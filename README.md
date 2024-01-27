@@ -22,13 +22,13 @@ Follow the following steps:
 3.  Go to [https://openai.com](https://openai.com/) and login
 4.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
 5.  Create a new API key and copy it
-    ![Screenshot 2024-01-26 alle 17.10.10.png](%F0%9F%A4%96%20AmazScraper%201c39ca53921c406da6a86898af0564ae/Screenshot_2024-01-26_alle_17.10.10.png)
+    ![Screenshot 2024-01-26 alle 17.10.10.png](doc/Screenshot_2024-01-26_alle_17.10.10.png)
 
-![Screenshot 2024-01-26 alle 17.10.31.png](%F0%9F%A4%96%20AmazScraper%201c39ca53921c406da6a86898af0564ae/Screenshot_2024-01-26_alle_17.10.31.png)
+![Screenshot 2024-01-26 alle 17.10.31.png](doc/Screenshot_2024-01-26_alle_17.10.31.png)
 
-![Screenshot 2024-01-26 alle 17.10.52.png](%F0%9F%A4%96%20AmazScraper%201c39ca53921c406da6a86898af0564ae/Screenshot_2024-01-26_alle_17.10.52.png)
+![Screenshot 2024-01-26 alle 17.10.52.png](doc/Screenshot_2024-01-26_alle_17.10.52.png)
 
-![Screenshot 2024-01-26 alle 17.11.10.png](%F0%9F%A4%96%20AmazScraper%201c39ca53921c406da6a86898af0564ae/Screenshot_2024-01-26_alle_17.11.10.png)
+![Screenshot 2024-01-26 alle 17.11.10.png](doc/Screenshot_2024-01-26_alle_17.11.10.png)
 
 6. Open the .env file inside main and paste the API key
 
@@ -123,4 +123,4 @@ if __name__ == "__main__":
 
 Developed by
 
-![logo-removebg-preview.png](%F0%9F%A4%96%20AmazScraper%201c39ca53921c406da6a86898af0564ae/logo-removebg-preview.png)
+![logo-removebg-preview.png](doc/logo-removebg-preview.png)
