@@ -22,13 +22,13 @@ Follow the following steps:
 3.  Go to [https://openai.com](https://openai.com/) and login
 4.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
 5.  Create a new API key and copy it
-    ![Screenshot 2024-01-26 alle 17.10.10.png](doc/Screenshot_2024-01-26_alle_17.10.10.png)
+    ![Screenshot 2024-01-26 alle 17.10.10.png](docs/generate_api_key/step_1.png)
 
-![Screenshot 2024-01-26 alle 17.10.31.png](doc/Screenshot_2024-01-26_alle_17.10.31.png)
+![Screenshot 2024-01-26 alle 17.10.31.png](docs/generate_api_key/step_2.png)
 
-![Screenshot 2024-01-26 alle 17.10.52.png](doc/Screenshot_2024-01-26_alle_17.10.52.png)
+![Screenshot 2024-01-26 alle 17.10.52.png](docs/generate_api_key/step_3.png)
 
-![Screenshot 2024-01-26 alle 17.11.10.png](doc/Screenshot_2024-01-26_alle_17.11.10.png)
+![Screenshot 2024-01-26 alle 17.11.10.png](docs/generate_api_key/step_4.png)
 
 6. Open the .env file inside main and paste the API key
 
@@ -123,4 +123,4 @@ if __name__ == "__main__":
 
 Developed by
 
-![logo-removebg-preview.png](doc/logo-removebg-preview.png)
+![logo-removebg-preview.png](docs/logo_vincios.png)
