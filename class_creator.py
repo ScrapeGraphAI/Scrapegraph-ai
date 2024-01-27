@@ -1,7 +1,7 @@
 base_script = '''
 from langchain_core.pydantic_v1 import BaseModel, Field
 
-class Response(BaseModel):
+class _Response(BaseModel):
 '''
 
 # This function creates a class at runtime using the values from the list.
