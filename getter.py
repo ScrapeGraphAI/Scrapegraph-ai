@@ -1,10 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
 'Accept-Language': 'en-US'}
-
 
 def get_function(link:str, param = HEADERS) -> str:
     """
@@ -19,9 +17,6 @@ def get_function(link:str, param = HEADERS) -> str:
     """
     response = requests.get(url=link, headers=HEADERS)
     return str(response.content)
-
-
-
 
 def scraper(link: str, max_char: int) -> str:
     """
