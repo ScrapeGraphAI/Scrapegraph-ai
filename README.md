@@ -57,10 +57,9 @@ values = [
 
 if __name__ == "__main__":
 
-    query_info = scraper("https://www.mockupworld.co", 4197)
-    generator_instance = Generator(values)
+    generator_instance = Generator(values, 0, "gpt-3.5-turbo")
 
-    res = generator_instance.invocation(query_info)
+    res = generator_instance.invocation(scraper("https://www.mockupworld.co", 4197))
 ```
 
 ### Case 2: Passing your own HTML code
@@ -116,7 +115,8 @@ query_info = '''
     '''
 
 if __name__ == "__main__":
-    generator_instance = Generator(values)
+
+    generator_instance = Generator(values, 0, "gpt-3.5-turbo")
 
     generator_instance.invocation(query_info)
 ```
