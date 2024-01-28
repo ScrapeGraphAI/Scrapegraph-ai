@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from AmazScraper.pydantic_class import Response
+from AmazScraper.pydantic_class import _Response
 from AmazScraper.class_creator import create_class
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
@@ -15,7 +15,7 @@ class Generator:
     def __init__(self, values: list):
         create_class(values)
 
-        self.parser = PydanticOutputParser(pydantic_object=Response)
+        self.parser = PydanticOutputParser(pydantic_object=_Response)
 
         self.prompt = PromptTemplate(
             template="Answer the user query.\n{format_instructions}\n{query}\n",
