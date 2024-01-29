@@ -19,7 +19,11 @@ class Generator:
         Parameters:
         - values (list): A list of values used for class creation.
         - temperature_param (float): A parameter controlling the randomness of the language model's output.
-        - model_name (str): The name of the language model to be used (default: "gpt-3.5-turbo").
+        - model_name (str): The name of the language model to be used (default: "gpt-3.5-turbo"). All
+          the possible models are avaible at the following link: https://platform.openai.com/docs/models
+
+        Returns:
+        - result_dict (dict): The result of the language model invocation, converted to a dictionary.
         """
         create_class(values)
 
@@ -38,7 +42,8 @@ class Generator:
     def invocation(self, query_info):
         try:
             result = self.chain.invoke({"query": query_info})
-            print(result)
-            return result
+            result_dict = result.dict()  
+            
+            return result_dict
         except Exception as e:
-            print(f"Error: {e}") 
+            print(f"Error: {e}")

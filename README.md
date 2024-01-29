@@ -43,7 +43,7 @@ API_KEY="your openai.com api key"
 ## Using AmazScraper as a library
 
 ```python
-from AmazScraper.ClassGenerator import Generator
+from AmazScraper.class_generator import Generator
 
 from AmazScraper.getter import get_function, scraper
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
 ```python
 import sys
-from AmazScraper.ClassGenerator import Generator
+from AmazScraper.class_generator import Generator
 
 values = [
     {
@@ -81,11 +81,11 @@ query_info = '''
         Given this code extract all the information in a json format about the news.
         <article class="c-card__wrapper aem_card_check_wrapper" data-cardindex="0">
             <div class="c-card__content">
-                <h2 class="c-card__title">Booker show da 52 punti, chi ha più partite oltre quota 50</h2>
+                <h2 class="c-card__title">Booker show with 52 points, whoever has the most games over 50</h2>
                 <div class="c-card__label-wrapper c-label-wrapper">
-                    <span class="c-label c-label--article-heading">LA CLASSIFICA</span>
+                    <span class="c-label c-label--article-heading">Standings</span>
                 </div>
-                <p class="c-card__abstract">Il n° 1 dei Suns ha dominato la sfida vinta a New Orleans segnando 52 punti. Si tratta della...</p>
+                <p class="c-card__abstract">The Suns' No. 1 dominated the match won in New Orleans, scoring 52 points. It's about...</p>
                 <div class="c-card__info">
                     <time class="c-card__date" datetime="20 gen - 07:54">20 gen - 07:54</time>
                     <span class="c-card__content-data">
@@ -119,6 +119,33 @@ if __name__ == "__main__":
     generator_instance = Generator(values, 0, "gpt-3.5-turbo")
 
     generator_instance.invocation(query_info)
+```
+
+Note: all the model are avaiable at the following link: [https://platform.openai.com/docs/models](https://platform.openai.com/docs/models), be sure you have enabled that keys
+
+# Example of output
+
+Given the following input
+
+```python
+    [
+        {
+            "title": "title",
+            "type": "str",
+            "description": "Title of the items"
+        }
+    ]
+
+```
+
+using as a input the website [https://sport.sky.it/nba?gr=www](https://sport.sky.it/nba?gr=www)
+
+The oputput format is a dict and its the following:
+
+```bash
+    {
+    'title': 'Booker show with 52 points, whoever has the most games over 50'
+    }
 ```
 
 Developed by
