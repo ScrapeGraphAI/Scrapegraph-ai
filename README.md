@@ -16,28 +16,27 @@ Follow the following steps:
 1.  ```bash
     git clone https://github.com/VinciGit00/AmazScraper.git
     ```
-2. (Optional)
-   ```bash
-        python -m venv venv
-        source ./venv/bin/activate
-   ```
-4.  ```bash
+2.  (Optional)
+    ```bash
+         python -m venv venv
+         source ./venv/bin/activate
+    ```
+3.  ```bash
     pip install -r requirements.txt
     ```
-5.  Go to [https://openai.com](https://openai.com/) and login
-6.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
-7.  Create a new API key and copy it
-   
+4.  Go to [https://openai.com](https://openai.com/) and login
+5.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
+6.  Create a new API key and copy it
+
     <img src="docs/generate_api_key/step_1.png" alt="Step 1 Screenshot" width="60%"/>
-    
+
     <img src="docs/generate_api_key/step_2.png" alt="Step 2 Screenshot" width="60%"/>
-    
+
     <img src="docs/generate_api_key/step_3.png" alt="Step 3 Screenshot" width="60%"/>
-    
+
     <img src="docs/generate_api_key/step_4.png" alt="Step 4 Screenshot" width="60%"/>
 
-
-7. Create a .env file inside the main and paste the API key
+7.  Create a .env file inside the main and paste the API key
 
 ```config
 API_KEY="your openai.com api key"
@@ -52,15 +51,15 @@ API_KEY="your openai.com api key"
    ```bash
         python -m AmazScraper.examples.html_scraping
    ```
-   
+
 # Practical use
 
 ## Using AmazScraper as a library
 
 ```python
-from AmazScraper.classes.class_generator import Generator
+from classes.class_generator import Generator
 
-from AmazScraper.utils.getter import get_function, scraper
+from utils.getter import get_function, scraper
 
 values = [
     {
@@ -75,13 +74,15 @@ if __name__ == "__main__":
     generator_instance = Generator(values, 0, "gpt-3.5-turbo")
 
     res = generator_instance.invocation(scraper("https://www.mockupworld.co", 4197))
+
+    print(res)
 ```
 
 ### Case 2: Passing your own HTML code
 
 ```python
 import sys
-from AmazScraper.classes.class_generator import Generator
+from classes.class_generator import Generator
 
 values = [
     {
@@ -133,10 +134,25 @@ if __name__ == "__main__":
 
     generator_instance = Generator(values, 0, "gpt-3.5-turbo")
 
-    generator_instance.invocation(query_info)
+    res = generator_instance.invocation(query_info)
+    print(res)
 ```
 
 Note: all the model are avaiable at the following link: [https://platform.openai.com/docs/models](https://platform.openai.com/docs/models), be sure you have enabled that keys
+
+Is it possible to run the examples through the command line inside the principal root:
+
+For the first example:
+
+```bash
+    python -m examples.value_scraping
+```
+
+For the second example:
+
+```bash
+    python -m examples.html_scraping
+```
 
 # Example of output
 
