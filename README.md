@@ -27,13 +27,15 @@ Follow the following steps:
 5.  Go to [https://openai.com](https://openai.com/) and login
 6.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
 7.  Create a new API key and copy it
-    ![Screenshot 2024-01-26 alle 17.10.10.png](docs/generate_api_key/step_1.png)
+   
+    <img src="docs/generate_api_key/step_1.png" alt="Step 1 Screenshot" width="60%"/>
+    
+    <img src="docs/generate_api_key/step_2.png" alt="Step 2 Screenshot" width="60%"/>
+    
+    <img src="docs/generate_api_key/step_3.png" alt="Step 3 Screenshot" width="60%"/>
+    
+    <img src="docs/generate_api_key/step_4.png" alt="Step 4 Screenshot" width="60%"/>
 
-![Screenshot 2024-01-26 alle 17.10.31.png](docs/generate_api_key/step_2.png)
-
-![Screenshot 2024-01-26 alle 17.10.52.png](docs/generate_api_key/step_3.png)
-
-![Screenshot 2024-01-26 alle 17.11.10.png](docs/generate_api_key/step_4.png)
 
 7. Create a .env file inside the main and paste the API key
 
@@ -42,7 +44,15 @@ API_KEY="your openai.com api key"
 ```
 
 8. You are ready to go! 🚀
-
+9. Try running the examples using:
+   ```bash
+        python -m examples.html_scraping
+   ```
+   or
+   ```bash
+        python -m AmazScraper.examples.html_scraping
+   ```
+   
 # Practical use
 
 ## Using AmazScraper as a library
