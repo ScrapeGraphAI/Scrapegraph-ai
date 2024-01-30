@@ -1,5 +1,5 @@
 import pytest
-from classes.pydantic_class import _Response
+from utils.pydantic_class import _Response
 from utils.class_creator import create_class
 from langchain_openai import ChatOpenAI
 

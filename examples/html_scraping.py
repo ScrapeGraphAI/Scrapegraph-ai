@@ -1,5 +1,5 @@
 import sys
-from classes.class_generator import Generator
+from utils.class_generator import Generator
 
 values = [
     {

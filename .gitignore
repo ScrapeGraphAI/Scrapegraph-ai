@@ -1,7 +1,20 @@
 .DS_Store
 .DS_Store?
 ._*
+
+# Byte-compiled / optimized / DLL files
 **/__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+MANIFEST
+
 docs/build/
 docs/source/_templates/
 .env

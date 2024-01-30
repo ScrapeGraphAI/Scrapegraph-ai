@@ -1,0 +1,34 @@
+# Include the license file
+include LICENSE
+
+# Include the readme and other markdown files
+include README.md
+include CONTRIBUTING.md
+
+# Include the requirements file
+include requirements.txt
+
+# Include the setup configuration
+include setup.py
+
+# Include the documentation files
+recursive-include docs *.md
+recursive-include docs *.rst
+
+# Include the YAML configuration for Read the Docs
+include readthedocs.yml
+
+# Include Python source files from the project's subpackages
+recursive-include utils *.py
+recursive-include examples *.py
+recursive-include tests *.py
+
+# If you want to exclude specific files or patterns, use the 'global-exclude' directive
+# global-exclude *.pyc
+# global-exclude __pycache__/*
+
+# Exclude all bytecode compiled files
+global-exclude *.py[cod]
+
+# Exclude OS generated files like .DS_Store
+global-exclude .DS_Store

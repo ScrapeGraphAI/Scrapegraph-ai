@@ -10,5 +10,5 @@ def create_class(data_dict: dict):
         global base_script
         base_script = base_script + f"    {elem['title']}: {elem['type']} = Field(description='{elem['description']}')\n"
 
-    with open("classes/pydantic_class.py", "w") as f:
+    with open("./pydantic_class.py", "w") as f:
         f.write(base_script)
