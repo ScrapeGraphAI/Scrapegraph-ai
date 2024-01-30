@@ -1,4 +1,4 @@
-from classes.class_generator import Generator
+from utils.class_generator import Generator
 
 from utils.getter import get_function, scraper
 
