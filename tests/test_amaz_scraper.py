@@ -1,6 +1,6 @@
 import pytest
-from AmazScraper.pydantic_class import Response
-from AmazScraper.class_creator import create_class
+from classes.pydantic_class import _Response
+from utils.class_creator import create_class
 from langchain_openai import ChatOpenAI
 
 @pytest.fixture
@@ -19,5 +19,5 @@ def test_generator_invocation(generator):
 def test_response_model():
     # Test the Response Pydantic model
     response_data = {"title_swebsite": "Test Title"}
-    response = Response(**response_data)
+    response = _Response(**response_data)
     assert response.title_swebsite == "Test Title"

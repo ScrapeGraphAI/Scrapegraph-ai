@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from AmazScraper.pydantic_class import _Response
-from AmazScraper.class_creator import create_class
+from classes.pydantic_class import _Response
+from utils.class_creator import create_class
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain_core.pydantic_v1 import Field
