@@ -16,12 +16,17 @@ Follow the following steps:
 1.  ```bash
     git clone https://github.com/VinciGit00/AmazScraper.git
     ```
-2.  ```bash
+2. (Optional)
+   ```bash
+        python -m venv venv
+        source ./venv/bin/activate
+   ```
+4.  ```bash
     pip install -r requirements.txt
     ```
-3.  Go to [https://openai.com](https://openai.com/) and login
-4.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
-5.  Create a new API key and copy it
+5.  Go to [https://openai.com](https://openai.com/) and login
+6.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
+7.  Create a new API key and copy it
     ![Screenshot 2024-01-26 alle 17.10.10.png](docs/generate_api_key/step_1.png)
 
 ![Screenshot 2024-01-26 alle 17.10.31.png](docs/generate_api_key/step_2.png)
@@ -30,22 +35,22 @@ Follow the following steps:
 
 ![Screenshot 2024-01-26 alle 17.11.10.png](docs/generate_api_key/step_4.png)
 
-6. Open the .env file inside main and paste the API key
+7. Create a .env file inside the main and paste the API key
 
 ```config
 API_KEY="your openai.com api key"
 ```
 
-7. You are ready to go! 🚀
+8. You are ready to go! 🚀
 
 # Practical use
 
 ## Using AmazScraper as a library
 
 ```python
-from AmazScraper.class_generator import Generator
+from AmazScraper.classes.class_generator import Generator
 
-from AmazScraper.getter import get_function, scraper
+from AmazScraper.utils.getter import get_function, scraper
 
 values = [
     {
@@ -66,7 +71,7 @@ if __name__ == "__main__":
 
 ```python
 import sys
-from AmazScraper.class_generator import Generator
+from AmazScraper.classes.class_generator import Generator
 
 values = [
     {
