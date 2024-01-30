@@ -51,4 +51,5 @@ if __name__ == "__main__":
 
     generator_instance = Generator(values, 0, "gpt-3.5-turbo")
 
-    generator_instance.invocation(query_info)
+    res = generator_instance.invocation(query_info)
+    print(res)
