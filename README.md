@@ -10,6 +10,7 @@ This library can work passing as a parameter from the code the HTML to scrape or
 link of the website that you want to extract informations.
 # 🔍 Demo
 Try out AmazScraper in your browser:
+
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/AmazScraper)
 
 # 🔧 Quick Setup
