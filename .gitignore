@@ -17,5 +17,6 @@ MANIFEST
 
 docs/build/
 docs/source/_templates/
+docs/source/_static/
 .env
 venv/

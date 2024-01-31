@@ -28,13 +28,13 @@ Follow the following steps:
 5.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
 6.  Create a new API key and copy it
 
-    <img src="docs/generate_api_key/step_1.png" alt="Step 1 Screenshot" width="60%"/>
+    <img src="docs/assets/apikey_1.png" alt="Step 1 Screenshot" width="70%"/>
 
-    <img src="docs/generate_api_key/step_2.png" alt="Step 2 Screenshot" width="60%"/>
+    <img src="docs/assets/apikey_2.png" alt="Step 2 Screenshot" width="70%"/>
 
-    <img src="docs/generate_api_key/step_3.png" alt="Step 3 Screenshot" width="60%"/>
+    <img src="docs/assets/apikey_3.png" alt="Step 3 Screenshot" width="70%"/>
 
-    <img src="docs/generate_api_key/step_4.png" alt="Step 4 Screenshot" width="60%"/>
+    <img src="docs/assets/apikey_4.png" alt="Step 4 Screenshot" width="70%"/>
 
 7.  Create a .env file inside the main and paste the API key
 
@@ -181,4 +181,4 @@ The oputput format is a dict and its the following:
 
 Developed by
 
-![logo-removebg-preview.png](docs/logo_vincios.png)
+![logo-removebg-preview.png](docs/assets/logo_vincios.png)

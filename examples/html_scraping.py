@@ -1,5 +1,5 @@
 import sys
-from utils.class_generator import Generator
+from amazscraper.class_generator import Generator
 
 values = [
     {

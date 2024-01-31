@@ -1,5 +1,4 @@
 from amazscraper.class_generator import Generator
-
 from amazscraper.getter import get_function, scraper
 
 values = [

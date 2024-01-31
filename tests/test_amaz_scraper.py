@@ -1,6 +1,6 @@
 import pytest
-from utils.pydantic_class import _Response
-from utils.class_creator import create_class
+from amazscraper.pydantic_class import _Response
+from amazscraper.class_creator import create_class
 from langchain_openai import ChatOpenAI
 
 @pytest.fixture
