@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from utils.getter import scraper
-from utils.class_generator import Generator
+from amazscraper.getter import scraper
+from amazscraper.class_generator import Generator
 
 load_dotenv()
 
