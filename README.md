@@ -8,8 +8,11 @@ The use of this library allows to scrape and extract informations from websites 
 
 This library can work passing as a parameter from the code the HTML to scrape or it can work passing the
 link of the website that you want to extract informations.
+# 🔍 Demo
+Try out AmazScraper in your browser:
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/AmazScraper)
 
-# Setup
+# 🔧 Quick Setup
 
 Follow the following steps:
 
@@ -52,7 +55,7 @@ API_KEY="your openai.com api key"
         python -m AmazScraper.examples.html_scraping
    ```
 
-# Practical use
+# 📖 Examples
 
 ## Using AmazScraper as a library
 
