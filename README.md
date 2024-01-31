@@ -8,7 +8,9 @@ The use of this library allows to scrape and extract informations from websites 
 
 This library can work passing as a parameter from the code the HTML to scrape or it can work passing the
 link of the website that you want to extract informations.
+
 # 🔍 Demo
+
 Try out AmazScraper in your browser:
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/AmazScraper)
 
@@ -61,30 +63,42 @@ python -m AmazScraper.examples.html_scraping
 # 📖 Examples
 
 ```python
-from AmazScraper.utils.class_generator import Generator
+import os
+from dotenv import load_dotenv
+from utils.getter import scraper
+from utils.class_generator import Generator
 
-from AmazScraper.utils.getter import get_function, scraper
+load_dotenv()
+
+MY_ENV_VAR = os.getenv('API_KEY')
 
 values = [
     {
-        "title": "title",
+        "title": "title_website",
         "type": "str",
-        "description": "Title of the items"
+        "description": "Give me the website name"
     }
 ]
 
-if name == "__main__":
+if __name__ == "__main__":
 
-    generator_instance = Generator(values, 0, "gpt-3.5-turbo")
+    generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
 
     res = generator_instance.invocation(scraper("https://www.mockupworld.co", 4197))
+
+    print(res)
 ```
 
 ### Case 2: Passing your own HTML code
 
 ```python
-import sys
-from AmazScraper.utils.class_generator import Generator
+import os
+from dotenv import load_dotenv
+from utils.class_generator import Generator
+
+load_dotenv()
+
+MY_ENV_VAR = os.getenv('API_KEY')
 
 values = [
     {
@@ -134,7 +148,7 @@ query_info = '''
 
 if __name__ == "__main__":
 
-    generator_instance = Generator(values, 0, "gpt-3.5-turbo")
+    generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
 
     res = generator_instance.invocation(query_info)
     print(res)

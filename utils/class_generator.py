@@ -1,4 +1,3 @@
-import os
 from dotenv import load_dotenv
 from .pydantic_class import _Response
 from .class_creator import create_class
@@ -7,12 +6,8 @@ from langchain.prompts import PromptTemplate
 from langchain_core.pydantic_v1 import Field
 from langchain.output_parsers import PydanticOutputParser
 
-load_dotenv()
-
-MY_ENV_VAR = os.getenv('API_KEY')
-
 class Generator:
-    def __init__(self, values:list, temperature_param:float = 0, model_name:str = "gpt-3.5-turbo"):
+    def __init__(self, values:list, api_key:str, temperature_param:float = 0, model_name:str = "gpt-3.5-turbo"):
         """
         Initializes the Generator object.
 
@@ -35,7 +30,7 @@ class Generator:
             partial_variables={"format_instructions": self.parser.get_format_instructions()},
         )
 
-        self.model = ChatOpenAI(openai_api_key=MY_ENV_VAR, temperature=temperature_param, model=model_name)
+        self.model = ChatOpenAI(openai_api_key=api_key, temperature=temperature_param, model=model_name)
 
         self.chain = self.prompt | self.model | self.parser
 
