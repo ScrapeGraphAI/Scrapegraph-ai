@@ -15,7 +15,7 @@ def get_function(link:str, param = HEADERS) -> str:
     Returns:
     str: The content of the response as a string.
     """
-    response = requests.get(url=link, headers=HEADERS)
+    response = requests.get(url=link, headers=param)
     return str(response.content)
 
 def scraper(link: str, max_char: int) -> str:

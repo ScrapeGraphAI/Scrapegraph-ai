@@ -2,14 +2,20 @@
 
 This repo is a Python open source library for making a faster scraping using AI and without any knowledge about the HTML code.
 
-The tech stack is fully in Python and the main libraries used are pydantic, langchain and requests.
+The tech stack is fully in Python and the main libraries used are pydantic, langchain and requests. All the required libraries are in the requirements.txt file.
 
 The use of this library allows to scrape and extract informations from websites in just few seconds instead of write ad-hoc code for each website.
 
 This library can work passing as a parameter from the code the HTML to scrape or it can work passing the
 link of the website that you want to extract informations.
 
-# Setup
+# 🔍 Demo
+
+Try out AmazScraper in your browser:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/AmazScraper)
+
+# 🔧 Quick Setup
 
 Follow the following steps:
 
@@ -18,8 +24,8 @@ Follow the following steps:
     ```
 2.  (Optional)
     ```bash
-         python -m venv venv
-         source ./venv/bin/activate
+    python -m venv venv
+    source ./venv/bin/activate
     ```
 3.  ```bash
     pip install -r requirements.txt
@@ -44,34 +50,40 @@ API_KEY="your openai.com api key"
 
 8. You are ready to go! 🚀
 9. Try running the examples using:
-   ```bash
-        python -m examples.html_scraping
-   ```
-   or
-   ```bash
-        python -m AmazScraper.examples.html_scraping
-   ```
 
-# Practical use
+```bash
+python -m examples.html_scraping
+```
 
-## Using AmazScraper as a library
+or
+
+```bash
+python -m AmazScraper.examples.html_scraping
+```
+
+# 📖 Examples
 
 ```python
-from classes.class_generator import Generator
+import os
+from dotenv import load_dotenv
+from utils.getter import scraper
+from utils.class_generator import Generator
 
-from utils.getter import get_function, scraper
+load_dotenv()
+
+MY_ENV_VAR = os.getenv('API_KEY')
 
 values = [
     {
-        "title": "title",
+        "title": "title_website",
         "type": "str",
-        "description": "Title of the items"
+        "description": "Give me the website name"
     }
 ]
 
 if __name__ == "__main__":
 
-    generator_instance = Generator(values, 0, "gpt-3.5-turbo")
+    generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
 
     res = generator_instance.invocation(scraper("https://www.mockupworld.co", 4197))
 
@@ -81,8 +93,13 @@ if __name__ == "__main__":
 ### Case 2: Passing your own HTML code
 
 ```python
-import sys
-from classes.class_generator import Generator
+import os
+from dotenv import load_dotenv
+from utils.class_generator import Generator
+
+load_dotenv()
+
+MY_ENV_VAR = os.getenv('API_KEY')
 
 values = [
     {
@@ -132,7 +149,7 @@ query_info = '''
 
 if __name__ == "__main__":
 
-    generator_instance = Generator(values, 0, "gpt-3.5-turbo")
+    generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
 
     res = generator_instance.invocation(query_info)
     print(res)
@@ -145,13 +162,13 @@ Is it possible to run the examples through the command line inside the principal
 For the first example:
 
 ```bash
-    python -m examples.value_scraping
+python -m examples.value_scraping
 ```
 
 For the second example:
 
 ```bash
-    python -m examples.html_scraping
+python -m examples.html_scraping
 ```
 
 # Example of output

@@ -1,5 +1,10 @@
-import sys
+import os
+from dotenv import load_dotenv
 from amazscraper.class_generator import Generator
+
+load_dotenv()
+
+MY_ENV_VAR = os.getenv('API_KEY')
 
 values = [
     {
@@ -49,7 +54,7 @@ query_info = '''
 
 if __name__ == "__main__":
 
-    generator_instance = Generator(values, 0, "gpt-3.5-turbo")
+    generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
 
     res = generator_instance.invocation(query_info)
     print(res)
