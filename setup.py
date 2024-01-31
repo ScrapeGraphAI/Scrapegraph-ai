@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setup(
-    name='amazscraper',
+    name='AmazScraper',
     version='1.0.0', # MAJOR.MINOR.PATCH
     description='A web scraping library using langchain',
     author='Marco Vinciguerra',

@@ -2,7 +2,7 @@
 
 This repo is a Python open source library for making a faster scraping using AI and without any knowledge about the HTML code.
 
-The tech stack is fully in Python and the main libraries used are pydantic, langchain and requests.
+The tech stack is fully in Python and the main libraries used are pydantic, langchain and requests. All the required libraries are in the requirements.txt file.
 
 The use of this library allows to scrape and extract informations from websites in just few seconds instead of write ad-hoc code for each website.
 
@@ -18,8 +18,8 @@ Follow the following steps:
     ```
 2.  (Optional)
     ```bash
-         python -m venv venv
-         source ./venv/bin/activate
+    python -m venv venv
+    source ./venv/bin/activate
     ```
 3.  ```bash
     pip install -r requirements.txt
@@ -44,22 +44,23 @@ API_KEY="your openai.com api key"
 
 8. You are ready to go! 🚀
 9. Try running the examples using:
-   ```bash
-        python -m examples.html_scraping
-   ```
-   or
-   ```bash
-        python -m AmazScraper.examples.html_scraping
-   ```
+
+```bash
+python -m examples.html_scraping
+```
+
+or
+
+```bash
+python -m AmazScraper.examples.html_scraping
+```
 
 # Practical use
 
-## Using AmazScraper as a library
-
 ```python
-from classes.class_generator import Generator
+from AmazScraper.utils.class_generator import Generator
 
-from utils.getter import get_function, scraper
+from AmazScraper.utils.getter import get_function, scraper
 
 values = [
     {
@@ -69,20 +70,18 @@ values = [
     }
 ]
 
-if __name__ == "__main__":
+if name == "__main__":
 
     generator_instance = Generator(values, 0, "gpt-3.5-turbo")
 
     res = generator_instance.invocation(scraper("https://www.mockupworld.co", 4197))
-
-    print(res)
 ```
 
 ### Case 2: Passing your own HTML code
 
 ```python
 import sys
-from classes.class_generator import Generator
+from AmazScraper.utils.class_generator import Generator
 
 values = [
     {
@@ -145,13 +144,13 @@ Is it possible to run the examples through the command line inside the principal
 For the first example:
 
 ```bash
-    python -m examples.value_scraping
+python -m examples.value_scraping
 ```
 
 For the second example:
 
 ```bash
-    python -m examples.html_scraping
+python -m examples.html_scraping
 ```
 
 # Example of output
