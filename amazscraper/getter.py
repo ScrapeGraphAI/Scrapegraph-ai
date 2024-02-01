@@ -18,31 +18,32 @@ def get_function(link:str, param = HEADERS) -> str:
     response = requests.get(url=link, headers=param)
     return str(response.content)
 
-def scraper(link: str, max_char: int) -> str:
-    """
-    Scrapes the HTML text and removes unwanted elements, text, and comments.
-
-    Args:
-        link (str): The HTML link to be scraped.
-        max_char (int): The maximum number of characters in the returned HTML body.
+def remover(file:str) -> str:
+    '''
+    This function elaborate the HTML file and remove all the not necessary tag
+    Parameters:
+    file (str): the file to parse
 
     Returns:
-        str: The scraped HTML body as a string without script meta tags and limited to max_char characters.
-    """
-    text = get_function(link)
-    soup = BeautifulSoup(text, 'html.parser')
+    str: the parsed file
+    '''
+    res = ""
+    
+    isBody = False
 
-    unwanted_elements = ['head', 'script', 'style']
-    unwanted_text = "Per discutere l'accesso automatizzato ai dati di Amazon"
-    unwanted_comment = "Correios.DoNotSend"
+    for elem in file.splitlines():
+        if "<title>" in elem:
+            res = res + elem
 
-    for element in soup(unwanted_elements):
-        element.decompose()
+        if "<body>" in elem: 
+            isBody = True
 
-    for unwanted_content in soup.find_all(string=lambda text: unwanted_text in text or unwanted_comment in text):
-        unwanted_content.extract()
+        if "</body>" in elem:
+            break
 
-    html_body = str(soup.body).replace('\n', '')
+        if "<script>" in elem:
+            continue
 
-    # Limit the number of characters in the HTML body
-    return html_body[:max_char]
+        if isBody == True:
+            res = res + elem
+    return res

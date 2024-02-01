@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from amazscraper.getter import scraper
+from amazscraper.getter import remover
 from amazscraper.class_generator import Generator
 
 load_dotenv()
@@ -19,6 +19,6 @@ if __name__ == "__main__":
 
     generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
 
-    res = generator_instance.invocation(scraper("https://www.mockupworld.co", 4197))
+    res = generator_instance.invocation(remover("https://www.mockupworld.co"))
     
     print(res)

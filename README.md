@@ -9,6 +9,8 @@ The use of this library allows to scrape and extract informations from websites 
 This library can work passing as a parameter from the code the HTML to scrape or it can work passing the
 link of the website that you want to extract informations.
 
+Official documentation page: [https://amazscraper.readthedocs.io/en/latest/index.html](https://amazscraper.readthedocs.io/en/latest/index.html)
+
 # 🔍 Demo
 
 Try out AmazScraper in your browser:
@@ -66,7 +68,7 @@ python -m AmazScraper.examples.html_scraping
 ```python
 import os
 from dotenv import load_dotenv
-from utils.getter import scraper
+from utils.getter import remover
 from utils.class_generator import Generator
 
 load_dotenv()
@@ -85,7 +87,7 @@ if __name__ == "__main__":
 
     generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
 
-    res = generator_instance.invocation(scraper("https://www.mockupworld.co", 4197))
+    res = generator_instance.invocation(remover("https://www.mockupworld.co", 4197))
 
     print(res)
 ```
