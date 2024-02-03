@@ -9,11 +9,11 @@ The use of this library allows to scrape and extract informations from websites 
 This library can work passing as a parameter from the code the HTML to scrape or it can work passing the
 link of the website that you want to extract informations.
 
-Official documentation page: [https://amazscraper.readthedocs.io/en/latest/index.html](https://amazscraper.readthedocs.io/en/latest/index.html)
+Official documentation page: [yoso-ai.readthedocs.io](https://yoso-ai.readthedocs.io/)
 
 # 🔍 Demo
 
-Try out AmazScraper in your browser:
+Try out YOSO-ai in your browser:
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://obscure-trout-74p9vqwv75wcxwq6.github.dev)
 
@@ -22,7 +22,7 @@ Try out AmazScraper in your browser:
 Follow the following steps:
 
 1.  ```bash
-    git clone https://github.com/VinciGit00/AmazScraper.git
+    git clone https://github.com/VinciGit00/yoso-ai.git
     ```
 2.  (Optional)
     ```bash
