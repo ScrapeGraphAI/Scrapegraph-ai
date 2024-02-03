@@ -10,9 +10,9 @@
 
 import os, sys
 
-sys.path.insert(0, os.path.abspath('../../amazscraper'))
+sys.path.insert(0, os.path.abspath('../../yosoai'))
 
-project = 'amazscraper'
+project = 'yosoai'
 copyright = '2024, Marco Vinciguerra'
 author = 'Marco Vinciguerra'
 
