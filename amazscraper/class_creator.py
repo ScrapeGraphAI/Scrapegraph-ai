@@ -8,6 +8,13 @@ class _Response(BaseModel):
 def create_class(data_dict: dict):
     '''
     This function creates a class at runtime using the values from the list.
+    Parameters:
+        data_dict 
+            dict {
+                "title": str
+                "type": str,
+                "description": str
+            }: dictionary for describing the  prompt
     '''
     for elem in data_dict:
         global base_script

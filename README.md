@@ -1,4 +1,4 @@
-# 🤖 AmazScraper
+# 🤖 YOSO-ai
 
 This repo is a Python open source library for making a faster scraping using AI and without any knowledge about the HTML code.
 
@@ -15,7 +15,7 @@ Official documentation page: [https://amazscraper.readthedocs.io/en/latest/index
 
 Try out AmazScraper in your browser:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/AmazScraper)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://obscure-trout-74p9vqwv75wcxwq6.github.dev)
 
 # 🔧 Quick Setup
 
@@ -182,7 +182,7 @@ Given the following input
         {
             "title": "title",
             "type": "str",
-            "description": "Title of the items"
+            "description": "Title of the news"
         }
     ]
 
