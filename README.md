@@ -157,7 +157,7 @@ if __name__ == "__main__":
     print(res)
 ```
 
-Note: all the model are avaiable at the following link: [https://platform.openai.com/docs/models](https://platform.openai.com/docs/models), be sure you have enabled that keys
+Note: all the model are available at the following link: [https://platform.openai.com/docs/models](https://platform.openai.com/docs/models), be sure you have enabled that keys
 
 Is it possible to run the examples through the command line inside the principal root:
 
