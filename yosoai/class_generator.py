@@ -7,20 +7,22 @@ from langchain_core.pydantic_v1 import Field
 from langchain.output_parsers import PydanticOutputParser
 
 class Generator:
-    def __init__(self, values:list[dict], api_key:str, temperature_param:float = 0, model_name:str = "gpt-3.5-turbo")->dict:
+    def __init__(self, values: list[dict], api_key: str, temperature_param: float = 0, model_name: str = "gpt-3.5-turbo") -> dict:
         """
         Initializes the Generator object.
 
-        Parameters:
+        Args:
             values (list): A list of values used for class creation.
+            api_key (str): The API key for accessing the language model.
             temperature_param (float): A parameter controlling the randomness of the language model's output.
             model_name (str): The name of the language model to be used (default: "gpt-3.5-turbo"). All
-          the possible models are avaible at the following link: https://platform.openai.com/docs/models
+            the possible models are available at the following link: https://platform.openai.com/docs/models
 
         Returns:
             result_dict (dict): The result of the language model invocation, converted to a dictionary.
         """
-        create_class(values) #in future to remove
+        
+        create_class(values)  # in future to remove
 
         self.parser = PydanticOutputParser(pydantic_object=_Response)
 

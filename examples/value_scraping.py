@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from amazscraper.getter import remover
-from amazscraper.class_generator import Generator
+from yosoai.getter import remover
+from yosoai.class_generator import Generator
 
 load_dotenv()
 
@@ -11,7 +11,7 @@ values = [
     {
         "title": "title_website",
         "type": "str",
-        "description": "Give me the website name"
+        "description": "Find the main header title of the website"
     }
 ]
 

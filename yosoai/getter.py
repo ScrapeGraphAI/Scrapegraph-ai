@@ -29,15 +29,15 @@ def truncate_text_tokens(text: str, model: str, encoding_name: str = EMBEDDING_E
     """
     It creates a list of strings to create max dimension tokenizable elements
 
-    Parameters:
-    text (str): text to scrape
-    model_name (str): The name of the language model to be used (default: "gpt-3.5-turbo"). All
-    the possible models are available at the following link: https://platform.openai.com/docs/models
-    encoding_name (str):
+    Args:
+        text (str): The input text to be truncated into tokenizable elements.
+        model (str): The name of the language model to be used.
+        encoding_name (str): The name of the encoding to be used (default: EMBEDDING_ENCODING).
 
-    Returns
-    List[str] of elements to send the requests
+    Returns:
+        List[str]: A list of tokenizable elements created from the input text.
     """
+
     encoding = tiktoken.get_encoding(encoding_name)
     max_tokens = models_tokens[model]
     encoded_text = encoding.encode(text)
@@ -53,25 +53,27 @@ def get_function(link:str, param = HEADERS) -> str:
     """
     It sends a GET request to the specified link with optional headers.
 
-    Parameters:
-    link (str): The URL to send the GET request to.
-    param (dict): Optional headers to include in the request. Default is HEADERS.
+    Args:
+        link (str): The URL to send the GET request to.
+        param (dict): Optional headers to include in the request. Default is HEADERS.
 
     Returns:
-    str: The content of the response as a string.
+        str: The content of the response as a string.
     """
     response = requests.get(url=link, headers=param)
     return str(response.content)
 
 def remover(file:str) -> str:
-    '''
-    This function elaborate the HTML file and remove all the not necessary tag
+    """
+    This function elaborates the HTML file and remove all the not necessary tag
+    
     Parameters:
-    file (str): the file to parse
+        file (str): the file to parse
 
     Returns:
-    str: the parsed file
-    '''
+        str: the parsed file
+    """
+
     res = ""
     
     isBody = False

@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from amazscraper.class_generator import Generator
+from yosoai.class_generator import Generator
 
 load_dotenv()
 
@@ -8,9 +8,9 @@ MY_ENV_VAR = os.getenv('API_KEY')
 
 values = [
     {
-        "title": "title",
+        "title": "description",
         "type": "str",
-        "description": "Title of the news"
+        "description": "The description of the news"
     }
 ]
 

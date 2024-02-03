@@ -28,7 +28,7 @@ Clone the repository
 
 .. code-block:: bash
 
-   git clone https://github.com/VinciGit00/AmazScraper
+   git clone https://github.com/VinciGit00/yoso-ai.git
    cd AmazScraper
 
 Create a virtual environment

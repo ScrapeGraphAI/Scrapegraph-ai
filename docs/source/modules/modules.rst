@@ -1,7 +1,7 @@
-modules
-===========
+yosoai
+======
 
 .. toctree::
    :maxdepth: 4
 
-   amazscraper
+   yosoai
