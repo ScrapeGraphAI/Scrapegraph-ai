@@ -1,6 +1,6 @@
-# Contributing to AmazScraper
+# Contributing to YOSO-ai
 
-Thank you for your interest in contributing to **AmazScraper**! We welcome contributions from the community to help improve and grow the project. This document outlines the guidelines and steps for contributing.
+Thank you for your interest in contributing to **YOSO-ai**! We welcome contributions from the community to help improve and grow the project. This document outlines the guidelines and steps for contributing.
 
 ## Table of Contents
 
