@@ -6,10 +6,10 @@ def create_class(data_dict: dict):
 
     Args:
         data_dict (dict): A dictionary containing the description of the prompt.
-            It should have the following keys:
-                - "title" (str): The title of the field.
-                - "type" (str): The type of the field.
-                - "description" (str): The description of the field.
+                        It should have the following keys:
+                            - "title" (str): The title of the field.
+                            - "type" (str): The type of the field.
+                            - "description" (str): The description of the field.
 
     Returns:
         None

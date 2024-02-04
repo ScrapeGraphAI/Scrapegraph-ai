@@ -10,7 +10,8 @@
 
 import os, sys
 
-sys.path.insert(0, os.path.abspath('../../yosoai'))
+# import all the modules
+sys.path.insert(0, os.path.abspath('../../'))
 
 project = 'yosoai'
 copyright = '2024, Marco Vinciguerra'
