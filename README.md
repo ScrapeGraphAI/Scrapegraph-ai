@@ -15,7 +15,7 @@ Official documentation page: [yoso-ai.readthedocs.io](https://yoso-ai.readthedoc
 
 Try out YOSO-ai in your browser:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://obscure-trout-74p9vqwv75wcxwq6.github.dev)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/YOSO-ai)
 
 # 🔧 Quick Setup
 
