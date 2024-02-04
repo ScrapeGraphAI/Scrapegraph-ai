@@ -199,5 +199,6 @@ The oputput format is a dict and its the following:
 ```
 
 Developed by
-
-![logo-removebg-preview.png](docs/assets/logo_vincios.png)
+<p align="center">
+    <img src = "docs/assets/logo_vincios.png">
+    <img src = "docs/assets/logo_lurens.png", height="350", width="350" >
