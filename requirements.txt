@@ -3,11 +3,5 @@ langchain==0.1.4
 langchain_core==0.1.16
 langchain_openai==0.0.5
 Requests==2.31.0
-pytest==8.0.0
 tiktoken==0.5.2
-
 python-dotenv==1.0.1
-wheel==0.42.0
-twine==4.0.2
-sphinx==7.1.2
-sphinx-rtd-theme==2.0.0

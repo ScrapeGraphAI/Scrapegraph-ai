@@ -1,11 +1,19 @@
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 
+# Function to read the contents of a requirements file
+def load_requirements(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        return file.read().splitlines()
+
+prod_requirements = load_requirements('requirements.txt')
+dev_requirements = load_requirements('requirements-dev.txt')
+
 setup(
     name='yosoai',
     version='0.1.0', # MAJOR.MINOR.PATCH
     description='A web scraping library using langchain',
-    long_description='A web scraping library using langchain but a longer description',
+    long_description=open('README.md', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     url='https://yoso-ai.readthedocs.io/',
     author='Marco Vinciguerra',
@@ -24,15 +32,11 @@ setup(
         'Operating System :: OS Independent',
     ],
     packages = ['yosoai'],
+    python_requires='>=3.9 , !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*, !=3.7.*, !=3.8.*',
     include_package_data=True,
     # https://packaging.python.org/en/latest/discussions/install-requires-vs-requirements/
-    install_requires=[
-        'beautifulsoup4',
-        'langchain',
-        'langchain_core',
-        'langchain_openai',
-        'Requests',
-        'pytest',
-        'tiktoken',
-    ]
+    install_requires=prod_requirements,
+    extras_require={
+        'dev': prod_requirements + dev_requirements,
+    },
 )
