@@ -182,13 +182,18 @@ The oputput format is a dict and its the following:
 ```
 
 # Developed by
-<table align="center" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td align="center"><img src="docs/assets/logo_vincios.png" alt="Vincios Logo" width="200"></td>
-    <td align="center"><img src="docs/assets/logo_lurens.png" alt="Lurenss Logo" width="200"></td>
-    <td align="center"><img src="docs/assets/logo_perinilab.png" alt="PeriniLab Logo" width="200"></td>
-  </tr>
-</table>
+<p align="center">
+  <a href="https://vincigit00.github.io/">
+    <img src="docs/assets/logo_vincios.png" alt="Vincios Logo" style="width: 30%;">
+  </a>
+  <a href="https://lurenss.github.io/">
+    <img src="docs/assets/logo_lurens.png" alt="Lurenss Logo" style="width: 30%;">
+  </a>
+  <a href="https://perinim.github.io/">
+    <img src="docs/assets/logo_perinilab.png" alt="PeriniLab Logo" style="width: 30%;">
+  </a>
+</p>
+
 
 
 
