@@ -1,13 +1,6 @@
-# 🤖 YOSO-ai
+# 🤖 YOSO-ai: You Only Scrape Once
 
-This repo is a Python open source library for making a faster scraping using AI and without any knowledge about the HTML code.
-
-The tech stack is fully in Python and the main libraries used are pydantic, langchain and requests. All the required libraries are in the requirements.txt file.
-
-The use of this library allows to scrape and extract informations from websites in just few seconds instead of write ad-hoc code for each website.
-
-This library can work passing as a parameter from the code the HTML to scrape or it can work passing the
-link of the website that you want to extract informations.
+YOSO-ai is a Python **Open Source** library that uses LLM and Langchain for faster and efficient web scraping. Just say which information you want to extract and the library will do it for you.
 
 Official documentation page: [yoso-ai.readthedocs.io](https://yoso-ai.readthedocs.io/)
 
