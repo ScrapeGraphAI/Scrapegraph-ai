@@ -31,6 +31,8 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
     #We should implement an asynchrous wait instead for the writing part
     time.sleep(2)
 
+    text = remover(text)
+
     messages = truncate_text_tokens(text, model, encoding_name)
     
     count = 0
