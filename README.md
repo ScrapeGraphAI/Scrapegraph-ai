@@ -30,7 +30,9 @@ Follow the following steps:
     source ./venv/bin/activate
     ```
 3.  ```bash
-    pip install -r requirements.txt
+    pip install .
+    # or if you plan on developing new features it is best to install also the extra dependencies
+    pip install .[dev]
     ```
 4.  Go to [https://openai.com](https://openai.com/) and login
 5.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
@@ -55,12 +57,8 @@ API_KEY="your openai.com api key"
 
 ```bash
 python -m examples.html_scraping
-```
-
-or
-
-```bash
-python -m AmazScraper.examples.html_scraping
+# or if you are outside of the project folder
+python -m yoso-ai.examples.html_scraping
 ```
 
 # 📖 Examples
@@ -68,8 +66,7 @@ python -m AmazScraper.examples.html_scraping
 ```python
 import os
 from dotenv import load_dotenv
-from utils.getter import remover
-from utils.class_generator import Generator
+from yosoai import Generator, remover
 
 load_dotenv()
 
@@ -97,7 +94,7 @@ if __name__ == "__main__":
 ```python
 import os
 from dotenv import load_dotenv
-from utils.class_generator import Generator
+from yosoai import Generator
 
 load_dotenv()
 
@@ -159,20 +156,6 @@ if __name__ == "__main__":
 
 Note: all the model are available at the following link: [https://platform.openai.com/docs/models](https://platform.openai.com/docs/models), be sure you have enabled that keys
 
-Is it possible to run the examples through the command line inside the principal root:
-
-For the first example:
-
-```bash
-python -m examples.value_scraping
-```
-
-For the second example:
-
-```bash
-python -m examples.html_scraping
-```
-
 # Example of output
 
 Given the following input
@@ -198,7 +181,18 @@ The oputput format is a dict and its the following:
     }
 ```
 
-Developed by
-<p align="center">
-    <img src = "docs/assets/logo_vincios.png">
-    <img src = "docs/assets/logo_lurens.png", height="350", width="350" >
+# Developed by
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center"><img src="docs/assets/logo_vincios.png" alt="Vincios Logo" width="200"></td>
+    <td align="center"><img src="docs/assets/logo_lurens.png" alt="Lurenss Logo" width="200"></td>
+    <td align="center"><img src="docs/assets/logo_perinilab.png" alt="PeriniLab Logo" width="200"></td>
+  </tr>
+</table>
+
+
+
+
+
+
+
