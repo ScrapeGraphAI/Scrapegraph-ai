@@ -30,30 +30,25 @@ Follow the following steps:
     source ./venv/bin/activate
     ```
 3.  ```bash
+    pip install -r requirements.txt
+    # if you want to install it as a library
     pip install .
-    # or if you plan on developing new features it is best to install also the extra dependencies
+    
+    # or if you plan on developing new features it is best to also install the extra dependencies using
+    
+    pip install -r requirements-dev.txt
+    # if you want to install it as a library
     pip install .[dev]
     ```
-4.  Go to [https://openai.com](https://openai.com/) and login
-5.  Now you can access to [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview)
-6.  Create a new API key and copy it
-
-    <img src="docs/assets/apikey_1.png" alt="Step 1 Screenshot" width="70%"/>
-
-    <img src="docs/assets/apikey_2.png" alt="Step 2 Screenshot" width="70%"/>
-
-    <img src="docs/assets/apikey_3.png" alt="Step 3 Screenshot" width="70%"/>
-
-    <img src="docs/assets/apikey_4.png" alt="Step 4 Screenshot" width="70%"/>
-
-7.  Create a .env file inside the main and paste the API key
+4.  Create your personal OpenAI API key from [here](https://platform.openai.com/api-keys) 
+5.  (Optional) Create a .env file inside the main and paste the API key
 
 ```config
 API_KEY="your openai.com api key"
 ```
 
-8. You are ready to go! 🚀
-9. Try running the examples using:
+6. You are ready to go! 🚀
+7. Try running the examples using:
 
 ```bash
 python -m examples.html_scraping
