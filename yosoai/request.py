@@ -36,20 +36,19 @@ def send_request(key: str, text: str, values: list[dict], model: str, temperatur
     create_class(values)
     time.sleep(2) # TODO: implement asynchronous waiting
 
-    # text = remover(text)
+    text = remover(text)
 
     messages = truncate_text_tokens(text, model, encoding_name)
     total_messages = len(messages)
     processed_messages = 0
 
-    pool = Pool(processes=2) # Limit the number of processes to 3
+    pool = Pool(processes=2) 
 
     with tqdm(total=total_messages) as pbar:
         for result in pool.imap_unordered(process_message, [(key, temperature, model, encoding_name, message) for message in messages]):
             res.append(result)
             processed_messages += 1
-            pbar.update(1)  # Update the progress bar
-            progress = processed_messages / total_messages * 100
+            pbar.update(1) 
 
             # Wait for 20 seconds between requests to respect the limit
             if processed_messages % 2 == 0:
@@ -57,5 +56,3 @@ def send_request(key: str, text: str, values: list[dict], model: str, temperatur
 
     pool.close()
     pool.join()
-
-    return res
