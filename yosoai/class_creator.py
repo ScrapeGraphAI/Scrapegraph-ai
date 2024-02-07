@@ -1,5 +1,3 @@
-import time
-
 def create_class(data_dict: dict):
     """
     This function creates a class at runtime using the values from the list.

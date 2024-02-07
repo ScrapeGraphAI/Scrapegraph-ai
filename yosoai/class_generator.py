@@ -1,13 +1,12 @@
 from dotenv import load_dotenv
 from .pydantic_class import _Response
-from .class_creator import create_class #in future to remove
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain_core.pydantic_v1 import Field
 from langchain.output_parsers import PydanticOutputParser
 
 class Generator:
-    def __init__(self, values: list[dict], api_key: str, temperature_param: float = 0, model_name: str = "gpt-3.5-turbo") -> dict:
+    def __init__(self, values: list[dict], api_key: str, temperature_param: float = 0.0, model_name: str = "gpt-3.5-turbo") -> dict:
         """
         Initializes the Generator object.
 
@@ -21,8 +20,6 @@ class Generator:
         Returns:
             result_dict (dict): The result of the language model invocation, converted to a dictionary.
         """
-        
-        create_class(values)  # in future to remove
 
         self.parser = PydanticOutputParser(pydantic_object=_Response)
 

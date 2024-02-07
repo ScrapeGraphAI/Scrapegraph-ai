@@ -32,7 +32,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     packages = ['yosoai'],
-    python_requires='>=3.9 , !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*, !=3.7.*, !=3.8.*',
+    python_requires='>=3.9, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*, !=3.7.*, !=3.8.*',
     include_package_data=True,
     # https://packaging.python.org/en/latest/discussions/install-requires-vs-requirements/
     install_requires=prod_requirements,

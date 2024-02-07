@@ -1,20 +1,9 @@
 import os
 from dotenv import load_dotenv
-from yosoai.class_generator import Generator
+from yosoai.request import send_request
 
 load_dotenv()
 
-MY_ENV_VAR = os.getenv('API_KEY')
-
-values = [
-    {
-        "title": "description",
-        "type": "str",
-        "description": "The description of the news"
-    }
-]
-
-# Example using a HTML code
 query_info = '''
         Given this code extract all the information in a json format about the news.
         <article class="c-card__wrapper aem_card_check_wrapper" data-cardindex="0">
@@ -52,9 +41,31 @@ query_info = '''
         </article>
     '''
 
+def main():
+    # Get OpenAI API key from environment variables
+    openai_key = os.getenv("API_KEY")
+    if not openai_key:
+        print("Error: OpenAI API key not found in environment variables.")
+        return
+
+    # Example values for the request
+    request_settings = [
+        {
+            "title": "title",
+            "type": "str",
+            "description": "Title of the news"
+        }
+    ]
+
+    # Choose the desired model and other parameters
+    selected_model = "gpt-3.5-turbo"
+    temperature_value = 0.7
+
+    # Invoke send_request function
+    result = send_request(openai_key, query_info, request_settings, selected_model, temperature_value, 'cl100k_base')
+
+    # Print or process the result as needed
+    print("Result:", result)
+
 if __name__ == "__main__":
-
-    generator_instance = Generator(values, MY_ENV_VAR, 0, "gpt-3.5-turbo")
-
-    res = generator_instance.invocation(query_info)
-    print(res)
+    main()
