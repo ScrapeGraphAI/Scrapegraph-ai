@@ -1,8 +1,8 @@
 import time
 from typing import List
 from .getter import remover
-from .class_creator import create_class
 from .class_generator import Generator
+from .class_creator import create_class
 from .token_calculator import truncate_text_tokens
 
 EMBEDDING_ENCODING = 'cl100k_base'
