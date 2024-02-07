@@ -44,6 +44,14 @@ yosoai.request module
    :undoc-members:
    :show-inheritance:
 
+yosoai.token\_calculator module
+-------------------------------
+
+.. automodule:: yosoai.token_calculator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
