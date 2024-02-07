@@ -30,7 +30,7 @@ def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]
     """
 
     encoding = tiktoken.get_encoding(encoding_name)
-    max_tokens = models_tokens[model]
+    max_tokens = models_tokens[model] - 500
     encoded_text = encoding.encode(text)
     
     chunks = [encoded_text[i:i + max_tokens] for i in range(0, len(encoded_text), max_tokens)]
