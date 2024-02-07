@@ -14,26 +14,32 @@ Try out YOSO-ai in your browser:
 
 Follow the following steps:
 
-1.  ```bash
-    git clone https://github.com/VinciGit00/yoso-ai.git
-    ```
+1.
+
+```bash
+git clone https://github.com/VinciGit00/yoso-ai.git
+```
+
 2.  (Optional)
-    ```bash
-    python -m venv venv
-    source ./venv/bin/activate
-    ```
+
+```bash
+python -m venv venv
+source ./venv/bin/activate
+```
+
 3.  ```bash
     pip install -r requirements.txt
     # if you want to install it as a library
     pip install .
-    
+
     # or if you plan on developing new features it is best to also install the extra dependencies using
-    
+
     pip install -r requirements-dev.txt
     # if you want to install it as a library
     pip install .[dev]
     ```
-4.  Create your personal OpenAI API key from [here](https://platform.openai.com/api-keys) 
+
+4.  Create your personal OpenAI API key from [here](https://platform.openai.com/api-keys)
 5.  (Optional) Create a .env file inside the main and paste the API key
 
 ```config
@@ -186,6 +192,7 @@ The oputput format is a dict and its the following:
 ```
 
 # Developed by
+
 <p align="center">
   <a href="https://vincigit00.github.io/">
     <img src="docs/assets/logo_vincios.png" alt="Vincios Logo" style="width: 30%;">
@@ -197,11 +204,3 @@ The oputput format is a dict and its the following:
     <img src="docs/assets/logo_perinilab.png" alt="PeriniLab Logo" style="width: 30%;">
   </a>
 </p>
-
-
-
-
-
-
-
-
