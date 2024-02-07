@@ -51,4 +51,4 @@ def remover(file:str, only_body:bool = False) -> str:
         if isBody == True:
             res = res + elem
 
-    return res.replace("\n", "")
+    return res.replace("\\n", "")

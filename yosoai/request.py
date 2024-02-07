@@ -1,4 +1,5 @@
 import time
+from tqdm import tqdm 
 from typing import List
 from .getter import remover
 from .class_generator import Generator
@@ -32,19 +33,20 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
     create_class(values)
     time.sleep(2) # TODO: implement an asynchrous waiting
 
-    # text = remover(text)
+    text = remover(text)
 
     messages = truncate_text_tokens(text, model, encoding_name)
     
-    count = 0
+    processed_messages = 0
 
-    for message in messages:
-        generator_instance = Generator(key, temperature, model)
+    with tqdm(total=len(messages)) as pbar:
+        for message in messages:
+            generator_instance = Generator(key, temperature, model)
 
-        res.append(generator_instance.invocation(message))
+            res.append(generator_instance.invocation(message))
+            processed_messages += 1
+            pbar.update(1) 
 
-        print(res)
-        print(f"Percentage: {round(count/len(messages),2)*100}%")
-        count +=1
+            print(res)
 
     return res
