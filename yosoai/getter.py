@@ -17,7 +17,7 @@ def get_function(link:str, param = HEADERS) -> str:
     response = requests.get(url=link, headers=param)
     return str(response.content)
 
-def remover(file:str) -> str:
+def remover(file:str, only_body:bool = False) -> str:
     """
     This function elaborates the HTML file and remove all the not necessary tag
     
@@ -30,7 +30,10 @@ def remover(file:str) -> str:
 
     res = ""
     
-    isBody = False
+    if only_body == True:
+        isBody = True
+    else:
+        isBody = False
 
     for elem in file.splitlines():
         if "<title>" in elem:

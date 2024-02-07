@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from yosoai.request import send_request
+from yosoai import send_request
 
 load_dotenv()
 

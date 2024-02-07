@@ -32,7 +32,7 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
     create_class(values)
     time.sleep(2) # TODO: implement an asynchrous waiting
 
-    text = remover(text)
+    # text = remover(text)
 
     messages = truncate_text_tokens(text, model, encoding_name)
     
