@@ -1,6 +1,7 @@
 import time
 from typing import List
 from multiprocessing import Pool
+from tqdm import tqdm  # Import tqdm for progress bar
 from .getter import remover
 from .class_generator import Generator
 from .class_creator import create_class
@@ -41,17 +42,18 @@ def send_request(key: str, text: str, values: list[dict], model: str, temperatur
     total_messages = len(messages)
     processed_messages = 0
 
-    pool = Pool(processes=2) # Limita il numero di processi a 3
+    pool = Pool(processes=2) # Limit the number of processes to 3
 
-    for result in pool.imap_unordered(process_message, [(key, temperature, model, encoding_name, message) for message in messages]):
-        res.append(result)
-        processed_messages += 1
-        progress = processed_messages / total_messages * 100
-        print(f"Overall Progress: {progress:.2f}%")
+    with tqdm(total=total_messages) as pbar:
+        for result in pool.imap_unordered(process_message, [(key, temperature, model, encoding_name, message) for message in messages]):
+            res.append(result)
+            processed_messages += 1
+            pbar.update(1)  # Update the progress bar
+            progress = processed_messages / total_messages * 100
 
-        # Attendere 20 secondi tra le richieste per rispettare il limite
-        if processed_messages % 2 == 0:
-            time.sleep(60)
+            # Wait for 20 seconds between requests to respect the limit
+            if processed_messages % 2 == 0:
+                time.sleep(20)
 
     pool.close()
     pool.join()
