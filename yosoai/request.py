@@ -34,7 +34,7 @@ def send_request(key: str, text: str, values: list[dict], model: str, temperatur
     """
     res = []
     create_class(values)
-    time.sleep(2) # TODO: implement asynchronous waiting
+    time.sleep(2) #TOFIX
 
     text = remover(text)
 
@@ -45,14 +45,31 @@ def send_request(key: str, text: str, values: list[dict], model: str, temperatur
     pool = Pool(processes=2) 
 
     with tqdm(total=total_messages) as pbar:
-        for result in pool.imap_unordered(process_message, [(key, temperature, model, encoding_name, message) for message in messages]):
+        for i, result in enumerate(pool.imap_unordered(process_message, [(key, temperature, model, encoding_name, message) for message in messages])):
             res.append(result)
             processed_messages += 1
             pbar.update(1) 
 
-            # Wait for 20 seconds between requests to respect the limit
-            if processed_messages % 2 == 0:
-                time.sleep(20)
+            time.sleep(20)  
+
+            if processed_messages % 3 == 0:
+                time.sleep(40)  
+                continue
+
+            try:
+                time.sleep(5)  
+                result = process_message((key, temperature, model, encoding_name, messages[i]))
+            except Exception as e:
+                if hasattr(e, 'response') and e.response.status_code == 429:
+                    retry_after = int(e.response.headers.get('Retry-After', 30))
+                    print(f"Rate limit reached. Retrying after {retry_after} seconds.")
+                    time.sleep(retry_after)
+                    result = process_message((key, temperature, model, encoding_name, messages[i]))
+                else:
+                    raise  
+            res.append(result)
 
     pool.close()
     pool.join()
+
+    return res
