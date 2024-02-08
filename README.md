@@ -28,17 +28,17 @@ source ./venv/bin/activate
 ```
 
 3.
-   ```bash
-    pip install -r requirements.txt
-    # if you want to install it as a library
-    pip install .
+```bash
+pip install -r requirements.txt
+# if you want to install it as a library
+pip install .
 
-    # or if you plan on developing new features it is best to also install the extra dependencies using
+# or if you plan on developing new features it is best to also install the extra dependencies using
 
-    pip install -r requirements-dev.txt
-    # if you want to install it as a library
-    pip install .[dev]
-    ```
+pip install -r requirements-dev.txt
+# if you want to install it as a library
+pip install .[dev]
+```
 
 5.  Create your personal OpenAI API key from [here](https://platform.openai.com/api-keys)
 6.  (Optional) Create a .env file inside the main and paste the API key
