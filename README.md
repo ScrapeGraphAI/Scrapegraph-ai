@@ -40,8 +40,8 @@ pip install -r requirements-dev.txt
 pip install .[dev]
 ```
 
-5.  Create your personal OpenAI API key from [here](https://platform.openai.com/api-keys)
-6.  (Optional) Create a .env file inside the main and paste the API key
+4.  Create your personal OpenAI API key from [here](https://platform.openai.com/api-keys)
+5.  (Optional) Create a .env file inside the main and paste the API key
 
 ```config
 API_KEY="your openai.com api key"
