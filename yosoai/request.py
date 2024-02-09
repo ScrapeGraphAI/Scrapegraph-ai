@@ -8,6 +8,9 @@ from .token_calculator import truncate_text_tokens
 
 EMBEDDING_ENCODING = 'cl100k_base'
 
+LAST_REQUEST_TIME = 0
+REQUEST_INTERVAL = 20  # Adjust as needed, represents the interval in seconds between requests
+
 def send_request(key: str, text:str, values:list[dict], model:str, temperature:float = 0.0, encoding_name: str = EMBEDDING_ENCODING) -> List[dict]:
     """
     Send a request to openai.
@@ -29,9 +32,11 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
         List[dict]: The result of the request to openai.
     """
 
+    global LAST_REQUEST_TIME
+
     res = []
     create_class(values)
-    time.sleep(2) # TODO: implement an asynchrous waiting
+    time.sleep(2)  # TODO: implement asynchronous waiting
 
     text = remover(text)
 
@@ -41,12 +46,17 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
 
     with tqdm(total=len(messages)) as pbar:
         for message in messages:
+            current_time = time.time()
+            time_since_last_request = current_time - LAST_REQUEST_TIME
+            if time_since_last_request < REQUEST_INTERVAL:
+                time.sleep(REQUEST_INTERVAL - time_since_last_request)
+            
             generator_instance = Generator(key, temperature, model)
 
             res.append(generator_instance.invocation(message))
             processed_messages += 1
             pbar.update(1) 
 
-            print(res)
+            LAST_REQUEST_TIME = time.time()  
 
     return res
