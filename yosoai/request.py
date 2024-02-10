@@ -38,9 +38,7 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
     create_class(values)
     time.sleep(2)  # TODO: implement asynchronous waiting
 
-    text = remover(text)
-
-    messages = truncate_text_tokens(text, model, encoding_name)
+    messages = truncate_text_tokens(text.replace("\\n", ""), model, encoding_name)
     
     processed_messages = 0
 

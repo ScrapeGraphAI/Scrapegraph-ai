@@ -1,7 +1,9 @@
-beautifulsoup4==4.12.3
-langchain==0.1.4
-langchain_core==0.1.16
+langchain==0.1.6
+langchain_community==0.0.19
+langchain_core==0.1.22
 langchain_openai==0.0.5
-Requests==2.31.0
-tiktoken==0.5.2
+pytest==8.0.0
 python-dotenv==1.0.1
+setuptools==63.2.0
+tiktoken==0.6.0
+tqdm==4.66.1
