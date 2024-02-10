@@ -1,6 +1,8 @@
 import time
 from tqdm import tqdm 
 from typing import List
+from multiprocessing import Pool
+from tqdm import tqdm  # Import tqdm for progress bar
 from .getter import remover
 from .class_generator import Generator
 from .class_creator import create_class
@@ -14,7 +16,6 @@ REQUEST_INTERVAL = 20  # Adjust as needed, represents the interval in seconds be
 def send_request(key: str, text:str, values:list[dict], model:str, temperature:float = 0.0, encoding_name: str = EMBEDDING_ENCODING) -> List[dict]:
     """
     Send a request to openai.
-
     Args:
         key (str): The API key for accessing the language model.
         text (str): The input text to be processed.
@@ -23,11 +24,9 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
                             - "title" (str): The title of the field.
                             - "type" (str): The type of the field.
                             - "description" (str): The description of the field.
-
         model (str): The name of the language model to be used.
         temperature (float): A parameter controlling the randomness of the language model's output (default: 0).
         encoding_name (str): The name of the encoding to be used (default: EMBEDDING_ENCODING).
-
     Returns:
         List[dict]: The result of the request to openai.
     """
