@@ -12,7 +12,5 @@ def get_function(link:str) -> str:
         str: The content of the response as a string.
     """
     loader = AsyncHtmlLoader(link) 
-    docs = loader.load()
-
-    html2text = Html2TextTransformer()
-    return str(html2text.transform_documents(docs))
+    print(str(loader.load()))
+    return str(loader.load())

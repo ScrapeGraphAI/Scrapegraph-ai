@@ -1,6 +1,8 @@
 import time
 from tqdm import tqdm 
 from typing import List
+from multiprocessing import Pool
+from tqdm import tqdm  
 from .class_generator import Generator
 from .class_creator import create_class
 from .token_calculator import truncate_text_tokens
