@@ -1,9 +1,9 @@
 import time
 from tqdm import tqdm 
 from typing import List
-from multiprocessing import Pool
 from tqdm import tqdm  
 from .class_generator import Generator
+from .remover import remover
 from .class_creator import create_class
 from .token_calculator import truncate_text_tokens
 
@@ -36,9 +36,7 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
     create_class(values)
     time.sleep(2)  # TODO: implement asynchronous waiting
 
-    print(text.replace("\\n", ""))
-
-    messages = truncate_text_tokens(text, model, encoding_name)
+    messages = truncate_text_tokens(remover(text), model, encoding_name)
     
     processed_messages = 0
 
