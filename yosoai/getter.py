@@ -1,5 +1,4 @@
 from langchain_community.document_loaders import AsyncHtmlLoader 
-from langchain_community.document_transformers import Html2TextTransformer
 
 def get_function(link:str) -> str:
     """
