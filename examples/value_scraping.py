@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from yosoai import get_function, send_request
+from yosoai import _get_function, send_request
 
 load_dotenv()
 
@@ -28,7 +28,7 @@ def main():
     mockup_world_url = "https://sport.sky.it/nba?gr=www"
 
     # Invoke send_request function
-    result = send_request(openai_key, get_function(mockup_world_url), request_settings, selected_model, temperature_value, 'cl100k_base')
+    result = send_request(openai_key, _get_function(mockup_world_url), request_settings, selected_model, temperature_value, 'cl100k_base')
 
     # Print or process the result as needed
     print("Result:", result)

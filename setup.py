@@ -1,4 +1,4 @@
-# Always prefer setuptools over distutils
+# Always prefer setuptools over distdictionaries
 from setuptools import setup, find_packages
 
 # Function to read the contents of a requirements file

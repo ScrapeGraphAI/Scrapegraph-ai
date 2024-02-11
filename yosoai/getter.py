@@ -1,6 +1,6 @@
 from langchain_community.document_loaders import AsyncHtmlLoader 
 
-def get_function(link:str) -> str:
+def _get_function(link:str) -> str:
     """
     It sends a GET request to the specified link with optional headers.
 

@@ -2,15 +2,15 @@ import time
 from tqdm import tqdm 
 from typing import List
 from tqdm import tqdm  
-from .class_generator import Generator
 from .remover import remover
+from .class_generator import Generator
 from .class_creator import create_class
 from .token_calculator import truncate_text_tokens
 
 EMBEDDING_ENCODING = 'cl100k_base'
 
 LAST_REQUEST_TIME = 0
-REQUEST_INTERVAL = 20  # Adjust as needed, represents the interval in seconds between requests
+REQUEST_INTERVAL = 20  
 
 def send_request(key: str, text:str, values:list[dict], model:str, temperature:float = 0.0, encoding_name: str = EMBEDDING_ENCODING) -> List[dict]:
     """
@@ -23,7 +23,7 @@ def send_request(key: str, text:str, values:list[dict], model:str, temperature:f
                             - "title" (str): The title of the field.
                             - "type" (str): The type of the field.
                             - "description" (str): The description of the field.
-        model (str): The name of the language model to be used.
+        model (str): The name of the openai language model to be used.
         temperature (float): A parameter controlling the randomness of the language model's output (default: 0).
         encoding_name (str): The name of the encoding to be used (default: EMBEDDING_ENCODING).
     Returns:
