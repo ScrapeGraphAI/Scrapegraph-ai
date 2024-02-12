@@ -13,7 +13,7 @@ def remover(file:str, only_body:bool = False) -> str:
     
     if only_body == True:
         isBody = True
-    else:
+    else: 
         isBody = False
 
     for elem in file.splitlines():
@@ -33,3 +33,4 @@ def remover(file:str, only_body:bool = False) -> str:
             res = res + elem
 
     return res.replace("\\n", "")
+    

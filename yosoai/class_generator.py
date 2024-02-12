@@ -6,7 +6,13 @@ from langchain_core.pydantic_v1 import Field
 from langchain.output_parsers import PydanticOutputParser
 
 class Generator:
-    def __init__(self, api_key: str, temperature_param: float = 0.0, model_name: str = "gpt-3.5-turbo") -> dict:
+    def __init__(
+    self,
+    api_key: str,
+    temperature_param: float = 0.0,
+    model_name: str = "gpt-3.5-turbo"
+    ) -> dict:
+
         """
         Initializes the Generator object.
 
@@ -28,7 +34,8 @@ class Generator:
             partial_variables={"format_instructions": self.parser.get_format_instructions()},
         )
 
-        self.model = ChatOpenAI(openai_api_key=api_key, temperature=temperature_param, model=model_name)
+        self.model = ChatOpenAI(openai_api_key=api_key, temperature=temperature_param, 
+                                model=model_name)
 
         self.chain = self.prompt | self.model | self.parser
 

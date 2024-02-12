@@ -12,7 +12,7 @@ schema_example= {
                     "project_name": {"type": "string"}, 
                     "project_description": {"type": "string"}, 
                     "url": {"type": "string"} 
-                }, 
+                },
                 "required": ["project_name", "project_description", "url"], 
             }, 
         }, 
