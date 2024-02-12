@@ -1,23 +1,27 @@
-schema_example= { 
-    "properties": { 
-        "person_name": {"type": "string"}, 
-        "person_surname": {"type": "string"}, 
-        "profession": {"type": "string"}, 
-        "hobbies": {"type": "string"}, 
-        "projects": { 
-            "type": "array", 
-            "items": { 
-                "type": "object", 
-                "properties": { 
-                    "project_name": {"type": "string"}, 
-                    "project_description": {"type": "string"}, 
-                    "url": {"type": "string"} 
+"""
+Module for defining dictionaries and token limits
+"""
+
+schema_example = {
+    "properties": {
+        "person_name": {"type": "string"},
+        "person_surname": {"type": "string"},
+        "profession": {"type": "string"},
+        "hobbies": {"type": "string"},
+        "projects": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "project_name": {"type": "string"},
+                    "project_description": {"type": "string"},
+                    "url": {"type": "string"}
                 },
-                "required": ["project_name", "project_description", "url"], 
-            }, 
-        }, 
-    }, 
-    "required": ["person_name", "person_surname", "profession", "hobbies", "projects"], 
+                "required": ["project_name", "project_description", "url"],
+            },
+        },
+    },
+    "required": ["person_name", "person_surname", "profession", "hobbies", "projects"],
 }
 
 models_tokens = {

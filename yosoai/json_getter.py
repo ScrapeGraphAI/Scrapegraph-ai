@@ -1,16 +1,14 @@
-import tiktoken
 from tqdm import tqdm
-from typing import List
 from .getter import _get_function
 from langchain_openai import ChatOpenAI
-from .dictionaries import schema_example
+from .dictionaries import schema_example  
 from langchain.prompts import PromptTemplate
-from .token_calculator import truncate_text_tokens
+from .token_calculator import truncate_text_tokens 
 from langchain_core.output_parsers import JsonOutputParser
 
 EMBEDDING_ENCODING = 'cl100k_base'
 
-def _getJson(key: str, link: str,  model_name:str, encoding_name_chunk: str = EMBEDDING_ENCODING) -> str:
+def get_json(key: str, link: str, model_name: str, encoding_name_chunk: str = EMBEDDING_ENCODING) -> str:
     """
     Function that creates a JSON schema given a link
     Args:
@@ -50,7 +48,7 @@ def _getJson(key: str, link: str,  model_name:str, encoding_name_chunk: str = EM
 
     progress_bar.close()
 
-    if(len(result)>1):
+    if len(result) > 1:
         prompt = PromptTemplate(
             template="You are a website scraper and you have to merge the given schemas without repetitions.\n{format_instructions}}\n. Example: {to_merge}",
             input_variables=["to_merge"],

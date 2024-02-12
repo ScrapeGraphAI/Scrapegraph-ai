@@ -1,17 +1,23 @@
+"""
+Module for generating responses using language model
+"""
 from dotenv import load_dotenv
-from .pydantic_class import _Response
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain_core.pydantic_v1 import Field
 from langchain.output_parsers import PydanticOutputParser
+from .pydantic_class import _Response
 
 class Generator:
+    """
+    Class to generate responses using language model
+    """
     def __init__(
-    self,
-    api_key: str,
-    temperature_param: float = 0.0,
-    model_name: str = "gpt-3.5-turbo"
-    ) -> dict:
+        self,
+        api_key: str,
+        temperature_param: float = 0.0,
+        model_name: str = "gpt-3.5-turbo"
+    ) -> None:
 
         """
         Initializes the Generator object.
@@ -40,6 +46,9 @@ class Generator:
         self.chain = self.prompt | self.model | self.parser
 
     def invocation(self, query_info):
+        """
+        Invokes the language model to generate a response
+        """
         try:
             result = self.chain.invoke({"query": query_info})
             result_dict = result.dict()  

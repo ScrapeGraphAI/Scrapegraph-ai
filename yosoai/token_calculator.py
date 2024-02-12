@@ -1,27 +1,28 @@
-import tiktoken
+"""
+Module for calculating token truncation for text
+"""
 from typing import List
-from .dictionaries import models_tokens 
+from .tiktoken import tokenizer
 
 def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]:
     """
-    It creates a list of strings to create max dimension tokenizable elements
-
+    Truncates the input text into smaller chunks based on the model's token limit.
     Args:
-        text (str): The input text to be truncated into tokenizable elements.
-        model (str): The name of the language model to be used.
-        encoding_name (str): The name of the encoding to be used (default: EMBEDDING_ENCODING).
-
+        text (str): The input text to be truncated.
+        model (str): The name of the language model.
+        encoding_name (str): The name of the encoding to be used.
     Returns:
-        List[str]: A list of tokenizable elements created from the input text.
+        List[str]: A list of truncated text chunks.
     """
-
-    encoding = tiktoken.get_encoding(encoding_name)
-    max_tokens = models_tokens[model] - 500
-    encoded_text = encoding.encode(text)
+    # Calculate the token limit for the given model and encoding
+    token_limit = tokenizer.token_limit(model, encoding_name)
     
-    chunks = [encoded_text[i:i + max_tokens] for i in range(0, len(encoded_text), max_tokens)]
+    # Truncate the text into smaller chunks based on the token limit
+    chunks = []
+    start = 0
+    while start < len(text):
+        chunk = text[start:start+token_limit]
+        chunks.append(chunk)
+        start += token_limit
     
-    result = [encoding.decode(chunk) for chunk in chunks]
-    
-    return result
-    
+    return chunks

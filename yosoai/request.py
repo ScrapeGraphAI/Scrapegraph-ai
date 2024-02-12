@@ -1,7 +1,6 @@
 import time
-from tqdm import tqdm 
+from tqdm import tqdm
 from typing import List
-from tqdm import tqdm  
 from .remover import remover
 from .class_generator import Generator
 from .class_creator import create_class
@@ -12,13 +11,13 @@ EMBEDDING_ENCODING = 'cl100k_base'
 LAST_REQUEST_TIME = 0
 REQUEST_INTERVAL = 20  
 
-def send_request(key: str, text:str, values:list[dict], model:str, temperature:float = 0.0, encoding_name: str = EMBEDDING_ENCODING) -> List[dict]:
+def send_request(key: str, text: str, values: List[dict], model: str, temperature: float = 0.0, encoding_name: str = EMBEDDING_ENCODING) -> List[dict]:
     """
     Send a request to openai.
     Args:
         key (str): The API key for accessing the language model.
         text (str): The input text to be processed.
-        values (list[dict]): Settings of the request. 
+        values (List[dict]): Settings of the request. 
                         Each element of the list should have the following keys:
                             - "title" (str): The title of the field.
                             - "type" (str): The type of the field.
