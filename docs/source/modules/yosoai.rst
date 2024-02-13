@@ -20,6 +20,30 @@ yosoai.class\_generator module
    :undoc-members:
    :show-inheritance:
 
+yosoai.convert\_to\_csv module
+------------------------------
+
+.. automodule:: yosoai.convert_to_csv
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yosoai.convert\_to\_json module
+-------------------------------
+
+.. automodule:: yosoai.convert_to_json
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yosoai.dictionaries module
+--------------------------
+
+.. automodule:: yosoai.dictionaries
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 yosoai.getter module
 --------------------
 
@@ -28,10 +52,26 @@ yosoai.getter module
    :undoc-members:
    :show-inheritance:
 
+yosoai.json\_getter module
+--------------------------
+
+.. automodule:: yosoai.json_getter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 yosoai.pydantic\_class module
 -----------------------------
 
 .. automodule:: yosoai.pydantic_class
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+yosoai.remover module
+---------------------
+
+.. automodule:: yosoai.remover
    :members:
    :undoc-members:
    :show-inheritance:
