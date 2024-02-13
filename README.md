@@ -2,7 +2,7 @@
 
 YOSO-ai is a Python **Open Source** library that uses LLM and Langchain for faster and efficient web scraping. Just say which information you want to extract and the library will do it for you.
 
-Official documentation page: [yoso-ai.readthedocs.io](https://yoso-ai.readthedocs.io/)
+Official documentation page: [yoso-ai.readthedocs.io](https://yoso-ai.readthedocs.io/en/latest/modules/modules.html)
 
 # 🔍 Demo
 
