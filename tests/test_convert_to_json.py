@@ -5,7 +5,7 @@ import unittest
 from yosoai.convert_to_json import convert_to_json
 
 
-class TestConvertToCsvFunction(unittest.TestCase):
+class TestConvertToJSonFunction(unittest.TestCase):
     """ 
     class for testing convert_to_json inside the folder yosoai/convert_to_json.py
     """
