@@ -7,12 +7,28 @@ from .generate_answer_node import GenerateAnswerNode
 from .parse_html_node import ParseHTMLNode
 
 class SmartScraper:
-    def __init__(self, prompt, url, llm):
+    def __init__(self, prompt, url, llm_config):
         self.prompt = prompt
         self.url = url
-        self.llm = llm
+        self.llm_config = llm_config
+        self.llm = self._create_llm()
         self.graph = self._create_graph()
 
+    def _create_llm(self):
+        # Set default values for any LLM parameters that are not provided
+        llm_defaults = {
+            "model_name": "gpt-3.5-turbo",
+            "temperature": 0,
+            "streaming": True
+        }
+        # Update defaults with any LLM parameters that were provided
+        llm_params = {**llm_defaults, **self.llm_config}
+        # Ensure the api_key is set, raise an error if it's not
+        if "api_key" not in llm_params:
+            raise ValueError("LLM configuration must include an 'api_key'.")
+        # Create the ChatOpenAI instance with the provided and default parameters
+        return ChatOpenAI(**llm_params)
+    
     def _create_graph(self):
         fetch_html_node = FetchHTMLNode("fetch_html")
         get_probable_tags_node = GetProbableTagsNode(self.llm, "get_probable_tags")
