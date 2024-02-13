@@ -41,8 +41,8 @@ def get_json(key: str, link: str, model_name: str,
         prompt = PromptTemplate(
             template=("You are a website scraper and you want to extract information "
                       "in a schema like the example provided. Write a dictionary where "
-                      "the key is the section and the value is the type.\n{format_instructions}\n{query}\n"
-                      ". Example: {example}"),
+                      "the key is the section and the value is the type"
+                      ".\n{format_instructions}\n{query}\n. Example: {example}"),
             input_variables=["query"],
             partial_variables={
                 "format_instructions": parser.get_format_instructions(),

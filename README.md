@@ -193,6 +193,10 @@ The oputput format is a dict and its the following:
     }
 ```
 
+# Credits
+Thanks to: 
+- [nicolapiazzalunga](https://github.com/nicolapiazzalunga): for inspiring yosoai/convert_to_csv.py and yosoai/convert_to_json.py functions
+
 # Developed by
 
 <p align="center">
