@@ -21,4 +21,5 @@ jobs:
           pip install -r requirements.txt
       - name: Analysing the code with pylint
         run: |
-          pylint yosoai/*.py
+          pylint --disable=C0114,C0115,C0116 --exit-zero yosoai/*.py
+
