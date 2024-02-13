@@ -1,3 +1,6 @@
+"""
+init file
+"""
 from .class_creator import create_class
 from .class_generator import Generator
 from .getter import  _get_function

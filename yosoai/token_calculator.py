@@ -2,7 +2,8 @@
 Module for calculating token truncation for text
 """
 from typing import List
-from .tiktoken import tokenizer
+from tiktoken import tokenizer
+
 
 def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]:
     """
@@ -16,7 +17,6 @@ def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]
     """
     # Calculate the token limit for the given model and encoding
     token_limit = tokenizer.token_limit(model, encoding_name)
-    
     # Truncate the text into smaller chunks based on the token limit
     chunks = []
     start = 0
@@ -24,5 +24,4 @@ def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]
         chunk = text[start:start+token_limit]
         chunks.append(chunk)
         start += token_limit
-    
     return chunks

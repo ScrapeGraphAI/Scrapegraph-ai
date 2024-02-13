@@ -1,3 +1,8 @@
+"""
+Module for creating a class
+"""
+
+
 def create_class(data_dict: dict):
     """
     This function creates a class at runtime using the values from the list.
@@ -20,8 +25,8 @@ class _Response(BaseModel):
     """
 
     for elem in data_dict:
-        base_script = base_script + f"    {elem['title']}: {elem['type']} = Field(description='{elem['description']}')\n"
+        base_script = base_script + \
+            f"    {elem['title']}: {elem['type']} = Field(description='{elem['description']}')\n"
 
-    with open("./yosoai/pydantic_class.py", "w") as f:
+    with open("./yosoai/pydantic_class.py", "w", encoding="utf-8") as f:
         f.write(base_script)
-        

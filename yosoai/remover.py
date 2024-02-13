@@ -1,7 +1,12 @@
-def remover(file:str, only_body:bool = False) -> str:
+"""
+Module for removing the unused html tags
+"""
+
+
+def remover(file: str, only_body: bool = False) -> str:
     """
     This function elaborates the HTML file and remove all the not necessary tag
-    
+
     Parameters:
         file (str): the file to parse
 
@@ -11,17 +16,17 @@ def remover(file:str, only_body:bool = False) -> str:
 
     res = ""
 
-    if only_body == True:
-        isBody = True
+    if only_body:
+        is_body = True
     else:
-        isBody = False
+        is_body = False
 
     for elem in file.splitlines():
         if "<title>" in elem:
             res = res + elem
 
-        if "<body>" in elem: 
-            isBody = True
+        if "<body>" in elem:
+            is_body = True
 
         if "</body>" in elem:
             break
@@ -29,7 +34,7 @@ def remover(file:str, only_body:bool = False) -> str:
         if "<script>" in elem:
             continue
 
-        if isBody == True:
+        if is_body:
             res = res + elem
 
     return res.replace("\\n", "")
