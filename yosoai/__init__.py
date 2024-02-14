@@ -1,5 +1,5 @@
 """
-init file
+    __init__.py file for yosoai folder
 """
 from .class_creator import create_class
 from .class_generator import Generator

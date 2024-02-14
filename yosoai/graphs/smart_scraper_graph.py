@@ -1,6 +1,11 @@
+""" 
+Module for creating the smart scaper
+"""
 from langchain_openai import ChatOpenAI
 from .base_graph import BaseGraph
-from ..nodes import FetchHTMLNode,ConditionalNode, GetProbableTagsNode, GenerateAnswerNode, ParseHTMLNode
+from ..nodes import FetchHTMLNode, ConditionalNode, GetProbableTagsNode
+from ..nodes import GenerateAnswerNode, ParseHTMLNode
+
 
 class SmartScraper:
     """
@@ -10,21 +15,23 @@ class SmartScraper:
     Attributes:
         prompt (str): The user's natural language prompt for the information to be extracted.
         url (str): The URL of the web page to scrape.
-        llm_config (dict): Configuration parameters for the language model, with 'api_key' being mandatory.
+        llm_config (dict): Configuration parameters for the language model, with 
+        'api_key' being mandatory.
         llm (ChatOpenAI): An instance of the ChatOpenAI class configured with llm_config.
         graph (BaseGraph): An instance of the BaseGraph class representing the scraping workflow.
 
     Methods:
         run(): Executes the web scraping process and returns the answer to the prompt.
-    
+
     Args:
         prompt (str): The user's natural language prompt for the information to be extracted.
         url (str): The URL of the web page to scrape.
         llm_config (dict): A dictionary containing configuration options for the language model.
-                           Must include 'api_key', may also specify 'model_name', 'temperature', and 'streaming'.
+                           Must include 'api_key', may also specify 'model_name', 
+                           'temperature', and 'streaming'.
     """
 
-    def __init__(self, prompt, url, llm_config):
+    def __init__(self, prompt: str, url: str, llm_config: dict):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
@@ -56,7 +63,7 @@ class SmartScraper:
             raise ValueError("LLM configuration must include an 'api_key'.")
         # Create the ChatOpenAI instance with the provided and default parameters
         return ChatOpenAI(**llm_params)
-    
+
     def _create_graph(self):
         """
         Creates the graph of nodes representing the workflow for web scraping.
@@ -65,10 +72,12 @@ class SmartScraper:
             BaseGraph: An instance of the BaseGraph class.
         """
         fetch_html_node = FetchHTMLNode("fetch_html")
-        get_probable_tags_node = GetProbableTagsNode(self.llm, "get_probable_tags")
+        get_probable_tags_node = GetProbableTagsNode(
+            self.llm, "get_probable_tags")
         parse_document_node = ParseHTMLNode("parse_document")
         generate_answer_node = GenerateAnswerNode(self.llm, "generate_answer")
-        conditional_node = ConditionalNode("conditional", [parse_document_node, generate_answer_node])
+        conditional_node = ConditionalNode(
+            "conditional", [parse_document_node, generate_answer_node])
 
         return BaseGraph(
             nodes={
@@ -86,7 +95,7 @@ class SmartScraper:
             entry_point=fetch_html_node
         )
 
-    def run(self):
+    def run(self) -> str:
         """
         Executes the scraping process by running the graph and returns the extracted information.
 

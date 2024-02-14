@@ -1,6 +1,10 @@
-from .base_node import BaseNode
-from langchain.prompts import PromptTemplate
+"""
+Module for proobable tags
+"""
 from langchain.output_parsers import CommaSeparatedListOutputParser
+from langchain.prompts import PromptTemplate
+from .base_node import BaseNode
+
 
 class GetProbableTagsNode(BaseNode):
     """
@@ -11,26 +15,28 @@ class GetProbableTagsNode(BaseNode):
 
     Attributes:
         llm: An instance of a language model client, configured for generating tag predictions.
-        node_name (str): The unique identifier name for the node, defaulting to "GetProbableTagsNode".
+        node_name (str): The unique identifier name for the node,
+        defaulting to "GetProbableTagsNode".
         node_type (str): The type of the node, set to "node" indicating a standard operational node.
 
     Args:
         llm: An instance of the language model client (e.g., ChatOpenAI) used for tag predictions.
-        node_name (str, optional): The unique identifier name for the node. Defaults to "GetProbableTagsNode".
+        node_name (str, optional): The unique identifier name for the node. 
+        Defaults to "GetProbableTagsNode".
 
     Methods:
         execute(state): Processes the user's input and the URL from the state to generate a list of 
                         probable HTML tags, updating the state with these tags under the 'tags' key.
     """
 
-    def __init__(self, llm, node_name="GetProbableTagsNode"):
+    def __init__(self, llm, node_name: str = "GetProbableTagsNode"):
         """
         Initializes the GetProbableTagsNode with a language model client and a node name.
         """
         super().__init__(node_name, "node")
         self.llm = llm
 
-    def execute(self, state):
+    def execute(self, state: dict):
         """
         Generates a list of probable HTML tags based on the user's input and updates the state 
         with this list. The method constructs a prompt for the language model, submits it, and 
@@ -47,9 +53,8 @@ class GetProbableTagsNode(BaseNode):
             KeyError: If 'user_input' or 'url' is not found in the state, indicating that the
                       necessary information for generating tag predictions is missing.
         """
-        
+
         print("---GET PROBABLE TAGS---")
-        # Accessing the nested structure
         try:
             user_input = state["keys"]["user_input"]
             url = state["keys"]["url"]
@@ -60,14 +65,16 @@ class GetProbableTagsNode(BaseNode):
         output_parser = CommaSeparatedListOutputParser()
         format_instructions = output_parser.get_format_instructions()
 
-        template = """You are a website scraper that knows all the types of html tags. You are now asked to list all the html tags where you think you can find the information of the asked question.\n {format_instructions} \n The webpage is: {webpage} \n The asked question is the following:
-        {question}
+        template = """You are a website scraper that knows all the types of html tags.
+         You are now asked to list all the html tags where you think you can find the information of the asked question.\n 
+         {format_instructions} \n  The webpage is: {webpage} \n The asked question is the following: {question}
         """
 
         tag_prompt = PromptTemplate(
             template=template,
             input_variables=["question"],
-            partial_variables={"format_instructions": format_instructions, "webpage": url},
+            partial_variables={
+                "format_instructions": format_instructions, "webpage": url},
         )
 
         # Execute the chain to get probable tags

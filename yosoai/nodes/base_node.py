@@ -1,4 +1,8 @@
+""" 
+Module for creating the basic node
+"""
 from abc import ABC, abstractmethod
+
 
 class BaseNode(ABC):
     """
@@ -33,7 +37,7 @@ class BaseNode(ABC):
                     values ("node" or "conditional_node"), a ValueError is 
                     raised to indicate the incorrect usage.
     """
-    
+
     def __init__(self, node_name: str, node_type: str):
         """
         Initialize the node with a unique identifier and a specified node type.
@@ -47,15 +51,16 @@ class BaseNode(ABC):
         """
         self.node_name = node_name
         if node_type not in ["node", "conditional_node"]:
-            raise ValueError(f"node_type must be 'node' or 'conditional_node', got '{node_type}'")
+            raise ValueError(
+                f"node_type must be 'node' or 'conditional_node', got '{node_type}'")
         self.node_type = node_type
-        
+
     @abstractmethod
-    def execute(self, state):
+    def execute(self, state: dict):
         """
         Execute the node's logic and return the updated state.
-        
-        :param state: The current state of the graph.
+        Args:
+            state (dict): The current state of the graph.
         :return: The updated state after executing this node.
         """
         pass

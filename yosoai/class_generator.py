@@ -58,3 +58,4 @@ class Generator:
             return result_dict
         except Exception as e:
             print(f"Error: {e}")
+            return None

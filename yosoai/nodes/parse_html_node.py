@@ -1,5 +1,9 @@
-from .base_node import BaseNode
+"""
+Module for parsing the HTML node
+"""
 from langchain_community.document_transformers import BeautifulSoupTransformer
+from .base_node import BaseNode
+
 
 class ParseHTMLNode(BaseNode):
     """
@@ -15,11 +19,12 @@ class ParseHTMLNode(BaseNode):
         node_type (str): The type of the node, set to "node" indicating a standard operational node.
 
     Args:
-        node_name (str, optional): The unique identifier name for the node. Defaults to "ParseHTMLNode".
+        node_name (str, optional): The unique identifier name for the node. 
+        Defaults to "ParseHTMLNode".
 
     Methods:
-        execute(state): Parses the HTML document contained within the state using the specified tags,
-                        if provided, and updates the state with the parsed content.
+        execute(state): Parses the HTML document contained within the state using 
+        the specified tags, if provided, and updates the state with the parsed content.
     """
 
     def __init__(self, node_name="ParseHTMLNode"):
@@ -36,8 +41,8 @@ class ParseHTMLNode(BaseNode):
         or parsed document under the 'parsed_document' key.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 'document' within 'keys',
-                          and optionally 'tags' for targeted parsing.
+            state (dict): The current state of the graph, expected to contain 
+            'document' within 'keys', and optionally 'tags' for targeted parsing.
 
         Returns:
             dict: The updated state with the 'parsed_document' key containing the parsed content,
@@ -47,7 +52,7 @@ class ParseHTMLNode(BaseNode):
             KeyError: If 'document' is not found in the state, indicating that the necessary 
                       information for parsing is missing.
         """
-        
+
         print("---PARSE HTML DOCUMENT---")
         try:
             document = state["keys"]["document"]
@@ -55,20 +60,15 @@ class ParseHTMLNode(BaseNode):
             print(f"Error: {e} not found in state.")
             raise
 
-        # Check if tags are specified in the state
         tags = state["keys"].get("tags", None)
 
-        if tags:
-            # Initialize the BeautifulSoupTransformer with any required configurations
-            bs_transformer = BeautifulSoupTransformer()
-            # Parse the document with specified tags
-            parsed_document = bs_transformer.transform_documents(document, tags_to_extract=tags)
-            print("Document parsed with specified tags.")
-        else:
-            # If no tags are specified, return the document as is
+        if not tags:
             print("No specific tags provided; returning document as is.")
             return state
 
-        # Update the state with the parsed document
+        bs_transformer = BeautifulSoupTransformer()
+        parsed_document = bs_transformer.transform_documents(
+            document, tags_to_extract=tags)
+        print("Document parsed with specified tags.")
         state["keys"].update({"parsed_document": parsed_document})
         return state

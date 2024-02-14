@@ -1,17 +1,22 @@
+""" 
+Basic example for creating the node
+"""
+import os
+from dotenv import load_dotenv
 from yosoai.graphs import SmartScraper
 
-OPENAI_API_KEY = ''
+load_dotenv()
 
+openai_key = os.getenv("API_KEY")
+if not openai_key:
+    print("Error: OpenAI API key not found in environment variables.")
 llm_config = {
-    "api_key": OPENAI_API_KEY,
+    "api_key": openai_key,
     "model_name": "gpt-3.5-turbo",
 }
 
-url = "https://perinim.github.io/projects/"
-prompt = "List me all the titles and project descriptions"
-
-smart_scraper = SmartScraper(prompt, url, llm_config)
+smart_scraper = SmartScraper("List me all the titles and project descriptions",
+                             "https://perinim.github.io/projects/", llm_config)
 
 answer = smart_scraper.run()
 print(answer)
-

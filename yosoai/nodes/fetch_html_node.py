@@ -1,5 +1,10 @@
+""" 
+Module for fetching the HTML node
+"""
+
 from langchain_community.document_loaders import AsyncHtmlLoader
 from .base_node import BaseNode
+
 
 class FetchHTMLNode(BaseNode):
     """
@@ -29,13 +34,13 @@ class FetchHTMLNode(BaseNode):
                         to succeed.
     """
 
-    def __init__(self, node_name, node_type="node"):
+    def __init__(self, node_name: str, node_type: str = "node"):
         """
         Initializes the FetchHTMLNode with a node name and node type.
         """
         super().__init__(node_name, node_type)
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
         Executes the node's logic to fetch HTML content from a specified URL and
         update the state with this content.

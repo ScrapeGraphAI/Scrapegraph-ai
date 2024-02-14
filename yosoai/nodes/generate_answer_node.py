@@ -1,6 +1,10 @@
-from .base_node import BaseNode
-from langchain.prompts import PromptTemplate
+"""
+Module for generating the answer node
+"""
 from langchain_core.output_parsers import JsonOutputParser
+from langchain.prompts import PromptTemplate
+from .base_node import BaseNode
+
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -11,26 +15,30 @@ class GenerateAnswerNode(BaseNode):
 
     Attributes:
         llm (ChatOpenAI): An instance of a language model client, configured for generating answers.
-        node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswerNode".
-        node_type (str): The type of the node, set to "node" indicating a standard operational node.
+        node_name (str): The unique identifier name for the node, defaulting 
+        to "GenerateAnswerNode".
+        node_type (str): The type of the node, set to "node" indicating a 
+        standard operational node.
 
     Args:
-        llm: An instance of the language model client (e.g., ChatOpenAI) used for generating answers.
-        node_name (str, optional): The unique identifier name for the node. Defaults to "GenerateAnswerNode".
+        llm: An instance of the language model client (e.g., ChatOpenAI) used 
+        for generating answers.
+        node_name (str, optional): The unique identifier name for the node. 
+        Defaults to "GenerateAnswerNode".
 
     Methods:
         execute(state): Processes the input and document from the state to generate an answer,
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, llm, node_name="GenerateAnswerNode"):
+    def __init__(self, llm, node_name: str = "GenerateAnswerNode"):
         """
         Initializes the GenerateAnswerNode with a language model client and a node name.
         """
         super().__init__(node_name, "node")
         self.llm = llm
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
         Generates an answer by constructing a prompt from the user's input and the scraped
         content, querying the language model, and parsing its response.
@@ -48,7 +56,7 @@ class GenerateAnswerNode(BaseNode):
             KeyError: If 'user_input' or 'document' is not found in the state, indicating
                       that the necessary information for generating an answer is missing.
         """
-        
+
         print("---GENERATE ANSWER---")
         try:
             user_input = state["keys"]["user_input"]
@@ -60,7 +68,6 @@ class GenerateAnswerNode(BaseNode):
         parsed_document = state["keys"].get("parsed_document", None)
         relevant_chunks = state["keys"].get("relevant_chunks", None)
 
-        # Use relevant chunks if available, otherwise use the parsed document or the original document
         if relevant_chunks:
             context = relevant_chunks
         elif parsed_document:
@@ -71,10 +78,10 @@ class GenerateAnswerNode(BaseNode):
         output_parser = JsonOutputParser()
         format_instructions = output_parser.get_format_instructions()
 
-        template = """You are a website scraper and you have just scraped the following content from a website. You are now asked to answer a question about the content you have scraped.\n {format_instructions} \n The content is as follows:
-                {context}
-
-                Question: {question}
+        template = """You are a website scraper and you have just scraped the
+        following content from a website.
+         You are now asked to answer a question about the content you have scraped.\n {format_instructions} \n The content is as follows: {context}
+        Question: {question}
                 """
 
         schema_prompt = PromptTemplate(
@@ -85,9 +92,9 @@ class GenerateAnswerNode(BaseNode):
 
         # Chain
         schema_chain = schema_prompt | self.llm | output_parser
-        answer = schema_chain.invoke({"context": context, "question": user_input})
+        answer = schema_chain.invoke(
+            {"context": context, "question": user_input})
 
         # Update the state with the generated answer
         state["keys"].update({"answer": answer})
         return state
-        

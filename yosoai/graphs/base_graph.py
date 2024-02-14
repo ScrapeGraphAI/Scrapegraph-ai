@@ -1,3 +1,8 @@
+"""
+Module for creating the base graphs
+ """
+
+
 class BaseGraph:
     """
     BaseGraph manages the execution flow of a graph composed of interconnected nodes.
@@ -19,7 +24,7 @@ class BaseGraph:
         entry_point (BaseNode): The node instance that represents the entry point of the graph.
     """
 
-    def __init__(self, nodes, edges, entry_point):
+    def __init__(self, nodes: dict, edges: dict, entry_point: str):
         """
         Initializes the graph with nodes, edges, and the entry point.
         """
@@ -27,7 +32,7 @@ class BaseGraph:
         self.edges = self._create_edges(edges)
         self.entry_point = entry_point.node_name
 
-    def _create_edges(self, edges):
+    def _create_edges(self, edges: dict) -> dict:
         """
         Helper method to create a dictionary of edges from the given iterable of tuples.
 
@@ -42,7 +47,7 @@ class BaseGraph:
             edge_dict[from_node.node_name] = to_node.node_name
         return edge_dict
 
-    def execute(self, initial_state):
+    def execute(self, initial_state: dict) -> dict:
         """
         Executes the graph by traversing nodes starting from the entry point. The execution 
         follows the edges based on the result of each node's execution and continues until 
@@ -62,13 +67,10 @@ class BaseGraph:
             result = current_node.execute(state)
 
             if current_node.node_type == "conditional_node":
-                # For ConditionalNode, result is the next node based on the condition
                 current_node_name = result
             elif current_node_name in self.edges:
-                # For regular nodes, move to the next node based on the defined edges
                 current_node_name = self.edges[current_node_name]
             else:
-                # No further edges, end the execution
                 current_node_name = None
 
         return state
