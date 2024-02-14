@@ -2,9 +2,8 @@ langchain==0.1.6
 langchain_community==0.0.19
 langchain_core==0.1.22
 langchain_openai==0.0.5
+beautifulsoup4==4.12.3
 pandas==2.0.3
-pytest==8.0.0
 python-dotenv==1.0.1
-setuptools==65.5.1
 tiktoken>=0.5.2,<0.6.0
 tqdm==4.66.1
