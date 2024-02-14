@@ -26,6 +26,6 @@ jobs:
         run: |
           sphinx-apidoc -o docs/source/modules yosoai -f
 
-      - name: Move generated files to docs/source/modules
-        run: |
-          mv docs/source/yosoai* docs/source/modules
+      #- name: Move generated files to docs/source/modules
+      #  run: |
+      #   mv docs/source/yosoai* docs/source/modules
