@@ -1,4 +1,4 @@
-from yosoai.graph import SmartScraper
+from yosoai.graphs import SmartScraper
 
 OPENAI_API_KEY = ''
 
