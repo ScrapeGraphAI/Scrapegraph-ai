@@ -1,14 +1,14 @@
-# 🤖 YOSO-ai: You Only Scrape Once
+# 🤖 Scrapegraph-ai: You Only Scrape Once
 
-YOSO-ai is a Python **Open Source** library that uses LLM and Langchain for faster and efficient web scraping. Just say which information you want to extract and the library will do it for you.
+Scrapegraph-ai is a Python **Open Source** library that uses LLM and Langchain for faster and efficient web scraping. Just say which information you want to extract and the library will do it for you.
 
-Official documentation page: [yoso-ai.readthedocs.io](https://yoso-ai.readthedocs.io/en/latest/index.html)
+Official documentation page: [Scrapegraph-ai.readthedocs.io](https://Scrapegraph-ai.readthedocs.io/en/latest/index.html)
 
 # 🔍 Demo
 
-Try out YOSO-ai in your browser:
+Try out Scrapegraph-ai in your browser:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/YOSO-ai)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/Scrapegraph-ai)
 
 # 🔧 Quick Setup
 
@@ -17,7 +17,7 @@ Follow the following steps:
 1.
 
 ```bash
-git clone https://github.com/VinciGit00/yoso-ai.git
+git clone https://github.com/VinciGit00/Scrapegraph-ai.git
 ```
 
 2.  (Optional)
@@ -54,7 +54,7 @@ API_KEY="your openai.com api key"
 ```bash
 python -m examples.html_scraping
 # or if you are outside of the project folder
-python -m yoso-ai.examples.html_scraping
+python -m Scrapegraph-ai.examples.html_scraping
 ```
 
 # 📖 Examples
