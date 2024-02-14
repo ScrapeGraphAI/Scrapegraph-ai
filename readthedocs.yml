@@ -9,6 +9,9 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.9"
+  jobs:
+    pre_build:
+     - sphinx-apidoc -o docs/source/modules yosoai -f
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
