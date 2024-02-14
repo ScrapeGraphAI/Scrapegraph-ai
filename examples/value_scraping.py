@@ -9,7 +9,7 @@ load_dotenv()
 
 
 def main():
-    """ """
+    """ main of the program"""
     openai_key = os.getenv("API_KEY")
     if not openai_key:
         print("Error: OpenAI API key not found in environment variables.")
