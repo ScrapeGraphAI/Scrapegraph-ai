@@ -28,5 +28,5 @@ class _Response(BaseModel):
         base_script = base_script + \
             f"    {elem['title']}: {elem['type']} = Field(description='{elem['description']}')\n"
 
-    with open("./yosoai/pydantic_class.py", "w", encoding="utf-8") as f:
+    with open("./scrapegraphai/pydantic_class.py", "w", encoding="utf-8") as f:
         f.write(base_script)

@@ -62,7 +62,7 @@ python -m yoso-ai.examples.html_scraping
 ```python
 import os
 from dotenv import load_dotenv
-from yosoai import _get_function, send_request
+from scrapegraphai import _get_function, send_request
 
 load_dotenv()
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 ```python
 import os
 from dotenv import load_dotenv
-from yosoai import send_request
+from scrapegraphai import send_request
 
 load_dotenv()
 
@@ -195,7 +195,7 @@ The oputput format is a dict and its the following:
 
 # Credits
 Thanks to: 
-- [nicolapiazzalunga](https://github.com/nicolapiazzalunga): for inspiring yosoai/convert_to_csv.py and yosoai/convert_to_json.py functions
+- [nicolapiazzalunga](https://github.com/nicolapiazzalunga): for inspiring scrapegraphai/convert_to_csv.py and scrapegraphai/convert_to_json.py functions
 
 # Developed by
 

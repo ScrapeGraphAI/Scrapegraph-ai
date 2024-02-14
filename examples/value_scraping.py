@@ -3,7 +3,7 @@ Example of scraping using just a link
  """
 import os
 from dotenv import load_dotenv
-from yosoai import _get_function, send_request
+from scrapegraphai import _get_function, send_request
 
 load_dotenv()
 

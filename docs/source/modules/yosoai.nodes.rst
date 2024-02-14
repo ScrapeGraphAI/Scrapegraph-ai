@@ -1,53 +1,53 @@
-yosoai.nodes package
+scrapegraphai.nodes package
 ====================
 
 Submodules
 ----------
 
-yosoai.nodes.base\_node module
+scrapegraphai.nodes.base\_node module
 ------------------------------
 
-.. automodule:: yosoai.nodes.base_node
+.. automodule:: scrapegraphai.nodes.base_node
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.nodes.conditional\_node module
+scrapegraphai.nodes.conditional\_node module
 -------------------------------------
 
-.. automodule:: yosoai.nodes.conditional_node
+.. automodule:: scrapegraphai.nodes.conditional_node
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.nodes.fetch\_html\_node module
+scrapegraphai.nodes.fetch\_html\_node module
 -------------------------------------
 
-.. automodule:: yosoai.nodes.fetch_html_node
+.. automodule:: scrapegraphai.nodes.fetch_html_node
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.nodes.generate\_answer\_node module
+scrapegraphai.nodes.generate\_answer\_node module
 ------------------------------------------
 
-.. automodule:: yosoai.nodes.generate_answer_node
+.. automodule:: scrapegraphai.nodes.generate_answer_node
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.nodes.get\_probable\_tags\_node module
+scrapegraphai.nodes.get\_probable\_tags\_node module
 ---------------------------------------------
 
-.. automodule:: yosoai.nodes.get_probable_tags_node
+.. automodule:: scrapegraphai.nodes.get_probable_tags_node
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.nodes.parse\_html\_node module
+scrapegraphai.nodes.parse\_html\_node module
 -------------------------------------
 
-.. automodule:: yosoai.nodes.parse_html_node
+.. automodule:: scrapegraphai.nodes.parse_html_node
    :members:
    :undoc-members:
    :show-inheritance:
@@ -55,7 +55,7 @@ yosoai.nodes.parse\_html\_node module
 Module contents
 ---------------
 
-.. automodule:: yosoai.nodes
+.. automodule:: scrapegraphai.nodes
    :members:
    :undoc-members:
    :show-inheritance:

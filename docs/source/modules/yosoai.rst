@@ -1,4 +1,4 @@
-yosoai package
+scrapegraphai package
 ==============
 
 Subpackages
@@ -7,96 +7,96 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   yosoai.graphs
-   yosoai.nodes
+   scrapegraphai.graphs
+   scrapegraphai.nodes
 
 Submodules
 ----------
 
-yosoai.class\_creator module
+scrapegraphai.class\_creator module
 ----------------------------
 
-.. automodule:: yosoai.class_creator
+.. automodule:: scrapegraphai.class_creator
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.class\_generator module
+scrapegraphai.class\_generator module
 ------------------------------
 
-.. automodule:: yosoai.class_generator
+.. automodule:: scrapegraphai.class_generator
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.convert\_to\_csv module
+scrapegraphai.convert\_to\_csv module
 ------------------------------
 
-.. automodule:: yosoai.convert_to_csv
+.. automodule:: scrapegraphai.convert_to_csv
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.convert\_to\_json module
+scrapegraphai.convert\_to\_json module
 -------------------------------
 
-.. automodule:: yosoai.convert_to_json
+.. automodule:: scrapegraphai.convert_to_json
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.dictionaries module
+scrapegraphai.dictionaries module
 --------------------------
 
-.. automodule:: yosoai.dictionaries
+.. automodule:: scrapegraphai.dictionaries
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.getter module
+scrapegraphai.getter module
 --------------------
 
-.. automodule:: yosoai.getter
+.. automodule:: scrapegraphai.getter
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.json\_getter module
+scrapegraphai.json\_getter module
 --------------------------
 
-.. automodule:: yosoai.json_getter
+.. automodule:: scrapegraphai.json_getter
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.pydantic\_class module
+scrapegraphai.pydantic\_class module
 -----------------------------
 
-.. automodule:: yosoai.pydantic_class
+.. automodule:: scrapegraphai.pydantic_class
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.remover module
+scrapegraphai.remover module
 ---------------------
 
-.. automodule:: yosoai.remover
+.. automodule:: scrapegraphai.remover
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.request module
+scrapegraphai.request module
 ---------------------
 
-.. automodule:: yosoai.request
+.. automodule:: scrapegraphai.request
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.token\_calculator module
+scrapegraphai.token\_calculator module
 -------------------------------
 
-.. automodule:: yosoai.token_calculator
+.. automodule:: scrapegraphai.token_calculator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -104,7 +104,7 @@ yosoai.token\_calculator module
 Module contents
 ---------------
 
-.. automodule:: yosoai
+.. automodule:: scrapegraphai
    :members:
    :undoc-members:
    :show-inheritance:

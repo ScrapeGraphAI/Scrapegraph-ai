@@ -3,7 +3,7 @@ Exmaple of scraper using just the HTML code
 """
 import os
 from dotenv import load_dotenv
-from yosoai import send_request
+from scrapegraphai import send_request
 
 load_dotenv()
 

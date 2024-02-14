@@ -1,7 +1,7 @@
-yosoai
+scrapegraphai
 ======
 
 .. toctree::
    :maxdepth: 4
 
-   yosoai
+   scrapegraphai

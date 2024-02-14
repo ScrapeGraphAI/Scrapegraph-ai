@@ -1,21 +1,21 @@
-yosoai.graphs package
+scrapegraphai.graphs package
 =====================
 
 Submodules
 ----------
 
-yosoai.graphs.base\_graph module
+scrapegraphai.graphs.base\_graph module
 --------------------------------
 
-.. automodule:: yosoai.graphs.base_graph
+.. automodule:: scrapegraphai.graphs.base_graph
    :members:
    :undoc-members:
    :show-inheritance:
 
-yosoai.graphs.smart\_scraper\_graph module
+scrapegraphai.graphs.smart\_scraper\_graph module
 ------------------------------------------
 
-.. automodule:: yosoai.graphs.smart_scraper_graph
+.. automodule:: scrapegraphai.graphs.smart_scraper_graph
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ yosoai.graphs.smart\_scraper\_graph module
 Module contents
 ---------------
 
-.. automodule:: yosoai.graphs
+.. automodule:: scrapegraphai.graphs
    :members:
    :undoc-members:
    :show-inheritance:
