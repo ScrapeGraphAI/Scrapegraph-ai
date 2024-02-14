@@ -3,7 +3,7 @@ name: Generate Sphinx documentation
 on:
   push:
     branches:
-      - main  
+      - main  # Puoi cambiare il nome del ramo se necessario
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.10' 
+          python-version: '3.10'  # Puoi modificare la versione di Python se necessario
 
       - name: Install Sphinx
         run: |
@@ -25,3 +25,7 @@ jobs:
       - name: Generate Sphinx documentation
         run: |
           sphinx-apidoc -o docs/source/modules yosoai -f
+
+      - name: Move generated files to docs/source/modules
+        run: |
+          mv docs/source/yosoai* docs/source/modules
