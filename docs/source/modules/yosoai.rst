@@ -1,6 +1,15 @@
 yosoai package
 ==============
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   yosoai.graphs
+   yosoai.nodes
+
 Submodules
 ----------
 
