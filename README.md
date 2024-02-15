@@ -83,15 +83,7 @@ pip install -e .[dev]
 ## Authors
 
 <p align="center">
-  <a href="https://vincigit00.github.io/">
-    <img src="docs/assets/logo_vincios.png" alt="Vincios Logo" style="width: 30%;">
-  </a>
-  <a href="https://lurenss.github.io/">
-    <img src="docs/assets/logo_lurens.png" alt="Lurenss Logo" style="width: 30%;">
-  </a>
-  <a href="https://perinim.github.io/">
-    <img src="docs/assets/logo_perinilab.png" alt="PeriniLab Logo" style="width: 30%;">
-  </a>
+  <img src="docs/assets/logo_authors.png" alt="Authors Logos"">
 </p>
 
 ## 📜 License
