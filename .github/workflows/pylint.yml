@@ -22,4 +22,4 @@ jobs:
       - name: Analysing the code with pylint
         run: |
           pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py scrapegraphai/*.py examples/*.py tests/*.py > pylint_output.txt
-          python evaluate_pylint_score.py pylint_output.txt
+          python .github/workflows/evaluate_pylint_score.py pylint_output.txt
