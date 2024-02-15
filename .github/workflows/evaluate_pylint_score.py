@@ -1,18 +1,24 @@
 # evaluate_pylint_score.py
 
 import sys
+import re
 
 def evaluate_pylint_score():
     lines = sys.stdin.readlines()
     
     score_line = next((line for line in lines if 'Your code has been rated at' in line), None)
     if score_line:
-        score = float(score_line.split(' ')[-2])
-        if score >= 6:
-            print("Pylint score is acceptable. Proceeding with the push.")
-            sys.exit(0)
+        score_match = re.search(r'(\d+\.\d+)', score_line)
+        if score_match:
+            score = float(score_match.group(1))
+            if score >= 6:
+                print("Pylint score is acceptable. Proceeding with the push.")
+                sys.exit(0)
+            else:
+                print("Pylint score is below 6. Skipping the push.")
+                sys.exit(1)
         else:
-            print("Pylint score is below 6. Skipping the push.")
+            print("Unable to parse pylint score. Skipping the push.")
             sys.exit(1)
     else:
         print("Pylint score not found in output. Skipping the push.")
