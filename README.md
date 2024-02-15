@@ -94,3 +94,6 @@ ScrapeGraphAI is licensed under the Apache 2.0 License. See the [LICENSE](LICENS
 
 - We would like to thank all the contributors to the project and the open-source community for their support.
 - ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
+
+## Thanks to: 
+- [nicolapiazzalunga](https://github.com/nicolapiazzalunga)for having inspired us to the functions: scrapegraph/convert_to_json.py and scrapegraph/convert_to_csv.py
