@@ -11,7 +11,7 @@ build:
     python: "3.9"
   jobs:
     pre_build:
-     - sphinx-apidoc -o docs/source/modules yosoai -f
+     - sphinx-apidoc -o docs/source/modules scrapegraphai -f
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:

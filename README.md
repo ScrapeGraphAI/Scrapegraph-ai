@@ -23,6 +23,10 @@ Try out ScrapeGraphAI in your browser:
 
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
 
+## Setup the api keys
+
+The procedure per for activatating the openai keys are in the following link: [link](https://scrapegraph-ai.readthedocs.io/en/latest/index.html).
+
 ## 💻 Usage
 
 ### Case 1: Extracting information using a prompt
