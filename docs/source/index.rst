@@ -1,9 +1,9 @@
-.. yoso-ai documentation master file, created by
+.. Scrapegraph-ai documentation master file, created by
    sphinx-quickstart on Wed Jan 31 15:38:23 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to yoso-ai's documentation!
+Welcome to scrapegraphai-ai's documentation!
 =======================================
 
 Here you will find all the information you need to get started.

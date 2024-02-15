@@ -16,5 +16,5 @@ class TestConvertToJSonFunction(unittest.TestCase):
         """
         example = {"trial": [1, 2, 3]}
         filename = "result"
-        path = "../YOSO-ai/tests"
+        path = "../Scrapegraph-ai/tests"
         convert_to_json(example, filename, path)

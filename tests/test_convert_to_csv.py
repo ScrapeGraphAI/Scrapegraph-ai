@@ -14,5 +14,5 @@ class TestConvertToCsvFunction(unittest.TestCase):
         """
         example = {"trial": [1, 2, 3]}
         filename = "result"
-        path = "../YOSO-ai/tests"
+        path = "../Scrapegraph-ai/tests"
         convert_to_csv(example, filename, path)
