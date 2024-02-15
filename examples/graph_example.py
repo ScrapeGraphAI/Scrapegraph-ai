@@ -3,7 +3,7 @@ Basic example for creating the node
 """
 import os
 from dotenv import load_dotenv
-from yosoai.graphs import SmartScraper
+from scrapegraphai.graphs import SmartScraper
 
 load_dotenv()
 

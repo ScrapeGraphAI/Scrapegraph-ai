@@ -1,16 +1,16 @@
-"""Module for testing convert_to_json inside the folder yosoai/convert_to_json.py"""
+"""Module for testing convert_to_json inside the folder scrapegraphai/convert_to_json.py"""
 import unittest
-from yosoai.convert_to_csv import convert_to_csv
+from scrapegraphai.convert_to_csv import convert_to_csv
 
 
 class TestConvertToCsvFunction(unittest.TestCase):
     """ 
-    class for testing convert_to_json inside the folder yosoai/convert_to_json.py
+    class for testing convert_to_json inside the folder scrapegraphai/convert_to_json.py
     """
 
     def test_get_json(self):
         """
-        function for testing convert_to_json inside the folder yosoai/convert_to_json.py
+        function for testing convert_to_json inside the folder scrapegraphai/convert_to_json.py
         """
         example = {"trial": [1, 2, 3]}
         filename = "result"

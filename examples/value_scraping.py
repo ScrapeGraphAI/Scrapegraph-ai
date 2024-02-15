@@ -3,13 +3,13 @@ Example of scraping using just a link
  """
 import os
 from dotenv import load_dotenv
-from yosoai import _get_function, send_request
+from scrapegraphai import _get_function, send_request
 
 load_dotenv()
 
 
 def main():
-    """ """
+    """ main of the program"""
     openai_key = os.getenv("API_KEY")
     if not openai_key:
         print("Error: OpenAI API key not found in environment variables.")

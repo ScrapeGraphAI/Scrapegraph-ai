@@ -1,203 +1,82 @@
-# 🤖 YOSO-ai: You Only Scrape Once
+# 🕷️ ScrapeGraphAI: You Only Scrape Once
 
-YOSO-ai is a Python **Open Source** library that uses LLM and Langchain for faster and efficient web scraping. Just say which information you want to extract and the library will do it for you.
+ScrapeGraphAI is a *web scraping* python library based on LangChain which uses LLM and direct graph logic to create scraping pipelines.
+Just say which information you want to extract and the library will do it for you!
 
-Official documentation page: [yoso-ai.readthedocs.io](https://yoso-ai.readthedocs.io/en/latest/index.html)
+<p align="center">
+  <img src="docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
+</p>
 
-# 🔍 Demo
 
-Try out YOSO-ai in your browser:
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/YOSO-ai)
-
-# 🔧 Quick Setup
-
-Follow the following steps:
-
-1.
+## 🚀 Quick install
 
 ```bash
-git clone https://github.com/VinciGit00/yoso-ai.git
+pip install scrapegraphai
 ```
+## 🔍 Demo
 
-2.  (Optional)
+Try out ScrapeGraphAI in your browser:
 
-```bash
-python -m venv venv
-source ./venv/bin/activate
-```
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/Scrapegraph-ai)
 
-3.
+## 📖 Documentation
 
-```bash
-pip install -r requirements.txt
-# if you want to install it as a library
-pip install .
+The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
 
-# or if you plan on developing new features it is best to also install the extra dependencies using
+## 💻 Usage
 
-pip install -r requirements-dev.txt
-# if you want to install it as a library
-pip install .[dev]
-```
+### Case 1: Extracting information using a prompt
 
-4.  Create your personal OpenAI API key from [here](https://platform.openai.com/api-keys)
-5.  (Optional) Create a .env file inside the main and paste the API key
+You can use the `SmartScraper` class to extract information from a website using a prompt.
 
-```config
-API_KEY="your openai.com api key"
-```
-
-6. You are ready to go! 🚀
-7. Try running the examples using:
-
-```bash
-python -m examples.html_scraping
-# or if you are outside of the project folder
-python -m yoso-ai.examples.html_scraping
-```
-
-# 📖 Examples
+The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
 
 ```python
-import os
-from dotenv import load_dotenv
-from yosoai import _get_function, send_request
+from scrapegraphai.graphs import SmartScraper
 
-load_dotenv()
+OPENAI_API_KEY = "YOUR_API_KEY"
 
-def main():
-    # Get OpenAI API key from environment variables
-    openai_key = os.getenv("API_KEY")
-    if not openai_key:
-        print("Error: OpenAI API key not found in environment variables.")
-        return
+llm_config = {
+    "api_key": OPENAI_API_KEY,
+    "model_name": "gpt-3.5-turbo",
+}
 
-    # Example values for the request
-    request_settings = [
-        {
-        "title": "title_news",
-        "type": "str",
-        "description": "Give me the name of the news"
-        }
-    ]
+smart_scraper = SmartScraper("List me all the titles and project descriptions",
+                             "https://perinim.github.io/projects/", llm_config)
 
-    # Choose the desired model and other parameters
-    selected_model = "gpt-3.5-turbo"
-    temperature_value = 0.7
-
-    # Mockup World URL
-    mockup_world_url = "https://sport.sky.it/nba?gr=www"
-
-    # Invoke send_request function
-    result = send_request(openai_key, _get_function(mockup_world_url), request_settings, selected_model, temperature_value, 'cl100k_base')
-
-    # Print or process the result as needed
-    print("Result:", result)
-
-if __name__ == "__main__":
-    main()
+answer = smart_scraper.run()
+print(answer)
 ```
 
-### Case 2: Passing your own HTML code
-
-```python
-import os
-from dotenv import load_dotenv
-from yosoai import send_request
-
-load_dotenv()
-
-# Example using a HTML code
-query_info = '''
-        Given this code extract all the information in a json format about the news.
-
-        <article class="c-card__wrapper aem_card_check_wrapper" data-cardindex="0">
-            <div class="c-card__content">
-                <h2 class="c-card__title">Booker show with 52 points, whoever has the most games over 50</h2>
-                <div class="c-card__label-wrapper c-label-wrapper">
-                    <span class="c-label c-label--article-heading">Standings</span>
-                </div>
-                <p class="c-card__abstract">The Suns' No. 1 dominated the match won in New Orleans, scoring 52 points. It's about...</p>
-                <div class="c-card__info">
-                    <time class="c-card__date" datetime="20 gen - 07:54">20 gen - 07:54</time>
-                ...
-                </div>
-            </div>
-            <div class="c-card__img-wrapper">
-                <figure class="o-aspect-ratio o-aspect-ratio--16-10 ">
-                    <img crossorigin="anonymous" class="c-card__img j-lazyload" alt="Partite con 50+ punti: Booker in Top-20" data-srcset="..." sizes="..." loading="lazy" data-src="...">
-                    <noscript>
-                        <img crossorigin="anonymous" class="c-card__img" alt="Partite con 50+ punti: Booker in Top-20" srcset="..." sizes="..." src="...">
-                    </noscript>
-                </figure>
-                <i class="icon icon--media icon--gallery icon--medium icon--c-primary">
-                </i>
-            </div>
-        </article>
-    '''
-def main():
-    # Get OpenAI API key from environment variables
-    openai_key = os.getenv("API_KEY")
-    if not openai_key:
-        print("Error: OpenAI API key not found in environment variables.")
-        return
-
-    # Example values for the request
-    request_settings = [
-        {
-            "title": "title",
-            "type": "str",
-            "description": "Title of the news"
-        }
-    ]
-
-    # Choose the desired model and other parameters
-    selected_model = "gpt-3.5-turbo"
-    temperature_value = 0.7
-
-    # Invoke send_request function
-    result = send_request(openai_key, query_info, request_settings, selected_model, temperature_value, 'cl100k_base')
-
-    # Print or process the result as needed
-    print("Result:", result)
-
-if __name__ == "__main__":
-    main()
-```
-
-Note: all the model are available at the following link: [https://platform.openai.com/docs/models](https://platform.openai.com/docs/models), be sure you have enabled that keys
-
-# Example of output
-
-Given the following input
-
-```python
-    [
-        {
-            "title": "title",
-            "type": "str",
-            "description": "Title of the news"
-        }
-    ]
-
-```
-
-using as a input the website [https://sport.sky.it/nba?gr=www](https://sport.sky.it/nba?gr=www)
-
-The oputput format is a dict and its the following:
+The output will be a dictionary with the extracted information, for example:
 
 ```bash
-    {
-    'title': 'Booker show with 52 points, whoever has the most games over 50'
-    }
+{
+    'titles': [
+        'Rotary Pendulum RL'
+        ],
+    'descriptions': [
+        'Open Source project aimed at controlling a real life rotary pendulum using RL algorithms'
+        ]
+}
 ```
 
-# Credits
-Thanks to: 
-- [nicolapiazzalunga](https://github.com/nicolapiazzalunga): for inspiring yosoai/convert_to_csv.py and yosoai/convert_to_json.py functions
+## 🤝 Contributing
 
-# Developed by
+Contributions are welcome! Please check out the todos below, and feel free to open a pull request.
+For more information, please see the [contributing guidelines](CONTRIBUTING.md).
+
+After installing and activating the virtual environment, please remember to install the library using the "dev" extra parameter to have the extra dependencies for development.
+
+```bash
+pip install -e .[dev]
+```
+
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
+
+## Authors
 
 <p align="center">
   <a href="https://vincigit00.github.io/">
@@ -210,3 +89,12 @@ Thanks to:
     <img src="docs/assets/logo_perinilab.png" alt="PeriniLab Logo" style="width: 30%;">
   </a>
 </p>
+
+## 📜 License
+
+ScrapeGraphAI is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for more information.
+
+## Acknowledgements
+
+- We would like to thank all the contributors to the project and the open-source community for their support.
+- ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.

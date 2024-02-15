@@ -8,12 +8,13 @@
 
 # -- Path setup --------------------------------------------------------------
 
-import os, sys
+import os
+import sys
 
 # import all the modules
 sys.path.insert(0, os.path.abspath('../../'))
 
-project = 'yosoai'
+project = 'scrapegraphai'
 copyright = '2024, Marco Vinciguerra'
 author = 'Marco Vinciguerra'
 
