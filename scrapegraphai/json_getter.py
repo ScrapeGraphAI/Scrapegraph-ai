@@ -6,7 +6,7 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from .getter import _get_function
-from .dictionaries import schema_example
+from .info.dictionaries import schema_example
 from .token_calculator import truncate_text_tokens
 
 EMBEDDING_ENCODING = 'cl100k_base'
