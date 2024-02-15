@@ -2,7 +2,7 @@
 Module for testing convert_to_json inside the folder scrapegraphai/convert_to_json.py
 """
 import unittest
-from scrapegraphai.convert_to_json import convert_to_json
+from scrapegraphai.utils.convert_to_json import convert_to_json
 
 
 class TestConvertToJSonFunction(unittest.TestCase):

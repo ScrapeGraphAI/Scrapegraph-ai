@@ -1,6 +1,6 @@
 """Module for testing convert_to_json inside the folder scrapegraphai/convert_to_json.py"""
 import unittest
-from scrapegraphai.convert_to_csv import convert_to_csv
+from scrapegraphai.utils.convert_to_csv import convert_to_csv
 
 
 class TestConvertToCsvFunction(unittest.TestCase):
