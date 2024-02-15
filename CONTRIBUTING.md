@@ -1,6 +1,6 @@
-# Contributing to YOSO-ai
+# Contributing to ScrapeGraphAI
 
-Thank you for your interest in contributing to **YOSO-ai**! We welcome contributions from the community to help improve and grow the project. This document outlines the guidelines and steps for contributing.
+Thank you for your interest in contributing to **ScrapeGraphAI**! We welcome contributions from the community to help improve and grow the project. This document outlines the guidelines and steps for contributing.
 
 ## Table of Contents
 

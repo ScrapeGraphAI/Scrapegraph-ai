@@ -15,7 +15,7 @@ dev_requirements = load_requirements('requirements-dev.txt')
 setup(
     name='scrapegraphai',
     version='0.1.0',  # MAJOR.MINOR.PATCH
-    description='A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines.
+    description='A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines.',
     long_description=open('README.md', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     url='https://scrapegraph-ai.readthedocs.io/',
