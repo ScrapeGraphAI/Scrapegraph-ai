@@ -3,7 +3,7 @@ Module for truncatinh in chunks the messages
 """
 from typing import List
 import tiktoken
-from .dictionaries import models_tokens
+from .info.dictionaries import models_tokens
 
 
 def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]:
