@@ -8,3 +8,17 @@ The goal is to be able to scrape data using natural language queries and store t
    :align: center
    :width: 400px
    :alt: OpenAI Key
+   
+.. image:: ../../assets/apikey_2.png
+   :align: center
+   :width: 400px
+   :alt: OpenAI Key
+
+.. image:: ../../assets/apikey_3.png
+   :align: center
+   :width: 400px
+   :alt: OpenAI Key
+.. image:: ../../assets/apikey_4.png
+   :align: center
+   :width: 400px
+   :alt: OpenAI Key
