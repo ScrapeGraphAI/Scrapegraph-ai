@@ -6,7 +6,8 @@
 # and pushes the changes to the remote repository.
 
 # Usage: ./commit_and_push.sh <commit_message>
-#   <commit_message>: The message to be used for the Git commit.
+#   <commit_message>: The message to be used for the Git commit. 
+#   The commit message should be under ""
 # If it is the first time you have to do chmod +x commit_and_push.sh
 
 # Check if an argument is provided

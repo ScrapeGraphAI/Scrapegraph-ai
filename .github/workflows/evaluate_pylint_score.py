@@ -11,7 +11,7 @@ def evaluate_pylint_score():
         score_match = re.search(r'(\d+\.\d+)', score_line)
         if score_match:
             score = float(score_match.group(1))
-            print(f"The score is{score}")
+            print(f"The score is {score}")
             if score >= 6:
                 print("Pylint score is acceptable. Proceeding with the push.")
                 sys.exit(0)
