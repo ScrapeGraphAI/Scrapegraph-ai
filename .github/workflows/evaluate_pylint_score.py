@@ -5,6 +5,7 @@ import re
 
 def evaluate_pylint_score():
     lines = sys.stdin.readlines()
+    print(lines)
     
     score_line = next((line for line in lines if 'Your code has been rated at' in line), None)
     if score_line:
