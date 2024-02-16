@@ -5,7 +5,7 @@ from tqdm import tqdm
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-from .getter import _get_function
+from .scrapegraphai.getter import _get_function
 from .info.dictionaries import schema_example
 from .token_calculator import truncate_text_tokens
 
