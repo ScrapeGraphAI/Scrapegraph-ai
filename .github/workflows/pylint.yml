@@ -20,8 +20,4 @@ jobs:
           pip install pylint
           pip install -r requirements.txt
       - name: Analysing the code with pylint
-        run: |
-          pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py scrapegraphai/*.py examples/*.py tests/*.py
-      - name: Process Pylint output
-        run: |
-          python .github/workflows/evaluate_pylint_score.py
+        run: pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py scrapegraphai/*.py examples/*.py tests/*.py | python .github/workflows/evaluate_pylint_score.py
