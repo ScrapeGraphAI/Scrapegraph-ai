@@ -29,7 +29,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setuptools.setup(
     name="cf-remote",
     version=cf_remote_version,
-    author="Northern.tech, Inc.",
+    author="Marco Vinciguerra",
     author_email="contact@northern.tech",
     description="Tooling to deploy CFEngine (and much more)",
     long_description=long_description,
@@ -46,6 +46,14 @@ setuptools.setup(
     python_requires=">=3.5",
     entry_points={"console_scripts": ["cf-remote = cf_remote.main:main"]},
     install_requires=[
-        "apache-libcloud >= 3.3.1",
+        "langchain==0.1.6",
+        "langchain_community==0.0.19",
+        "langchain_core==0.1.22",
+        "langchain_openai==0.0.5",
+        "beautifulsoup4==4.12.3",
+        "pandas==2.0.3",
+        "python-dotenv==1.0.1",
+        "tiktoken>=0.5.2,<0.6.0",
+        "tqdm==4.66.1",
     ],
 )
