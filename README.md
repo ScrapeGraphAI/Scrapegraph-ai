@@ -4,7 +4,7 @@ ScrapeGraphAI is a *web scraping* python library based on LangChain which uses L
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">
-  <img src="docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
 </p>
 
 
@@ -17,7 +17,7 @@ pip install scrapegraphai
 
 Try out ScrapeGraphAI in your browser:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/Scrapegraph-ai)
+[![Open in GitHub Codespaces](docs/assets/codespaces-badge.png)](https://codespaces.new/VinciGit00/Scrapegraph-ai)
 
 ## 📖 Documentation
 
@@ -26,7 +26,7 @@ Behind this there is also the docusaurus documentation [here]([https://scrapegra
 
 ## Setup the api keys
 
-The procedure per for activatating the openai keys are in the following link: [link](https://scrapegraph-ai.readthedocs.io/en/latest/index.html).
+Follow the procedure on the following link to setup your OpenAI API key: [link](https://scrapegraph-ai.readthedocs.io/en/latest/index.html).
 
 ## 💻 Usage
 
@@ -69,7 +69,7 @@ The output will be a dictionary with the extracted information, for example:
 ## 🤝 Contributing
 
 Contributions are welcome! Please check out the todos below, and feel free to open a pull request.
-For more information, please see the [contributing guidelines](CONTRIBUTING.md).
+For more information, please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
 After installing and activating the virtual environment, please remember to install the library using the "dev" extra parameter to have the extra dependencies for development.
 
@@ -84,12 +84,12 @@ pip install -e .[dev]
 ## Authors
 
 <p align="center">
-  <img src="docs/assets/logo_authors.png" alt="Authors Logos"">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors Logos">
 </p>
 
 ## 📜 License
 
-ScrapeGraphAI is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for more information.
+ScrapeGraphAI is licensed under the Apache 2.0 License. See the [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) file for more information.
 
 ## Acknowledgements
 
