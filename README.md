@@ -4,7 +4,7 @@ ScrapeGraphAI is a *web scraping* python library based on LangChain which uses L
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
+  <img src="docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
 </p>
 
 
