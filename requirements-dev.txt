@@ -1,6 +1,3 @@
-wheel==0.42.0
-setuptools==65.5.1
-twine==4.0.2
 sphinx==7.1.2
 sphinx-rtd-theme==2.0.0
 pytest==8.0.0

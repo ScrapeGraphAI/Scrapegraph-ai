@@ -17,7 +17,7 @@ pip install scrapegraphai
 
 Try out ScrapeGraphAI in your browser:
 
-[![Open in GitHub Codespaces](docs/assets/codespaces-badge.png)](https://codespaces.new/VinciGit00/Scrapegraph-ai)
+[![Open in GitHub Codespaces](https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/codespaces-badge.png)](https://codespaces.new/VinciGit00/Scrapegraph-ai)
 
 ## 📖 Documentation
 
