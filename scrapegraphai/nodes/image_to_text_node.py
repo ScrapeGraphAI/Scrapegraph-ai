@@ -1,11 +1,13 @@
 """ 
 Module for creating the basic node
 """
-from abc import ABC, abstractmethod
-from openai import OpenAI
+from langchain_openai import ChatOpenAI
+from .base_node import BaseNode
+
+from langchain_core.messages import HumanMessage, SystemMessage
 
 
-class ImageToTextNode(ABC):
+class ImageToTextNode(BaseNode):
     """
     An abstract base class for nodes in a graph-based workflow. Each node is 
     intended to perform a specific action when executed as part of the graph's 
@@ -53,7 +55,6 @@ class ImageToTextNode(ABC):
         super().__init__(node_name, "node")
         self.llm = llm
 
-    @abstractmethod
     def execute(self, state: dict, url: str) -> str:
         """
         Execute the node's logic and return the updated state.
@@ -63,28 +64,26 @@ class ImageToTextNode(ABC):
         :return: The updated state after executing this node.
         """
         # Da fixare
-        client = OpenAI(api_key=self.llm.openai_api_key)
 
         if not self.llm.model_name == "gpt-4-vision-preview":
             raise ValueError("Model is not gpt-4-vision-preview")
 
-        response = client.chat.completions.create(
-            model=self.llm.model_name,
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": "What’s in this image?"},
+        chat = ChatOpenAI(model=self.llm.model_name, max_tokens=256)
+        result = chat.invoke(
+            [
+                HumanMessage(
+                    content=[
+                        {"type": "text", "text": "What is this image showing"},
                         {
                             "type": "image_url",
                             "image_url": {
                                 "url": url,
+                                "detail": "auto",
                             },
                         },
-                    ],
-                }
-            ],
-            max_tokens=300,
+                    ]
+                )
+            ]
         )
 
-        return response.choices[0]
+        return result

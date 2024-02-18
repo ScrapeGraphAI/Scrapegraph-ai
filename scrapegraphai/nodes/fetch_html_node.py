@@ -2,8 +2,8 @@
 Module for fetching the HTML node
 """
 
-from langchain_community.document_loaders import AsyncHtmlLoader
 from .base_node import BaseNode
+from ..utils.getter import _get_function
 
 
 class FetchHTMLNode(BaseNode):
@@ -60,8 +60,9 @@ class FetchHTMLNode(BaseNode):
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
-        loader = AsyncHtmlLoader(url)
-        document = loader.load()
+
+        document = _get_function(url)
+
         state["keys"]["document"] = document
 
         return state

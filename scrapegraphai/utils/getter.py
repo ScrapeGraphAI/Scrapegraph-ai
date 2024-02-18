@@ -14,5 +14,6 @@ def _get_function(link: str) -> str:
     Returns:
         str: The content of the response as a string.
     """
+
     loader = AsyncHtmlLoader(link)
-    return str(loader.load())
+    return loader.load()
