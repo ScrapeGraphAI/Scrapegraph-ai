@@ -76,11 +76,10 @@ Contributions are welcome! Please check out the todos below, and feel free to op
 
 For more information, please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
-After installing and activating the virtual environment, please remember to install the library using the "dev" extra parameter to have the extra dependencies for development.
+Join our Discord server to discuss with us improvements and give us suggestions!
 
-```bash
-pip install -e .[dev]
-```
+[![Join Discord Server](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/DujC7HG8)
+ 
 
 ## Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
