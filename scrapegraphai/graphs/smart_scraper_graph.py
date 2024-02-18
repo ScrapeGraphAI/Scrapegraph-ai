@@ -102,6 +102,7 @@ class SmartScraper:
         Returns:
             str: The answer extracted from the web page, corresponding to the given prompt.
         """
-        inputs = {"keys": {"user_input": self.prompt, "url": self.url}}
+        inputs = {"user_input": self.prompt, "url": self.url}
         final_state = self.graph.execute(inputs)
-        return final_state["keys"].get("answer", "No answer found.")
+        
+        return final_state.get("answer", "No answer found.")

@@ -11,7 +11,7 @@ from scrapegraphai.nodes import FetchHTMLNode, ParseHTMLNode, GenerateAnswerNode
 
 # load the environment variables
 load_dotenv()
-openai_key = os.getenv("API_KEY")
+openai_key = os.getenv("OPENAI_APIKEY")
 if not openai_key:
     print("Error: OpenAI API key not found in environment variables.")
 
@@ -44,9 +44,9 @@ graph = BaseGraph(
 )
 
 # execute the graph
-inputs = {"keys": {"user_input": "What is the title of the page?", "url": "https://example.com"}}
+inputs = {"user_input": "What is the title of the page?", "url": "https://example.com"}
 result = graph.execute(inputs)
 
 # get the answer from the result
-answer = result["keys"].get("answer", "No answer found.")
+answer = result.get("answer", "No answer found.")
 print(answer)

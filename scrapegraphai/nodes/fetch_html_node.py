@@ -56,13 +56,13 @@ class FetchHTMLNode(BaseNode):
                       necessary information to perform the operation is missing.
         """
         try:
-            url = state["keys"]["url"]
+            url = state["url"]
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
 
         document = _get_function(url)
 
-        state["keys"]["document"] = document
+        state["document"] = document
 
         return state

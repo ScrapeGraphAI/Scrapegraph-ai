@@ -7,7 +7,7 @@ from openai import OpenAI
 from .base_node import BaseNode
 
 
-class TextToSpeachNode(BaseNode):
+class TextToSpeechNode(BaseNode):
     """
     A node responsible for parsing text content from a document using specified tags and readinf 
     it with the selected voiceq.
