@@ -9,10 +9,8 @@ from .base_node import BaseNode
 
 class TextToSpeachNode(BaseNode):
     """
-    A node responsible for parsing HTML content from a document using specified tags. 
-    It uses BeautifulSoupTransformer for parsing, providing flexibility in extracting
-    specific parts of an HTML document based on the tags provided in the state.
-
+    A node responsible for parsing text content from a document using specified tags and readinf 
+    it with the selected voiceq.
     This node enhances the scraping workflow by allowing for targeted extraction of 
     content, thereby optimizing the processing of large HTML documents.
 
@@ -29,14 +27,14 @@ class TextToSpeachNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, llm, node_name="ParseTextToSpeach"):
+    def __init__(self, llm, node_name: str = "ParseTextToSpeach"):
         """
         Initializes the ParseHTMLNode with a node name.
         """
         super().__init__(node_name, "node")
         self.llm = llm
 
-    def execute(self, state: dict, text: str, output_path: str = str, model: str = "tts-1", voice="alloy"):
+    def execute(self, state: dict, text: str, output_path: str = str, model: str = "tts-1", voice="alloy") -> dict:
         """
         Executes the node's logic to parse the HTML document based on specified tags. 
         If tags are provided in the state, the document is parsed accordingly; otherwise, 
