@@ -1,4 +1,4 @@
-from langchain_openai import ChatOpenAI
+from ..models import OpenAI
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchHTMLNode,
@@ -64,7 +64,7 @@ class SmartScraper:
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
         # Create the ChatOpenAI instance with the provided and default parameters
-        return ChatOpenAI(**llm_params)
+        return OpenAI(llm_params)
 
     def _create_graph(self):
         """

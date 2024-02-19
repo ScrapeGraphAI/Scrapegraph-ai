@@ -63,8 +63,7 @@ class ImageToTextNode(BaseNode):
             url (str): url of the image where to 
         :return: The updated state after executing this node.
         """
-        # Da fixare
-
+        
         if not self.llm.model_name == "gpt-4-vision-preview":
             raise ValueError("Model is not gpt-4-vision-preview")
 

@@ -1,15 +1,15 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
+
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraper
 
 load_dotenv()
 
+# Define the configuration for the language model
 openai_key = os.getenv("OPENAI_APIKEY")
-if not openai_key:
-    print("Error: OpenAI API key not found in environment variables.")
 llm_config = {
     "api_key": openai_key,
     "model_name": "gpt-3.5-turbo",

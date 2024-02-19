@@ -21,3 +21,6 @@ docs/source/_static/
 .env
 venv/
 .vscode/
+
+# exclude pdf
+*.pdf

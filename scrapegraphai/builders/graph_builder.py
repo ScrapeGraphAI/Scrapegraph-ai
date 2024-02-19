@@ -1,7 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
-from langchain_openai import ChatOpenAI
-from scrapegraphai.utils import nodes_metadata, graph_schema
+from ..models import OpenAI
+from ..utils import nodes_metadata, graph_schema
 
 class GraphBuilder:
     """
@@ -59,8 +59,8 @@ class GraphBuilder:
         # Ensure the api_key is set, raise an error if it's not
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
-        # Create the ChatOpenAI instance with the provided and default parameters
-        return ChatOpenAI(**llm_params)
+        # Create the OpenAI instance with the provided and default parameters
+        return OpenAI(llm_params)
 
     def _generate_nodes_description(self):
         """
@@ -114,7 +114,7 @@ class GraphBuilder:
             graphviz.Digraph: A Graphviz object representing the graph configuration.
         """
         import graphviz
-        
+
         graph = graphviz.Digraph(comment='ScrapeGraphAI Generated Graph', format=format,
                      node_attr={'color': 'lightblue2', 'style': 'filled'})
         
