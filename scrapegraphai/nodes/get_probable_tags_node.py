@@ -83,6 +83,6 @@ class GetProbableTagsNode(BaseNode):
 
         print("Possible tags: ", *probable_tags)
 
-        # Update the nested 'keys' dictionary with probable tags
+        # Update the dictionary with probable tags
         state.update({"tags": probable_tags})
         return state

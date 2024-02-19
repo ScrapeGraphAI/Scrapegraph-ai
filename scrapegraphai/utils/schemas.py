@@ -1,3 +1,7 @@
+"""
+Schemas representing the configuration of a graph or node in the ScrapeGraphAI library
+"""
+
 graph_schema = {
   "name": "ScrapeGraphAI Graph Configuration",
   "description": "JSON schema for representing graphs in the ScrapeGraphAI library",

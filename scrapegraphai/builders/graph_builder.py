@@ -41,10 +41,10 @@ class GraphBuilder:
         
     def _create_llm(self):
         """
-        Creates an instance of the ChatOpenAI class with the provided language model configuration.
+        Creates an instance of the OpenAI class with the provided language model configuration.
 
         Returns:
-            ChatOpenAI: An instance of the ChatOpenAI class.
+            OpenAI: An instance of the OpenAI class.
 
         Raises:
             ValueError: If 'api_key' is not provided in llm_config.
