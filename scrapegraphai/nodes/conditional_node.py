@@ -63,6 +63,6 @@ class ConditionalNode(BaseNode):
             str: The name of the next node to execute based on the presence of the key.
         """
 
-        if self.key_name in state.get("keys", {}) and len(state["keys"][self.key_name]) > 0:
+        if self.key_name in state and len(state[self.key_name]) > 0:
             return self.next_nodes[0].node_name
         return self.next_nodes[1].node_name

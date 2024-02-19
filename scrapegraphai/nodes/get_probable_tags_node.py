@@ -56,8 +56,8 @@ class GetProbableTagsNode(BaseNode):
 
         print("---GET PROBABLE TAGS---")
         try:
-            user_input = state["keys"]["user_input"]
-            url = state["keys"]["url"]
+            user_input = state["user_input"]
+            url = state["url"]
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
@@ -83,6 +83,6 @@ class GetProbableTagsNode(BaseNode):
 
         print("Possible tags: ", *probable_tags)
 
-        # Update the nested 'keys' dictionary with probable tags
-        state["keys"].update({"tags": probable_tags})
+        # Update the dictionary with probable tags
+        state.update({"tags": probable_tags})
         return state

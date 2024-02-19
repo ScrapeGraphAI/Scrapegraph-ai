@@ -59,14 +59,14 @@ class GenerateAnswerNode(BaseNode):
 
         print("---GENERATE ANSWER---")
         try:
-            user_input = state["keys"]["user_input"]
-            document = state["keys"]["document"]
+            user_input = state["user_input"]
+            document = state["document"]
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
 
-        parsed_document = state["keys"].get("parsed_document", None)
-        relevant_chunks = state["keys"].get("relevant_chunks", None)
+        parsed_document = state.get("parsed_document", None)
+        relevant_chunks = state.get("relevant_chunks", None)
 
         if relevant_chunks:
             context = relevant_chunks
@@ -96,5 +96,5 @@ class GenerateAnswerNode(BaseNode):
             {"context": context, "question": user_input})
 
         # Update the state with the generated answer
-        state["keys"].update({"answer": answer})
+        state.update({"answer": answer})
         return state

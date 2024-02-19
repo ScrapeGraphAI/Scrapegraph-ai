@@ -31,6 +31,7 @@ pandas = "2.0.3"
 python-dotenv = "1.0.1"
 tiktoken = {version = ">=0.5.2,<0.6.0"}
 tqdm = "4.66.1"
+graphviz = "0.20.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "8.0.0"

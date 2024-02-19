@@ -21,3 +21,7 @@ docs/source/_static/
 .env
 venv/
 .vscode/
+
+# exclude pdf, mp3
+*.pdf
+*.mp3
