@@ -1,10 +1,12 @@
-""" 
-Module for creating the smart scaper
-"""
 from langchain_openai import ChatOpenAI
 from .base_graph import BaseGraph
-from ..nodes import FetchHTMLNode, ConditionalNode, GetProbableTagsNode
-from ..nodes import GenerateAnswerNode, ParseHTMLNode
+from ..nodes import (
+    FetchHTMLNode,
+    ConditionalNode,
+    GetProbableTagsNode,
+    GenerateAnswerNode,
+    ParseHTMLNode
+    )
 
 
 class SmartScraper:
@@ -104,5 +106,5 @@ class SmartScraper:
         """
         inputs = {"user_input": self.prompt, "url": self.url}
         final_state = self.graph.execute(inputs)
-        
+
         return final_state.get("answer", "No answer found.")
