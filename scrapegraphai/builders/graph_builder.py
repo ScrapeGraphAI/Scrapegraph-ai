@@ -95,7 +95,9 @@ class GraphBuilder:
         """
 
         create_graph_prompt_template = """
-        You are an AI that designs direct graphs for web scraping tasks. Your goal is to create a web scraping pipeline that is efficient and tailored to the user's requirements. You have access to a set of default nodes, each with specific capabilities:
+        You are an AI that designs direct graphs for web scraping tasks. 
+        Your goal is to create a web scraping pipeline that is efficient and tailored to the user's requirements. 
+        You have access to a set of default nodes, each with specific capabilities:
 
         {nodes_description}
 
