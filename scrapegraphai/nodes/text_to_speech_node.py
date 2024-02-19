@@ -23,7 +23,7 @@ class TextToSpeechNode(BaseNode):
         super().__init__(node_name, "node")
         self.llm = llm
 
-    def execute(self, state: dict, text: str) -> dict:
+    def execute(self, state: dict, text: str | None = None) -> dict:
         """
         Execute the node's logic and return the updated state.
         Args:
@@ -33,7 +33,12 @@ class TextToSpeechNode(BaseNode):
         :return: The updated state after executing this node.
         """
 
-        audio = self.llm.run(text)
+        text2translate = state.get("answer", None)
+        if not text2translate:
+            raise ValueError("No text to translate to speech.")
+        
+        print("---TRANSLATING TEXT TO SPEECH---")
+        audio = self.llm.run(text2translate["summary"])
 
         state.update({"audio": audio})
         return state

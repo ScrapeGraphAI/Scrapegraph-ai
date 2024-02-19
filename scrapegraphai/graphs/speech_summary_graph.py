@@ -1,47 +1,48 @@
-from ..models import OpenAI
+from ..models import OpenAI, OpenAITextToSpeech
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchHTMLNode,
     ConditionalNode,
     GetProbableTagsNode,
     GenerateAnswerNode,
-    ParseHTMLNode
+    ParseHTMLNode,
+    TextToSpeechNode,
     )
+from scrapegraphai.utils import save_audio_from_bytes
 
-
-class SmartScraperGraph:
+class SpeechSummaryGraph:
     """
-    SmartScraper is a comprehensive web scraping tool that automates the process of extracting
-    information from web pages using a natural language model to interpret and answer prompts.
+    SpeechSummaryGraph is a tool that automates the process of extracting and summarizing
+    information from web pages, then converting that summary into spoken word via an MP3 file.
 
     Attributes:
-        prompt (str): The user's natural language prompt for the information to be extracted.
-        url (str): The URL of the web page to scrape.
-        llm_config (dict): Configuration parameters for the language model, with 
-        'api_key' being mandatory.
-        llm (ChatOpenAI): An instance of the ChatOpenAI class configured with llm_config.
-        graph (BaseGraph): An instance of the BaseGraph class representing the scraping workflow.
+        url (str): The URL of the web page to scrape and summarize.
+        llm_config (dict): Configuration parameters for the language model, with 'api_key' mandatory.
+        summary_prompt (str): The prompt used to guide the summarization process.
+        output_path (Path): The path where the generated MP3 file will be saved.
 
     Methods:
-        run(): Executes the web scraping process and returns the answer to the prompt.
+        run(): Executes the web scraping, summarization, and text-to-speech process.
 
     Args:
-        prompt (str): The user's natural language prompt for the information to be extracted.
-        url (str): The URL of the web page to scrape.
+        url (str): The URL of the web page to scrape and summarize.
         llm_config (dict): A dictionary containing configuration options for the language model.
-                           Must include 'api_key', may also specify 'model_name', 
-                           'temperature', and 'streaming'.
+        summary_prompt (str): The prompt used to guide the summarization process.
+        output_path (str): The file path where the generated MP3 should be saved.
     """
 
-    def __init__(self, prompt: str, url: str, llm_config: dict):
+    def __init__(self, prompt: str, url: str, llm_config: dict, output_path: str):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
-        self.prompt = prompt
+        self.prompt = f"{prompt} - Save the summary in a key called 'summary'."
         self.url = url
         self.llm_config = llm_config
         self.llm = self._create_llm()
+        self.output_path = output_path
+        self.text_to_speech_model = OpenAITextToSpeech(llm_config, model="tts-1", voice="alloy")
         self.graph = self._create_graph()
+        
 
     def _create_llm(self):
         """
@@ -80,6 +81,8 @@ class SmartScraperGraph:
         generate_answer_node = GenerateAnswerNode(self.llm, "generate_answer")
         conditional_node = ConditionalNode(
             "conditional", [parse_document_node, generate_answer_node])
+        text_to_speech_node = TextToSpeechNode(
+            self.text_to_speech_model, "text_to_speech")
 
         return BaseGraph(
             nodes={
@@ -88,11 +91,13 @@ class SmartScraperGraph:
                 conditional_node,
                 parse_document_node,
                 generate_answer_node,
+                text_to_speech_node
             },
             edges={
                 (fetch_html_node, get_probable_tags_node),
                 (get_probable_tags_node, conditional_node),
-                (parse_document_node, generate_answer_node)
+                (parse_document_node, generate_answer_node),
+                (generate_answer_node, text_to_speech_node)
             },
             entry_point=fetch_html_node
         )
@@ -107,4 +112,10 @@ class SmartScraperGraph:
         inputs = {"user_input": self.prompt, "url": self.url}
         final_state = self.graph.execute(inputs)
 
-        return final_state.get("answer", "No answer found.")
+        audio = final_state.get("audio", None)
+        if not audio:
+            raise ValueError("No audio generated from the text.")
+        save_audio_from_bytes(audio, self.output_path)
+        print(f"Audio saved to {self.output_path}")
+
+        return final_state

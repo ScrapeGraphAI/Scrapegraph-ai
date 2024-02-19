@@ -34,6 +34,8 @@ class ImageToTextNode(BaseNode):
             url (str): url of the image where to 
         :return: The updated state after executing this node.
         """
+
+        print("---GENERATING TEXT FROM IMAGE---")
         text_answer = self.llm.run(url)
 
         state.update({"image_text": text_answer})

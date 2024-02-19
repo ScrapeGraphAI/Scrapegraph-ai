@@ -4,7 +4,7 @@ Basic example of scraping pipeline using SmartScraper
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraper
+from scrapegraphai.graphs import SmartScraperGraph
 
 load_dotenv()
 
@@ -15,8 +15,8 @@ llm_config = {
     "model_name": "gpt-3.5-turbo",
 }
 
-smart_scraper = SmartScraper("List me all the titles and project descriptions",
+smart_scraper_graph = SmartScraperGraph("List me all the titles and project descriptions",
                              "https://perinim.github.io/projects/", llm_config)
 
-answer = smart_scraper.run()
+answer = smart_scraper_graph.run()
 print(answer)
