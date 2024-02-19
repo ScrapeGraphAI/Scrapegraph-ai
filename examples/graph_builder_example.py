@@ -16,10 +16,15 @@ llm_config = {
 }
 
 # Example usage of GraphBuilder
-user_prompt = "I want to scrape all the links related to the cinema UCI and return me a JSON with the results."
+user_prompt = "Give me all the titles of the page"
 graph_builder = GraphBuilder(user_prompt, llm_config)
 graph_json = graph_builder.build_graph()
 
 # Convert the resulting JSON to Graphviz format
 graphviz_graph = graph_builder.convert_json_to_graphviz(graph_json)
-graphviz_graph.render('custom_graph', view=True)
+
+# save on current directory
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, 'custom_graph')
+
+graphviz_graph.render(file_path, view=True)

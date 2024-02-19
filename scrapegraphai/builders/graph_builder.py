@@ -2,7 +2,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
 from langchain_openai import ChatOpenAI
 from scrapegraphai.utils import nodes_metadata, graph_schema
-import graphviz
 
 class GraphBuilder:
     """
@@ -114,7 +113,8 @@ class GraphBuilder:
         Returns:
             graphviz.Digraph: A Graphviz object representing the graph configuration.
         """
-
+        import graphviz
+        
         graph = graphviz.Digraph(comment='ScrapeGraphAI Generated Graph', format=format,
                      node_attr={'color': 'lightblue2', 'style': 'filled'})
         
