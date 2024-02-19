@@ -1,7 +1,12 @@
+""" 
+Module for making the graph building
+"""
+import graphviz
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
 from ..models import OpenAI
-from ..utils import nodes_metadata, graph_schema
+from ..helpers import nodes_metadata, graph_schema
+
 
 class GraphBuilder:
     """
@@ -11,19 +16,24 @@ class GraphBuilder:
 
     Attributes:
         prompt (str): The user's natural language prompt for the scraping task.
-        llm (ChatOpenAI): An instance of the ChatOpenAI class configured with the specified llm_config.
+        llm (ChatOpenAI): An instance of the ChatOpenAI class configured 
+        with the specified llm_config.
         nodes_description (str): A string description of all available nodes and their arguments.
-        chain (LLMChain): The extraction chain responsible for processing the prompt and creating the graph.
+        chain (LLMChain): The extraction chain responsible for 
+        processing the prompt and creating the graph.
 
     Methods:
-        build_graph(): Executes the graph creation process based on the user prompt and returns the graph configuration.
-        convert_json_to_graphviz(json_data): Converts a JSON graph configuration to a Graphviz object for visualization.
+        build_graph(): Executes the graph creation process based on the user prompt 
+        and returns the graph configuration.
+        convert_json_to_graphviz(json_data): Converts a JSON graph configuration 
+        to a Graphviz object for visualization.
 
     Args:
         prompt (str): The user's natural language prompt describing the desired scraping operation.
         url (str): The target URL from which data is to be scraped.
-        llm_config (dict): Configuration parameters for the language model, where 'api_key' is mandatory, 
-                           and 'model_name', 'temperature', and 'streaming' can be optionally included.
+        llm_config (dict): Configuration parameters for the 
+            language model, where 'api_key' is mandatory, 
+            and 'model_name', 'temperature', and 'streaming' can be optionally included.
 
     Raises:
         ValueError: If 'api_key' is not included in llm_config.
@@ -38,7 +48,7 @@ class GraphBuilder:
         self.llm = self._create_llm()
         self.nodes_description = self._generate_nodes_description()
         self.chain = self._create_extraction_chain()
-        
+
     def _create_llm(self):
         """
         Creates an instance of the OpenAI class with the provided language model configuration.
@@ -77,7 +87,8 @@ class GraphBuilder:
 
     def _create_extraction_chain(self):
         """
-        Creates an extraction chain for processing the user prompt and generating the graph configuration.
+        Creates an extraction chain for processing the user prompt and 
+        generating the graph configuration.
 
         Returns:
             LLMChain: An instance of the LLMChain class.
@@ -90,20 +101,22 @@ class GraphBuilder:
 
         Based on the user's input: "{input}", identify the essential nodes required for the task and suggest a graph configuration that outlines the flow between the chosen nodes.
         """.format(nodes_description=self.nodes_description, input="{input}")
-        extraction_prompt = ChatPromptTemplate.from_template(create_graph_prompt_template)
+        extraction_prompt = ChatPromptTemplate.from_template(
+            create_graph_prompt_template)
         return create_extraction_chain(prompt=extraction_prompt, schema=graph_schema, llm=self.llm)
 
     def build_graph(self):
         """
-        Executes the graph creation process based on the user prompt and returns the graph configuration.
+        Executes the graph creation process based on the user prompt and
+         returns the graph configuration.
 
         Returns:
             dict: A JSON representation of the graph configuration.
         """
         return self.chain.invoke(self.user_prompt)
-    
+
     @staticmethod
-    def convert_json_to_graphviz(json_data, format='pdf'):
+    def convert_json_to_graphviz(json_data, format: str = 'pdf'):
         """
         Converts a JSON graph configuration to a Graphviz object for visualization.
 
@@ -113,11 +126,10 @@ class GraphBuilder:
         Returns:
             graphviz.Digraph: A Graphviz object representing the graph configuration.
         """
-        import graphviz
 
         graph = graphviz.Digraph(comment='ScrapeGraphAI Generated Graph', format=format,
-                     node_attr={'color': 'lightblue2', 'style': 'filled'})
-        
+                                 node_attr={'color': 'lightblue2', 'style': 'filled'})
+
         graph_config = json_data["text"][0]
 
         # Retrieve nodes, edges, and the entry point from the JSON data

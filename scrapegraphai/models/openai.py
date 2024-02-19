@@ -1,6 +1,12 @@
+""" 
+openai configuration wrapper
+"""
 from langchain_openai import ChatOpenAI
 
+
 class OpenAI(ChatOpenAI):
+    """Class for wrapping openai module"""
+
     def __init__(self, llm_config: dict):
         """
         A wrapper for the ChatOpenAI class that provides default configuration

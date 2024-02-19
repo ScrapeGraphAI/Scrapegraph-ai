@@ -24,7 +24,7 @@ Try out ScrapeGraphAI in your browser:
 ## 📖 Documentation
 
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
-Behind this there is also the docusaurus documentation [here]([https://scrapegraph-ai.readthedocs.io/en/latest/](https://scrapegraph-doc.onrender.com/)).
+Behind this there is also the docusaurus documentation [here](https://scrapegraph-doc.onrender.com/)).
 
 ## Setup the api keys
 

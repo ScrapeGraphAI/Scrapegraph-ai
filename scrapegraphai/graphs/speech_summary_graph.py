@@ -1,3 +1,7 @@
+""" 
+Module for extracting the summary from the speach
+"""
+from scrapegraphai.utils.save_audio_from_bytes import save_audio_from_bytes
 from ..models import OpenAI, OpenAITextToSpeech
 from .base_graph import BaseGraph
 from ..nodes import (
@@ -7,8 +11,8 @@ from ..nodes import (
     GenerateAnswerNode,
     ParseHTMLNode,
     TextToSpeechNode,
-    )
-from scrapegraphai.utils import save_audio_from_bytes
+)
+
 
 class SpeechSummaryGraph:
     """
@@ -17,7 +21,8 @@ class SpeechSummaryGraph:
 
     Attributes:
         url (str): The URL of the web page to scrape and summarize.
-        llm_config (dict): Configuration parameters for the language model, with 'api_key' mandatory.
+        llm_config (dict): Configuration parameters for the language model, 
+        with 'api_key' mandatory.
         summary_prompt (str): The prompt used to guide the summarization process.
         output_path (Path): The path where the generated MP3 file will be saved.
 
@@ -40,9 +45,9 @@ class SpeechSummaryGraph:
         self.llm_config = llm_config
         self.llm = self._create_llm()
         self.output_path = output_path
-        self.text_to_speech_model = OpenAITextToSpeech(llm_config, model="tts-1", voice="alloy")
+        self.text_to_speech_model = OpenAITextToSpeech(
+            llm_config, model="tts-1", voice="alloy")
         self.graph = self._create_graph()
-        
 
     def _create_llm(self):
         """

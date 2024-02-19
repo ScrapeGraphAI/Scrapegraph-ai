@@ -5,6 +5,7 @@ to convert text into speech.
 
 from openai import OpenAI
 
+
 class OpenAITextToSpeech:
     """
     A class that uses OpenAI's API to convert text to speech.
@@ -17,17 +18,20 @@ class OpenAITextToSpeech:
         voice (str): The voice model to use for generating speech.
 
     Methods:
-        run(text): Converts the provided text to speech and returns the bytes of the generated speech.
+        run(text): Converts the provided text to speech and returns the
+        bytes of the generated speech.
     """
 
-    def __init__(self, llm_config, model="tts-1", voice="alloy"):
+    def __init__(self, llm_config: dict, model: str = "tts-1", voice: str = "alloy"):
         """
         Initializes an instance of the OpenAITextToSpeech class.
 
         Args:
             llm_config (dict): The configuration for the language model.
-            model (str, optional): The model to use for text-to-speech conversion. Defaults to "tts-1".
-            voice (str, optional): The voice model to use for generating speech. Defaults to "alloy".
+            model (str, optional): The model to use for text-to-speech conversion. 
+            Defaults to "tts-1".
+            voice (str, optional): The voice model to use for generating speech. 
+            Defaults to "alloy".
         """
 
         # convert model_name to model
@@ -41,7 +45,7 @@ class OpenAITextToSpeech:
 
         Args:
             text (str): The text to convert to speech.
-            
+
         """
         response = self.client.audio.speech.create(
             model=self.model,

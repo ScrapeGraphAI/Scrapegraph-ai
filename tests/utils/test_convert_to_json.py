@@ -16,5 +16,5 @@ class TestConvertToJSonFunction(unittest.TestCase):
         """
         example = {"trial": [1, 2, 3]}
         filename = "result"
-        path = "../Scrapegraph-ai/tests"
+        path = "../Scrapegraph-ai/test/utils"
         convert_to_json(example, filename, path)

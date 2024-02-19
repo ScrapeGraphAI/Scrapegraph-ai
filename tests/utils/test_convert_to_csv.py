@@ -14,5 +14,5 @@ class TestConvertToCsvFunction(unittest.TestCase):
         """
         example = {"trial": [1, 2, 3]}
         filename = "result"
-        path = "../Scrapegraph-ai/tests"
+        path = "../Scrapegraph-ai/tests/utils"
         convert_to_csv(example, filename, path)

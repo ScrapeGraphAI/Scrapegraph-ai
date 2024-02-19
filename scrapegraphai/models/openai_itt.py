@@ -1,9 +1,11 @@
 """
-This module contains the OpenAIImageToText class, which is a subclass of ChatOpenAI that is specialized for converting images to text.
+This module contains the OpenAIImageToText class, 
+which is a subclass of ChatOpenAI that is specialized for converting images to text.
 """
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
+
 
 class OpenAIImageToText(ChatOpenAI):
     """
@@ -56,5 +58,4 @@ class OpenAIImageToText(ChatOpenAI):
 
         # Use the invoke method from the superclass (ChatOpenAI)
         result = self.invoke([message]).content
-        
         return result

@@ -43,12 +43,14 @@ nodes_metadata = {
         "type": "conditional_node",
         "args": {
             "key_name": "The key in the state to check for a condition.",
-            "next_nodes": "A list of two nodes specifying the next node to execute based on the condition's outcome."
+            "next_nodes": """A list of two nodes specifying the next node 
+            to execute based on the condition's outcome."""
         },
         "returns": "The name of the next node to execute."
     },
     "ImageToTextNode": {
-        "description": "Converts image content to text by extracting visual information and interpreting it.",
+        "description": """Converts image content to text by 
+        extracting visual information and interpreting it.""",
         "type": "node",
         "args": {
             "image_data": "Data of the image to be processed."
@@ -56,7 +58,8 @@ nodes_metadata = {
         "returns": "Updated state with the textual description of the image under 'image_text' key."
     },
     "TextToSpeechNode": {
-        "description": "Converts text into spoken words, allowing for auditory representation of the text.",
+        "description": """Converts text into spoken words, allow
+        ing for auditory representation of the text.""",
         "type": "node",
         "args": {
             "text": "The text to be converted into speech."
