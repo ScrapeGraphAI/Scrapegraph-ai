@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "scrapegraphai"
-version = "0.0.2"
+version = "0.0.3"
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     "Marco Vinciguerra <mvincig11@gmail.com>",
@@ -12,7 +12,7 @@ readme = "README.md"
 homepage = "https://scrapegraph-ai.readthedocs.io/"
 repository = "https://github.com/VinciGit00/Scrapegraph-ai"
 documentation = "https://scrapegraph-doc.onrender.com/"
-keywords = ["langchain", "ai", "artificial intelligence", "gpt", "machine learning", "rag", "nlp", "natural language processing", "openai", "scraping", "web scraping", "web scraping library", "web scraping tool", "webscraping", "graph", "scrapegraph"]
+keywords = ["scrapegraph", "scrapegraphai", "langchain", "ai", "artificial intelligence", "gpt", "machine learning", "rag", "nlp", "natural language processing", "openai", "scraping", "web scraping", "web scraping library", "web scraping tool", "webscraping", "graph"]
 classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries :: Python Modules",
