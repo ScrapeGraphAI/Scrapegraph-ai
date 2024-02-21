@@ -80,6 +80,8 @@ Join our Discord server to discuss with us improvements and give us suggestions!
 
 [![Join Discord Server](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/DujC7HG8)
  
+You can also follow all the updates on linkedin!
+[![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/company/scrapegraphai/)
 
 ## Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
@@ -98,6 +100,3 @@ ScrapeGraphAI is licensed under the Apache 2.0 License. See the [LICENSE](https:
 
 - We would like to thank all the contributors to the project and the open-source community for their support.
 - ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
-
-## Contact us
-[![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/company/scrapegraphai/)
