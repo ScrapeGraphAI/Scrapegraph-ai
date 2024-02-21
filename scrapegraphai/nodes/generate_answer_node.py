@@ -3,6 +3,7 @@ Module for generating the answer node
 """
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
+from langchain_core.runnables import RunnableParallel
 from .base_node import BaseNode
 
 
@@ -69,7 +70,7 @@ class GenerateAnswerNode(BaseNode):
         relevant_chunks = state.get("relevant_chunks", None)
 
         if relevant_chunks:
-            context = relevant_chunks[0].page_content
+            context = relevant_chunks
         elif parsed_document:
             context = parsed_document
         else:
@@ -84,16 +85,32 @@ class GenerateAnswerNode(BaseNode):
         Question: {question}
                 """
 
-        schema_prompt = PromptTemplate(
-            template=template,
-            input_variables=["context", "question"],
-            partial_variables={"format_instructions": format_instructions},
-        )
+        chains_dict = {}
 
+        for i, chunk in enumerate(context):
+            prompt = PromptTemplate(
+                template=template,
+                input_variables=["question"],
+                partial_variables={"format_instructions": format_instructions, "context": chunk.page_content},
+            )
+            # Dynamically name the chains based on their index
+            chain_name = f"chunk{i}"
+            chains_dict[chain_name] = prompt | self.llm | output_parser
+
+        # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
+        map_chain = RunnableParallel(**chains_dict)
+        # schema_prompt = PromptTemplate(
+        #     template=template,
+        #     input_variables=["context", "question"],
+        #     partial_variables={"format_instructions": format_instructions},
+        # )
+        # schema_chain = schema_prompt | self.llm | output_parser
+        # answer = schema_chain.invoke(
+        #     {"context": context, "question": user_input})
+            
         # Chain
-        schema_chain = schema_prompt | self.llm | output_parser
-        answer = schema_chain.invoke(
-            {"context": context, "question": user_input})
+        answer = map_chain.invoke({"question": user_input})
+
 
         # Update the state with the generated answer
         state.update({"answer": answer})

@@ -1,7 +1,7 @@
 """
 Module for parsing the HTML node
 """
-# from langchain_community.document_transformers import BeautifulSoupTransformer
+
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain.docstore.document import Document
@@ -74,7 +74,7 @@ class TestRagNode(BaseNode):
 
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
             chunk_size=4000,
-            chunk_overlap=200,
+            chunk_overlap=0,
         )
 
         docs_transformed = Html2TextTransformer().transform_documents(document)[0]

@@ -40,7 +40,7 @@ graph = BaseGraph(
 )
 
 # execute the graph
-inputs = {"user_input": "Dammi i cinema presenti a Roma", "url": "https://www.mymovies.it/cinema/roma/"}
+inputs = {"user_input": "List me all the cinemas in Rome", "url": "https://www.mymovies.it/cinema/roma/"}
 result = graph.execute(inputs)
 
 # get the answer from the result
