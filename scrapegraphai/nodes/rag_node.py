@@ -15,7 +15,7 @@ from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from .base_node import BaseNode
 
 
-class TestRagNode(BaseNode):
+class RAGNode(BaseNode):
     """
     A node responsible for parsing HTML content from a document using specified tags. 
     It uses BeautifulSoupTransformer for parsing, providing flexibility in extracting
