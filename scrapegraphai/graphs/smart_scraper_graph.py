@@ -1,3 +1,6 @@
+""" 
+Module for creating the smart scraper
+"""
 from ..models import OpenAI
 from .base_graph import BaseGraph
 from ..nodes import (
@@ -5,7 +8,6 @@ from ..nodes import (
     RAGNode,
     GenerateAnswerNode
     )
-
 
 class SmartScraperGraph:
     """
