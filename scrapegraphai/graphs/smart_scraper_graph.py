@@ -5,12 +5,9 @@ from ..models import OpenAI
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchHTMLNode,
-    ConditionalNode,
-    GetProbableTagsNode,
-    GenerateAnswerNode,
-    ParseHTMLNode
-)
-
+    RAGNode,
+    GenerateAnswerNode
+    )
 
 class SmartScraperGraph:
     """
@@ -77,25 +74,18 @@ class SmartScraperGraph:
             BaseGraph: An instance of the BaseGraph class.
         """
         fetch_html_node = FetchHTMLNode("fetch_html")
-        get_probable_tags_node = GetProbableTagsNode(
-            self.llm, "get_probable_tags")
-        parse_document_node = ParseHTMLNode("parse_document")
+        rag_node = RAGNode(self.llm, "rag")
         generate_answer_node = GenerateAnswerNode(self.llm, "generate_answer")
-        conditional_node = ConditionalNode(
-            "conditional", [parse_document_node, generate_answer_node])
 
         return BaseGraph(
             nodes={
                 fetch_html_node,
-                get_probable_tags_node,
-                conditional_node,
-                parse_document_node,
+                rag_node,
                 generate_answer_node,
             },
             edges={
-                (fetch_html_node, get_probable_tags_node),
-                (get_probable_tags_node, conditional_node),
-                (parse_document_node, generate_answer_node)
+                (fetch_html_node, rag_node),
+                (rag_node, generate_answer_node)
             },
             entry_point=fetch_html_node
         )

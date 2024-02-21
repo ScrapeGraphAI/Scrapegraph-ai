@@ -15,8 +15,12 @@ llm_config = {
     "model_name": "gpt-3.5-turbo",
 }
 
-smart_scraper_graph = SmartScraperGraph("List me all the titles and project descriptions",
-                             "https://perinim.github.io/projects/", llm_config)
+# Define URL and prompt
+url = "https://perinim.github.io/projects/"
+prompt = "List me all the titles and project descriptions"
+
+# Create the SmartScraperGraph instance
+smart_scraper_graph = SmartScraperGraph(prompt, url, llm_config)
 
 answer = smart_scraper_graph.run()
 print(answer)

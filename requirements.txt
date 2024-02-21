@@ -2,6 +2,8 @@ langchain==0.1.6
 langchain_community==0.0.19
 langchain_core==0.1.22
 langchain_openai==0.0.5
+faiss-cpu==1.7.4
+html2text==2020.1.16
 beautifulsoup4==4.12.3
 pandas==2.0.3
 python-dotenv==1.0.1
