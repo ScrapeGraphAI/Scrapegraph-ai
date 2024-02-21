@@ -69,7 +69,7 @@ class GenerateAnswerNode(BaseNode):
         relevant_chunks = state.get("relevant_chunks", None)
 
         if relevant_chunks:
-            context = relevant_chunks
+            context = relevant_chunks[0].page_content
         elif parsed_document:
             context = parsed_document
         else:

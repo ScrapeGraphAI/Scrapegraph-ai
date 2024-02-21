@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchHTMLNode, ParseHTMLNode, GenerateAnswerNode
+from scrapegraphai.nodes import FetchHTMLNode, ParseHTMLNode, GenerateAnswerNode, TestRagNode
 
 load_dotenv()
 
@@ -22,7 +22,7 @@ model = OpenAI(llm_config)
 
 # define the nodes for the graph
 fetch_html_node = FetchHTMLNode("fetch_html")
-parse_document_node = ParseHTMLNode("parse_document")
+parse_document_node = TestRagNode(model, "parse_document")
 generate_answer_node = GenerateAnswerNode(model, "generate_answer")
 
 # create the graph
@@ -40,7 +40,7 @@ graph = BaseGraph(
 )
 
 # execute the graph
-inputs = {"user_input": "What is the title of the page?", "url": "https://example.com"}
+inputs = {"user_input": "Dammi i cinema presenti a Roma", "url": "https://www.mymovies.it/cinema/roma/"}
 result = graph.execute(inputs)
 
 # get the answer from the result
