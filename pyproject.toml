@@ -37,7 +37,6 @@ graphviz = "0.20.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "8.0.0"
-sentence_transformers = "2.3.1"
 
 [tool.poetry.group.docs]
 optional = true

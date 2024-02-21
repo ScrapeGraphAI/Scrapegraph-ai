@@ -40,7 +40,7 @@ graph = BaseGraph(
 )
 
 # execute the graph
-inputs = {"user_input": "Give me all the projects with their descriptions", "url": "https://perinim.github.io/projects/"}
+inputs = {"user_input": "Give me the summary of the page", "url": "https://python.langchain.com/docs/expression_language/how_to/map"}
 result = graph.execute(inputs)
 
 # get the answer from the result
