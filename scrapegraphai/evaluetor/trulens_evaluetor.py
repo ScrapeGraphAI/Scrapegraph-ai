@@ -1,7 +1,8 @@
-import os
-from scrapegraphai.graphs import SmartScraperGraph
-from openai import OpenAI
+"""Module for making the RAG"""
 from trulens_eval import Feedback, OpenAI as fOpenAI, Tru, Provider, Select, TruBasicApp
+from openai import OpenAI
+from scrapegraphai.graphs import SmartScraperGraph
+
 
 class TrulensEvaluator:
     """
@@ -16,20 +17,27 @@ class TrulensEvaluator:
         llm_standalone: Standalone function for Trulens evaluation.
     """
 
-    def __init__(self):
+    def __init__(self, key: str):
+        """ 
+            Initialization of the class
+            Arguments:
+            -  key (str): openai key
+        """
         standalone = StandAlone()
         f_custom_function = Feedback(standalone.json_complaint).on(
             my_text_field=Select.RecordOutput
         )
-        os.environ["OPENAI_API_KEY"] = os.environ["OPENAI_APIKEY"]
-        client = OpenAI()
+        client = OpenAI(api_key=key)
         tru = Tru()
         tru.reset_database()
         fopenai = fOpenAI()
         f_relevance = Feedback(self.fopenai.relevance).on_input_output()
-        tru_llm_standalone_recorder = TruBasicApp(self.llm_standalone, app_id="smart_scraper_evaluator", feedbacks=[self.f_relevance, self.f_custom_function])
+        tru_llm_standalone_recorder = TruBasicApp(self.llm_standalone,
+                                                  app_id="smart_scraper_evaluator",
+                                                  feedbacks=[self.f_relevance,
+                                                             self.f_custom_function])
 
-    def evaluate(self, graph_params : list[tuple[str, str, dict]]):
+    def evaluate(self, graph_params: list[tuple[str, str, dict]]):
         """
         Evaluates Trulens using SmartScraperGraph and starts the dashboard.
 
@@ -59,13 +67,18 @@ class TrulensEvaluator:
         print(f"Prompt: {prompt}")
         return str(response)
 
-"""
-Class for standalone Trulens evaluation. Personalise
-"""
+
 class StandAlone(Provider):
+    """
+    Class for standalone Trulens evaluation. 
+    """
+
     def json_complaint(self, my_text_field: str) -> float:
+        """ 
+        Args:
+            - my_text_field (str): textfield
+        """
         if '{' in my_text_field and '}' in my_text_field and ':' in my_text_field:
             return 1.0
         else:
             return 0.0
-        
