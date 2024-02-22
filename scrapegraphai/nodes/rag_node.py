@@ -3,14 +3,13 @@ Module for parsing the HTML node
 """
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_transformers import Html2TextTransformer
 from langchain.docstore.document import Document
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
+from langchain_community.document_transformers import Html2TextTransformer, EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import EmbeddingsFilter
-from langchain.retrievers.document_compressors import DocumentCompressorPipeline
-from langchain_community.document_transformers import EmbeddingsRedundantFilter
+
 
 from .base_node import BaseNode
 
@@ -77,7 +76,8 @@ class RAGNode(BaseNode):
             chunk_overlap=0,
         )
 
-        docs_transformed = Html2TextTransformer().transform_documents(document)[0]
+        docs_transformed = Html2TextTransformer(
+        ).transform_documents(document)[0]
 
         chunks = text_splitter.split_text(docs_transformed.page_content)
         chunked_docs = []
@@ -90,12 +90,15 @@ class RAGNode(BaseNode):
                 },
             )
             chunked_docs.append(doc)
-        
+
         openai_key = self.llm.openai_api_key
-        retriever = FAISS.from_documents(chunked_docs, OpenAIEmbeddings(api_key=openai_key)).as_retriever()
-        embeddings = OpenAIEmbeddings(api_key=openai_key) # could be any embedding of your choice
+        retriever = FAISS.from_documents(chunked_docs,
+                                         OpenAIEmbeddings(api_key=openai_key)).as_retriever()
+        # could be any embedding of your choice
+        embeddings = OpenAIEmbeddings(api_key=openai_key)
         redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
-        relevant_filter = EmbeddingsFilter(embeddings=embeddings) # similarity_threshold could be set, now k=20
+        # similarity_threshold could be set, now k=20
+        relevant_filter = EmbeddingsFilter(embeddings=embeddings)
         pipeline_compressor = DocumentCompressorPipeline(
             transformers=[redundant_filter, relevant_filter]
         )
@@ -104,7 +107,8 @@ class RAGNode(BaseNode):
             base_compressor=pipeline_compressor, base_retriever=retriever
         )
 
-        compressed_docs = compression_retriever.get_relevant_documents(user_input)
+        compressed_docs = compression_retriever.get_relevant_documents(
+            user_input)
         print("Documents compressed and stored in a vector database.")
         state.update({"relevant_chunks": compressed_docs})
         return state

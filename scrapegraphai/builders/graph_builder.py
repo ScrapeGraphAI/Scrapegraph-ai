@@ -81,7 +81,8 @@ class GraphBuilder:
         """
 
         return "\n".join([
-            f'- {node}: {data["description"]} (Type: {data["type"]}, Args: {", ".join(data["args"].keys())})'
+            f"""- {node}: {data["description"]} (Type: {data["type"]}, 
+            Args: {", ".join(data["args"].keys())})"""
             for node, data in nodes_metadata.items()
         ])
 

@@ -33,13 +33,15 @@ nodes_metadata = {
         "description": """A node responsible for reducing the amount of text to be processed 
         by identifying and retrieving the most relevant chunks of text based on the user's query. 
         Utilizes RecursiveCharacterTextSplitter for chunking, Html2TextTransformer for HTML to text 
-        conversion, and a combination of FAISS and OpenAIEmbeddings for efficient information retrieval.""",
+        conversion, and a combination of FAISS and OpenAIEmbeddings 
+        for efficient information retrieval.""",
         "type": "node",
         "args": {
             "user_input": "The user's query or question guiding the retrieval.",
             "document": "The HTML content to be processed and compressed."
         },
-        "returns": "Updated state with 'relevant_chunks' key containing the most relevant text chunks."
+        "returns": """Updated state with 'relevant_chunks' key containing
+         the most relevant text chunks."""
     },
     "GenerateAnswerNode": {
         "description": "Generates an answer based on the user's input and parsed document.",

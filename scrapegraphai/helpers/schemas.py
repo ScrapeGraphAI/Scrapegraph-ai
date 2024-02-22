@@ -46,8 +46,10 @@ graph_schema = {
                         "items": {
                             "type": "string"
                         },
-                        "description": """An array containing the node_names of the ending nodes of the edge. 
-                        If the 'from' node is a conditional node, this array must contain exactly two node_names."""
+                        "description": """An array containing the node_names 
+                        of the ending nodes of the edge. 
+                        If the 'from' node is a conditional node, 
+                        this array must contain exactly two node_names."""
                     }
                 },
                 "required": ["from", "to"]

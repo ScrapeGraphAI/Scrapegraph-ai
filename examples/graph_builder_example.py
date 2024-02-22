@@ -1,3 +1,6 @@
+""" 
+Example of graph builder
+"""
 import os
 from dotenv import load_dotenv
 from scrapegraphai.builders import GraphBuilder
@@ -14,8 +17,8 @@ llm_config = {
 }
 
 # Example usage of GraphBuilder
-user_prompt = "Extract the news and generate a text summary with a voiceover."
-graph_builder = GraphBuilder(user_prompt, llm_config)
+USER_PROMPT = "Extract the news and generate a text summary with a voiceover."
+graph_builder = GraphBuilder(USER_PROMPT, llm_config)
 graph_json = graph_builder.build_graph()
 
 # Convert the resulting JSON to Graphviz format

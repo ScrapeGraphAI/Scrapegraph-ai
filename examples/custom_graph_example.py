@@ -40,7 +40,8 @@ graph = BaseGraph(
 )
 
 # execute the graph
-inputs = {"user_input": "Give me the news", "url": "https://www.ansa.it/sito/notizie/topnews/index.shtml"}
+inputs = {"user_input": "Give me the news",
+          "url": "https://www.ansa.it/sito/notizie/topnews/index.shtml"}
 result = graph.execute(inputs)
 
 # get the answer from the result

@@ -1,9 +1,9 @@
 """ 
 Module for fetching the HTML node
 """
-
-from .base_node import BaseNode
 from langchain_community.document_loaders import AsyncHtmlLoader
+from .base_node import BaseNode
+
 
 class FetchHTMLNode(BaseNode):
     """

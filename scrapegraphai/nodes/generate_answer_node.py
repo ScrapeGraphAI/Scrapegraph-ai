@@ -86,7 +86,6 @@ class GenerateAnswerNode(BaseNode):
         Content of {chunk_id}: {context}
         Question: {question}
                 """
-        
         template_merge = """You are a website scraper and you have just scraped the
         following content from a website.
         You are now asked to answer a question about the content you have scraped.\n {format_instructions} \n
@@ -101,14 +100,15 @@ class GenerateAnswerNode(BaseNode):
             prompt = PromptTemplate(
                 template=template_chunks,
                 input_variables=["question"],
-                partial_variables={"context": chunk.page_content, "chunk_id": i + 1, "format_instructions": format_instructions},
+                partial_variables={"context": chunk.page_content,
+                                   "chunk_id": i + 1, "format_instructions": format_instructions},
             )
             # Dynamically name the chains based on their index
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm | output_parser
 
         # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
-        map_chain = RunnableParallel(**chains_dict)           
+        map_chain = RunnableParallel(**chains_dict)
         # Chain
         answer_map = map_chain.invoke({"question": user_input})
 
