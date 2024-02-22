@@ -9,3 +9,4 @@ pandas==2.0.3
 python-dotenv==1.0.1
 tiktoken>=0.5.2,<0.6.0
 tqdm==4.66.1
+trulens_eval==0.23.0
