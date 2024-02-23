@@ -1,3 +1,6 @@
+""" 
+Module for evaluating the graph
+"""
 import os
 from scrapegraphai.evaluators import TrulensEvaluator
 from dotenv import load_dotenv
@@ -14,8 +17,10 @@ llm_config = {
 }
 
 list_of_inputs = [
-    ("List me all the titles and project descriptions", "https://perinim.github.io/projects/", llm_config),
-    ("Who is the author of the project?", "https://perinim.github.io/projects/", llm_config),
+    ("List me all the titles and project descriptions",
+     "https://perinim.github.io/projects/", llm_config),
+    ("Who is the author of the project?",
+     "https://perinim.github.io/projects/", llm_config),
     ("What is the project about?", "https://perinim.github.io/projects/", llm_config)
 ]
 
