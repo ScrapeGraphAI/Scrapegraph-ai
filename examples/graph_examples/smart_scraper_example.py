@@ -17,7 +17,7 @@ llm_config = {
 
 # Define URL and PROMPT
 URL = "https://perinim.github.io/projects/"
-PROMPT = "List me all the titles and project descriptions"
+PROMPT = "List me all the titles and project descriptions and give me an audio"
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(PROMPT, URL, llm_config)

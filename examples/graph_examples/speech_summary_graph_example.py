@@ -18,9 +18,9 @@ llm_config = {
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 output_file_path = os.path.join(curr_dir, "website_summary.mp3")
 
-speech_summary_graph = SpeechSummaryGraph("""Make a summary of the webpage to be
+speech_summary_graph = SpeechSummaryGraph("""Make a summary of the news to be
 converted to audio for blind people.""",
-                                          "https://perinim.github.io/projects/", llm_config,
+                                          "https://www.wired.com/category/science/", llm_config,
                                           output_file_path)
 
 final_state = speech_summary_graph.run()

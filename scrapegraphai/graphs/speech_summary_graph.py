@@ -6,10 +6,8 @@ from ..models import OpenAI, OpenAITextToSpeech
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchHTMLNode,
-    ConditionalNode,
-    GetProbableTagsNode,
+    RAGNode,
     GenerateAnswerNode,
-    ParseHTMLNode,
     TextToSpeechNode,
 )
 
@@ -36,7 +34,7 @@ class SpeechSummaryGraph:
         output_path (str): The file path where the generated MP3 should be saved.
     """
 
-    def __init__(self, prompt: str, url: str, llm_config: dict, output_path: str):
+    def __init__(self, prompt: str, url: str, llm_config: dict, output_path: str = "website_summary.mp3"):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
@@ -80,28 +78,21 @@ class SpeechSummaryGraph:
             BaseGraph: An instance of the BaseGraph class.
         """
         fetch_html_node = FetchHTMLNode("fetch_html")
-        get_probable_tags_node = GetProbableTagsNode(
-            self.llm, "get_probable_tags")
-        parse_document_node = ParseHTMLNode("parse_document")
+        rag_node = RAGNode(self.llm, "rag")
         generate_answer_node = GenerateAnswerNode(self.llm, "generate_answer")
-        conditional_node = ConditionalNode(
-            "conditional", [parse_document_node, generate_answer_node])
         text_to_speech_node = TextToSpeechNode(
             self.text_to_speech_model, "text_to_speech")
 
         return BaseGraph(
             nodes={
                 fetch_html_node,
-                get_probable_tags_node,
-                conditional_node,
-                parse_document_node,
+                rag_node,
                 generate_answer_node,
                 text_to_speech_node
             },
             edges={
-                (fetch_html_node, get_probable_tags_node),
-                (get_probable_tags_node, conditional_node),
-                (parse_document_node, generate_answer_node),
+                (fetch_html_node, rag_node),
+                (rag_node, generate_answer_node),
                 (generate_answer_node, text_to_speech_node)
             },
             entry_point=fetch_html_node
