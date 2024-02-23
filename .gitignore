@@ -25,3 +25,4 @@ venv/
 # exclude pdf, mp3
 *.pdf
 *.mp3
+*.sqlite

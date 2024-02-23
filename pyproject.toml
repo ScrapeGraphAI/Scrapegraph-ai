@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "scrapegraphai"
-version = "0.0.4"
+version = "0.0.5"
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     "Marco Vinciguerra <mvincig11@gmail.com>",
@@ -21,7 +21,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9,<3.9.7 || >3.9.7,<3.12"
 langchain = "0.1.6"
 langchain_community = "0.0.19"
 langchain_core = "0.1.22"
@@ -29,6 +29,7 @@ langchain_openai = "0.0.5"
 html2text = "2020.1.16"
 faiss-cpu = "1.7.4"
 beautifulsoup4 = "4.12.3"
+trulens_eval = "0.23.0"
 pandas = "2.0.3"
 python-dotenv = "1.0.1"
 tiktoken = {version = ">=0.5.2,<0.6.0"}

@@ -1,6 +1,7 @@
 import os
-from scrapegraphai.evaluetor import TrulensEvaluator
+from scrapegraphai.evaluators import TrulensEvaluator
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()
 
@@ -19,6 +20,9 @@ list_of_inputs = [
 ]
 
 # Create the TrulensEvaluator instance
-trulens_evaluator = TrulensEvaluator()
+trulens_evaluator = TrulensEvaluator(openai_key)
 # Evaluate SmartScraperGraph on the list of inputs
-trulens_evaluator.evaluate(list_of_inputs)
+results_df = trulens_evaluator.evaluate(list_of_inputs, dashboard=True)
+
+# show the pandas dataframe
+print(results_df["app_json"].to_string())

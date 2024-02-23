@@ -1,8 +1,6 @@
 """Module for making the RAG"""
-from trulens_eval import Feedback, OpenAI as fOpenAI, Tru, Provider, Select, TruBasicApp
-from openai import OpenAI
+from trulens_eval import Feedback, OpenAI, Tru, Provider, Select, TruBasicApp
 from scrapegraphai.graphs import SmartScraperGraph
-
 
 class TrulensEvaluator:
     """
@@ -24,20 +22,19 @@ class TrulensEvaluator:
             -  key (str): openai key
         """
         standalone = StandAlone()
-        f_custom_function = Feedback(standalone.json_complaint).on(
+        self.f_custom_function = Feedback(standalone.json_complaint).on(
             my_text_field=Select.RecordOutput
         )
-        client = OpenAI(api_key=key)
-        tru = Tru()
-        tru.reset_database()
-        fopenai = fOpenAI()
-        f_relevance = Feedback(self.fopenai.relevance).on_input_output()
-        tru_llm_standalone_recorder = TruBasicApp(self.llm_standalone,
+        self.tru = Tru()
+        self.tru.reset_database()
+        self.openai = OpenAI(api_key=key)
+        self.f_relevance = Feedback(self.openai.relevance).on_input_output()
+        self.tru_llm_standalone_recorder = TruBasicApp(self.llm_standalone,
                                                   app_id="smart_scraper_evaluator",
                                                   feedbacks=[self.f_relevance,
                                                              self.f_custom_function])
 
-    def evaluate(self, graph_params: list[tuple[str, str, dict]]):
+    def evaluate(self, graph_params: list[tuple[str, str, dict]], dashboard: bool = True):
         """
         Evaluates Trulens using SmartScraperGraph and starts the dashboard.
 
@@ -51,7 +48,10 @@ class TrulensEvaluator:
             for params in graph_params:
                 output = SmartScraperGraph(*params).run()
                 self.tru_llm_standalone_recorder.app(params[0], output)
-        self.tru.run_dashboard()
+        if dashboard:
+            self.tru.run_dashboard()
+        else:
+            return self.tru.get_records_and_feedback(app_ids=[])[0]
 
     def llm_standalone(self, prompt, response):
         """
