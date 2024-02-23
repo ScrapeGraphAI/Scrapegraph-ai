@@ -27,7 +27,7 @@ list_of_inputs = [
 # Create the TrulensEvaluator instance
 trulens_evaluator = TrulensEvaluator(openai_key)
 # Evaluate SmartScraperGraph on the list of inputs
-results_df = trulens_evaluator.evaluate(list_of_inputs, dashboard=True)
+results_df = trulens_evaluator.evaluate(list_of_inputs, dashboard=False)
 
-# show the pandas dataframe
-print(results_df["app_json"].to_string())
+# Print the results
+print(results_df)
