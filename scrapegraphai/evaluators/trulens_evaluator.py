@@ -33,6 +33,8 @@ class TrulensEvaluator:
                                                   app_id="smart_scraper_evaluator",
                                                   feedbacks=[self.f_relevance,
                                                              self.f_custom_function])
+        
+        self.graph_output = []
 
     def evaluate(self, graph_params: list[tuple[str, str, dict]], dashboard: bool = True):
         """
@@ -44,14 +46,16 @@ class TrulensEvaluator:
         Returns:
             None
         """
+
         with self.tru_llm_standalone_recorder as recording:
             for params in graph_params:
                 output = SmartScraperGraph(*params).run()
                 self.tru_llm_standalone_recorder.app(params[0], output)
+                self.graph_output.append(output)
         if dashboard:
             self.tru.run_dashboard()
         else:
-            return self.tru.get_records_and_feedback(app_ids=[])[0]
+            return (self.tru.get_records_and_feedback(app_ids=[])[0], self.graph_output)
 
     def llm_standalone(self, prompt, response):
         """
