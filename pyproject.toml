@@ -21,7 +21,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.9.7 || >3.9.7,<3.12"
+python = ">3.9,<3.9.7 || >3.9.7,<3.12"
 langchain = "0.1.6"
 langchain_community = "0.0.19"
 langchain_core = "0.1.22"
