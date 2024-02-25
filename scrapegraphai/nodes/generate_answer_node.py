@@ -32,11 +32,15 @@ class GenerateAnswerNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, llm, node_name: str = "GenerateAnswerNode"):
+    def __init__(self, llm, node_name: str, node_type: str = "GenerateAnswerNode"):
         """
         Initializes the GenerateAnswerNode with a language model client and a node name.
+        Args:
+            llm (OpenAIImageToText): An instance of the OpenAIImageToText class.
+            node_name (str): name of the node
+            node_type (str, optional): type of the node
         """
-        super().__init__(node_name, "node")
+        super().__init__(node_name, node_type)
         self.llm = llm
 
     def execute(self, state: dict) -> dict:
@@ -58,7 +62,7 @@ class GenerateAnswerNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        print("---GENERATE ANSWER---")
+        print("---GENERATING ANSWER---")
         try:
             user_input = state["user_input"]
             document = state["document"]
