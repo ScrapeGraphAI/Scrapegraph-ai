@@ -36,7 +36,7 @@ class GenerateAnswerNode(BaseNode):
         """
         Initializes the GenerateAnswerNode with a language model client and a node name.
         """
-        super().__init__(node_name, "node")
+        super().__init__(node_name, "generateAnswer")
         self.llm = llm
 
     def execute(self, state: dict) -> dict:
