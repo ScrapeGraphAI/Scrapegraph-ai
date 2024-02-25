@@ -54,6 +54,7 @@ class FetchHTMLNode(BaseNode):
             KeyError: If the 'url' key is not found in the state, indicating that the
                       necessary information to perform the operation is missing.
         """
+        print("---FETCH DATA---")
         try:
             url = state["url"]
         except KeyError as e:

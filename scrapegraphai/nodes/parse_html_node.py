@@ -2,6 +2,16 @@
 Module for parsing the HTML node
 """
 from langchain_community.document_transformers import BeautifulSoupTransformer
+from langchain.docstore.document import Document
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+from langchain_community.document_transformers import (
+    Html2TextTransformer,
+    EmbeddingsRedundantFilter
+)
+from langchain_openai import OpenAIEmbeddings
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
 from .base_node import BaseNode
 
 
@@ -27,13 +37,14 @@ class ParseHTMLNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, node_name="ParseHTMLNode"):
+    def __init__(self, llm, node_name="ParseHTMLNode"):
         """
         Initializes the ParseHTMLNode with a node name.
         """
         super().__init__(node_name, "node")
+        self.llm = llm
 
-    def execute(self, state):
+    def execute(self,  state):
         """
         Executes the node's logic to parse the HTML document based on specified tags. 
         If tags are provided in the state, the document is parsed accordingly; otherwise, 
@@ -60,15 +71,65 @@ class ParseHTMLNode(BaseNode):
             print(f"Error: {e} not found in state.")
             raise
 
-        tags = state.get("tags", None)
+        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+            chunk_size=4000,
+            chunk_overlap=0,
+        )
 
-        if not tags:
-            print("No specific tags provided; returning document as is.")
-            return state
+        docs_transformed = Html2TextTransformer(
+        ).transform_documents(document)[0]
 
-        bs_transformer = BeautifulSoupTransformer()
-        parsed_document = bs_transformer.transform_documents(
-            document, tags_to_extract=tags)
-        print("Document parsed with specified tags.")
-        state.update({"parsed_document": parsed_document})
+        chunks = text_splitter.split_text(docs_transformed.page_content)
+        print("----------")
+        print(len(chunks))
+        if len(chunks) == 1:
+
+            tags = state.get("tags", None)
+
+            if not tags:
+                print("No specific tags provided; returning document as is.")
+                return state
+
+            bs_transformer = BeautifulSoupTransformer()
+            parsed_document = bs_transformer.transform_documents(
+                document, tags_to_extract=tags)
+            print("Document parsed with specified tags.")
+            state.update({"parsed_document": parsed_document})
+        else:
+            try:
+                user_input = state["user_input"]
+            except KeyError as e:
+                print(f"Error: {e} not found in state.")
+                raise
+            chunked_docs = []
+
+            for i, chunk in enumerate(chunks):
+                doc = Document(
+                    page_content=chunk,
+                    metadata={
+                        "chunk": i + 1,
+                    },
+                )
+                chunked_docs.append(doc)
+
+            openai_key = self.llm.openai_api_key
+            retriever = FAISS.from_documents(chunked_docs,
+                                             OpenAIEmbeddings(api_key=openai_key)).as_retriever()
+            # could be any embedding of your choice
+            embeddings = OpenAIEmbeddings(api_key=openai_key)
+            redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
+            # similarity_threshold could be set, now k=20
+            relevant_filter = EmbeddingsFilter(embeddings=embeddings)
+            pipeline_compressor = DocumentCompressorPipeline(
+                transformers=[redundant_filter, relevant_filter]
+            )
+
+            compression_retriever = ContextualCompressionRetriever(
+                base_compressor=pipeline_compressor, base_retriever=retriever
+            )
+
+            compressed_docs = compression_retriever.get_relevant_documents(
+                user_input)
+            print("Documents compressed and stored in a vector database.")
+            state.update({"relevant_chunks": compressed_docs})
         return state
