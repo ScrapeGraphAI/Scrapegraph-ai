@@ -66,10 +66,8 @@ class GraphBuilder:
         }
         # Update defaults with any LLM parameters that were provided
         llm_params = {**llm_defaults, **self.llm_config}
-        # Ensure the api_key is set, raise an error if it's not
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
-        # Create the OpenAI instance with the provided and default parameters
         return OpenAI(llm_params)
 
     def _generate_nodes_description(self):
