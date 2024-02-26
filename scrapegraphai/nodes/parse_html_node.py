@@ -1,17 +1,8 @@
 """
 Module for parsing the HTML node
 """
-from langchain_community.document_transformers import BeautifulSoupTransformer
-from langchain.docstore.document import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
-from langchain_community.document_transformers import (
-    Html2TextTransformer,
-    EmbeddingsRedundantFilter
-)
-from langchain_openai import OpenAIEmbeddings
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
+from langchain_community.document_transformers import Html2TextTransformer
 from .base_node import BaseNode
 
 
@@ -80,56 +71,7 @@ class ParseHTMLNode(BaseNode):
         ).transform_documents(document)[0]
 
         chunks = text_splitter.split_text(docs_transformed.page_content)
-        print("----------")
-        print(len(chunks))
-        if len(chunks) == 1:
 
-            tags = state.get("tags", None)
+        state.update({"document_chunks": chunks})
 
-            if not tags:
-                print("No specific tags provided; returning document as is.")
-                return state
-
-            bs_transformer = BeautifulSoupTransformer()
-            parsed_document = bs_transformer.transform_documents(
-                document, tags_to_extract=tags)
-            print("Document parsed with specified tags.")
-            state.update({"parsed_document": parsed_document})
-        else:
-            try:
-                user_input = state["user_input"]
-            except KeyError as e:
-                print(f"Error: {e} not found in state.")
-                raise
-            chunked_docs = []
-
-            for i, chunk in enumerate(chunks):
-                doc = Document(
-                    page_content=chunk,
-                    metadata={
-                        "chunk": i + 1,
-                    },
-                )
-                chunked_docs.append(doc)
-
-            openai_key = self.llm.openai_api_key
-            retriever = FAISS.from_documents(chunked_docs,
-                                             OpenAIEmbeddings(api_key=openai_key)).as_retriever()
-            # could be any embedding of your choice
-            embeddings = OpenAIEmbeddings(api_key=openai_key)
-            redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
-            # similarity_threshold could be set, now k=20
-            relevant_filter = EmbeddingsFilter(embeddings=embeddings)
-            pipeline_compressor = DocumentCompressorPipeline(
-                transformers=[redundant_filter, relevant_filter]
-            )
-
-            compression_retriever = ContextualCompressionRetriever(
-                base_compressor=pipeline_compressor, base_retriever=retriever
-            )
-
-            compressed_docs = compression_retriever.get_relevant_documents(
-                user_input)
-            print("Documents compressed and stored in a vector database.")
-            state.update({"relevant_chunks": compressed_docs})
         return state
