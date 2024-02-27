@@ -32,7 +32,7 @@ class ParseHTMLNode(BaseNode):
         """
         Initializes the ParseHTMLNode with a node name.
         """
-        super().__init__(node_name, "parseHTML")
+        super().__init__(node_name, "node")
 
     def execute(self,  state):
         """

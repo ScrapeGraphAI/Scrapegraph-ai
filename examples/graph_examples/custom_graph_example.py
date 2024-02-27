@@ -30,11 +30,11 @@ graph = BaseGraph(
     nodes={
         fetch_html_node,
         parse_document_node,
-        # generate_answer_node
+        generate_answer_node
     },
     edges={
         (fetch_html_node, parse_document_node),
-        # (parse_document_node, generate_answer_node)
+        (parse_document_node, generate_answer_node)
     },
     entry_point=fetch_html_node
 )

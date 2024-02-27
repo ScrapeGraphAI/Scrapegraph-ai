@@ -36,7 +36,7 @@ class GenerateAnswerNode(BaseNode):
         """
         Initializes the GenerateAnswerNode with a language model client and a node name.
         """
-        super().__init__(node_name, "generateAnswer")
+        super().__init__(node_name, "node")
         self.llm = llm
 
     def execute(self, state: dict) -> dict:
@@ -61,7 +61,7 @@ class GenerateAnswerNode(BaseNode):
         print("---GENERATE ANSWER---")
         try:
             user_input = state["user_input"]
-            document = state["document"]
+            document = state["document_chunks"]
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
@@ -100,7 +100,7 @@ class GenerateAnswerNode(BaseNode):
             prompt = PromptTemplate(
                 template=template_chunks,
                 input_variables=["question"],
-                partial_variables={"context": chunk.page_content,
+                partial_variables={"context": chunk,
                                    "chunk_id": i + 1, "format_instructions": format_instructions},
             )
             # Dynamically name the chains based on their index
