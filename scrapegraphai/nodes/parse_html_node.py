@@ -28,12 +28,11 @@ class ParseHTMLNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, llm, node_name="ParseHTMLNode"):
+    def __init__(self, node_name="ParseHTMLNode"):
         """
         Initializes the ParseHTMLNode with a node name.
         """
         super().__init__(node_name, "parseHTML")
-        self.llm = llm
 
     def execute(self,  state):
         """
