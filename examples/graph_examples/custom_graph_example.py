@@ -22,7 +22,7 @@ model = OpenAI(llm_config)
 
 # define the nodes for the graph
 fetch_html_node = FetchHTMLNode("fetch_html")
-parse_document_node = ParseHTMLNode(model, "parse_document")
+parse_document_node = ParseHTMLNode("parse_document")
 generate_answer_node = GenerateAnswerNode(model, "generate_answer")
 
 # create the graph
@@ -30,11 +30,11 @@ graph = BaseGraph(
     nodes={
         fetch_html_node,
         parse_document_node,
-        generate_answer_node
+        # generate_answer_node
     },
     edges={
         (fetch_html_node, parse_document_node),
-        (parse_document_node, generate_answer_node)
+        # (parse_document_node, generate_answer_node)
     },
     entry_point=fetch_html_node
 )
