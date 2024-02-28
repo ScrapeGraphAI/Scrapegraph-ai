@@ -63,7 +63,7 @@ class RAGNode(BaseNode):
                       information for parsing is missing.
         """
 
-        print("---PARSE HTML DOCUMENT---")
+        print("---PARSING HTML DOCUMENT---")
         try:
             user_input = state["user_input"]
             document = state["document"]

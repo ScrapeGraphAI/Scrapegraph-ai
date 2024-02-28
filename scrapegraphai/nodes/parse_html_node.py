@@ -28,11 +28,14 @@ class ParseHTMLNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, node_name="ParseHTMLNode"):
+    def __init__(self, node_name: str, node_type: str = "ParseHTMLNode"):
         """
         Initializes the ParseHTMLNode with a node name.
+        Args:
+            node_name (str): name of the node
+            node_type (str, optional): type of the node
         """
-        super().__init__(node_name, "node")
+        super().__init__(node_name, node_type)
 
     def execute(self,  state):
         """
@@ -54,7 +57,7 @@ class ParseHTMLNode(BaseNode):
                       information for parsing is missing.
         """
 
-        print("---PARSE HTML DOCUMENT---")
+        print("---PARSING HTML DOCUMENT---")
         try:
             document = state["document"]
         except KeyError as e:
