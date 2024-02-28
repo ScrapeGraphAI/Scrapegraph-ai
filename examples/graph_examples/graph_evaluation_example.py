@@ -2,8 +2,8 @@
 Module for evaluating the graph
 """
 import os
-from scrapegraphai.evaluators import TrulensEvaluator
 from dotenv import load_dotenv
+from scrapegraphai.evaluators import TrulensEvaluator
 
 load_dotenv()
 
@@ -26,6 +26,7 @@ list_of_inputs = [
 # Create the TrulensEvaluator instance
 trulens_evaluator = TrulensEvaluator(openai_key)
 # Evaluate SmartScraperGraph on the list of inputs
-(results_df, answer) = trulens_evaluator.evaluate(list_of_inputs, dashboard=False)
+(results_df, answer) = trulens_evaluator.evaluate(
+    list_of_inputs, dashboard=False)
 
 print(answer)

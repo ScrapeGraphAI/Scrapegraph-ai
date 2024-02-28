@@ -24,19 +24,12 @@ Is it possible to try also the colab version
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
-Try out ScrapeGraphAI in your browser:
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/VinciGit00/Scrapegraph-ai)
-
+Follow the procedure on the following link to setup your OpenAI API key: [link](https://scrapegraph-ai.readthedocs.io/en/latest/index.html).
 
 ## 📖 Documentation
 
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
 Behind this there is also the docusaurus documentation [here](https://scrapegraph-doc.onrender.com/)).
-
-## Setup the api keys
-
-Follow the procedure on the following link to setup your OpenAI API key: [link](https://scrapegraph-ai.readthedocs.io/en/latest/index.html).
 
 ## 💻 Usage
 
