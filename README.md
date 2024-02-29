@@ -29,8 +29,7 @@ Follow the procedure on the following link to setup your OpenAI API key: [link](
 ## 📖 Documentation
 
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
-Behind this there is also the docusaurus documentation [here](https://scrapegraph-doc.onrender.com/)).
-
+Behind this there is also the docusaurus documentation [here](https://scrapegraph-doc.onrender.com/).
 ## 💻 Usage
 
 ### Case 1: Extracting information using a prompt
