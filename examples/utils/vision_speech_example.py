@@ -17,13 +17,14 @@ llm_config = {
 }
 
 model = OpenAIImageToText(llm_config)
-answer = model.run("https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png")
-print(answer)
+ANSWER = model.run(
+    "https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png")
+print(ANSWER)
 
 text_to_speech = OpenAITextToSpeech(llm_config, model="tts-1", voice="alloy")
 
-text = "Today is a wonderful day to build something people love!"
-audio = text_to_speech.run(text)
+TEXT = "Today is a wonderful day to build something people love!"
+audio = text_to_speech.run(TEXT)
 
 # Save the audio to a file
 curr_dir = os.path.dirname(os.path.realpath(__file__))

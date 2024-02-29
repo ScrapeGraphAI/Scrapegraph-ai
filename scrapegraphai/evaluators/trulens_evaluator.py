@@ -84,5 +84,4 @@ class StandAlone(Provider):
         """
         if '{' in my_text_field and '}' in my_text_field and ':' in my_text_field:
             return 1.0
-        else:
-            return 0.0
+        return 0.0
