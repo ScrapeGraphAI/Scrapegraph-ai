@@ -110,5 +110,5 @@ class RAGNode(BaseNode):
         compressed_docs = compression_retriever.get_relevant_documents(
             user_input)
         print("Documents compressed and stored in a vector database.")
-        state.update({"relevant_chunks": compressed_docs})
+        state.update({"document_chunks": compressed_docs})
         return state

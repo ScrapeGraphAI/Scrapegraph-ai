@@ -29,15 +29,14 @@ class GetProbableTagsNode(BaseNode):
                         probable HTML tags, updating the state with these tags under the 'tags' key.
     """
 
-    def __init__(self, llm, node_name: str, node_type: str = "GetPropbableTagsNode"):
+    def __init__(self, llm, node_name: str):
         """
         Initializes the GetProbableTagsNode with a language model client and a node name.
         Args:
             llm (OpenAIImageToText): An instance of the OpenAIImageToText class.
             node_name (str): name of the node
-            node_type (str, optional): type of the node
         """
-        super().__init__(node_name, node_type)
+        super().__init__(node_name, "node")
         self.llm = llm
 
     def execute(self, state: dict):

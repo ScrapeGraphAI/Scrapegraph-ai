@@ -33,14 +33,13 @@ class FetchHTMLNode(BaseNode):
                         to succeed.
     """
 
-    def __init__(self, node_name: str, node_type: str = "fetch_node"):
+    def __init__(self, node_name: str):
         """
         Initializes the FetchHTMLNode with a node name and node type.
         Arguments:
             node_name (str): name of the node
-            node_type (str, optional): type of the node
         """
-        super().__init__(node_name, node_type)
+        super().__init__(node_name, "node")
 
     def execute(self, state: dict) -> dict:
         """

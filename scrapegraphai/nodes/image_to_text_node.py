@@ -16,14 +16,13 @@ class ImageToTextNode(BaseNode):
         execute(state, url): Execute the node's logic and return the updated state.
     """
 
-    def __init__(self, llm, node_name: str, node_type: str = "ImageToTextNode"):
+    def __init__(self, llm, node_name: str):
         """
         Initializes an instance of the ImageToTextNode class.
 
         Args:
             llm (OpenAIImageToText): An instance of the OpenAIImageToText class.
             node_name (str): name of the node
-            node_type (str, optional): type of the node
         """
         super().__init__(node_name, "node")
         self.llm = llm
