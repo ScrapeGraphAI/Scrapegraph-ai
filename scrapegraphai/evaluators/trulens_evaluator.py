@@ -2,6 +2,7 @@
 from trulens_eval import Feedback, OpenAI, Tru, Provider, Select, TruBasicApp
 from scrapegraphai.graphs import SmartScraperGraph
 
+
 class TrulensEvaluator:
     """
     Class for evaluating Trulens using SmartScraperGraph.
@@ -30,10 +31,9 @@ class TrulensEvaluator:
         self.openai = OpenAI(api_key=key)
         self.f_relevance = Feedback(self.openai.relevance).on_input_output()
         self.tru_llm_standalone_recorder = TruBasicApp(self.llm_standalone,
-                                                  app_id="smart_scraper_evaluator",
-                                                  feedbacks=[self.f_relevance,
-                                                             self.f_custom_function])
-        
+                                                       app_id="smart_scraper_evaluator",
+                                                       feedbacks=[self.f_relevance,
+                                                                  self.f_custom_function])
         self.graph_output = []
 
     def evaluate(self, graph_params: list[tuple[str, str, dict]], dashboard: bool = True):

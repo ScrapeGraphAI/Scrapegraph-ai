@@ -34,7 +34,8 @@ class SpeechSummaryGraph:
         output_path (str): The file path where the generated MP3 should be saved.
     """
 
-    def __init__(self, prompt: str, url: str, llm_config: dict, output_path: str = "website_summary.mp3"):
+    def __init__(self, prompt: str, url: str, llm_config: dict,
+                 output_path: str = "website_summary.mp3"):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
