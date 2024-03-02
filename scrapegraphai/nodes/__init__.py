@@ -9,3 +9,5 @@ from .parse_html_node import ParseHTMLNode
 from .rag_node import RAGNode
 from .text_to_speech_node import TextToSpeechNode
 from .image_to_text_node import ImageToTextNode
+from .text_node import TextNode
+from .parse_text_node import ParseTextNode

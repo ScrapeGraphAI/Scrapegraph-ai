@@ -38,14 +38,12 @@ class TextNode(BaseNode):
         """
         super().__init__(node_name, "node")
 
-    def execute(self, state: dict, text: str) -> dict:
+    def execute(self, state: dict) -> dict:
         """
-        Executes the node's logic to fetch HTML content from a specified URL and
-        update the state with this content.
+        Add to the state the text as a document
 
         Args:
             state (dict): The current state of the graph, expected to contain a 'url' key.
-            text (str):
 
         Returns:
             dict: The updated state with a new 'document' key containing the fetched HTML content.
@@ -54,8 +52,8 @@ class TextNode(BaseNode):
             KeyError: If the 'url' key is not found in the state, indicating that the
                       necessary information to perform the operation is missing.
         """
-        print("---LOADING HTML CODE---")
+        print("---LOADING TEXT CODE---")
 
-        state["document"] = text
+        state["document"] = state["url"]
 
         return state

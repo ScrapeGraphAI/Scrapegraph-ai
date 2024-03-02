@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import TextNode, ParseHTMLNode, GenerateAnswerNode
+from scrapegraphai.nodes import TextNode, ParseTextNode, GenerateAnswerNode
 
 load_dotenv()
 
@@ -20,11 +20,13 @@ llm_config = {
 }
 model = OpenAI(llm_config)
 
-text = open("text_example.txt", "r", encoding="utf-8")
+with open("text_example.txt", "r", encoding="utf-8") as file:
+    text = file.read()
+
 
 # define the nodes for the graph
-fetch_html_node = TextNode("fetch_html")
-parse_document_node = ParseHTMLNode("parse_document", )
+fetch_html_node = TextNode("load_html")
+parse_document_node = ParseTextNode("parse_document")
 generate_answer_node = GenerateAnswerNode(model, "generate_answer")
 
 # create the graph
@@ -42,7 +44,7 @@ graph = BaseGraph(
 )
 
 # execute the graph
-inputs = {"user_input": "Give me the news",
+inputs = {"user_input": "Give me the name of all the news",
           "url": text}
 result = graph.execute(inputs)
 
