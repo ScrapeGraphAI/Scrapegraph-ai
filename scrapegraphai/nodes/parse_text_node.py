@@ -7,68 +7,69 @@ from .base_node import BaseNode
 
 class ParseTextNode(BaseNode):
     """
-    A node responsible for parsing HTML content from a document using specified tags. 
-    It uses BeautifulSoupTransformer for parsing, providing flexibility in extracting
-    specific parts of an HTML document based on the tags provided in the state.
+    A node for extracting content from HTML documents based on provided tags.
 
-    This node enhances the scraping workflow by allowing for targeted extraction of 
-    content, thereby optimizing the processing of large HTML documents.
+    This node leverages the BeautifulSoupTransformer to offer flexible parsing 
+    capabilities. It allows you to isolate specific elements within an HTML 
+    document, making it valuable for targeted content extraction in scraping workflows.
 
     Attributes:
-        node_name (str): The unique identifier name for the node, defaulting to "ParseHTMLNode".
-        node_type (str): The type of the node, set to "node" indicating a standard operational node.
+        node_name (str): Unique name for the node (defaults to "ParseHTMLNode").
+        node_type (str): Indicates a standard operational node (set to "node").
 
     Args:
-        node_name (str, optional): The unique identifier name for the node. 
-        Defaults to "ParseHTMLNode".
+        node_name (str, optional): Custom name for the node (defaults to "ParseHTMLNode").
 
     Methods:
-        execute(state): Parses the HTML document contained within the state using 
-        the specified tags, if provided, and updates the state with the parsed content.
+        execute(state):  
+            * Extracts content from the 'document' field in the state based on tags (if provided in the state).
+            * Stores the result in the 'parsed_document' field of the state.
+            * Employs the RecursiveCharacterTextSplitter for handling larger documents.
     """
 
-    def __init__(self, node_name: str):
+    def __init__(self, node_name: str = "ParseHTMLNode"):
         """
-        Initializes the ParseHTMLNode with a node name.
+        Initializes the ParseHTMLNode.
+
         Args:
-            node_name (str): name of the node
-            node_type (str, optional): type of the node
+            node_name (str, optional): Custom name for the node (defaults to "ParseHTMLNode").
         """
         super().__init__(node_name, "node")
 
-    def execute(self,  state):
+    def execute(self, state):
         """
-        Executes the node's logic to parse the HTML document based on specified tags. 
-        If tags are provided in the state, the document is parsed accordingly; otherwise, 
-        the document remains unchanged. The method updates the state with either the original 
-        or parsed document under the 'parsed_document' key.
+        Parses HTML content and updates the state.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 
-            'document' within 'keys', and optionally 'tags' for targeted parsing.
+            state (dict):  Expects the following keys:
+                * 'document': The HTML content to parse.
+                * 'tags' (optional): A list of HTML tags to target for extraction.
 
         Returns:
-            dict: The updated state with the 'parsed_document' key containing the parsed content,
-                  if tags were provided, or the original document otherwise.
+            dict: Updated state with the following:
+                * 'parsed_document': The extracted content 
+                (or the original document if no tags were provided).
+                * 'document_chunks': The original document split into chunks (using RecursiveCharacterTextSplitter) 
+                for larger documents.
 
         Raises:
-            KeyError: If 'document' is not found in the state, indicating that the necessary 
-                      information for parsing is missing.
+            KeyError: If the required 'document' key is missing from the state.
         """
 
         print("---PARSING TEXT DOCUMENT---")
+
         try:
             document = state["document"]
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
 
+        # ... (Add logic for parsing with BeautifulSoup based on 'tags' if present)
+
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
             chunk_size=4000,
             chunk_overlap=0,
         )
-
-        chunks = text_splitter.split_text(document)
-        state.update({"document_chunks": chunks})
+        state["document_chunks"] = text_splitter.split_text(document)
 
         return state
