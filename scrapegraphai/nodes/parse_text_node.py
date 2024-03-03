@@ -42,14 +42,15 @@ class ParseTextNode(BaseNode):
 
         Args:
             state (dict):  Expects the following keys:
-                * 'document': The HTML content to parse.
-                * 'tags' (optional): A list of HTML tags to target for extraction.
+                'document': The HTML content to parse.
+                'tags' (optional): A list of HTML tags to target for extraction.
 
         Returns:
             dict: Updated state with the following:
-                * 'parsed_document': The extracted content 
+                'parsed_document': The extracted content 
                 (or the original document if no tags were provided).
-                * 'document_chunks': The original document split into chunks (using RecursiveCharacterTextSplitter) 
+                'document_chunks': The original document split into chunka
+                 (using RecursiveCharacterTextSplitter) 
                 for larger documents.
 
         Raises:

@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import TextNode, ParseTextNode, GenerateAnswerNode
+from scrapegraphai.nodes import FetchTextNode, ParseTextNode, GenerateAnswerNode
 
 load_dotenv()
 
@@ -25,7 +25,7 @@ with open("text_example.txt", "r", encoding="utf-8") as file:
 
 
 # define the nodes for the graph
-fetch_html_node = TextNode("load_html")
+fetch_html_node = FetchTextNode("load_html")
 parse_document_node = ParseTextNode("parse_document")
 generate_answer_node = GenerateAnswerNode(model, "generate_answer")
 
@@ -45,7 +45,7 @@ graph = BaseGraph(
 
 # execute the graph
 inputs = {"user_input": "Give me the name of all the news",
-          "url": text}
+          "text": text}
 result = graph.execute(inputs)
 
 # get the answer from the result

@@ -1,10 +1,10 @@
 """ 
-Module for TextNode
+Module for FetchTextNode
 """
 from .base_node import BaseNode
 
 
-class TextNode(BaseNode):
+class FetchTextNode(BaseNode):
     """
     A node for loading raw text into the state.
 
@@ -27,7 +27,7 @@ class TextNode(BaseNode):
 
     def __init__(self, node_name: str):
         """
-        Initializes the TextNode with a node name.
+        Initializes the FetchTextNode with a node name.
 
         Args:
           node_name (str): The unique name for the node.
@@ -39,7 +39,7 @@ class TextNode(BaseNode):
         Loads raw text content into the state.
 
         Args:
-          state (dict): The current state, expected to contain a 'url' key 
+          state (dict): The current state, expected to contain a 'text' key 
               indicating the source of the text.
 
         Returns:
@@ -50,8 +50,8 @@ class TextNode(BaseNode):
         """
         print("---LOADING TEXT CODE---")
 
-        if 'url' not in state:
+        if 'text' not in state:
             raise KeyError("The 'url' key is required to load the text.")
 
-        state["document"] = state["url"]
+        state["document"] = state["text"]
         return state
