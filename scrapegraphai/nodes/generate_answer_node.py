@@ -1,9 +1,15 @@
 """
 Module for generating the answer node
 """
-from langchain_core.output_parsers import JsonOutputParser
+# Imports from standard library
+from tqdm import tqdm
+
+# Imports from Langchain
 from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
+
+# Imports from the library
 from .base_node import BaseNode
 
 
@@ -99,7 +105,8 @@ class GenerateAnswerNode(BaseNode):
 
         chains_dict = {}
 
-        for i, chunk in enumerate(context):
+        # Use tqdm to add progress bar
+        for i, chunk in enumerate(tqdm(context, desc="Processing chunks")):
             prompt = PromptTemplate(
                 template=template_chunks,
                 input_variables=["question"],

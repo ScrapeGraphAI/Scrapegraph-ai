@@ -1,6 +1,6 @@
 # 🕷️ ScrapeGraphAI: You Only Scrape Once
 
-ScrapeGraphAI is a *web scraping* python library based on LangChain which uses LLM and direct graph logic to create scraping pipelines.
+ScrapeGraphAI is a *web scraping* python library based on LangChain which uses LLM and direct graph logic to create scraping pipelines for websites and documents.
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">

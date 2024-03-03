@@ -1,0 +1,63 @@
+<body class="section-hp hpsection-page base-editorial-page base-page page basicpage"><div id="dtm_script" data-src="https://assets.adobedtm.com/launch-EN578e54a3f0c6478aa41c89022e30863c.min.js"></div>
+    
+<a class="c-card  c-card--CA25-m c-card--CA25-t c-card--CA25-d c-card--no-abstract-m c-card--media  c-card--base" href="https://sport.sky.it/nba/nba-classifica-marcatori-ogni-epoca" data-no-autoplay-policy-article-enabled="false">
+        <article class="c-card__wrapper aem_card_check_wrapper">
+            <div class="c-card__content">
+                
+                <h2 class="c-card__title">Countdown LeBron: mancano 8 punti ai 40.000</h2>
+
+                
+                
+
+
+                
+                    <div class="c-card__label-wrapper c-label-wrapper">
+                        
+                        <span class="c-label c-label--article-heading">CLASSIFICA</span>
+                        
+                    </div>
+                    
+                
+
+                <p class="c-card__abstract">Nella notte, per battere Washington in una sfida meno semplice del previsto, ai Lakers sono...</p>
+                
+                    <div class="c-card__info">
+                        <time class="c-card__date" datetime="01 mar - 09:10">01 mar - 09:10
+                        </time>
+                        <span class="c-card__content-data">
+                                <i class="icon icon--media-outline icon--gallery-outline icon--xxsmall icon--c-neutral">
+                                    <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="icon__svg icon__svg--gallery-outline"><path d="M26.174 32.174v31.975h44.588V32.174H26.174zm-3.08-9.238h50.747A6.159 6.159 0 0 1 80 29.095v38.134a6.159 6.159 0 0 1-6.159 6.158H23.095a6.159 6.159 0 0 1-6.159-6.158V29.095a6.159 6.159 0 0 1 6.159-6.159zM9.239 55.665a4.619 4.619 0 0 1-9.238 0V16.777C0 10.825 4.825 6 10.777 6H64.08a4.619 4.619 0 1 1 0 9.238H10.777c-.85 0-1.54.69-1.54 1.54v38.887z" fill="currentColor" fill-rule="evenodd"></path></svg>
+                                </i>
+                                26 foto
+                            </span>
+                    </div>
+                    
+                
+                
+                
+                <!-- end -->
+            </div>
+
+            <div class="c-card__img-wrapper">
+                <figure class="o-aspect-ratio o-aspect-ratio--16-10 ">
+                    <img crossorigin="anonymous" class="c-card__img j-lazyload" alt="Countdown LeBron: mancano 8 punti ai 40.000" data-srcset="https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-desktop/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 314w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-desktop-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 628w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-tablet/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg  416w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-tablet-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 832w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 375w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg  750w" sizes="(max-width: 1024px) 100vw, 30vw" loading="lazy" data-src="https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg" src="https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg" srcset="https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-desktop/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 314w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-desktop-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 628w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-tablet/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg  416w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-tablet-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 832w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 375w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg  750w">
+                    
+                    <noscript>
+                        <img crossorigin="anonymous" class="c-card__img" alt="Countdown LeBron: mancano 8 punti ai 40.000" srcset="https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-desktop/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 314w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-desktop-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 628w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-tablet/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg  416w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-tablet-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 832w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg 375w,https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-mobile-2x/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg  750w" sizes="(max-width: 1024px) 100vw, 30vw" src="https://static.sky.it/images/skysport/it/nba/nba-classifica-marcatori-ogni-epoca/LeBron_Record_Punti.jpg.transform/card-tablet/ebcd4e23041ef9af59c046ce3e919cf9000541a9/img.jpeg"/>
+                    </noscript>
+                </figure>
+
+                
+                    
+
+                    <i class="icon icon--media icon--gallery icon--medium icon--c-primary">
+                        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" class="icon__svg icon__svg--gallery">
+                            <path d="M17.005 20.221h60.211c1.538 0 2.784 1.28 2.784 2.858v48.317c0 1.578-1.246 2.858-2.784 2.858H17.005c-1.537 0-2.784-1.28-2.784-2.858V23.079c0-1.578 1.247-2.858 2.784-2.858zM5.873 11.873V60.62a2.937 2.937 0 0 1-5.873 0V11.286A5.286 5.286 0 0 1 5.286 6h61.08a2.937 2.937 0 1 1 0 5.873H5.873z"></path>
+                        </svg>
+                    </i>
+                
+            </div>
+        </article>
+    </a>
+
+</body>
