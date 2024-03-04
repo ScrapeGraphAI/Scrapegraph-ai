@@ -85,9 +85,19 @@ You can also follow all the updates on linkedin!
 
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 
-
-## Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
+
+### Citations
+If you want to use our library for research purposes please quote us with the following reference
+```text
+  @misc{scrapegraph-ai,
+    author = {Marco Perini, Lorenzo Padoan, Marco Vinciguerra},
+    title = {Scrapegraph-ai},
+    year = {2024},
+    url = {https://github.com/VinciGit00/Scrapegraph-ai},
+    note = {A Python library for scraping data from graphs}
+  }
+```
 
 ## Authors
 

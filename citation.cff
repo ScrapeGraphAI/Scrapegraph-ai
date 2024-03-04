@@ -1,0 +1,14 @@
+cff-version: 0.0.1
+message: "If you use Scrapegraph-ai in your research, please cite it using these metadata."
+authors:
+  - family-names: Perini
+    given-names: Marco
+  - family-names: Padoan
+    given-names: Lorenzo
+  - family-names: Vinciguerra
+    given-names: Marco
+title: Scrapegraph-ai
+version: v0.0.10
+date-released: 2024-1-10
+url: https://github.com/VinciGit00/Scrapegraph-ai
+license: MIT
