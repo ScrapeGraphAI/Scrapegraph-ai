@@ -133,10 +133,8 @@ class GenerateAnswerNode(BaseNode):
 
         answer_lines = []
         for chunk in chunks:
-            print(i)
             answer_temp = merge_chain.invoke(
                 {"context": chunk, "question": user_input})
-            print(answer_temp)
             answer_lines.append(answer_temp)
 
         unique_answer_lines = list(set(answer_lines))
