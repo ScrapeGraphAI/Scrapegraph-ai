@@ -131,13 +131,16 @@ class GenerateAnswerNode(BaseNode):
         )
         merge_chain = merge_prompt | self.llm | output_parser
 
-        answer = []
+        answer_lines = []
         for chunk in chunks:
+            print(i)
             answer_temp = merge_chain.invoke(
                 {"context": chunk, "question": user_input})
+            print(answer_temp)
+            answer_lines.append(answer_temp)
 
-            answer.append(answer_temp)
+        unique_answer_lines = list(set(answer_lines))
+        answer = '\n'.join(unique_answer_lines)
 
-        # Update the state with the generated answer
         state.update({"answer": answer})
         return state

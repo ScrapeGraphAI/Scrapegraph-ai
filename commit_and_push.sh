@@ -21,7 +21,7 @@ commit_message="$1"
 
 # Run Pylint on the specified Python files
 pylint scrapegraphai/**/*.py scrapegraphai/*.py examples/**/*.py tests/**/*.py
-#Maket the pull
+#Make the pull
 git pull
 
 # Add the modified files to the Git repository
