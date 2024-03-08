@@ -11,6 +11,7 @@ from langchain_core.runnables import RunnableParallel
 
 # Imports from the library
 from .base_node import BaseNode
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
 class GenerateAnswerNode(BaseNode):
@@ -114,24 +115,30 @@ class GenerateAnswerNode(BaseNode):
                                    "chunk_id": i + 1, "format_instructions": format_instructions},
             )
             # Dynamically name the chains based on their index
-            chain_name = f"chunk{i+1}"
-            chains_dict[chain_name] = prompt | self.llm | output_parser
+            chains_dict[f"chunk{i+1}"] = prompt | self.llm | output_parser
 
-        # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
-        map_chain = RunnableParallel(**chains_dict)
-        # Chain
-        answer_map = map_chain.invoke({"question": user_input})
+        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+            chunk_size=4000,
+            chunk_overlap=0,
+        )
 
-        # Merge the answers from the chunks
+        chunks = text_splitter.split_text(str(chains_dict))
+
         merge_prompt = PromptTemplate(
             template=template_merge,
             input_variables=["context", "question"],
             partial_variables={"format_instructions": format_instructions},
         )
         merge_chain = merge_prompt | self.llm | output_parser
-        answer = merge_chain.invoke(
-            {"context": answer_map, "question": user_input})
 
-        # Update the state with the generated answer
+        answer_lines = []
+        for chunk in chunks:
+            answer_temp = merge_chain.invoke(
+                {"context": chunk, "question": user_input})
+            answer_lines.append(answer_temp)
+
+        unique_answer_lines = list(set(answer_lines))
+        answer = '\n'.join(unique_answer_lines)
+
         state.update({"answer": answer})
         return state
