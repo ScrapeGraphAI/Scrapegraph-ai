@@ -1,10 +1,24 @@
 """ 
 Module for fetching the HTML node
 """
+from typing import Any
 from langchain_community.document_loaders import AsyncHtmlLoader
+from langchain_core.documents import Document
 from .base_node import BaseNode
-
 from ..utils.remover import remover
+
+
+def _build_metadata(soup: Any, url: str) -> dict:
+    """Build metadata from BeautifulSoup output."""
+    metadata = {"source": url}
+    if title := soup.find("title"):
+        metadata["title"] = title.get_text()
+    if description := soup.find("meta", attrs={"name": "description"}):
+        metadata["description"] = description.get(
+            "content", "No description found.")
+    if html := soup.find("html"):
+        metadata["language"] = html.get("lang", "No language found.")
+    return metadata
 
 
 class FetchHTMLNode(BaseNode):
@@ -67,9 +81,10 @@ class FetchHTMLNode(BaseNode):
 
         loader = AsyncHtmlLoader(url)
         document = loader.load()
+        metadata = document[0].metadata
+        document = remover(str(document[0]))
 
-        document = remover(document, only_body=True)
-
-        state["document"] = document
+        state["document"] = [
+            Document(page_content=document, metadata=metadata)]
 
         return state
