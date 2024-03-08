@@ -4,6 +4,8 @@ Module for fetching the HTML node
 from langchain_community.document_loaders import AsyncHtmlLoader
 from .base_node import BaseNode
 
+from ..utils.remover import remover
+
 
 class FetchHTMLNode(BaseNode):
     """
@@ -65,6 +67,8 @@ class FetchHTMLNode(BaseNode):
 
         loader = AsyncHtmlLoader(url)
         document = loader.load()
+
+        document = remover(document, only_body=True)
 
         state["document"] = document
 

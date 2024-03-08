@@ -1,40 +1,32 @@
 """
 Module for removing the unused html tags
 """
+from bs4 import BeautifulSoup
 
 
-def remover(file: str, only_body: bool = False) -> str:
+def remover(html_content: str) -> str:
     """
-    This function elaborates the HTML file and remove all the not necessary tag
+    This function processes the HTML content, removes unnecessary tags,
+     and retrieves the title and body content.
 
     Parameters:
-        file (str): the file to parse
+        html_content (str): the HTML content to parse
 
     Returns:
-        str: the parsed file
+        str: the parsed title followed by the body content without script tags
     """
 
-    res = ""
+    soup = BeautifulSoup(html_content, 'html.parser')
 
-    if only_body:
-        is_body = True
-    else:
-        is_body = False
+    # Estrai il titolo
+    title_tag = soup.find('title')
+    title = title_tag.get_text() if title_tag else ""
 
-    for elem in file.splitlines():
-        if "<title>" in elem:
-            res = res + elem
+    # Rimuovi i tag <script> in tutto il documento
+    [script.extract() for script in soup.find_all('script')]
 
-        if "<body>" in elem:
-            is_body = True
+    # Estrai il corpo del documento
+    body_content = soup.find('body')
+    body = str(body_content) if body_content else ""
 
-        if "</body>" in elem:
-            break
-
-        if "<script>" in elem:
-            continue
-
-        if is_body:
-            res = res + elem
-
-    return res.replace("\\n", "")
+    return title + body
