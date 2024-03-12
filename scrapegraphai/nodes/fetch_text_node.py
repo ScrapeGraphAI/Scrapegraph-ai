@@ -2,7 +2,7 @@
 Module for FetchTextNode
 """
 from .base_node import BaseNode
-
+from langchain_core.documents import Document
 
 class FetchTextNode(BaseNode):
     """
@@ -53,5 +53,5 @@ class FetchTextNode(BaseNode):
         if 'text' not in state:
             raise KeyError("The 'url' key is required to load the text.")
 
-        state["document"] = state["text"]
+        state["document"] = Document(page_content=state["text"])
         return state

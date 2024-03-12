@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchTextNode, ParseTextNode, GenerateAnswerNode
+from scrapegraphai.nodes import FetchTextNode, ParseNode, RAGNode, GenerateAnswerNode
 
 load_dotenv()
 
@@ -20,13 +20,17 @@ llm_config = {
 }
 model = OpenAI(llm_config)
 
-with open("text_example.txt", "r", encoding="utf-8") as file:
+curr_dir = os.path.dirname(__file__)
+file_path = os.path.join(curr_dir, "text_example.txt")
+
+with open(file_path, "r", encoding="utf-8") as file:
     text = file.read()
 
 
 # define the nodes for the graph
-fetch_html_node = FetchTextNode("load_html")
-parse_document_node = ParseTextNode("parse_document")
+fetch_html_node = FetchTextNode("load_html_from_text")
+parse_document_node = ParseNode(doc_type="text", chunks_size=4000, node_name="parse_document")
+rag_node = RAGNode(model, "rag")
 generate_answer_node = GenerateAnswerNode(model, "generate_answer")
 
 # create the graph
@@ -34,11 +38,13 @@ graph = BaseGraph(
     nodes={
         fetch_html_node,
         parse_document_node,
+        rag_node,
         generate_answer_node
     },
     edges={
         (fetch_html_node, parse_document_node),
-        (parse_document_node, generate_answer_node)
+        (parse_document_node, rag_node),
+        (rag_node, generate_answer_node)
     },
     entry_point=fetch_html_node
 )
