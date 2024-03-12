@@ -5,6 +5,7 @@ from ..models import OpenAI
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchHTMLNode,
+    ParseNode,
     RAGNode,
     GenerateAnswerNode
     )
@@ -73,18 +74,22 @@ class SmartScraperGraph:
         Returns:
             BaseGraph: An instance of the BaseGraph class.
         """
+        # define the nodes for the graph
         fetch_html_node = FetchHTMLNode("fetch_html")
+        parse_document_node = ParseNode(doc_type="html", chunks_size=4000, node_name="parse_document")
         rag_node = RAGNode(self.llm, "rag")
         generate_answer_node = GenerateAnswerNode(self.llm, "generate_answer")
 
         return BaseGraph(
             nodes={
                 fetch_html_node,
+                parse_document_node,
                 rag_node,
                 generate_answer_node,
             },
             edges={
-                (fetch_html_node, rag_node),
+                (fetch_html_node, parse_document_node),
+                (parse_document_node, rag_node),
                 (rag_node, generate_answer_node)
             },
             entry_point=fetch_html_node

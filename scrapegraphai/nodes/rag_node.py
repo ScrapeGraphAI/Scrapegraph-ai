@@ -36,7 +36,7 @@ class RAGNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, llm, node_name="TestRagNode"):
+    def __init__(self, llm, node_name="RagNode"):
         """
         Initializes the ParseHTMLNode with a node name.
         """
@@ -63,7 +63,7 @@ class RAGNode(BaseNode):
                       information for parsing is missing.
         """
 
-        print("---PARSING HTML DOCUMENT---")
+        print("---RAG STARTED---")
         try:
             user_input = state["user_input"]
             document = state["document"]
@@ -71,15 +71,14 @@ class RAGNode(BaseNode):
             print(f"Error: {e} not found in state.")
             raise
 
-        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=4000,
-            chunk_overlap=0,
-        )
+        parsed_document = state.get("parsed_document", None)
 
-        docs_transformed = Html2TextTransformer(
-        ).transform_documents(document)[0]
+        if parsed_document:
+            chunks = parsed_document
+        else:
+            print("Parsed document not found. Using original document.")
+            chunks = document
 
-        chunks = text_splitter.split_text(docs_transformed.page_content)
         chunked_docs = []
 
         for i, chunk in enumerate(chunks):
@@ -90,6 +89,8 @@ class RAGNode(BaseNode):
                 },
             )
             chunked_docs.append(doc)
+
+        print("---UPDATED CHUNKS METADATA---")
 
         openai_key = self.llm.openai_api_key
         retriever = FAISS.from_documents(chunked_docs,
@@ -102,13 +103,21 @@ class RAGNode(BaseNode):
         pipeline_compressor = DocumentCompressorPipeline(
             transformers=[redundant_filter, relevant_filter]
         )
+        
+        # redundant + relevant filter compressor
+        # compression_retriever = ContextualCompressionRetriever(
+        #     base_compressor=pipeline_compressor, base_retriever=retriever
+        # )
 
+        # relevant filter compressor
         compression_retriever = ContextualCompressionRetriever(
-            base_compressor=pipeline_compressor, base_retriever=retriever
+            base_compressor=relevant_filter, base_retriever=retriever
         )
 
         compressed_docs = compression_retriever.get_relevant_documents(
             user_input)
-        print("Documents compressed and stored in a vector database.")
-        state.update({"document_chunks": compressed_docs})
+        
+        print("---TOKENS COMPRESSED AND VECTOR STORED---")
+        
+        state.update({"relevant_chunks": compressed_docs})
         return state

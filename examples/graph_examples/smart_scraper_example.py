@@ -16,8 +16,8 @@ llm_config = {
 }
 
 # Define URL and PROMPT
-URL = "https://www.google.com/search?client=safari&rls=en&q=ristoranti+trento&ie=UTF-8&oe=UTF-8"
-PROMPT = "List me all the https inside the page"
+URL = "https://www.ansa.it/veneto/"
+PROMPT = "List me all the news with their description."
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(PROMPT, URL, llm_config)

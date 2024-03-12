@@ -11,7 +11,6 @@ from langchain_core.runnables import RunnableParallel
 
 # Imports from the library
 from .base_node import BaseNode
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
 class GenerateAnswerNode(BaseNode):
@@ -71,7 +70,7 @@ class GenerateAnswerNode(BaseNode):
         print("---GENERATING ANSWER---")
         try:
             user_input = state["user_input"]
-            document = state["document_chunks"]
+            document = state["document"]
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
@@ -111,34 +110,28 @@ class GenerateAnswerNode(BaseNode):
             prompt = PromptTemplate(
                 template=template_chunks,
                 input_variables=["question"],
-                partial_variables={"context": chunk,
+                partial_variables={"context": chunk.page_content,
                                    "chunk_id": i + 1, "format_instructions": format_instructions},
             )
             # Dynamically name the chains based on their index
-            chains_dict[f"chunk{i+1}"] = prompt | self.llm | output_parser
+            chain_name = f"chunk{i+1}"
+            chains_dict[chain_name] = prompt | self.llm | output_parser
 
-        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=4000,
-            chunk_overlap=0,
-        )
+        # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
+        map_chain = RunnableParallel(**chains_dict)
+        # Chain
+        answer_map = map_chain.invoke({"question": user_input})
 
-        chunks = text_splitter.split_text(str(chains_dict))
-
+        # Merge the answers from the chunks
         merge_prompt = PromptTemplate(
             template=template_merge,
             input_variables=["context", "question"],
             partial_variables={"format_instructions": format_instructions},
         )
         merge_chain = merge_prompt | self.llm | output_parser
+        answer = merge_chain.invoke(
+            {"context": answer_map, "question": user_input})
 
-        answer_lines = []
-        for chunk in chunks:
-            answer_temp = merge_chain.invoke(
-                {"context": chunk, "question": user_input})
-            answer_lines.append(answer_temp)
-
-        unique_answer_lines = list(set(answer_lines))
-        answer = '\n'.join(unique_answer_lines)
-
+        # Update the state with the generated answer
         state.update({"answer": answer})
         return state

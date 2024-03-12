@@ -20,12 +20,12 @@ nodes_metadata = {
         },
         "returns": "Updated state with probable HTML tags under 'tags' key."
     },
-    "ParseHTMLNode": {
-        "description": "Parses HTML content to extract specific data.",
+    "ParseNode": {
+        "description": "Parses document content to extract specific data.",
         "type": "node",
         "args": {
-            "document": "HTML content as a string.",
-            "tags": "List of HTML tags to focus on during parsing."
+            "doc_type": "Type of the input document. Default is 'html'.",
+            "document": "The document content to be parsed.",
         },
         "returns": "Updated state with extracted data under 'parsed_document' key."
     },
@@ -38,7 +38,7 @@ nodes_metadata = {
         "type": "node",
         "args": {
             "user_input": "The user's query or question guiding the retrieval.",
-            "document": "The HTML content to be processed and compressed."
+            "document": "The document content to be processed and compressed."
         },
         "returns": """Updated state with 'relevant_chunks' key containing
          the most relevant text chunks."""
@@ -48,7 +48,7 @@ nodes_metadata = {
         "type": "node",
         "args": {
             "user_input": "User's query or question.",
-            "parsed_document": "Data extracted from the HTML document."
+            "parsed_document": "Data extracted from the input document."
         },
         "returns": "Updated state with the answer under 'answer' key."
     },
