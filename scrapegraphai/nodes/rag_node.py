@@ -2,11 +2,10 @@
 Module for parsing the HTML node
 """
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
-from langchain_community.document_transformers import Html2TextTransformer, EmbeddingsRedundantFilter
+from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 
@@ -16,12 +15,10 @@ from .base_node import BaseNode
 
 class RAGNode(BaseNode):
     """
-    A node responsible for parsing HTML content from a document using specified tags. 
-    It uses BeautifulSoupTransformer for parsing, providing flexibility in extracting
-    specific parts of an HTML document based on the tags provided in the state.
+    A node responsible for compressing the input tokens and storing the document
+    in a vector database for retrieval.
 
-    This node enhances the scraping workflow by allowing for targeted extraction of 
-    content, thereby optimizing the processing of large HTML documents.
+    It allows scraping of big documents without exceeding the token limit of the language model.
 
     Attributes:
         node_name (str): The unique identifier name for the node, defaulting to "ParseHTMLNode".
@@ -36,7 +33,7 @@ class RAGNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, llm, node_name="TestRagNode"):
+    def __init__(self, llm, node_name="RagNode"):
         """
         Initializes the ParseHTMLNode with a node name.
         """
@@ -45,25 +42,21 @@ class RAGNode(BaseNode):
 
     def execute(self, state):
         """
-        Executes the node's logic to parse the HTML document based on specified tags. 
-        If tags are provided in the state, the document is parsed accordingly; otherwise, 
-        the document remains unchanged. The method updates the state with either the original 
-        or parsed document under the 'parsed_document' key.
+        Executes the node's logic to implement RAG (Retrieval-Augmented Generation) 
+        The method updates the state with relevant chunks of the document.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 
-            'document' within 'keys', and optionally 'tags' for targeted parsing.
+            state (dict): The state containing the 'document' key with the HTML content
 
         Returns:
-            dict: The updated state with the 'parsed_document' key containing the parsed content,
-                  if tags were provided, or the original document otherwise.
+            dict: The updated state containing the 'relevant_chunks' key with the relevant chunks.
 
         Raises:
             KeyError: If 'document' is not found in the state, indicating that the necessary 
                       information for parsing is missing.
         """
 
-        print("---PARSING HTML DOCUMENT---")
+        print("---RAG STARTED---")
         try:
             user_input = state["user_input"]
             document = state["document"]
@@ -71,15 +64,14 @@ class RAGNode(BaseNode):
             print(f"Error: {e} not found in state.")
             raise
 
-        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=4000,
-            chunk_overlap=0,
-        )
+        parsed_document = state.get("parsed_document", None)
 
-        docs_transformed = Html2TextTransformer(
-        ).transform_documents(document)[0]
+        if parsed_document:
+            chunks = parsed_document
+        else:
+            print("Parsed document not found. Using original document.")
+            chunks = document
 
-        chunks = text_splitter.split_text(docs_transformed.page_content)
         chunked_docs = []
 
         for i, chunk in enumerate(chunks):
@@ -90,6 +82,8 @@ class RAGNode(BaseNode):
                 },
             )
             chunked_docs.append(doc)
+
+        print("---UPDATED CHUNKS METADATA---")
 
         openai_key = self.llm.openai_api_key
         retriever = FAISS.from_documents(chunked_docs,
@@ -102,13 +96,21 @@ class RAGNode(BaseNode):
         pipeline_compressor = DocumentCompressorPipeline(
             transformers=[redundant_filter, relevant_filter]
         )
-
+        
+        # redundant + relevant filter compressor
         compression_retriever = ContextualCompressionRetriever(
             base_compressor=pipeline_compressor, base_retriever=retriever
         )
 
+        # relevant filter compressor only
+        # compression_retriever = ContextualCompressionRetriever(
+        #     base_compressor=relevant_filter, base_retriever=retriever
+        # )
+
         compressed_docs = compression_retriever.get_relevant_documents(
             user_input)
-        print("Documents compressed and stored in a vector database.")
-        state.update({"document_chunks": compressed_docs})
+        
+        print("---TOKENS COMPRESSED AND VECTOR STORED---")
+        
+        state.update({"relevant_chunks": compressed_docs})
         return state

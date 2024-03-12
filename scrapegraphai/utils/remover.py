@@ -29,4 +29,4 @@ def remover(html_content: str) -> str:
     body_content = soup.find('body')
     body = str(body_content) if body_content else ""
 
-    return title + body
+    return "Title: " + title + ", Body: " + body

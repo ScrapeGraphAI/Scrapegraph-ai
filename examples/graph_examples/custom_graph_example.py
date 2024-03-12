@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchHTMLNode, ParseHTMLNode, GenerateAnswerNode
+from scrapegraphai.nodes import FetchHTMLNode, ParseNode, RAGNode, GenerateAnswerNode
 
 load_dotenv()
 
@@ -22,7 +22,8 @@ model = OpenAI(llm_config)
 
 # define the nodes for the graph
 fetch_html_node = FetchHTMLNode("fetch_html")
-parse_document_node = ParseHTMLNode("parse_document")
+parse_document_node = ParseNode(doc_type="html", chunks_size=4000, node_name="parse_document")
+rag_node = RAGNode(model, "rag")
 generate_answer_node = GenerateAnswerNode(model, "generate_answer")
 
 # create the graph
@@ -30,18 +31,20 @@ graph = BaseGraph(
     nodes={
         fetch_html_node,
         parse_document_node,
+        rag_node,
         generate_answer_node
     },
     edges={
         (fetch_html_node, parse_document_node),
-        (parse_document_node, generate_answer_node)
+        (parse_document_node, rag_node),
+        (rag_node, generate_answer_node)
     },
     entry_point=fetch_html_node
 )
 
 # execute the graph
-inputs = {"user_input": "Give me the news",
-          "url": "https://www.ansa.it/sito/notizie/topnews/index.shtml"}
+inputs = {"user_input": "List me the projects with their description",
+          "url": "https://perinim.github.io/projects/"}
 result = graph.execute(inputs)
 
 # get the answer from the result

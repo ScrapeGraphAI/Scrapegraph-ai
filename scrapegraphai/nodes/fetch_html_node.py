@@ -81,10 +81,11 @@ class FetchHTMLNode(BaseNode):
 
         loader = AsyncHtmlLoader(url)
         document = loader.load()
-        metadata = document[0].metadata
-        document = remover(str(document[0]))
+        # metadata = document[0].metadata
+        # document = remover(str(document[0]))
 
-        state["document"] = [
-            Document(page_content=document, metadata=metadata)]
+        # state["document"] = [
+        #     Document(page_content=document, metadata=metadata)]
+        state["document"] = document
 
         return state

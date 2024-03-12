@@ -6,11 +6,11 @@ from langchain_community.document_transformers import Html2TextTransformer
 from .base_node import BaseNode
 
 
-class ParseHTMLNode(BaseNode):
+class ParseNode(BaseNode):
     """
-    A node responsible for parsing HTML content from a document using specified tags. 
+    A node responsible for parsing HTML content from a document. 
     It uses BeautifulSoupTransformer for parsing, providing flexibility in extracting
-    specific parts of an HTML document based on the tags provided in the state.
+    specific parts of an HTML document.
 
     This node enhances the scraping workflow by allowing for targeted extraction of 
     content, thereby optimizing the processing of large HTML documents.
@@ -28,14 +28,18 @@ class ParseHTMLNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, node_name: str):
+    def __init__(self, doc_type: str = "html", chunks_size: int = 4000, node_name: str = "ParseHTMLNode"):
         """
         Initializes the ParseHTMLNode with a node name.
         Args:
+            doc_type (str): type of the input document
+            chunks_size (int): size of the chunks to split the document
             node_name (str): name of the node
             node_type (str, optional): type of the node
         """
         super().__init__(node_name, "node")
+        self.doc_type = doc_type
+        self.chunks_size = chunks_size
 
     def execute(self,  state):
         """
@@ -57,23 +61,27 @@ class ParseHTMLNode(BaseNode):
                       information for parsing is missing.
         """
 
-        print("---PARSING HTML DOCUMENT---")
+        print("---PARSING DOCUMENT---")
         try:
             document = state["document"]
         except KeyError as e:
             print(f"Error: {e} not found in state.")
             raise
-
+        
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=4000,
+            chunk_size=self.chunks_size,
             chunk_overlap=0,
         )
 
-        docs_transformed = Html2TextTransformer(
-        ).transform_documents(document)[0]
+        # Parse the document based on the specified doc_type
+        if self.doc_type == "html":
+            docs_transformed = Html2TextTransformer(
+            ).transform_documents(document)[0]
+        elif self.doc_type == "text":
+            docs_transformed = document
 
         chunks = text_splitter.split_text(docs_transformed.page_content)
 
-        state.update({"document_chunks": chunks})
+        state.update({"parsed_document": chunks})
 
         return state
