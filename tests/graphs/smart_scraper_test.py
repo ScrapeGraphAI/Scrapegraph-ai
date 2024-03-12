@@ -1,3 +1,6 @@
+""" 
+Module for testing SmartScraper class
+"""
 import os
 import unittest
 from dotenv import load_dotenv

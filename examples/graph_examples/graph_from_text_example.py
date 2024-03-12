@@ -28,25 +28,26 @@ with open(file_path, "r", encoding="utf-8") as file:
 
 
 # define the nodes for the graph
-fetch_html_node = FetchTextNode("load_html_from_text")
-parse_document_node = ParseNode(doc_type="text", chunks_size=4000, node_name="parse_document")
+fetch_text_node = FetchTextNode("load_html_from_text")
+parse_document_node = ParseNode(
+    doc_type="text", chunks_size=4000, node_name="parse_document")
 rag_node = RAGNode(model, "rag")
 generate_answer_node = GenerateAnswerNode(model, "generate_answer")
 
 # create the graph
 graph = BaseGraph(
     nodes={
-        fetch_html_node,
+        fetch_text_node,
         parse_document_node,
         rag_node,
         generate_answer_node
     },
     edges={
-        (fetch_html_node, parse_document_node),
+        (fetch_text_node, parse_document_node),
         (parse_document_node, rag_node),
         (rag_node, generate_answer_node)
     },
-    entry_point=fetch_html_node
+    entry_point=fetch_text_node
 )
 
 # execute the graph

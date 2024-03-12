@@ -26,3 +26,4 @@ venv/
 *.pdf
 *.mp3
 *.sqlite
+examples/graph_examples/ScrapeGraphAI_generated_graph

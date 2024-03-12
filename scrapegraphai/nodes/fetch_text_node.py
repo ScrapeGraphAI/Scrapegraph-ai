@@ -1,8 +1,9 @@
 """ 
 Module for FetchTextNode
 """
-from .base_node import BaseNode
 from langchain_core.documents import Document
+from .base_node import BaseNode
+
 
 class FetchTextNode(BaseNode):
     """
