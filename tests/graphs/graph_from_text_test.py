@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchTextNode, ParseNode, RAGNode, GenerateAnswerNode
+from scrapegraphai.nodes import FetchTextNode, ParseNode, RAGNode, GenerateAnswerNodeFromRag
 
 
 class TestCustomGraph(unittest.TestCase):
@@ -59,7 +59,7 @@ class TestCustomGraph(unittest.TestCase):
         parse_document_node = ParseNode(
             doc_type="text", chunks_size=20, node_name="parse_document")
         rag_node = RAGNode(model, "rag")
-        generate_answer_node = GenerateAnswerNode(model, "generate_answer")
+        generate_answer_node = GenerateAnswerNodeFromRag(model, "generate_answer")
 
         graph = BaseGraph(
             nodes={
