@@ -8,7 +8,7 @@ from ..nodes import (
     FetchHTMLNode,
     ParseNode,
     RAGNode,
-    GenerateAnswerNode,
+    GenerateAnswerNodeFromRag,
     TextToSpeechNode,
 )
 
@@ -82,7 +82,7 @@ class SpeechSummaryGraph:
         fetch_html_node = FetchHTMLNode("fetch_html")
         parse_document_node = ParseNode(doc_type="html", chunks_size=4000, node_name="parse_document")
         rag_node = RAGNode(self.llm, "rag")
-        generate_answer_node = GenerateAnswerNode(self.llm, "generate_answer")
+        generate_answer_node = GenerateAnswerNodeFromRag(self.llm, "generate_answer")
         text_to_speech_node = TextToSpeechNode(
             self.text_to_speech_model, "text_to_speech")
 

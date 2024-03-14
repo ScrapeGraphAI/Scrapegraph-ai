@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchTextNode, ParseNode, RAGNode, GenerateAnswerNode
+from scrapegraphai.nodes import FetchTextNode, ParseNode, RAGNode, GenerateAnswerNodeFromRag
 
 load_dotenv()
 
@@ -32,7 +32,7 @@ fetch_text_node = FetchTextNode("load_html_from_text")
 parse_document_node = ParseNode(
     doc_type="text", chunks_size=4000, node_name="parse_document")
 rag_node = RAGNode(model, "rag")
-generate_answer_node = GenerateAnswerNode(model, "generate_answer")
+generate_answer_node = GenerateAnswerNodeFromRag(model, "generate_answer")
 
 # create the graph
 graph = BaseGraph(

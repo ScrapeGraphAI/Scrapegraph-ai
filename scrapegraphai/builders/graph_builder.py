@@ -4,7 +4,7 @@ Module for making the graph building
 import graphviz
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
-from ..models import OpenAI
+from ..models import OpenAI, Gemini
 from ..helpers import nodes_metadata, graph_schema
 
 
@@ -68,6 +68,13 @@ class GraphBuilder:
         llm_params = {**llm_defaults, **self.llm_config}
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
+        
+        # select the model based on the model name
+        if "gpt-" in llm_params["model_name"]:
+            return OpenAI(llm_params)
+        elif "gemini" in llm_params["model_name"]:
+            return Gemini(llm_params)
+        
         return OpenAI(llm_params)
 
     def _generate_nodes_description(self):
