@@ -29,7 +29,7 @@ class ParseNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, input: str, output: List[str], node_name: str = "ParseNode"):
+    def __init__(self, input: str, output: List[str], node_name: str = "Parse"):
         """
         Initializes the ParseHTMLNode with a node name.
         Args:

@@ -17,12 +17,12 @@ class TextToSpeechNode(BaseNode):
         execute(state, text): Execute the node's logic and return the updated state.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "TextToSpeechNode"):
+    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "TextToSpeech"):
         """
         Initializes an instance of the TextToSpeechNode class.
         """
         super().__init__(node_name, "node", input, output, 1, model_config)
-        self.text2speech_model = model_config["text2speech_model"]
+        self.tts_model = model_config["tts_model"]
 
     def execute(self, state):
         """
@@ -42,13 +42,11 @@ class TextToSpeechNode(BaseNode):
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
-        text2translate = input_data[0]
-
-        # if not a string, raise an error
-        if not isinstance(text2translate, str):
-            raise ValueError("No text to translate to speech.")
-        print("---TRANSLATING TEXT TO SPEECH---")
-        audio = self.text2speech_model.run(text2translate["summary"])
+        # get the text to translate
+        text2translate = str(next(iter(input_data[0].values())))
+        # text2translate = str(input_data[0])
+        
+        audio = self.tts_model.run(text2translate)
 
         state.update({self.output[0]: audio})
         return state

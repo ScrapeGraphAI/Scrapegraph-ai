@@ -5,7 +5,7 @@ from scrapegraphai.utils.save_audio_from_bytes import save_audio_from_bytes
 from ..models import OpenAI, OpenAITextToSpeech
 from .base_graph import BaseGraph
 from ..nodes import (
-    FetchHTMLNode,
+    FetchNode,
     ParseNode,
     RAGNode,
     GenerateAnswerNode,
@@ -13,7 +13,7 @@ from ..nodes import (
 )
 
 
-class SpeechSummaryGraph:
+class SpeechGraph:
     """
     SpeechSummaryGraph is a tool that automates the process of extracting and summarizing
     information from web pages, then converting that summary into spoken word via an MP3 file.
@@ -35,21 +35,18 @@ class SpeechSummaryGraph:
         output_path (str): The file path where the generated MP3 should be saved.
     """
 
-    def __init__(self, prompt: str, url: str, llm_config: dict,
-                 output_path: str = "website_summary.mp3"):
+    def __init__(self, prompt: str, url: str, config: dict):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
-        self.prompt = f"{prompt} - Save the summary in a key called 'summary'."
+        self.prompt = prompt
         self.url = url
-        self.llm_config = llm_config
-        self.llm = self._create_llm()
-        self.output_path = output_path
-        self.text_to_speech_model = OpenAITextToSpeech(
-            llm_config, model="tts-1", voice="alloy")
+        self.llm_model = self._create_llm(config["llm"])
+        self.output_path = config.get("output_path", "output.mp3")
+        self.text_to_speech_model = OpenAITextToSpeech(config["tts_model"])
         self.graph = self._create_graph()
 
-    def _create_llm(self):
+    def _create_llm(self, llm_config: dict):
         """
         Creates an instance of the ChatOpenAI class with the provided language model configuration.
 
@@ -60,12 +57,11 @@ class SpeechSummaryGraph:
             ValueError: If 'api_key' is not provided in llm_config.
         """
         llm_defaults = {
-            "model_name": "gpt-3.5-turbo",
             "temperature": 0,
             "streaming": True
         }
         # Update defaults with any LLM parameters that were provided
-        llm_params = {**llm_defaults, **self.llm_config}
+        llm_params = {**llm_defaults, **llm_config}
         # Ensure the api_key is set, raise an error if it's not
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
@@ -79,28 +75,46 @@ class SpeechSummaryGraph:
         Returns:
             BaseGraph: An instance of the BaseGraph class.
         """
-        fetch_html_node = FetchHTMLNode("fetch_html")
-        parse_document_node = ParseNode(doc_type="html", chunks_size=4000, node_name="parse_document")
-        rag_node = RAGNode(self.llm, "rag")
-        generate_answer_node = GenerateAnswerNode(self.llm, "generate_answer")
+        # define the nodes for the graph
+        fetch_node = FetchNode(
+            input="url | local_dir",
+            output=["doc"],
+            )
+        parse_node = ParseNode(
+            input="doc",
+            output=["parsed_doc"],
+            )
+        rag_node = RAGNode(
+            input="user_prompt & (parsed_doc | doc)",
+            output=["relevant_chunks"],
+            model_config={"llm_model": self.llm_model},
+            )
+        generate_answer_node = GenerateAnswerNode(
+            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+            output=["answer"],
+            model_config={"llm_model": self.llm_model},
+            )
         text_to_speech_node = TextToSpeechNode(
-            self.text_to_speech_model, "text_to_speech")
+            input="answer",
+            output=["audio"],
+            model_config={"tts_model": self.text_to_speech_model},
+        )
 
         return BaseGraph(
             nodes={
-                fetch_html_node,
-                parse_document_node,
+                fetch_node,
+                parse_node,
                 rag_node,
                 generate_answer_node,
                 text_to_speech_node
             },
             edges={
-                (fetch_html_node, parse_document_node),
-                (parse_document_node, rag_node),
+                (fetch_node, parse_node),
+                (parse_node, rag_node),
                 (rag_node, generate_answer_node),
                 (generate_answer_node, text_to_speech_node)
             },
-            entry_point=fetch_html_node
+            entry_point=fetch_node
         )
 
     def run(self) -> str:
@@ -110,7 +124,7 @@ class SpeechSummaryGraph:
         Returns:
             str: The answer extracted from the web page, corresponding to the given prompt.
         """
-        inputs = {"user_input": self.prompt, "url": self.url}
+        inputs = {"user_prompt": self.prompt, "url": self.url}
         final_state = self.graph.execute(inputs)
 
         audio = final_state.get("audio", None)

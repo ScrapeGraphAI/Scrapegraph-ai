@@ -38,7 +38,7 @@ class GenerateAnswerNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "GenerateAnswerNode"):
+    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "GenerateAnswer"):
         """
         Initializes the GenerateAnswerNode with a language model client and a node name.
         Args:

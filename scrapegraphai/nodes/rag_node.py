@@ -12,7 +12,6 @@ from typing import List
 
 from .base_node import BaseNode
 
-
 class RAGNode(BaseNode):
     """
     A node responsible for compressing the input tokens and storing the document
@@ -33,7 +32,7 @@ class RAGNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "RAGNode"):
+    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "RAG"):
         """
         Initializes the ParseHTMLNode with a node name.
         """
@@ -78,7 +77,7 @@ class RAGNode(BaseNode):
             )
             chunked_docs.append(doc)
 
-        print("---UPDATED CHUNKS METADATA---")
+        print("--- (updated chunks metadata) ---")
 
         openai_key = self.llm_model.openai_api_key
         retriever = FAISS.from_documents(chunked_docs,
@@ -105,7 +104,7 @@ class RAGNode(BaseNode):
         compressed_docs = compression_retriever.get_relevant_documents(
             user_prompt)
         
-        print("---TOKENS COMPRESSED AND VECTOR STORED---")
+        print("--- (tokens compressed and vector stored) ---")
         
         state.update({self.output[0]: compressed_docs})
         return state

@@ -35,7 +35,7 @@ class FetchNode(BaseNode):
                         to succeed.
     """
 
-    def __init__(self, input: str, output: List[str], node_name: str = "FetchNode"):
+    def __init__(self, input: str, output: List[str], node_name: str = "Fetch"):
         """
         Initializes the FetchHTMLNode with a node name and node type.
         Arguments:
