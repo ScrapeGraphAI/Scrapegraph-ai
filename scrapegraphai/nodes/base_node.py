@@ -2,7 +2,7 @@
 Module for creating the basic node
 """
 from abc import ABC, abstractmethod
-from typing import List, Dict
+from typing import Optional, List
 import re
 
 class BaseNode(ABC):
@@ -39,7 +39,7 @@ class BaseNode(ABC):
                     raised to indicate the incorrect usage.
     """
 
-    def __init__(self, node_name: str, node_type: str):
+    def __init__(self, node_name: str, node_type: str, input: str, output: List[str], min_input_len: int = 1, model = None):
         """
         Initialize the node with a unique identifier and a specified node type.
 
@@ -51,6 +51,11 @@ class BaseNode(ABC):
             ValueError: If node_type is not "node" or "conditional_node".
         """
         self.node_name = node_name
+        self.input = input
+        self.output = output
+        self.min_input_len = min_input_len
+        self.model = model
+
         if node_type not in ["node", "conditional_node"]:
             raise ValueError(
                 f"node_type must be 'node' or 'conditional_node', got '{node_type}'")
@@ -65,6 +70,20 @@ class BaseNode(ABC):
         :return: The updated state after executing this node.
         """
         pass
+
+    def get_input_keys(self, state: dict) -> List[str]:
+        # Use the _parse_input_keys method to identify which state keys are needed based on the input attribute
+        try:
+            input_keys = self._parse_input_keys(state, self.input)
+            self._validate_input_keys(input_keys)
+            return input_keys
+        except ValueError as e:
+            raise ValueError(f"Error parsing input keys for {self.node_name}: {str(e)}")
+
+    
+    def _validate_input_keys(self, input_keys):
+        if len(input_keys) < self.min_input_len:
+            raise ValueError(f"{self.node_name} requires at least {self.min_input_len} input keys, got {len(input_keys)}.")
 
     def _parse_input_keys(self, state: dict, expression: str) -> List[str]:
         """

@@ -20,6 +20,34 @@ llm_config = {
 }
 model = OpenAI(llm_config)
 
+# fetch_html_node = FetchNode(
+#     input="url | local_dir",
+#     output=["doc"],
+#     node_name="fetch_html"
+#     )
+# parse_document_node = ParseNode(
+#     input="doc",
+#     output=["parsed_doc"],
+#     node_name="parse_document"
+#     )
+# split_chunks_node = SplitChunksNode(
+#     input="parsed_doc | doc",
+#     output=["doc_chunks"],
+#     node_name="split_chunks"
+#     )
+# rag_node = RAGNode(
+#     input="user_prompt & (doc_chunks | parsed_doc | doc)",
+#     output=["relevant_doc_chunks"],
+#     model=model,
+#     node_name="rag"
+#     )
+# generate_answer_node = GenerateAnswerNode(
+#     input="user_prompt & (relevant_doc_chunks | doc_chunks | parsed_doc | doc)",
+#     output=["answer"],
+#     model=model,
+#     node_name="generate_answer"
+#     )
+
 # define the nodes for the graph
 fetch_html_node = FetchHTMLNode("fetch_html")
 parse_document_node = ParseNode(doc_type="html", chunks_size=4000, node_name="parse_document")
