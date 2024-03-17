@@ -77,6 +77,8 @@ class ParseNode(BaseNode):
         docs_transformed = Html2TextTransformer(
         ).transform_documents(input_data[0])[0]
 
+        # TODO: keep the metadata
+
         chunks = text_splitter.split_text(docs_transformed.page_content)
 
         state.update({self.output[0]: chunks})

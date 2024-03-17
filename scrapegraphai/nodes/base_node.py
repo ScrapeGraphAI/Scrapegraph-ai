@@ -39,7 +39,7 @@ class BaseNode(ABC):
                     raised to indicate the incorrect usage.
     """
 
-    def __init__(self, node_name: str, node_type: str, input: str, output: List[str], min_input_len: int = 1, model = None):
+    def __init__(self, node_name: str, node_type: str, input: str, output: List[str], min_input_len: int = 1, model_config: Optional[dict] = None):
         """
         Initialize the node with a unique identifier and a specified node type.
 
@@ -54,7 +54,7 @@ class BaseNode(ABC):
         self.input = input
         self.output = output
         self.min_input_len = min_input_len
-        self.model = model
+        self.model_config = model_config
 
         if node_type not in ["node", "conditional_node"]:
             raise ValueError(
