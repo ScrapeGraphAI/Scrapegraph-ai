@@ -38,7 +38,7 @@ class ParseNode(BaseNode):
             node_name (str): name of the node
             node_type (str, optional): type of the node
         """
-        super().__init__(node_name, "node", input, output, 2)
+        super().__init__(node_name, "node", input, output, 1)
 
     def execute(self,  state):
         """

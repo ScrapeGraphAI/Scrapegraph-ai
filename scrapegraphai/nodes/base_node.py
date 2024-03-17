@@ -62,7 +62,7 @@ class BaseNode(ABC):
         self.node_type = node_type
 
     @abstractmethod
-    def execute(self, state: dict):
+    def execute(self, state: dict) -> dict:
         """
         Execute the node's logic and return the updated state.
         Args:
