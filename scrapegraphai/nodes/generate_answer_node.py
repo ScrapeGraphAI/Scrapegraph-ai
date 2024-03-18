@@ -2,6 +2,7 @@
 Module for generating the answer node
 """
 # Imports from standard library
+from typing import List
 from tqdm import tqdm
 
 # Imports from Langchain
@@ -11,7 +12,7 @@ from langchain_core.runnables import RunnableParallel
 
 # Imports from the library
 from .base_node import BaseNode
-from typing import List
+
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -38,7 +39,8 @@ class GenerateAnswerNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "GenerateAnswer"):
+    def __init__(self, input: str, output: List[str], model_config: dict,
+                 node_name: str = "GenerateAnswer"):
         """
         Initializes the GenerateAnswerNode with a language model client and a node name.
         Args:
@@ -68,10 +70,10 @@ class GenerateAnswerNode(BaseNode):
         """
 
         print(f"--- Executing {self.node_name} Node ---")
-    
+
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        
+
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 

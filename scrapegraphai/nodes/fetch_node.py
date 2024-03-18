@@ -2,10 +2,11 @@
 Module for fetching the HTML node
 """
 
+from typing import List
 from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_core.documents import Document
 from .base_node import BaseNode
-from typing import List
+
 
 class FetchNode(BaseNode):
     """
@@ -59,10 +60,10 @@ class FetchNode(BaseNode):
                       necessary information to perform the operation is missing.
         """
         print(f"--- Executing {self.node_name} Node ---")
-    
+
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        
+
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
@@ -74,7 +75,7 @@ class FetchNode(BaseNode):
             document = Document(page_content=file_content, metadata={
                 "source": source
             })
-        
+
         # if it is a URL
         else:
             loader = AsyncHtmlLoader(source)

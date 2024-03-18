@@ -49,20 +49,31 @@ You can use the `SmartScraper` class to extract information from a website using
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
 
 ```python
-from scrapegraphai.graphs import SmartScraper
+import os
+from dotenv import load_dotenv
+from scrapegraphai.graphs import SmartScraperGraph
 
-OPENAI_API_KEY = "YOUR_API_KEY"
+load_dotenv()
+openai_key = os.getenv("OPENAI_APIKEY")
 
-llm_config = {
-    "api_key": OPENAI_API_KEY,
-    "model_name": "gpt-3.5-turbo",
+# Define the configuration for the graph
+graph_config = {
+    "llm": {
+        "api_key": openai_key,
+        "model": "gpt-3.5-turbo",
+    },
 }
 
-smart_scraper = SmartScraper("List me all the titles and project descriptions",
-                             "https://perinim.github.io/projects/", llm_config)
+# Create the SmartScraperGraph instance
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the titles and project descriptions"
+    file_source="https://perinim.github.io/projects/",  # also accepts a local file path
+    config=graph_config
+)
 
-answer = smart_scraper.run()
-print(answer)
+result = smart_scraper_graph.run()
+print(result)
+
 ```
 
 The output will be a dictionary with the extracted information, for example:

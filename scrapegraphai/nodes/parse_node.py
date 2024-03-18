@@ -1,10 +1,10 @@
 """
 Module for parsing the HTML node
 """
+from typing import List
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_transformers import Html2TextTransformer
 from .base_node import BaseNode
-from typing import List
 
 
 class ParseNode(BaseNode):
@@ -61,13 +61,13 @@ class ParseNode(BaseNode):
         """
 
         print(f"--- Executing {self.node_name} Node ---")
-    
+
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        
+
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
-        
+
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
             chunk_size=4000,
             chunk_overlap=0,
@@ -76,8 +76,6 @@ class ParseNode(BaseNode):
         # Parse the document
         docs_transformed = Html2TextTransformer(
         ).transform_documents(input_data[0])[0]
-
-        # TODO: keep the metadata
 
         chunks = text_splitter.split_text(docs_transformed.page_content)
 

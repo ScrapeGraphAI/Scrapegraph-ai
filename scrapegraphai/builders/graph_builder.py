@@ -67,7 +67,7 @@ class GraphBuilder:
         llm_params = {**llm_defaults, **llm_config}
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
-        
+
         # select the model based on the model name
         if "gpt-" in llm_params["model"]:
             return OpenAI(llm_params)

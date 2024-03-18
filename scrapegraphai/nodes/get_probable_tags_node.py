@@ -1,10 +1,11 @@
 """
 Module for proobable tags
 """
+from typing import List
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from .base_node import BaseNode
-from typing import List
+
 
 class GetProbableTagsNode(BaseNode):
     """
@@ -29,7 +30,8 @@ class GetProbableTagsNode(BaseNode):
                         probable HTML tags, updating the state with these tags under the 'tags' key.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "GetProbableTags"):
+    def __init__(self, input: str, output: List[str], model_config: dict,
+                 node_name: str = "GetProbableTags"):
         """
         Initializes the GetProbableTagsNode with a language model client and a node name.
         Args:
@@ -58,10 +60,10 @@ class GetProbableTagsNode(BaseNode):
         """
 
         print(f"--- Executing {self.node_name} Node ---")
-    
+
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        
+
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 

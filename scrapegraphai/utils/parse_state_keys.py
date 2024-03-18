@@ -1,22 +1,35 @@
+""" 
+Parse_state_key module
+"""
 import re
 
-def parse_expression(expression, state):
+
+def parse_expression(expression, state: dict):
+    """ 
+    Function for parsing the expressions
+    """
     # Check for empty expression
     if not expression:
         raise ValueError("Empty expression.")
 
     # Check for adjacent state keys without an operator between them
-    pattern = r'\b(' + '|'.join(re.escape(key) for key in state.keys()) + r')(\b\s*\b)(' + '|'.join(re.escape(key) for key in state.keys()) + r')\b'
+    pattern = r'\b(' + '|'.join(re.escape(key) for key in state.keys()) + \
+        r')(\b\s*\b)(' + '|'.join(re.escape(key)
+                                  for key in state.keys()) + r')\b'
     if re.search(pattern, expression):
-        raise ValueError("Adjacent state keys found without an operator between them.")
+        raise ValueError(
+            "Adjacent state keys found without an operator between them.")
 
     # Remove spaces
     expression = expression.replace(" ", "")
-    
+
     # Check for operators with empty adjacent tokens or at the start/end
-    if expression[0] in '&|' or expression[-1] in '&|' or '&&' in expression or '||' in expression or '&|' in expression or '|&' in expression:
+    if expression[0] in '&|' or expression[-1] in '&|' or \
+        '&&' in expression or '||' in expression or \
+            '&|' in expression or '|&' in expression:
+
         raise ValueError("Invalid operator usage.")
-    
+
     # Check for balanced parentheses and valid operator placement
     open_parentheses = close_parentheses = 0
     for i, char in enumerate(expression):
@@ -26,8 +39,9 @@ def parse_expression(expression, state):
             close_parentheses += 1
         # Check for invalid operator sequences
         if char in "&|" and i + 1 < len(expression) and expression[i + 1] in "&|":
-            raise ValueError("Invalid operator placement: operators cannot be adjacent.")
-    
+            raise ValueError(
+                "Invalid operator placement: operators cannot be adjacent.")
+
     # Check for missing or balanced parentheses
     if open_parentheses != close_parentheses:
         raise ValueError("Missing or unbalanced parentheses in expression.")
@@ -51,11 +65,12 @@ def parse_expression(expression, state):
             # Replace the evaluated part with a placeholder and then evaluate it
             sub_result = evaluate_simple_expression(sub_exp)
             # For simplicity in handling, join sub-results with OR to reprocess them later
-            expression = expression[:start] + '|'.join(sub_result) + expression[end+1:]
+            expression = expression[:start] + \
+                '|'.join(sub_result) + expression[end+1:]
         return evaluate_simple_expression(expression)
 
     result = evaluate_expression(expression)
-    
+
     if not result:
         raise ValueError("No state keys matched the expression.")
 
@@ -67,7 +82,8 @@ def parse_expression(expression, state):
 
     return final_result
 
-expression = "user_input & (relevant_chunks | parsed_document | document)"
+
+EXPRESSION = "user_input & (relevant_chunks | parsed_document | document)"
 state = {
     "user_input": None,
     "document": None,
@@ -76,7 +92,7 @@ state = {
 }
 
 try:
-    result = parse_expression(expression, state)
+    result = parse_expression(EXPRESSION, state)
     print("Matched keys:", result)
 except ValueError as e:
     print("Error:", e)

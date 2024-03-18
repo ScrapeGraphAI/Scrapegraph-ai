@@ -2,15 +2,15 @@
 Module for parsing the HTML node
 """
 
+from typing import List
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
-from typing import List
-
 from .base_node import BaseNode
+
 
 class RAGNode(BaseNode):
     """
@@ -56,10 +56,10 @@ class RAGNode(BaseNode):
         """
 
         print(f"--- Executing {self.node_name} Node ---")
-    
+
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        
+
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
@@ -90,7 +90,6 @@ class RAGNode(BaseNode):
         pipeline_compressor = DocumentCompressorPipeline(
             transformers=[redundant_filter, relevant_filter]
         )
-        
         # redundant + relevant filter compressor
         compression_retriever = ContextualCompressionRetriever(
             base_compressor=pipeline_compressor, base_retriever=retriever
@@ -103,8 +102,8 @@ class RAGNode(BaseNode):
 
         compressed_docs = compression_retriever.get_relevant_documents(
             user_prompt)
-        
+
         print("--- (tokens compressed and vector stored) ---")
-        
+
         state.update({self.output[0]: compressed_docs})
         return state

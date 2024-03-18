@@ -19,9 +19,9 @@ graph_config = {
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt = "List me all the news with their description.",
-    file_source = "https://www.ansa.it/veneto/", # also accepts a local file path
-    config = graph_config
+    prompt="List me all the news with their description.",
+    file_source="https://www.ansa.it/veneto/",  # also accepts a local file path
+    config=graph_config
 )
 
 result = smart_scraper_graph.run()

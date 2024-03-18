@@ -8,7 +8,8 @@ from ..nodes import (
     ParseNode,
     RAGNode,
     GenerateAnswerNode
-    )
+)
+
 
 class SmartScraperGraph:
     """
@@ -83,21 +84,21 @@ class SmartScraperGraph:
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
-            )
+        )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            )
+        )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
             model_config={"llm_model": self.llm_model},
-            )
+        )
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             model_config={"llm_model": self.llm_model},
-            )
+        )
 
         return BaseGraph(
             nodes={
@@ -121,7 +122,6 @@ class SmartScraperGraph:
         Returns:
             str: The answer extracted from the web page, corresponding to the given prompt.
         """
-
 
         inputs = {"user_prompt": self.prompt, self.input_key: self.file_source}
         final_state = self.graph.execute(inputs)

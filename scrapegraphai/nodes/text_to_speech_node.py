@@ -2,9 +2,9 @@
 """
 Module for parsing the text to voice
 """
-
-from .base_node import BaseNode
 from typing import List
+from .base_node import BaseNode
+
 
 class TextToSpeechNode(BaseNode):
     """
@@ -17,7 +17,8 @@ class TextToSpeechNode(BaseNode):
         execute(state, text): Execute the node's logic and return the updated state.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "TextToSpeech"):
+    def __init__(self, input: str, output: List[str],
+                 model_config: dict, node_name: str = "TextToSpeech"):
         """
         Initializes an instance of the TextToSpeechNode class.
         """
@@ -35,17 +36,17 @@ class TextToSpeechNode(BaseNode):
         """
 
         print(f"--- Executing {self.node_name} Node ---")
-    
+
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        
+
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         # get the text to translate
         text2translate = str(next(iter(input_data[0].values())))
         # text2translate = str(input_data[0])
-        
+
         audio = self.tts_model.run(text2translate)
 
         state.update({self.output[0]: audio})

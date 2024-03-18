@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 from typing import Optional, List
 import re
 
+
 class BaseNode(ABC):
     """
     An abstract base class for nodes in a graph-based workflow. Each node is 
@@ -78,12 +79,13 @@ class BaseNode(ABC):
             self._validate_input_keys(input_keys)
             return input_keys
         except ValueError as e:
-            raise ValueError(f"Error parsing input keys for {self.node_name}: {str(e)}")
+            raise ValueError(
+                f"Error parsing input keys for {self.node_name}: {str(e)}")
 
-    
     def _validate_input_keys(self, input_keys):
         if len(input_keys) < self.min_input_len:
-            raise ValueError(f"{self.node_name} requires at least {self.min_input_len} input keys, got {len(input_keys)}.")
+            raise ValueError(
+                f"{self.node_name} requires at least {self.min_input_len} input keys, got {len(input_keys)}.")
 
     def _parse_input_keys(self, state: dict, expression: str) -> List[str]:
         """
@@ -102,17 +104,22 @@ class BaseNode(ABC):
             raise ValueError("Empty expression.")
 
         # Check for adjacent state keys without an operator between them
-        pattern = r'\b(' + '|'.join(re.escape(key) for key in state.keys()) + r')(\b\s*\b)(' + '|'.join(re.escape(key) for key in state.keys()) + r')\b'
+        pattern = r'\b(' + '|'.join(re.escape(key) for key in state.keys()) + \
+            r')(\b\s*\b)(' + '|'.join(re.escape(key)
+                                      for key in state.keys()) + r')\b'
         if re.search(pattern, expression):
-            raise ValueError("Adjacent state keys found without an operator between them.")
+            raise ValueError(
+                "Adjacent state keys found without an operator between them.")
 
         # Remove spaces
         expression = expression.replace(" ", "")
-        
+
         # Check for operators with empty adjacent tokens or at the start/end
-        if expression[0] in '&|' or expression[-1] in '&|' or '&&' in expression or '||' in expression or '&|' in expression or '|&' in expression:
+        if expression[0] in '&|' or expression[-1] in '&|' \
+                or '&&' in expression or '||' in expression or \
+                '&|' in expression or '|&' in expression:
             raise ValueError("Invalid operator usage.")
-        
+
         # Check for balanced parentheses and valid operator placement
         open_parentheses = close_parentheses = 0
         for i, char in enumerate(expression):
@@ -122,11 +129,13 @@ class BaseNode(ABC):
                 close_parentheses += 1
             # Check for invalid operator sequences
             if char in "&|" and i + 1 < len(expression) and expression[i + 1] in "&|":
-                raise ValueError("Invalid operator placement: operators cannot be adjacent.")
-        
+                raise ValueError(
+                    "Invalid operator placement: operators cannot be adjacent.")
+
         # Check for missing or balanced parentheses
         if open_parentheses != close_parentheses:
-            raise ValueError("Missing or unbalanced parentheses in expression.")
+            raise ValueError(
+                "Missing or unbalanced parentheses in expression.")
 
         # Helper function to evaluate an expression without parentheses
         def evaluate_simple_expression(exp):
@@ -147,11 +156,12 @@ class BaseNode(ABC):
                 # Replace the evaluated part with a placeholder and then evaluate it
                 sub_result = evaluate_simple_expression(sub_exp)
                 # For simplicity in handling, join sub-results with OR to reprocess them later
-                expression = expression[:start] + '|'.join(sub_result) + expression[end+1:]
+                expression = expression[:start] + \
+                    '|'.join(sub_result) + expression[end+1:]
             return evaluate_simple_expression(expression)
 
         result = evaluate_expression(expression)
-        
+
         if not result:
             raise ValueError("No state keys matched the expression.")
 

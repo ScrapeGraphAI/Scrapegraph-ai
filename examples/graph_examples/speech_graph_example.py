@@ -10,9 +10,9 @@ load_dotenv()
 openai_key = os.getenv("OPENAI_APIKEY")
 
 # Save the audio to a file
-file_name = "website_summary.mp3"
+FILE_NAME = "website_summary.mp3"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
-output_path = os.path.join(curr_dir, file_name)
+output_path = os.path.join(curr_dir, FILE_NAME)
 
 # Define the configuration for the graph
 graph_config = {
@@ -29,9 +29,9 @@ graph_config = {
 }
 
 speech_graph = SpeechGraph(
-    prompt = "Create a summary of the website",
-    file_source = "https://perinim.github.io/projects/",
-    config = graph_config,
+    prompt="Create a summary of the website",
+    file_source="https://perinim.github.io/projects/",
+    config=graph_config,
 )
 
 result = speech_graph.run()

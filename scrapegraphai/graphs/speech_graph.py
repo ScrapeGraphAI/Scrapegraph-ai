@@ -85,21 +85,21 @@ class SpeechGraph:
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
-            )
+        )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            )
+        )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
             model_config={"llm_model": self.llm_model},
-            )
+        )
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             model_config={"llm_model": self.llm_model},
-            )
+        )
         text_to_speech_node = TextToSpeechNode(
             input="answer",
             output=["audio"],
