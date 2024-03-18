@@ -66,5 +66,5 @@ result = graph.execute({
     })
 
 # get the answer from the result
-answer = result.get("answer", "No answer found.")
-print(answer)
+result = result.get("answer", "No answer found.")
+print(result)

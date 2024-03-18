@@ -3,8 +3,8 @@ Nodes metadata for the scrapegraphai package.
 """
 
 nodes_metadata = {
-    "FetchHTMLNode": {
-        "description": "Fetches HTML content from a given URL.",
+    "FetchNode": {
+        "description": "Fetches input content from a given URL or file path.",
         "type": "node",
         "args": {
             "url": "The URL from which to fetch HTML content."

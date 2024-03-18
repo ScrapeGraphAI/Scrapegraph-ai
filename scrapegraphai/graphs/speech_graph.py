@@ -35,12 +35,13 @@ class SpeechGraph:
         output_path (str): The file path where the generated MP3 should be saved.
     """
 
-    def __init__(self, prompt: str, url: str, config: dict):
+    def __init__(self, prompt: str, file_source: str, config: dict):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
         self.prompt = prompt
-        self.url = url
+        self.file_source = file_source
+        self.input_key = "url" if "http" in file_source else "local_dir"
         self.llm_model = self._create_llm(config["llm"])
         self.output_path = config.get("output_path", "output.mp3")
         self.text_to_speech_model = OpenAITextToSpeech(config["tts_model"])
@@ -124,7 +125,7 @@ class SpeechGraph:
         Returns:
             str: The answer extracted from the web page, corresponding to the given prompt.
         """
-        inputs = {"user_prompt": self.prompt, "url": self.url}
+        inputs = {"user_prompt": self.prompt, self.input_key: self.file_source}
         final_state = self.graph.execute(inputs)
 
         audio = final_state.get("audio", None)

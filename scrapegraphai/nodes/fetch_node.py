@@ -66,13 +66,19 @@ class FetchNode(BaseNode):
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
-        loader = AsyncHtmlLoader(input_data[0])
-        document = loader.load()
-        # metadata = document[0].metadata
-        # document = remover(str(document[0]))
+        source = input_data[0]
+        # if it is a .txt file
+        if source.endswith(".txt"):
+            with open(source, "r") as file:
+                file_content = file.read()
+            document = Document(page_content=file_content, metadata={
+                "source": source
+            })
+        
+        # if it is a URL
+        else:
+            loader = AsyncHtmlLoader(source)
+            document = loader.load()
 
-        # state["document"] = [
-        #     Document(page_content=document, metadata=metadata)]
         state.update({self.output[0]: document})
-
         return state

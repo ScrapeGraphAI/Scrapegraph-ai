@@ -29,10 +29,10 @@ graph_config = {
 }
 
 speech_graph = SpeechGraph(
-    prompt = "List me all the projects and generate and audio for me to listen to.",
-    url = "https://perinim.github.io/projects/",
+    prompt = "Create a summary of the website",
+    file_source = "https://perinim.github.io/projects/",
     config = graph_config,
 )
 
-final_state = speech_graph.run()
-print(final_state.get("answer", "No answer found."))
+result = speech_graph.run()
+print(result.get("answer", "No answer found"))

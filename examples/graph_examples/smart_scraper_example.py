@@ -15,18 +15,14 @@ graph_config = {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
     },
-    # "embedding_model": {
-    #     "api_key": openai_key,
-    #     "model": "gpt-3.5-turbo",
-    # },
 }
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
     prompt = "List me all the news with their description.",
-    url = "https://www.ansa.it/veneto/",
+    file_source = "https://www.ansa.it/veneto/", # also accepts a local file path
     config = graph_config
 )
 
-answer = smart_scraper_graph.run()
-print(answer)
+result = smart_scraper_graph.run()
+print(result)

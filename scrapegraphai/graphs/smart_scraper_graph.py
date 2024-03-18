@@ -34,12 +34,13 @@ class SmartScraperGraph:
                            'temperature', and 'streaming'.
     """
 
-    def __init__(self, prompt: str, url: str, config: dict):
+    def __init__(self, prompt: str, file_source: str, config: dict):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
         self.prompt = prompt
-        self.url = url
+        self.file_source = file_source
+        self.input_key = "url" if "http" in file_source else "local_dir"
         self.config = config
         self.llm_model = self._create_llm(config["llm"])
         self.graph = self._create_graph()
@@ -115,7 +116,9 @@ class SmartScraperGraph:
         Returns:
             str: The answer extracted from the web page, corresponding to the given prompt.
         """
-        inputs = {"user_prompt": self.prompt, "url": self.url}
+
+
+        inputs = {"user_prompt": self.prompt, self.input_key: self.file_source}
         final_state = self.graph.execute(inputs)
 
         return final_state.get("answer", "No answer found.")
