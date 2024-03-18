@@ -2,7 +2,7 @@
 Module for extracting the summary from the speach
 """
 from scrapegraphai.utils.save_audio_from_bytes import save_audio_from_bytes
-from ..models import OpenAI, OpenAITextToSpeech
+from ..models import OpenAI, Gemini, OpenAITextToSpeech
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchNode,
@@ -66,8 +66,13 @@ class SpeechGraph:
         # Ensure the api_key is set, raise an error if it's not
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
-        # Create the ChatOpenAI instance with the provided and default parameters
-        return OpenAI(llm_params)
+        # select the model based on the model name
+        if "gpt-" in llm_params["model"]:
+            return OpenAI(llm_params)
+        elif "gemini" in llm_params["model"]:
+            return Gemini(llm_params)
+        else:
+            raise ValueError("Model not supported")
 
     def _create_graph(self):
         """

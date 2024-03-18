@@ -13,7 +13,7 @@ from langchain_core.runnables import RunnableParallel
 from .base_node import BaseNode
 from typing import List
 
-class GenerateAnswerNodeFromRag(BaseNode):
+class GenerateAnswerNode(BaseNode):
     """
     A node that generates an answer using a language model (LLM) based on the user's input
     and the content extracted from a webpage. It constructs a prompt from the user's input
