@@ -13,7 +13,5 @@ class Gemini(ChatGoogleGenerativeAI):
             llm_config (dict): Configuration parameters for the language model.
             such as model="gemini-pro" and api_key 
         """
-        # change the key model_name to model
-        llm_config["model"] = llm_config["model_name"]
         # Initialize the superclass (ChatOpenAI) with provided config parameters
         super().__init__(**llm_config)

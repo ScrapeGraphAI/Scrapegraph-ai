@@ -69,12 +69,12 @@ class GraphBuilder:
             raise ValueError("LLM configuration must include an 'api_key'.")
         
         # select the model based on the model name
-        if "gpt-" in llm_params["model_name"]:
+        if "gpt-" in llm_params["model"]:
             return OpenAI(llm_params)
-        elif "gemini" in llm_params["model_name"]:
+        elif "gemini" in llm_params["model"]:
             return Gemini(llm_params)
-        
-        return OpenAI(llm_params)
+        else:
+            raise ValueError("Model not supported")
 
     def _generate_nodes_description(self):
         """
