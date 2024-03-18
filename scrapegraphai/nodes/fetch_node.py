@@ -72,9 +72,9 @@ class FetchNode(BaseNode):
         if source.endswith(".txt"):
             with open(source, "r") as file:
                 file_content = file.read()
-            document = Document(page_content=file_content, metadata={
+            document = [Document(page_content=file_content, metadata={
                 "source": source
-            })
+            })]
 
         # if it is a URL
         else:
