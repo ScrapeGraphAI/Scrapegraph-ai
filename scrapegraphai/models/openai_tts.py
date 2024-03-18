@@ -22,7 +22,7 @@ class OpenAITextToSpeech:
         bytes of the generated speech.
     """
 
-    def __init__(self, llm_config: dict, model: str = "tts-1", voice: str = "alloy"):
+    def __init__(self, tts_config: dict):
         """
         Initializes an instance of the OpenAITextToSpeech class.
 
@@ -35,9 +35,9 @@ class OpenAITextToSpeech:
         """
 
         # convert model_name to model
-        self.client = OpenAI(api_key=llm_config.get("api_key"))
-        self.model = model
-        self.voice = voice
+        self.client = OpenAI(api_key=tts_config.get("api_key"))
+        self.model = tts_config.get("model", "tts-1")
+        self.voice = tts_config.get("voice", "alloy")
 
     def run(self, text):
         """

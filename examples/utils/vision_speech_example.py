@@ -8,28 +8,39 @@ from scrapegraphai.models import OpenAIImageToText, OpenAITextToSpeech
 from scrapegraphai.utils import save_audio_from_bytes
 
 load_dotenv()
-
-# Define the configuration for the language model
 openai_key = os.getenv("OPENAI_APIKEY")
-llm_config = {
-    "api_key": openai_key,
-    "model_name": "gpt-4-vision-preview",
+
+# Define the configuration for the graph
+config = {
+    "itt_model": {
+        "api_key": openai_key,
+        "model": "gpt-4-vision-preview",
+    },
+    "tts_model": {
+        "api_key": openai_key,
+        "model": "tts-1",
+        "voice": "alloy"
+    },
 }
 
-model = OpenAIImageToText(llm_config)
-ANSWER = model.run(
-    "https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png")
-print(ANSWER)
+itt_model = OpenAIImageToText(config["itt_model"])
+img_to_text_result = itt_model.run(
+    "https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png"
+    )
 
-text_to_speech = OpenAITextToSpeech(llm_config, model="tts-1", voice="alloy")
+print(f"Image description: {img_to_text_result}")
 
-TEXT = "Today is a wonderful day to build something people love!"
-audio = text_to_speech.run(TEXT)
+tts_model = OpenAITextToSpeech(config["tts_model"])
+
+audio = tts_model.run(
+    img_to_text_result
+    )
 
 # Save the audio to a file
+file_name = "image_description.mp3"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(curr_dir, "text2speech.mp3")
+output_path = os.path.join(curr_dir, file_name)
 
-save_audio_from_bytes(audio, file_path)
+save_audio_from_bytes(audio, output_path)
 
-print(f"Speech file saved to: {file_path}")
+print(f"Audio file saved to: {output_path}")

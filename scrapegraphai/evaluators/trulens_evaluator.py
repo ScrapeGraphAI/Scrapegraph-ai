@@ -52,10 +52,11 @@ class TrulensEvaluator:
                 output = SmartScraperGraph(*params).run()
                 self.tru_llm_standalone_recorder.app(params[0], output)
                 self.graph_output.append(output)
+                
         if dashboard:
             self.tru.run_dashboard()
-        else:
-            return (self.tru.get_records_and_feedback(app_ids=[])[0], self.graph_output)
+        
+        return (self.tru.get_records_and_feedback(app_ids=[])[0], self.graph_output)
 
     def llm_standalone(self, prompt, response):
         """

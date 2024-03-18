@@ -4,10 +4,10 @@ Module for creating the smart scraper
 from ..models import OpenAI
 from .base_graph import BaseGraph
 from ..nodes import (
-    FetchHTMLNode,
+    FetchNode,
     ParseNode,
     RAGNode,
-    GenerateAnswerNodeFromRag
+    GenerateAnswerNode
     )
 
 class SmartScraperGraph:
@@ -34,17 +34,18 @@ class SmartScraperGraph:
                            'temperature', and 'streaming'.
     """
 
-    def __init__(self, prompt: str, url: str, llm_config: dict):
+    def __init__(self, prompt: str, file_source: str, config: dict):
         """
         Initializes the SmartScraper with a prompt, URL, and language model configuration.
         """
         self.prompt = prompt
-        self.url = url
-        self.llm_config = llm_config
-        self.llm = self._create_llm()
+        self.file_source = file_source
+        self.input_key = "url" if "http" in file_source else "local_dir"
+        self.config = config
+        self.llm_model = self._create_llm(config["llm"])
         self.graph = self._create_graph()
 
-    def _create_llm(self):
+    def _create_llm(self, llm_config: dict):
         """
         Creates an instance of the ChatOpenAI class with the provided language model configuration.
 
@@ -55,12 +56,11 @@ class SmartScraperGraph:
             ValueError: If 'api_key' is not provided in llm_config.
         """
         llm_defaults = {
-            "model_name": "gpt-3.5-turbo",
             "temperature": 0,
             "streaming": True
         }
         # Update defaults with any LLM parameters that were provided
-        llm_params = {**llm_defaults, **self.llm_config}
+        llm_params = {**llm_defaults, **llm_config}
         # Ensure the api_key is set, raise an error if it's not
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
@@ -75,24 +75,38 @@ class SmartScraperGraph:
             BaseGraph: An instance of the BaseGraph class.
         """
         # define the nodes for the graph
-        fetch_html_node = FetchHTMLNode("fetch_html")
-        parse_document_node = ParseNode(doc_type="html", chunks_size=4000, node_name="parse_document")
-        rag_node = RAGNode(self.llm, "rag")
-        generate_answer_node = GenerateAnswerNodeFromRag(self.llm, "generate_answer")
+        fetch_node = FetchNode(
+            input="url | local_dir",
+            output=["doc"],
+            )
+        parse_node = ParseNode(
+            input="doc",
+            output=["parsed_doc"],
+            )
+        rag_node = RAGNode(
+            input="user_prompt & (parsed_doc | doc)",
+            output=["relevant_chunks"],
+            model_config={"llm_model": self.llm_model},
+            )
+        generate_answer_node = GenerateAnswerNode(
+            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+            output=["answer"],
+            model_config={"llm_model": self.llm_model},
+            )
 
         return BaseGraph(
             nodes={
-                fetch_html_node,
-                parse_document_node,
+                fetch_node,
+                parse_node,
                 rag_node,
                 generate_answer_node,
             },
             edges={
-                (fetch_html_node, parse_document_node),
-                (parse_document_node, rag_node),
+                (fetch_node, parse_node),
+                (parse_node, rag_node),
                 (rag_node, generate_answer_node)
             },
-            entry_point=fetch_html_node
+            entry_point=fetch_node
         )
 
     def run(self) -> str:
@@ -102,7 +116,9 @@ class SmartScraperGraph:
         Returns:
             str: The answer extracted from the web page, corresponding to the given prompt.
         """
-        inputs = {"user_input": self.prompt, "url": self.url}
+
+
+        inputs = {"user_prompt": self.prompt, self.input_key: self.file_source}
         final_state = self.graph.execute(inputs)
 
         return final_state.get("answer", "No answer found.")
