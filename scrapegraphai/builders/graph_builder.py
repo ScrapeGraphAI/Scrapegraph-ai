@@ -1,7 +1,7 @@
 """ 
 Module for making the graph building
 """
-import graphviz
+
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
 from ..models import OpenAI
@@ -39,17 +39,17 @@ class GraphBuilder:
         ValueError: If 'api_key' is not included in llm_config.
     """
 
-    def __init__(self, user_prompt: str, llm_config: dict):
+    def __init__(self, user_prompt: str, config: dict):
         """
         Initializes the GraphBuilder with a user prompt and language model configuration.
         """
         self.user_prompt = user_prompt
-        self.llm_config = llm_config
-        self.llm = self._create_llm()
+        self.config = config
+        self.llm = self._create_llm(config["llm"])
         self.nodes_description = self._generate_nodes_description()
         self.chain = self._create_extraction_chain()
 
-    def _create_llm(self):
+    def _create_llm(self, llm_config: dict):
         """
         Creates an instance of the OpenAI class with the provided language model configuration.
 
@@ -60,12 +60,11 @@ class GraphBuilder:
             ValueError: If 'api_key' is not provided in llm_config.
         """
         llm_defaults = {
-            "model_name": "gpt-3.5-turbo",
             "temperature": 0,
             "streaming": True
         }
         # Update defaults with any LLM parameters that were provided
-        llm_params = {**llm_defaults, **self.llm_config}
+        llm_params = {**llm_defaults, **llm_config}
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
         return OpenAI(llm_params)
@@ -127,6 +126,11 @@ class GraphBuilder:
         Returns:
             graphviz.Digraph: A Graphviz object representing the graph configuration.
         """
+        try:
+            import graphviz
+        except ImportError:
+            raise ImportError("The 'graphviz' library is required for this functionality. "
+                              "Please install it from 'https://graphviz.org/download/'.")
 
         graph = graphviz.Digraph(comment='ScrapeGraphAI Generated Graph', format=format,
                                  node_attr={'color': 'lightblue2', 'style': 'filled'})
