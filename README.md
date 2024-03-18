@@ -4,6 +4,7 @@
 # 🕷️ ScrapeGraphAI: You Only Scrape Once
 [![Downloads](https://static.pepy.tech/badge/scrapegraphai)](https://pepy.tech/project/scrapegraphai)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+[![Pylint](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/pylint.yml/badge.svg)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/pylint.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -27,7 +28,7 @@ Official streamlit demo:
 
 [![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-ai-demo.streamlit.app/)
 
-Is it possible to try also the colab version
+Try it directly on the web using Google Colab:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
@@ -36,7 +37,9 @@ Follow the procedure on the following link to setup your OpenAI API key: [link](
 ## 📖 Documentation
 
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
-Behind this there is also the docusaurus documentation [here](https://scrapegraph-doc.onrender.com/).
+
+Check out also the docusaurus [documentation](https://scrapegraph-doc.onrender.com/).
+
 ## 💻 Usage
 
 ### Case 1: Extracting information using a prompt
@@ -77,25 +80,18 @@ The output will be a dictionary with the extracted information, for example:
 
 ## 🤝 Contributing
 
-Scrapegraph-ai is [MIT LICENSED](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE).
-
-Contributions are welcome! Please check out the todos below, and feel free to open a pull request.
+Fell free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
 
 For more information, please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
-Join our Discord server to discuss with us improvements and give us suggestions!
-
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/DujC7HG8)
-
-
-You can also follow all the updates on linkedin!
-
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 
+## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
 
-### Citations
-If you want to use our library for research purposes please quote us with the following reference
+## 🎓 Citations
+If you have used our library for research purposes please quote us with the following reference:
 ```text
   @misc{scrapegraph-ai,
     author = {Marco Perini, Lorenzo Padoan, Marco Vinciguerra},
@@ -120,7 +116,7 @@ If you want to use our library for research purposes please quote us with the fo
 
 ## 📜 License
 
-ScrapeGraphAI is licensed under the Apache 2.0 License. See the [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) file for more information.
+ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) file for more information.
 
 ## Acknowledgements
 
