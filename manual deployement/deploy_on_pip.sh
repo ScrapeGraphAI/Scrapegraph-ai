@@ -1,5 +1,7 @@
 #!/bin/bash
+cd ..
 
+poetry update
 # Install dependencies using Poetry
 poetry install
 

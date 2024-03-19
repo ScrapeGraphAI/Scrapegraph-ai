@@ -16,6 +16,7 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
+cd ..
 # Extract the commit message from the argument
 commit_message="$1"
 
