@@ -68,12 +68,11 @@ class FetchNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         source = input_data[0]
-        # if it is a .txt file
-        if source.endswith(".txt"):
-            with open(source, "r") as file:
-                file_content = file.read()
-            document = [Document(page_content=file_content, metadata={
-                "source": source
+
+        if not source.startswith(
+                "http"):
+            document = [Document(page_content=source, metadata={
+                "source": "local_dir"
             })]
 
         # if it is a URL
