@@ -17,10 +17,14 @@ graph_config = {
     },
 }
 
+
+# It could be also a http request using the request model
+text = open('plain_html_example.txt', 'r', encoding="utf-8")
+
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the news with their description.",
-    file_source="/Users/marcovinciguerra/Github/Scrapegraph-ai/examples/graph_examples/plain_html_example.txt",
+    file_source=str(text),
     config=graph_config
 )
 

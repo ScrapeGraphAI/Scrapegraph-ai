@@ -41,7 +41,8 @@ class SmartScraperGraph:
         """
         self.prompt = prompt
         self.file_source = file_source
-        self.input_key = "url" if "http" in file_source else "local_dir"
+        self.input_key = "url" if file_source.startswith(
+            "http") else "local_dir"
         self.config = config
         self.llm_model = self._create_llm(config["llm"])
         self.graph = self._create_graph()
