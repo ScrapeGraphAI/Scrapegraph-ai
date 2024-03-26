@@ -95,7 +95,7 @@ Fell free to contribute and join our Discord server to discuss with us improveme
 
 For more information, please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
-[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/DujC7HG8)
+[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/bSgWTVXz)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraph)
 
