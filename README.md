@@ -97,6 +97,7 @@ For more information, please see the [contributing guidelines](https://github.co
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/DujC7HG8)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
+[![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraph)
 
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
