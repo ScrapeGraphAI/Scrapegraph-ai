@@ -1,0 +1,19 @@
+// ScrapeGraphAI Generated Graph
+digraph {
+	node [color=lightblue2 style=filled]
+	FetchHTMLNode [shape=doublecircle]
+	GetProbableTagsNode
+	ParseNode
+	RAGNode
+	GenerateAnswerNode
+	ConditionalNode
+	ImageToTextNode
+	TextToSpeechNode
+	FetchHTMLNode -> GetProbableTagsNode
+	GetProbableTagsNode -> ParseNode
+	ParseNode -> RAGNode
+	RAGNode -> GenerateAnswerNode
+	RAGNode -> ConditionalNode
+	ConditionalNode -> ImageToTextNode
+	ConditionalNode -> TextToSpeechNode
+}
