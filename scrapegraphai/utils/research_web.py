@@ -10,11 +10,16 @@ def search_word_on_google(word):
     """
     url = f"https://www.google.com/search?q={word}"
     headers = {
-        'User-Agent': """Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (
-            KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"""
+        'User-Agent': """ Mozilla/5.0 (Windows NT 10.0; Win64; x64) A
+        ppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"""
     }
 
-    response = requests.get(url, headers=headers)
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+    except requests.RequestException as e:
+        print(f"Error occurred: {e}")
+        return
 
     if response.status_code == 200:
         print("Search request successful!")
@@ -24,5 +29,3 @@ def search_word_on_google(word):
     else:
         print(
             f"Failed to make search request. Status code: {response.status_code}")
-
-# Example usage
