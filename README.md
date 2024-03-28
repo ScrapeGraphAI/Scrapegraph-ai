@@ -67,7 +67,7 @@ graph_config = {
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the titles and project descriptions"
-    file_source="https://perinim.github.io/projects/",  # also accepts a local file path
+    file_source="https://perinim.github.io/projects/", #Also accepts a string with the already downloaded HTML code
     config=graph_config
 )
 
