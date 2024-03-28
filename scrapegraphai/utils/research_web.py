@@ -5,7 +5,7 @@ import re
 from langchain_community.tools import DuckDuckGoSearchResults
 
 
-def search_word_on_google(word, max_results=10):
+def search_word_on_web(word, max_results=10):
     """ 
     Function that given a word it finds it on the intenet
     Args:
