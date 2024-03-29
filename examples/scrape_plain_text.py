@@ -32,3 +32,6 @@ result = smart_scraper_graph.run()
 print(result)
 
 # Save to json or csv
+onvert_to_csv(result, "result")
+convert_to_json(result, "result")
+
