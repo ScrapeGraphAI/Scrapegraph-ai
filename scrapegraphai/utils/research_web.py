@@ -33,6 +33,5 @@ def search_word_on_web(word: str, web_browser: str = "Google", max_results: int 
         links = re.findall(r'https?://\S+', res)
 
         return links
-    else:
-        raise ValueError(
-            "The only web browsers avaiable are DuckDuckGo or Google")
+    raise ValueError(
+        "The only web browsers avaiable are DuckDuckGo or Google")
