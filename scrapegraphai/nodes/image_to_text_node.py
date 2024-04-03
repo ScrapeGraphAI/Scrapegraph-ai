@@ -17,7 +17,7 @@ class ImageToTextNode(BaseNode):
     """
 
     def __init__(self, input: str, output: List[str], model_config: dict,
-                 node_name: str = "GetProbableTags"):
+                 node_name: str = "ImageToText"):
         """
         Initializes an instance of the ImageToTextNode class.
 
@@ -27,21 +27,25 @@ class ImageToTextNode(BaseNode):
             model_config (dict): Configuration for the model.
             node_name (str): Name of the node.
         """
-        super().__init__(node_name, "node", input, output, 2, model_config)
+        super().__init__(node_name, "node", input, output, 1, model_config)
         self.llm_model = model_config["llm_model"]
 
-    def execute(self, state: dict, url: str) -> dict:
+    def execute(self, state: dict) -> dict:
         """
         Execute the node's logic and return the updated state.
 
         Args:
             state (dict): The current state of the graph.
-            url (str): URL of the image to process.
 
         Returns:
             dict: The updated state after executing this node.
         """
         print("---GENERATING TEXT FROM IMAGE---")
+        input_keys = self.get_input_keys(state)
+
+        input_data = [state[key] for key in input_keys]
+        url = input_data[0]
+
         text_answer = self.llm_model.run(url)
 
         state.update({"image_text": text_answer})
