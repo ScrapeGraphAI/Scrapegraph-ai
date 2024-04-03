@@ -18,14 +18,11 @@ def remover(html_content: str) -> str:
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    # Estrai il titolo
     title_tag = soup.find('title')
     title = title_tag.get_text() if title_tag else ""
 
-    # Rimuovi i tag <script> in tutto il documento
     [script.extract() for script in soup.find_all('script')]
 
-    # Estrai il corpo del documento
     body_content = soup.find('body')
     body = str(body_content) if body_content else ""
 

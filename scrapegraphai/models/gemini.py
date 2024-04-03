@@ -1,3 +1,6 @@
+"""
+Gemini module configuration
+"""
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 
