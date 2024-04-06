@@ -88,7 +88,8 @@ class BaseNode(ABC):
     def _validate_input_keys(self, input_keys):
         if len(input_keys) < self.min_input_len:
             raise ValueError(
-                f"{self.node_name} requires at least {self.min_input_len} input keys, got {len(input_keys)}.")
+                f"""{self.node_name} requires at least {self.min_input_len} input keys,
+                  got {len(input_keys)}.""")
 
     def _parse_input_keys(self, state: dict, expression: str) -> List[str]:
         """

@@ -26,5 +26,6 @@ venv/
 *.pdf
 *.mp3
 *.sqlite
+*.google-cookie
 examples/graph_examples/ScrapeGraphAI_generated_graph
 main.py

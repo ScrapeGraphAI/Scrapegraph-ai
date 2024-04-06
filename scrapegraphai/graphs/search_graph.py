@@ -1,9 +1,10 @@
 """ 
-Module for creating the smart scraper
+Module for making the search on the intenet
 """
 from ..models import OpenAI, Gemini
 from .base_graph import BaseGraph
 from ..nodes import (
+    SearchInternetNode,
     FetchNode,
     ParseNode,
     RAGNode,
@@ -12,10 +13,9 @@ from ..nodes import (
 from .abstract_graph import AbstractGraph
 
 
-class SmartScraperGraph(AbstractGraph):
-    """
-    SmartScraper is a comprehensive web scraping tool that automates the process of extracting
-    information from web pages using a natural language model to interpret and answer prompts.
+class SearchGraph(AbstractGraph):
+    """ 
+    Module for searching info on the internet
     """
 
     def _create_llm(self, llm_config: dict):
@@ -33,12 +33,18 @@ class SmartScraperGraph(AbstractGraph):
             return OpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
             return Gemini(llm_params)
-        raise ValueError("Model not supported")
+        else:
+            raise ValueError("Model not supported")
 
     def _create_graph(self):
         """
-        Creates the graph of nodes representing the workflow for web scraping.
+        Creates the graph of nodes representing the workflow for web scraping and searching.
         """
+        search_internet_node = SearchInternetNode(
+            input="user_prompt",
+            output=["url"],
+            model_config={"llm_model": self.llm_model}
+        )
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
@@ -60,24 +66,26 @@ class SmartScraperGraph(AbstractGraph):
 
         return BaseGraph(
             nodes={
+                search_internet_node,
                 fetch_node,
                 parse_node,
                 rag_node,
                 generate_answer_node,
             },
             edges={
+                (search_internet_node, fetch_node),
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
                 (rag_node, generate_answer_node)
             },
-            entry_point=fetch_node
+            entry_point=search_internet_node
         )
 
     def run(self) -> str:
         """
-        Executes the web scraping process and returns the answer to the prompt.
+        Executes the web scraping and searching process.
         """
-        inputs = {"user_prompt": self.prompt, self.input_key: self.file_source}
+        inputs = {"user_prompt": self.prompt}
         final_state = self.graph.execute(inputs)
 
         return final_state.get("answer", "No answer found.")
