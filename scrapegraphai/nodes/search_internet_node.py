@@ -95,7 +95,7 @@ class SearchInternetNode(BaseNode):
 
         print(f"Search Query: {search_query}")
         # TODO: handle multiple URLs
-        answer = search_on_web(query=search_query, web_browser="Google", max_results=1)[0]
+        answer = search_on_web(query=search_query, search_engine="DuckDuckGo", max_results=1)[0]
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})

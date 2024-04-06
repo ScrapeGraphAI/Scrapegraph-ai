@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode
-from scrapegraphai.utils import convert_to_csv, convert_to_json
 
 load_dotenv()
 openai_key = os.getenv("OPENAI_APIKEY")
@@ -69,7 +68,3 @@ result = graph.execute({
 # get the answer from the result
 result = result.get("answer", "No answer found.")
 print(result)
-
-# Save to json and csv
-convert_to_csv(result, "result")
-convert_to_json(result, "result")

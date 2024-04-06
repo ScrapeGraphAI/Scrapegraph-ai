@@ -5,7 +5,6 @@ Basic example of scraping pipeline using SpeechSummaryGraph
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SpeechGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json
 
 load_dotenv()
 openai_key = os.getenv("OPENAI_APIKEY")
@@ -37,7 +36,3 @@ speech_graph = SpeechGraph(
 
 result = speech_graph.run()
 print(result.get("answer", "No answer found"))
-
-# Save to json and csv
-convert_to_csv(result, "result")
-convert_to_json(result, "result")
