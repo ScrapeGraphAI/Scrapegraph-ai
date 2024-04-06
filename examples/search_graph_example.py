@@ -20,12 +20,12 @@ graph_config = {
 }
 
 # Create the SmartScraperGraph instance
-smart_scraper_graph = SearchGraph(
+search_graph = SearchGraph(
     prompt="List me all the regions of Italy.",
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
+result = search_graph.run()
 print(result)
 
 # Save to json and csv
