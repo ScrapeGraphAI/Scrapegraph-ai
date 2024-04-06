@@ -6,9 +6,10 @@
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Pylint](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/pylint.yml/badge.svg)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/pylint.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
 
-ScrapeGraphAI is a *web scraping* python library based on LangChain which uses LLM and direct graph logic to create scraping pipelines for websites and documents.
+ScrapeGraphAI is a *web scraping* python library which uses LLM and direct graph logic to create scraping pipelines for websites, documents and XML files.
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">
@@ -49,31 +50,26 @@ You can use the `SmartScraper` class to extract information from a website using
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
 
 ```python
-import os
-from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
-
-load_dotenv()
-openai_key = os.getenv("OPENAI_APIKEY")
+OPENAI_API_KEY = "YOUR_API_KEY"
 
 # Define the configuration for the graph
 graph_config = {
     "llm": {
-        "api_key": openai_key,
+        "api_key": OPENAI_API_KEY,
         "model": "gpt-3.5-turbo",
     },
 }
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the titles and project descriptions"
-    file_source="https://perinim.github.io/projects/",  # also accepts a local file path
+    prompt="List me all the news with their description.",
+    file_source="https://perinim.github.io/projects/",  # also accepts a string with the already downloaded HTML code as string format
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
 print(result)
-
 ```
 
 The output will be a dictionary with the extracted information, for example:
@@ -95,7 +91,7 @@ Fell free to contribute and join our Discord server to discuss with us improveme
 
 For more information, please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
-[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/bSgWTVXz)
+[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/gkxQDAjfeX)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraph)
 

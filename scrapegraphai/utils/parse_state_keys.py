@@ -7,6 +7,8 @@ import re
 def parse_expression(expression, state: dict):
     """ 
     Function for parsing the expressions
+    Args:
+        state (dict): state to elaborate
     """
     # Check for empty expression
     if not expression:
@@ -69,14 +71,14 @@ def parse_expression(expression, state: dict):
                 '|'.join(sub_result) + expression[end+1:]
         return evaluate_simple_expression(expression)
 
-    result = evaluate_expression(expression)
+    temp_result = evaluate_expression(expression)
 
-    if not result:
+    if not temp_result:
         raise ValueError("No state keys matched the expression.")
 
     # Remove redundant state keys from the result, without changing their order
     final_result = []
-    for key in result:
+    for key in temp_result:
         if key not in final_result:
             final_result.append(key)
 

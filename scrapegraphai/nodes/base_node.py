@@ -74,9 +74,8 @@ class BaseNode(ABC):
         pass
 
     def get_input_keys(self, state: dict) -> List[str]:
-        """
-        Use the _parse_input_keys method to identify which state keys are needed
-         based on the input attribute
+        """Use the _parse_input_keys method to identify which state keys are 
+        needed based on the input attribute
         """
         try:
             input_keys = self._parse_input_keys(state, self.input)

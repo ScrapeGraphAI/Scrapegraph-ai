@@ -33,8 +33,7 @@ class SmartScraperGraph(AbstractGraph):
             return OpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
             return Gemini(llm_params)
-        else:
-            raise ValueError("Model not supported")
+        raise ValueError("Model not supported")
 
     def _create_graph(self):
         """
