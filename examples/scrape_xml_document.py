@@ -1,5 +1,5 @@
-""" 
-Basic example of scraping pipeline using SmartScraper from text
+"""
+Basic example of scraping pipeline using SmartScraper from XML documents
 """
 
 import os
@@ -18,14 +18,14 @@ graph_config = {
     },
 }
 
-
-# It could be also a http request using the request model
-text = open('inputs/plain_html_example.txt', 'r', encoding="utf-8")
+# Read the XML file
+with open('inputs/books.xml', 'r', encoding="utf-8") as file:
+    text = file.read()
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
-    file_source=str(text),
+    prompt="List me all the authors, title and genres of the books",
+    file_source=text,  # Pass the content of the file, not the file object
     config=graph_config
 )
 
