@@ -2,14 +2,14 @@
 Module having abstract class for creating all the graphs
 """
 from abc import ABC, abstractmethod
-
+from typing import Optional
 
 class AbstractGraph(ABC):
     """
     Abstract class representing a generic graph-based tool.
     """
 
-    def __init__(self, prompt: str, file_source: str, config: dict):
+    def __init__(self, prompt: str, config: dict, file_source: Optional[str] = "url"):
         """
         Initializes the AbstractGraph with a prompt, file source, and configuration.
         """

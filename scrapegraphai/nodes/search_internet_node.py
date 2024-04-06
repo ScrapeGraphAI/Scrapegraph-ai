@@ -2,7 +2,9 @@
 Module for generating the answer node
 """
 from typing import List
-from ..utils.research_web import search_word_on_web
+from langchain.output_parsers import CommaSeparatedListOutputParser
+from langchain.prompts import PromptTemplate
+from ..utils.research_web import search_on_web
 from .base_node import BaseNode
 
 
@@ -46,6 +48,7 @@ class SearchInternetNode(BaseNode):
             node_name (str): The unique identifier name for the node.
         """
         super().__init__(node_name, "node", input, output, 1, model_config)
+        self.llm_model = model_config["llm_model"]
 
     def execute(self, state):
         """
@@ -75,7 +78,24 @@ class SearchInternetNode(BaseNode):
 
         user_prompt = input_data[0]
 
-        answer = search_word_on_web(user_prompt)
+        output_parser = CommaSeparatedListOutputParser()
+
+        search_template = """Given the following user prompt, return a query that can be used to search the internet for relevant information. \n
+        You should return only the query string. \n
+        User Prompt: {user_prompt}"""
+
+        search_prompt = PromptTemplate(
+            template=search_template,
+            input_variables=["user_prompt"],
+        )
+
+        # Execute the chain to get the search query
+        search_answer = search_prompt | self.llm_model | output_parser
+        search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
+
+        print(f"Search Query: {search_query}")
+        # TODO: handle multiple URLs
+        answer = search_on_web(query=search_query, web_browser="Google", max_results=1)[0]
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})

@@ -4,11 +4,11 @@ Module for making the search on the intenet
 from ..models import OpenAI, Gemini
 from .base_graph import BaseGraph
 from ..nodes import (
+    SearchInternetNode,
     FetchNode,
     ParseNode,
     RAGNode,
-    GenerateAnswerNode,
-    SearchInternetNode
+    GenerateAnswerNode
 )
 from .abstract_graph import AbstractGraph
 
@@ -41,9 +41,9 @@ class SearchGraph(AbstractGraph):
         Creates the graph of nodes representing the workflow for web scraping and searching.
         """
         search_internet_node = SearchInternetNode(
-            input="url | local_dir",
-            output=["doc"],
-            model_config={"llm_model": self.llm_model},
+            input="user_prompt",
+            output=["url"],
+            model_config={"llm_model": self.llm_model}
         )
         fetch_node = FetchNode(
             input="url | local_dir",
@@ -85,7 +85,7 @@ class SearchGraph(AbstractGraph):
         """
         Executes the web scraping and searching process.
         """
-        inputs = {"user_prompt": self.prompt, self.input_key: self.file_source}
+        inputs = {"user_prompt": self.prompt}
         final_state = self.graph.execute(inputs)
 
         return final_state.get("answer", "No answer found.")
