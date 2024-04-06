@@ -80,7 +80,8 @@ class SearchInternetNode(BaseNode):
 
         output_parser = CommaSeparatedListOutputParser()
 
-        search_template = """Given the following user prompt, return a query that can be used to search the internet for relevant information. \n
+        search_template = """Given the following user prompt, return a query that can be 
+        used to search the internet for relevant information. \n
         You should return only the query string. \n
         User Prompt: {user_prompt}"""
 
@@ -95,7 +96,7 @@ class SearchInternetNode(BaseNode):
 
         print(f"Search Query: {search_query}")
         # TODO: handle multiple URLs
-        answer = search_on_web(query=search_query, search_engine="DuckDuckGo", max_results=1)[0]
+        answer = search_on_web(query=search_query, max_results=1)[0]
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})

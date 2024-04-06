@@ -5,6 +5,7 @@ Example of Search Graph
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SearchGraph
+from scrapegraphai.utils import convert_to_csv, convert_to_json
 
 load_dotenv()
 openai_key = os.getenv("OPENAI_APIKEY")
@@ -26,3 +27,7 @@ smart_scraper_graph = SearchGraph(
 
 result = smart_scraper_graph.run()
 print(result)
+
+# Save to json and csv
+convert_to_csv(result, "result")
+convert_to_json(result, "result")
