@@ -30,7 +30,6 @@ langchain_google_genai = "0.0.11"
 html2text = "2020.1.16"
 faiss-cpu = "1.7.4"
 beautifulsoup4 = "4.12.3"
-trulens_eval = "0.23.0"
 pandas = "2.0.3"
 python-dotenv = "1.0.1"
 tiktoken = {version = ">=0.5.2,<0.6.0"}

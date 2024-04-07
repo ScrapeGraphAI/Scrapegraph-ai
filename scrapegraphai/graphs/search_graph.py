@@ -1,7 +1,7 @@
 """ 
 Module for making the search on the intenet
 """
-from ..models import OpenAI, Gemini
+from ..models import OpenAI, Gemini, Ollama
 from .base_graph import BaseGraph
 from ..nodes import (
     SearchInternetNode,
@@ -33,6 +33,8 @@ class SearchGraph(AbstractGraph):
             return OpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
             return Gemini(llm_params)
+        elif "llama2" in llm_params["model"]:
+            return Ollama(llm_params)
         else:
             raise ValueError("Model not supported")
 

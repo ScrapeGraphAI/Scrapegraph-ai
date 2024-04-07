@@ -82,7 +82,8 @@ class SearchInternetNode(BaseNode):
 
         search_template = """Given the following user prompt, return a query that can be 
         used to search the internet for relevant information. \n
-        You should return only the query string. \n
+        You should return only the query string without any additional sentences. \n
+        You are taught to reply directly giving the search query. \n
         User Prompt: {user_prompt}"""
 
         search_prompt = PromptTemplate(
