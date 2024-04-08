@@ -29,7 +29,7 @@ class ParseNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, input: str, output: List[str], node_name: str = "Parse"):
+    def __init__(self, input: str, output: List[str], node_config: dict, node_name: str = "Parse"):
         """
         Initializes the ParseHTMLNode with a node name.
         Args:
@@ -38,7 +38,7 @@ class ParseNode(BaseNode):
             node_name (str): name of the node
             node_type (str, optional): type of the node
         """
-        super().__init__(node_name, "node", input, output, 1)
+        super().__init__(node_name, "node", input, output, 1, node_config)
 
     def execute(self,  state):
         """
@@ -69,7 +69,7 @@ class ParseNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=4000,
+            chunk_size=self.node_config.get("chunk_size", 4096),
             chunk_overlap=0,
         )
 

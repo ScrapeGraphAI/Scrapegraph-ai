@@ -18,6 +18,14 @@ class SmartScraperGraph(AbstractGraph):
     information from web pages using a natural language model to interpret and answer prompts.
     """
 
+    def __init__(self, prompt: str, source: str, config: dict):
+        """
+        Initializes the SmartScraperGraph with a prompt, source, and configuration.
+        """
+        super().__init__(prompt, config, source)
+
+        self.input_key = "url" if source.startswith("http") else "local_dir"
+
     def _create_graph(self):
         """
         Creates the graph of nodes representing the workflow for web scraping.
@@ -29,6 +37,7 @@ class SmartScraperGraph(AbstractGraph):
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
+            node_config={"chunk_size": self.model_token}
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",

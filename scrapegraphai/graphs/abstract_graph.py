@@ -4,6 +4,7 @@ Module having abstract class for creating all the graphs
 from abc import ABC, abstractmethod
 from typing import Optional
 from ..models import OpenAI, Gemini, Ollama, AzureOpenAI
+from ..helpers import models_tokens
 
 class AbstractGraph(ABC):
     """
@@ -16,8 +17,6 @@ class AbstractGraph(ABC):
         """
         self.prompt = prompt
         self.source = source
-        self.input_key = "url" if source.startswith(
-            "http") else "local_dir"
         self.config = config
         self.llm_model = self._create_llm(config["llm"])
         self.embedder_model = None if "embeddings" not in config else self._create_llm(config["embeddings"])
@@ -33,16 +32,39 @@ class AbstractGraph(ABC):
         }
         llm_params = {**llm_defaults, **llm_config}
 
+        # Instantiate the language model based on the model name
         if "gpt-" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["openai"][llm_params["model"]]
+            except KeyError:
+                raise ValueError("Model not supported")
             return OpenAI(llm_params)
+        
         elif "azure" in llm_params["model"]:
+            # take the model after the last dash
+            llm_params["model"] = llm_params["model"].split("/")[-1]
+            try:
+                self.model_token = models_tokens["openai"][llm_params["model"]]
+            except KeyError:
+                raise ValueError("Model not supported")
             return AzureOpenAI(llm_params)
+        
         elif "gemini" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["gemini"][llm_params["model"]]
+            except KeyError:
+                raise ValueError("Model not supported")
             return Gemini(llm_params)
-        elif "llama2" in llm_params["model"]:
-            # set model to llama2 if it has a different structure
-            llm_params["model"] = "llama2"
+        
+        elif "ollama" in llm_params["model"]:
+            # take the model after the last dash
+            llm_params["model"] = llm_params["model"].split("/")[-1]
+            try:
+                self.model_token = models_tokens["ollama"][llm_params["model"]]
+            except KeyError:
+                raise ValueError("Model not supported")
             return Ollama(llm_params)
+        
         else:
             raise ValueError("Model not supported")
 

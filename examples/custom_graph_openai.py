@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode
+from scrapegraphai.helpers import models_tokens
 load_dotenv()
 
 # ************************************************
@@ -38,6 +39,7 @@ fetch_node = FetchNode(
 parse_node = ParseNode(
     input="doc",
     output=["parsed_doc"],
+    node_config={"chunk_size": 4096}
 )
 rag_node = RAGNode(
     input="user_prompt & (parsed_doc | doc)",

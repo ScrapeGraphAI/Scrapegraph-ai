@@ -16,7 +16,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama2",
+        "model": "ollama/mistral",
         "temperature": 0,
         "format": "json", # Ollama needs the format to be specified explicitly
     },

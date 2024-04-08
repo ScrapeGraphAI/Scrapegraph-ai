@@ -32,6 +32,7 @@ class SearchGraph(AbstractGraph):
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
+            node_config={"chunk_size": self.model_token}
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
