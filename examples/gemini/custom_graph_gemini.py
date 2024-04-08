@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 from scrapegraphai.models import Gemini
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode
-from scrapegraphai.helpers import models_tokens
 load_dotenv()
 
 # ************************************************

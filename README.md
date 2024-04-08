@@ -43,12 +43,18 @@ Check out also the docusaurus [documentation](https://scrapegraph-doc.onrender.c
 
 ## 💻 Usage
 
-### Case 1: Extracting information using a prompt
+### Case 1: Extracting informations using a local LLM 
 
 You can use the `SmartScraper` class to extract information from a website using a prompt.
 
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
 
+```python
+
+```
+
+
+### Case 2: Extracting informations using Openai model
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 OPENAI_API_KEY = "YOUR_API_KEY"
@@ -72,7 +78,31 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-The output will be a dictionary with the extracted information, for example:
+### Case 3: Extracting informations using Gemini 
+```python
+from scrapegraphai.graphs import SmartScraperGraph
+GOOGLE_APIKEY = "YOUR_API_KEY"
+
+# Define the configuration for the graph
+graph_config = {
+    "llm": {
+        "api_key": GOOGLE_APIKEY,
+        "model": "gemini-pro",
+    },
+}
+
+# Create the SmartScraperGraph instance
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the quotes, authors and tags ",
+    file_source="http://quotes.toscrape.com",  # also accepts a string with the already downloaded HTML code as string format
+    config=graph_config
+)
+
+result = smart_scraper_graph.run()
+print(result)
+```
+
+The output for alle 3 the cases will be a dictionary with the extracted information, for example:
 
 ```bash
 {
