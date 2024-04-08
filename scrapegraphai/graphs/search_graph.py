@@ -1,7 +1,6 @@
 """ 
 Module for making the search on the intenet
 """
-from ..models import OpenAI, Gemini
 from .base_graph import BaseGraph
 from ..nodes import (
     SearchInternetNode,
@@ -12,29 +11,10 @@ from ..nodes import (
 )
 from .abstract_graph import AbstractGraph
 
-
 class SearchGraph(AbstractGraph):
     """ 
     Module for searching info on the internet
     """
-
-    def _create_llm(self, llm_config: dict):
-        """
-        Creates an instance of the language model (OpenAI or Gemini) based on configuration.
-        """
-        llm_defaults = {
-            "temperature": 0,
-            "streaming": True
-        }
-        llm_params = {**llm_defaults, **llm_config}
-        if "api_key" not in llm_params:
-            raise ValueError("LLM configuration must include an 'api_key'.")
-        if "gpt-" in llm_params["model"]:
-            return OpenAI(llm_params)
-        elif "gemini" in llm_params["model"]:
-            return Gemini(llm_params)
-        else:
-            raise ValueError("Model not supported")
 
     def _create_graph(self):
         """
@@ -43,7 +23,7 @@ class SearchGraph(AbstractGraph):
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["url"],
-            model_config={"llm_model": self.llm_model}
+            node_config={"llm": self.llm_model}
         )
         fetch_node = FetchNode(
             input="url | local_dir",
@@ -52,16 +32,20 @@ class SearchGraph(AbstractGraph):
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
+            node_config={"chunk_size": self.model_token}
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
-            model_config={"llm_model": self.llm_model},
+            node_config={
+                "llm": self.llm_model,
+                "embedder_model": self.embedder_model
+            }
         )
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
-            model_config={"llm_model": self.llm_model},
+            node_config={"llm": self.llm_model},
         )
 
         return BaseGraph(

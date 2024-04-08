@@ -18,22 +18,13 @@ class SmartScraperGraph(AbstractGraph):
     information from web pages using a natural language model to interpret and answer prompts.
     """
 
-    def _create_llm(self, llm_config: dict):
+    def __init__(self, prompt: str, source: str, config: dict):
         """
-        Creates an instance of the language model (OpenAI or Gemini) based on configuration.
+        Initializes the SmartScraperGraph with a prompt, source, and configuration.
         """
-        llm_defaults = {
-            "temperature": 0,
-            "streaming": True
-        }
-        llm_params = {**llm_defaults, **llm_config}
-        if "api_key" not in llm_params:
-            raise ValueError("LLM configuration must include an 'api_key'.")
-        if "gpt-" in llm_params["model"]:
-            return OpenAI(llm_params)
-        elif "gemini" in llm_params["model"]:
-            return Gemini(llm_params)
-        raise ValueError("Model not supported")
+        super().__init__(prompt, config, source)
+
+        self.input_key = "url" if source.startswith("http") else "local_dir"
 
     def _create_graph(self):
         """
@@ -46,16 +37,17 @@ class SmartScraperGraph(AbstractGraph):
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
+            node_config={"chunk_size": self.model_token}
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
-            model_config={"llm_model": self.llm_model},
+            node_config={"llm": self.llm_model},
         )
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
-            model_config={"llm_model": self.llm_model},
+            node_config={"llm": self.llm_model},
         )
 
         return BaseGraph(
@@ -77,7 +69,7 @@ class SmartScraperGraph(AbstractGraph):
         """
         Executes the web scraping process and returns the answer to the prompt.
         """
-        inputs = {"user_prompt": self.prompt, self.input_key: self.file_source}
+        inputs = {"user_prompt": self.prompt, self.input_key: self.source}
         final_state = self.graph.execute(inputs)
 
         return final_state.get("answer", "No answer found.")

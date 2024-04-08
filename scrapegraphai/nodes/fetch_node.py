@@ -68,8 +68,7 @@ class FetchNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         source = input_data[0]        
-                
-        print(f"Fetching content from: {source}")
+        
         # if it is a local directory
         if not source.startswith("http"):
             document = [Document(page_content=source, metadata={

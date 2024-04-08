@@ -3,6 +3,14 @@ Nodes metadata for the scrapegraphai package.
 """
 
 nodes_metadata = {
+    "SearchInternetNode": {
+        "description": "Refactors the user's query into a search query and fetches the search result URLs.",
+        "type": "node",
+        "args": {
+            "user_input": "User's query or question."
+        },
+        "returns": "Updated state with the URL of the search result under 'url' key."
+    },
     "FetchNode": {
         "description": "Fetches input content from a given URL or file path.",
         "type": "node",
