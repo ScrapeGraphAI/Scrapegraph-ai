@@ -39,7 +39,7 @@ class GenerateAnswerNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: dict,
                  node_name: str = "GenerateAnswer"):
         """
         Initializes the GenerateAnswerNode with a language model client and a node name.
@@ -47,8 +47,8 @@ class GenerateAnswerNode(BaseNode):
             llm (OpenAIImageToText): An instance of the OpenAIImageToText class.
             node_name (str): name of the node
         """
-        super().__init__(node_name, "node", input, output, 2, model_config)
-        self.llm_model = model_config["llm_model"]
+        super().__init__(node_name, "node", input, output, 2, node_config)
+        self.llm_model = node_config["llm"]
 
     def execute(self, state):
         """

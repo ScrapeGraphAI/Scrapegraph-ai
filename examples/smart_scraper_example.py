@@ -5,11 +5,15 @@ Basic example of scraping pipeline using SmartScraper
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
-
 load_dotenv()
+
+
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
 openai_key = os.getenv("OPENAI_APIKEY")
 
-# Define the configuration for the graph
 graph_config = {
     "llm": {
         "api_key": openai_key,
@@ -17,11 +21,14 @@ graph_config = {
     },
 }
 
-# Create the SmartScraperGraph instance
+# ************************************************
+# Create the SmartScraperGraph instance and run it
+# ************************************************
+
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the news with their description.",
     # also accepts a string with the already downloaded HTML code
-    file_source="https://www.wired.com",
+    source="https://www.wired.com",
     config=graph_config
 )
 

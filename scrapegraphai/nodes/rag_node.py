@@ -8,7 +8,9 @@ from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
-from langchain_openai import OpenAIEmbeddings
+from ..models import OpenAI, Gemini, Ollama, AzureOpenAI
+from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 from .base_node import BaseNode
 
 
@@ -32,12 +34,13 @@ class RAGNode(BaseNode):
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict, node_name: str = "RAG"):
+    def __init__(self, input: str, output: List[str], node_config: dict, node_name: str = "RAG"):
         """
         Initializes the ParseHTMLNode with a node name.
         """
-        super().__init__(node_name, "node", input, output, 2, model_config)
-        self.llm_model = model_config["llm_model"]
+        super().__init__(node_name, "node", input, output, 2, node_config)
+        self.llm_model = node_config["llm"]
+        self.embedder_model = node_config.get("embedder_model", None)
 
     def execute(self, state):
         """
@@ -79,11 +82,20 @@ class RAGNode(BaseNode):
 
         print("--- (updated chunks metadata) ---")
 
-        openai_key = self.llm_model.openai_api_key
-        retriever = FAISS.from_documents(chunked_docs,
-                                         OpenAIEmbeddings(api_key=openai_key)).as_retriever()
-        # could be any embedding of your choice
-        embeddings = OpenAIEmbeddings(api_key=openai_key)
+        # check if embedder_model is provided, if not use llm_model
+        embedding_model = self.embedder_model if self.embedder_model else self.llm_model
+
+        if isinstance(embedding_model, OpenAI):
+            embeddings = OpenAIEmbeddings(api_key=embedding_model.openai_api_key)
+        elif isinstance(embedding_model, AzureOpenAI):
+            embeddings = AzureOpenAIEmbeddings()
+        elif isinstance(embedding_model, Ollama):
+            embeddings = OllamaEmbeddings()
+        else:
+            raise ValueError("Embedding Model missing or not supported")
+        
+        retriever = FAISS.from_documents(chunked_docs, embeddings).as_retriever()
+    
         redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
         # similarity_threshold could be set, now k=20
         relevant_filter = EmbeddingsFilter(embeddings=embeddings)

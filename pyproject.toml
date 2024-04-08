@@ -21,12 +21,10 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">3.9,<3.9.7 || >3.9.7,<3.12"
-langchain = "0.1.6"
-langchain_community = "0.0.19"
-langchain_core = "0.1.22"
-langchain_openai = "0.0.5"
-langchain_google_genai = "0.0.11"
+python = ">3.9,<4.0"
+langchain = "0.1.14"
+langchain-openai = "0.1.1"
+langchain-google-genai = "1.0.1"
 html2text = "2020.1.16"
 faiss-cpu = "1.7.4"
 beautifulsoup4 = "4.12.3"

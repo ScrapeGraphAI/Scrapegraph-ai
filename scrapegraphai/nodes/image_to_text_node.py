@@ -16,7 +16,7 @@ class ImageToTextNode(BaseNode):
         execute(state, url): Execute the node's logic and return the updated state.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: dict,
                  node_name: str = "ImageToText"):
         """
         Initializes an instance of the ImageToTextNode class.
@@ -24,11 +24,11 @@ class ImageToTextNode(BaseNode):
         Args:
             input (str): The input for the node.
             output (List[str]): The output of the node.
-            model_config (dict): Configuration for the model.
+            node_config (dict): Configuration for the model.
             node_name (str): Name of the node.
         """
-        super().__init__(node_name, "node", input, output, 1, model_config)
-        self.llm_model = model_config["llm_model"]
+        super().__init__(node_name, "node", input, output, 1, node_config)
+        self.llm_model = node_config["llm_model"]
 
     def execute(self, state: dict) -> dict:
         """

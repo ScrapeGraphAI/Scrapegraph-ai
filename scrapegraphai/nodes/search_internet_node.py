@@ -36,7 +36,7 @@ class SearchInternetNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: dict,
                  node_name: str = "SearchInternet"):
         """
         Initializes the SearchInternetNode with input, output, model configuration, and a node name.
@@ -47,8 +47,8 @@ class SearchInternetNode(BaseNode):
             model_config (dict): Configuration parameters for the language model client.
             node_name (str): The unique identifier name for the node.
         """
-        super().__init__(node_name, "node", input, output, 1, model_config)
-        self.llm_model = model_config["llm_model"]
+        super().__init__(node_name, "node", input, output, 1, node_config)
+        self.llm_model = node_config["llm"]
 
     def execute(self, state):
         """
@@ -94,7 +94,7 @@ class SearchInternetNode(BaseNode):
         # Execute the chain to get the search query
         search_answer = search_prompt | self.llm_model | output_parser
         search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
-
+    
         print(f"Search Query: {search_query}")
         # TODO: handle multiple URLs
         answer = search_on_web(query=search_query, max_results=1)[0]

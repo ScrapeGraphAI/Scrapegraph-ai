@@ -18,12 +18,12 @@ class TextToSpeechNode(BaseNode):
     """
 
     def __init__(self, input: str, output: List[str],
-                 model_config: dict, node_name: str = "TextToSpeech"):
+                 node_config: dict, node_name: str = "TextToSpeech"):
         """
         Initializes an instance of the TextToSpeechNode class.
         """
-        super().__init__(node_name, "node", input, output, 1, model_config)
-        self.tts_model = model_config["tts_model"]
+        super().__init__(node_name, "node", input, output, 1, node_config)
+        self.tts_model = node_config["tts_model"]
 
     def execute(self, state):
         """

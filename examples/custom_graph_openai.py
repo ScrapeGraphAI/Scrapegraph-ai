@@ -7,11 +7,14 @@ from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode
-
 load_dotenv()
+
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
 openai_key = os.getenv("OPENAI_APIKEY")
 
-# Define the configuration for the graph
 graph_config = {
     "llm": {
         "api_key": openai_key,
@@ -20,6 +23,10 @@ graph_config = {
         "streaming": True
     },
 }
+
+# ************************************************
+# Define the graph nodes
+# ************************************************
 
 llm_model = OpenAI(graph_config["llm"])
 
@@ -35,15 +42,18 @@ parse_node = ParseNode(
 rag_node = RAGNode(
     input="user_prompt & (parsed_doc | doc)",
     output=["relevant_chunks"],
-    model_config={"llm_model": llm_model},
+    node_config={"llm": llm_model},
 )
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
-    model_config={"llm_model": llm_model},
+    node_config={"llm": llm_model},
 )
 
-# create the graph by defining the nodes and their connections
+# ************************************************
+# Create the graph by defining the connections
+# ************************************************
+
 graph = BaseGraph(
     nodes={
         fetch_node,
@@ -59,7 +69,10 @@ graph = BaseGraph(
     entry_point=fetch_node
 )
 
-# execute the graph
+# ************************************************
+# Execute the graph
+# ************************************************
+
 result = graph.execute({
     "user_prompt": "List me the projects with their description",
     "url": "https://perinim.github.io/projects/"
