@@ -27,7 +27,7 @@ class SpeechGraph(AbstractGraph):
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-        
+
     def _create_graph(self):
         """
         Creates the graph of nodes representing the workflow for web scraping and summarization.

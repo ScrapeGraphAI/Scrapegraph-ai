@@ -6,6 +6,7 @@ from typing import Optional
 from ..models import OpenAI, Gemini, Ollama, AzureOpenAI
 from ..helpers import models_tokens
 
+
 class AbstractGraph(ABC):
     """
     Abstract class representing a generic graph-based tool.
@@ -19,7 +20,8 @@ class AbstractGraph(ABC):
         self.source = source
         self.config = config
         self.llm_model = self._create_llm(config["llm"])
-        self.embedder_model = None if "embeddings" not in config else self._create_llm(config["embeddings"])
+        self.embedder_model = None if "embeddings" not in config else self._create_llm(
+            config["embeddings"])
         self.graph = self._create_graph()
 
     def _create_llm(self, llm_config: dict):
@@ -39,7 +41,7 @@ class AbstractGraph(ABC):
             except KeyError:
                 raise ValueError("Model not supported")
             return OpenAI(llm_params)
-        
+
         elif "azure" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
@@ -48,14 +50,14 @@ class AbstractGraph(ABC):
             except KeyError:
                 raise ValueError("Model not supported")
             return AzureOpenAI(llm_params)
-        
+
         elif "gemini" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["gemini"][llm_params["model"]]
             except KeyError:
                 raise ValueError("Model not supported")
             return Gemini(llm_params)
-        
+
         elif "ollama" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
@@ -64,7 +66,7 @@ class AbstractGraph(ABC):
             except KeyError:
                 raise ValueError("Model not supported")
             return Ollama(llm_params)
-        
+
         else:
             raise ValueError("Model not supported")
 

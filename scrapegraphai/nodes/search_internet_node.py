@@ -94,7 +94,7 @@ class SearchInternetNode(BaseNode):
         # Execute the chain to get the search query
         search_answer = search_prompt | self.llm_model | output_parser
         search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
-    
+
         print(f"Search Query: {search_query}")
         # TODO: handle multiple URLs
         answer = search_on_web(query=search_query, max_results=1)[0]

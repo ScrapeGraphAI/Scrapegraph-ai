@@ -21,9 +21,9 @@ models_tokens = {
         "gemini-pro": 128000,
     },
 
-    "ollama":{
+    "ollama": {
         "llama2": 4096,
         "mistral": 8192,
     }
-    
+
 }

@@ -86,16 +86,18 @@ class RAGNode(BaseNode):
         embedding_model = self.embedder_model if self.embedder_model else self.llm_model
 
         if isinstance(embedding_model, OpenAI):
-            embeddings = OpenAIEmbeddings(api_key=embedding_model.openai_api_key)
+            embeddings = OpenAIEmbeddings(
+                api_key=embedding_model.openai_api_key)
         elif isinstance(embedding_model, AzureOpenAI):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
             embeddings = OllamaEmbeddings()
         else:
             raise ValueError("Embedding Model missing or not supported")
-        
-        retriever = FAISS.from_documents(chunked_docs, embeddings).as_retriever()
-    
+
+        retriever = FAISS.from_documents(
+            chunked_docs, embeddings).as_retriever()
+
         redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
         # similarity_threshold could be set, now k=20
         relevant_filter = EmbeddingsFilter(embeddings=embeddings)

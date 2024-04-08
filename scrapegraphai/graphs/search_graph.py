@@ -11,6 +11,7 @@ from ..nodes import (
 )
 from .abstract_graph import AbstractGraph
 
+
 class SearchGraph(AbstractGraph):
     """ 
     Module for searching info on the internet
