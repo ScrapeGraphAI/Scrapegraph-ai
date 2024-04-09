@@ -50,7 +50,25 @@ You can use the `SmartScraper` class to extract information from a website using
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
 
 ```python
+from scrapegraphai.graphs import SmartScraperGraph
 
+graph_config = {
+    "llm": {
+        "model": "ollama/mistral",
+        "temperature": 0,
+        "format": "json",  # Ollama needs the format to be specified explicitly
+    },
+}
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the news with their description.",
+    # also accepts a string with the already downloaded HTML code
+    source="https://www.wired.com",
+    config=graph_config
+)
+
+result = smart_scraper_graph.run()
+print(result)
 ```
 
 

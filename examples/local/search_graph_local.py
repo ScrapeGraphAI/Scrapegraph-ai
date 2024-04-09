@@ -2,27 +2,19 @@
 Example of Search Graph
 """
 
-import os
-from dotenv import load_dotenv
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json
-load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
         "model": "ollama/mistral",
         "temperature": 0,
-        "format": "json", # Ollama needs the format to be specified explicitly
-    },
-    "embeddings": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "format": "json",  # Ollama needs the format to be specified explicitly
     },
 }
 

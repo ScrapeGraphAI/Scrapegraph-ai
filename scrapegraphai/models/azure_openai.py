@@ -3,6 +3,7 @@ Azure Openai configuration wrapper
 """
 from langchain_openai import AzureChatOpenAI
 
+
 class AzureOpenAI(AzureChatOpenAI):
     """Class for wrapping openai module"""
 
