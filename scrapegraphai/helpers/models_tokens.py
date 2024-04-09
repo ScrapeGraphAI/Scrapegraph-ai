@@ -24,6 +24,8 @@ models_tokens = {
     "ollama": {
         "llama2": 4096,
         "mistral": 8192,
+        "codellama": 16000,
+        "dolphin-mixtral": 32000,
+        "mistral-openorca": 32000,
     }
-
 }

@@ -2,7 +2,7 @@
 Module for converting text to speach
 """
 from scrapegraphai.utils.save_audio_from_bytes import save_audio_from_bytes
-from ..models import OpenAI, Gemini, OpenAITextToSpeech
+from ..models import OpenAITextToSpeech
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchNode,

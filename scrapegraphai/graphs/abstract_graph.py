@@ -59,7 +59,14 @@ class AbstractGraph(ABC):
             return Gemini(llm_params)
 
         elif "ollama" in llm_params["model"]:
-            # take the model after the last dash
+            """ 
+            Avaiable models:
+            - llama2
+            - mistral
+            - codellama
+            - dolphin-mixtral
+            - mistral-openorca
+            """
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
                 self.model_token = models_tokens["ollama"][llm_params["model"]]

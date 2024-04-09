@@ -8,8 +8,8 @@ from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
-from ..models import OpenAI, Gemini, Ollama, AzureOpenAI
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
+from ..models import OpenAI, Ollama, AzureOpenAI
 from langchain_community.embeddings import OllamaEmbeddings
 from .base_node import BaseNode
 

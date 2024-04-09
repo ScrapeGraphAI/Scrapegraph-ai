@@ -67,8 +67,8 @@ class FetchNode(BaseNode):
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
-        source = input_data[0]        
-        
+        source = input_data[0]
+
         # if it is a local directory
         if not source.startswith("http"):
             document = [Document(page_content=source, metadata={
