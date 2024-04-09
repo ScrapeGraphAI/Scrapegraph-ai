@@ -87,10 +87,6 @@ graph_config = {
     },
 }
 
-# ************************************************
-# Create the SmartScraperGraph instance and run it
-# ************************************************
-
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the news with their description.",
     # also accepts a string with the already downloaded HTML code
