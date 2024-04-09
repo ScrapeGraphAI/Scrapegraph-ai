@@ -1,7 +1,6 @@
 """ 
 Module for creating the smart scraper
 """
-from ..models import OpenAI, Gemini
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchNode,
