@@ -47,9 +47,10 @@ The `SmartScraper` class is a direct graph implementation that uses the most com
 
 Note: before using the local model remeber to create the docker container!
 ```text
- 
+    docker-compose up -d
+    docker exec -it ollama ollama run stablelm-zephyr
 ```
-
+You can use which model you want instead of stablelm-zephyr
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 
