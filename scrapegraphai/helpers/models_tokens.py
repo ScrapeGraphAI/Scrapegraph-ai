@@ -27,5 +27,6 @@ models_tokens = {
         "codellama": 16000,
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,
+        "stablelm-zephyr": 8192
     }
 }

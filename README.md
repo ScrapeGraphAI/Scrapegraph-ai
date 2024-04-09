@@ -1,6 +1,4 @@
 
-
-
 # 🕷️ ScrapeGraphAI: You Only Scrape Once
 [![Downloads](https://static.pepy.tech/badge/scrapegraphai)](https://pepy.tech/project/scrapegraphai)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
@@ -42,12 +40,15 @@ The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.r
 Check out also the docusaurus [documentation](https://scrapegraph-doc.onrender.com/).
 
 ## 💻 Usage
-
-### Case 1: Extracting informations using a local LLM 
-
 You can use the `SmartScraper` class to extract information from a website using a prompt.
 
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
+### Case 1: Extracting informations using a local LLM 
+
+Note: before using the local model remeber to create the docker container!
+```text
+ 
+```
 
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
