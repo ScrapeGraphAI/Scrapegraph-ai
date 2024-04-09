@@ -2,7 +2,7 @@
 Module for converting text to speach
 """
 from scrapegraphai.utils.save_audio_from_bytes import save_audio_from_bytes
-from ..models import OpenAI, Gemini, OpenAITextToSpeech
+from ..models import OpenAITextToSpeech
 from .base_graph import BaseGraph
 from ..nodes import (
     FetchNode,
@@ -27,7 +27,7 @@ class SpeechGraph(AbstractGraph):
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-        
+
     def _create_graph(self):
         """
         Creates the graph of nodes representing the workflow for web scraping and summarization.
