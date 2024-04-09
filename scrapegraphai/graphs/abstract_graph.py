@@ -68,10 +68,15 @@ class AbstractGraph(ABC):
             - mistral-openorca
             """
             llm_params["model"] = llm_params["model"].split("/")[-1]
-            try:
+
+            # allow user to set model_tokens in config
+            if "model_tokens" in llm_params:
+                self.model_token = llm_params["model_tokens"]
+            elif llm_params["model"] in models_tokens["ollama"]:
                 self.model_token = models_tokens["ollama"][llm_params["model"]]
-            except KeyError:
-                raise ValueError("Model not supported")
+            else:
+                 raise ValueError("Model not supported")
+
             return Ollama(llm_params)
 
         else:
