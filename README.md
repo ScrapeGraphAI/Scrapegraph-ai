@@ -80,7 +80,6 @@ print(result)
 from scrapegraphai.graphs import SmartScraperGraph
 OPENAI_API_KEY = "YOUR_API_KEY"
 
-# Define the configuration for the graph
 graph_config = {
     "llm": {
         "api_key": OPENAI_API_KEY,
@@ -88,10 +87,14 @@ graph_config = {
     },
 }
 
-# Create the SmartScraperGraph instance
+# ************************************************
+# Create the SmartScraperGraph instance and run it
+# ************************************************
+
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the news with their description.",
-    file_source="https://perinim.github.io/projects/",  # also accepts a string with the already downloaded HTML code as string format
+    # also accepts a string with the already downloaded HTML code
+    source="https://www.wired.com",
     config=graph_config
 )
 
