@@ -12,11 +12,11 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": openai_key,
+        "api_key": gemini_key,
         "model": "gpt-3.5-turbo",
     },
 }
