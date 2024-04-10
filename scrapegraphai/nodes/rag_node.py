@@ -91,7 +91,7 @@ class RAGNode(BaseNode):
         elif isinstance(embedding_model, AzureOpenAI):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
-            embeddings = OllamaEmbeddings()
+            embeddings = OllamaEmbeddings(model=embedding_model.model)
         else:
             raise ValueError("Embedding Model missing or not supported")
 
