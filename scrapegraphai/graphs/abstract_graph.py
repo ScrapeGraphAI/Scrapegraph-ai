@@ -73,9 +73,10 @@ class AbstractGraph(ABC):
             if "model_tokens" in llm_params:
                 self.model_token = llm_params["model_tokens"]
             elif llm_params["model"] in models_tokens["ollama"]:
-                self.model_token = models_tokens["ollama"][llm_params["model"]]
-            else:
-                 raise ValueError("Model not supported")
+                try:
+                    self.model_token = models_tokens["ollama"][llm_params["model"]]
+                except KeyError:
+                    raise ValueError("Model not supported")
 
             return Ollama(llm_params)
 
