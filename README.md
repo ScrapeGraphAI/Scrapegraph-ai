@@ -114,7 +114,7 @@ graph_config = {
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the quotes, authors and tags ",
-    file_source="http://quotes.toscrape.com",  # also accepts a string with the already downloaded HTML code as string format
+    source="http://quotes.toscrape.com",  # also accepts a string with the already downloaded HTML code as string format
     config=graph_config
 )
 
