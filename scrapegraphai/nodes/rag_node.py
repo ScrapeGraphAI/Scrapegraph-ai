@@ -27,11 +27,11 @@ class RAGNode(BaseNode):
         node_type (str): The type of the node, set to "node" indicating a standard operational node.
 
     Args:
-        node_name (str, optional): The unique identifier name for the node. 
+        node_name (str, optional): The unique identifier name for the node.
         Defaults to "ParseHTMLNode".
 
     Methods:
-        execute(state): Parses the HTML document contained within the state using 
+        execute(state): Parses the HTML document contained within the state using
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
@@ -45,7 +45,7 @@ class RAGNode(BaseNode):
 
     def execute(self, state):
         """
-        Executes the node's logic to implement RAG (Retrieval-Augmented Generation) 
+        Executes the node's logic to implement RAG (Retrieval-Augmented Generation)
         The method updates the state with relevant chunks of the document.
 
         Args:
@@ -55,7 +55,7 @@ class RAGNode(BaseNode):
             dict: The updated state containing the 'relevant_chunks' key with the relevant chunks.
 
         Raises:
-            KeyError: If 'document' is not found in the state, indicating that the necessary 
+            KeyError: If 'document' is not found in the state, indicating that the necessary
                       information for parsing is missing.
         """
 
@@ -93,8 +93,8 @@ class RAGNode(BaseNode):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
             embeddings = OllamaEmbeddings(model=embedding_model.model)
-        elif isinstance(embedding_model, Ollama):
-            embeddings = HuggingFaceHubEmbeddings(embedding_model, HuggingFace)
+        elif isinstance(embedding_model, HuggingFace):
+            embeddings = HuggingFaceHubEmbeddings(model=embedding_model.model)
         else:
             raise ValueError("Embedding Model missing or not supported")
 
