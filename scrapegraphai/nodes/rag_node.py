@@ -7,9 +7,10 @@ from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
+from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
-from ..models import OpenAI, Ollama, AzureOpenAI
+from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace
 from langchain_community.embeddings import OllamaEmbeddings
 from .base_node import BaseNode
 
@@ -92,6 +93,8 @@ class RAGNode(BaseNode):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
             embeddings = OllamaEmbeddings(model=embedding_model.model)
+        elif isinstance(embedding_model, Ollama):
+            embeddings = HuggingFaceHubEmbeddings(embedding_model, HuggingFace)
         else:
             raise ValueError("Embedding Model missing or not supported")
 
