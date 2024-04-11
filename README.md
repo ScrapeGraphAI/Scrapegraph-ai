@@ -43,14 +43,45 @@ Check out also the docusaurus [documentation](https://scrapegraph-doc.onrender.c
 You can use the `SmartScraper` class to extract information from a website using a prompt.
 
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
-### Case 1: Extracting informations using a local LLM 
+### Case 1: Extracting informations using Ollama
+Remember to download the model on Ollama separately!
+```python
+from scrapegraphai.graphs import SmartScraperGraph
+
+graph_config = {
+    "llm": {
+        "model": "ollama/mistral",
+        "temperature": 0,
+        "format": "json",  # Ollama needs the format to be specified explicitly
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    }
+}
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the news with their description.",
+    # also accepts a string with the already downloaded HTML code
+    source="https://perinim.github.io/projects",
+    config=graph_config
+)
+
+result = smart_scraper_graph.run()
+print(result)
+
+```
+
+### Case 2: Extracting informations using Docker
 
 Note: before using the local model remeber to create the docker container!
 ```text
     docker-compose up -d
     docker exec -it ollama ollama run stablelm-zephyr
 ```
-You can use which model you want instead of stablelm-zephyr
+You can use which models avaiable on Ollama or your own model instead of stablelm-zephyr
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 
@@ -75,7 +106,7 @@ print(result)
 ```
 
 
-### Case 2: Extracting informations using Openai model
+### Case 3: Extracting informations using Openai model
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 OPENAI_API_KEY = "YOUR_API_KEY"
@@ -98,7 +129,7 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-### Case 3: Extracting informations using Gemini 
+### Case 4: Extracting informations using Gemini 
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 GOOGLE_APIKEY = "YOUR_API_KEY"
