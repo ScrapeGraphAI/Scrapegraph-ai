@@ -6,7 +6,6 @@ from typing import Optional
 from ..models import OpenAI, Gemini, Ollama, AzureOpenAI
 from ..helpers import models_tokens
 
-
 class AbstractGraph(ABC):
     """
     Abstract class representing a generic graph-based tool.
@@ -23,6 +22,9 @@ class AbstractGraph(ABC):
         self.embedder_model = None if "embeddings" not in config else self._create_llm(
             config["embeddings"])
         self.graph = self._create_graph()
+        
+        self.final_state = None
+        self.execution_info = None
 
     def _create_llm(self, llm_config: dict):
         """
@@ -30,7 +32,7 @@ class AbstractGraph(ABC):
         """
         llm_defaults = {
             "temperature": 0,
-            "streaming": True
+            "streaming": False
         }
         llm_params = {**llm_defaults, **llm_config}
 
@@ -83,6 +85,12 @@ class AbstractGraph(ABC):
         else:
             raise ValueError("Model not supported")
 
+    def get_execution_info(self):
+        """
+        Returns the execution information of the graph.
+        """
+        return self.execution_info
+    
     @abstractmethod
     def _create_graph(self):
         """

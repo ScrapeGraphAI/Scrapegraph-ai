@@ -5,7 +5,7 @@ Basic example of scraping pipeline using SmartScraper from text
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json
+from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
 # ************************************************
@@ -45,6 +45,13 @@ smart_scraper_graph = SmartScraperGraph(
 
 result = smart_scraper_graph.run()
 print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))
 
 # Save to json or csv
 convert_to_csv(result, "result")

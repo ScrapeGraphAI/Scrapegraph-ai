@@ -1,7 +1,8 @@
 """
 Module for creating the base graphs
  """
-
+import time
+from langchain_community.callbacks import get_openai_callback
 
 class BaseGraph:
     """
@@ -62,9 +63,46 @@ class BaseGraph:
         current_node_name = self.entry_point
         state = initial_state
 
+        # variables for tracking execution info
+        total_exec_time = 0.0
+        exec_info = {}
+        cb_total = {
+            "total_tokens": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "successful_requests": 0,
+            "total_cost_USD": 0.0,
+        }
+
         while current_node_name is not None:
+
+            curr_time = time.time()
             current_node = self.nodes[current_node_name]
-            result = current_node.execute(state)
+
+            with get_openai_callback() as cb:
+                result = current_node.execute(state)
+                
+                node_exec_time = time.time() - curr_time
+                total_exec_time += node_exec_time
+
+                cb = {
+                    "total_tokens": cb.total_tokens,
+                    "prompt_tokens": cb.prompt_tokens,
+                    "completion_tokens": cb.completion_tokens,
+                    "successful_requests": cb.successful_requests,
+                    "total_cost_USD": cb.total_cost,
+                }
+
+                exec_info[current_node_name] = {
+                    "exec_time": node_exec_time,
+                    "model_info": cb
+                }
+
+                cb_total["total_tokens"] += cb["total_tokens"]
+                cb_total["prompt_tokens"] += cb["prompt_tokens"]
+                cb_total["completion_tokens"] += cb["completion_tokens"]
+                cb_total["successful_requests"] += cb["successful_requests"]
+                cb_total["total_cost_USD"] += cb["total_cost_USD"]
 
             if current_node.node_type == "conditional_node":
                 current_node_name = result
@@ -73,4 +111,10 @@ class BaseGraph:
             else:
                 current_node_name = None
 
-        return state
+        execution_info = {
+            "total_exec_time": total_exec_time,
+            "total_model_info": cb_total,
+            "nodes_info": exec_info
+        }
+
+        return state, execution_info

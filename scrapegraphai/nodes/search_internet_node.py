@@ -7,7 +7,6 @@ from langchain.prompts import PromptTemplate
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
 
-
 class SearchInternetNode(BaseNode):
     """
     A node that generates an answer by querying a language model (LLM) based on the user's input

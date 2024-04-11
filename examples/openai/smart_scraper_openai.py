@@ -5,6 +5,7 @@ Basic example of scraping pipeline using SmartScraper
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.utils import prettify_exec_info
 load_dotenv()
 
 
@@ -26,11 +27,18 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
+    prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
-    source="https://www.wired.com",
+    source="https://perinim.github.io/projects/",
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
 print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))
