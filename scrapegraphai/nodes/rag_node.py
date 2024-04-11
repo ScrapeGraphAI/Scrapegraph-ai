@@ -7,9 +7,10 @@ from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
+from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
-from ..models import OpenAI, Ollama, AzureOpenAI
+from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace
 from langchain_community.embeddings import OllamaEmbeddings
 from .base_node import BaseNode
 
@@ -26,11 +27,11 @@ class RAGNode(BaseNode):
         node_type (str): The type of the node, set to "node" indicating a standard operational node.
 
     Args:
-        node_name (str, optional): The unique identifier name for the node. 
+        node_name (str, optional): The unique identifier name for the node.
         Defaults to "ParseHTMLNode".
 
     Methods:
-        execute(state): Parses the HTML document contained within the state using 
+        execute(state): Parses the HTML document contained within the state using
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
@@ -44,7 +45,7 @@ class RAGNode(BaseNode):
 
     def execute(self, state):
         """
-        Executes the node's logic to implement RAG (Retrieval-Augmented Generation) 
+        Executes the node's logic to implement RAG (Retrieval-Augmented Generation)
         The method updates the state with relevant chunks of the document.
 
         Args:
@@ -54,7 +55,7 @@ class RAGNode(BaseNode):
             dict: The updated state containing the 'relevant_chunks' key with the relevant chunks.
 
         Raises:
-            KeyError: If 'document' is not found in the state, indicating that the necessary 
+            KeyError: If 'document' is not found in the state, indicating that the necessary
                       information for parsing is missing.
         """
 
@@ -92,6 +93,8 @@ class RAGNode(BaseNode):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
             embeddings = OllamaEmbeddings(model=embedding_model.model)
+        elif isinstance(embedding_model, HuggingFace):
+            embeddings = HuggingFaceHubEmbeddings(model=embedding_model.model)
         else:
             raise ValueError("Embedding Model missing or not supported")
 

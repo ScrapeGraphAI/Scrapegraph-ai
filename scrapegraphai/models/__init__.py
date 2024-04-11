@@ -8,3 +8,4 @@ from .openai_itt import OpenAIImageToText
 from .openai_tts import OpenAITextToSpeech
 from .gemini import Gemini
 from .ollama import Ollama
+from .hugging_face import HuggingFace
