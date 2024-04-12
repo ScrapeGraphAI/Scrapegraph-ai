@@ -1,0 +1,1 @@
+This folder contains an example of how to use ScrapeGraph-AI with OpenAI, an artificial intelligence platform. The examples show how to extract information from a website using a natural language prompt.

@@ -15,10 +15,6 @@ graph_config = {
         "format": "json",
         # "model_tokens": 2000, # set context length arbitrarily,
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-    }
 }
 
 # ************************************************
