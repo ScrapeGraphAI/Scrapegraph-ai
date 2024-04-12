@@ -13,11 +13,13 @@ The model runned for this benchmark is Mistral on Ollama with nomic-embed-text
 | ----------------------- | --------- | --------- | --------- |
 | Macbook pro 14 inches   | 26.10<br> | 60.915    | 200.77    |
 | Ubuntu with Radeon M260 | 296.98    | 1003.56   | /         |
+
 **Note**: the examples on Docker are not runned on other devices than the Macbook because the performance are to slow (10 times slower than Ollama). Indeed the results are the following:
 
 | Hardware              | Example 1 | Example 2 | Example 3 |
 | --------------------- | --------- | --------- | --------- |
 | Macbook pro 14 inches | 240.22    | 612.48    | 2008.32   |
+
 # Performance on APIs services
 ### Example 1: personal portfolio 
 **URL**: https://perinim.github.io/projects
