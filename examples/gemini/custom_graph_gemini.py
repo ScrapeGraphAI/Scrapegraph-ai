@@ -74,7 +74,7 @@ graph = BaseGraph(
 # Execute the graph
 # ************************************************
 
-result = graph.execute({
+result, execution_info = graph.execute({
     "user_prompt": "List me the projects with their description",
     "url": "https://perinim.github.io/projects/"
 })

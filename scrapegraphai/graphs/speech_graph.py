@@ -83,13 +83,13 @@ class SpeechGraph(AbstractGraph):
         Executes the web scraping, summarization, and text-to-speech process.
         """
         inputs = {"user_prompt": self.prompt, self.input_key: self.source}
-        final_state = self.graph.execute(inputs)
+        self.final_state, self.execution_info = self.graph.execute(inputs)
 
-        audio = final_state.get("audio", None)
+        audio = self.final_state.get("audio", None)
         if not audio:
             raise ValueError("No audio generated from the text.")
         save_audio_from_bytes(audio, self.config.get(
             "output_path", "output.mp3"))
         print(f"Audio saved to {self.config.get('output_path', 'output.mp3')}")
 
-        return final_state
+        return self.final_state

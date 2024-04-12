@@ -11,7 +11,6 @@ from ..nodes import (
 )
 from .abstract_graph import AbstractGraph
 
-
 class SearchGraph(AbstractGraph):
     """ 
     Module for searching info on the internet
@@ -71,6 +70,6 @@ class SearchGraph(AbstractGraph):
         Executes the web scraping and searching process.
         """
         inputs = {"user_prompt": self.prompt}
-        final_state = self.graph.execute(inputs)
+        self.final_state, self.execution_info = self.graph.execute(inputs)
 
-        return final_state.get("answer", "No answer found.")
+        return self.final_state.get("answer", "No answer found.")

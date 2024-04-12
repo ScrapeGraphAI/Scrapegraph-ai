@@ -1,11 +1,10 @@
-""" 
+"""
 Module having abstract class for creating all the graphs
 """
 from abc import ABC, abstractmethod
 from typing import Optional
-from ..models import OpenAI, Gemini, Ollama, AzureOpenAI
+from ..models import OpenAI, Gemini, Ollama, AzureOpenAI, HuggingFace
 from ..helpers import models_tokens
-
 
 class AbstractGraph(ABC):
     """
@@ -23,6 +22,9 @@ class AbstractGraph(ABC):
         self.embedder_model = None if "embeddings" not in config else self._create_llm(
             config["embeddings"])
         self.graph = self._create_graph()
+        
+        self.final_state = None
+        self.execution_info = None
 
     def _create_llm(self, llm_config: dict):
         """
@@ -30,7 +32,7 @@ class AbstractGraph(ABC):
         """
         llm_defaults = {
             "temperature": 0,
-            "streaming": True
+            "streaming": False
         }
         llm_params = {**llm_defaults, **llm_config}
 
@@ -46,7 +48,7 @@ class AbstractGraph(ABC):
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
-                self.model_token = models_tokens["openai"][llm_params["model"]]
+                self.model_token = models_tokens["azure"][llm_params["model"]]
             except KeyError:
                 raise ValueError("Model not supported")
             return AzureOpenAI(llm_params)
@@ -59,14 +61,6 @@ class AbstractGraph(ABC):
             return Gemini(llm_params)
 
         elif "ollama" in llm_params["model"]:
-            """ 
-            Avaiable models:
-            - llama2
-            - mistral
-            - codellama
-            - dolphin-mixtral
-            - mistral-openorca
-            """
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
             # allow user to set model_tokens in config
@@ -79,10 +73,22 @@ class AbstractGraph(ABC):
                     raise ValueError("Model not supported")
 
             return Ollama(llm_params)
-
+        elif "hugging_face" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["hugging_face"][llm_params["model"]]
+            except KeyError:
+                raise ValueError("Model not supported")
+            return HuggingFace(llm_params)
         else:
-            raise ValueError("Model not supported")
+            raise ValueError(
+                "Model provided by the configuration not supported")
 
+    def get_execution_info(self):
+        """
+        Returns the execution information of the graph.
+        """
+        return self.execution_info
+    
     @abstractmethod
     def _create_graph(self):
         """
