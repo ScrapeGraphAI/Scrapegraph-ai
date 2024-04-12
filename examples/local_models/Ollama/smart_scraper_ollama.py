@@ -2,7 +2,7 @@
 Basic example of scraping pipeline using SmartScraper
 """
 from scrapegraphai.graphs import SmartScraperGraph
-
+from scrapegraphai.utils import prettify_exec_info
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
@@ -35,3 +35,10 @@ smart_scraper_graph = SmartScraperGraph(
 
 result = smart_scraper_graph.run()
 print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))
