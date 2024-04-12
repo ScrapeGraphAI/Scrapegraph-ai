@@ -1,0 +1,1 @@
+This folder contains an example of how to use ScrapeGraph-AI with Gemini, a large language model (LLM) from Google AI. The example shows how to extract information from a website using a natural language prompt.
