@@ -6,14 +6,6 @@ from scrapegraphai.graphs import SmartScraperGraph
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-""" 
-            Avaiable models:
-            - ollama/llama2
-            - ollama/mistral
-            - ollama/codellama
-            - ollama/dolphin-mixtral
-            - ollama/mistral-openorca
-"""
 
 graph_config = {
     "llm": {
