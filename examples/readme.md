@@ -48,5 +48,3 @@ The model runned for this benchmark is Mistral on Ollama with nomic-embed-text
 | gpt-3.5-turbo       | 145.55                   | 26038        | 18091         | 7947              | 5                   | 0.04303        |
 | gpt-4-turbo-preview | 82.38                    | 15640        | 13698         | 1942              | 2                   | 0.19524        |
 
-## Hosting services
-[[💻 Provider costs informations]]
