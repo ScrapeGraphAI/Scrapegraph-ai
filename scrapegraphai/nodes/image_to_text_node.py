@@ -1,7 +1,7 @@
 """
 Module for the ImageToTextNode class.
 """
-from typing import List
+from typing import List, Dict
 from .base_node import BaseNode
 
 
@@ -30,23 +30,23 @@ class ImageToTextNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1, node_config)
         self.llm_model = node_config["llm_model"]
 
-    def execute(self, state: dict) -> dict:
+    def execute(self, state: List[Dict]) -> List[Dict]:
         """
         Execute the node's logic and return the updated state.
 
         Args:
-            state (dict): The current state of the graph.
+            state (List[Dict]): The current state of the graph.
 
         Returns:
-            dict: The updated state after executing this node.
+            List[Dict]: The updated state after executing this node.
         """
         print("---GENERATING TEXT FROM IMAGE---")
-        input_keys = self.get_input_keys(state)
+        input_keys = self.get_input_keys(state[-1])
 
-        input_data = [state[key] for key in input_keys]
+        input_data = [state[-1][key] for key in input_keys]
         url = input_data[0]
 
         text_answer = self.llm_model.run(url)
 
-        state.update({"image_text": text_answer})
+        state.append({self.output[0]: text_answer})
         return state

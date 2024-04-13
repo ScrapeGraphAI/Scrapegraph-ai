@@ -2,7 +2,7 @@
 Module for parsing the HTML node
 """
 
-from typing import List
+from typing import List, Dict
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
@@ -43,7 +43,7 @@ class RAGNode(BaseNode):
         self.llm_model = node_config["llm"]
         self.embedder_model = node_config.get("embedder_model", None)
 
-    def execute(self, state):
+    def execute(self, state: List[Dict]) -> List[Dict]:
         """
         Executes the node's logic to implement RAG (Retrieval-Augmented Generation)
         The method updates the state with relevant chunks of the document.
@@ -62,10 +62,10 @@ class RAGNode(BaseNode):
         print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
-        input_keys = self.get_input_keys(state)
+        input_keys = self.get_input_keys(state[-1])
 
         # Fetching data from the state based on the input keys
-        input_data = [state[key] for key in input_keys]
+        input_data = [state[-1][key] for key in input_keys]
 
         user_prompt = input_data[0]
         doc = input_data[1]
@@ -122,5 +122,5 @@ class RAGNode(BaseNode):
 
         print("--- (tokens compressed and vector stored) ---")
 
-        state.update({self.output[0]: compressed_docs})
+        state.append({self.output[0]: compressed_docs})
         return state

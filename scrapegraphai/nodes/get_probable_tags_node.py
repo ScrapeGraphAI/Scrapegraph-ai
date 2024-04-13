@@ -1,7 +1,7 @@
 """
 Module for proobable tags
 """
-from typing import List
+from typing import List, Dict
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from .base_node import BaseNode
@@ -41,18 +41,20 @@ class GetProbableTagsNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, model_config)
         self.llm_model = model_config["llm_model"]
 
-    def execute(self, state):
+    def execute(self, state: List[Dict]) -> List[Dict]:
         """
         Generates a list of probable HTML tags based on the user's input and updates the state 
         with this list. The method constructs a prompt for the language model, submits it, and 
         parses the output to identify probable tags.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 'user_input', 'url',
-                          and optionally 'document' within 'keys'.
+            state (List[Dict]): The current state of the graph, expected 
+            to contain 'user_input', 'url',
+            and optionally 'document' within 'keys'.
 
         Returns:
-            dict: The updated state with the 'tags' key containing a list of probable HTML tags.
+            List[Dict]: The updated state with the 'tags' key 
+            containing a list of probable HTML tags.
 
         Raises:
             KeyError: If 'user_input' or 'url' is not found in the state, indicating that the
@@ -62,10 +64,10 @@ class GetProbableTagsNode(BaseNode):
         print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
-        input_keys = self.get_input_keys(state)
+        input_keys = self.get_input_keys(state[-1])
 
         # Fetching data from the state based on the input keys
-        input_data = [state[key] for key in input_keys]
+        input_data = [state[-1][key] for key in input_keys]
 
         user_prompt = input_data[0]
         url = input_data[1]
@@ -90,5 +92,5 @@ class GetProbableTagsNode(BaseNode):
         probable_tags = tag_answer.invoke({"question": user_prompt})
 
         # Update the dictionary with probable tags
-        state.update({self.output[0]: probable_tags})
+        state.append({self.output[0]: probable_tags})
         return state

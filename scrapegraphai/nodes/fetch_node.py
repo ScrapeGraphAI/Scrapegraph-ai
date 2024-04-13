@@ -2,7 +2,7 @@
 Module for fetching the HTML node
 """
 
-from typing import List
+from typing import List, Dict
 from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_core.documents import Document
 from .base_node import BaseNode
@@ -44,16 +44,17 @@ class FetchNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 1)
 
-    def execute(self, state):
+    def execute(self, state: List[Dict]) -> List[Dict]:
         """
         Executes the node's logic to fetch HTML content from a specified URL and
         update the state with this content.
 
         Args:
-            state (dict): The current state of the graph, expected to contain a 'url' key.
+            state (List[Dict]:): The current state of the graph, expected to contain a 'url' key.
 
         Returns:
-            dict: The updated state with a new 'document' key containing the fetched HTML content.
+            List[Dict]: The updated state with a new 'document' key containing 
+            the fetched HTML content.
 
         Raises:
             KeyError: If the 'url' key is not found in the state, indicating that the
@@ -62,10 +63,10 @@ class FetchNode(BaseNode):
         print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
-        input_keys = self.get_input_keys(state)
+        input_keys = self.get_input_keys(state[-1])
 
         # Fetching data from the state based on the input keys
-        input_data = [state[key] for key in input_keys]
+        input_data = [state[-1][key] for key in input_keys]
 
         source = input_data[0]
 
@@ -80,5 +81,5 @@ class FetchNode(BaseNode):
             loader = AsyncHtmlLoader(source)
             document = loader.load()
 
-        state.update({self.output[0]: document})
+        state.append({self.output[0]: document})
         return state

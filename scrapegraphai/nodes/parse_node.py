@@ -1,7 +1,7 @@
 """
 Module for parsing the HTML node
 """
-from typing import List
+from typing import List, Dict
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_transformers import Html2TextTransformer
 from .base_node import BaseNode
@@ -9,11 +9,11 @@ from .base_node import BaseNode
 
 class ParseNode(BaseNode):
     """
-    A node responsible for parsing HTML content from a document. 
+    A node responsible for parsing HTML content from a document.
     It uses BeautifulSoupTransformer for parsing, providing flexibility in extracting
     specific parts of an HTML document.
 
-    This node enhances the scraping workflow by allowing for targeted extraction of 
+    This node enhances the scraping workflow by allowing for targeted extraction of
     content, thereby optimizing the processing of large HTML documents.
 
     Attributes:
@@ -21,11 +21,11 @@ class ParseNode(BaseNode):
         node_type (str): The type of the node, set to "node" indicating a standard operational node.
 
     Args:
-        node_name (str, optional): The unique identifier name for the node. 
+        node_name (str, optional): The unique identifier name for the node.
         Defaults to "ParseHTMLNode".
 
     Methods:
-        execute(state): Parses the HTML document contained within the state using 
+        execute(state): Parses the HTML document contained within the state using
         the specified tags, if provided, and updates the state with the parsed content.
     """
 
@@ -40,33 +40,33 @@ class ParseNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 1, node_config)
 
-    def execute(self,  state):
+    def execute(self,  state: List[Dict]) -> List[Dict]:
         """
-        Executes the node's logic to parse the HTML document based on specified tags. 
-        If tags are provided in the state, the document is parsed accordingly; otherwise, 
-        the document remains unchanged. The method updates the state with either the original 
+        Executes the node's logic to parse the HTML document based on specified tags.
+        If tags are provided in the state, the document is parsed accordingly; otherwise,
+        the document remains unchanged. The method updates the state with either the original
         or parsed document under the 'parsed_document' key.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 
+            state (List[Dict]): The current state of the graph, expected to contain
             'document' within 'keys', and optionally 'tags' for targeted parsing.
 
         Returns:
-            dict: The updated state with the 'parsed_document' key containing the parsed content,
+            List[Dict]: The updated state with the 'parsed_document' key containing the parsed content,
                   if tags were provided, or the original document otherwise.
 
         Raises:
-            KeyError: If 'document' is not found in the state, indicating that the necessary 
+            KeyError: If 'document' is not found in the state, indicating that the necessary
                       information for parsing is missing.
         """
 
         print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
-        input_keys = self.get_input_keys(state)
+        input_keys = self.get_input_keys(state[-1])
 
         # Fetching data from the state based on the input keys
-        input_data = [state[key] for key in input_keys]
+        input_data = [state[-1][key] for key in input_keys]
 
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
             chunk_size=self.node_config.get("chunk_size", 4096),
@@ -79,6 +79,6 @@ class ParseNode(BaseNode):
 
         chunks = text_splitter.split_text(docs_transformed.page_content)
 
-        state.update({self.output[0]: chunks})
+        state.append({self.output[0]: chunks})
 
         return state

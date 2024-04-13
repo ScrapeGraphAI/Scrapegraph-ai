@@ -2,7 +2,7 @@
 Module for generating the answer node
 """
 # Imports from standard library
-from typing import List
+from typing import List, Dict
 from tqdm import tqdm
 
 # Imports from Langchain
@@ -50,7 +50,7 @@ class GenerateAnswerNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm"]
 
-    def execute(self, state):
+    def execute(self, state: List[Dict]) -> List[Dict]:
         """
         Generates an answer by constructing a prompt from the user's input and the scraped
         content, querying the language model, and parsing its response.
@@ -58,11 +58,11 @@ class GenerateAnswerNode(BaseNode):
         The method updates the state with the generated answer under the 'answer' key.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 'user_input',
+            state (List[Dict]:): The current state of the graph, expected to contain 'user_input',
                           and optionally 'parsed_document' or 'relevant_chunks' within 'keys'.
 
         Returns:
-            dict: The updated state with the 'answer' key containing the generated answer.
+            List[Dict]:: The updated state with the 'answer' key containing the generated answer.
 
         Raises:
             KeyError: If 'user_input' or 'document' is not found in the state, indicating
@@ -72,10 +72,10 @@ class GenerateAnswerNode(BaseNode):
         print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
-        input_keys = self.get_input_keys(state)
+        input_keys = self.get_input_keys(state[-1])
 
         # Fetching data from the state based on the input keys
-        input_data = [state[key] for key in input_keys]
+        input_data = [state[-1][key] for key in input_keys]
 
         user_prompt = input_data[0]
         doc = input_data[1]
@@ -129,5 +129,5 @@ class GenerateAnswerNode(BaseNode):
             {"context": answer_map, "question": user_prompt})
 
         # Update the state with the generated answer
-        state.update({self.output[0]: answer})
+        state.append({self.output[0]: answer})
         return state

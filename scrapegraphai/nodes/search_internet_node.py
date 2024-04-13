@@ -1,11 +1,12 @@
 """
 Module for generating the answer node
 """
-from typing import List
+from typing import List, Dict
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
+
 
 class SearchInternetNode(BaseNode):
     """
@@ -49,7 +50,7 @@ class SearchInternetNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1, node_config)
         self.llm_model = node_config["llm"]
 
-    def execute(self, state):
+    def execute(self, state: List[Dict]) -> List[Dict]:
         """
         Generates an answer by constructing a prompt from the user's input and the scraped
         content, querying the language model, and parsing its response.
@@ -57,11 +58,11 @@ class SearchInternetNode(BaseNode):
         The method updates the state with the generated answer under the 'answer' key.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 'user_input',
+            state (s List[Dict]): The current state of the graph, expected to contain 'user_input',
                           and optionally 'parsed_document' or 'relevant_chunks' within 'keys'.
 
         Returns:
-            dict: The updated state with the 'answer' key containing the generated answer.
+            List[Dict]: The updated state with the 'answer' key containing the generated answer.
 
         Raises:
             KeyError: If 'user_input' or 'document' is not found in the state, indicating
@@ -70,10 +71,10 @@ class SearchInternetNode(BaseNode):
 
         print(f"--- Executing {self.node_name} Node ---")
 
-        input_keys = self.get_input_keys(state)
+        input_keys = self.get_input_keys(state[-1])
 
         # Fetching data from the state based on the input keys
-        input_data = [state[key] for key in input_keys]
+        input_data = [state[-1][key] for key in input_keys]
 
         user_prompt = input_data[0]
 
@@ -99,5 +100,5 @@ class SearchInternetNode(BaseNode):
         answer = search_on_web(query=search_query, max_results=1)[0]
 
         # Update the state with the generated answer
-        state.update({self.output[0]: answer})
+        state.append({self.output[0]: answer})
         return state
