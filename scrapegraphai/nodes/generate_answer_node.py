@@ -100,7 +100,6 @@ class GenerateAnswerNode(BaseNode):
         following content from a website.
         You are now asked to answer a question about the content you have scraped.\n 
         You have scraped many chunks since the website is big and now you are asked to merge them into a single answer without repetitions (if there are any).\n
-        Question: {question}
         INSTRUCTIONS: {format_instructions}\n 
         TEXT TO MERGE:: {context}\n 
         QUESTION: {question}\n 
