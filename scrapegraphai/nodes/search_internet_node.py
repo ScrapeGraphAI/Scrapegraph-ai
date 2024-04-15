@@ -7,6 +7,7 @@ from langchain.prompts import PromptTemplate
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
 
+
 class SearchInternetNode(BaseNode):
     """
     A node that generates an answer by querying a language model (LLM) based on the user's input
@@ -79,11 +80,13 @@ class SearchInternetNode(BaseNode):
 
         output_parser = CommaSeparatedListOutputParser()
 
-        search_template = """Given the following user prompt, return a query that can be 
+        search_template = """
+        PROMPT:
+        Given the following user prompt, return a query that can be
         used to search the internet for relevant information. \n
         You should return only the query string without any additional sentences. \n
         You are taught to reply directly giving the search query. \n
-        User Prompt: {user_prompt}"""
+        USER PROMPT: {user_prompt}"""
 
         search_prompt = PromptTemplate(
             template=search_template,

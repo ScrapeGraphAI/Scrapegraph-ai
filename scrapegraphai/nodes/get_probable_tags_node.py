@@ -73,9 +73,13 @@ class GetProbableTagsNode(BaseNode):
         output_parser = CommaSeparatedListOutputParser()
         format_instructions = output_parser.get_format_instructions()
 
-        template = """You are a website scraper that knows all the types of html tags.
-         You are now asked to list all the html tags where you think you can find the information of the asked question.\n 
-         {format_instructions} \n  The webpage is: {webpage} \n The asked question is the following: {question}
+        template = """
+        PROMPT:
+        You are a website scraper that knows all the types of html tags.
+        You are now asked to list all the html tags where you think you can find the information of the asked question.\n 
+        INSTRUCTIONS: {format_instructions} \n  
+        WEBPAGE: The webpage is: {webpage} \n 
+        QUESTION: The asked question is the following: {question}
         """
 
         tag_prompt = PromptTemplate(
