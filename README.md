@@ -63,7 +63,7 @@ graph_config = {
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
+    prompt="List me all the articles",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects",
     config=graph_config
@@ -95,9 +95,9 @@ graph_config = {
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
+    prompt="List me all the articles",
     # also accepts a string with the already downloaded HTML code
-    source="https://www.wired.com",
+    source="https://perinim.github.io/projects",  
     config=graph_config
 )
 
@@ -119,9 +119,9 @@ graph_config = {
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
+    prompt="List me all the articles",
     # also accepts a string with the already downloaded HTML code
-    source="https://www.wired.com",
+    source="https://perinim.github.io/projects",
     config=graph_config
 )
 
@@ -144,8 +144,8 @@ graph_config = {
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the quotes, authors and tags ",
-    source="http://quotes.toscrape.com",  # also accepts a string with the already downloaded HTML code as string format
+    prompt="List me all the articles",
+    source="https://perinim.github.io/projects",
     config=graph_config
 )
 
