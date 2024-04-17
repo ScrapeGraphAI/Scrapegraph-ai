@@ -119,21 +119,27 @@ class GenerateAnswerNode(BaseNode):
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
-        # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
-        map_chain = RunnableParallel(**chains_dict)
-        # Chain
-        answer_map = map_chain.invoke({"question": user_prompt})
+        if len(chains_dict) > 1:
+            # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
+            map_chain = RunnableParallel(**chains_dict)
+            # Chain
+            answer_map = map_chain.invoke({"question": user_prompt})
 
-        # Merge the answers from the chunks
-        merge_prompt = PromptTemplate(
-            template=template_merge,
-            input_variables=["context", "question"],
-            partial_variables={"format_instructions": format_instructions},
-        )
-        merge_chain = merge_prompt | self.llm_model | output_parser
-        answer = merge_chain.invoke(
-            {"context": answer_map, "question": user_prompt})
+            # Merge the answers from the chunks
+            merge_prompt = PromptTemplate(
+                template=template_merge,
+                input_variables=["context", "question"],
+                partial_variables={"format_instructions": format_instructions},
+            )
+            merge_chain = merge_prompt | self.llm_model | output_parser
+            answer = merge_chain.invoke(
+                {"context": answer_map, "question": user_prompt})
 
-        # Update the state with the generated answer
-        state.update({self.output[0]: answer})
-        return state
+            # Update the state with the generated answer
+            state.update({self.output[0]: answer})
+            return state
+
+        else:
+            # Update the state with the generated answer
+            state.update({self.output[0]: chains_dict})
+            return state
