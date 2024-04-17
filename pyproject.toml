@@ -32,7 +32,6 @@ pandas = "2.0.3"
 python-dotenv = "1.0.1"
 tiktoken = {version = ">=0.5.2,<0.6.0"}
 tqdm = "4.66.1"
-graphviz = "0.20.1"
 google = "3.0.0"
 minify-html = "0.15.0"
 
