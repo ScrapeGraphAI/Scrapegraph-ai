@@ -6,6 +6,7 @@ from typing import List
 from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_core.documents import Document
 from .base_node import BaseNode
+from ..utils.remover import remover
 
 
 class FetchNode(BaseNode):
@@ -71,7 +72,7 @@ class FetchNode(BaseNode):
 
         # if it is a local directory
         if not source.startswith("http"):
-            document = [Document(page_content=source, metadata={
+            compressedDocument = [Document(page_content=remover(source), metadata={
                 "source": "local_dir"
             })]
 
@@ -79,6 +80,7 @@ class FetchNode(BaseNode):
         else:
             loader = AsyncHtmlLoader(source)
             document = loader.load()
+            compressedDocument = [Document(page_content=remover(str(document)))]
 
-        state.update({self.output[0]: document})
+        state.update({self.output[0]: compressedDocument})
         return state
