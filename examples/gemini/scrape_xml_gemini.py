@@ -5,7 +5,7 @@ Basic example of scraping pipeline using SmartScraper from XML documents
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json
+from scrapegraphai.utils import prettify_exec_info
 load_dotenv()
 
 # ************************************************
@@ -47,6 +47,10 @@ smart_scraper_graph = SmartScraperGraph(
 result = smart_scraper_graph.run()
 print(result)
 
-# Save to json or csv
-convert_to_csv(result, "result")
-convert_to_json(result, "result")
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))

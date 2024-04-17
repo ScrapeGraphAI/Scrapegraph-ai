@@ -34,5 +34,10 @@ smart_scraper_graph = SmartScraperGraph(
 result = smart_scraper_graph.run()
 print(result)
 
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
 graph_exec_info = smart_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
