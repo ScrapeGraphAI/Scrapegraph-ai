@@ -72,7 +72,7 @@ class FetchNode(BaseNode):
 
         # if it is a local directory
         if not source.startswith("http"):
-            document = [Document(page_content=remover(source), metadata={
+            compressedDocument = [Document(page_content=remover(source), metadata={
                 "source": "local_dir"
             })]
 
@@ -80,5 +80,7 @@ class FetchNode(BaseNode):
         else:
             loader = AsyncHtmlLoader(source)
             document = loader.load()
-        state.update({self.output[0]: document})
+            compressedDocument = [Document(page_content=remover(str(document)))]
+
+        state.update({self.output[0]: compressedDocument})
         return state
