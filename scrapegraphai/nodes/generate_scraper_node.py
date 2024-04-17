@@ -121,31 +121,28 @@ class GenerateScraperNode(BaseNode):
 
         # Use tqdm to add progress bar
         for i, chunk in enumerate(tqdm(doc, desc="Processing chunks")):
-            if len(doc) == 1:
-                prompt = PromptTemplate(
-                    template=template_no_chunks,
-                    input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                       "chunk_id": i + 1,
-                                       "format_instructions": format_instructions},
-                )
+            if len(doc) > 1:
+                template = template_chunks
             else:
-                prompt = PromptTemplate(
-                    template=template_chunks,
-                    input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                       "chunk_id": i + 1,
-                                       "format_instructions": format_instructions},
-                )
+                template = template_no_chunks
+
+            prompt = PromptTemplate(
+                template=template,
+                input_variables=["question"],
+                partial_variables={"context": chunk.page_content,
+                                    "chunk_id": i + 1,
+                                    "format_instructions": format_instructions},
+            )
             # Dynamically name the chains based on their index
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
+        # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
+        map_chain = RunnableParallel(**chains_dict)
+        # Chain
+        answer = map_chain.invoke({"question": user_prompt})
+
         if len(chains_dict) > 1:
-            # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
-            map_chain = RunnableParallel(**chains_dict)
-            # Chain
-            answer_map = map_chain.invoke({"question": user_prompt})
 
             # Merge the answers from the chunks
             merge_prompt = PromptTemplate(
@@ -155,11 +152,7 @@ class GenerateScraperNode(BaseNode):
             )
             merge_chain = merge_prompt | self.llm_model | output_parser
             answer = merge_chain.invoke(
-                {"context": answer_map, "question": user_prompt})
+                {"context": answer, "question": user_prompt})
 
-            # Update the state with the generated answer
-            state.update({self.output[0]: answer})
-            return state
-        else:
-            state.update({self.output[0]: chains_dict})
-            return state
+        state.update({self.output[0]: answer})
+        return state

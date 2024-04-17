@@ -46,7 +46,7 @@ class ScriptCreatorGraph(AbstractGraph):
                 "embedder_model": self.embedder_model
             }
         )
-        generate_answer_node = GenerateScraperNode(
+        generate_scraper_node = GenerateScraperNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={"llm": self.llm_model},
@@ -57,12 +57,12 @@ class ScriptCreatorGraph(AbstractGraph):
                 fetch_node,
                 parse_node,
                 rag_node,
-                generate_answer_node,
+                generate_scraper_node,
             },
             edges={
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
-                (rag_node, generate_answer_node)
+                (rag_node, generate_scraper_node)
             },
             entry_point=fetch_node
         )
