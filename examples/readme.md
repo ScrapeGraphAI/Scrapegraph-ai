@@ -13,7 +13,7 @@ The model runned for this benchmark is Mistral on Ollama with nomic-embed-text
 | Hardware                | Example 1 | Example 2 |
 | ----------------------- | --------- | --------- |
 | Macbook pro 14' m1      | 11.60s    |  26.61s   |
-| Macbook pro 16' m2 max  | 8.05s     |  12.17    |
+| Macbook pro 16' m2 max  | 8.05s     |  12.17s    |
 
 **Note**: the examples on Docker are not runned on other devices than the Macbook because the performance are to slow (10 times slower than Ollama). Indeed the results are the following:
 
