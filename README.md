@@ -7,7 +7,7 @@
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
 
-ScrapeGraphAI is a *web scraping* python library which uses LLM and direct graph logic to create scraping pipelines for websites, documents and XML files.
+ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites, documents and XML files.
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">
@@ -17,7 +17,7 @@ Just say which information you want to extract and the library will do it for yo
 
 ## 🚀 Quick install
 
-The reference page for Scrapegraph-ai is avaible on the official page of pypy: [pypi](https://pypi.org/project/scrapegraphai/).
+The reference page for Scrapegraph-ai is available on the official page of pypy: [pypi](https://pypi.org/project/scrapegraphai/).
 
 ```bash
 pip install scrapegraphai
@@ -43,7 +43,7 @@ Check out also the docusaurus [documentation](https://scrapegraph-doc.onrender.c
 You can use the `SmartScraper` class to extract information from a website using a prompt.
 
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
-### Case 1: Extracting informations using Ollama
+### Case 1: Extracting information using Ollama
 Remember to download the model on Ollama separately!
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
@@ -53,12 +53,12 @@ graph_config = {
         "model": "ollama/mistral",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # set Ollama URL arbitrarily
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # set Ollama URL arbitrarily
     }
 }
 
@@ -74,9 +74,9 @@ print(result)
 
 ```
 
-### Case 2: Extracting informations using Docker
+### Case 2: Extracting information using Docker
 
-Note: before using the local model remeber to create the docker container!
+Note: before using the local model remember to create the docker container!
 ```text
     docker-compose up -d
     docker exec -it ollama ollama run stablelm-zephyr
@@ -106,7 +106,7 @@ print(result)
 ```
 
 
-### Case 3: Extracting informations using Openai model
+### Case 3: Extracting information using Openai model
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 OPENAI_API_KEY = "YOUR_API_KEY"
@@ -129,7 +129,7 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-### Case 4: Extracting informations using Gemini 
+### Case 4: Extracting information using Gemini 
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 GOOGLE_APIKEY = "YOUR_API_KEY"
@@ -153,7 +153,7 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-The output for alle 3 the cases will be a dictionary with the extracted information, for example:
+The output for all 3 the cases will be a dictionary with the extracted information, for example:
 
 ```bash
 {
@@ -168,9 +168,9 @@ The output for alle 3 the cases will be a dictionary with the extracted informat
 
 ## 🤝 Contributing
 
-Fell free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
+Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
 
-For more information, please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
+Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/gkxQDAjfeX)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
@@ -187,7 +187,7 @@ If you have used our library for research purposes please quote us with the foll
     title = {Scrapegraph-ai},
     year = {2024},
     url = {https://github.com/VinciGit00/Scrapegraph-ai},
-    note = {A Python library for scraping data from graphs}
+    note = {A Python library for scraping leveraging large language models}
   }
 ```
 
