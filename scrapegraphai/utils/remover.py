@@ -31,17 +31,8 @@ def remover(html_content: str) -> str:
     # Body Extraction (if it exists)
     body_content = soup.find('body')
     if body_content:
-        # Remove some attributes from tags
-        """ tagsToRemove = ['style', 'rel', 'width',
-                        'height', 'target', 'media',
-                        'onerror', 'onload', 'onclick']
-        for tag in body_content.find_all():
-            for attr in tagsToRemove:
-                if tag.has_attr(attr):
-                    del tag.attrs[attr] """
-
         # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
         return "Title: " + title + ", Body: " + minimized_body
-    else:
-        return "Title: " + title + ", Body: No body content found"
+
+    return "Title: " + title + ", Body: No body content found"

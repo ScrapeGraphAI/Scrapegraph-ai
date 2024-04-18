@@ -21,6 +21,7 @@ graph_config = {
         "api_key": gemini_key,
         "model": "gpt-3.5-turbo",
     },
+    "library": "beautifoulsoup"
 }
 
 # ************************************************

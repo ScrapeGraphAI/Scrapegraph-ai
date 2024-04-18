@@ -18,7 +18,8 @@ graph_config = {
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-    }
+    },
+    "library": "beautifoulsoup"
 }
 
 # ************************************************

@@ -25,6 +25,8 @@ class ScriptCreatorGraph(AbstractGraph):
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
 
+        self.library = config['library']
+
     def _create_graph(self):
         """
         Creates the graph of nodes representing the workflow for web scraping.
@@ -50,6 +52,7 @@ class ScriptCreatorGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={"llm": self.llm_model},
+            library=self.library
         )
 
         return BaseGraph(

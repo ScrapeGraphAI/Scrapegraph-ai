@@ -1,4 +1,4 @@
-""" 
+"""
 Basic example of scraping pipeline using ScriptCreatorGraph
 """
 from scrapegraphai.graphs import ScriptCreatorGraph
@@ -19,7 +19,8 @@ graph_config = {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
         "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    }
+    },
+    "library": "beautifoulsoup"
 }
 
 # ************************************************
