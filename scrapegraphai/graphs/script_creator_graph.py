@@ -52,7 +52,8 @@ class ScriptCreatorGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={"llm": self.llm_model},
-            library=self.library
+            library=self.library,
+            website=self.source
         )
 
         return BaseGraph(
