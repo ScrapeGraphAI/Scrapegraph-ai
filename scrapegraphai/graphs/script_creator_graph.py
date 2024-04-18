@@ -21,11 +21,11 @@ class ScriptCreatorGraph(AbstractGraph):
         """
         Initializes the ScriptCreatorGraph with a prompt, source, and configuration.
         """
+        self.library = config['library']
+
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-
-        self.library = config['library']
 
     def _create_graph(self):
         """
