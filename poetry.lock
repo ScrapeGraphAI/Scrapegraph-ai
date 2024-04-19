@@ -1420,6 +1420,7 @@ description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
+
     {file = "openai-1.21.2-py3-none-any.whl", hash = "sha256:65f6bed84ecde0fc20e4f3b458000deb775531aa29154ff4d679e937d7e4370d"},
     {file = "openai-1.21.2.tar.gz", hash = "sha256:7b6e4d59f3686fcd94efdb2ee61052bf6c9dbb58052b5116fc0d75ba7adbf329"},
 ]
