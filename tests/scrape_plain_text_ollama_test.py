@@ -8,7 +8,9 @@ from scrapegraphai.graphs import SmartScraperGraph
 
 @pytest.fixture
 def sample_text():
-    # Read the sample text file
+    """
+    Example of text
+    """
     file_name = "inputs/plain_html_example.txt"
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     file_path = os.path.join(curr_dir, file_name)
@@ -21,6 +23,9 @@ def sample_text():
 
 @pytest.fixture
 def graph_config():
+    """
+    Configuration of the graph
+    """
     return {
         "llm": {
             "model": "ollama/mistral",
@@ -36,16 +41,16 @@ def graph_config():
     }
 
 
-def test_scraping_pipeline(sample_text, graph_config):
-    # Create the SmartScraperGraph instance
+def test_scraping_pipeline(sample_text: str, graph_config: dict):
+    """
+    Start of the scraping pipeline
+    """
     smart_scraper_graph = SmartScraperGraph(
         prompt="List me all the news with their description.",
         source=sample_text,
         config=graph_config
     )
 
-    # Run the graph
     result = smart_scraper_graph.run()
 
-    # Check that the result is not empty
     assert result is not None
