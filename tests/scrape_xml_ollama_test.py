@@ -8,7 +8,9 @@ from scrapegraphai.graphs import SmartScraperGraph
 
 @pytest.fixture
 def sample_xml():
-    # Leggi il file XML di esempio
+    """
+    Example of text
+    """
     file_name = "inputs/books.xml"
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     file_path = os.path.join(curr_dir, file_name)
@@ -21,6 +23,9 @@ def sample_xml():
 
 @pytest.fixture
 def graph_config():
+    """
+    Configuration of the graph
+    """
     return {
         "llm": {
             "model": "ollama/mistral",
@@ -36,16 +41,16 @@ def graph_config():
     }
 
 
-def test_scraping_pipeline(sample_xml, graph_config):
-    # Crea un'istanza di SmartScraperGraph
+def test_scraping_pipeline(sample_xml: str, graph_config: dict):
+    """
+    Start of the scraping pipeline
+    """
     smart_scraper_graph = SmartScraperGraph(
         prompt="List me all the authors, title and genres of the books",
         source=sample_xml,
         config=graph_config
     )
 
-    # Esegui il grafico
     result = smart_scraper_graph.run()
 
-    # Verifica che il risultato non sia vuoto
     assert result is not None
