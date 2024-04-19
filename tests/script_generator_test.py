@@ -1,5 +1,9 @@
 """ 
+<<<<<<< Updated upstream
 Module for making the tests for ScriptGeneratorGraph
+=======
+Test for script generator
+>>>>>>> Stashed changes
 """
 import pytest
 from scrapegraphai.graphs import ScriptCreatorGraph
