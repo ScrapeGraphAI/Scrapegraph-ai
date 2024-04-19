@@ -21,6 +21,8 @@ class ScriptCreatorGraph(AbstractGraph):
         """
         Initializes the ScriptCreatorGraph with a prompt, source, and configuration.
         """
+        self.library = config['library']
+
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -50,6 +52,8 @@ class ScriptCreatorGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={"llm": self.llm_model},
+            library=self.library,
+            website=self.source
         )
 
         return BaseGraph(

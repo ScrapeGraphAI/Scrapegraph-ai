@@ -1,3 +1,6 @@
+""" 
+Module for making the tests for ScriptGeneratorGraph
+"""
 import pytest
 from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
@@ -11,12 +14,14 @@ def graph_config():
             "temperature": 0,
             "format": "json",
             "base_url": "http://localhost:11434",
+            "library": "beautifoulsoup",
         },
         "embeddings": {
             "model": "ollama/nomic-embed-text",
             "temperature": 0,
             "base_url": "http://localhost:11434",
-        }
+        },
+        "library": "beautifoulsoup"
     }
 
 
