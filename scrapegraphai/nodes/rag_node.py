@@ -92,7 +92,13 @@ class RAGNode(BaseNode):
         elif isinstance(embedding_model, AzureOpenAI):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
-            embeddings = OllamaEmbeddings(model=embedding_model.model)
+            # unwrap the kwargs from the model whihc is a dict
+            params = embedding_model._lc_kwargs
+            # remove streaming and temperature
+            params.pop("streaming", None)
+            params.pop("temperature", None)
+            
+            embeddings = OllamaEmbeddings(**params)
         elif isinstance(embedding_model, HuggingFace):
             embeddings = HuggingFaceHubEmbeddings(model=embedding_model.model)
         else:
