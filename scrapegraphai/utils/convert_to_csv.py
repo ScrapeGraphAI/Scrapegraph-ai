@@ -12,12 +12,10 @@ def convert_to_csv(data: dict, filename: str, position: str = None):
 
     Args:
     data (dict): Data to be converted to CSV.
-    filename (str): Name of the CSV file (without the .csv extension).
     position (str): Optional path where the file should be saved. If not provided,
     the directory of the caller script will be used.
 
     Raises:
-    ValueError: If the filename contains '.csv'.
     FileNotFoundError: If the specified directory does not exist.
     PermissionError: If the program lacks write permission for the directory.
     TypeError: If the input data is not a dictionary.
@@ -25,7 +23,7 @@ def convert_to_csv(data: dict, filename: str, position: str = None):
     """
 
     if ".csv" in filename:
-        raise ValueError("The filename should not contain '.csv'")
+        filename = filename.replace(".csv", "")  # Remove .csv extension
 
     # Get the directory of the caller script if position is not provided
     if position is None:
