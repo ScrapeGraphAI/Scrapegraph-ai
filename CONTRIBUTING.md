@@ -61,7 +61,7 @@ If you encounter any issues or have suggestions for improvements, please open an
 
 ## License
 
-AmazScraper is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE) file for more information.
+AmazScraper is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
 By contributing to this project, you agree to license your contributions under the same license.
 
 Can't wait to see your contributions! :smile:
