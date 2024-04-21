@@ -22,7 +22,7 @@ def convert_to_json(data: dict, filename: str, position: str = None):
     PermissionError: If the program does not have permission to write to the directory.
     """
     if ".json" in filename:
-        raise ValueError("The filename should not contain '.json'")
+        filename = filename.replace(".json", "")  # Remove .csv extension
 
   # Get the directory of the caller script
     if position is None:
