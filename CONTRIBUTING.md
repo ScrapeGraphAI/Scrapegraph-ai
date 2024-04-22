@@ -26,7 +26,7 @@ To get started with contributing, follow these steps:
 
 ## Contributing Guidelines
 
-Please adhere to the following guidelines when contributing to AmazScraper:
+Please adhere to the following guidelines when contributing to ScrapeGraphAI:
 
 - Follow the code style and formatting guidelines specified in the [Code Style](#code-style) section.
 - Make sure your changes are well-documented and include any necessary updates to the project's documentation.
@@ -61,7 +61,7 @@ If you encounter any issues or have suggestions for improvements, please open an
 
 ## License
 
-AmazScraper is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
+ScrapeGraphAI is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
 By contributing to this project, you agree to license your contributions under the same license.
 
 Can't wait to see your contributions! :smile:
