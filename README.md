@@ -53,12 +53,11 @@ graph_config = {
         "model": "ollama/mistral",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
-        "base_url": "http://localhost:11434",  # set Ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # set Ollama URL
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        "base_url": "http://localhost:11434",  # set Ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # set Ollama URL
     }
 }
 
@@ -79,7 +78,7 @@ print(result)
 Note: before using the local model remember to create the docker container!
 ```text
     docker-compose up -d
-    docker exec -it ollama ollama run stablelm-zephyr
+    docker exec -it ollama ollama pull stablelm-zephyr
 ```
 You can use which models avaiable on Ollama or your own model instead of stablelm-zephyr
 ```python
