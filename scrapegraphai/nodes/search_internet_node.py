@@ -29,7 +29,6 @@ class SearchInternetNode(BaseNode):
                              generated answer will be stored.
         model_config (dict): Configuration parameters for the language model client.
         node_name (str, optional): The unique identifier name for the node. 
-        Defaults to "GenerateAnswer".
 
     Methods:
         execute(state): Processes the input and document from the state to generate an answer,
