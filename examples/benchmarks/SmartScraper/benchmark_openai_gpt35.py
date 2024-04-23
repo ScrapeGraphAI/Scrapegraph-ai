@@ -19,7 +19,7 @@ tasks = ["List me all the projects with their description.",
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("GPT35_KEY")
+openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
