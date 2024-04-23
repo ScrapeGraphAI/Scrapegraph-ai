@@ -11,7 +11,7 @@ In particular, is tested with SmartScraper
 | ------------------ | --------------------------------------- | --------- | --------- |
 | Macbook 14' m1 pro | Mistral on Ollama with nomic-embed-text | 11.60s    | 26.61s    |
 | Macbook m2 max     | Mistral on Ollama with nomic-embed-text | 8.05s     | 12.17s    |
-| Macbook 14' m1 pro | Llama3 on Ollama with nomic-embed-text  | 29.871    | 35.32     |
+| Macbook 14' m1 pro | Llama3 on Ollama with nomic-embed-text  | 29.871s   | 35.32s    |
 | Macbook m2 max     | Llama3 on Ollama with nomic-embed-text  | 18.36s    | 78.32s    |
 
 
@@ -19,7 +19,7 @@ In particular, is tested with SmartScraper
 
 | Hardware           | Example 1 | Example 2 |
 | ------------------ | --------- | --------- |
-| Macbook 14' m1 pro | 139.89    | Too long  |
+| Macbook 14' m1 pro | 139.89s   | Too long  |
 # Performance on APIs services
 ### Example 1: personal portfolio 
 **URL**: https://perinim.github.io/projects
