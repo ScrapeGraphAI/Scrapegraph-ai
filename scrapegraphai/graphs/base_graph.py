@@ -4,6 +4,7 @@ Module for creating the base graphs
 import time
 from langchain_community.callbacks import get_openai_callback
 
+
 class BaseGraph:
     """
     BaseGraph manages the execution flow of a graph composed of interconnected nodes.
@@ -81,7 +82,8 @@ class BaseGraph:
 
             with get_openai_callback() as cb:
                 result = current_node.execute(state)
-                
+                # ADd the check for the node RObots
+
                 node_exec_time = time.time() - curr_time
                 total_exec_time += node_exec_time
 

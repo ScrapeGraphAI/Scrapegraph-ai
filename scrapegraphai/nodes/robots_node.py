@@ -1,7 +1,6 @@
 """
-Module for fetching the HTML node
+Module for checking if a website is scrapepable or not 
 """
-import warnings
 from typing import List
 from urllib.parse import urlparse
 from langchain_community.document_loaders import AsyncHtmlLoader
@@ -13,11 +12,15 @@ from ..helpers import robots_dictionary
 
 class RobotsNode(BaseNode):
     """
-    A node responsible for fetching the HTML content of a specified URL and updating
-    the graph's state with this content. It uses the AsyncHtmlLoader for asynchronous
+    A node responsible for checking if a website is scrapepable or not. 
+    It uses the AsyncHtmlLoader for asynchronous
     document loading.
 
     This node acts as a starting point in many scraping workflows, preparing the state
+    with the necessary HTML content for further processing by subsequent nodes in the graph.
+
+    Attributes:
+        This node acts as a starting point in many scraping workflows, preparing the state
     with the necessary HTML content for further processing by subsequent nodes in the graph.
 
     Attributes:
@@ -31,6 +34,11 @@ class RobotsNode(BaseNode):
                          reference the node within the graph.
         node_type (str, optional): The type of the node, limited to "node" or
                                    "conditional_node". Defaults to "node".
+        node_config (dict): Configuration parameters for the node.
+        force_scraping (bool): A flag indicating whether scraping should be enforced even
+                               if disallowed by robots.txt. Defaults to True.
+        input (str): Input expression defining how to interpret the incoming data.
+        output (List[str]): List of output keys where the results will be stored.
 
     Methods:
         execute(state): Fetches the HTML content for the URL specified in the state and
@@ -39,15 +47,24 @@ class RobotsNode(BaseNode):
                         to succeed.
     """
 
-    def __init__(self, input: str, output: List[str],  node_config: dict,
+    def __init__(self, input: str, output: List[str],  node_config: dict, force_scraping=True,
                  node_name: str = "Robots"):
         """
-        Initializes the FetchHTMLNode with a node name and node type.
+        Initializes the RobotsNode with a node name, input/output expressions
+         and node configuration.
+
         Arguments:
-            node_name (str): name of the node
+            input (str): Input expression defining how to interpret the incoming data.
+            output (List[str]): List of output keys where the results will be stored.
+            node_config (dict): Configuration parameters for the node.
+            force_scraping (bool): A flag indicating whether scraping should be enforced even
+                                   if disallowed by robots.txt. Defaults to True.
+            node_name (str, optional): The unique identifier name for the node. 
+                                       Defaults to "Robots".
         """
         super().__init__(node_name, "node", input, output, 1)
         self.llm_model = node_config["llm"]
+        self.force_scraping = force_scraping
 
     def execute(self, state):
         """
@@ -86,11 +103,10 @@ class RobotsNode(BaseNode):
 
         source = input_data[0]
         output_parser = CommaSeparatedListOutputParser()
-        # if it is a local directory
         if not source.startswith("http"):
             raise ValueError(
                 "Operation not allowed")
-        # if it is a URL
+
         else:
             parsed_url = urlparse(source)
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
@@ -119,8 +135,11 @@ class RobotsNode(BaseNode):
             is_scrapable = chain.invoke({"path": source})[0]
             print(f"Is the provided URL scrapable? {is_scrapable}")
             if "no" in is_scrapable:
-                warnings.warn("Scraping this website is not allowed")
+                print("\033[33mScraping this website is not allowed\033[0m")
+                if not self.force_scraping:
+                    return {"update": "block the scraping phase"}
+            else:
+                print("\033[92mThe path is scrapable\033[0m")
 
-        # Update the state with the generated answer
         state.update({self.output[0]: is_scrapable})
         return state
