@@ -102,11 +102,17 @@ class RobotsNode(BaseNode):
 
             document = loader.load()
 
-            # TODO: look at the agent
-            agent = "TODO"
-            # mandare la richiesta
-            # if errore -> manda l'eccezione
-            # poi faccio un return
+            model = self.llm_model["model"]
+
+            if "ollama" in model:
+                model = model.split("/", maxsplit=1)[-1]
+
+            try:
+                agent = robots_dictionary[model]
+
+            except KeyError:
+                agent = model
+
             prompt = PromptTemplate(
                 template=template,
                 partial_variables={"context": document,
