@@ -82,8 +82,6 @@ class BaseGraph:
 
             with get_openai_callback() as cb:
                 result = current_node.execute(state)
-                # ADd the check for the node RObots
-
                 node_exec_time = time.time() - curr_time
                 total_exec_time += node_exec_time
 

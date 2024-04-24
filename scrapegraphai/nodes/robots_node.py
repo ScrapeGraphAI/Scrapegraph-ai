@@ -137,7 +137,8 @@ class RobotsNode(BaseNode):
             if "no" in is_scrapable:
                 print("\033[33mScraping this website is not allowed\033[0m")
                 if not self.force_scraping:
-                    return {"update": "block the scraping phase"}
+                    raise ValueError(
+                        'The website you selected is not scrapable')
             else:
                 print("\033[92mThe path is scrapable\033[0m")
 
