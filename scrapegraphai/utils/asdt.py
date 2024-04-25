@@ -1,15 +1,18 @@
+""" 
+Module for creating the tree
+"""
+import time
 from bs4 import BeautifulSoup, NavigableString
 from graphviz import Digraph
 from langchain_community.document_loaders import AsyncHtmlLoader
-import json
 from bs4 import BeautifulSoup, NavigableString, Comment
-import time
 
-def tag_structure(tag, exclude=None):
+
+def tag_structure(tag, exclude=None) -> dict:
     """
     Recursively get a tag's structure, including its attributes, children, and textual content,
     with an option to exclude specific tags. Text is treated as separate nodes.
-    
+
     :param tag: BeautifulSoup tag object
     :param exclude: List of tag names to exclude from the structure
     :return: A dict with the tag's name, attributes, children, and text nodes
@@ -26,7 +29,7 @@ def tag_structure(tag, exclude=None):
             text_node = {'text': {
                 'content': text_content,
                 'children': []
-                }
+            }
             }
             return text_node
         else:
@@ -62,18 +65,22 @@ def add_nodes_edges(graph, structure, parent=None, include_scripts=True):
             if parent:
                 graph.edge(parent, node_name)
             # Recursively process the children nodes
-            add_nodes_edges(graph, content['children'], parent=node_name, include_scripts=include_scripts)
+            add_nodes_edges(
+                graph, content['children'], parent=node_name, include_scripts=include_scripts)
 
     elif isinstance(structure, list):
         for item in structure:
-            add_nodes_edges(graph, item, parent, include_scripts=include_scripts)
+            add_nodes_edges(graph, item, parent,
+                            include_scripts=include_scripts)
 
     elif isinstance(structure, str) and parent:
         # Adding text node with limited length to keep the visualization clean
-        text_label = (structure[:30] + '..') if len(structure) > 30 else structure
+        text_label = (structure[:30] +
+                      '..') if len(structure) > 30 else structure
         text_node_name = f"text_{id(structure)}"
         graph.node(text_node_name, label=text_label, shape="plaintext")
         graph.edge(parent, text_node_name)
+
 
 def has_text_content(structure):
     if isinstance(structure, str) and structure.strip():
@@ -92,6 +99,7 @@ def has_text_content(structure):
                     return True
     return False
 
+
 def add_text_nodes_only(graph, structure, parent=None):
     """
     Recursively traverse the structured HTML dictionary and create graph nodes and edges
@@ -103,10 +111,11 @@ def add_text_nodes_only(graph, structure, parent=None):
     """
     if isinstance(structure, dict):
         for tag, content in structure.items():
-     
+
             if 'text' in content:
                 # Content is a text node
-                text_label = (content['text'][:30] + '...') if len(content['text']) > 30 else content['text']
+                text_label = (
+                    content['text'][:30] + '...') if len(content['text']) > 30 else content['text']
                 text_node_name = f"text_{id(content)}"
                 graph.node(text_node_name, label=text_label, shape="plaintext")
                 if parent:
@@ -130,8 +139,10 @@ curr_time = time.time()
 soup = BeautifulSoup(html_content, 'html.parser')
 
 # Generate and print structured HTML
-html_structure = tag_structure(soup.find('html'), exclude=['head', 'style', 'script'])
-print(f"Time taken to generate structured HTML: {time.time() - curr_time:.2f} seconds")
+html_structure = tag_structure(soup.find('html'), exclude=[
+                               'head', 'style', 'script'])
+print(
+    f"Time taken to generate structured HTML: {time.time() - curr_time:.2f} seconds")
 # print(json.dumps(html_structure, indent=2))
 
 # Create a Digraph object
