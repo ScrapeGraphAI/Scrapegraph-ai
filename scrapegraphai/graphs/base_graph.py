@@ -26,15 +26,14 @@ class BaseGraph:
         entry_point (BaseNode): The node instance that represents the entry point of the graph.
     """
 
-    def __init__(self, nodes: dict, edges: dict, entry_point: str):
+    def __init__(self, nodes: list, edges: list):
         """
         Initializes the graph with nodes, edges, and the entry point.
         """
-        self.nodes = {node.node_name: node for node in nodes}
+        self.nodes = nodes
         self.edges = self._create_edges(edges)
-        self.entry_point = entry_point.node_name
 
-    def _create_edges(self, edges: dict) -> dict:
+    def _create_edges(self, edges: list) -> dict:
         """
         Helper method to create a dictionary of edges from the given iterable of tuples.
 
@@ -61,7 +60,7 @@ class BaseGraph:
         Returns:
             dict: The state after execution has completed, which may have been altered by the nodes.
         """
-        current_node_name = self.entry_point
+        current_node_name = self.nodes[0]
         state = initial_state
 
         # variables for tracking execution info
@@ -75,10 +74,10 @@ class BaseGraph:
             "total_cost_USD": 0.0,
         }
 
-        while current_node_name is not None:
+        for index in self.nodes:
 
             curr_time = time.time()
-            current_node = self.nodes[current_node_name]
+            current_node = index
 
             with get_openai_callback() as cb:
                 result = current_node.execute(state)

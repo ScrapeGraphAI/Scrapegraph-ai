@@ -10,6 +10,7 @@ from ..nodes import (
 )
 from .abstract_graph import AbstractGraph
 
+
 class SmartScraperGraph(AbstractGraph):
     """
     SmartScraper is a comprehensive web scraping tool that automates the process of extracting
@@ -52,25 +53,24 @@ class SmartScraperGraph(AbstractGraph):
         )
 
         return BaseGraph(
-            nodes={
+            nodes=[
                 fetch_node,
                 parse_node,
                 rag_node,
                 generate_answer_node,
-            },
+            ],
             edges={
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
                 (rag_node, generate_answer_node)
-            },
-            entry_point=fetch_node
+            }
         )
 
     def run(self) -> str:
         """
         Executes the web scraping process and returns the answer to the prompt.
         """
-        inputs = {"user_prompt": self.prompt, self.input_key: self.source}  
+        inputs = {"user_prompt": self.prompt, self.input_key: self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
         return self.final_state.get("answer", "No answer found.")
