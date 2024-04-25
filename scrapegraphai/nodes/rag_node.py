@@ -9,9 +9,9 @@ from langchain.retrievers.document_compressors import EmbeddingsFilter, Document
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
 from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace
-from langchain_community.embeddings import OllamaEmbeddings
 from .base_node import BaseNode
 
 
@@ -97,7 +97,7 @@ class RAGNode(BaseNode):
             # remove streaming and temperature
             params.pop("streaming", None)
             params.pop("temperature", None)
-            
+
             embeddings = OllamaEmbeddings(**params)
         elif isinstance(embedding_model, HuggingFace):
             embeddings = HuggingFaceHubEmbeddings(model=embedding_model.model)
