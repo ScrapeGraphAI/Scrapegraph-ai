@@ -4,17 +4,19 @@ from langchain_community.document_loaders import AsyncHtmlLoader
 import time
 
 class TreeNode:
-    def __init__(self, value=None, attributes=None, children=None, parent=None):
+    def __init__(self, value=None, attributes=None, children=None, parent=None, depth=0):
         self.value = value
         self.attributes = attributes if attributes is not None else {}
         self.children = children if children is not None else []
         self.parent = parent
+        self.depth = depth
         self.leads_to_text = False  # Initialize the flag as False
         self.root_path = self._compute_root_path()
         self.closest_fork_path = self._compute_fork_path()
 
     def add_child(self, child_node):
         child_node.parent = self
+        child_node.depth = self.depth + 1
         self.children.append(child_node)
         child_node.update_paths()
         self.update_leads_to_text()  # Update this node if the child leads to text
@@ -48,9 +50,18 @@ class TreeNode:
             current = current.parent
         path.append(current.value)  # Add the fork or root node
         return '>'.join(reversed(path))
-
+    
+    def get_subtrees(self):
+        # This method finds and returns subtrees rooted at this node and all descendant forks
+        subtrees = []
+        if self.is_fork:
+            subtrees.append(Tree(root=self))
+        for child in self.children:
+            subtrees.extend(child.get_subtrees())
+        return subtrees
+    
     def __repr__(self):
-        return f"TreeNode(value={self.value}, leads_to_text={self.leads_to_text}, root_path={self.root_path}, closest_fork_path={self.closest_fork_path})"
+        return f"TreeNode(value={self.value}, leads_to_text={self.leads_to_text}, depth={self.depth}, root_path={self.root_path}, closest_fork_path={self.closest_fork_path})"
 
     @property
     def is_fork(self):
@@ -72,6 +83,10 @@ class Tree:
                     _traverse(child)
         _traverse(self.root)
 
+    def get_subtrees(self):
+        # Retrieves all subtrees rooted at fork nodes
+        return self.root.get_subtrees() if self.root else []
+
     def __repr__(self):
         return f"Tree(root={self.root})"
 
@@ -89,7 +104,6 @@ class DOMTree(Tree):
             elif isinstance(child, NavigableString):
                 text = child.strip()
                 if text:
-                    # Create a text node with value 'text' and the actual content under 'content' key
                     tree_node.add_child(TreeNode(value='text', attributes={'content': text}))
             elif isinstance(child, Tag):
                 new_node = TreeNode(value=child.name, attributes=child.attrs)
@@ -98,14 +112,20 @@ class DOMTree(Tree):
 
 # Usage example:
 
-loader = AsyncHtmlLoader('https://www.mymovies.it/cinema/roma/')
+loader = AsyncHtmlLoader('https://github.com/PeriniM')
 document = loader.load()
 html_content = document[0].page_content
 
 curr_time = time.time()
 # Instantiate a DOMTree with HTML content
 dom_tree = DOMTree(html_content)
+subtrees = dom_tree.get_subtrees()  # Retrieve subtrees rooted at fork nodes
+
 print(f"Time taken to build DOM tree: {time.time() - curr_time:.2f} seconds")
 
+# Optionally, traverse each subtree
+for subtree in subtrees:
+    print("Subtree rooted at:", subtree.root.value)
+    # subtree.traverse(lambda node: print(node))
 # Traverse the DOMTree and print each node
 # dom_tree.traverse(lambda node: print(node))
