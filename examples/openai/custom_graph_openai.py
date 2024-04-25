@@ -75,7 +75,7 @@ graph = BaseGraph(
         (parse_node, rag_node),
         (rag_node, generate_answer_node)
     },
-    entry_point=fetch_node
+    entry_point=robot_node
 )
 
 # ************************************************
