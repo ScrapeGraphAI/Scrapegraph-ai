@@ -13,6 +13,8 @@ pylint pylint scrapegraphai/**/*.py scrapegraphai/*.py tests/**/*.py
 
 cd tests
 
+poetry install
+
 # Run pytest
 if ! pytest; then
     echo "Pytest failed. Aborting commit and push."

@@ -69,12 +69,13 @@ graph = BaseGraph(
         rag_node,
         generate_answer_node,
     ],
-    edges={
+    edges=[
         (robot_node, fetch_node),
         (fetch_node, parse_node),
         (parse_node, rag_node),
         (rag_node, generate_answer_node)
-    },
+    ],
+    entry_point=robot_node
 )
 
 # ************************************************

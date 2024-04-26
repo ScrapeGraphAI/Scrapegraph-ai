@@ -11,6 +11,7 @@ from ..nodes import (
 )
 from .abstract_graph import AbstractGraph
 
+
 class SearchGraph(AbstractGraph):
     """ 
     Module for searching info on the internet
@@ -49,19 +50,19 @@ class SearchGraph(AbstractGraph):
         )
 
         return BaseGraph(
-            nodes={
+            nodes=[
                 search_internet_node,
                 fetch_node,
                 parse_node,
                 rag_node,
                 generate_answer_node,
-            },
-            edges={
+            ],
+            edges=[
                 (search_internet_node, fetch_node),
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
                 (rag_node, generate_answer_node)
-            },
+            ],
             entry_point=search_internet_node
         )
 
