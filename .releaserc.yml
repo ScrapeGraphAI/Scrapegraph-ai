@@ -1,0 +1,56 @@
+plugins:
+  - - "@semantic-release/commit-analyzer"
+    - preset: conventionalcommits
+  - - "@semantic-release/release-notes-generator"
+    - writerOpts:
+        commitsSort:
+        - subject
+        - scope
+      preset: conventionalcommits
+      presetConfig:
+        types:
+        - type: feat
+          section: Features
+        - type: fix
+          section: Bug Fixes
+        - type: chore
+          section: chore
+        - type: docs
+          section: Docs
+        - type: style
+          hidden: true
+        - type: refactor
+          section: Refactor
+        - type: perf
+          section: Perf
+        - type: test
+          section: Test
+        - type: build
+          section: Build
+        - type: ci
+          section: CI
+  - "@semantic-release/changelog"
+  - "semantic-release-pypi"
+  - "@semantic-release/github"
+  - - "@semantic-release/git"
+    - assets:
+        - CHANGELOG.md
+        - pyproject.toml
+      message: |-
+        ci(release): ${nextRelease.version} [skip ci]
+
+        ${nextRelease.notes}
+branches:
+  #child branches coming from tagged version for bugfix (1.1.x) or new features (1.x)
+  #maintenance branch
+  - name: "+([0-9])?(.{+([0-9]),x}).x"
+    channel: "stable"
+  #release a production version when merging towards main
+  - name: "main"
+    channel: "stable"
+  #prerelease branch
+  - name: "pre/beta"
+    channel: "dev"
+    prerelease: "beta"
+debug: true
+
