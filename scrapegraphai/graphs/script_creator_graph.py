@@ -1,4 +1,4 @@
-""" 
+"""
 Module for creating the smart scraper
 """
 from .base_graph import BaseGraph
@@ -57,17 +57,17 @@ class ScriptCreatorGraph(AbstractGraph):
         )
 
         return BaseGraph(
-            nodes={
+            nodes=[
                 fetch_node,
                 parse_node,
                 rag_node,
                 generate_scraper_node,
-            },
-            edges={
+            ],
+            edges=[
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
                 (rag_node, generate_scraper_node)
-            },
+            ],
             entry_point=fetch_node
         )
 
