@@ -41,7 +41,7 @@ class AbstractGraph(ABC):
             try:
                 self.model_token = models_tokens["openai"][llm_params["model"]]
             except KeyError:
-                raise ValueError("Model not supported")
+                raise KeyError("Model not supported")
             return OpenAI(llm_params)
 
         elif "azure" in llm_params["model"]:
@@ -50,14 +50,14 @@ class AbstractGraph(ABC):
             try:
                 self.model_token = models_tokens["azure"][llm_params["model"]]
             except KeyError:
-                raise ValueError("Model not supported")
+                raise KeyError("Model not supported")
             return AzureOpenAI(llm_params)
 
         elif "gemini" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["gemini"][llm_params["model"]]
             except KeyError:
-                raise ValueError("Model not supported")
+                raise KeyError("Model not supported")
             return Gemini(llm_params)
 
         elif "ollama" in llm_params["model"]:
@@ -70,18 +70,26 @@ class AbstractGraph(ABC):
                 try:
                     self.model_token = models_tokens["ollama"][llm_params["model"]]
                 except KeyError:
-                    raise ValueError("Model not supported")
+                    raise KeyError("Model not supported")
 
             return Ollama(llm_params)
         elif "hugging_face" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["hugging_face"][llm_params["model"]]
             except KeyError:
-                raise ValueError("Model not supported")
+                raise KeyError("Model not supported")
             return HuggingFace(llm_params)
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
+
+    def get_state(self, key=None) -> dict:
+        """""
+        Obtain the current state
+        """
+        if key is not None:
+            return self.final_state[key]
+        return self.final_state
 
     def get_execution_info(self):
         """
