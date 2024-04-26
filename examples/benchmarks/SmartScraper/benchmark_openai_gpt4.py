@@ -20,12 +20,12 @@ tasks = ["List me all the projects with their description.",
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("GPT4_KEY")
+openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "gpt-4-turbo-preview",
+        "model": "gpt-4-turbo",
     },
 }
 

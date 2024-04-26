@@ -6,5 +6,5 @@ Remember to activating Ollama and having installed the LLM on your pc
 
 For running the tests run the command:
 ```python
-pytests
+pytest
 ```

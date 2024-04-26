@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode
+from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
 load_dotenv()
 
 # ************************************************
@@ -31,6 +31,12 @@ graph_config = {
 llm_model = OpenAI(graph_config["llm"])
 
 # define the nodes for the graph
+robot_node = RobotsNode(
+    input="url",
+    output=["is_scrapable"],
+    node_config={"llm": llm_model}
+)
+
 fetch_node = FetchNode(
     input="url | local_dir",
     output=["doc"],
@@ -57,17 +63,19 @@ generate_answer_node = GenerateAnswerNode(
 
 graph = BaseGraph(
     nodes={
+        robot_node,
         fetch_node,
         parse_node,
         rag_node,
         generate_answer_node,
     },
     edges={
+        (robot_node, fetch_node),
         (fetch_node, parse_node),
         (parse_node, rag_node),
         (rag_node, generate_answer_node)
     },
-    entry_point=fetch_node
+    entry_point=robot_node
 )
 
 # ************************************************

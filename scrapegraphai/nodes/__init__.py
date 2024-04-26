@@ -13,3 +13,4 @@ from .image_to_text_node import ImageToTextNode
 from .search_internet_node import SearchInternetNode
 from .generate_scraper_node import GenerateScraperNode
 from .search_link_node import SearchLinkNode
+from .robots_node import RobotsNode

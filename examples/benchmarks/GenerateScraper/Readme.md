@@ -9,12 +9,14 @@ The time is measured in seconds
 
 The model runned for this benchmark is Mistral on Ollama with nomic-embed-text
 
+In particular, is tested with ScriptCreatorGraph
+
 | Hardware               | Model                                   | Example 1 | Example 2 |
 | ---------------------- | --------------------------------------- | --------- | --------- |
 | Macbook 14' m1 pro     | Mistral on Ollama with nomic-embed-text | 30.54s    | 35.76s    |
-| Macbook m2 max         | Mistral on Ollama with nomic-embed-text |           |           |
-| Macbook 14' m1 pro<br> | Llama3 on Ollama with nomic-embed-text  | 27.82s    | 29.986s   |
-| Macbook m2 max<br>     | Llama3 on Ollama with nomic-embed-text  |           |           |
+| Macbook m2 max         | Mistral on Ollama with nomic-embed-text | 18,46s    | 19.59     |
+| Macbook 14' m1 pro<br> | Llama3 on Ollama with nomic-embed-text  | 27.82s    | 29.98s    |
+| Macbook m2 max<br>     | Llama3 on Ollama with nomic-embed-text  | 20.83s    | 12.29s    |
 
 
 **Note**: the examples on Docker are not runned on other devices than the Macbook because the performance are to slow (10 times slower than Ollama). 
@@ -23,10 +25,10 @@ The model runned for this benchmark is Mistral on Ollama with nomic-embed-text
 **URL**: https://perinim.github.io/projects
 **Task**: List me all the projects with their description.
 
-| Name                | Execution time (seconds) | total_tokens | prompt_tokens | completion_tokens | successful_requests | total_cost_USD |
-| ------------------- | ------------------------ | ------------ | ------------- | ----------------- | ------------------- | -------------- |
-| gpt-3.5-turbo       | 24.215268                | 1892         | 1802          | 90                | 1                   | 0.002883       |
-| gpt-4-turbo-preview | 6.614                    | 1936         | 1802          | 134               | 1                   | 0.02204        |
+| Name                | Execution time | total_tokens | prompt_tokens | completion_tokens | successful_requests | total_cost_USD |
+| ------------------- | ---------------| ------------ | ------------- | ----------------- | ------------------- | -------------- |
+| gpt-3.5-turbo       | 4.50s          | 1897         | 1802          | 95                | 1                   | 0.002893       |
+| gpt-4-turbo         | 7.88s          | 1920         | 1802          | 118               | 1                   | 0.02156        |
 
 ### Example 2: Wired
 **URL**: https://www.wired.com
@@ -34,6 +36,6 @@ The model runned for this benchmark is Mistral on Ollama with nomic-embed-text
 
 | Name                | Execution time (seconds) | total_tokens | prompt_tokens | completion_tokens | successful_requests | total_cost_USD |
 | ------------------- | ------------------------ | ------------ | ------------- | ----------------- | ------------------- | -------------- |
-| gpt-3.5-turbo       |                          |              |               |                   |                     |                |
-| gpt-4-turbo-preview |                          |              |               |                   |                     |                |
+| gpt-3.5-turbo       |   Error (text too long)  |      -       |      -        |         -         |           -         |        -       |
+| gpt-4-turbo         |   Error (TPM limit reach)|      -       |      -        |         -         |           -         |        -       |
 

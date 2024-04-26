@@ -1,0 +1,79 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+      - pre/*
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install git
+        run: |
+          sudo apt update
+          sudo apt install -y git
+      - name: Install Python Env and Poetry
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - run: pip install poetry
+      - name: Install Node Env
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Build app
+        run: |
+          poetry install
+          poetry build
+        id: build_cache
+        if: success()
+      - name: Cache build
+        uses: actions/cache@v2
+        with:
+          path: ./dist
+          key: ${{ runner.os }}-build-${{ hashFiles('dist/**') }}
+        if: steps.build_cache.outputs.id != ''
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build
+    environment: development
+    if: | 
+        github.event_name == 'push' && github.ref == 'refs/heads/main' || 
+        github.event_name == 'push' && github.ref == 'refs/heads/pre/beta' || 
+        github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.event.pull_request.base.ref == 'main' || 
+        github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.event.pull_request.base.ref == 'pre/beta'
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4.1.0
+        with:
+          semantic_version: 23
+          extra_plugins: |
+            semantic-release-pypi@3
+            @semantic-release/git 
+            @semantic-release/commit-analyzer@12 
+            @semantic-release/release-notes-generator@13 
+            @semantic-release/github@10 
+            @semantic-release/changelog@6
+            conventional-changelog-conventionalcommits@7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}

@@ -22,7 +22,7 @@ class GenerateScraperNode(BaseNode):
     an answer.
 
     Attributes:
-        llm (ChatOpenAI): An instance of a language model client, configured for generating answers.
+        llm: An instance of a language model client, configured for generating answers.
         node_name (str): The unique identifier name for the node, defaulting 
         to "GenerateScraperNode".
         node_type (str): The type of the node, set to "node" indicating a 
