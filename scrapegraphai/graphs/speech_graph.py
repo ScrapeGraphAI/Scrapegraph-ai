@@ -62,19 +62,19 @@ class SpeechGraph(AbstractGraph):
         )
 
         return BaseGraph(
-            nodes={
+            nodes=[
                 fetch_node,
                 parse_node,
                 rag_node,
                 generate_answer_node,
                 text_to_speech_node
-            },
-            edges={
+            ],
+            edges=[
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
                 (rag_node, generate_answer_node),
                 (generate_answer_node, text_to_speech_node)
-            },
+            ],
             entry_point=fetch_node
         )
 
