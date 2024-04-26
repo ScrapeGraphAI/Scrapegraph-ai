@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup, NavigableString
 from graphviz import Digraph
 from langchain_community.document_loaders import AsyncHtmlLoader
 from bs4 import BeautifulSoup, NavigableString, Comment
-
+from remover import remover
 
 def tag_structure(tag, exclude=None) -> dict:
     """
@@ -130,16 +130,16 @@ def add_text_nodes_only(graph, structure, parent=None):
                     add_text_nodes_only(graph, child, parent=node_name)
 
 
-loader = AsyncHtmlLoader('https://www.mymovies.it/cinema/roma/')
+loader = AsyncHtmlLoader('https://perinim.github.io/projects/')
 document = loader.load()
-html_content = document[0].page_content
+html_content = remover(document[0].page_content)
 
 curr_time = time.time()
 # Parse HTML content
 soup = BeautifulSoup(html_content, 'html.parser')
 
 # Generate and print structured HTML
-html_structure = tag_structure(soup.find('html'), exclude=[
+html_structure = tag_structure(soup, exclude=[
                                'head', 'style', 'script'])
 print(
     f"Time taken to generate structured HTML: {time.time() - curr_time:.2f} seconds")
