@@ -4,11 +4,6 @@ on:
     branches:
       - main
       - pre/*
-  pull_request: 
-    types: [closed]
-
-permissions:
-  contents: write # for checkout
 
 jobs:
   build:
@@ -22,7 +17,7 @@ jobs:
       - name: Install Python Env and Poetry
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9.19'
+          python-version: '3.9'
       - run: pip install poetry
       - name: Install Node Env
         uses: actions/setup-node@v4
@@ -72,13 +67,13 @@ jobs:
         with:
           semantic_version: 23
           extra_plugins: |
-            semantic-release-pypi
+            semantic-release-pypi@3
             @semantic-release/git 
-            @semantic-release/commit-analyzer 
-            @semantic-release/release-notes-generator 
-            @semantic-release/github 
-            @semantic-release/changelog 
-            conventional-changelog-conventionalcommits
+            @semantic-release/commit-analyzer@12 
+            @semantic-release/release-notes-generator@13 
+            @semantic-release/github@10 
+            @semantic-release/changelog@6
+            conventional-changelog-conventionalcommits@7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
