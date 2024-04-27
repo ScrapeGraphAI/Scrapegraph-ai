@@ -1,3 +1,15 @@
+## [0.4.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.3.0...v0.4.0-beta.1) (2024-04-27)
+
+
+### Features
+
+* add new proxy rotation function ([f6077d1](https://github.com/VinciGit00/Scrapegraph-ai/commit/f6077d1f98023ac3bf0c89ef6b3d67dde4818df7))
+
+
+### Bug Fixes
+
+* changed proxy function ([b754dd9](https://github.com/VinciGit00/Scrapegraph-ai/commit/b754dd909cd2aa2d5b5d94d9c7879ba3da58adc4))
+
 ## [0.3.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.2.8...v0.3.0) (2024-04-26)
 
 
