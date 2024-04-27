@@ -1,3 +1,10 @@
+## [0.4.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0-beta.1...v0.4.0-beta.2) (2024-04-27)
+
+
+### Bug Fixes
+
+* robot node and proxyes ([adbc08f](https://github.com/VinciGit00/Scrapegraph-ai/commit/adbc08f27bc0966822f054f3af0e1f94fc0b87f5))
+
 ## [0.4.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.3.0...v0.4.0-beta.1) (2024-04-27)
 
 
