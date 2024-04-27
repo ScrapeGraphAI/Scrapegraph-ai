@@ -1,3 +1,10 @@
+## [0.4.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0-beta.2...v0.4.0-beta.3) (2024-04-27)
+
+
+### Bug Fixes
+
+* bug with fetch node ([9cd5165](https://github.com/VinciGit00/Scrapegraph-ai/commit/9cd516507cc5ad65b100522b488cb0272dc7b366))
+
 ## [0.4.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0-beta.1...v0.4.0-beta.2) (2024-04-27)
 
 
