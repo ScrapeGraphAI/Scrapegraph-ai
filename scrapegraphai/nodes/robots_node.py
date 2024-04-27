@@ -1,5 +1,5 @@
 """
-Module for checking if a website is scrapepable or not 
+Module for checking if a website is scrapepable or not
 """
 from typing import List
 from urllib.parse import urlparse
@@ -12,7 +12,7 @@ from ..helpers import robots_dictionary
 
 class RobotsNode(BaseNode):
     """
-    A node responsible for checking if a website is scrapepable or not. 
+    A node responsible for checking if a website is scrapepable or not.
     It uses the AsyncHtmlLoader for asynchronous
     document loading.
 
@@ -59,7 +59,7 @@ class RobotsNode(BaseNode):
             node_config (dict): Configuration parameters for the node.
             force_scraping (bool): A flag indicating whether scraping should be enforced even
                                    if disallowed by robots.txt. Defaults to True.
-            node_name (str, optional): The unique identifier name for the node. 
+            node_name (str, optional): The unique identifier name for the node.
                                        Defaults to "Robots".
         """
         super().__init__(node_name, "node", input, output, 1)
@@ -112,11 +112,12 @@ class RobotsNode(BaseNode):
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
             loader = AsyncHtmlLoader(f"{base_url}/robots.txt")
             document = loader.load()
-            model = self.llm_model.model_name
+            if "ollama" in self.llm_model.model:
+                self.llm_model.model = self.llm_model.model.split("/")[-1]
+                model = self.llm_model.model.split("/")[-1]
 
-            if "ollama" in model:
-                model = model.split("/", maxsplit=1)[-1]
-
+            else:
+                model = self.llm_model.model_name
             try:
                 agent = robots_dictionary[model]
 
