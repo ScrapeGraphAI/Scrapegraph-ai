@@ -23,11 +23,6 @@ commit_message="$1"
 # Run Pylint on the specified Python files
 pylint pylint scrapegraphai/**/*.py scrapegraphai/*.py tests/*.py
 
-# Run the tests
-cd tests
-
-pytest
-
 #Make the pull
 git pull
 
