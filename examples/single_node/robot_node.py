@@ -2,22 +2,16 @@
 Example of custom graph using existing nodes
 """
 
-import os
-from dotenv import load_dotenv
-from scrapegraphai.models import OpenAI
+from scrapegraphai.models import Ollama
 from scrapegraphai.nodes import RobotsNode
-load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
-
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "ollama/llama3",
         "temperature": 0,
         "streaming": True
     },
@@ -27,7 +21,7 @@ graph_config = {
 # Define the node
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
+llm_model = Ollama(graph_config["llm"])
 
 robots_node = RobotsNode(
     input="url",

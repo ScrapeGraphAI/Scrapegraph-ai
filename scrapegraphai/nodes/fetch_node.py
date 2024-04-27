@@ -7,7 +7,6 @@ from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_core.documents import Document
 from .base_node import BaseNode
 from ..utils.remover import remover
-from ..utils.proxy_generator import proxy_generator
 
 
 class FetchNode(BaseNode):
@@ -38,8 +37,7 @@ class FetchNode(BaseNode):
                         to succeed.
     """
 
-    def __init__(self, input: str, output: List[str], num_prox: int = True,
-                 node_name: str = "Fetch"):
+    def __init__(self, input: str, output: List[str], node_name: str = "Fetch"):
         """
         Initializes the FetchHTMLNode with a node name and node type.
         Arguments:
@@ -47,7 +45,6 @@ class FetchNode(BaseNode):
             prox_rotation (bool): if you wamt to rotate proxies
         """
         super().__init__(node_name, "node", input, output, 1)
-        self.num_prox = num_prox
 
     def execute(self, state):
         """
@@ -80,13 +77,13 @@ class FetchNode(BaseNode):
                 "source": "local_dir"
             })]
 
-        # if it is a URL
         else:
-            if self.num_prox > 1:
+            if self.node_config.get("endpoint") is not None:
                 loader = AsyncHtmlLoader(
-                    source, proxies=proxy_generator(self.num_prox))
+                    source, proxies={"http": self.node_config["endpoint"]})
             else:
                 loader = AsyncHtmlLoader(source)
+
             document = loader.load()
             compressed_document = [
                 Document(page_content=remover(str(document)))]
