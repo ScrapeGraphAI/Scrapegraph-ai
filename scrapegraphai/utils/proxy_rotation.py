@@ -4,7 +4,7 @@ Module for rotating proxies
 from fp.fp import FreeProxy
 
 
-def proxy_rotation(num_ips: int):
+def proxy_generator(num_ips: int):
     """
     Rotates through a specified number of proxy IPs using the FreeProxy library.
 
@@ -15,7 +15,7 @@ def proxy_rotation(num_ips: int):
         dict: A dictionary containing the rotated proxy IPs, indexed by their position in rotation.
 
     Example:
-        >>> proxy_rotation(5)
+        >>> proxy_generator(5)
         {
             0: '192.168.1.1:8080',
             1: '103.10.63.135:8080',
@@ -24,9 +24,8 @@ def proxy_rotation(num_ips: int):
             4: '113.20.31.250:8080'
         }
     """
-    res = {}
+    res = []
 
     for i in range(0, num_ips):
-        res[i] = FreeProxy().get()
-
+        res.append(FreeProxy().get())
     return res

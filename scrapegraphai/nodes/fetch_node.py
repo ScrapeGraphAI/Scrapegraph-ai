@@ -7,7 +7,7 @@ from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_core.documents import Document
 from .base_node import BaseNode
 from ..utils.remover import remover
-from ..utils.proxy_rotation import proxy_rotation
+from ..utils.proxy_generator import proxy_generator
 
 
 class FetchNode(BaseNode):
@@ -84,7 +84,7 @@ class FetchNode(BaseNode):
         else:
             if self.num_prox > 1:
                 loader = AsyncHtmlLoader(
-                    source, proxies=proxy_rotation(self.num_prox))
+                    source, proxies=proxy_generator(self.num_prox))
             else:
                 loader = AsyncHtmlLoader(source)
             document = loader.load()
