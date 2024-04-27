@@ -2,8 +2,7 @@
 Module for testinh robot_node
 """
 import pytest
-from scrapegraphai.models import Ollama
-from scrapegraphai.nodes import RobotsNode
+from scrapegraphai.nodes import FetchNode
 
 
 @pytest.fixture
@@ -12,27 +11,12 @@ def setup():
     setup
     """
     # ************************************************
-    # Define the configuration for the graph
-    # ************************************************
-
-    graph_config = {
-        "llm": {
-            "model": "ollama/llama3",
-            "temperature": 0,
-            "streaming": True
-        },
-    }
-
-    # ************************************************
     # Define the node
     # ************************************************
 
-    llm_model = Ollama(graph_config["llm"])
-
-    robots_node = RobotsNode(
-        input="url",
-        output=["is_scrapable"],
-        node_config={"llm": llm_model}
+    robots_node = FetchNode(
+        input="url | local_dir",
+        output=["doc"],
     )
 
     return robots_node
