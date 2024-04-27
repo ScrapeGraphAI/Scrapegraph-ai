@@ -59,7 +59,7 @@ class FetchNode(BaseNode):
 
         Raises:
             KeyError: If the 'url' key is not found in the state, indicating that the
-                      necessary information to perform the operation is missing.
+                    necessary information to perform the operation is missing.
         """
         print(f"--- Executing {self.node_name} Node ---")
 
@@ -78,7 +78,7 @@ class FetchNode(BaseNode):
             })]
 
         else:
-            if self.node_config.get("endpoint") is not None:
+            if self.node_config is not None and self.node_config.get("endpoint") is not None:
                 loader = AsyncHtmlLoader(
                     source, proxies={"http": self.node_config["endpoint"]})
             else:
