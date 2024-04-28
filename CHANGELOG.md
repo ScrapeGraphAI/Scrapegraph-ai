@@ -1,3 +1,24 @@
+## [0.4.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.3.0...v0.4.0) (2024-04-28)
+
+
+### Features
+
+* add new proxy rotation function ([f6077d1](https://github.com/VinciGit00/Scrapegraph-ai/commit/f6077d1f98023ac3bf0c89ef6b3d67dde4818df7))
+
+
+### Bug Fixes
+
+* bug for calculate costs ([a9b11e4](https://github.com/VinciGit00/Scrapegraph-ai/commit/a9b11e433a28dc111bce260d6a83849410fcb03c))
+* bug with fetch node ([9cd5165](https://github.com/VinciGit00/Scrapegraph-ai/commit/9cd516507cc5ad65b100522b488cb0272dc7b366))
+* changed proxy function ([b754dd9](https://github.com/VinciGit00/Scrapegraph-ai/commit/b754dd909cd2aa2d5b5d94d9c7879ba3da58adc4))
+* robot node and proxyes ([adbc08f](https://github.com/VinciGit00/Scrapegraph-ai/commit/adbc08f27bc0966822f054f3af0e1f94fc0b87f5))
+
+
+### CI
+
+* **release:** 0.4.0-beta.1 [skip ci] ([4bc7274](https://github.com/VinciGit00/Scrapegraph-ai/commit/4bc727412f3b329491300ae2efb705a8386801d2))
+* **release:** 0.4.0-beta.2 [skip ci] ([3c77acb](https://github.com/VinciGit00/Scrapegraph-ai/commit/3c77acbb1de43b8b09b5f46e69e38f9fa5551120))
+
 ## [0.4.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0-beta.1...v0.4.0-beta.2) (2024-04-27)
 
 
