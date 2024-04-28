@@ -5,7 +5,7 @@ Groq module configuration
 from langchain_groq import ChatGroq
 
 
-class Gemini(ChatGroq):
+class Groq(ChatGroq):
     """Class for wrapping gemini module"""
 
     def __init__(self, llm_config: dict):
