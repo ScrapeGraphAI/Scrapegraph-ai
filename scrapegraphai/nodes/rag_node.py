@@ -123,8 +123,7 @@ class RAGNode(BaseNode):
         #     base_compressor=relevant_filter, base_retriever=retriever
         # )
 
-        compressed_docs = compression_retriever.get_relevant_documents(
-            user_prompt)
+        compressed_docs = compression_retriever.invoke(user_prompt)
 
         print("--- (tokens compressed and vector stored) ---")
 
