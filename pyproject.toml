@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "scrapegraphai"
-version = "0.3.1"
+version = "0.4.0b2"
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     "Marco Vinciguerra <mvincig11@gmail.com>",

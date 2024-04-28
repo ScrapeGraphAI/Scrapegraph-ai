@@ -42,6 +42,7 @@ class FetchNode(BaseNode):
         Initializes the FetchHTMLNode with a node name and node type.
         Arguments:
             node_name (str): name of the node
+            prox_rotation (bool): if you wamt to rotate proxies
         """
         super().__init__(node_name, "node", input, output, 1)
 
@@ -58,7 +59,7 @@ class FetchNode(BaseNode):
 
         Raises:
             KeyError: If the 'url' key is not found in the state, indicating that the
-                      necessary information to perform the operation is missing.
+                    necessary information to perform the operation is missing.
         """
         print(f"--- Executing {self.node_name} Node ---")
 
@@ -76,9 +77,13 @@ class FetchNode(BaseNode):
                 "source": "local_dir"
             })]
 
-        # if it is a URL
         else:
-            loader = AsyncHtmlLoader(source)
+            if self.node_config is not None and self.node_config.get("endpoint") is not None:
+                loader = AsyncHtmlLoader(
+                    source, proxies={"http": self.node_config["endpoint"]})
+            else:
+                loader = AsyncHtmlLoader(source)
+
             document = loader.load()
             compressed_document = [
                 Document(page_content=remover(str(document)))]
