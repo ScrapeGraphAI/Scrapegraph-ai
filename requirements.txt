@@ -11,3 +11,4 @@ python-dotenv==1.0.1
 tiktoken>=0.5.2,<0.6.0
 tqdm==4.66.1
 minify-html==0.15.0
+free-proxy==1.1.1
