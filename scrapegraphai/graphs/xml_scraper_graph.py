@@ -30,7 +30,7 @@ class XmlScraperGraph(AbstractGraph):
         Creates the graph of nodes representing the workflow for web scraping.
         """
         fetch_node = FetchNode(
-            input="xml | xml_dir",
+            input="xml_dir",
             output=["doc"],
         )
         parse_node = ParseNode(

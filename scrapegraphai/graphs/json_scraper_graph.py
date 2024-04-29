@@ -30,7 +30,7 @@ class JsonScraperGraph(AbstractGraph):
         Creates the graph of nodes representing the workflow for web scraping.
         """
         fetch_node = FetchNode(
-            input="json | json_dir",
+            input="json_dir",
             output=["doc"],
         )
         parse_node = ParseNode(
