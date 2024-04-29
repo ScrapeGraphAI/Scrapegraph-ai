@@ -31,5 +31,9 @@ models_tokens = {
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,
         "stablelm-zephyr": 8192
+    },
+    "gemma": {
+        "gemma:2b": 8192,
+        "gemma:7b": 8192
     }
 }
