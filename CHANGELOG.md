@@ -1,7 +1,9 @@
 ## [0.4.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0...v0.4.1) (2024-04-28)
 
 
+
 ### Bug Fixes
+
 
 * added missing dependecies ([7f1c3b7](https://github.com/VinciGit00/Scrapegraph-ai/commit/7f1c3b7d833ac782da17829dc021e86e258cf461))
 
@@ -25,6 +27,7 @@
 
 * **release:** 0.4.0-beta.1 [skip ci] ([4bc7274](https://github.com/VinciGit00/Scrapegraph-ai/commit/4bc727412f3b329491300ae2efb705a8386801d2))
 * **release:** 0.4.0-beta.2 [skip ci] ([3c77acb](https://github.com/VinciGit00/Scrapegraph-ai/commit/3c77acbb1de43b8b09b5f46e69e38f9fa5551120))
+
 
 ## [0.4.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0-beta.1...v0.4.0-beta.2) (2024-04-27)
 
