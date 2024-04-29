@@ -4,7 +4,7 @@ Basic example of scraping pipeline using SmartScraper from XML documents
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import XmlScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
@@ -33,10 +33,10 @@ graph_config = {
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the XmlScraperGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
+smart_scraper_graph = XmlScraperGraph(
     prompt="List me all the authors, title and genres of the books",
     source=text,  # Pass the content of the file, not the file object
     config=graph_config
