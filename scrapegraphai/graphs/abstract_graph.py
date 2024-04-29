@@ -64,13 +64,18 @@ class AbstractGraph(ABC):
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
             # allow user to set model_tokens in config
-            if "model_tokens" in llm_params:
-                self.model_token = llm_params["model_tokens"]
-            elif llm_params["model"] in models_tokens["ollama"]:
-                try:
-                    self.model_token = models_tokens["ollama"][llm_params["model"]]
-                except KeyError:
-                    raise KeyError("Model not supported")
+            try:
+                if "model_tokens" in llm_params:
+                    self.model_token = llm_params["model_tokens"]
+                elif llm_params["model"] in models_tokens["ollama"]:
+                    try:
+                        self.model_token = models_tokens["ollama"][llm_params["model"]]
+                    except KeyError:
+                        raise KeyError("Model not supported")
+                else:
+                    self.model_token = 8192
+            except AttributeError:
+                self.model_token = 8192
 
             return Ollama(llm_params)
         elif "hugging_face" in llm_params["model"]:
