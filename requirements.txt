@@ -12,3 +12,4 @@ tiktoken>=0.5.2,<0.6.0
 tqdm==4.66.1
 minify-html==0.15.0
 langchain-groq==0.1.3
+free-proxy==1.1.1
