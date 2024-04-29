@@ -33,7 +33,6 @@ models_tokens = {
         "stablelm-zephyr": 8192
     },
     "gemma": {
-        "gemma:2b": 8192,
-        "gemma:7b": 8192
+        "gemma": 8192,
     }
 }
