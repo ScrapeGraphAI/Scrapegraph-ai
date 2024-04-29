@@ -56,7 +56,7 @@ class BaseGraph:
             edge_dict[from_node.node_name] = to_node.node_name
         return edge_dict
 
-    def execute(self, initial_state: dict) -> dict:
+    def execute(self, initial_state: dict) -> (dict, list):
         """
         Executes the graph by traversing nodes starting from the entry point. The execution
         follows the edges based on the result of each node's execution and continues until
@@ -68,13 +68,12 @@ class BaseGraph:
         Returns:
             dict: The state after execution has completed, which may have been altered by the nodes.
         """
-        print(self.nodes)
         current_node_name = self.nodes[0]
         state = initial_state
 
         # variables for tracking execution info
         total_exec_time = 0.0
-        exec_info = {}
+        exec_info = []
         cb_total = {
             "total_tokens": 0,
             "prompt_tokens": 0,
@@ -94,17 +93,18 @@ class BaseGraph:
                 total_exec_time += node_exec_time
 
                 cb = {
+                    "node_name": index.node_name,
                     "total_tokens": cb.total_tokens,
                     "prompt_tokens": cb.prompt_tokens,
                     "completion_tokens": cb.completion_tokens,
                     "successful_requests": cb.successful_requests,
                     "total_cost_USD": cb.total_cost,
+                    "exec_time": node_exec_time,
                 }
 
-                exec_info[current_node_name] = {
-                    "exec_time": node_exec_time,
-                    "model_info": cb
-                }
+                exec_info.append(
+                    cb
+                )
 
                 cb_total["total_tokens"] += cb["total_tokens"]
                 cb_total["prompt_tokens"] += cb["prompt_tokens"]
@@ -119,10 +119,14 @@ class BaseGraph:
             else:
                 current_node_name = None
 
-        execution_info = {
-            "total_exec_time": total_exec_time,
-            "total_model_info": cb_total,
-            "nodes_info": exec_info
-        }
+        exec_info.append({
+            "node_name": "TOTAL RESULT",
+            "total_tokens":  cb_total["total_tokens"],
+            "prompt_tokens":  cb_total["prompt_tokens"],
+            "completion_tokens": cb_total["completion_tokens"],
+            "successful_requests": cb_total["successful_requests"],
+            "total_cost_USD":   cb_total["total_cost_USD"],
+            "exec_time": total_exec_time,
+        })
 
-        return state, execution_info
+        return state, exec_info
