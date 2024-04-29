@@ -15,7 +15,9 @@ class DOMTree(Tree):
             elif isinstance(child, NavigableString):
                 text = child.strip()
                 if text:
-                    tree_node.add_child(TreeNode(value='text', attributes={'content': text}))
+                    new_node = TreeNode(value='text', attributes={'content': text})
+                    tree_node.add_child(new_node)
+                    new_node.finalize_node()
             elif isinstance(child, Tag):
                 new_node = TreeNode(value=child.name, attributes=child.attrs)
                 tree_node.add_child(new_node)

@@ -72,7 +72,7 @@ class FetchNode(BaseNode):
 
         # if it is a local directory
         if not source.startswith("http"):
-            compressedDocument = [Document(page_content=remover(source), metadata={
+            compressedDocument = [Document(page_content=source, metadata={
                 "source": "local_dir"
             })]
 

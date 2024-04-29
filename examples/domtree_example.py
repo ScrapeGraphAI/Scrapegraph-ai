@@ -46,21 +46,34 @@ def print_matches_side_by_side(matches):
 # Usage example:
 # *********************************************************************************************************************
 
-loader = AsyncHtmlLoader('https://www.wired.com/category/science/')
+loader = AsyncHtmlLoader('https://perinim.github.io/projects/')
 document = loader.load()
 html_content = document[0].page_content
 
 curr_time = time.time()
 # Instantiate a DOMTree with HTML content
 dom_tree = DOMTree(html_content)
-nodes, metadatas = dom_tree.collect_text_nodes()  # Collect text nodes for analysis
-for node, metadata in zip(nodes, metadatas):
-    print("Text:", node)
-    print("Metadata:", metadata)
+# nodes, metadatas = dom_tree.collect_text_nodes()  # Collect text nodes for analysis
+# for node, metadata in zip(nodes, metadatas):
+#     print("Text:", node)
+#     print("Metadata:", metadata)
 
+# sub_list = dom_tree.generate_subtree_dicts()  # Generate subtree dictionaries for analysis
+# print(sub_list)
 # graph = dom_tree.visualize(exclude_tags=['script', 'style', 'meta', 'link'])
-# subtrees = dom_tree.get_subtrees()  # Retrieve subtrees rooted at fork nodes
+subtrees = dom_tree.get_subtrees()  # Retrieve subtrees rooted at fork nodes
+print("Number of subtrees found:", len(subtrees))
 
+# remove trees whos root node does not lead to any text
+text_subtrees = [subtree for subtree in subtrees if subtree.root.leads_to_text]
+print("Number of subtrees that lead to text:", len(text_subtrees))
+
+direct_leaf_subtrees = [subtree for subtree in text_subtrees if subtree.root.has_direct_leaves]
+print("Number of subtrees with direct leaves beneath fork nodes:", len(direct_leaf_subtrees))
+
+for subtree in direct_leaf_subtrees:
+    print("Subtree rooted at:", subtree.root.value)
+    subtree.traverse(lambda node: print(node))
 # Index subtrees by structure and content
 # structure_index, content_index = index_subtrees(subtrees)
 
