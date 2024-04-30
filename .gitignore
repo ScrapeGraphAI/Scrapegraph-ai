@@ -29,7 +29,6 @@ venv/
 *.google-cookie
 examples/graph_examples/ScrapeGraphAI_generated_graph
 examples/**/*.csv
-examples/**/*.json
 main.py
 poetry.lock
 

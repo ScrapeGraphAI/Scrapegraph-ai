@@ -72,9 +72,12 @@ class FetchNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         source = input_data[0]
-
+        if self.input == "json_dir" or self.input == "xml_dir":
+            compressed_document = [Document(page_content=source, metadata={
+                "source": "local_dir"
+            })]
         # if it is a local directory
-        if not source.startswith("http"):
+        elif not source.startswith("http"):
             compressed_document = [Document(page_content=remover(source), metadata={
                 "source": "local_dir"
             })]
