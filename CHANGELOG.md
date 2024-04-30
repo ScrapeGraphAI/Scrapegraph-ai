@@ -1,3 +1,10 @@
+## [0.5.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.4...v0.5.0-beta.5) (2024-04-30)
+
+
+### Features
+
+* **refactor:** changed variable names ([8fba7e5](https://github.com/VinciGit00/Scrapegraph-ai/commit/8fba7e5490f916b325588443bba3fff5c0733c17))
+
 ## [0.5.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.3...v0.5.0-beta.4) (2024-04-30)
 
 
