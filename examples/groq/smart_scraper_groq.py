@@ -18,9 +18,16 @@ groq_key = os.getenv("GROQ_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": groq_key,
         "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "headless": False
 }
 
 # ************************************************
