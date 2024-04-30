@@ -1,3 +1,10 @@
+## [0.5.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.3...v0.5.0-beta.4) (2024-04-30)
+
+
+### Bug Fixes
+
+* script generator and add new benchmarks ([e3d0194](https://github.com/VinciGit00/Scrapegraph-ai/commit/e3d0194dc93b20dc254fc48bba11559bf8a3a185))
+
 ## [0.5.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.2...v0.5.0-beta.3) (2024-04-30)
 
 
