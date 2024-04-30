@@ -23,6 +23,10 @@ The reference page for Scrapegraph-ai is available on the official page of pypy:
 ```bash
 pip install scrapegraphai
 ```
+you will also need to install Playwright for javascript-based scraping:
+```bash
+playwright install
+```
 ## 🔍 Demo
 Official streamlit demo:
 

@@ -39,6 +39,7 @@ google = "3.0.0"
 minify-html = "0.15.0"
 free-proxy = "1.1.1"
 langchain-groq = "0.1.3"
+playwright = "^1.43.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "8.0.0"
