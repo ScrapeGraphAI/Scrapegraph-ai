@@ -48,6 +48,7 @@ class SearchInternetNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 1, node_config)
         self.llm_model = node_config["llm"]
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -68,7 +69,8 @@ class SearchInternetNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         input_keys = self.get_input_keys(state)
 
@@ -96,7 +98,9 @@ class SearchInternetNode(BaseNode):
         search_answer = search_prompt | self.llm_model | output_parser
         search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
 
-        print(f"Search Query: {search_query}")
+        if self.verbose:
+            print(f"Search Query: {search_query}")
+            
         # TODO: handle multiple URLs
         answer = search_on_web(query=search_query, max_results=1)[0]
 

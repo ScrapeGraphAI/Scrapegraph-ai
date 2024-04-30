@@ -49,6 +49,7 @@ class GenerateAnswerNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm"]
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -69,7 +70,8 @@ class GenerateAnswerNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -116,7 +118,7 @@ class GenerateAnswerNode(BaseNode):
         chains_dict = {}
 
         # Use tqdm to add progress bar
-        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks")):
+        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
             if len(doc) == 1:
                 prompt = PromptTemplate(
                     template=template_no_chunks,

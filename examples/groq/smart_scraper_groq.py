@@ -1,10 +1,10 @@
 """ 
-Basic example of scraping pipeline using ScriptCreatorGraph
+Basic example of scraping pipeline using SmartScraper
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import ScriptCreatorGraph
+from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
@@ -14,24 +14,30 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-gemini_key = os.getenv("GOOGLE_APIKEY")
+groq_key = os.getenv("GROQ_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": gemini_key,
-        "model": "gemini-pro",
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
-    "library": "beautifoulsoup"
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "headless": False
 }
 
 # ************************************************
-# Create the ScriptCreatorGraph instance and run it
+# Create the SmartScraperGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = ScriptCreatorGraph(
-    prompt="List me all the news with their description.",
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects",
+    source="https://perinim.github.io/projects/",
     config=graph_config
 )
 

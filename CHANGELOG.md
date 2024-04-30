@@ -1,3 +1,53 @@
+## [0.5.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.5...v0.5.0-beta.6) (2024-04-30)
+
+
+### Features
+
+* added verbose flag to suppress print statements ([2dd7817](https://github.com/VinciGit00/Scrapegraph-ai/commit/2dd7817cfb37cfbeb7e65b3a24655ab238f48026))
+
+## [0.5.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.4...v0.5.0-beta.5) (2024-04-30)
+
+
+### Features
+
+* **refactor:** changed variable names ([8fba7e5](https://github.com/VinciGit00/Scrapegraph-ai/commit/8fba7e5490f916b325588443bba3fff5c0733c17))
+
+## [0.5.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.3...v0.5.0-beta.4) (2024-04-30)
+
+
+### Bug Fixes
+
+* script generator and add new benchmarks ([e3d0194](https://github.com/VinciGit00/Scrapegraph-ai/commit/e3d0194dc93b20dc254fc48bba11559bf8a3a185))
+
+## [0.5.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.2...v0.5.0-beta.3) (2024-04-30)
+
+
+### Features
+
+* add cluade integration ([e0ffc83](https://github.com/VinciGit00/Scrapegraph-ai/commit/e0ffc838b06c0f024026a275fc7f7b4243ad5cf9))
+
+## [0.5.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.1...v0.5.0-beta.2) (2024-04-30)
+
+
+### Features
+
+* **fetch:** added playwright support ([42ab0aa](https://github.com/VinciGit00/Scrapegraph-ai/commit/42ab0aa1d275b5798ab6fc9feea575fe59b6e767))
+
+## [0.5.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.1...v0.5.0-beta.1) (2024-04-30)
+
+
+### Features
+
+* add co-author ([719a353](https://github.com/VinciGit00/Scrapegraph-ai/commit/719a353410992cc96f46ec984a5d3ec372e71ad2))
+* base groq + requirements + toml update with groq ([7dd5b1a](https://github.com/VinciGit00/Scrapegraph-ai/commit/7dd5b1a03327750ffa5b2fb647eda6359edd1fc2))
+* **llm:** implemented groq model ([dbbf10f](https://github.com/VinciGit00/Scrapegraph-ai/commit/dbbf10fc77b34d99d64c6cd7f74524b6d8e57fa5))
+* updated requirements.txt ([d368725](https://github.com/VinciGit00/Scrapegraph-ai/commit/d36872518a6d234eba5f8b7ddca7da93797874b2))
+
+
+### CI
+
+* **release:** 0.4.0-beta.3 [skip ci] ([d13321b](https://github.com/VinciGit00/Scrapegraph-ai/commit/d13321b2f86d98e2a3a0c563172ca0dd29cdf5fb))
+
 ## [0.4.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0...v0.4.1) (2024-04-28)
 
 

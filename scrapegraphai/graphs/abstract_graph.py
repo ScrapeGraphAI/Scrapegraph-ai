@@ -3,7 +3,7 @@ Module having abstract class for creating all the graphs
 """
 from abc import ABC, abstractmethod
 from typing import Optional
-from ..models import OpenAI, Gemini, Ollama, AzureOpenAI, HuggingFace
+from ..models import OpenAI, Gemini, Ollama, AzureOpenAI, HuggingFace, Groq
 from ..helpers import models_tokens
 
 
@@ -20,8 +20,14 @@ class AbstractGraph(ABC):
         self.source = source
         self.config = config
         self.llm_model = self._create_llm(config["llm"])
-        self.embedder_model = None if "embeddings" not in config else self._create_llm(
+        self.embedder_model = self.llm_model if "embeddings" not in config else self._create_llm(
             config["embeddings"])
+
+        # Set common configuration parameters
+        self.verbose = True if config is None else config.get("verbose", False)
+        self.headless = True if config is None else config.get("headless", True)
+
+        # Create the graph
         self.graph = self._create_graph()
         self.final_state = None
         self.execution_info = None
@@ -84,6 +90,14 @@ class AbstractGraph(ABC):
             except KeyError:
                 raise KeyError("Model not supported")
             return HuggingFace(llm_params)
+        elif "groq" in llm_params["model"]:
+            llm_params["model"] = llm_params["model"].split("/")[-1]
+            
+            try:
+                self.model_token = models_tokens["groq"][llm_params["model"]]
+            except KeyError:
+                raise KeyError("Model not supported")
+            return Groq(llm_params)
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")

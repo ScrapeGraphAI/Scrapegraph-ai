@@ -23,6 +23,10 @@ The reference page for Scrapegraph-ai is available on the official page of pypy:
 ```bash
 pip install scrapegraphai
 ```
+you will also need to install Playwright for javascript-based scraping:
+```bash
+playwright install
+```
 ## 🔍 Demo
 Official streamlit demo:
 
@@ -46,6 +50,7 @@ You can use the `SmartScraper` class to extract information from a website using
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
 ### Case 1: Extracting information using Ollama
 Remember to download the model on Ollama separately!
+
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 
@@ -129,7 +134,38 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-### Case 4: Extracting information using Gemini 
+### Case 4: Extracting information using Groq
+```python
+from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.utils import prettify_exec_info
+
+groq_key = os.getenv("GROQ_APIKEY")
+
+graph_config = {
+    "llm": {
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
+    },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        "base_url": "http://localhost:11434", 
+    },
+    "headless": False
+}
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the projects with their description and the author.",
+    source="https://perinim.github.io/projects",
+    config=graph_config
+)
+
+result = smart_scraper_graph.run()
+print(result)
+```
+
+### Case 5: Extracting information using Gemini 
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 GOOGLE_APIKEY = "YOUR_API_KEY"

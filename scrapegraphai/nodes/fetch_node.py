@@ -2,8 +2,8 @@
 Module for fetching the HTML node
 """
 
-from typing import List
-from langchain_community.document_loaders import AsyncHtmlLoader
+from typing import List, Optional
+from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.documents import Document
 from .base_node import BaseNode
 from ..utils.remover import remover
@@ -37,7 +37,7 @@ class FetchNode(BaseNode):
                         to succeed.
     """
 
-    def __init__(self, input: str, output: List[str], node_name: str = "Fetch"):
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict], node_name: str = "Fetch"):
         """
         Initializes the FetchHTMLNode with a node name and node type.
         Arguments:
@@ -45,6 +45,9 @@ class FetchNode(BaseNode):
             prox_rotation (bool): if you wamt to rotate proxies
         """
         super().__init__(node_name, "node", input, output, 1)
+
+        self.headless = True if node_config is None else node_config.get("headless", True)
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -61,7 +64,8 @@ class FetchNode(BaseNode):
             KeyError: If the 'url' key is not found in the state, indicating that the
                     necessary information to perform the operation is missing.
         """
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -70,23 +74,33 @@ class FetchNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         source = input_data[0]
-
+        if self.input == "json_dir" or self.input == "xml_dir":
+            compressed_document = [Document(page_content=source, metadata={
+                "source": "local_dir"
+            })]
         # if it is a local directory
-        if not source.startswith("http"):
+        elif not source.startswith("http"):
             compressed_document = [Document(page_content=remover(source), metadata={
                 "source": "local_dir"
             })]
 
         else:
             if self.node_config is not None and self.node_config.get("endpoint") is not None:
-                loader = AsyncHtmlLoader(
-                    source, proxies={"http": self.node_config["endpoint"]})
+                
+                loader = AsyncChromiumLoader(
+                    [source],
+                    proxies={"http": self.node_config["endpoint"]},
+                    headless=self.headless,
+                )
             else:
-                loader = AsyncHtmlLoader(source)
+                loader = AsyncChromiumLoader(
+                    [source],
+                    headless=self.headless,
+                )
 
             document = loader.load()
             compressed_document = [
-                Document(page_content=remover(str(document)))]
+                Document(page_content=remover(str(document[0].page_content)))]
 
         state.update({self.output[0]: compressed_document})
         return state

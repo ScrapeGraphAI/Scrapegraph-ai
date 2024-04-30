@@ -1,9 +1,12 @@
 """ 
 Basic example of scraping pipeline using SmartScraper from text
 """
-
+import os
+from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
+
+load_dotenv()
 
 files = ["inputs/example_1.txt", "inputs/example_2.txt"]
 tasks = ["List me all the projects with their description.",
@@ -14,19 +17,20 @@ tasks = ["List me all the projects with their description.",
 # Define the configuration for the graph
 # ************************************************
 
+groq_key = os.getenv("GROQ_APIKEY")
+
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        # "model_tokens": 2000, # set context length arbitrarily
-        "base_url": "http://localhost:11434",
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-        "base_url": "http://localhost:11434",
-    }
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "headless": False
 }
 
 # ************************************************

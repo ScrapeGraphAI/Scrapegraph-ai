@@ -24,6 +24,7 @@ class SmartScraperGraph(AbstractGraph):
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
+        
 
     def _create_graph(self):
         """
@@ -32,24 +33,35 @@ class SmartScraperGraph(AbstractGraph):
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
+            node_config={
+                "headless": self.headless,
+                "verbose": self.verbose
+            }
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            node_config={"chunk_size": self.model_token}
+            node_config={
+                "chunk_size": self.model_token,
+                "verbose": self.verbose
+            }
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
             node_config={
                 "llm": self.llm_model,
-                "embedder_model": self.embedder_model
+                "embedder_model": self.embedder_model,
+                "verbose": self.verbose
             }
         )
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
-            node_config={"llm": self.llm_model},
+            node_config={
+                "llm": self.llm_model,
+                "verbose": self.verbose
+            }
         )
 
         return BaseGraph(

@@ -6,12 +6,12 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     RAGNode,
-    GenerateScraperNode
+    GenerateAnswerNode
 )
 from .abstract_graph import AbstractGraph
 
 
-class ScriptCreatorGraph(AbstractGraph):
+class XMLScraperGraph(AbstractGraph):
     """
     SmartScraper is a comprehensive web scraping tool that automates the process of extracting
     information from web pages using a natural language model to interpret and answer prompts.
@@ -19,43 +19,48 @@ class ScriptCreatorGraph(AbstractGraph):
 
     def __init__(self, prompt: str, source: str, config: dict):
         """
-        Initializes the ScriptCreatorGraph with a prompt, source, and configuration.
+        Initializes the XmlScraperGraph with a prompt, source, and configuration.
         """
-        self.library = config['library']
-
         super().__init__(prompt, config, source)
 
-        self.input_key = "url" if source.startswith("http") else "local_dir"
+        self.input_key = "xml" if source.endswith("xml") else "xml_dir"
 
     def _create_graph(self):
         """
         Creates the graph of nodes representing the workflow for web scraping.
         """
         fetch_node = FetchNode(
-            input="url | local_dir",
+            input="xml_dir",
             output=["doc"],
             node_config={
-                "headless": True if self.config is None else self.config.get("headless", True)}
+                "headless": self.headless,
+                "verbose": self.verbose
+            }
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            node_config={"chunk_size": self.model_token}
+            node_config={
+                "chunk_size": self.model_token,
+                "verbose": self.verbose
+            }
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
             node_config={
                 "llm": self.llm_model,
-                "embedder_model": self.embedder_model
+                "embedder_model": self.embedder_model,
+                "verbose": self.verbose
             }
         )
-        generate_scraper_node = GenerateScraperNode(
+        generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
-            node_config={"llm": self.llm_model},
-            library=self.library,
-            website=self.source
+            node_config={
+                "llm": self.llm_model,
+                "verbose": self.verbose
+            }
         )
 
         return BaseGraph(
@@ -63,12 +68,12 @@ class ScriptCreatorGraph(AbstractGraph):
                 fetch_node,
                 parse_node,
                 rag_node,
-                generate_scraper_node,
+                generate_answer_node,
             ],
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
-                (rag_node, generate_scraper_node)
+                (rag_node, generate_answer_node)
             ],
             entry_point=fetch_node
         )
