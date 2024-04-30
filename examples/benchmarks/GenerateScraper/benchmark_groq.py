@@ -1,33 +1,41 @@
 """ 
 Basic example of scraping pipeline using SmartScraper from text
 """
-
-from scrapegraphai.graphs import SmartScraperGraph
+import os
+from dotenv import load_dotenv
+from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
 
+load_dotenv()
+
+# ************************************************
+# Read the text file
+# ************************************************
 files = ["inputs/example_1.txt", "inputs/example_2.txt"]
 tasks = ["List me all the projects with their description.",
          "List me all the articles with their description."]
-
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
+groq_key = os.getenv("GROQ_APIKEY")
+
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        # "model_tokens": 2000, # set context length arbitrarily
-        "base_url": "http://localhost:11434",
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-        "base_url": "http://localhost:11434",
-    }
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "headless": False,
+    "library": "beautifoulsoup"
 }
+
 
 # ************************************************
 # Create the SmartScraperGraph instance and run it
@@ -37,7 +45,7 @@ for i in range(0, 2):
     with open(files[i], 'r', encoding="utf-8") as file:
         text = file.read()
 
-    smart_scraper_graph = SmartScraperGraph(
+    smart_scraper_graph = ScriptCreatorGraph(
         prompt=tasks[i],
         source=text,
         config=graph_config

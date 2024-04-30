@@ -2,11 +2,8 @@
 Basic example of scraping pipeline using SmartScraper from text
 """
 
-import os
-from dotenv import load_dotenv
 from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
-load_dotenv()
 
 # ************************************************
 # Read the text file
@@ -18,8 +15,6 @@ tasks = ["List me all the projects with their description.",
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
-openai_key = os.getenv("GPT4_KEY")
 
 
 graph_config = {

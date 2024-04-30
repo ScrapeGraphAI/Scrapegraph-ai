@@ -34,6 +34,8 @@ class ScriptCreatorGraph(AbstractGraph):
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
+            node_config={
+                "headless": True if self.config is None else self.config.get("headless", True)}
         )
         parse_node = ParseNode(
             input="doc",
