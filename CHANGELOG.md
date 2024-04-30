@@ -1,3 +1,10 @@
+## [0.5.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.5...v0.5.0-beta.6) (2024-04-30)
+
+
+### Features
+
+* added verbose flag to suppress print statements ([2dd7817](https://github.com/VinciGit00/Scrapegraph-ai/commit/2dd7817cfb37cfbeb7e65b3a24655ab238f48026))
+
 ## [0.5.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.4...v0.5.0-beta.5) (2024-04-30)
 
 
