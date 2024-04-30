@@ -1,3 +1,18 @@
+## [0.5.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.1...v0.5.0-beta.1) (2024-04-30)
+
+
+### Features
+
+* add co-author ([719a353](https://github.com/VinciGit00/Scrapegraph-ai/commit/719a353410992cc96f46ec984a5d3ec372e71ad2))
+* base groq + requirements + toml update with groq ([7dd5b1a](https://github.com/VinciGit00/Scrapegraph-ai/commit/7dd5b1a03327750ffa5b2fb647eda6359edd1fc2))
+* **llm:** implemented groq model ([dbbf10f](https://github.com/VinciGit00/Scrapegraph-ai/commit/dbbf10fc77b34d99d64c6cd7f74524b6d8e57fa5))
+* updated requirements.txt ([d368725](https://github.com/VinciGit00/Scrapegraph-ai/commit/d36872518a6d234eba5f8b7ddca7da93797874b2))
+
+
+### CI
+
+* **release:** 0.4.0-beta.3 [skip ci] ([d13321b](https://github.com/VinciGit00/Scrapegraph-ai/commit/d13321b2f86d98e2a3a0c563172ca0dd29cdf5fb))
+
 ## [0.4.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.0...v0.4.1) (2024-04-28)
 
 
