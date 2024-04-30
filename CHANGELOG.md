@@ -1,3 +1,10 @@
+## [0.5.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.1...v0.5.0-beta.2) (2024-04-30)
+
+
+### Features
+
+* **fetch:** added playwright support ([42ab0aa](https://github.com/VinciGit00/Scrapegraph-ai/commit/42ab0aa1d275b5798ab6fc9feea575fe59b6e767))
+
 ## [0.5.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.1...v0.5.0-beta.1) (2024-04-30)
 
 
