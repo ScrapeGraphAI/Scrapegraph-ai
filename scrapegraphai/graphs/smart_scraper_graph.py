@@ -25,6 +25,7 @@ class SmartScraperGraph(AbstractGraph):
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
 
+
     def _create_graph(self):
         """
         Creates the graph of nodes representing the workflow for web scraping.
@@ -32,6 +33,7 @@ class SmartScraperGraph(AbstractGraph):
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
+            node_config={"headless": True if self.config is None else self.config.get("headless", True)}
         )
         parse_node = ParseNode(
             input="doc",
