@@ -1,3 +1,10 @@
+## [0.5.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.2...v0.5.0-beta.3) (2024-04-30)
+
+
+### Features
+
+* add cluade integration ([e0ffc83](https://github.com/VinciGit00/Scrapegraph-ai/commit/e0ffc838b06c0f024026a275fc7f7b4243ad5cf9))
+
 ## [0.5.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.1...v0.5.0-beta.2) (2024-04-30)
 
 
