@@ -11,7 +11,7 @@ from ..nodes import (
 from .abstract_graph import AbstractGraph
 
 
-class XmlScraperGraph(AbstractGraph):
+class XMLScraperGraph(AbstractGraph):
     """
     SmartScraper is a comprehensive web scraping tool that automates the process of extracting
     information from web pages using a natural language model to interpret and answer prompts.

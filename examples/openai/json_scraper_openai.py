@@ -1,10 +1,10 @@
 """
-Basic example of scraping pipeline using JsonScraperGraph from JSON documents
+Basic example of scraping pipeline using JSONScraperGraph from JSON documents
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import JsonScraperGraph
+from scrapegraphai.graphs import JSONScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
@@ -33,23 +33,23 @@ graph_config = {
 }
 
 # ************************************************
-# Create the XmlScraperGraph instance and run it
+# Create the JSONScraperGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = JsonScraperGraph(
+json_scraper_graph = JSONScraperGraph(
     prompt="List me all the authors, title and genres of the books",
     source=text,  # Pass the content of the file, not the file object
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
+result = json_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = smart_scraper_graph.get_execution_info()
+graph_exec_info = json_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
 # Save to json or csv

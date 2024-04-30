@@ -6,5 +6,5 @@ from .smart_scraper_graph import SmartScraperGraph
 from .speech_graph import SpeechGraph
 from .search_graph import SearchGraph
 from .script_creator_graph import ScriptCreatorGraph
-from .xml_scraper_graph import XmlScraperGraph
-from .json_scraper_graph import JsonScraperGraph
+from .xml_scraper_graph import XMLScraperGraph
+from .json_scraper_graph import JSONScraperGraph
