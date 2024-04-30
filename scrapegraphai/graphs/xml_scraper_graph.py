@@ -23,7 +23,7 @@ class XmlScraperGraph(AbstractGraph):
         """
         super().__init__(prompt, config, source)
 
-        self.input_key = "url" if source.startswith("http") else "local_dir"
+        self.input_key = "xml" if source.endswith("xml") else "xml_dir"
 
     def _create_graph(self):
         """

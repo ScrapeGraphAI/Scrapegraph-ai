@@ -23,7 +23,7 @@ class JsonScraperGraph(AbstractGraph):
         """
         super().__init__(prompt, config, source)
 
-        self.input_key = "url" if source.startswith("http") else "local_dir"
+        self.input_key = "json" if source.endswith("json") else "json_dir"
 
     def _create_graph(self):
         """

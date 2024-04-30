@@ -1,18 +1,18 @@
 """
-Basic example of scraping pipeline using SmartScraper from XML documents
+Basic example of scraping pipeline using JsonScraperGraph from JSON documents
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import XmlScraperGraph
+from scrapegraphai.graphs import JsonScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
 # ************************************************
-# Read the XML file
+# Read the JSON file
 # ************************************************
 
-FILE_NAME = "inputs/books.xml"
+FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
@@ -23,20 +23,26 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
-
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "ollama/mistral",
+        "temperature": 0,
+        "format": "json",  # Ollama needs the format to be specified explicitly
+        # "model_tokens": 2000, # set context length arbitrarily
+        "base_url": "http://localhost:11434",
     },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        "base_url": "http://localhost:11434",
+    }
 }
 
 # ************************************************
 # Create the XmlScraperGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = XmlScraperGraph(
+smart_scraper_graph = JsonScraperGraph(
     prompt="List me all the authors, title and genres of the books",
     source=text,  # Pass the content of the file, not the file object
     config=graph_config
