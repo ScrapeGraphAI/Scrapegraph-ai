@@ -42,6 +42,7 @@ class RAGNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm"]
         self.embedder_model = node_config.get("embedder_model", None)
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -59,7 +60,8 @@ class RAGNode(BaseNode):
                       information for parsing is missing.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -80,8 +82,9 @@ class RAGNode(BaseNode):
                 },
             )
             chunked_docs.append(doc)
-
-        print("--- (updated chunks metadata) ---")
+        
+        if self.verbose:
+            print("--- (updated chunks metadata) ---")
 
         # check if embedder_model is provided, if not use llm_model
         embedding_model = self.embedder_model if self.embedder_model else self.llm_model
@@ -125,7 +128,8 @@ class RAGNode(BaseNode):
 
         compressed_docs = compression_retriever.invoke(user_prompt)
 
-        print("--- (tokens compressed and vector stored) ---")
+        if self.verbose:
+            print("--- (tokens compressed and vector stored) ---")
 
         state.update({self.output[0]: compressed_docs})
         return state

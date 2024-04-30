@@ -29,6 +29,7 @@ class ImageToTextNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 1, node_config)
         self.llm_model = node_config["llm_model"]
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -40,9 +41,11 @@ class ImageToTextNode(BaseNode):
         Returns:
             dict: The updated state after executing this node.
         """
-        print("---GENERATING TEXT FROM IMAGE---")
-        input_keys = self.get_input_keys(state)
 
+        if self.verbose:
+            print("---GENERATING TEXT FROM IMAGE---")
+            
+        input_keys = self.get_input_keys(state)
         input_data = [state[key] for key in input_keys]
         url = input_data[0]
 

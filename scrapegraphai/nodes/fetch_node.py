@@ -47,6 +47,7 @@ class FetchNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1)
 
         self.headless = True if node_config is None else node_config.get("headless", True)
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -63,7 +64,8 @@ class FetchNode(BaseNode):
             KeyError: If the 'url' key is not found in the state, indicating that the
                     necessary information to perform the operation is missing.
         """
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

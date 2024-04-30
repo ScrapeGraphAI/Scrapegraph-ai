@@ -4,7 +4,7 @@ Module for creating the base graphs
 import time
 import warnings
 from langchain_community.callbacks import get_openai_callback
-
+from typing import Tuple
 
 class BaseGraph:
     """
@@ -56,7 +56,7 @@ class BaseGraph:
             edge_dict[from_node.node_name] = to_node.node_name
         return edge_dict
 
-    def execute(self, initial_state: dict) -> (dict, list):
+    def execute(self, initial_state: dict) -> Tuple[dict, list]:
         """
         Executes the graph by traversing nodes starting from the entry point. The execution
         follows the edges based on the result of each node's execution and continues until

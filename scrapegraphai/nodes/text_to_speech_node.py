@@ -24,6 +24,7 @@ class TextToSpeechNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 1, node_config)
         self.tts_model = node_config["tts_model"]
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -35,7 +36,8 @@ class TextToSpeechNode(BaseNode):
         :return: The updated state after executing this node.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

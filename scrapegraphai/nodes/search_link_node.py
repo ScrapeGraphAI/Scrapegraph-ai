@@ -51,6 +51,7 @@ class SearchLinkNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 1, node_config)
         self.llm_model = node_config["llm"]
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -71,7 +72,8 @@ class SearchLinkNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -87,7 +89,9 @@ class SearchLinkNode(BaseNode):
             state.update({self.output[0]: {elem for elem in links}})
 
         except Exception as e:
-            print("error on using classical methods. Using LLM for getting the links")
+            if self.verbose:
+                print("error on using classical methods. Using LLM for getting the links")
+                
             output_parser = JsonOutputParser()
 
             template_chunks = """
