@@ -32,7 +32,11 @@ models_tokens = {
         "mistral-openorca": 32000,
         "stablelm-zephyr": 8192
     },
-    "gemma": {
-        "gemma": 8192,
-    }
+    
+    "groq": {
+        "llama3-8b-8192": 8192,
+        "llama3-70b-8192": 8192,
+        "mixtral-8x7b-32768": 32768,
+        "gemma-7b-it": 8192,
+    },
 }

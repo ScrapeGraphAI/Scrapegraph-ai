@@ -46,6 +46,7 @@ You can use the `SmartScraper` class to extract information from a website using
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
 ### Case 1: Extracting information using Ollama
 Remember to download the model on Ollama separately!
+
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 
