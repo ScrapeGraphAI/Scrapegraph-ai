@@ -6,7 +6,7 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     RAGNode,
-    GenerateAnswerNodeCsv
+    GenerateAnswerCSVNode
 )
 from .abstract_graph import AbstractGraph
 
@@ -54,7 +54,7 @@ class CSVScraperGraph(AbstractGraph):
                 "verbose": self.verbose
             }
         )
-        generate_answer_node = GenerateAnswerNodeCsv(
+        generate_answer_node = GenerateAnswerCSVNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
