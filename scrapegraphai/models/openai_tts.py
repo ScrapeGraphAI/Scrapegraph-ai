@@ -1,6 +1,5 @@
 """
-This module contains the OpenAITextToSpeech class, which uses OpenAI's API
-to convert text into speech.
+OpenAITextToSpeech Module
 """
 
 from openai import OpenAI
@@ -8,44 +7,33 @@ from openai import OpenAI
 
 class OpenAITextToSpeech:
     """
-    A class that uses OpenAI's API to convert text to speech.
-
-    Args:
-        llm_config (dict): The configuration for the language model.
+    Implements a text-to-speech model using the OpenAI API.
 
     Attributes:
+        client (OpenAI): The OpenAI client used to interact with the API.
         model (str): The model to use for text-to-speech conversion.
         voice (str): The voice model to use for generating speech.
 
-    Methods:
-        run(text): Converts the provided text to speech and returns the
-        bytes of the generated speech.
+    Args:
+        tts_config (dict): Configuration parameters for the text-to-speech model.
     """
 
     def __init__(self, tts_config: dict):
-        """
-        Initializes an instance of the OpenAITextToSpeech class.
-
-        Args:
-            llm_config (dict): The configuration for the language model.
-            model (str, optional): The model to use for text-to-speech conversion. 
-            Defaults to "tts-1".
-            voice (str, optional): The voice model to use for generating speech. 
-            Defaults to "alloy".
-        """
 
         # convert model_name to model
         self.client = OpenAI(api_key=tts_config.get("api_key"))
         self.model = tts_config.get("model", "tts-1")
         self.voice = tts_config.get("voice", "alloy")
 
-    def run(self, text):
+    def run(self, text: str) -> bytes:
         """
         Converts the provided text to speech and returns the bytes of the generated speech.
 
         Args:
             text (str): The text to convert to speech.
 
+        Returns:
+            bytes: The bytes of the generated speech audio.
         """
         response = self.client.audio.speech.create(
             model=self.model,
