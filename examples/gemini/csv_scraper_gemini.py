@@ -1,11 +1,11 @@
 """
-Basic example of scraping pipeline using CsvScraperGraph from CSV documents
+Basic example of scraping pipeline using CSVScraperGraph from CSV documents
 """
 
 import os
 from dotenv import load_dotenv
 import pandas as pd
-from scrapegraphai.graphs import CsvScraperGraph
+from scrapegraphai.graphs import CSVScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 load_dotenv()
@@ -36,10 +36,10 @@ graph_config = {
 }
 
 # ************************************************
-# Create the CsvScraperGraph instance and run it
+# Create the CSVScraperGraph instance and run it
 # ************************************************
 
-csv_scraper_graph = CsvScraperGraph(
+csv_scraper_graph = CSVScraperGraph(
     prompt="List me all the last names",
     source=str(text),  # Pass the content of the file, not the file object
     config=graph_config

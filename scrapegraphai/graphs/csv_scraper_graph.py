@@ -11,7 +11,7 @@ from ..nodes import (
 from .abstract_graph import AbstractGraph
 
 
-class CsvScraperGraph(AbstractGraph):
+class CSVScraperGraph(AbstractGraph):
     """
     SmartScraper is a comprehensive web scraping tool that automates the process of extracting
     information from web pages using a natural language model to interpret and answer prompts.
@@ -19,7 +19,7 @@ class CsvScraperGraph(AbstractGraph):
 
     def __init__(self, prompt: str, source: str, config: dict):
         """
-        Initializes the csvScraperGraph with a prompt, source, and configuration.
+        Initializes the CSVScraperGraph with a prompt, source, and configuration.
         """
         super().__init__(prompt, config, source)
 

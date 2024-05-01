@@ -8,4 +8,4 @@ from .search_graph import SearchGraph
 from .script_creator_graph import ScriptCreatorGraph
 from .xml_scraper_graph import XMLScraperGraph
 from .json_scraper_graph import JSONScraperGraph
-from .csv_scraper_graph import CsvScraperGraph
+from .csv_scraper_graph import CSVScraperGraph
