@@ -1,3 +1,11 @@
+## [0.5.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.6...v0.5.0-beta.7) (2024-05-01)
+
+
+### Features
+
+* added node and graph for CSV scraping ([4d542a8](https://github.com/VinciGit00/Scrapegraph-ai/commit/4d542a88f7d949a5ba360dcd880716c8110a5d14))
+* modified node name ([02d1af0](https://github.com/VinciGit00/Scrapegraph-ai/commit/02d1af006cb89bf860ee4f1186f582e2049a8e3d))
+
 ## [0.5.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.5...v0.5.0-beta.6) (2024-04-30)
 
 
