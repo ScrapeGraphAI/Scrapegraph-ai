@@ -20,7 +20,7 @@ graph_config = {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
     },
-    "library": "beautifoulsoup"
+    "library": "beautifulsoup"
 }
 
 # ************************************************

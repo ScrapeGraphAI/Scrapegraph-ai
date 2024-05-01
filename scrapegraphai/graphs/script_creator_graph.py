@@ -42,10 +42,12 @@ class ScriptCreatorGraph(AbstractGraph):
     """
 
     def __init__(self, prompt: str, source: str, config: dict):
+
+        self.library = config['library']
+        
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-        self.library = config['library']
 
     def _create_graph(self) -> BaseGraph:
         """

@@ -40,6 +40,7 @@ robot_node = RobotsNode(
 fetch_node = FetchNode(
     input="url | local_dir",
     output=["doc"],
+    node_config={"headless": True, "verbose": True}
 )
 parse_node = ParseNode(
     input="doc",
