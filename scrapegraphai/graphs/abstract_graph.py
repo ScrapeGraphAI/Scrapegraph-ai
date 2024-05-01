@@ -1,6 +1,7 @@
 """
-Module having abstract class for creating all the graphs
+AbstractGraph Module
 """
+
 from abc import ABC, abstractmethod
 from typing import Optional
 from ..models import OpenAI, Gemini, Ollama, AzureOpenAI, HuggingFace, Groq
@@ -9,13 +10,34 @@ from ..helpers import models_tokens
 
 class AbstractGraph(ABC):
     """
-    Abstract class representing a generic graph-based tool.
+    Scaffolding class for creating a graph representation and executing it.
+
+    Attributes:
+        prompt (str): The prompt for the graph.
+        source (str): The source of the graph.
+        config (dict): Configuration parameters for the graph.
+        llm_model: An instance of a language model client, configured for generating answers.
+        embedder_model: An instance of an embedding model client, configured for generating embeddings.
+        verbose (bool): A flag indicating whether to show print statements during execution.
+        headless (bool): A flag indicating whether to run the graph in headless mode.
+
+    Args:
+        prompt (str): The prompt for the graph.
+        config (dict): Configuration parameters for the graph.
+        source (str, optional): The source of the graph.
+
+    Example:
+        >>> class MyGraph(AbstractGraph):
+        ...     def _create_graph(self):
+        ...         # Implementation of graph creation here
+        ...         return graph
+        ...
+        >>> my_graph = MyGraph("Example Graph", {"llm": {"model": "gpt-3.5-turbo"}}, "example_source")
+        >>> result = my_graph.run()
     """
 
     def __init__(self, prompt: str, config: dict, source: Optional[str] = None):
-        """
-        Initializes the AbstractGraph with a prompt, file source, and configuration.
-        """
+
         self.prompt = prompt
         self.source = source
         self.config = config
@@ -32,10 +54,20 @@ class AbstractGraph(ABC):
         self.final_state = None
         self.execution_info = None
 
-    def _create_llm(self, llm_config: dict):
+    def _create_llm(self, llm_config: dict) -> object:
         """
-        Creates an instance of the language model (OpenAI or Gemini) based on configuration.
+        Create a large language model instance based on the configuration provided.
+
+        Args:
+            llm_config (dict): Configuration parameters for the language model.
+
+        Returns:
+            object: An instance of the language model client.
+
+        Raises:
+            KeyError: If the model is not supported.
         """
+
         llm_defaults = {
             "temperature": 0,
             "streaming": False
@@ -104,8 +136,15 @@ class AbstractGraph(ABC):
 
     def get_state(self, key=None) -> dict:
         """""
-        Obtain the current state
+        Get the final state of the graph.
+
+        Args:
+            key (str, optional): The key of the final state to retrieve.
+
+        Returns:
+            dict: The final state of the graph.
         """
+
         if key is not None:
             return self.final_state[key]
         return self.final_state
@@ -113,7 +152,11 @@ class AbstractGraph(ABC):
     def get_execution_info(self):
         """
         Returns the execution information of the graph.
+
+        Returns:
+            dict: The execution information of the graph.
         """
+        
         return self.execution_info
 
     @abstractmethod

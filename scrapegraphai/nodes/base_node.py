@@ -17,7 +17,18 @@ class BaseNode(ABC):
         output (List[str]): List of 
         min_input_len (int): Minimum required number of input keys.
         node_config (Optional[dict]): Additional configuration for the node.
+    
+    Args:
+        node_name (str): Name for identifying the node.
+        node_type (str): Type of the node; must be 'node' or 'conditional_node'.
+        input (str): Expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        min_input_len (int, optional): Minimum required number of input keys; defaults to 1.
+        node_config (Optional[dict], optional): Additional configuration for the node; defaults to None.
 
+    Raises:
+        ValueError: If `node_type` is not one of the allowed types.
+    
     Example:
         >>> class MyNode(BaseNode):
         ...     def execute(self, state):
@@ -31,20 +42,6 @@ class BaseNode(ABC):
 
     def __init__(self, node_name: str, node_type: str, input: str, output: List[str],
                  min_input_len: int = 1, node_config: Optional[dict] = None):
-        """
-        Initialize the instance with the node's name, type, input/output specifications, and configuration details.
-
-        Args:
-            node_name (str): Name for identifying the node.
-            node_type (str): Type of the node; must be 'node' or 'conditional_node'.
-            input (str): Expression defining the input keys needed from the state.
-            output (List[str]): List of output keys to be updated in the state.
-            min_input_len (int, optional): Minimum required number of input keys; defaults to 1.
-            node_config (Optional[dict], optional): Additional configuration for the node; defaults to None.
-
-        Raises:
-            ValueError: If `node_type` is not one of the allowed types.
-        """
 
         self.node_name = node_name
         self.input = input
