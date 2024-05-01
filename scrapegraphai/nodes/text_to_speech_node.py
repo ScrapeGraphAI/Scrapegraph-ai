@@ -1,39 +1,47 @@
+"""
+TextToSpeechNode Module
+"""
 
-"""
-Module for parsing the text to voice
-"""
 from typing import List
 from .base_node import BaseNode
 
 
 class TextToSpeechNode(BaseNode):
     """
-    A class representing a node that processes text and returns the voice.
+    Converts text to speech using the specified text-to-speech model.
 
     Attributes:
-        llm (OpenAITextToSpeech): An instance of the OpenAITextToSpeech class.
+        tts_model: An instance of the text-to-speech model client.
+        verbose (bool): A flag indicating whether to show print statements during execution.
 
-    Methods:
-        execute(state, text): Execute the node's logic and return the updated state.
+    Args:
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        node_config (dict): Additional configuration for the node.
+        node_name (str): The unique identifier name for the node, defaulting to "TextToSpeech".
     """
 
     def __init__(self, input: str, output: List[str],
                  node_config: dict, node_name: str = "TextToSpeech"):
-        """
-        Initializes an instance of the TextToSpeechNode class.
-        """
         super().__init__(node_name, "node", input, output, 1, node_config)
+
         self.tts_model = node_config["tts_model"]
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
-        Execute the node's logic and return the updated state.
-        Args:
-            state (dict): The current state of the graph.
-            text (str): The text to convert to speech.
+        Converts text to speech using the specified text-to-speech model.
 
-        :return: The updated state after executing this node.
+        Args:
+            state (dict): The current state of the graph. The input keys will be used to fetch the
+                            correct data types from the state.
+                            
+        Returns:
+            dict: The updated state with the output key containing the audio generated from the text.
+
+        Raises:
+            KeyError: If the input keys are not found in the state, indicating that the
+                        necessary information for generating the audio is missing.
         """
 
         if self.verbose:

@@ -1,5 +1,5 @@
 """ 
-Module for defining BaseNode, an abstract base class for nodes in a graph-based workflow.
+BaseNode Module
 """
 
 from abc import ABC, abstractmethod

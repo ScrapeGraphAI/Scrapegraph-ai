@@ -1,5 +1,5 @@
 """
-Module for parsing the HTML node
+RAGNode Module
 """
 
 from typing import List
@@ -18,46 +18,44 @@ from .base_node import BaseNode
 class RAGNode(BaseNode):
     """
     A node responsible for compressing the input tokens and storing the document
-    in a vector database for retrieval.
+    in a vector database for retrieval. Relevant chunks are stored in the state.
 
     It allows scraping of big documents without exceeding the token limit of the language model.
 
     Attributes:
-        node_name (str): The unique identifier name for the node, defaulting to "ParseHTMLNode".
-        node_type (str): The type of the node, set to "node" indicating a standard operational node.
+        llm_model: An instance of a language model client, configured for generating answers.
+        embedder_model: An instance of an embedding model client, configured for generating embeddings.
+        verbose (bool): A flag indicating whether to show print statements during execution.
 
     Args:
-        node_name (str, optional): The unique identifier name for the node.
-        Defaults to "ParseHTMLNode".
-
-    Methods:
-        execute(state): Parses the HTML document contained within the state using
-        the specified tags, if provided, and updates the state with the parsed content.
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        node_config (dict): Additional configuration for the node.
+        node_name (str): The unique identifier name for the node, defaulting to "Parse".
     """
 
     def __init__(self, input: str, output: List[str], node_config: dict, node_name: str = "RAG"):
-        """
-        Initializes the ParseHTMLNode with a node name.
-        """
         super().__init__(node_name, "node", input, output, 2, node_config)
+
         self.llm_model = node_config["llm"]
         self.embedder_model = node_config.get("embedder_model", None)
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
-        Executes the node's logic to implement RAG (Retrieval-Augmented Generation)
+        Executes the node's logic to implement RAG (Retrieval-Augmented Generation).
         The method updates the state with relevant chunks of the document.
 
         Args:
-            state (dict): The state containing the 'document' key with the HTML content
+            state (dict): The current state of the graph. The input keys will be used to fetch the
+                            correct data from the state.
 
         Returns:
-            dict: The updated state containing the 'relevant_chunks' key with the relevant chunks.
+            dict: The updated state with the output key containing the relevant chunks of the document.
 
         Raises:
-            KeyError: If 'document' is not found in the state, indicating that the necessary
-                      information for parsing is missing.
+            KeyError: If the input keys are not found in the state, indicating that the
+                        necessary information for compressing the content is missing.
         """
 
         if self.verbose:

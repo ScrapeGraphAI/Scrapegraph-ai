@@ -1,5 +1,5 @@
 """ 
-Module for fetching the HTML node
+FetchNode Module
 """
 
 from typing import List, Optional
@@ -27,10 +27,6 @@ class FetchNode(BaseNode):
         output (List[str]): List of output keys to be updated in the state.
         node_config (Optional[dict]): Additional configuration for the node.
         node_name (str): The unique identifier name for the node, defaulting to "Fetch".
-
-    Methods:
-        execute(state): Fetches the HTML content for the URL specified in the state
-        and updates the state with the fetched content under the specified output key.
     """
 
     def __init__(self, input: str, output: List[str], node_config: Optional[dict], node_name: str = "Fetch"):
@@ -45,13 +41,14 @@ class FetchNode(BaseNode):
         update the state with this content.
 
         Args:
-            state (dict): The current state of the graph, expected to contain a 'url' key.
+            state (dict): The current state of the graph. The input keys will be used
+                            to fetch the correct data types from the state.
 
         Returns:
-            dict: The updated state with a new 'document' key containing the fetched HTML content.
+            dict: The updated state with a new output key containing the fetched HTML content.
 
         Raises:
-            KeyError: If the 'url' key is not found in the state, indicating that the
+            KeyError: If the input key is not found in the state, indicating that the
                     necessary information to perform the operation is missing.
         """
         if self.verbose:
