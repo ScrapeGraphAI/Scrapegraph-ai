@@ -80,8 +80,7 @@ class BaseGraph:
             initial_state (dict): The initial state to pass to the entry point node.
 
         Returns:
-            Tuple[dict, list]: A tuple containing the final state of the execution and a list
-                               of execution information for each node.
+            Tuple[dict, list]: A tuple containing the final state and a list of execution info.
         """
         
         current_node_name = self.nodes[0]
