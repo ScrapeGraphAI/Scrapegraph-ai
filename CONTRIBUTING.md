@@ -15,22 +15,31 @@ Thank you for your interest in contributing to **ScrapeGraphAI**! We welcome con
 
 To get started with contributing, follow these steps:
 
-1. Fork the repository on GitHub.
+1. Fork the repository on GitHub **(FROM pre/beta branch)**.
 2. Clone your forked repository to your local machine.
-3. Install the necessary dependencies.
+3. Install the necessary dependencies from requirements.txt or via pyproject.toml as you prefere :).
 4. Make your changes or additions.
 5. Test your changes thoroughly.
 6. Commit your changes with descriptive commit messages.
 7. Push your changes to your forked repository.
-8. Submit a pull request to the main repository.
+8. Submit a pull request to the pre/beta branch.
+
+N.B All the pull request to the main branch will be rejected!
 
 ## Contributing Guidelines
 
 Please adhere to the following guidelines when contributing to ScrapeGraphAI:
 
 - Follow the code style and formatting guidelines specified in the [Code Style](#code-style) section.
-- Make sure your changes are well-documented and include any necessary updates to the project's documentation.
-- Write clear and concise commit messages that describe the purpose of your changes.
+- Make sure your changes are well-documented and include any necessary updates to the project's documentation and requirements if needed.
+- Write clear and concise commit messages that describe the purpose of your changes and the last commit before the pull request has to follow the following format:
+  - `feat: Add new feature`
+  - `fix: Correct issue with existing feature`
+  - `docs: Update documentation`
+  - `style: Improve formatting and style`
+  - `refactor: Restructure code`
+  - `test: Add or update tests`
+  - `perf: Improve performance`
 - Be respectful and considerate towards other contributors and maintainers.
 
 ## Code Style
@@ -53,7 +62,7 @@ To submit your changes for review, please follow these steps:
 4. Select your forked repository and the branch containing your changes.
 5. Provide a descriptive title and detailed description for your pull request.
 6. Reviewers will provide feedback and discuss any necessary changes.
-7. Once your pull request is approved, it will be merged into the main repository.
+7. Once your pull request is approved, it will be merged into the pre/beta branch.
 
 ## Reporting Issues
 
