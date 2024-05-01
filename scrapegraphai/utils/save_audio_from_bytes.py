@@ -7,12 +7,18 @@ from typing import Union
 
 def save_audio_from_bytes(byte_response: bytes, output_path: Union[str, Path]) -> None:
     """
-    Saves the byte response as an audio file.
+    Saves the byte response as an audio file to the specified path.
 
     Args:
-        byte_response (bytes): The byte response containing the generated speech.
-        output_path (str or Path): The file path where the generated speech should be saved.
+        byte_response (bytes): The byte array containing audio data.
+        output_path (Union[str, Path]): The destination file path where the audio file will be saved.
+
+    Example:
+        >>> save_audio_from_bytes(b'audio data', 'path/to/audio.mp3')
+
+    This function writes the byte array containing audio data to a file, saving it as an audio file.
     """
+
     if not isinstance(output_path, Path):
         output_path = Path(output_path)
 
