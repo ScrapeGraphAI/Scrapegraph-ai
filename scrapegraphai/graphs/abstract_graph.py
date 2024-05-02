@@ -4,7 +4,8 @@ AbstractGraph Module
 
 from abc import ABC, abstractmethod
 from typing import Optional
-from ..models import OpenAI, Gemini, Ollama, AzureOpenAI, HuggingFace, Groq
+
+from ..models import OpenAI, Gemini, Ollama, AzureOpenAI, HuggingFace, Groq, Bedrock
 from ..helpers import models_tokens
 
 
@@ -47,7 +48,8 @@ class AbstractGraph(ABC):
 
         # Set common configuration parameters
         self.verbose = True if config is None else config.get("verbose", False)
-        self.headless = True if config is None else config.get("headless", True)
+        self.headless = True if config is None else config.get(
+            "headless", True)
 
         # Create the graph
         self.graph = self._create_graph()
@@ -140,12 +142,26 @@ class AbstractGraph(ABC):
             return HuggingFace(llm_params)
         elif "groq" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
-            
+
             try:
                 self.model_token = models_tokens["groq"][llm_params["model"]]
             except KeyError:
                 raise KeyError("Model not supported")
             return Groq(llm_params)
+        elif "bedrock" in llm_params["model"]:
+            llm_params["model"] = llm_params["model"].split("/")[-1]
+            model_id = llm_params["model"]
+
+            try:
+                self.model_token = models_tokens["bedrock"][llm_params["model"]]
+            except KeyError:
+                raise KeyError("Model not supported")
+            return Bedrock({
+                "model_id": model_id,
+                "model_kwargs": {
+                    "temperature": llm_params["temperature"],
+                }
+            })
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
