@@ -1,3 +1,25 @@
+## [0.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.0...v0.6.1) (2024-05-02)
+
+
+### Bug Fixes
+
+* gemini errror ([2ea54ea](https://github.com/VinciGit00/Scrapegraph-ai/commit/2ea54eab1d070e177c7d5ecfcc032b325fbd7c12))
+
+## [0.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.2...v0.6.0) (2024-05-02)
+
+
+### Features
+
+* added node and graph for CSV scraping ([4d542a8](https://github.com/VinciGit00/Scrapegraph-ai/commit/4d542a88f7d949a5ba360dcd880716c8110a5d14))
+* Allow end users to pass model instances for llm and embedding model ([b86aac2](https://github.com/VinciGit00/Scrapegraph-ai/commit/b86aac2188887642564a34d13d55d0fcff220ec1))
+* modified node name ([02d1af0](https://github.com/VinciGit00/Scrapegraph-ai/commit/02d1af006cb89bf860ee4f1186f582e2049a8e3d))
+
+
+### CI
+
+* **release:** 0.5.0-beta.7 [skip ci] ([40b2a34](https://github.com/VinciGit00/Scrapegraph-ai/commit/40b2a346d57865ca21915ecaa658096c52a2cc6b))
+* **release:** 0.5.0-beta.8 [skip ci] ([c11331a](https://github.com/VinciGit00/Scrapegraph-ai/commit/c11331a26ac325dfcf489272442ceeed13225a39))
+
 ## [0.5.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.1...v0.5.2) (2024-05-02)
 
 
@@ -54,6 +76,7 @@
 * **release:** 0.5.0-beta.4 [skip ci] ([14e56f6](https://github.com/VinciGit00/Scrapegraph-ai/commit/14e56f6ab1711a08e749edbda860d349db491dae))
 * **release:** 0.5.0-beta.5 [skip ci] ([5ac97e2](https://github.com/VinciGit00/Scrapegraph-ai/commit/5ac97e2fb321be40c9787fbf8cb53fa62cf0ce06))
 * **release:** 0.5.0-beta.6 [skip ci] ([9356124](https://github.com/VinciGit00/Scrapegraph-ai/commit/9356124ce39568e88f7d2965181579c4ff0a5752))
+
 
 ## [0.5.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.5...v0.5.0-beta.6) (2024-04-30)
 
