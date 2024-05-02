@@ -62,14 +62,16 @@ class ScriptCreatorGraph(AbstractGraph):
             input="url | local_dir",
             output=["doc"],
             node_config={
-                "headless": True if self.config is None else self.config.get("headless", True),
-                "verbose": self.verbose}
+                "headless": self.headless,
+                "verbose": self.verbose
+            }
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={"chunk_size": self.model_token,
-                         "verbose": self.verbose}
+                         "verbose": self.verbose
+                         }
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
