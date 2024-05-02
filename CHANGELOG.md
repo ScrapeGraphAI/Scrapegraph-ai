@@ -1,3 +1,10 @@
+## [0.6.1-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.0...v0.6.1-beta.1) (2024-05-02)
+
+
+### Bug Fixes
+
+* add to requirements.txt langchain-aws = "^0.1.2" ([1afa319](https://github.com/VinciGit00/Scrapegraph-ai/commit/1afa31910d25b2735abe0ad09dad433d6c2159fb))
+
 ## [0.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.2...v0.6.0) (2024-05-02)
 
 
