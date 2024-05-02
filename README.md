@@ -249,7 +249,7 @@ Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegra
 ## 📈 Roadmap
 Check out the project roadmap [here](docs/README.md)! 🚀
 
-Wanna visualize the roadmap in a more interactive way? Check out the [markmap](https://markmap.js.org/repl/) visualization by copy pasting the markdown content in the editor!
+Wanna visualize the roadmap in a more interactive way? Check out the [markmap](https://markmap.js.org/repl) visualization by copy pasting the markdown content in the editor!
 
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
