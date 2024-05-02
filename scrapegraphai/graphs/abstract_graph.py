@@ -41,8 +41,15 @@ class AbstractGraph(ABC):
         self.prompt = prompt
         self.source = source
         self.config = config
-        self.llm_model = self._create_llm(config["llm"])
-        self.embedder_model = self.llm_model if "embeddings" not in config else self._create_llm(
+        if config.get('llm_model_instance'):
+            self.llm_model = config.get('llm_model_instance')
+            self.model_token = 16000
+        else:
+            self.llm_model = self._create_llm(config["llm"])
+        if config.get('embedder_model_instance'):
+            self.embedder_model = config.get('embedder_model_instance')
+        else:
+            self.embedder_model = self.llm_model if "embeddings" not in config else self._create_llm(
             config["embeddings"])
 
         # Set common configuration parameters

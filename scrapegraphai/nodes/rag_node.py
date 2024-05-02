@@ -86,10 +86,11 @@ class RAGNode(BaseNode):
 
         # check if embedder_model is provided, if not use llm_model
         embedding_model = self.embedder_model if self.embedder_model else self.llm_model
-
         if isinstance(embedding_model, OpenAI):
             embeddings = OpenAIEmbeddings(
                 api_key=embedding_model.openai_api_key)
+        elif isinstance(embedding_model, AzureOpenAIEmbeddings):
+            embeddings = embedding_model
         elif isinstance(embedding_model, AzureOpenAI):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
