@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.0...v0.6.1) (2024-05-02)
+
+
+### Bug Fixes
+
+* gemini errror ([2ea54ea](https://github.com/VinciGit00/Scrapegraph-ai/commit/2ea54eab1d070e177c7d5ecfcc032b325fbd7c12))
+
 ## [0.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.2...v0.6.0) (2024-05-02)
 
 
