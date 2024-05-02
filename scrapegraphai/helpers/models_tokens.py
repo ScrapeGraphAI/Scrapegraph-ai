@@ -18,7 +18,9 @@ models_tokens = {
         "gpt-4-32k": 32768,
         "gpt-4-32k-0613": 32768,
     },
-
+    "azure": {
+        "gpt-3.5-turbo": 4096
+    },
     "gemini": {
         "gemini-pro": 128000,
     },
@@ -45,3 +47,4 @@ models_tokens = {
         "claude3": 200000
     }
 }
+
