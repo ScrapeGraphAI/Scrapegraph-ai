@@ -14,7 +14,8 @@ from .abstract_graph import AbstractGraph
 
 class SmartScraperGraph(AbstractGraph):
     """
-    SmartScraper is a scraping pipeline that automates the process of extracting information from web pages
+    SmartScraper is a scraping pipeline that automates the process of 
+    extracting information from web pages
     using a natural language model to interpret and answer prompts.
 
     Attributes:
@@ -22,7 +23,8 @@ class SmartScraperGraph(AbstractGraph):
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, configured for generating embeddings.
+        embedder_model: An instance of an embedding model client, 
+        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
 
@@ -45,7 +47,7 @@ class SmartScraperGraph(AbstractGraph):
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-        
+
     def _create_graph(self) -> BaseGraph:
         """
         Creates the graph of nodes representing the workflow for web scraping.

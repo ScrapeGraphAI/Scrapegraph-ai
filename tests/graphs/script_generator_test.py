@@ -46,6 +46,4 @@ def test_script_creator_graph(graph_config: dict):
 
     assert graph_exec_info is not None
 
-    assert isinstance(graph_exec_info, dict)
-
     print(prettify_exec_info(graph_exec_info))

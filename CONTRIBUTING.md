@@ -51,6 +51,7 @@ Please make sure to format your code accordingly before submitting a pull reques
 - [Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/)
 - [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 - [The Hitchhiker's Guide to Python](https://docs.python-guide.org/writing/style/)
+- [Pylint style of code for the documentation](https://pylint.pycqa.org/en/1.6.0/tutorial.html)
 
 ## Submitting a Pull Request
 

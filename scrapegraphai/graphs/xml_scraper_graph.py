@@ -22,7 +22,8 @@ class XMLScraperGraph(AbstractGraph):
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, configured for generating embeddings.
+        embedder_model: An instance of an embedding model client, 
+        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
         model_token (int): The token limit for the language model.
@@ -49,7 +50,7 @@ class XMLScraperGraph(AbstractGraph):
     def _create_graph(self) -> BaseGraph:
         """
         Creates the graph of nodes representing the workflow for web scraping.
-        
+
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
@@ -110,7 +111,7 @@ class XMLScraperGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
-        
+
         inputs = {"user_prompt": self.prompt, self.input_key: self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
