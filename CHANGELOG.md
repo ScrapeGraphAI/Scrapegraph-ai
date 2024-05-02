@@ -1,3 +1,10 @@
+## [0.5.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.7...v0.5.0-beta.8) (2024-05-02)
+
+
+### Features
+
+* Allow end users to pass model instances for llm and embedding model ([b86aac2](https://github.com/VinciGit00/Scrapegraph-ai/commit/b86aac2188887642564a34d13d55d0fcff220ec1))
+
 ## [0.5.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.6...v0.5.0-beta.7) (2024-05-01)
 
 
