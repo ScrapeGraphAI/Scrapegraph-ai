@@ -6,12 +6,14 @@ from typing import List
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
+from langchain_aws.embeddings.bedrock import BedrockEmbeddings
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
-from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace
+
+from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace, Bedrock
 from .base_node import BaseNode
 
 
@@ -39,7 +41,8 @@ class RAGNode(BaseNode):
 
         self.llm_model = node_config["llm"]
         self.embedder_model = node_config.get("embedder_model", None)
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.verbose = True if node_config is None else node_config.get(
+            "verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -80,7 +83,7 @@ class RAGNode(BaseNode):
                 },
             )
             chunked_docs.append(doc)
-        
+
         if self.verbose:
             print("--- (updated chunks metadata) ---")
 
@@ -104,6 +107,9 @@ class RAGNode(BaseNode):
             embeddings = OllamaEmbeddings(**params)
         elif isinstance(embedding_model, HuggingFace):
             embeddings = HuggingFaceHubEmbeddings(model=embedding_model.model)
+        elif isinstance(embedding_model, Bedrock):
+            embeddings = BedrockEmbeddings(
+                client=None, model_id=embedding_model.model_id)
         else:
             raise ValueError("Embedding Model missing or not supported")
 
