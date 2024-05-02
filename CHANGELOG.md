@@ -55,6 +55,7 @@
 * **release:** 0.5.0-beta.5 [skip ci] ([5ac97e2](https://github.com/VinciGit00/Scrapegraph-ai/commit/5ac97e2fb321be40c9787fbf8cb53fa62cf0ce06))
 * **release:** 0.5.0-beta.6 [skip ci] ([9356124](https://github.com/VinciGit00/Scrapegraph-ai/commit/9356124ce39568e88f7d2965181579c4ff0a5752))
 
+
 ## [0.5.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0-beta.5...v0.5.0-beta.6) (2024-04-30)
 
 
