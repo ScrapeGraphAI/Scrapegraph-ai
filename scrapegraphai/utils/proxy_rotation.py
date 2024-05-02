@@ -4,26 +4,29 @@ Module for rotating proxies
 from fp.fp import FreeProxy
 
 
-def proxy_generator(num_ips: int):
+def proxy_generator(num_ips: int) -> list:
     """
-    Rotates through a specified number of proxy IPs using the FreeProxy library.
+    Generates a specified number of proxy IP addresses using the FreeProxy library.
 
     Args:
-        num_ips (int): The number of proxy IPs to rotate through.
+        num_ips (int): The number of proxy IPs to generate and rotate through.
 
     Returns:
-        dict: A dictionary containing the rotated proxy IPs, indexed by their position in rotation.
+        list: A list of proxy IP addresses.
 
     Example:
         >>> proxy_generator(5)
-        {
-            0: '192.168.1.1:8080',
-            1: '103.10.63.135:8080',
-            2: '176.9.75.42:8080',
-            3: '37.57.216.2:8080',
-            4: '113.20.31.250:8080'
-        }
+        [
+            '192.168.1.1:8080',
+            '103.10.63.135:8080',
+            '176.9.75.42:8080',
+            '37.57.216.2:8080',
+            '113.20.31.250:8080'
+        ]
+
+    This function fetches fresh proxies and indexes them, making it easy to manage multiple proxy configurations.
     """
+
     res = []
 
     for i in range(0, num_ips):

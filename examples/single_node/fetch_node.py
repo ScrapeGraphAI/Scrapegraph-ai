@@ -12,6 +12,9 @@ from scrapegraphai.nodes import FetchNode
 robots_node = FetchNode(
     input="url | local_dir",
     output=["doc"],
+    node_config={
+        "headless": False
+    }
 )
 
 # ************************************************

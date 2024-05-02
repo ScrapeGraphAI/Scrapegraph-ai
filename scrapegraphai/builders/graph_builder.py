@@ -1,5 +1,5 @@
 """ 
-Module for making the graph building
+GraphBuilder Module
 """
 
 from langchain_core.prompts import ChatPromptTemplate

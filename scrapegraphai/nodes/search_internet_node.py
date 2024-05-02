@@ -1,6 +1,7 @@
 """
-Module for generating the answer node
+SearchInternetNode Module
 """
+
 from typing import List
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
@@ -10,63 +11,46 @@ from .base_node import BaseNode
 
 class SearchInternetNode(BaseNode):
     """
-    A node that generates an answer by querying a language model (LLM) based on the user's input
-    and the content extracted from a webpage. It constructs a prompt from the user's input
-    and the scraped content, feeds it to the LLM, and parses the LLM's response to produce
-    an answer.
+    A node that generates a search query based on the user's input and searches the internet
+    for relevant information. The node constructs a prompt for the language model, submits it,
+    and processes the output to generate a search query. It then uses the search query to find
+    relevant information on the internet and updates the state with the generated answer.
 
     Attributes:
-        node_name (str): The unique identifier name for the node.
-        node_type (str): The type of the node, set to "node" indicating a standard operational node.
-        input (str): The user input used to construct the prompt.
-        output (List[str]): The keys in the state dictionary 
-                            where the generated answer will be stored.
-        model_config (dict): Configuration parameters for the language model client.
+        llm_model: An instance of the language model client used for generating search queries.
+        verbose (bool): A flag indicating whether to show print statements during execution.
 
     Args:
-        input (str): The user input used to construct the prompt.
-        output (List[str]): The keys in the state dictionary where the
-                             generated answer will be stored.
-        model_config (dict): Configuration parameters for the language model client.
-        node_name (str, optional): The unique identifier name for the node. 
-
-    Methods:
-        execute(state): Processes the input and document from the state to generate an answer,
-                        updating the state with the generated answer under the 'answer' key.
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        node_config (dict): Additional configuration for the node.
+        node_name (str): The unique identifier name for the node, defaulting to "SearchInternet".
     """
 
     def __init__(self, input: str, output: List[str], node_config: dict,
                  node_name: str = "SearchInternet"):
-        """
-        Initializes the SearchInternetNode with input, output, model configuration, and a node name.
-        Args:
-            input (str): The user input used to construct the prompt.
-            output (List[str]): The keys in the state dictionary where the
-             generated answer will be stored.
-            model_config (dict): Configuration parameters for the language model client.
-            node_name (str): The unique identifier name for the node.
-        """
         super().__init__(node_name, "node", input, output, 1, node_config)
+
         self.llm_model = node_config["llm"]
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
         Generates an answer by constructing a prompt from the user's input and the scraped
         content, querying the language model, and parsing its response.
 
-        The method updates the state with the generated answer under the 'answer' key.
+        The method updates the state with the generated answer.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 'user_input',
-                          and optionally 'parsed_document' or 'relevant_chunks' within 'keys'.
+            state (dict): The current state of the graph. The input keys will be used to fetch the
+                            correct data types from the state.
 
         Returns:
-            dict: The updated state with the 'answer' key containing the generated answer.
+            dict: The updated state with the output key containing the generated answer.
 
         Raises:
-            KeyError: If 'user_input' or 'document' is not found in the state, indicating
-                      that the necessary information for generating an answer is missing.
+            KeyError: If the input keys are not found in the state, indicating that the
+                        necessary information for generating the answer is missing.
         """
 
         if self.verbose:

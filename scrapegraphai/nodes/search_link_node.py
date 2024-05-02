@@ -1,6 +1,7 @@
 """
-Module for generating the answer node
+SearchLinkNode Module
 """
+
 # Imports from standard library
 from typing import List
 from tqdm import tqdm
@@ -18,58 +19,42 @@ from .base_node import BaseNode
 
 class SearchLinkNode(BaseNode):
     """
-    A node that generates an answer using a language model (LLM) based on the user's input
-    and the content extracted from a webpage. It constructs a prompt from the user's input
-    and the scraped content, feeds it to the LLM, and parses the LLM's response to produce
-    an answer.
+    A node that look for all the links in a web page and returns them.
+    It initially tries to extract the links using classical methods, if it fails it uses the LLM to extract the links.
 
     Attributes:
-        llm: An instance of a language model client, configured for generating answers.
-        node_name (str): The unique identifier name for the node, defaulting 
-        to "GenerateAnswerNode".
-        node_type (str): The type of the node, set to "node" indicating a 
-        standard operational node.
+        llm_model: An instance of the language model client used for generating answers.
+        verbose (bool): A flag indicating whether to show print statements during execution.
 
     Args:
-        llm: An instance of the language model client (e.g., ChatOpenAI) used 
-        for generating answers.
-        node_name (str, optional): The unique identifier name for the node. 
-        Defaults to "GenerateAnswerNode".
-
-    Methods:
-        execute(state): Processes the input and document from the state to generate an answer,
-                        updating the state with the generated answer under the 'answer' key.
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        node_config (dict): Additional configuration for the node.
+        node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
     """
 
     def __init__(self, input: str, output: List[str], node_config: dict,
                  node_name: str = "GenerateLinks"):
-        """
-        Initializes the GenerateAnswerNode with a language model client and a node name.
-        Args:
-            llm: An instance of the OpenAIImageToText class.
-            node_name (str): name of the node
-        """
         super().__init__(node_name, "node", input, output, 1, node_config)
+
         self.llm_model = node_config["llm"]
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
-        Generates an answer by constructing a prompt from the user's input and the scraped
-        content, querying the language model, and parsing its response.
-
-        The method updates the state with the generated answer under the 'answer' key.
+        Generates a list of links by extracting them from the provided HTML content.
+        First, it tries to extract the links using classical methods, if it fails it uses the LLM to extract the links.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 'user_input',
-                          and optionally 'parsed_document' or 'relevant_chunks' within 'keys'.
+            state (dict): The current state of the graph. The input keys will be used to fetch the
+                            correct data types from the state.
 
         Returns:
-            dict: The updated state with the 'answer' key containing the generated answer.
+            dict: The updated state with the output key containing the list of links.
 
         Raises:
-            KeyError: If 'user_input' or 'document' is not found in the state, indicating
-                      that the necessary information for generating an answer is missing.
+            KeyError: If the input keys are not found in the state, indicating that the
+                        necessary information for generating the answer is missing.
         """
 
         if self.verbose:
@@ -90,7 +75,7 @@ class SearchLinkNode(BaseNode):
 
         except Exception as e:
             if self.verbose:
-                print("error on using classical methods. Using LLM for getting the links")
+                print("Error extracting links using classical methods. Using LLM to extract links.")
                 
             output_parser = JsonOutputParser()
 

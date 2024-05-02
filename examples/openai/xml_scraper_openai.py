@@ -23,13 +23,14 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # Define the configuration for the graph
 # ************************************************
 
-gemini_key = os.getenv("GOOGLE_APIKEY")
+openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": gemini_key,
+        "api_key": openai_key,
         "model": "gpt-3.5-turbo",
     },
+    "verbose":False,
 }
 
 # ************************************************

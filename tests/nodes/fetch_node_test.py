@@ -17,6 +17,9 @@ def setup():
     robots_node = FetchNode(
         input="url | local_dir",
         output=["doc"],
+        node_config={
+            "headless": False
+        }
     )
 
     return robots_node

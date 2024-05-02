@@ -8,16 +8,25 @@ from googlesearch import search
 
 
 def search_on_web(query: str, search_engine: str = "Google", max_results: int = 10) -> List[str]:
-    """ 
-    Function that given a query it finds it on the intenet
+    """
+    Searches the web for a given query using specified search engine options.
+
     Args:
-        query (str): query to search on internet
-        search_engine (str, optional): type of browser, it could be DuckDuckGo or Google,
-            default: Google
-        max_results (int, optional): maximum number of results
+        query (str): The search query to find on the internet.
+        search_engine (str, optional): Specifies the search engine to use, options include 'Google' or 'DuckDuckGo'. Default is 'Google'.
+        max_results (int, optional): The maximum number of search results to return.
 
     Returns:
-        List[str]: List of strings of web link
+        List[str]: A list of URLs as strings that are the search results.
+
+    Raises:
+        ValueError: If the search engine specified is neither 'Google' nor 'DuckDuckGo'.
+
+    Example:
+        >>> search_on_web("example query", search_engine="Google", max_results=5)
+        ['http://example.com', 'http://example.org', ...]
+
+    This function allows switching between Google and DuckDuckGo to perform internet searches, returning a list of result URLs.
     """
 
     if search_engine == "Google":

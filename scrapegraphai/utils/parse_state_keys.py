@@ -4,12 +4,30 @@ Parse_state_key module
 import re
 
 
-def parse_expression(expression, state: dict):
-    """ 
-    Function for parsing the expressions
-    Args:
-        state (dict): state to elaborate
+def parse_expression(expression, state: dict) -> list:
     """
+    Parses a complex boolean expression involving state keys.
+
+    Args:
+        expression (str): The boolean expression to parse.
+        state (dict): Dictionary of state keys used to evaluate the expression.
+
+    Raises:
+        ValueError: If the expression is empty, has adjacent state keys without operators, invalid operator usage,
+                    unbalanced parentheses, or if no state keys match the expression.
+
+    Returns:
+        list: A list of state keys that match the boolean expression, ensuring each key appears only once.
+
+    Example:
+        >>> parse_expression("user_input & (relevant_chunks | parsed_document | document)", 
+                            {"user_input": None, "document": None, "parsed_document": None, "relevant_chunks": None})
+        ['user_input', 'relevant_chunks', 'parsed_document', 'document']
+
+    This function evaluates the expression to determine the logical inclusion of state keys based on provided boolean logic.
+    It checks for syntax errors such as unbalanced parentheses, incorrect adjacency of operators, and empty expressions.
+    """
+
     # Check for empty expression
     if not expression:
         raise ValueError("Empty expression.")

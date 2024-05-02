@@ -26,7 +26,9 @@ llm_model = Ollama(graph_config["llm"])
 robots_node = RobotsNode(
     input="url",
     output=["is_scrapable"],
-    node_config={"llm": llm_model}
+    node_config={"llm": llm_model,
+                 "headless": False
+                 }
 )
 
 # ************************************************

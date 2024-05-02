@@ -1,45 +1,44 @@
 """
-Module for the ImageToTextNode class.
+ImageToTextNode Module
 """
+
 from typing import List
 from .base_node import BaseNode
 
 
 class ImageToTextNode(BaseNode):
     """
-    A class representing a node that processes an image and returns the text description.
+    Retrieve an image from an URL and convert it to text using an ImageToText model.
 
     Attributes:
-        llm_model (OpenAIImageToText): An instance of the OpenAIImageToText class.
+        llm_model: An instance of the language model client used for image-to-text conversion.
+        verbose (bool): A flag indicating whether to show print statements during execution.
 
-    Methods:
-        execute(state, url): Execute the node's logic and return the updated state.
+    Args:
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        node_config (dict): Additional configuration for the node.
+        node_name (str): The unique identifier name for the node, defaulting to "ImageToText".
     """
 
     def __init__(self, input: str, output: List[str], node_config: dict,
                  node_name: str = "ImageToText"):
-        """
-        Initializes an instance of the ImageToTextNode class.
-
-        Args:
-            input (str): The input for the node.
-            output (List[str]): The output of the node.
-            node_config (dict): Configuration for the model.
-            node_name (str): Name of the node.
-        """
         super().__init__(node_name, "node", input, output, 1, node_config)
+
         self.llm_model = node_config["llm_model"]
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
-        Execute the node's logic and return the updated state.
+        Generate text from an image using an image-to-text model. The method retrieves the image
+        from the URL provided in the state.
 
         Args:
-            state (dict): The current state of the graph.
+            state (dict): The current state of the graph. The input keys will be used to fetch the
+                            correct data types from the state.
 
         Returns:
-            dict: The updated state after executing this node.
+            dict: The updated state with the input key containing the text extracted from the image.
         """
 
         if self.verbose:

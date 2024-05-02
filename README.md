@@ -27,6 +27,9 @@ you will also need to install Playwright for javascript-based scraping:
 ```bash
 playwright install
 ```
+
+**Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
+
 ## 🔍 Demo
 Official streamlit demo:
 

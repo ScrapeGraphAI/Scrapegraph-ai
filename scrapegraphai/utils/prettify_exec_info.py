@@ -7,13 +7,17 @@ import pandas as pd
 
 def prettify_exec_info(complete_result: list[dict]) -> pd.DataFrame:
     """
-    Transform the execution information of the graph into a DataFrame for better visualization.
+    Transforms the execution information of a graph into a DataFrame for enhanced visualization.
 
     Args:
-    - complete_result (list[dict]): The complete execution information of the graph.
+        complete_result (list[dict]): The complete execution information of the graph.
 
     Returns:
-    - pd.DataFrame: The execution information of the graph in a DataFrame.
+        pd.DataFrame: A DataFrame that organizes the execution information for better readability and analysis.
+
+    Example:
+        >>> prettify_exec_info([{'node': 'A', 'status': 'success'}, {'node': 'B', 'status': 'failure'}])
+        DataFrame with columns 'node' and 'status' showing execution results for each node.
     """
 
     df_nodes = pd.DataFrame(complete_result)

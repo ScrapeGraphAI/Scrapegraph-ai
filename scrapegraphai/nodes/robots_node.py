@@ -1,6 +1,7 @@
 """
-Module for checking if a website is scrapepable or not
+RobotsNode Module
 """
+
 from typing import List
 from urllib.parse import urlparse
 from langchain_community.document_loaders import AsyncHtmlLoader
@@ -12,75 +13,53 @@ from ..helpers import robots_dictionary
 
 class RobotsNode(BaseNode):
     """
-    A node responsible for checking if a website is scrapepable or not.
-    It uses the AsyncHtmlLoader for asynchronous
-    document loading.
+    A node responsible for checking if a website is scrapeable or not based on the robots.txt file.
+    It uses a language model to determine if the website allows scraping of the provided path.
 
     This node acts as a starting point in many scraping workflows, preparing the state
     with the necessary HTML content for further processing by subsequent nodes in the graph.
 
     Attributes:
-        This node acts as a starting point in many scraping workflows, preparing the state
-    with the necessary HTML content for further processing by subsequent nodes in the graph.
-
-    Attributes:
-        node_name (str): The unique identifier name for the node.
-        node_type (str): The type of the node, defaulting to "node". This categorization
-                         helps in determining the node's role and behavior within the graph.
-                         The "node" type is used for standard operational nodes.
+        llm_model: An instance of the language model client used for checking scrapeability.
+        force_scraping (bool): A flag indicating whether scraping should be enforced even
+                               if disallowed by robots.txt.
+        verbose (bool): A flag indicating whether to show print statements during execution.
 
     Args:
-        node_name (str): The unique identifier name for the node. This name is used to
-                         reference the node within the graph.
-        node_type (str, optional): The type of the node, limited to "node" or
-                                   "conditional_node". Defaults to "node".
-        node_config (dict): Configuration parameters for the node.
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        node_config (dict): Additional configuration for the node.
         force_scraping (bool): A flag indicating whether scraping should be enforced even
-                               if disallowed by robots.txt. Defaults to True.
-        input (str): Input expression defining how to interpret the incoming data.
-        output (List[str]): List of output keys where the results will be stored.
-
-    Methods:
-        execute(state): Fetches the HTML content for the URL specified in the state and
-                        updates the state with this content under the 'document' key.
-                        The 'url' key must be present in the state for the operation
-                        to succeed.
+                                 if disallowed by robots.txt. Defaults to True.
+        node_name (str): The unique identifier name for the node, defaulting to "Robots".
     """
 
     def __init__(self, input: str, output: List[str],  node_config: dict, force_scraping=True,
                  node_name: str = "Robots"):
-        """
-        Initializes the RobotsNode with a node name, input/output expressions
-         and node configuration.
-
-        Arguments:
-            input (str): Input expression defining how to interpret the incoming data.
-            output (List[str]): List of output keys where the results will be stored.
-            node_config (dict): Configuration parameters for the node.
-            force_scraping (bool): A flag indicating whether scraping should be enforced even
-                                   if disallowed by robots.txt. Defaults to True.
-            node_name (str, optional): The unique identifier name for the node.
-                                       Defaults to "Robots".
-        """
         super().__init__(node_name, "node", input, output, 1)
+
         self.llm_model = node_config["llm"]
         self.force_scraping = force_scraping
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
-        Executes the node's logic to fetch HTML content from a specified URL and
-        update the state with this content.
+        Checks if a website is scrapeable based on the robots.txt file and updates the state
+        with the scrapeability status. The method constructs a prompt for the language model,
+        submits it, and parses the output to determine if scraping is allowed.
 
         Args:
-            state (dict): The current state of the graph, expected to contain a 'url' key.
+            state (dict): The current state of the graph. The input keys will be used to fetch the
 
         Returns:
-            dict: The updated state with a new 'document' key containing the fetched HTML content.
+            dict: The updated state with the output key containing the scrapeability status.
 
         Raises:
-            KeyError: If the 'url' key is not found in the state, indicating that the
-                      necessary information to perform the operation is missing.
+            KeyError: If the input keys are not found in the state, indicating that the
+                        necessary information for checking scrapeability is missing.
+            KeyError: If the large language model is not found in the robots_dictionary.
+            ValueError: If the website is not scrapeable based on the robots.txt file and
+                        scraping is not enforced.
         """
 
         if self.verbose:

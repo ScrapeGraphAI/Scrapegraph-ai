@@ -1,17 +1,17 @@
 """ 
-Module for scraping XML documents
+Module for scraping json documents
 """
 import os
 import pytest
-from scrapegraphai.graphs import XMLScraperGraph
+from scrapegraphai.graphs import JSONScraperGraph
 
 
 @pytest.fixture
-def sample_xml():
+def sample_json():
     """
     Example of text
     """
-    file_name = "inputs/books.xml"
+    file_name = "inputs/example.json"
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     file_path = os.path.join(curr_dir, file_name)
 
@@ -41,13 +41,13 @@ def graph_config():
     }
 
 
-def test_scraping_pipeline(sample_xml: str, graph_config: dict):
+def test_scraping_pipeline(sample_json: str, graph_config: dict):
     """
     Start of the scraping pipeline
     """
-    smart_scraper_graph = XMLScraperGraph(
-        prompt="List me all the authors, title and genres of the books",
-        source=sample_xml,
+    smart_scraper_graph = JSONScraperGraph(
+        prompt="List me all the titles",
+        source=sample_json,
         config=graph_config
     )
 

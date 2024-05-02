@@ -1,6 +1,7 @@
 """
-Module for creating the base graphs
- """
+BaseGraph Module
+"""
+
 import time
 import warnings
 from langchain_community.callbacks import get_openai_callback
@@ -16,21 +17,33 @@ class BaseGraph:
                       key-value pair corresponds to the from-node and to-node relationship.
         entry_point (str): The name of the entry point node from which the graph execution begins.
 
-    Methods:
-        execute(initial_state): Executes the graph's nodes starting from the entry point and
-                                traverses the graph based on the provided initial state.
-
     Args:
         nodes (iterable): An iterable of node instances that will be part of the graph.
         edges (iterable): An iterable of tuples where each tuple represents a directed edge
                           in the graph, defined by a pair of nodes (from_node, to_node).
         entry_point (BaseNode): The node instance that represents the entry point of the graph.
+
+    Raises:
+        Warning: If the entry point node is not the first node in the list.
+
+    Example:
+        >>> BaseGraph(
+        ...    nodes=[
+        ...        fetch_node,
+        ...        parse_node,
+        ...        rag_node,
+        ...        generate_answer_node,
+        ...    ],
+        ...    edges=[
+        ...        (fetch_node, parse_node),
+        ...        (parse_node, rag_node),
+        ...        (rag_node, generate_answer_node)
+        ...    ],
+        ...    entry_point=fetch_node
+        ... )
     """
 
     def __init__(self, nodes: list, edges: list, entry_point: str):
-        """
-        Initializes the graph with nodes, edges, and the entry point.
-        """
 
         self.nodes = nodes
         self.edges = self._create_edges({e for e in edges})
@@ -51,6 +64,7 @@ class BaseGraph:
         Returns:
             dict: A dictionary of edges with the from-node as keys and to-node as values.
         """
+
         edge_dict = {}
         for from_node, to_node in edges:
             edge_dict[from_node.node_name] = to_node.node_name
@@ -66,8 +80,9 @@ class BaseGraph:
             initial_state (dict): The initial state to pass to the entry point node.
 
         Returns:
-            dict: The state after execution has completed, which may have been altered by the nodes.
+            Tuple[dict, list]: A tuple containing the final state and a list of execution info.
         """
+        
         current_node_name = self.nodes[0]
         state = initial_state
 
