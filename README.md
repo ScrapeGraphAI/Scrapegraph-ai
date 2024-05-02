@@ -168,7 +168,38 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-### Case 5: Extracting information using Gemini 
+
+### Case 5: Extracting information using Azure
+```python
+from langchain_openai import AzureChatOpenAI
+from langchain_openai import AzureOpenAIEmbeddings
+
+lm_model_instance = AzureChatOpenAI(
+    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
+)
+
+embedder_model_instance = AzureOpenAIEmbeddings(
+    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
+    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+)
+graph_config = {
+    "llm": {"model_instance": llm_model_instance},
+    "embeddings": {"model_instance": embedder_model_instance}
+}
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="""List me all the events, with the following fields: company_name, event_name, event_start_date, event_start_time, 
+    event_end_date, event_end_time, location, event_mode, event_category, 
+    third_party_redirect, no_of_days, 
+    time_in_hours, hosted_or_attending, refreshments_type, 
+    registration_available, registration_link""",
+    source="https://www.hmhco.com/event",
+    config=graph_config
+)
+```
+
+### Case 6: Extracting information using Gemini 
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 GOOGLE_APIKEY = "YOUR_API_KEY"

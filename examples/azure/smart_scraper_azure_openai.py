@@ -10,7 +10,7 @@ from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 
-## required environment variable in .env
+# required environment variable in .env
 # AZURE_OPENAI_ENDPOINT
 # AZURE_OPENAI_CHAT_DEPLOYMENT_NAME
 # MODEL_NAME
@@ -45,8 +45,11 @@ graph_config = {
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the events, with the following fields: company_name, event_name, event_start_date, event_start_time, event_end_date, event_end_time, location, event_mode, event_category, third_party_redirect, no_of_days, 
-time_in_hours, hosted_or_attending, refreshments_type,  registration_available, registration_link",
+    prompt="""List me all the events, with the following fields: company_name, event_name, event_start_date, event_start_time, 
+    event_end_date, event_end_time, location, event_mode, event_category, 
+    third_party_redirect, no_of_days, 
+    time_in_hours, hosted_or_attending, refreshments_type, 
+    registration_available, registration_link""",
     # also accepts a string with the already downloaded HTML code
     source="https://www.hmhco.com/event",
     config=graph_config
