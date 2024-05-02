@@ -1,3 +1,18 @@
+## [0.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.2...v0.6.0) (2024-05-02)
+
+
+### Features
+
+* added node and graph for CSV scraping ([4d542a8](https://github.com/VinciGit00/Scrapegraph-ai/commit/4d542a88f7d949a5ba360dcd880716c8110a5d14))
+* Allow end users to pass model instances for llm and embedding model ([b86aac2](https://github.com/VinciGit00/Scrapegraph-ai/commit/b86aac2188887642564a34d13d55d0fcff220ec1))
+* modified node name ([02d1af0](https://github.com/VinciGit00/Scrapegraph-ai/commit/02d1af006cb89bf860ee4f1186f582e2049a8e3d))
+
+
+### CI
+
+* **release:** 0.5.0-beta.7 [skip ci] ([40b2a34](https://github.com/VinciGit00/Scrapegraph-ai/commit/40b2a346d57865ca21915ecaa658096c52a2cc6b))
+* **release:** 0.5.0-beta.8 [skip ci] ([c11331a](https://github.com/VinciGit00/Scrapegraph-ai/commit/c11331a26ac325dfcf489272442ceeed13225a39))
+
 ## [0.5.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.1...v0.5.2) (2024-05-02)
 
 
