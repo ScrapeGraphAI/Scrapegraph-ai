@@ -19,7 +19,7 @@ class AbstractGraph(ABC):
         self.prompt = prompt
         self.source = source
         self.config = config
-        self.llm_model = self._create_llm(config["llm"])
+        self.llm_model = self._create_llm(config["llm"], chat=True)
         self.embedder_model = self.llm_model if "embeddings" not in config else self._create_llm(
             config["embeddings"])
 
@@ -32,7 +32,16 @@ class AbstractGraph(ABC):
         self.final_state = None
         self.execution_info = None
 
-    def _create_llm(self, llm_config: dict):
+    def _set_model_token(self, llm):
+
+        if 'Azure' in str(type(llm)):
+            try:
+                self.model_token = models_tokens["azure"][llm.model_name]
+            except KeyError:
+                raise KeyError("Model not supported")
+
+
+    def _create_llm(self, llm_config: dict, chat=False) -> object:
         """
         Creates an instance of the language model (OpenAI or Gemini) based on configuration.
         """
@@ -42,6 +51,12 @@ class AbstractGraph(ABC):
         }
         llm_params = {**llm_defaults, **llm_config}
 
+        # If model instance is passed directly instead of the model details
+        if 'model_instance' in llm_params:
+            if chat:
+                self._set_model_token(llm_params['model_instance'])
+            return llm_params['model_instance']
+        
         # Instantiate the language model based on the model name
         if "gpt-" in llm_params["model"]:
             try:
@@ -129,3 +144,4 @@ class AbstractGraph(ABC):
         Abstract method to execute the graph and return the result.
         """
         pass
+
