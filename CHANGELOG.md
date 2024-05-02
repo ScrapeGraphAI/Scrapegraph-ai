@@ -1,3 +1,22 @@
+## [0.6.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.1...v0.6.2) (2024-05-02)
+
+
+### Bug Fixes
+
+* add to requirements.txt langchain-aws = "^0.1.2" ([1afa319](https://github.com/VinciGit00/Scrapegraph-ai/commit/1afa31910d25b2735abe0ad09dad433d6c2159fb))
+
+
+### Docs
+
+* **tree:** added roadmap ([c8eeff8](https://github.com/VinciGit00/Scrapegraph-ai/commit/c8eeff873db6c8d23c9e4109ddee46edaa68b92b))
+* **roadmap:** open contributions ([4441505](https://github.com/VinciGit00/Scrapegraph-ai/commit/4441505b239fa819032469f148115bb3392b15ea))
+* typo ([faa3498](https://github.com/VinciGit00/Scrapegraph-ai/commit/faa3498fa7694ee3309eeed479d8f1bc4b1c7b97))
+
+
+### CI
+
+* **release:** 0.6.1-beta.1 [skip ci] ([75a4042](https://github.com/VinciGit00/Scrapegraph-ai/commit/75a4042a232a5b69fd38d1666fea9633b4fd015e))
+
 ## [0.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.0...v0.6.1) (2024-05-02)
 
 
