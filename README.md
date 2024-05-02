@@ -246,6 +246,11 @@ Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegra
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
+## 📈 Roadmap
+Check out the project roadmap [here](docs/README.md)! 🚀
+
+Wanna visualize the roadmap in a more interactive way? Check out the [markmap](https://markmap.js.org/repl/) visualization by copy pasting the markdown content in the editor!
+
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
 
@@ -281,50 +286,3 @@ ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://githu
 
 - We would like to thank all the contributors to the project and the open-source community for their support.
 - ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
-
-## 📈 Roadmap
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Markmap</title>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-}
-#mindmap {
-  display: block;
-  width: 100vw;
-  height: 100vh;
-}
-</style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.0/dist/style.css">
-</head>
-<body>
-<svg id="mindmap"></svg>
-<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.17.0/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.0/dist/index.js"></script><script>(r => {
-                setTimeout(r);
-              })(() => {
-  const {
-    markmap,
-    mm
-  } = window;
-  const {
-    el
-  } = markmap.Toolbar.create(mm);
-  el.setAttribute('style', 'position:absolute;bottom:20px;right:20px');
-  document.body.append(el);
-})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
-              const markmap = getMarkmap();
-              window.mm = markmap.Markmap.create(
-                "svg#mindmap",
-                (getOptions || markmap.deriveOptions)(jsonOptions),
-                root2
-              );
-            })(() => window.markmap,null,{"content":"<strong>ScrapGraphAI Roadmap</strong>","children":[{"content":"<strong>Short-Term Goals</strong>","children":[{"content":"\n<p data-lines=\"5,6\">Integration with more llm APIs</p>","children":[],"payload":{"lines":"5,7"}},{"content":"\n<p data-lines=\"7,8\">Test proxy rotation implementation</p>","children":[],"payload":{"lines":"7,9"}},{"content":"\n<p data-lines=\"9,10\">Add more search engines inside the SearchInternetNode</p>","children":[],"payload":{"lines":"9,11"}},{"content":"\n<p data-lines=\"11,12\">Improve the documentation (ReadTheDocs)</p>","children":[{"content":"<a href=\"https://github.com/VinciGit00/Scrapegraph-ai/issues/102\">Issue #102</a>","children":[],"payload":{"lines":"12,14"}}],"payload":{"lines":"11,14"}},{"content":"\n<p data-lines=\"14,15\">Create tutorials for the library</p>","children":[],"payload":{"lines":"14,16"}}],"payload":{"lines":"3,4"}},{"content":"<strong>Medium-Term Goals</strong>","children":[{"content":"\n<p data-lines=\"18,19\">Node for handling API requests</p>","children":[],"payload":{"lines":"18,20"}},{"content":"\n<p data-lines=\"20,21\">Improve SearchGraph to look into the first 5 results of the search engine</p>","children":[],"payload":{"lines":"20,22"}},{"content":"\n<p data-lines=\"22,23\">Make scraping more deterministic</p>","children":[{"content":"Create DOM tree of the website","children":[],"payload":{"lines":"23,24"}},{"content":"HTML tag text embeddings with tags metadata","children":[],"payload":{"lines":"24,25"}},{"content":"Study tree forks from root node","children":[],"payload":{"lines":"25,26"}},{"content":"How do we use the tags parameters?","children":[],"payload":{"lines":"26,28"}}],"payload":{"lines":"22,28"}},{"content":"\n<p data-lines=\"28,29\">Create scraping folder with report</p>","children":[{"content":"Folder contains .scrape files, DOM tree files, report","children":[],"payload":{"lines":"29,30"}},{"content":"Report could be a HTML page with scraping speed, costs, LLM info, scraped content and DOM tree visualization","children":[],"payload":{"lines":"30,31"}},{"content":"We can use pyecharts with R-markdown","children":[],"payload":{"lines":"31,33"}}],"payload":{"lines":"28,33"}},{"content":"\n<p data-lines=\"33,34\">Scrape multiple pages of the same website</p>","children":[{"content":"Create new node that instantiate multiple graphs at the same time","children":[],"payload":{"lines":"34,35"}},{"content":"Make graphs run in parallel","children":[],"payload":{"lines":"35,36"}},{"content":"Scrape only relevant URLs from user prompt","children":[],"payload":{"lines":"36,37"}},{"content":"Use the multi dimensional DOM tree of the website for retrieval","children":[],"payload":{"lines":"37,38"}},{"content":"<a href=\"https://github.com/VinciGit00/Scrapegraph-ai/issues/112\">Issue #112</a>","children":[],"payload":{"lines":"38,40"}}],"payload":{"lines":"33,40"}},{"content":"\n<p data-lines=\"40,41\">Crawler graph</p>","children":[{"content":"Scrape all the URLs with the same domain in all the pages","children":[],"payload":{"lines":"41,42"}},{"content":"Build many DOM trees and link them together","children":[],"payload":{"lines":"42,43"}},{"content":"Save the multi dimensional tree in a file","children":[],"payload":{"lines":"43,45"}}],"payload":{"lines":"40,45"}},{"content":"\n<p data-lines=\"45,46\">Compare two DOM trees to assess the similarity</p>","children":[{"content":"Save the DOM tree of the scraped website in a file as a sort of cache to be used to compare with future website structure","children":[],"payload":{"lines":"46,47"}},{"content":"Create similarity metrics with multiple DOM trees (overall tree? only relevant tags structure?)","children":[],"payload":{"lines":"47,49"}}],"payload":{"lines":"45,49"}},{"content":"\n<p data-lines=\"49,50\">Nodes for handling authentication</p>","children":[{"content":"Use Selenium or Playwright to handle authentication","children":[],"payload":{"lines":"50,51"}},{"content":"Passes the cookies to the other nodes","children":[],"payload":{"lines":"51,53"}}],"payload":{"lines":"49,53"}},{"content":"\n<p data-lines=\"53,54\">Nodes that attaches to an open browser</p>","children":[{"content":"Use Selenium or Playwright to attach to an open browser","children":[],"payload":{"lines":"54,55"}},{"content":"Navigate inside the browser and scrape the content","children":[],"payload":{"lines":"55,57"}}],"payload":{"lines":"53,57"}},{"content":"\n<p data-lines=\"57,58\">Nodes for taking screenshots and understanding the page layout</p>","children":[{"content":"Use Selenium or Playwright to take screenshots","children":[],"payload":{"lines":"58,59"}},{"content":"Use LLM to asses if it is a block-like page, paragraph-like page, etc.","children":[],"payload":{"lines":"59,60"}},{"content":"<a href=\"https://github.com/VinciGit00/Scrapegraph-ai/issues/88\">Issue #88</a>","children":[],"payload":{"lines":"60,62"}}],"payload":{"lines":"57,62"}}],"payload":{"lines":"16,17"}},{"content":"<strong>Long-Term Goals</strong>","children":[{"content":"\n<p data-lines=\"64,65\">Automatic generation of scraping pipelines from a given prompt</p>","children":[],"payload":{"lines":"64,66"}},{"content":"\n<p data-lines=\"66,67\">Create API for the library</p>","children":[],"payload":{"lines":"66,68"}},{"content":"\n<p data-lines=\"68,69\">Finetune a LLM for html content</p>","children":[],"payload":{"lines":"68,69"}}],"payload":{"lines":"62,63"}}],"payload":{"lines":"1,2"}},{"colorFreezeLevel":2,"maxWidth":500})</script>
-</body>
-</html>
