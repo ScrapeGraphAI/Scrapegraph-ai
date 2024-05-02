@@ -1,3 +1,23 @@
+## [0.5.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.5.0...v0.5.1) (2024-05-02)
+
+
+### Bug Fixes
+
+* examples and graphs ([5cf4e4f](https://github.com/VinciGit00/Scrapegraph-ai/commit/5cf4e4f92f024041c44211aebd2e3bdf73351a00))
+
+
+### Docs
+
+* added venv suggestion ([ba2b24b](https://github.com/VinciGit00/Scrapegraph-ai/commit/ba2b24b4cd82d63f9235051eb0e95519c51fd639))
+* base and fetch node ([e981796](https://github.com/VinciGit00/Scrapegraph-ai/commit/e9817963c8e98e35662cc5a140b0348792d25307))
+* change contributing.md with new ci/cd workflow ([3e91a46](https://github.com/VinciGit00/Scrapegraph-ai/commit/3e91a46522ab1f6b2f733efd234b06df4687c695))
+* fixed basegraph docstring ([29427c2](https://github.com/VinciGit00/Scrapegraph-ai/commit/29427c233485816967c4ecd6c1951351be9b27ce))
+* graphs and helpers docstrings ([0631985](https://github.com/VinciGit00/Scrapegraph-ai/commit/0631985e6156bd21ec5317faff9e345c8aa7f88b))
+* refactor examples ([c11fc28](https://github.com/VinciGit00/Scrapegraph-ai/commit/c11fc288963e1a2818e451279a3bf53eb33e22be))
+* refactor models docstrings ([18c20eb](https://github.com/VinciGit00/Scrapegraph-ai/commit/18c20eb03de183a0311be5ffe21f53ec4edf1b87))
+* refactor nodes docstrings ([1409797](https://github.com/VinciGit00/Scrapegraph-ai/commit/140979747598210674131befadd786800c9fb5ec))
+* update utils docstrings ([cf038b3](https://github.com/VinciGit00/Scrapegraph-ai/commit/cf038b33eaae42f65d7d9c782b5729092b272dd0))
+
 ## [0.5.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.4.1...v0.5.0) (2024-04-30)
 
 
