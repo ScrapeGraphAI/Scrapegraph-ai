@@ -41,15 +41,8 @@ class AbstractGraph(ABC):
         self.prompt = prompt
         self.source = source
         self.config = config
-        if config.get('llm_model_instance'):
-            self.llm_model = config.get('llm_model_instance')
-            self.model_token = 16000
-        else:
-            self.llm_model = self._create_llm(config["llm"])
-        if config.get('embedder_model_instance'):
-            self.embedder_model = config.get('embedder_model_instance')
-        else:
-            self.embedder_model = self.llm_model if "embeddings" not in config else self._create_llm(
+        self.llm_model = self._create_llm(config["llm"], chat=True)
+        self.embedder_model = self.llm_model if "embeddings" not in config else self._create_llm(
             config["embeddings"])
 
         # Set common configuration parameters
@@ -61,7 +54,18 @@ class AbstractGraph(ABC):
         self.final_state = None
         self.execution_info = None
 
-    def _create_llm(self, llm_config: dict) -> object:
+
+    def _set_model_token(self, llm):
+        
+        if 'Azure' in str(type(llm)):
+            try:
+                self.model_token = models_tokens["azure"][llm.model_name]
+            except KeyError:
+                raise KeyError("Model not supported")
+
+
+
+    def _create_llm(self, llm_config: dict, chat=False) -> object:
         """
         Create a large language model instance based on the configuration provided.
 
@@ -80,6 +84,12 @@ class AbstractGraph(ABC):
             "streaming": False
         }
         llm_params = {**llm_defaults, **llm_config}
+
+        # If model instance is passed directly instead of the model details
+        if 'model_instance' in llm_params:
+            if chat:
+                self._set_model_token(llm_params['model_instance'])
+            return llm_params['model_instance']
 
         # Instantiate the language model based on the model name
         if "gpt-" in llm_params["model"]:
