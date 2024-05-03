@@ -6,14 +6,9 @@ from typing import List
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
-from langchain_aws.embeddings.bedrock import BedrockEmbeddings
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
-from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
 
-from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace, Bedrock
 from .base_node import BaseNode
 
 
