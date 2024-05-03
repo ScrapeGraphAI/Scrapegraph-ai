@@ -1,3 +1,10 @@
+## [0.7.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0-beta.2...v0.7.0-beta.3) (2024-05-03)
+
+
+### Features
+
+* add pdf scraper ([10a9453](https://github.com/VinciGit00/Scrapegraph-ai/commit/10a94530e3fd4dfde933ecfa96cb3e21df72e606))
+
 ## [0.7.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0-beta.1...v0.7.0-beta.2) (2024-05-03)
 
 
