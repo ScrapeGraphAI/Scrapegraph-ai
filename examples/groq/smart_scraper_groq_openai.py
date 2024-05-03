@@ -25,7 +25,7 @@ graph_config = {
     },
     "embeddings": {
         "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "openai",
     },
     "headless": False
 }
