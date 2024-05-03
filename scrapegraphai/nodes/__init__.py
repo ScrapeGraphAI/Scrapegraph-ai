@@ -2,6 +2,7 @@
 __init__.py file for node folder 
 """
 
+from .base_node import BaseNode
 from .fetch_node import FetchNode
 from .conditional_node import ConditionalNode
 from .get_probable_tags_node import GetProbableTagsNode

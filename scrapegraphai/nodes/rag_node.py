@@ -6,14 +6,9 @@ from typing import List
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
-from langchain_aws.embeddings.bedrock import BedrockEmbeddings
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
-from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
 
-from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace, Bedrock
 from .base_node import BaseNode
 
 
@@ -87,31 +82,7 @@ class RAGNode(BaseNode):
         if self.verbose:
             print("--- (updated chunks metadata) ---")
 
-        # check if embedder_model is provided, if not use llm_model
-        embedding_model = self.embedder_model if self.embedder_model else self.llm_model
-
-        if isinstance(embedding_model, OpenAI):
-            embeddings = OpenAIEmbeddings(
-                api_key=embedding_model.openai_api_key)
-        elif isinstance(embedding_model, AzureOpenAIEmbeddings):
-            embeddings = embedding_model
-        elif isinstance(embedding_model, AzureOpenAI):
-            embeddings = AzureOpenAIEmbeddings()
-        elif isinstance(embedding_model, Ollama):
-            # unwrap the kwargs from the model whihc is a dict
-            params = embedding_model._lc_kwargs
-            # remove streaming and temperature
-            params.pop("streaming", None)
-            params.pop("temperature", None)
-
-            embeddings = OllamaEmbeddings(**params)
-        elif isinstance(embedding_model, HuggingFace):
-            embeddings = HuggingFaceHubEmbeddings(model=embedding_model.model)
-        elif isinstance(embedding_model, Bedrock):
-            embeddings = BedrockEmbeddings(
-                client=None, model_id=embedding_model.model_id)
-        else:
-            raise ValueError("Embedding Model missing or not supported")
+        embeddings = self.embedder_model
 
         retriever = FAISS.from_documents(
             chunked_docs, embeddings).as_retriever()

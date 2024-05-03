@@ -1,3 +1,22 @@
+## [0.7.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0-beta.1...v0.7.0-beta.2) (2024-05-03)
+
+
+### Features
+
+* Azure implementation + embeddings refactoring ([aa9271e](https://github.com/VinciGit00/Scrapegraph-ai/commit/aa9271e7bc4daa54860499d0615580b17550ff58))
+
+
+### Refactor
+
+* Changed the way embedding model is created in AbstractGraph class and removed handling of embedding model creation from RAGNode. Now AbstractGraph will call a dedicated method for embedding models instead of _create_llm. This makes it easy to use any LLM with any supported embedding model. ([819cbcd](https://github.com/VinciGit00/Scrapegraph-ai/commit/819cbcd3be1a8cb195de0b44c6b6d4d824e2a42a))
+
+## [0.7.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.2...v0.7.0-beta.1) (2024-05-03)
+
+
+### Features
+
+* add base_node to __init__.py ([cb1cb61](https://github.com/VinciGit00/Scrapegraph-ai/commit/cb1cb616b7998d3624bf57b19b5f1b1945fea4ef))
+
 ## [0.6.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.1...v0.6.2) (2024-05-02)
 
 
