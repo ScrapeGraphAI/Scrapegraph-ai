@@ -10,7 +10,7 @@ from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbed
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Claude
 
 
 class AbstractGraph(ABC):
@@ -22,7 +22,8 @@ class AbstractGraph(ABC):
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, configured for generating embeddings.
+        embedder_model: An instance of an embedding model client,
+                        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
 
@@ -47,8 +48,8 @@ class AbstractGraph(ABC):
         self.source = source
         self.config = config
         self.llm_model = self._create_llm(config["llm"], chat=True)
-        self.embedder_model = self._create_default_embedder(    
-            ) if "embeddings" not in config else self._create_embedder(
+        self.embedder_model = self._create_default_embedder(
+        ) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
 
         # Set common configuration parameters
@@ -61,15 +62,13 @@ class AbstractGraph(ABC):
         self.final_state = None
         self.execution_info = None
 
-
     def _set_model_token(self, llm):
 
         if 'Azure' in str(type(llm)):
             try:
                 self.model_token = models_tokens["azure"][llm.model_name]
-            except KeyError:
-                raise KeyError("Model not supported")
-
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
 
     def _create_llm(self, llm_config: dict, chat=False) -> object:
         """
@@ -96,13 +95,13 @@ class AbstractGraph(ABC):
             if chat:
                 self._set_model_token(llm_params['model_instance'])
             return llm_params['model_instance']
-        
+
         # Instantiate the language model based on the model name
         if "gpt-" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["openai"][llm_params["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return OpenAI(llm_params)
 
         elif "azure" in llm_params["model"]:
@@ -110,17 +109,22 @@ class AbstractGraph(ABC):
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
                 self.model_token = models_tokens["azure"][llm_params["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return AzureOpenAI(llm_params)
 
         elif "gemini" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["gemini"][llm_params["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return Gemini(llm_params)
-
+        elif "claude" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["claude"][llm_params["model"]]
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
+            return Claude(llm_params)
         elif "ollama" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
@@ -131,8 +135,8 @@ class AbstractGraph(ABC):
                 elif llm_params["model"] in models_tokens["ollama"]:
                     try:
                         self.model_token = models_tokens["ollama"][llm_params["model"]]
-                    except KeyError:
-                        raise KeyError("Model not supported")
+                    except KeyError as exc:
+                        raise KeyError("Model not supported") from exc
                 else:
                     self.model_token = 8192
             except AttributeError:
@@ -142,16 +146,16 @@ class AbstractGraph(ABC):
         elif "hugging_face" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["hugging_face"][llm_params["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return HuggingFace(llm_params)
         elif "groq" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
             try:
                 self.model_token = models_tokens["groq"][llm_params["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return Groq(llm_params)
         elif "bedrock" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
@@ -159,8 +163,8 @@ class AbstractGraph(ABC):
 
             try:
                 self.model_token = models_tokens["bedrock"][llm_params["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return Bedrock({
                 "model_id": model_id,
                 "model_kwargs": {
@@ -170,7 +174,7 @@ class AbstractGraph(ABC):
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
-    
+
     def _create_default_embedder(self) -> object:
         """
         Create an embedding model instance based on the chosen llm model.
@@ -202,7 +206,7 @@ class AbstractGraph(ABC):
             return BedrockEmbeddings(client=None, model_id=self.llm_model.model_id)
         else:
             raise ValueError("Embedding Model missing or not supported")
-        
+
     def _create_embedder(self, embedder_config: dict) -> object:
         """
         Create an embedding model instance based on the configuration provided.
@@ -216,7 +220,7 @@ class AbstractGraph(ABC):
         Raises:
             KeyError: If the model is not supported.
         """
-        
+
         # Instantiate the embedding model based on the model name
         if "openai" in embedder_config["model"]:
             return OpenAIEmbeddings(api_key=embedder_config["api_key"])
@@ -228,27 +232,27 @@ class AbstractGraph(ABC):
             embedder_config["model"] = embedder_config["model"].split("/")[-1]
             try:
                 models_tokens["ollama"][embedder_config["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return OllamaEmbeddings(**embedder_config)
-        
+
         elif "hugging_face" in embedder_config["model"]:
             try:
                 models_tokens["hugging_face"][embedder_config["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported")from exc
             return HuggingFaceHubEmbeddings(model=embedder_config["model"])
-        
+
         elif "bedrock" in embedder_config["model"]:
             embedder_config["model"] = embedder_config["model"].split("/")[-1]
             try:
                 models_tokens["bedrock"][embedder_config["model"]]
-            except KeyError:
-                raise KeyError("Model not supported")
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
             return BedrockEmbeddings(client=None, model_id=embedder_config["model"])
         else:
             raise ValueError(
-                "Model provided by the configuration not supported") 
+                "Model provided by the configuration not supported")
 
     def get_state(self, key=None) -> dict:
         """""
@@ -272,7 +276,7 @@ class AbstractGraph(ABC):
         Returns:
             dict: The execution information of the graph.
         """
-        
+
         return self.execution_info
 
     @abstractmethod
@@ -288,4 +292,3 @@ class AbstractGraph(ABC):
         Abstract method to execute the graph and return the result.
         """
         pass
-
