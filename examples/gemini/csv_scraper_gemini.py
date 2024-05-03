@@ -19,20 +19,13 @@ text = pd.read_csv("inputs/username.csv")
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
+gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        # "model_tokens": 2000, # set context length arbitrarily
-        "base_url": "http://localhost:11434",
+        "api_key": gemini_key,
+        "model": "gemini-pro",
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        "base_url": "http://localhost:11434",
-    }
 }
 
 # ************************************************
