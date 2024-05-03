@@ -87,31 +87,7 @@ class RAGNode(BaseNode):
         if self.verbose:
             print("--- (updated chunks metadata) ---")
 
-        # check if embedder_model is provided, if not use llm_model
-        embedding_model = self.embedder_model if self.embedder_model else self.llm_model
-
-        if isinstance(embedding_model, OpenAI):
-            embeddings = OpenAIEmbeddings(
-                api_key=embedding_model.openai_api_key)
-        elif isinstance(embedding_model, AzureOpenAIEmbeddings):
-            embeddings = embedding_model
-        elif isinstance(embedding_model, AzureOpenAI):
-            embeddings = AzureOpenAIEmbeddings()
-        elif isinstance(embedding_model, Ollama):
-            # unwrap the kwargs from the model whihc is a dict
-            params = embedding_model._lc_kwargs
-            # remove streaming and temperature
-            params.pop("streaming", None)
-            params.pop("temperature", None)
-
-            embeddings = OllamaEmbeddings(**params)
-        elif isinstance(embedding_model, HuggingFace):
-            embeddings = HuggingFaceHubEmbeddings(model=embedding_model.model)
-        elif isinstance(embedding_model, Bedrock):
-            embeddings = BedrockEmbeddings(
-                client=None, model_id=embedding_model.model_id)
-        else:
-            raise ValueError("Embedding Model missing or not supported")
+        embeddings = self.embedder_model
 
         retriever = FAISS.from_documents(
             chunked_docs, embeddings).as_retriever()
