@@ -1,3 +1,10 @@
+## [0.7.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.2...v0.7.0-beta.1) (2024-05-03)
+
+
+### Features
+
+* add base_node to __init__.py ([cb1cb61](https://github.com/VinciGit00/Scrapegraph-ai/commit/cb1cb616b7998d3624bf57b19b5f1b1945fea4ef))
+
 ## [0.6.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.1...v0.6.2) (2024-05-02)
 
 
