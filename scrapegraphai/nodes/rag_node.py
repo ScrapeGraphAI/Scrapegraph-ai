@@ -6,15 +6,12 @@ from typing import List
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
-from langchain_aws.embeddings.bedrock import BedrockEmbeddings
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
-from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
 from langchain_community.embeddings.huggingface import HuggingFaceInferenceAPIEmbeddings
 
-from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace, Bedrock
 from .base_node import BaseNode
 
 
@@ -116,6 +113,7 @@ class RAGNode(BaseNode):
                 client=None, model_id=embedding_model.model_id)
         else:
             raise ValueError("Embedding Model missing or not supported")
+        embeddings = self.embedder_model
 
         retriever = FAISS.from_documents(
             chunked_docs, embeddings).as_retriever()
