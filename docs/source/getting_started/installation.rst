@@ -19,6 +19,12 @@ Install the library
 
    pip install scrapegraphai
 
+Additionally on Windows when using WSL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+   sudo apt-get -y install libnss3 libnspr4 libgbm1 libasound2
 
 As simple as that! You are now ready to scrape gnamgnamgnam 👿👿👿
 
