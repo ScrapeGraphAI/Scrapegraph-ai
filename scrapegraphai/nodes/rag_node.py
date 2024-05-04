@@ -82,6 +82,8 @@ class RAGNode(BaseNode):
         if self.verbose:
             print("--- (updated chunks metadata) ---")
 
+        # check if embedder_model is provided, if not use llm_model
+        self.embedder_model = self.embedder_model if self.embedder_model else self.llm_model
         embeddings = self.embedder_model
 
         retriever = FAISS.from_documents(
