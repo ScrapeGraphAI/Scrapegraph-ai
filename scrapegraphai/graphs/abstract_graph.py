@@ -69,6 +69,13 @@ class AbstractGraph(ABC):
                 self.model_token = models_tokens["azure"][llm.model_name]
             except KeyError:
                 raise KeyError("Model not supported")
+            
+        elif 'HuggingFaceEndpoint' in str(type(llm)):
+            if 'mistral' in llm.repo_id:
+                try:
+                    self.model_token = models_tokens['mistral'][llm.repo_id]
+                except KeyError:
+                    raise KeyError("Model not supported")
 
 
     def _create_llm(self, llm_config: dict, chat=False) -> object:
@@ -181,7 +188,6 @@ class AbstractGraph(ABC):
         Raises:
             ValueError: If the model is not supported.
         """
-
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
@@ -216,6 +222,9 @@ class AbstractGraph(ABC):
         Raises:
             KeyError: If the model is not supported.
         """
+
+        if 'model_instance' in embedder_config:
+            return embedder_config['model_instance']
         
         # Instantiate the embedding model based on the model name
         if "openai" in embedder_config["model"]:
