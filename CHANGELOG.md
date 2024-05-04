@@ -1,11 +1,5 @@
-## [0.8.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.8.0-beta.1...v0.8.0-beta.2) (2024-05-04)
+## [0.8.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0...v0.8.0) (2024-05-03)
 
-
-### Features
-
-* Enable end users to pass model instances of HuggingFaceHub ([7599234](https://github.com/VinciGit00/Scrapegraph-ai/commit/7599234ab9563ca4ee9b7f5b2d0267daac621ecf))
-
-## [0.8.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0...v0.8.0-beta.1) (2024-05-03)
 
 
 ### Features
