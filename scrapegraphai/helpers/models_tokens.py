@@ -65,5 +65,8 @@ models_tokens = {
         "mistral.mistral-large-2402-v1:0": 32768,
         "cohere.embed-english-v3": 512,
         "cohere.embed-multilingual-v3": 512
+    },
+    "mistral": {
+        "mistralai/Mistral-7B-Instruct-v0.2": 32000
     }
 }

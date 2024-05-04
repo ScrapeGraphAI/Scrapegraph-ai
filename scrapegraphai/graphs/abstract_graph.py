@@ -64,6 +64,13 @@ class AbstractGraph(ABC):
                 self.model_token = models_tokens["azure"][llm.model_name]
             except KeyError:
                 raise KeyError("Model not supported")
+            
+        elif 'HuggingFaceEndpoint' in str(type(llm)):
+            if 'mistral' in llm.repo_id:
+                try:
+                    self.model_token = models_tokens['mistral'][llm.repo_id]
+                except KeyError:
+                    raise KeyError("Model not supported")
 
 
     def _create_llm(self, llm_config: dict, chat=False) -> object:

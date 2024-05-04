@@ -12,6 +12,7 @@ from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings, AzureOpenAIEmbeddings
+from langchain_community.embeddings.huggingface import HuggingFaceInferenceAPIEmbeddings
 
 from ..models import OpenAI, Ollama, AzureOpenAI, HuggingFace, Bedrock
 from .base_node import BaseNode
@@ -95,6 +96,9 @@ class RAGNode(BaseNode):
                 api_key=embedding_model.openai_api_key)
         elif isinstance(embedding_model, AzureOpenAIEmbeddings):
             embeddings = embedding_model
+        elif isinstance(embedding_model, HuggingFaceInferenceAPIEmbeddings):
+            embeddings = embedding_model
+
         elif isinstance(embedding_model, AzureOpenAI):
             embeddings = AzureOpenAIEmbeddings()
         elif isinstance(embedding_model, Ollama):
