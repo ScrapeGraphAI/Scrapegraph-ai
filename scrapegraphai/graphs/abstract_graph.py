@@ -188,7 +188,6 @@ class AbstractGraph(ABC):
         Raises:
             ValueError: If the model is not supported.
         """
-
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
@@ -223,6 +222,9 @@ class AbstractGraph(ABC):
         Raises:
             KeyError: If the model is not supported.
         """
+
+        if 'model_instance' in embedder_config:
+            return embedder_config['model_instance']
         
         # Instantiate the embedding model based on the model name
         if "openai" in embedder_config["model"]:
