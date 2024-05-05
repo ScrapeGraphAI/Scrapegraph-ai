@@ -31,7 +31,7 @@ class SearchInternetNode(BaseNode):
                  node_name: str = "SearchInternet"):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state: dict) -> dict:

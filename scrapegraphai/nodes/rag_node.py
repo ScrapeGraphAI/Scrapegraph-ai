@@ -39,7 +39,7 @@ class RAGNode(BaseNode):
     def __init__(self, input: str, output: List[str], node_config: dict, node_name: str = "RAG"):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.embedder_model = node_config.get("embedder_model", None)
         self.verbose = True if node_config is None else node_config.get(
             "verbose", False)

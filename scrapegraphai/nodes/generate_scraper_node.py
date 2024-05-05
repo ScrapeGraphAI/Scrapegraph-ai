@@ -40,7 +40,7 @@ class GenerateScraperNode(BaseNode):
                  library: str, website: str, node_name: str = "GenerateAnswer"):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.library = library
         self.source = website
 
