@@ -1,17 +1,18 @@
 """
-Gemini Module
+Claude Module
 """
-from langchain_google_genai import ChatGoogleGenerativeAI
+
+from langchain_anthropic import ChatAnthropic
 
 
-class Gemini(ChatGoogleGenerativeAI):
+class Claude(ChatAnthropic):
     """
-    A wrapper for the Gemini class that provides default configuration
+     A wrapper for the ChatAnthropic class that provides default configuration
     and could be extended with additional methods if needed.
 
     Args:
         llm_config (dict): Configuration parameters for the language model
-                        (e.g., model="gemini-pro")
+                        (e.g., model="claude_instant")
     """
 
     def __init__(self, llm_config: dict):
