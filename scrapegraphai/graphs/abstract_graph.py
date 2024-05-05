@@ -62,7 +62,7 @@ class AbstractGraph(ABC):
         self.set_common_params(common_params, overwrite=False)
 
 
-    def set_common_params(self, params: dict):
+    def set_common_params(self, params: dict, overwrite=False):
         """
         Pass parameters to every node in the graph unless otherwise defined in the graph.
         
@@ -71,7 +71,7 @@ class AbstractGraph(ABC):
         """
 
         for node in self.graph.nodes:
-            node.update_config(params)
+            node.update_config(params, overwrite)
 
     def _set_model_token(self, llm):
 
