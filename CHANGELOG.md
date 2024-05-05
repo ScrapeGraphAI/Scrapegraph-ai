@@ -1,3 +1,15 @@
+## [0.9.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.1...v0.9.0-beta.2) (2024-05-05)
+
+
+### Features
+
+* refactoring search function ([aeb1acb](https://github.com/VinciGit00/Scrapegraph-ai/commit/aeb1acbf05e63316c91672c99d88f8a6f338147f))
+
+
+### Bug Fixes
+
+* bug on .toml ([f7d66f5](https://github.com/VinciGit00/Scrapegraph-ai/commit/f7d66f51818dbdfddd0fa326f26265a3ab686b20))
+
 ## [0.9.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.8.0...v0.9.0-beta.1) (2024-05-04)
 
 
