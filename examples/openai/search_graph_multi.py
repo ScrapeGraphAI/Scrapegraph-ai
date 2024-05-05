@@ -45,6 +45,7 @@ search_internet_node = SearchInternetNode(
     output=["urls"],
     node_config={
         "llm_model": llm_model,
+        "max_results": 5,  # num of search results to fetch
         "verbose": True,
     }
 )

@@ -9,7 +9,6 @@ from tqdm import tqdm
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables import RunnableParallel
 
 # Imports from the library
 from .base_node import BaseNode
@@ -17,10 +16,7 @@ from .base_node import BaseNode
 
 class MergeAnswersNode(BaseNode):
     """
-    A node that generates an answer using a large language model (LLM) based on the user's input
-    and the content extracted from a webpage. It constructs a prompt from the user's input
-    and the scraped content, feeds it to the LLM, and parses the LLM's response to produce
-    an answer.
+    A node responsible for merging the answers from multiple graph instances into a single answer.
 
     Attributes:
         llm_model: An instance of a language model client, configured for generating answers.
@@ -42,8 +38,7 @@ class MergeAnswersNode(BaseNode):
 
     def execute(self, state: dict) -> dict:
         """
-        Generates an answer by constructing a prompt from the user's input and the scraped
-        content, querying the language model, and parsing its response.
+        Executes the node's logic to merge the answers from multiple graph instances into a single answer.
 
         Args:
             state (dict): The current state of the graph. The input keys will be used

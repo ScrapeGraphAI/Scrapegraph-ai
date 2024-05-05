@@ -10,11 +10,8 @@ from .base_node import BaseNode
 
 class GraphIteratorNode(BaseNode):
     """
-    A node responsible for parsing HTML content from a document. 
-    The parsed content is split into chunks for further processing.
-
-    This node enhances the scraping workflow by allowing for targeted extraction of 
-    content, thereby optimizing the processing of large HTML documents.
+    A node responsible for instantiating and running multiple graph instances in parallel.
+    It creates as many graph instances as the number of elements in the input list.
 
     Attributes:
         verbose (bool): A flag indicating whether to show print statements during execution.
@@ -33,18 +30,18 @@ class GraphIteratorNode(BaseNode):
 
     def execute(self,  state: dict) -> dict:
         """
-        Executes the node's logic to parse the HTML document content and split it into chunks.
+        Executes the node's logic to instantiate and run multiple graph instances in parallel.
 
         Args:
-            state (dict): The current state of the graph. The input keys will be used to fetch the
-                            correct data from the state.
+            state (dict): The current state of the graph. The input keys will be used to fetch
+                            the correct data from the state.
 
         Returns:
-            dict: The updated state with the output key containing the parsed content chunks.
+            dict: The updated state with the output key containing the results of the graph instances.
 
         Raises:
             KeyError: If the input keys are not found in the state, indicating that the
-                        necessary information for parsing the content is missing.
+                        necessary information for running the graph instances is missing.
         """
 
         if self.verbose:
@@ -79,5 +76,4 @@ class GraphIteratorNode(BaseNode):
             graphs_answers.append(result)
 
         state.update({self.output[0]: graphs_answers})
-
         return state
