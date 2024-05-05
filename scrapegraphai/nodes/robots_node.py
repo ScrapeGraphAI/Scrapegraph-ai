@@ -2,9 +2,9 @@
 RobotsNode Module
 """
 
-from typing import List
+from typing import List, Optional
 from urllib.parse import urlparse
-from langchain_community.document_loaders import AsyncHtmlLoader
+from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from .base_node import BaseNode
@@ -34,7 +34,7 @@ class RobotsNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Robots".
     """
 
-    def __init__(self, input: str, output: List[str],  node_config: dict, force_scraping=True,
+    def __init__(self, input: str, output: List[str],  node_config: Optional[dict]=None, force_scraping=True,
                  node_name: str = "Robots"):
         super().__init__(node_name, "node", input, output, 1)
 
@@ -93,11 +93,11 @@ class RobotsNode(BaseNode):
         else:
             parsed_url = urlparse(source)
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
-            loader = AsyncHtmlLoader(f"{base_url}/robots.txt")
+            loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
-            if "ollama" in self.llm_model.model:
-                self.llm_model.model = self.llm_model.model.split("/")[-1]
-                model = self.llm_model.model.split("/")[-1]
+            if "ollama" in self.llm_model.model_name:
+                self.llm_model.model_name = self.llm_model.model_name.split("/")[-1]
+                model = self.llm_model.model_name.split("/")[-1]
 
             else:
                 model = self.llm_model.model_name

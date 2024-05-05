@@ -4,11 +4,10 @@ Example of custom graph using existing nodes
 
 import os
 from dotenv import load_dotenv
-
 from langchain_openai import OpenAIEmbeddings
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, SearchInternetNode
 load_dotenv()
 
 # ************************************************
@@ -21,8 +20,6 @@ graph_config = {
     "llm": {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
-        "temperature": 0,
-        "streaming": False
     },
 }
 
@@ -33,16 +30,13 @@ graph_config = {
 llm_model = OpenAI(graph_config["llm"])
 embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
 
-# define the nodes for the graph
-robot_node = RobotsNode(
-    input="url",
-    output=["is_scrapable"],
+search_internet_node = SearchInternetNode(
+    input="user_prompt",
+    output=["url"],
     node_config={
-        "llm_model": llm_model,
-        "verbose": True,
-        }
+        "llm_model": llm_model
+    }
 )
-
 fetch_node = FetchNode(
     input="url | local_dir",
     output=["doc"],
@@ -83,19 +77,19 @@ generate_answer_node = GenerateAnswerNode(
 
 graph = BaseGraph(
     nodes=[
-        robot_node,
+        search_internet_node,
         fetch_node,
         parse_node,
         rag_node,
         generate_answer_node,
     ],
     edges=[
-        (robot_node, fetch_node),
+        (search_internet_node, fetch_node),
         (fetch_node, parse_node),
         (parse_node, rag_node),
         (rag_node, generate_answer_node)
     ],
-    entry_point=robot_node
+    entry_point=search_internet_node
 )
 
 # ************************************************
@@ -103,8 +97,7 @@ graph = BaseGraph(
 # ************************************************
 
 result, execution_info = graph.execute({
-    "user_prompt": "List me the projects with their description",
-    "url": "https://perinim.github.io/projects/"
+    "user_prompt": "List me all the typical Chioggia dishes."
 })
 
 # get the answer from the result

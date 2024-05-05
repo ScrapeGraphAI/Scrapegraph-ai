@@ -56,7 +56,7 @@ class AbstractGraph(ABC):
         self.execution_info = None
 
         # Set common configuration parameters
-        self.verbose = True if config is None else config.get("verbose", False)
+        self.verbose = False if config is None else config.get("verbose", False)
         self.headless = True if config is None else config.get(
             "headless", True)
         common_params = {"headless": self.headless,
