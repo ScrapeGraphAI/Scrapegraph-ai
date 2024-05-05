@@ -32,35 +32,18 @@ class CSVScraperGraph(AbstractGraph):
         fetch_node = FetchNode(
             input="csv_dir",
             output=["doc"],
-            node_config={
-                "headless": self.headless,
-                "verbose": self.verbose
-            }
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token,
-                "verbose": self.verbose
-            }
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
-            node_config={
-                "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model,
-                "verbose": self.verbose
-            }
         )
         generate_answer_node = GenerateAnswerCSVNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
-            node_config={
-                "llm_model": self.llm_model,
-                "verbose": self.verbose
-            }
         )
 
         return BaseGraph(

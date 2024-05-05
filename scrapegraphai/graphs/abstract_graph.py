@@ -55,9 +55,11 @@ class AbstractGraph(ABC):
         self.verbose = True if config is None else config.get("verbose", False)
         self.headless = True if config is None else config.get(
             "headless", True)
-        common_params = {"verbose": self.verbose,
-                         "headless": self.headless}
-        self.set_common_params(common_params)
+        common_params = {"headless": self.headless,
+                         "verbose": self.verbose,
+                         "llm_model": self.llm_model,
+                         "embedder_model": self.embedder_model}
+        self.set_common_params(common_params, overwrite=False)
 
 
     def set_common_params(self, params: dict):
