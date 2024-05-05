@@ -1,3 +1,10 @@
+## [0.9.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.2...v0.9.0-beta.3) (2024-05-05)
+
+
+### Features
+
+* add claude documentation ([5bdee55](https://github.com/VinciGit00/Scrapegraph-ai/commit/5bdee558760521bab818efc6725739e2a0f55d20))
+
 ## [0.9.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.1...v0.9.0-beta.2) (2024-05-05)
 
 
