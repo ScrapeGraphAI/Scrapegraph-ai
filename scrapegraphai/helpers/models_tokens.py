@@ -35,7 +35,8 @@ models_tokens = {
         "codellama": 16000,
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,
-        "stablelm-zephyr": 8192
+        "stablelm-zephyr": 8192,
+        "nomic-embed-text":8192
     },
     "groq": {
         "llama3-8b-8192": 8192,
@@ -65,5 +66,8 @@ models_tokens = {
         "mistral.mistral-large-2402-v1:0": 32768,
         "cohere.embed-english-v3": 512,
         "cohere.embed-multilingual-v3": 512
+    },
+    "mistral": {
+        "mistralai/Mistral-7B-Instruct-v0.2": 32000
     }
 }

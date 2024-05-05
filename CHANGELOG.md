@@ -1,3 +1,79 @@
+## [0.9.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.1...v0.9.0-beta.2) (2024-05-05)
+
+
+### Features
+
+* refactoring search function ([aeb1acb](https://github.com/VinciGit00/Scrapegraph-ai/commit/aeb1acbf05e63316c91672c99d88f8a6f338147f))
+
+
+### Bug Fixes
+
+* bug on .toml ([f7d66f5](https://github.com/VinciGit00/Scrapegraph-ai/commit/f7d66f51818dbdfddd0fa326f26265a3ab686b20))
+
+## [0.9.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.8.0...v0.9.0-beta.1) (2024-05-04)
+
+
+### Features
+
+* Enable end users to pass model instances of HuggingFaceHub ([7599234](https://github.com/VinciGit00/Scrapegraph-ai/commit/7599234ab9563ca4ee9b7f5b2d0267daac621ecf))
+
+
+### Build
+
+* **deps:** bump tqdm from 4.66.1 to 4.66.3 ([0a17c74](https://github.com/VinciGit00/Scrapegraph-ai/commit/0a17c74e50d0457aec289e81183e9c779c735842))
+* **deps:** bump tqdm from 4.66.1 to 4.66.3 ([aff6f98](https://github.com/VinciGit00/Scrapegraph-ai/commit/aff6f983b02a37ced21826847a6ace5fb15ecf3d))
+
+
+### CI
+
+* **release:** 0.8.0-beta.1 [skip ci] ([d277b34](https://github.com/VinciGit00/Scrapegraph-ai/commit/d277b349a98848749a7e38ea3c511271bced3b71))
+* **release:** 0.8.0-beta.2 [skip ci] ([892500a](https://github.com/VinciGit00/Scrapegraph-ai/commit/892500afe93c4d96dcffe897b382977a22079b83))
+
+## [0.8.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0...v0.8.0) (2024-05-03)
+
+
+
+### Features
+
+* add pdf scraper ([10a9453](https://github.com/VinciGit00/Scrapegraph-ai/commit/10a94530e3fd4dfde933ecfa96cb3e21df72e606))
+
+
+### CI
+
+* **release:** 0.7.0-beta.3 [skip ci] ([fbb06ab](https://github.com/VinciGit00/Scrapegraph-ai/commit/fbb06ab551fac9cc9824ad567f042e55450277bd))
+
+## [0.7.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.2...v0.7.0) (2024-05-03)
+
+### Features
+
+* add base_node to __init__.py ([cb1cb61](https://github.com/VinciGit00/Scrapegraph-ai/commit/cb1cb616b7998d3624bf57b19b5f1b1945fea4ef))
+* Azure implementation + embeddings refactoring ([aa9271e](https://github.com/VinciGit00/Scrapegraph-ai/commit/aa9271e7bc4daa54860499d0615580b17550ff58))
+
+
+### Refactor
+
+* Changed the way embedding model is created in AbstractGraph class and removed handling of embedding model creation from RAGNode. Now AbstractGraph will call a dedicated method for embedding models instead of _create_llm. This makes it easy to use any LLM with any supported embedding model. ([819cbcd](https://github.com/VinciGit00/Scrapegraph-ai/commit/819cbcd3be1a8cb195de0b44c6b6d4d824e2a42a))
+
+
+### CI
+
+* **release:** 0.7.0-beta.1 [skip ci] ([98dec36](https://github.com/VinciGit00/Scrapegraph-ai/commit/98dec36c60d1dc8b072482e8d514c3869a45a3f8))
+* **release:** 0.7.0-beta.2 [skip ci] ([42fa02e](https://github.com/VinciGit00/Scrapegraph-ai/commit/42fa02e65a3a81796bd66e55cf9dd1d1b692cb89))
+
+
+## [0.7.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0-beta.2...v0.7.0-beta.3) (2024-05-03)
+## [0.7.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.7.0-beta.1...v0.7.0-beta.2) (2024-05-03)
+
+
+### Features
+
+* Azure implementation + embeddings refactoring ([aa9271e](https://github.com/VinciGit00/Scrapegraph-ai/commit/aa9271e7bc4daa54860499d0615580b17550ff58))
+* add pdf scraper ([10a9453](https://github.com/VinciGit00/Scrapegraph-ai/commit/10a94530e3fd4dfde933ecfa96cb3e21df72e606))
+
+### Refactor
+
+* Changed the way embedding model is created in AbstractGraph class and removed handling of embedding model creation from RAGNode. Now AbstractGraph will call a dedicated method for embedding models instead of _create_llm. This makes it easy to use any LLM with any supported embedding model. ([819cbcd](https://github.com/VinciGit00/Scrapegraph-ai/commit/819cbcd3be1a8cb195de0b44c6b6d4d824e2a42a))
+
 ## [0.7.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.6.2...v0.7.0-beta.1) (2024-05-03)
 
 
