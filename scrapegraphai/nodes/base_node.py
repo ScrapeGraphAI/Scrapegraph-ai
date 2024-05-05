@@ -79,7 +79,7 @@ class BaseNode(ABC):
         if self.node_config is None:
             self.node_config = {}
         for key, val in params.items():
-            if hasattr(self, key) and key in self.node_config and overwrite:
+            if hasattr(self, key) and (key not in self.node_config or overwrite):
                 self.node_config[key] = val
                 setattr(self, key, val)
 
