@@ -29,7 +29,7 @@ class FetchNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Fetch".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict], node_name: str = "Fetch"):
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None, node_name: str = "Fetch"):
         super().__init__(node_name, "node", input, output, 1)
 
         self.headless = True if node_config is None else node_config.get("headless", True)
