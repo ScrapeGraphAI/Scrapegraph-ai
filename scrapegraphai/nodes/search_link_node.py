@@ -3,7 +3,7 @@ SearchLinkNode Module
 """
 
 # Imports from standard library
-from typing import List
+from typing import List, Optional
 from tqdm import tqdm
 from bs4 import BeautifulSoup
 
@@ -33,7 +33,7 @@ class SearchLinkNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None,
                  node_name: str = "GenerateLinks"):
         super().__init__(node_name, "node", input, output, 1, node_config)
 

@@ -6,8 +6,8 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings
 from scrapegraphai.models import OpenAI
-from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, SearchInternetNode
+from scrapegraphai.graphs import BaseGraph, SmartScraperGraph
+from scrapegraphai.nodes import SearchInternetNode, GraphIteratorNode, MergeAnswersNode
 load_dotenv()
 
 # ************************************************
@@ -24,6 +24,16 @@ graph_config = {
 }
 
 # ************************************************
+# Create a SmartScraperGraph instance
+# ************************************************
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="",
+    source="",
+    config=graph_config
+)
+
+# ************************************************
 # Define the graph nodes
 # ************************************************
 
@@ -32,38 +42,24 @@ embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
 
 search_internet_node = SearchInternetNode(
     input="user_prompt",
-    output=["url"],
-    node_config={
-        "llm_model": llm_model
-    }
-)
-fetch_node = FetchNode(
-    input="url | local_dir",
-    output=["doc"],
-    node_config={
-        "verbose": True,
-        "headless": True,
-    }
-)
-parse_node = ParseNode(
-    input="doc",
-    output=["parsed_doc"],
-    node_config={
-        "chunk_size": 4096,
-        "verbose": True,
-    }
-)
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
+    output=["urls"],
     node_config={
         "llm_model": llm_model,
-        "embedder_model": embedder,
         "verbose": True,
     }
 )
-generate_answer_node = GenerateAnswerNode(
-    input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+
+graph_iterator_node = GraphIteratorNode(
+    input="user_prompt & urls",
+    output=["results"],
+    node_config={
+        "graph_instance": smart_scraper_graph,
+        "verbose": True,
+    }
+)
+
+merge_answers_node = MergeAnswersNode(
+    input="user_prompt & results",
     output=["answer"],
     node_config={
         "llm_model": llm_model,
@@ -78,16 +74,12 @@ generate_answer_node = GenerateAnswerNode(
 graph = BaseGraph(
     nodes=[
         search_internet_node,
-        fetch_node,
-        parse_node,
-        rag_node,
-        generate_answer_node,
+        graph_iterator_node,
+        merge_answers_node
     ],
     edges=[
-        (search_internet_node, fetch_node),
-        (fetch_node, parse_node),
-        (parse_node, rag_node),
-        (rag_node, generate_answer_node)
+        (search_internet_node, graph_iterator_node),
+        (graph_iterator_node, merge_answers_node)
     ],
     entry_point=search_internet_node
 )
