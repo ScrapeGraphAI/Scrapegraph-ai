@@ -1,3 +1,10 @@
+## [0.9.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.3...v0.9.0-beta.4) (2024-05-05)
+
+
+### Features
+
+* add gemini embeddings ([79daa4c](https://github.com/VinciGit00/Scrapegraph-ai/commit/79daa4c112e076e9c5f7cd70bbbc6f5e4930832c))
+
 ## [0.9.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.2...v0.9.0-beta.3) (2024-05-05)
 
 
