@@ -46,16 +46,30 @@ class AbstractGraph(ABC):
         self.embedder_model = self.llm_model if "embeddings" not in config else self._create_llm(
             config["embeddings"])
 
-        # Set common configuration parameters
-        self.verbose = True if config is None else config.get("verbose", False)
-        self.headless = True if config is None else config.get(
-            "headless", True)
-
         # Create the graph
         self.graph = self._create_graph()
         self.final_state = None
         self.execution_info = None
 
+        # Set common configuration parameters
+        self.verbose = True if config is None else config.get("verbose", False)
+        self.headless = True if config is None else config.get(
+            "headless", True)
+        common_params = {"verbose": self.verbose,
+                         "headless": self.headless}
+        self.set_common_params(common_params)
+
+
+    def set_common_params(self, params: dict):
+        """
+        Pass parameters to every node in the graph unless otherwise defined in the graph.
+        
+        Args:
+            params (dict): Common parameters and their values.
+        """
+
+        for node in self.graph.nodes:
+            node.update_config(params)
 
     def _set_model_token(self, llm):
 
