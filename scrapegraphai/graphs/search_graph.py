@@ -49,25 +49,35 @@ class SearchGraph(AbstractGraph):
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["url"],
+            node_config={
+                "llm_model": self.llm_model
+            }
         )
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc"],
+            output=["doc"]
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
-                "chunk_size": self.model_token,
+                "chunk_size": self.model_token
             }
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
+            node_config={
+                "llm_model": self.llm_model,
+                "embedder_model": self.embedder_model
+            }
         )
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
+            node_config={
+                "llm_model": self.llm_model
+            }
         )
 
         return BaseGraph(

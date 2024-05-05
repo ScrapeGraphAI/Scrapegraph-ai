@@ -71,10 +71,15 @@ class ScriptCreatorGraph(AbstractGraph):
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
+            node_config={
+                "llm_model": self.llm_model,
+                "embedder_model": self.embedder_model
+            }
         )
         generate_scraper_node = GenerateScraperNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
+            node_config={"llm_model": self.llm_model},
             library=self.library,
             website=self.source
         )
