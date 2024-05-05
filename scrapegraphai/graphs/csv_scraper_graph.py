@@ -49,7 +49,7 @@ class CSVScraperGraph(AbstractGraph):
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
             node_config={
-                "llm": self.llm_model,
+                "llm_model": self.llm_model,
                 "embedder_model": self.embedder_model,
                 "verbose": self.verbose
             }
@@ -58,7 +58,7 @@ class CSVScraperGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
-                "llm": self.llm_model,
+                "llm_model": self.llm_model,
                 "verbose": self.verbose
             }
         )
