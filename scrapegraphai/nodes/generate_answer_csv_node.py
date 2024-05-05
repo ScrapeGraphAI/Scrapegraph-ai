@@ -22,14 +22,14 @@ class GenerateAnswerCSVNode(BaseNode):
     an answer.
 
     Attributes:
-        llm: An instance of a language model client, configured for generating answers.
+        llm_model: An instance of a language model client, configured for generating answers.
         node_name (str): The unique identifier name for the node, defaulting 
         to "GenerateAnswerNodeCsv".
         node_type (str): The type of the node, set to "node" indicating a 
         standard operational node.
 
     Args:
-        llm: An instance of the language model client (e.g., ChatOpenAI) used 
+        llm_model: An instance of the language model client (e.g., ChatOpenAI) used 
         for generating answers.
         node_name (str, optional): The unique identifier name for the node. 
         Defaults to "GenerateAnswerNodeCsv".
@@ -44,11 +44,11 @@ class GenerateAnswerCSVNode(BaseNode):
         """
         Initializes the GenerateAnswerNodeCsv with a language model client and a node name.
         Args:
-            llm: An instance of the OpenAIImageToText class.
+            llm_model: An instance of the OpenAIImageToText class.
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.verbose = True if node_config is None else node_config.get(
             "verbose", False)
 

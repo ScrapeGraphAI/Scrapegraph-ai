@@ -38,7 +38,7 @@ class RobotsNode(BaseNode):
                  node_name: str = "Robots"):
         super().__init__(node_name, "node", input, output, 1)
 
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.force_scraping = force_scraping
         self.verbose = True if node_config is None else node_config.get("verbose", False)
 

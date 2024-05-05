@@ -34,7 +34,7 @@ llm_model = OpenAI(graph_config["llm"])
 robot_node = RobotsNode(
     input="url",
     output=["is_scrapable"],
-    node_config={"llm": llm_model}
+    node_config={"llm_model": llm_model}
 )
 
 fetch_node = FetchNode(
@@ -50,12 +50,12 @@ parse_node = ParseNode(
 rag_node = RAGNode(
     input="user_prompt & (parsed_doc | doc)",
     output=["relevant_chunks"],
-    node_config={"llm": llm_model},
+    node_config={"llm_model": llm_model},
 )
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
-    node_config={"llm": llm_model},
+    node_config={"llm_model": llm_model},
 )
 
 # ************************************************

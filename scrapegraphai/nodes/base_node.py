@@ -68,6 +68,21 @@ class BaseNode(ABC):
 
         pass
 
+    def update_config(self, params: dict, overwrite: bool = False):
+        """
+        Updates the node_config dictionary as well as attributes with same key.
+
+        Args:
+            param (dict): The dictionary to update node_config with.
+            overwrite (bool): Flag indicating if the values of node_config should be overwritten if their value is not None.
+        """
+        if self.node_config is None:
+            self.node_config = {}
+        for key, val in params.items():
+            if hasattr(self, key) and (key not in self.node_config or overwrite):
+                self.node_config[key] = val
+                setattr(self, key, val)
+
     def get_input_keys(self, state: dict) -> List[str]:
         """
         Determines the necessary state keys based on the input specification.
