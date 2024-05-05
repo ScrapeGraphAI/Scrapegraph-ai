@@ -1,3 +1,28 @@
+## [0.9.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.8.0...v0.9.0) (2024-05-04)
+
+
+### Features
+
+* Enable end users to pass model instances of HuggingFaceHub ([7599234](https://github.com/VinciGit00/Scrapegraph-ai/commit/7599234ab9563ca4ee9b7f5b2d0267daac621ecf))
+
+
+### Bug Fixes
+
+* trailing whitespace ([2878695](https://github.com/VinciGit00/Scrapegraph-ai/commit/2878695d5f35cc9d81f24e4844fdc1988d10cb26))
+
+
+### Build
+
+* **deps:** bump tqdm from 4.66.1 to 4.66.3 ([0a17c74](https://github.com/VinciGit00/Scrapegraph-ai/commit/0a17c74e50d0457aec289e81183e9c779c735842))
+* **deps:** bump tqdm from 4.66.1 to 4.66.3 ([aff6f98](https://github.com/VinciGit00/Scrapegraph-ai/commit/aff6f983b02a37ced21826847a6ace5fb15ecf3d))
+
+
+### CI
+
+* **release:** 0.8.0-beta.1 [skip ci] ([d277b34](https://github.com/VinciGit00/Scrapegraph-ai/commit/d277b349a98848749a7e38ea3c511271bced3b71))
+* **release:** 0.8.0-beta.2 [skip ci] ([892500a](https://github.com/VinciGit00/Scrapegraph-ai/commit/892500afe93c4d96dcffe897b382977a22079b83))
+* **release:** 0.9.0-beta.1 [skip ci] ([14615a7](https://github.com/VinciGit00/Scrapegraph-ai/commit/14615a73c71bb5250772a75c415c57cb153660f8))
+
 ## [0.9.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.8.0...v0.9.0-beta.1) (2024-05-04)
 
 
