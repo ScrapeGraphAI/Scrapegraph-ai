@@ -3,7 +3,7 @@ GenerateScraperNode Module
 """
 
 # Imports from standard library
-from typing import List
+from typing import List, Optional
 from tqdm import tqdm
 
 # Imports from Langchain
@@ -36,11 +36,11 @@ class GenerateScraperNode(BaseNode):
 
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
-                 library: str, website: str, node_name: str = "GenerateAnswer"):
+    def __init__(self, input: str, output: List[str], library: str, website: str,
+                 node_config: Optional[dict]=None, node_name: str = "GenerateAnswer"):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.library = library
         self.source = website
 

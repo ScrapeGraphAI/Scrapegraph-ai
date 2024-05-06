@@ -3,7 +3,7 @@ SearchLinkNode Module
 """
 
 # Imports from standard library
-from typing import List
+from typing import List, Optional
 from tqdm import tqdm
 from bs4 import BeautifulSoup
 
@@ -33,12 +33,13 @@ class SearchLinkNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
                  node_name: str = "GenerateLinks"):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
-        self.llm_model = node_config["llm"]
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.llm_model = node_config["llm_model"]
+        self.verbose = True if node_config is None else node_config.get(
+            "verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -73,10 +74,11 @@ class SearchLinkNode(BaseNode):
                 links.append(soup.find_all("a"))
             state.update({self.output[0]: {elem for elem in links}})
 
-        except Exception as e:
+        except Exception:
             if self.verbose:
-                print("Error extracting links using classical methods. Using LLM to extract links.")
-                
+                print(
+                    "Error extracting links using classical methods. Using LLM to extract links.")
+
             output_parser = JsonOutputParser()
 
             template_chunks = """

@@ -57,35 +57,28 @@ class SmartScraperGraph(AbstractGraph):
         """
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc"],
-            node_config={
-                "headless": self.headless,
-                "verbose": self.verbose
-            }
+            output=["doc"]
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
-                "chunk_size": self.model_token,
-                "verbose": self.verbose
+                "chunk_size": self.model_token
             }
         )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
             node_config={
-                "llm": self.llm_model,
-                "embedder_model": self.embedder_model,
-                "verbose": self.verbose
+                "llm_model": self.llm_model,
+                "embedder_model": self.embedder_model
             }
         )
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
-                "llm": self.llm_model,
-                "verbose": self.verbose
+                "llm_model": self.llm_model
             }
         )
 
