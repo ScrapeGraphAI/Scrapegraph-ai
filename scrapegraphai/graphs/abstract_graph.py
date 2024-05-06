@@ -45,7 +45,7 @@ class AbstractGraph(ABC):
         self.config = config
         self.llm_model = self._create_llm(config["llm"], chat=True)
         self.embedder_model = self._create_default_embedder(llm_config=config["llm"]
-        ) if "embeddings" not in config else self._create_embedder(
+                                                            ) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
 
         # Create the graph
@@ -54,7 +54,8 @@ class AbstractGraph(ABC):
         self.execution_info = None
 
         # Set common configuration parameters
-        self.verbose = False if config is None else config.get("verbose", False)
+        self.verbose = False if config is None else config.get(
+            "verbose", False)
         self.headless = True if config is None else config.get(
             "headless", True)
         common_params = {"headless": self.headless,
@@ -63,11 +64,10 @@ class AbstractGraph(ABC):
                          "embedder_model": self.embedder_model}
         self.set_common_params(common_params, overwrite=False)
 
-
     def set_common_params(self, params: dict, overwrite=False):
         """
         Pass parameters to every node in the graph unless otherwise defined in the graph.
-        
+
         Args:
             params (dict): Common parameters and their values.
         """
@@ -89,7 +89,6 @@ class AbstractGraph(ABC):
                     self.model_token = models_tokens['mistral'][llm.repo_id]
                 except KeyError:
                     raise KeyError("Model not supported")
-                
         elif 'Google' in str(type(llm)):
             try:
                 if 'gemini' in llm.model:
@@ -216,7 +215,8 @@ class AbstractGraph(ABC):
             ValueError: If the model is not supported.
         """
         if isinstance(self.llm_model, Gemini):
-            return GoogleGenerativeAIEmbeddings(google_api_key=llm_config['api_key'], model="models/embedding-001")
+            return GoogleGenerativeAIEmbeddings(google_api_key=llm_config['api_key'],
+                                                model="models/embedding-001")
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):

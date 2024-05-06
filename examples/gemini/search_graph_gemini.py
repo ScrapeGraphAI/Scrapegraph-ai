@@ -21,6 +21,8 @@ graph_config = {
         "temperature": 0,
         "streaming": True
     },
+    "max_results": 5,
+    "verbose": True,
 }
 
 # ************************************************
