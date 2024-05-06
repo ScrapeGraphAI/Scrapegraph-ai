@@ -1,3 +1,12 @@
+## [0.9.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.4...v0.9.0-beta.5) (2024-05-06)
+
+
+### Features
+
+* fixed custom_graphs example and robots_node ([84fcb44](https://github.com/VinciGit00/Scrapegraph-ai/commit/84fcb44aaa36e84f775884138d04f4a60bb389be))
+* multiple graph instances ([dbb614a](https://github.com/VinciGit00/Scrapegraph-ai/commit/dbb614a8dd88d7667fe3daaf0263f5d6e9be1683))
+* **node:** multiple url search in SearchGraph + fixes ([930adb3](https://github.com/VinciGit00/Scrapegraph-ai/commit/930adb38f2154ba225342466bfd1846c47df72a0))
+
 ## [0.9.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.3...v0.9.0-beta.4) (2024-05-05)
 
 
