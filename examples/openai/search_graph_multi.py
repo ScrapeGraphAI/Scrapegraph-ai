@@ -4,11 +4,10 @@ Example of custom graph using existing nodes
 
 import os
 from dotenv import load_dotenv
-
 from langchain_openai import OpenAIEmbeddings
 from scrapegraphai.models import OpenAI
-from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+from scrapegraphai.graphs import BaseGraph, SmartScraperGraph
+from scrapegraphai.nodes import SearchInternetNode, GraphIteratorNode, MergeAnswersNode
 load_dotenv()
 
 # ************************************************
@@ -21,10 +20,18 @@ graph_config = {
     "llm": {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
-        "temperature": 0,
-        "streaming": False
     },
 }
+
+# ************************************************
+# Create a SmartScraperGraph instance
+# ************************************************
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="",
+    source="",
+    config=graph_config
+)
 
 # ************************************************
 # Define the graph nodes
@@ -33,43 +40,27 @@ graph_config = {
 llm_model = OpenAI(graph_config["llm"])
 embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
 
-# define the nodes for the graph
-robot_node = RobotsNode(
-    input="url",
-    output=["is_scrapable"],
+search_internet_node = SearchInternetNode(
+    input="user_prompt",
+    output=["urls"],
     node_config={
         "llm_model": llm_model,
+        "max_results": 5,  # num of search results to fetch
         "verbose": True,
-        }
+    }
 )
 
-fetch_node = FetchNode(
-    input="url | local_dir",
-    output=["doc"],
+graph_iterator_node = GraphIteratorNode(
+    input="user_prompt & urls",
+    output=["results"],
     node_config={
-        "verbose": True,
-        "headless": True,
-    }
-)
-parse_node = ParseNode(
-    input="doc",
-    output=["parsed_doc"],
-    node_config={
-        "chunk_size": 4096,
+        "graph_instance": smart_scraper_graph,
         "verbose": True,
     }
 )
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
-    node_config={
-        "llm_model": llm_model,
-        "embedder_model": embedder,
-        "verbose": True,
-    }
-)
-generate_answer_node = GenerateAnswerNode(
-    input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+
+merge_answers_node = MergeAnswersNode(
+    input="user_prompt & results",
     output=["answer"],
     node_config={
         "llm_model": llm_model,
@@ -83,19 +74,15 @@ generate_answer_node = GenerateAnswerNode(
 
 graph = BaseGraph(
     nodes=[
-        robot_node,
-        fetch_node,
-        parse_node,
-        rag_node,
-        generate_answer_node,
+        search_internet_node,
+        graph_iterator_node,
+        merge_answers_node
     ],
     edges=[
-        (robot_node, fetch_node),
-        (fetch_node, parse_node),
-        (parse_node, rag_node),
-        (rag_node, generate_answer_node)
+        (search_internet_node, graph_iterator_node),
+        (graph_iterator_node, merge_answers_node)
     ],
-    entry_point=robot_node
+    entry_point=search_internet_node
 )
 
 # ************************************************
@@ -103,8 +90,7 @@ graph = BaseGraph(
 # ************************************************
 
 result, execution_info = graph.execute({
-    "user_prompt": "List me the projects with their description",
-    "url": "https://perinim.github.io/projects/"
+    "user_prompt": "List me all the typical Chioggia dishes."
 })
 
 # get the answer from the result

@@ -5,12 +5,11 @@ SearchGraph Module
 from .base_graph import BaseGraph
 from ..nodes import (
     SearchInternetNode,
-    FetchNode,
-    ParseNode,
-    RAGNode,
-    GenerateAnswerNode
+    GraphIteratorNode,
+    MergeAnswersNode
 )
 from .abstract_graph import AbstractGraph
+from .smart_scraper_graph import SmartScraperGraph
 
 
 class SearchGraph(AbstractGraph):
@@ -38,6 +37,11 @@ class SearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
+    def __init__(self, prompt: str, config: dict):
+
+        self.max_results = config.get("max_results", 3)
+        super().__init__(prompt, config)
+
     def _create_graph(self) -> BaseGraph:
         """
         Creates the graph of nodes representing the workflow for web scraping and searching.
@@ -46,53 +50,53 @@ class SearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
+        # ************************************************
+        # Create a SmartScraperGraph instance
+        # ************************************************
+
+        smart_scraper_instance = SmartScraperGraph(
+            prompt="",
+            source="",
+            config=self.config
+        )
+
+        # ************************************************
+        # Define the graph nodes
+        # ************************************************
+
         search_internet_node = SearchInternetNode(
             input="user_prompt",
-            output=["url"],
-            node_config={
-                "llm_model": self.llm_model
-            }
-        )
-        fetch_node = FetchNode(
-            input="url | local_dir",
-            output=["doc"]
-        )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token
-            }
-        )
-        rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
-            output=["relevant_chunks"],
+            output=["urls"],
             node_config={
                 "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model
+                "max_results": self.max_results
             }
         )
-        generate_answer_node = GenerateAnswerNode(
-            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+        graph_iterator_node = GraphIteratorNode(
+            input="user_prompt & urls",
+            output=["results"],
+            node_config={
+                "graph_instance": smart_scraper_instance,
+            }
+        )
+
+        merge_answers_node = MergeAnswersNode(
+            input="user_prompt & results",
             output=["answer"],
             node_config={
-                "llm_model": self.llm_model
+                "llm_model": self.llm_model,
             }
         )
 
         return BaseGraph(
             nodes=[
                 search_internet_node,
-                fetch_node,
-                parse_node,
-                rag_node,
-                generate_answer_node,
+                graph_iterator_node,
+                merge_answers_node
             ],
             edges=[
-                (search_internet_node, fetch_node),
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
-                (rag_node, generate_answer_node)
+                (search_internet_node, graph_iterator_node),
+                (graph_iterator_node, merge_answers_node)
             ],
             entry_point=search_internet_node
         )

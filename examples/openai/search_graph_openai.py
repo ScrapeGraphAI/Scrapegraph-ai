@@ -19,6 +19,8 @@ graph_config = {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
     },
+    "max_results": 5,
+    "verbose": True,
 }
 
 # ************************************************
@@ -26,7 +28,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me top 5 eyeliner products for a gift.",
+    prompt="List me the best escursions near Trento",
     config=graph_config
 )
 

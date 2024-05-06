@@ -2,7 +2,7 @@
 Module for generating the answer node
 """
 # Imports from standard library
-from typing import List
+from typing import List, Optional
 from tqdm import tqdm
 
 # Imports from Langchain
@@ -39,7 +39,7 @@ class GenerateAnswerCSVNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
                  node_name: str = "GenerateAnswer"):
         """
         Initializes the GenerateAnswerNodeCsv with a language model client and a node name.

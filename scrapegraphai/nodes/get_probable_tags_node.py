@@ -2,7 +2,7 @@
 GetProbableTagsNode Module
 """
 
-from typing import List
+from typing import List, Optional
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from .base_node import BaseNode
