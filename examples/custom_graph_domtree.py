@@ -145,11 +145,27 @@ subtree_dict_complex = {
     }
 }
 
-result, execution_info = graph.execute({
-    "user_prompt": "How many list items are there in the document?",
-    "local_dir": str(subtree_dict_simple)
-})
+from playwright.sync_api import sync_playwright, Playwright
 
-# get the answer from the result
-result = result.get("answer", "No answer found.")
-print(result)
+def run(playwright: Playwright):
+    chromium = playwright.chromium # or "firefox" or "webkit".
+    browser = chromium.launch()
+    page = browser.new_page()
+    page.goto("https://www.wired.com/category/science/")
+    #get accessibilty tree
+    accessibility_tree = page.accessibility.snapshot()
+
+    result, execution_info = graph.execute({
+        "user_prompt": "List me all the latest news with their description.",
+        "local_dir": str(accessibility_tree)
+    })
+
+    # get the answer from the result
+    result = result.get("answer", "No answer found.")
+    print(result)
+    # other actions...
+    browser.close()
+
+with sync_playwright() as playwright:
+    run(playwright)
+
