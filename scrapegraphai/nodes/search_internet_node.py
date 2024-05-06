@@ -87,19 +87,13 @@ class SearchInternetNode(BaseNode):
         if self.verbose:
             print(f"Search Query: {search_query}")
 
+        answer = search_on_web(
+            query=search_query, max_results=self.max_results)
 
-<< << << < HEAD
-   answer = search_on_web(
-        query=search_query, max_results=self.max_results)
-== == == =
+        if len(answer) == 0:
+            # raise an exception if no answer is found
+            raise ValueError("Zero results found for the search query.")
 
-   answer = search_on_web(query=search_query, max_results=self.max_results)
->>>>>> > 532adb639d58640bc89e8b162903b2ed97be9853
-
-   if len(answer) == 0:
-           # raise an exception if no answer is found
-        raise ValueError("Zero results found for the search query.")
-
-    # Update the state with the generated answer
-    state.update({self.output[0]: answer})
-    return state
+        # Update the state with the generated answer
+        state.update({self.output[0]: answer})
+        return state
