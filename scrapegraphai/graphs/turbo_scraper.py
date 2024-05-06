@@ -8,7 +8,8 @@ from ..nodes import (
     ParseNode,
     RAGNode,
     SearchLinksWithContext,
-    GenerateAnswerNode
+    GraphIteratorNode,
+    MergeAnswersNode
 )
 from .search_graph import SearchGraph
 from .abstract_graph import AbstractGraph
@@ -57,17 +58,24 @@ class SmartScraperGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
-        fetch_node_1 = FetchNode(
+        smart_scraper_graph = SmartScraperGraph(
+            prompt="",
+            source="",
+            config=self.llm_model
+        )
+        fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"]
         )
-        parse_node_1 = ParseNode(
+
+        parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
                 "chunk_size": self.model_token
             }
         )
+
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
@@ -76,6 +84,7 @@ class SmartScraperGraph(AbstractGraph):
                 "embedder_model": self.embedder_model
             }
         )
+
         search_link_with_context_node = SearchLinksWithContext(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
@@ -84,26 +93,43 @@ class SmartScraperGraph(AbstractGraph):
             }
         )
 
-        search_graph = SearchGraph(
-            prompt="List me the best escursions near Trento",
-            config=self.llm_model
+        graph_iterator_node = GraphIteratorNode(
+            input="user_prompt & urls",
+            output=["results"],
+            node_config={
+                "graph_instance": smart_scraper_graph,
+                "verbose": True,
+            }
+        )
+
+        merge_answers_node = MergeAnswersNode(
+            input="user_prompt & results",
+            output=["answer"],
+            node_config={
+                "llm_model": self.llm_model,
+                "verbose": True,
+            }
         )
 
         return BaseGraph(
             nodes=[
-                fetch_node_1,
-                parse_node_1,
+                fetch_node,
+                parse_node,
                 rag_node,
                 search_link_with_context_node,
-                search_graph
+                graph_iterator_node,
+                merge_answers_node
+
             ],
             edges=[
-                (fetch_node_1, parse_node_1),
-                (parse_node_1, rag_node),
+                (fetch_node, parse_node),
+                (parse_node, rag_node),
                 (rag_node, search_link_with_context_node),
-                (search_link_with_context_node, search_graph)
+                (search_link_with_context_node, graph_iterator_node),
+                (graph_iterator_node, merge_answers_node),
+
             ],
-            entry_point=fetch_node_1
+            entry_point=fetch_node
         )
 
     def run(self) -> str:
