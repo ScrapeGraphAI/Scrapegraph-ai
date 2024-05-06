@@ -1,3 +1,10 @@
+## [0.9.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.5...v0.9.0-beta.6) (2024-05-06)
+
+
+### Features
+
+* Fix bug for gemini case when embeddings config not passed ([726de28](https://github.com/VinciGit00/Scrapegraph-ai/commit/726de288982700dab8ab9f22af8e26f01c6198a7))
+
 ## [0.9.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.4...v0.9.0-beta.5) (2024-05-06)
 
 
