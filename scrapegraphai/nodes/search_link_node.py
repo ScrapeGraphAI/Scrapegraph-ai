@@ -3,7 +3,7 @@ SearchLinkNode Module
 """
 
 # Imports from standard library
-from typing import List
+from typing import List, Optional
 from tqdm import tqdm
 from bs4 import BeautifulSoup
 

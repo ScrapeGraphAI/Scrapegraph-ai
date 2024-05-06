@@ -2,7 +2,7 @@
 RAGNode Module
 """
 
-from typing import List
+from typing import List, Optional
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
@@ -31,7 +31,7 @@ class RAGNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Parse".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict, node_name: str = "RAG"):
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None, node_name: str = "RAG"):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]

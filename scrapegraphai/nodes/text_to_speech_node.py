@@ -2,7 +2,7 @@
 TextToSpeechNode Module
 """
 
-from typing import List
+from typing import List, Optional
 from .base_node import BaseNode
 
 
@@ -22,7 +22,7 @@ class TextToSpeechNode(BaseNode):
     """
 
     def __init__(self, input: str, output: List[str],
-                 node_config: dict, node_name: str = "TextToSpeech"):
+                 node_config: Optional[dict]=None, node_name: str = "TextToSpeech"):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.tts_model = node_config["tts_model"]
