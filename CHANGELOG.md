@@ -1,3 +1,10 @@
+## [0.9.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.7...v0.9.0-beta.8) (2024-05-06)
+
+
+### Features
+
+* add llava integration ([019b722](https://github.com/VinciGit00/Scrapegraph-ai/commit/019b7223dc969c87c3c36b6a42a19b4423b5d2af))
+
 ## [0.9.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.6...v0.9.0-beta.7) (2024-05-06)
 
 
