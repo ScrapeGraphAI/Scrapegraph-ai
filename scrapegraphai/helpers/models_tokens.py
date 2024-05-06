@@ -71,5 +71,34 @@ models_tokens = {
     "mistral": {
         "mistralai/Mistral-7B-Instruct-v0.2": 32000
     },
-    "hugging_face": {}
+    "hugging_face": {
+        "meta-llama/Meta-Llama-3-8B": 8192,
+        "meta-llama/Meta-Llama-3-8B-Instruct": 8192,
+        "meta-llama/Meta-Llama-3-70B": 8192,
+        "meta-llama/Meta-Llama-3-70B-Instruct": 8192,
+        "google/gemma-2b": 8192,
+        "google/gemma-2b-it": 8192,
+        "google/gemma-7b": 8192,
+        "google/gemma-7b-it": 8192,
+        "microsoft/phi-2": 2048,
+        "openai-community/gpt2": 1024,
+        "openai-community/gpt2-medium": 1024,
+        "openai-community/gpt2-large": 1024,
+        "facebook/opt-125m": 2048,
+        "petals-team/StableBeluga2": 8192,
+        "distilbert/distilgpt2": 1024,
+        "mistralai/Mistral-7B-Instruct-v0.2": 32768,
+        "gradientai/Llama-3-8B-Instruct-Gradient-1048k": 1040200,
+        "NousResearch/Hermes-2-Pro-Llama-3-8B": 8192,
+        "NousResearch/Hermes-2-Pro-Llama-3-8B-GGUF": 8192,
+        "nvidia/Llama3-ChatQA-1.5-8B": 8192,
+        "microsoft/Phi-3-mini-4k-instruct": 4192,
+        "microsoft/Phi-3-mini-128k-instruct": 131072,
+        "mlabonne/Meta-Llama-3-120B-Instruct": 8192,
+        "cognitivecomputations/dolphin-2.9-llama3-8b": 8192,
+        "cognitivecomputations/dolphin-2.9-llama3-8b-gguf": 8192,
+        "cognitivecomputations/dolphin-2.8-mistral-7b-v02": 32768,
+        "cognitivecomputations/dolphin-2.5-mixtral-8x7b": 32768,
+        "TheBloke/dolphin-2.7-mixtral-8x7b-GGUF": 32768
+    }
 }
