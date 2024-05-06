@@ -26,6 +26,7 @@ models_tokens = {
     },
     "gemini": {
         "gemini-pro": 128000,
+        "models/embedding-001": 2048
     },
 
     "ollama": {

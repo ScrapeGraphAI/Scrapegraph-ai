@@ -15,4 +15,6 @@ class Gemini(ChatGoogleGenerativeAI):
     """
 
     def __init__(self, llm_config: dict):
+        # replace "api_key" to "google_api_key"
+        llm_config["google_api_key"] = llm_config.pop("api_key", None)
         super().__init__(**llm_config)
