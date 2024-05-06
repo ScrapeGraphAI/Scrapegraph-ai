@@ -1,6 +1,7 @@
 langchain==0.1.14
 langchain-openai==0.1.1
 langchain-google-genai==1.0.1
+langchain-anthropic==0.1.11
 html2text==2020.1.16
 faiss-cpu==1.8.0
 beautifulsoup4==4.12.3
