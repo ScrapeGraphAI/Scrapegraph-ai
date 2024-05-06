@@ -34,13 +34,14 @@ class RobotsNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Robots".
     """
 
-    def __init__(self, input: str, output: List[str],  node_config: Optional[dict]=None, force_scraping=True,
+    def __init__(self, input: str, output: List[str],  node_config: Optional[dict] = None, force_scraping=True,
                  node_name: str = "Robots"):
         super().__init__(node_name, "node", input, output, 1)
 
         self.llm_model = node_config["llm_model"]
         self.force_scraping = force_scraping
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.verbose = True if node_config is None else node_config.get(
+            "verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -96,7 +97,8 @@ class RobotsNode(BaseNode):
             loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
             if "ollama" in self.llm_model.model_name:
-                self.llm_model.model_name = self.llm_model.model_name.split("/")[-1]
+                self.llm_model.model_name = self.llm_model.model_name.split(
+                    "/")[-1]
                 model = self.llm_model.model_name.split("/")[-1]
 
             else:
@@ -121,7 +123,6 @@ class RobotsNode(BaseNode):
             if "no" in is_scrapable:
                 if self.verbose:
                     print("\033[33mScraping this website is not allowed\033[0m")
-                    
                 if not self.force_scraping:
                     raise ValueError(
                         'The website you selected is not scrapable')

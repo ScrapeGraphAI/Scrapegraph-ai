@@ -7,14 +7,16 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     RAGNode,
+    SearchLinksWithContext,
     GenerateAnswerNode
 )
+from .search_graph import SearchGraph
 from .abstract_graph import AbstractGraph
 
 
 class SmartScraperGraph(AbstractGraph):
     """
-    SmartScraper is a scraping pipeline that automates the process of 
+    SmartScraper is a scraping pipeline that automates the process of
     extracting information from web pages
     using a natural language model to interpret and answer prompts.
 
@@ -23,7 +25,7 @@ class SmartScraperGraph(AbstractGraph):
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, 
+        embedder_model: An instance of an embedding model client,
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
@@ -55,11 +57,11 @@ class SmartScraperGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
-        fetch_node = FetchNode(
+        fetch_node_1 = FetchNode(
             input="url | local_dir",
             output=["doc"]
         )
-        parse_node = ParseNode(
+        parse_node_1 = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
@@ -74,7 +76,7 @@ class SmartScraperGraph(AbstractGraph):
                 "embedder_model": self.embedder_model
             }
         )
-        generate_answer_node = GenerateAnswerNode(
+        search_link_with_context_node = SearchLinksWithContext(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
@@ -82,19 +84,26 @@ class SmartScraperGraph(AbstractGraph):
             }
         )
 
+        search_graph = SearchGraph(
+            prompt="List me the best escursions near Trento",
+            config=self.llm_model
+        )
+
         return BaseGraph(
             nodes=[
-                fetch_node,
-                parse_node,
+                fetch_node_1,
+                parse_node_1,
                 rag_node,
-                generate_answer_node,
+                search_link_with_context_node,
+                search_graph
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
-                (rag_node, generate_answer_node)
+                (fetch_node_1, parse_node_1),
+                (parse_node_1, rag_node),
+                (rag_node, search_link_with_context_node),
+                (search_link_with_context_node, search_graph)
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node_1
         )
 
     def run(self) -> str:
