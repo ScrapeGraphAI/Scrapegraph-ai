@@ -6,9 +6,7 @@ from typing import Optional
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Claude
-from langchain_aws.embeddings.bedrock import BedrockEmbeddings
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
 
 
 class AbstractGraph(ABC):
@@ -200,6 +198,9 @@ class AbstractGraph(ABC):
                     "temperature": llm_params["temperature"],
                 }
             })
+        elif "claude-3-" in llm_params["model"]:
+            self.model_token = models_tokens["claude"]["claude3"]
+            return Anthropic(llm_params)
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")

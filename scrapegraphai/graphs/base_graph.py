@@ -7,6 +7,7 @@ import warnings
 from langchain_community.callbacks import get_openai_callback
 from typing import Tuple
 
+
 class BaseGraph:
     """
     BaseGraph manages the execution flow of a graph composed of interconnected nodes.
@@ -82,7 +83,7 @@ class BaseGraph:
         Returns:
             Tuple[dict, list]: A tuple containing the final state and a list of execution info.
         """
-        
+
         current_node_name = self.nodes[0]
         state = initial_state
 
