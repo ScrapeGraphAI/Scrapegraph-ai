@@ -100,11 +100,10 @@ class SearchGraph(AbstractGraph):
     def run(self) -> str:
         """
         Executes the web scraping and searching process.
-        
+
         Returns:
             str: The answer to the prompt.
         """
-        
         inputs = {"user_prompt": self.prompt}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
