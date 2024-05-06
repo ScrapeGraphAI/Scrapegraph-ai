@@ -29,12 +29,13 @@ class MergeAnswersNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
                  node_name: str = "MergeAnswers"):
         super().__init__(node_name, "node", input, output, 2, node_config)
-        
+
         self.llm_model = node_config["llm_model"]
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.verbose = True if node_config is None else node_config.get(
+            "verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -63,12 +64,12 @@ class MergeAnswersNode(BaseNode):
 
         user_prompt = input_data[0]
         answers = input_data[1]
-        
+
         # merge the answers in one string
         answers_str = ""
         for i, answer in enumerate(answers):
             answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
-    
+
         output_parser = JsonOutputParser()
         format_instructions = output_parser.get_format_instructions()
 
@@ -79,7 +80,7 @@ class MergeAnswersNode(BaseNode):
         The scraped contents are in a JSON format and you need to merge them based on the context and providing a correct JSON structure.\n
         OUTPUT INSTRUCTIONS: {format_instructions}\n
         USER PROMPT: {user_prompt}\n
-        {website_content}
+        WEBSITE CONTENT: {website_content}
         """
 
         prompt_template = PromptTemplate(
