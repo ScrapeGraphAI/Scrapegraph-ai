@@ -31,12 +31,14 @@ models_tokens = {
     "ollama": {
         "llama2": 4096,
         "llama3": 8192,
+        "llava": 4096,
+        "llava_next": 4096,
         "mistral": 8192,
         "codellama": 16000,
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,
         "stablelm-zephyr": 8192,
-        "nomic-embed-text":8192
+        "nomic-embed-text": 8192
     },
     "groq": {
         "llama3-8b-8192": 8192,
