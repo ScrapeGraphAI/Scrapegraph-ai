@@ -1,3 +1,10 @@
+## [0.9.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.6...v0.9.0-beta.7) (2024-05-06)
+
+
+### Bug Fixes
+
+* **llm:** fixed gemini api_key ([fd01b73](https://github.com/VinciGit00/Scrapegraph-ai/commit/fd01b73b71b515206cfdf51c1d52136293494389))
+
 ## [0.9.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.5...v0.9.0-beta.6) (2024-05-06)
 
 
