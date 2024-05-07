@@ -89,7 +89,7 @@ Note: before using the local model remember to create the docker container!
     docker-compose up -d
     docker exec -it ollama ollama pull stablelm-zephyr
 ```
-You can use which models avaiable on Ollama or your own model instead of stablelm-zephyr
+You can use which models available on Ollama or your own model instead of stablelm-zephyr
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 
