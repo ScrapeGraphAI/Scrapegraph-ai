@@ -89,7 +89,7 @@ Note: before using the local model remember to create the docker container!
     docker-compose up -d
     docker exec -it ollama ollama pull stablelm-zephyr
 ```
-You can use which models avaiable on Ollama or your own model instead of stablelm-zephyr
+You can use which models available on Ollama or your own model instead of stablelm-zephyr
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 
@@ -247,7 +247,7 @@ Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegra
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
 ## 📈 Roadmap
-Check out the project roadmap [here](docs/README.md)! 🚀
+Check out the project roadmap [here](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/README.md)! 🚀
 
 Wanna visualize the roadmap in a more interactive way? Check out the [markmap](https://markmap.js.org/repl) visualization by copy pasting the markdown content in the editor!
 
