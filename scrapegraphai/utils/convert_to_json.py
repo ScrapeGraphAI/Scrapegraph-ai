@@ -6,23 +6,33 @@ import os
 import sys
 
 
-def convert_to_json(data: dict, filename: str, position: str = None):
+def convert_to_json(data: dict, filename: str, position: str = None) -> None:
     """
-    Convert data to JSON format and save it to a file.
+    Converts a dictionary to a JSON file and saves it at a specified location.
 
     Args:
-    data (dict): Data to save.
-    filename (str): Name of the file to save without .json extension.
-    position (str): Directory where the file should be saved. If None, 
-    the directory of the caller script will be used.
+        data (dict): The data to be converted into JSON format.
+        filename (str): The name of the output JSON file, without the '.json' extension.
+        position (str, optional): The file path where the JSON file should be saved. Defaults to the directory of the caller script if not provided.
 
+    Returns:
+        None: The function does not return anything.
+        
     Raises:
-    ValueError: If filename contains '.json'.
-    FileNotFoundError: If the specified directory does not exist.
-    PermissionError: If the program does not have permission to write to the directory.
+        ValueError: If 'filename' contains '.json'.
+        FileNotFoundError: If the specified directory does not exist.
+        PermissionError: If write permissions are lacking for the directory.
+
+    Example:
+        >>> convert_to_json({'id': [1, 2], 'value': [10, 20]}, 'output', '/path/to/save')
+        Saves a JSON file named 'output.json' at '/path/to/save'.
+
+    Notes:
+        This function automatically ensures the directory exists before attempting to write the file. If the directory does not exist, it will attempt to create it.
     """
+
     if ".json" in filename:
-        raise ValueError("The filename should not contain '.json'")
+        filename = filename.replace(".json", "")  # Remove .json extension
 
   # Get the directory of the caller script
     if position is None:

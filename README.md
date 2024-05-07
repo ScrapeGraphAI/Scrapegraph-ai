@@ -3,11 +3,12 @@
 [![Downloads](https://static.pepy.tech/badge/scrapegraphai)](https://pepy.tech/project/scrapegraphai)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 [![Pylint](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/pylint.yml/badge.svg)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/pylint.yml)
+[![CodeQL](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/codeql.yml/badge.svg)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
 
-ScrapeGraphAI is a *web scraping* python library which uses LLM and direct graph logic to create scraping pipelines for websites, documents and XML files.
+ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites, documents and XML files.
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">
@@ -17,11 +18,18 @@ Just say which information you want to extract and the library will do it for yo
 
 ## 🚀 Quick install
 
-The reference page for Scrapegraph-ai is avaible on the official page of pypy: [pypi](https://pypi.org/project/scrapegraphai/).
+The reference page for Scrapegraph-ai is available on the official page of pypy: [pypi](https://pypi.org/project/scrapegraphai/).
 
 ```bash
 pip install scrapegraphai
 ```
+you will also need to install Playwright for javascript-based scraping:
+```bash
+playwright install
+```
+
+**Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
+
 ## 🔍 Demo
 Official streamlit demo:
 
@@ -43,8 +51,9 @@ Check out also the docusaurus [documentation](https://scrapegraph-doc.onrender.c
 You can use the `SmartScraper` class to extract information from a website using a prompt.
 
 The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
-### Case 1: Extracting informations using Ollama
+### Case 1: Extracting information using Ollama
 Remember to download the model on Ollama separately!
+
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 
@@ -53,12 +62,11 @@ graph_config = {
         "model": "ollama/mistral",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # set Ollama URL
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # set Ollama URL
     }
 }
 
@@ -74,12 +82,12 @@ print(result)
 
 ```
 
-### Case 2: Extracting informations using Docker
+### Case 2: Extracting information using Docker
 
-Note: before using the local model remeber to create the docker container!
+Note: before using the local model remember to create the docker container!
 ```text
     docker-compose up -d
-    docker exec -it ollama ollama run stablelm-zephyr
+    docker exec -it ollama ollama pull stablelm-zephyr
 ```
 You can use which models avaiable on Ollama or your own model instead of stablelm-zephyr
 ```python
@@ -106,7 +114,7 @@ print(result)
 ```
 
 
-### Case 3: Extracting informations using Openai model
+### Case 3: Extracting information using Openai model
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 OPENAI_API_KEY = "YOUR_API_KEY"
@@ -129,7 +137,69 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-### Case 4: Extracting informations using Gemini 
+### Case 4: Extracting information using Groq
+```python
+from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.utils import prettify_exec_info
+
+groq_key = os.getenv("GROQ_APIKEY")
+
+graph_config = {
+    "llm": {
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
+    },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        "base_url": "http://localhost:11434", 
+    },
+    "headless": False
+}
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the projects with their description and the author.",
+    source="https://perinim.github.io/projects",
+    config=graph_config
+)
+
+result = smart_scraper_graph.run()
+print(result)
+```
+
+
+### Case 5: Extracting information using Azure
+```python
+from langchain_openai import AzureChatOpenAI
+from langchain_openai import AzureOpenAIEmbeddings
+
+lm_model_instance = AzureChatOpenAI(
+    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
+)
+
+embedder_model_instance = AzureOpenAIEmbeddings(
+    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
+    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+)
+graph_config = {
+    "llm": {"model_instance": llm_model_instance},
+    "embeddings": {"model_instance": embedder_model_instance}
+}
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="""List me all the events, with the following fields: company_name, event_name, event_start_date, event_start_time, 
+    event_end_date, event_end_time, location, event_mode, event_category, 
+    third_party_redirect, no_of_days, 
+    time_in_hours, hosted_or_attending, refreshments_type, 
+    registration_available, registration_link""",
+    source="https://www.hmhco.com/event",
+    config=graph_config
+)
+```
+
+### Case 6: Extracting information using Gemini 
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
 GOOGLE_APIKEY = "YOUR_API_KEY"
@@ -153,7 +223,7 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-The output for alle 3 the cases will be a dictionary with the extracted information, for example:
+The output for all 3 the cases will be a dictionary with the extracted information, for example:
 
 ```bash
 {
@@ -168,13 +238,18 @@ The output for alle 3 the cases will be a dictionary with the extracted informat
 
 ## 🤝 Contributing
 
-Fell free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
+Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
 
-For more information, please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
+Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/gkxQDAjfeX)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
-[![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraph)
+[![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
+
+## 📈 Roadmap
+Check out the project roadmap [here](docs/README.md)! 🚀
+
+Wanna visualize the roadmap in a more interactive way? Check out the [markmap](https://markmap.js.org/repl) visualization by copy pasting the markdown content in the editor!
 
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
@@ -187,7 +262,7 @@ If you have used our library for research purposes please quote us with the foll
     title = {Scrapegraph-ai},
     year = {2024},
     url = {https://github.com/VinciGit00/Scrapegraph-ai},
-    note = {A Python library for scraping data from graphs}
+    note = {A Python library for scraping leveraging large language models}
   }
 ```
 

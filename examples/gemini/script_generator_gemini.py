@@ -19,8 +19,9 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gpt-3.5-turbo",
+        "model": "gemini-pro",
     },
+    "library": "beautifoulsoup"
 }
 
 # ************************************************

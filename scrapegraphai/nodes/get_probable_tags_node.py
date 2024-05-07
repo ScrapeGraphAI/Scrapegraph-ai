@@ -1,6 +1,7 @@
 """
-Module for proobable tags
+GetProbableTagsNode Module
 """
+
 from typing import List
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
@@ -15,47 +16,36 @@ class GetProbableTagsNode(BaseNode):
     list of probable tags.
 
     Attributes:
-        llm: An instance of a language model client, configured for generating tag predictions.
-        node_name (str): The unique identifier name for the node,
-        defaulting to "GetProbableTagsNode".
-        node_type (str): The type of the node, set to "node" indicating a standard operational node.
+        llm_model: An instance of the language model client used for tag predictions.
 
     Args:
-        llm: An instance of the language model client (e.g., ChatOpenAI) used for tag predictions.
-        node_name (str, optional): The unique identifier name for the node. 
-        Defaults to "GetProbableTagsNode".
-
-    Methods:
-        execute(state): Processes the user's input and the URL from the state to generate a list of 
-                        probable HTML tags, updating the state with these tags under the 'tags' key.
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        model_config (dict): Additional configuration for the language model.
+        node_name (str): The unique identifier name for the node, defaulting to "GetProbableTags".
     """
 
     def __init__(self, input: str, output: List[str], model_config: dict,
                  node_name: str = "GetProbableTags"):
-        """
-        Initializes the GetProbableTagsNode with a language model client and a node name.
-        Args:
-            llm (OpenAIImageToText): An instance of the OpenAIImageToText class.
-            node_name (str): name of the node
-        """
         super().__init__(node_name, "node", input, output, 2, model_config)
+
         self.llm_model = model_config["llm_model"]
 
-    def execute(self, state):
+    def execute(self, state: dict) -> dict:
         """
         Generates a list of probable HTML tags based on the user's input and updates the state 
         with this list. The method constructs a prompt for the language model, submits it, and 
         parses the output to identify probable tags.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 'user_input', 'url',
-                          and optionally 'document' within 'keys'.
+            state (dict): The current state of the graph. The input keys will be used to fetch the
+                            correct data types from the state.
 
         Returns:
-            dict: The updated state with the 'tags' key containing a list of probable HTML tags.
+            dict: The updated state with the input key containing a list of probable HTML tags.
 
         Raises:
-            KeyError: If 'user_input' or 'url' is not found in the state, indicating that the
+            KeyError: If input keys are not found in the state, indicating that the
                       necessary information for generating tag predictions is missing.
         """
 

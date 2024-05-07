@@ -6,26 +6,31 @@ import sys
 import pandas as pd
 
 
-def convert_to_csv(data: dict, filename: str, position: str = None):
+def convert_to_csv(data: dict, filename: str, position: str = None) -> None:
     """
-    Converts a dictionary to a CSV file and saves it.
+    Converts a dictionary to a CSV file and saves it at a specified location.
 
     Args:
-    data (dict): Data to be converted to CSV.
-    filename (str): Name of the CSV file (without the .csv extension).
-    position (str): Optional path where the file should be saved. If not provided,
-    the directory of the caller script will be used.
+        data (dict): The data to be converted into CSV format.
+        filename (str): The name of the output CSV file, without the '.csv' extension.
+        position (str, optional): The file path where the CSV should be saved. Defaults to the directory of the caller script if not provided.
 
+    Returns:
+        None: The function does not return anything.
+        
     Raises:
-    ValueError: If the filename contains '.csv'.
-    FileNotFoundError: If the specified directory does not exist.
-    PermissionError: If the program lacks write permission for the directory.
-    TypeError: If the input data is not a dictionary.
-    Exception: For other potential errors during DataFrame creation or CSV saving.
+        FileNotFoundError: If the specified directory does not exist.
+        PermissionError: If write permissions are lacking for the directory.
+        TypeError: If `data` is not a dictionary.
+        Exception: For other issues that may arise during the creation or saving of the CSV file.
+
+    Example:
+        >>> convert_to_csv({'id': [1, 2], 'value': [10, 20]}, 'output', '/path/to/save')
+        Saves a CSV file named 'output.csv' at '/path/to/save'.
     """
 
     if ".csv" in filename:
-        raise ValueError("The filename should not contain '.csv'")
+        filename = filename.replace(".csv", "")  # Remove .csv extension
 
     # Get the directory of the caller script if position is not provided
     if position is None:

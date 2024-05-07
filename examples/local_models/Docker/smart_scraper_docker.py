@@ -10,14 +10,14 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
+        "model": "ollama/llama3",
         "temperature": 0,
         "format": "json",
-        # "model_tokens": 2000, # set context length arbitrarily,
+        "model_tokens": 2000, # set context length arbitrarily,
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
-        "temperature": 0,
+        "base_url": "http://localhost:11434",
     }
 }
 
@@ -33,6 +33,11 @@ smart_scraper_graph = SmartScraperGraph(
 )
 result = smart_scraper_graph.run()
 print(result)
+
+
+# ************************************************
+# Get graph execution info
+# ************************************************
 
 graph_exec_info = smart_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))

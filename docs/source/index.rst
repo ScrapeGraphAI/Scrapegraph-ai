@@ -21,6 +21,7 @@ The following sections will guide you through the installation process and the u
    :caption: Getting Started
 
    getting_started/installation
+   getting_started/examples
    modules/modules
 
 Indices and tables

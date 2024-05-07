@@ -1,6 +1,7 @@
 """
-Module for parsing the HTML node
+ParseNode Module
 """
+
 from typing import List
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_transformers import Html2TextTransformer
@@ -10,57 +11,44 @@ from .base_node import BaseNode
 class ParseNode(BaseNode):
     """
     A node responsible for parsing HTML content from a document. 
-    It uses BeautifulSoupTransformer for parsing, providing flexibility in extracting
-    specific parts of an HTML document.
+    The parsed content is split into chunks for further processing.
 
     This node enhances the scraping workflow by allowing for targeted extraction of 
     content, thereby optimizing the processing of large HTML documents.
 
     Attributes:
-        node_name (str): The unique identifier name for the node, defaulting to "ParseHTMLNode".
-        node_type (str): The type of the node, set to "node" indicating a standard operational node.
+        verbose (bool): A flag indicating whether to show print statements during execution.
 
     Args:
-        node_name (str, optional): The unique identifier name for the node. 
-        Defaults to "ParseHTMLNode".
-
-    Methods:
-        execute(state): Parses the HTML document contained within the state using 
-        the specified tags, if provided, and updates the state with the parsed content.
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        node_config (dict): Additional configuration for the node.
+        node_name (str): The unique identifier name for the node, defaulting to "Parse".
     """
 
     def __init__(self, input: str, output: List[str], node_config: dict, node_name: str = "Parse"):
-        """
-        Initializes the ParseHTMLNode with a node name.
-        Args:
-            doc_type (str): type of the input document
-            chunks_size (int): size of the chunks to split the document
-            node_name (str): name of the node
-            node_type (str, optional): type of the node
-        """
         super().__init__(node_name, "node", input, output, 1, node_config)
 
-    def execute(self,  state):
+        self.verbose = True if node_config is None else node_config.get("verbose", False)
+
+    def execute(self,  state: dict) -> dict:
         """
-        Executes the node's logic to parse the HTML document based on specified tags. 
-        If tags are provided in the state, the document is parsed accordingly; otherwise, 
-        the document remains unchanged. The method updates the state with either the original 
-        or parsed document under the 'parsed_document' key.
+        Executes the node's logic to parse the HTML document content and split it into chunks.
 
         Args:
-            state (dict): The current state of the graph, expected to contain 
-            'document' within 'keys', and optionally 'tags' for targeted parsing.
+            state (dict): The current state of the graph. The input keys will be used to fetch the
+                            correct data from the state.
 
         Returns:
-            dict: The updated state with the 'parsed_document' key containing the parsed content,
-                  if tags were provided, or the original document otherwise.
+            dict: The updated state with the output key containing the parsed content chunks.
 
         Raises:
-            KeyError: If 'document' is not found in the state, indicating that the necessary 
-                      information for parsing is missing.
+            KeyError: If the input keys are not found in the state, indicating that the
+                        necessary information for parsing the content is missing.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

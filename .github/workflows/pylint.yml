@@ -1,5 +1,3 @@
-name: Pylint
-
 on: [push]
 
 jobs:
@@ -20,4 +18,13 @@ jobs:
           pip install pylint
           pip install -r requirements.txt
       - name: Analysing the code with pylint
-        run: pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py scrapegraphai/*.py 
+        run: pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py scrapegraphai/*.py
+      - name: Check Pylint score
+        run: |
+          pylint_score=$(pylint --disable=all --enable=metrics --output-format=text scrapegraphai/**/*.py scrapegraphai/*.py | grep 'Raw metrics' | awk '{print $4}')
+          if (( $(echo "$pylint_score < 8" | bc -l) )); then
+            echo "Pylint score is below 8. Blocking commit."
+            exit 1
+          else
+            echo "Pylint score is acceptable."
+          fi

@@ -9,5 +9,5 @@ Go and check out the `contributing guidelines <https://github.com/VinciGit00/Scr
 
 License
 =======
-This project is licensed under the Apache License, Version 2.0.
+This project is licensed under the MIT license.
 See the `LICENSE <https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE>`__ file for more details.

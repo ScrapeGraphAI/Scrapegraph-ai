@@ -1,6 +1,7 @@
 """ 
-Module for creating the basic node
+BaseNode Module
 """
+
 from abc import ABC, abstractmethod
 from typing import Optional, List
 import re
@@ -8,50 +9,40 @@ import re
 
 class BaseNode(ABC):
     """
-    An abstract base class for nodes in a graph-based workflow. Each node is 
-    intended to perform a specific action when executed as part of the graph's 
-    processing flow.
+    An abstract base class for nodes in a graph-based workflow, designed to perform specific actions when executed.
 
     Attributes:
-        node_name (str): A unique identifier for the node.
-        node_type (str): Specifies the node's type, which influences how the 
-                         node interacts within the graph. Valid values are 
-                         "node" for standard nodes and "conditional_node" for 
-                         nodes that determine the flow based on conditions.
-
-    Methods:
-        execute(state): An abstract method that subclasses must implement. This 
-                        method should contain the logic that the node executes 
-                        when it is reached in the graph's flow. It takes the 
-                        graph's current state as input and returns the updated 
-                        state after execution.
-
+        node_name (str): The unique identifier name for the node.
+        input (str): Boolean expression defining the input keys needed from the state.
+        output (List[str]): List of 
+        min_input_len (int): Minimum required number of input keys.
+        node_config (Optional[dict]): Additional configuration for the node.
+    
     Args:
-        node_name (str): The unique identifier name for the node. This name is 
-                         used to reference the node within the graph.
-        node_type (str): The type of the node, limited to "node" or 
-                         "conditional_node". This categorization helps in 
-                         determining the node's role and behavior within the 
-                         graph.
+        node_name (str): Name for identifying the node.
+        node_type (str): Type of the node; must be 'node' or 'conditional_node'.
+        input (str): Expression defining the input keys needed from the state.
+        output (List[str]): List of output keys to be updated in the state.
+        min_input_len (int, optional): Minimum required number of input keys; defaults to 1.
+        node_config (Optional[dict], optional): Additional configuration for the node; defaults to None.
 
     Raises:
-        ValueError: If the provided `node_type` is not one of the allowed 
-                    values ("node" or "conditional_node"), a ValueError is 
-                    raised to indicate the incorrect usage.
+        ValueError: If `node_type` is not one of the allowed types.
+    
+    Example:
+        >>> class MyNode(BaseNode):
+        ...     def execute(self, state):
+        ...         # Implementation of node logic here
+        ...         return state
+        ...
+        >>> my_node = MyNode("ExampleNode", "node", "input_spec", ["output_spec"])
+        >>> updated_state = my_node.execute({'key': 'value'})
+        {'key': 'value'}
     """
 
     def __init__(self, node_name: str, node_type: str, input: str, output: List[str],
                  min_input_len: int = 1, node_config: Optional[dict] = None):
-        """
-        Initialize the node with a unique identifier and a specified node type.
 
-        Args:
-            node_name (str): The unique identifier name for the node.
-            node_type (str): The type of the node, limited to "node" or "conditional_node".
-
-        Raises:
-            ValueError: If node_type is not "node" or "conditional_node".
-        """
         self.node_name = node_name
         self.input = input
         self.output = output
@@ -66,17 +57,31 @@ class BaseNode(ABC):
     @abstractmethod
     def execute(self, state: dict) -> dict:
         """
-        Execute the node's logic and return the updated state.
+        Execute the node's logic based on the current state and update it accordingly.
+
         Args:
             state (dict): The current state of the graph.
-        :return: The updated state after executing this node.
+
+        Returns:
+            dict: The updated state after executing the node's logic.
         """
+
         pass
 
     def get_input_keys(self, state: dict) -> List[str]:
-        """Use the _parse_input_keys method to identify which state keys are 
-        needed based on the input attribute
         """
+        Determines the necessary state keys based on the input specification.
+
+        Args:
+            state (dict): The current state of the graph used to parse input keys.
+
+        Returns:
+            List[str]: A list of input keys required for node operation.
+
+        Raises:
+            ValueError: If error occurs in parsing input keys.
+        """
+
         try:
             input_keys = self._parse_input_keys(state, self.input)
             self._validate_input_keys(input_keys)
@@ -86,6 +91,16 @@ class BaseNode(ABC):
                 f"Error parsing input keys for {self.node_name}: {str(e)}")
 
     def _validate_input_keys(self, input_keys):
+        """
+        Validates if the provided input keys meet the minimum length requirement.
+
+        Args:
+            input_keys (List[str]): The list of input keys to validate.
+
+        Raises:
+            ValueError: If the number of input keys is less than the minimum required.
+        """
+
         if len(input_keys) < self.min_input_len:
             raise ValueError(
                 f"""{self.node_name} requires at least {self.min_input_len} input keys,
@@ -93,8 +108,8 @@ class BaseNode(ABC):
 
     def _parse_input_keys(self, state: dict, expression: str) -> List[str]:
         """
-        Parses the input keys expression and identifies the corresponding keys
-        from the state that match the expression logic.
+        Parses the input keys expression to extract relevant keys from the state based on logical conditions.
+        The expression can contain AND (&), OR (|), and parentheses to group conditions.
 
         Args:
             state (dict): The current state of the graph.
@@ -102,7 +117,11 @@ class BaseNode(ABC):
 
         Returns:
             List[str]: A list of key names that match the input keys expression logic.
+
+        Raises:
+            ValueError: If the expression is invalid or if no state keys match the expression.
         """
+
         # Check for empty expression
         if not expression:
             raise ValueError("Empty expression.")
@@ -142,9 +161,12 @@ class BaseNode(ABC):
                 "Missing or unbalanced parentheses in expression.")
 
         # Helper function to evaluate an expression without parentheses
-        def evaluate_simple_expression(exp):
+        def evaluate_simple_expression(exp: str) -> List[str]:
+            """Evaluate an expression without parentheses."""
+
             # Split the expression by the OR operator and process each segment
             for or_segment in exp.split('|'):
+
                 # Check if all elements in an AND segment are in state
                 and_segment = or_segment.split('&')
                 if all(elem.strip() in state for elem in and_segment):
@@ -152,13 +174,17 @@ class BaseNode(ABC):
             return []
 
         # Helper function to evaluate expressions with parentheses
-        def evaluate_expression(expression):
+        def evaluate_expression(expression: str) -> List[str]:
+            """Evaluate an expression with parentheses."""
+            
             while '(' in expression:
                 start = expression.rfind('(')
                 end = expression.find(')', start)
                 sub_exp = expression[start + 1:end]
+
                 # Replace the evaluated part with a placeholder and then evaluate it
                 sub_result = evaluate_simple_expression(sub_exp)
+
                 # For simplicity in handling, join sub-results with OR to reprocess them later
                 expression = expression[:start] + \
                     '|'.join(sub_result) + expression[end+1:]

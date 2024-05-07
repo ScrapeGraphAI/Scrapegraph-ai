@@ -4,6 +4,7 @@ Basic example of scraping pipeline using SmartScraper
 
 import os
 from dotenv import load_dotenv
+from scrapegraphai.utils import prettify_exec_info
 from scrapegraphai.graphs import SmartScraperGraph
 load_dotenv()
 
@@ -17,7 +18,7 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gpt-3.5-turbo",
+        "model": "gemini-pro",
     },
 }
 
@@ -34,3 +35,10 @@ smart_scraper_graph = SmartScraperGraph(
 
 result = smart_scraper_graph.run()
 print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))
