@@ -1,3 +1,17 @@
+## [0.10.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.1...v0.10.0-beta.2) (2024-05-08)
+
+
+### Bug Fixes
+
+* **examples:** local, mixed models and fixed SearchGraph embeddings problem ([6b71ec1](https://github.com/VinciGit00/Scrapegraph-ai/commit/6b71ec1d2be953220b6767bc429f4cf6529803fd))
+* **examples:** openai std examples ([186c0d0](https://github.com/VinciGit00/Scrapegraph-ai/commit/186c0d035d1d211aff33c38c449f2263d9716a07))
+* removed .lock file for deployment ([d4c7d4e](https://github.com/VinciGit00/Scrapegraph-ai/commit/d4c7d4e7fcc2110beadcb2fc91efc657ec6a485c))
+
+
+### Docs
+
+* update README.md ([17ec992](https://github.com/VinciGit00/Scrapegraph-ai/commit/17ec992b498839e001277e7bc3f0ebea49fbd00d))
+
 ## [0.10.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0...v0.10.0-beta.1) (2024-05-06)
 
 
