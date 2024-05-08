@@ -25,7 +25,7 @@ with open(file_path, 'r', encoding="utf-8") as file:
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
+        "model": "ollama/llama3",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "model_tokens": 2000, # set context length arbitrarily
@@ -35,7 +35,8 @@ graph_config = {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
         "base_url": "http://localhost:11434",
-    }
+    },
+    "verbose": True,
 }
 
 # ************************************************

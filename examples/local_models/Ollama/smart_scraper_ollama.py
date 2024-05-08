@@ -9,17 +9,17 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
+        "model": "ollama/llama3",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
-        # "model_tokens": 2000, # set context length arbitrarily,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    }
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "verbose": True,
 }
 
 # ************************************************
@@ -27,7 +27,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
+    prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects",
     config=graph_config

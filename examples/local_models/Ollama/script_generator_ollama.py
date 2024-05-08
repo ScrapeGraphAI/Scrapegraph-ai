@@ -19,7 +19,8 @@ graph_config = {
         "temperature": 0,
         "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
-    "library": "beautifoulsoup"
+    "library": "beautifoulsoup",
+    "verbose": True,
 }
 
 # ************************************************

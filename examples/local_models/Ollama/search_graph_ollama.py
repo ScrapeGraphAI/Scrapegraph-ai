@@ -11,16 +11,15 @@ from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_i
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
+        "model": "ollama/llama3",
         "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        # "model_tokens": 2000, # set context length arbitrarily,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        # "format": "json",  # Ollama needs the format to be specified explicitly
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
     "max_results": 5,
     "verbose": True,
