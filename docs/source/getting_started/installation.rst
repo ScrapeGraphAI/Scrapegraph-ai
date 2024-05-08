@@ -8,8 +8,8 @@ Prerequisites
 ^^^^^^^^^^^^^
 
 - `Python 3.8+ <https://www.python.org/downloads/>`_
-- `pip <https://pip.pypa.io/en/stable/getting-started/>`
-- `ollama <https://ollama.com/>` *optional for local models 
+- `pip <https://pip.pypa.io/en/stable/getting-started/>`_
+- `ollama <https://ollama.com/>`_ *optional for local models 
 
 
 Install the library
