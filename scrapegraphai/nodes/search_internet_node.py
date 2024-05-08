@@ -32,7 +32,7 @@ class SearchInternetNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = True if node_config is None else node_config.get(
+        self.verbose = False if node_config is None else node_config.get(
             "verbose", False)
         self.max_results = node_config.get("max_results", 3)
 
@@ -69,10 +69,13 @@ class SearchInternetNode(BaseNode):
 
         search_template = """
         PROMPT:
-        Given the following user prompt, return a query that can be
+        You are a search engine and you need to generate a search query based on the user's prompt. \n
+        Given the following user prompt, return a query that can be 
         used to search the internet for relevant information. \n
         You should return only the query string without any additional sentences. \n
-        You are taught to reply directly giving the search query. \n
+        For example, if the user prompt is "What is the capital of France?",
+        you should return "capital of France". \n
+        If yuo return something else, you will get a really bad grade. \n
         USER PROMPT: {user_prompt}"""
 
         search_prompt = PromptTemplate(

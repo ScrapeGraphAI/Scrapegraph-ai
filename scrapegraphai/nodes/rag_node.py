@@ -36,7 +36,7 @@ class RAGNode(BaseNode):
 
         self.llm_model = node_config["llm_model"]
         self.embedder_model = node_config.get("embedder_model", None)
-        self.verbose = True if node_config is None else node_config.get(
+        self.verbose = False if node_config is None else node_config.get(
             "verbose", False)
 
     def execute(self, state: dict) -> dict:

@@ -33,7 +33,7 @@ class FetchNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1)
 
         self.headless = True if node_config is None else node_config.get("headless", True)
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.verbose = False if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state):
         """
@@ -61,7 +61,7 @@ class FetchNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         source = input_data[0]
-        if self.input == "json_dir" or self.input == "xml_dir":
+        if self.input == "json_dir" or self.input == "xml_dir" or self.input == "csv_dir":
             compressed_document = [Document(page_content=source, metadata={
                 "source": "local_dir"
             })]

@@ -34,7 +34,8 @@ graph_config = {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
         "base_url": "http://localhost:11434",
-    }
+    },
+    "verbose": True,
 }
 
 # ************************************************
@@ -42,7 +43,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
+    prompt="List me all the projects",
     source=text,
     config=graph_config
 )

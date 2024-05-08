@@ -25,7 +25,8 @@ graph_config = {
         "temperature": 0,
         "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
-    "headless": False
+    "headless": False,
+    "verbose": True,
 }
 
 # ************************************************

@@ -12,18 +12,21 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+groq_key = os.getenv("GROQ_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
     "embeddings": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
+    "max_results": 2,
+    "verbose": True, 
 }
 
 # ************************************************

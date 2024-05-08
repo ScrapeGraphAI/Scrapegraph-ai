@@ -2,6 +2,8 @@
 SearchGraph Module
 """
 
+from copy import deepcopy
+
 from .base_graph import BaseGraph
 from ..nodes import (
     SearchInternetNode,
@@ -40,6 +42,8 @@ class SearchGraph(AbstractGraph):
     def __init__(self, prompt: str, config: dict):
 
         self.max_results = config.get("max_results", 3)
+        self.copy_config = deepcopy(config)
+
         super().__init__(prompt, config)
 
     def _create_graph(self) -> BaseGraph:
@@ -57,7 +61,7 @@ class SearchGraph(AbstractGraph):
         smart_scraper_instance = SmartScraperGraph(
             prompt="",
             source="",
-            config=self.config
+            config=self.copy_config
         )
 
         # ************************************************

@@ -41,13 +41,13 @@ graph_config = {
 # ************************************************
 
 speech_graph = SpeechGraph(
-    prompt="Give me a gift idea for a friend.",
-    source="https://www.amazon.it/s?k=profumo&__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=17UXSZNCS2NKE&sprefix=profumo%2Caps%2C88&ref=nb_sb_noss_1",
+    prompt="Make a detailed audio summary of the projects.",
+    source="https://perinim.github.io/projects/",
     config=graph_config,
 )
 
 result = speech_graph.run()
-print(result.get("answer", "No answer found"))
+print(result)
 
 # ************************************************
 # Get graph execution info
