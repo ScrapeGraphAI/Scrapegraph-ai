@@ -19,7 +19,7 @@ graph_config = {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
     },
-    "max_results": 5,
+    "max_results": 2,
     "verbose": True,
 }
 

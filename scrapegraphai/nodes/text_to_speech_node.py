@@ -26,7 +26,7 @@ class TextToSpeechNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.tts_model = node_config["tts_model"]
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.verbose = False if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state: dict) -> dict:
         """

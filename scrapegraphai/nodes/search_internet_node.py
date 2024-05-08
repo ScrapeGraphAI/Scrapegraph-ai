@@ -32,7 +32,7 @@ class SearchInternetNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = True if node_config is None else node_config.get(
+        self.verbose = False if node_config is None else node_config.get(
             "verbose", False)
         self.max_results = node_config.get("max_results", 3)
 

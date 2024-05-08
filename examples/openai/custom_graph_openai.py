@@ -39,6 +39,7 @@ robot_node = RobotsNode(
     output=["is_scrapable"],
     node_config={
         "llm_model": llm_model,
+        "force_scraping": True,
         "verbose": True,
         }
 )
@@ -103,8 +104,8 @@ graph = BaseGraph(
 # ************************************************
 
 result, execution_info = graph.execute({
-    "user_prompt": "List me the projects with their description",
-    "url": "https://perinim.github.io/projects/"
+    "user_prompt": "Describe the content",
+    "url": "https://example.com/"
 })
 
 # get the answer from the result

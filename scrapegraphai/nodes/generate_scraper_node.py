@@ -43,6 +43,8 @@ class GenerateScraperNode(BaseNode):
         self.llm_model = node_config["llm_model"]
         self.library = library
         self.source = website
+        
+        self.verbose = False if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -60,7 +62,8 @@ class GenerateScraperNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            print(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
