@@ -8,7 +8,8 @@
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
 
-ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites, documents and XML files.
+ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, etc.).
+
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">
@@ -136,26 +137,34 @@ The output will be a list of recipes like the following:
 You just need to pass the OpenAI API key and the model name.
 
 ```python
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import SpeechGraph
 
-# Define the configuration for the graph
 graph_config = {
     "llm": {
         "api_key": "OPENAI_API_KEY",
         "model": "gpt-3.5-turbo",
     },
+    "tts_model": {
+        "api_key": "OPENAI_API_KEY",
+        "model": "tts-1",
+        "voice": "alloy"
+    },
+    "output_path": "audio_summary.mp3",
 }
 
-# Create the SmartScraperGraph instance
-smart_scraper_graph = SmartScraperGraph(
-    prompt="Make a detailed audio summary of the projects on this page",
-    source="https://perinim.github.io/projects",
-    config=graph_config
+# ************************************************
+# Create the SpeechGraph instance and run it
+# ************************************************
+
+speech_graph = SpeechGraph(
+    prompt="Make a detailed audio summary of the projects.",
+    source="https://perinim.github.io/projects/",
+    config=graph_config,
 )
 
-# Run the graph
-result = smart_scraper_graph.run()
+result = speech_graph.run()
 print(result)
+
 ```
 
 The output will be an audio file with the summary of the projects on the page.
