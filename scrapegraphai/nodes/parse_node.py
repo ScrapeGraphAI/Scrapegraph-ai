@@ -2,7 +2,7 @@
 ParseNode Module
 """
 
-from typing import List
+from typing import List, Optional
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_transformers import Html2TextTransformer
 from .base_node import BaseNode
@@ -26,10 +26,10 @@ class ParseNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Parse".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict, node_name: str = "Parse"):
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None, node_name: str = "Parse"):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.verbose = False if node_config is None else node_config.get("verbose", False)
 
     def execute(self,  state: dict) -> dict:
         """

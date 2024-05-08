@@ -11,3 +11,4 @@ from .ollama import Ollama
 from .hugging_face import HuggingFace
 from .groq import Groq
 from .bedrock import Bedrock
+from .anthropic import Anthropic
