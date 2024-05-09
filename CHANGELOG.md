@@ -1,3 +1,10 @@
+## [0.10.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.5...v0.10.0-beta.6) (2024-05-09)
+
+
+### Bug Fixes
+
+* add json integration ([0ab31c3](https://github.com/VinciGit00/Scrapegraph-ai/commit/0ab31c3fdbd56652ed306e60109301f60e8042d3))
+
 ## [0.10.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.4...v0.10.0-beta.5) (2024-05-09)
 
 
