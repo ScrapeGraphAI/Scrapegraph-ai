@@ -5,6 +5,7 @@ FetchNode Module
 from typing import List, Optional
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.documents import Document
+from langchain_community.document_loaders import PyPDFLoader
 from .base_node import BaseNode
 from ..utils.remover import remover
 
@@ -56,7 +57,6 @@ class FetchNode(BaseNode):
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
@@ -66,6 +66,15 @@ class FetchNode(BaseNode):
                 "source": "local_dir"
             })]
         # if it is a local directory
+
+        # handling for pdf
+        elif self.input == "pdf":
+            loader = PyPDFLoader(source)
+            compressed_document = loader.load()
+
+        elif self.input == "pdf_dir":
+            pass
+
         elif not source.startswith("http"):
             compressed_document = [Document(page_content=remover(source), metadata={
                 "source": "local_dir"
