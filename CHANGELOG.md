@@ -1,3 +1,10 @@
+## [0.10.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.4...v0.10.0-beta.5) (2024-05-09)
+
+
+### Bug Fixes
+
+* fixed bugs for csv and xml ([324e977](https://github.com/VinciGit00/Scrapegraph-ai/commit/324e977b853ecaa55bac4bf86e7cd927f7f43d0d))
+
 ## [0.10.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.3...v0.10.0-beta.4) (2024-05-09)
 
 
