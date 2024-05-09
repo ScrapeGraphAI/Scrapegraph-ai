@@ -1,3 +1,15 @@
+## [0.10.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.3...v0.10.0-beta.4) (2024-05-09)
+
+
+### Features
+
+* Add support for passing pdf path as source ([f10f3b1](https://github.com/VinciGit00/Scrapegraph-ai/commit/f10f3b1438e0c625b7f2fa52faeb5a6c12116113))
+
+
+### Bug Fixes
+
+* limit python version to < 3.12 ([a37fbbc](https://github.com/VinciGit00/Scrapegraph-ai/commit/a37fbbcbcfc3ddd0cc66f586f279676b52c4abfe))
+
 ## [0.10.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.2...v0.10.0-beta.3) (2024-05-09)
 
 
