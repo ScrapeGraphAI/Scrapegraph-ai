@@ -44,9 +44,10 @@ class AbstractGraph(ABC):
         self.source = source
         self.config = config
         self.llm_model = self._create_llm(config["llm"], chat=True)
-        embeddings_config = config.get("embeddings", {"dimension": 8192})
-        self.embedder_model = self._create_default_embedder(
-            llm_config=config["llm"]) if "embeddings" not in config else self._create_embedder(embeddings_config)
+        print(config["embeddings"])
+        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]
+                                                            ) if "embeddings" not in config else self._create_embedder(
+            config["embeddings"])
 
         # Create the graph
         self.graph = self._create_graph()
@@ -162,7 +163,7 @@ class AbstractGraph(ABC):
                     try:
                         self.model_token = models_tokens["ollama"][llm_params["model"]]
                     except KeyError as exc:
-                        raise KeyError("Model not supported") from exc
+                        self.model_token = 8192
                 else:
                     self.model_token = 8192
             except AttributeError:
