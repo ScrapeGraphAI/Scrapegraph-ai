@@ -1,3 +1,10 @@
+## [0.10.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.2...v0.10.0-beta.3) (2024-05-09)
+
+
+### Features
+
+* update info ([4ed0fb8](https://github.com/VinciGit00/Scrapegraph-ai/commit/4ed0fb89c3e6068190a7775bedcb6ae65ba59d18))
+
 ## [0.10.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.1...v0.10.0-beta.2) (2024-05-08)
 
 
