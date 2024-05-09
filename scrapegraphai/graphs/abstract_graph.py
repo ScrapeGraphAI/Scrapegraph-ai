@@ -44,7 +44,6 @@ class AbstractGraph(ABC):
         self.source = source
         self.config = config
         self.llm_model = self._create_llm(config["llm"], chat=True)
-        print(config["embeddings"])
         self.embedder_model = self._create_default_embedder(llm_config=config["llm"]
                                                             ) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
