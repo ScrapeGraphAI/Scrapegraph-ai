@@ -7,6 +7,7 @@ from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from ..helpers import models_tokens
 from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
+from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 
 
 class AbstractGraph(ABC):
