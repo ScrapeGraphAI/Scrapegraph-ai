@@ -39,7 +39,8 @@ models_tokens = {
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,
         "stablelm-zephyr": 8192,
-        "nomic-embed-text": 8192
+        "nomic-embed-text": 8192,
+        "mxbai-embed-large'": 8192
     },
     "groq": {
         "llama3-8b-8192": 8192,
