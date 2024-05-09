@@ -155,6 +155,7 @@ typing-extensions = ">=4.7,<5"
 [package.extras]
 bedrock = ["boto3 (>=1.28.57)", "botocore (>=1.31.57)"]
 vertex = ["google-auth (>=2,<3)"]
+
 [[package]]
 name = "anyio"
 version = "4.3.0"
@@ -1298,19 +1299,19 @@ numpy = ">=1,<2"
 
 [[package]]
 name = "langchain-community"
-version = "0.0.37"
+version = "0.0.38"
 description = "Community contributed LangChain integrations."
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langchain_community-0.0.37-py3-none-any.whl", hash = "sha256:52e8557602dc099c2e236ec8a0599a956e2f08cfeb61e501815f5ec2d8545747"},
-    {file = "langchain_community-0.0.37.tar.gz", hash = "sha256:db2b5829bb20bc5b04c126b69143dbc31a880e949e94110c236b2c176906889f"},
+    {file = "langchain_community-0.0.38-py3-none-any.whl", hash = "sha256:ecb48660a70a08c90229be46b0cc5f6bc9f38f2833ee44c57dfab9bf3a2c121a"},
+    {file = "langchain_community-0.0.38.tar.gz", hash = "sha256:127fc4b75bc67b62fe827c66c02e715a730fef8fe69bd2023d466bab06b5810d"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.8.3,<4.0.0"
 dataclasses-json = ">=0.5.7,<0.7"
-langchain-core = ">=0.1.51,<0.2.0"
+langchain-core = ">=0.1.52,<0.2.0"
 langsmith = ">=0.1.0,<0.2.0"
 numpy = ">=1,<2"
 PyYAML = ">=5.3"
@@ -1412,13 +1413,13 @@ extended-testing = ["lxml (>=5.1.0,<6.0.0)"]
 
 [[package]]
 name = "langsmith"
-version = "0.1.55"
+version = "0.1.56"
 description = "Client library to connect to the LangSmith LLM Tracing and Evaluation Platform."
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langsmith-0.1.55-py3-none-any.whl", hash = "sha256:c198b4019d0e0948fa2c94efcafa0312bd5e7ce36aae8d62a38af2d6b16584fc"},
-    {file = "langsmith-0.1.55.tar.gz", hash = "sha256:08b75046471e3c32cb6b526e48ca4570bfe3911d6b0a3f8575ee062da940324c"},
+    {file = "langsmith-0.1.56-py3-none-any.whl", hash = "sha256:2f930e054ea8eccd8ff99f0f129ae7d2513973b2e706d5483f44ea9951a1dca0"},
+    {file = "langsmith-0.1.56.tar.gz", hash = "sha256:ff645b5bf16e2566740218ed6c048a1f8edbbedb4480a0d305a837ec71303fbf"},
 ]
 
 [package.dependencies]
@@ -1876,13 +1877,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.26.0"
+version = "1.27.0"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.26.0-py3-none-any.whl", hash = "sha256:884ced523fb0225780f8b0e0ed6f7e014049c32d049a41ad0ac962869f1055d1"},
-    {file = "openai-1.26.0.tar.gz", hash = "sha256:642e857b60855702ee6ff665e8fa80946164f77b92e58fd24e01b545685b8405"},
+    {file = "openai-1.27.0-py3-none-any.whl", hash = "sha256:1183346fae6e63cb3a9134e397c0067690dc9d94ceb36eb0eb2c1bb9a1542aca"},
+    {file = "openai-1.27.0.tar.gz", hash = "sha256:498adc80ba81a95324afdfd11a71fa43a37e1d94a5ca5f4542e52fe9568d995b"},
 ]
 
 [package.dependencies]
@@ -2005,7 +2006,6 @@ files = [
 numpy = [
     {version = ">=1.22.4", markers = "python_version < \"3.11\""},
     {version = ">=1.23.2", markers = "python_version == \"3.11\""},
-    {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
 ]
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
@@ -3342,5 +3342,5 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.9"
-content-hash = "b64eb1948d66b6f105fab878b1efc83ac5627631aa69552bd712f63a85246ebe"
+python-versions = ">=3.9, <3.12"
+content-hash = "4248d989a9691c2ded2ba504a6099527c02ff5ffbbbf4ce900f85c7f5c548518"
