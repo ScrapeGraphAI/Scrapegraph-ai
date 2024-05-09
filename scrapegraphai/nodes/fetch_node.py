@@ -2,6 +2,7 @@
 FetchNode Module
 """
 import pandas as pd
+import json
 from typing import List, Optional
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.documents import Document
@@ -75,8 +76,13 @@ class FetchNode(BaseNode):
             compressed_document = loader.load()
 
         elif self.input == "csv":
-            compressed_document = [Document(page_content=pd.read_csv(source), metadata={
-                "source": "xml"
+            compressed_document = [Document(page_content=str(pd.read_csv(source)), metadata={
+                "source": "csv"
+            })]
+        elif self.input == "json":
+            f = open(source)
+            compressed_document = [Document(page_content=str(json.load(f)), metadata={
+                "source": "json"
             })]
         elif self.input == "xml":
             with open(source, 'r', encoding='utf-8') as f:

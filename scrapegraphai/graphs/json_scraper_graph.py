@@ -54,7 +54,7 @@ class JSONScraperGraph(AbstractGraph):
         """
 
         fetch_node = FetchNode(
-            input="json_dir",
+            input="json",
             output=["doc"],
         )
         parse_node = ParseNode(
