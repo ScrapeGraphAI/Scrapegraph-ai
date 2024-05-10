@@ -266,9 +266,8 @@ If you have used our library for research purposes please quote us with the foll
 ```
 ## Sponsors
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="Scrapegraph-ai Logo" style="width: 100px;">
 </p>
-
 
 ## Authors
 
