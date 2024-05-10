@@ -168,7 +168,6 @@ result = smart_scraper_graph.run()
 print(result)
 ```
 
-
 ### Case 5: Extracting information using Azure
 ```python
 from langchain_openai import AzureChatOpenAI
@@ -265,6 +264,11 @@ If you have used our library for research purposes please quote us with the foll
     note = {A Python library for scraping leveraging large language models}
   }
 ```
+## Sponsors
+<p align="center">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
+</p>
+
 
 ## Authors
 
