@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from minify_html import minify
 
 
-def remover(html_content: str) -> str:
+def cleanup_html(html_content: str, urls: list = []) -> str:
     """
     Processes HTML content by removing unnecessary tags, minifying the HTML, and extracting the title and body content.
 
@@ -17,7 +17,7 @@ def remover(html_content: str) -> str:
 
     Example:
         >>> html_content = "<html><head><title>Example</title></head><body><p>Hello World!</p></body></html>"
-        >>> remover(html_content)
+        >>> cleanup_html(html_content)
         'Title: Example, Body: <body><p>Hello World!</p></body>'
 
     This function is particularly useful for preparing HTML content for environments where bandwidth usage needs to be minimized.
@@ -35,9 +35,12 @@ def remover(html_content: str) -> str:
 
     # Body Extraction (if it exists)
     body_content = soup.find('body')
+    urls_content = ""
+    if urls:
+        urls_content = f", URLs in page: {urls}"
     if body_content:
         # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
-        return "Title: " + title + ", Body: " + minimized_body
+        return "Title: " + title + ", Body: " + minimized_body + urls_content
 
-    return "Title: " + title + ", Body: No body content found"
+    return "Title: " + title + ", Body: No body content found" + urls_content
