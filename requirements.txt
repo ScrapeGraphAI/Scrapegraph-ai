@@ -19,3 +19,4 @@ langchain-aws==0.1.2
 langchain-anthropic==0.1.11 
 yahoo-search-py==0.3
 pypdf==4.2.0
+burr[start]
