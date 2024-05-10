@@ -1,5 +1,33 @@
-## [0.10.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.5...v0.10.0-beta.6) (2024-05-09)
+## [0.11.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.1...v0.11.0-beta.2) (2024-05-10)
 
+
+### Features
+
+* revert fetch_node ([864aa91](https://github.com/VinciGit00/Scrapegraph-ai/commit/864aa91326c360992326e04811d272e55eac8355))
+
+## [0.11.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0...v0.11.0-beta.1) (2024-05-10)
+
+
+### Features
+
+* Add support for passing pdf path as source ([f10f3b1](https://github.com/VinciGit00/Scrapegraph-ai/commit/f10f3b1438e0c625b7f2fa52faeb5a6c12116113))
+* update info ([4ed0fb8](https://github.com/VinciGit00/Scrapegraph-ai/commit/4ed0fb89c3e6068190a7775bedcb6ae65ba59d18))
+
+
+### Bug Fixes
+
+* add json integration ([0ab31c3](https://github.com/VinciGit00/Scrapegraph-ai/commit/0ab31c3fdbd56652ed306e60109301f60e8042d3))
+* Augment the information getting fetched from a webpage ([f8ce3d5](https://github.com/VinciGit00/Scrapegraph-ai/commit/f8ce3d5916eab926275d59d4d48b0d89ec9cd43f))
+* fixed bugs for csv and xml ([324e977](https://github.com/VinciGit00/Scrapegraph-ai/commit/324e977b853ecaa55bac4bf86e7cd927f7f43d0d))
+* limit python version to < 3.12 ([a37fbbc](https://github.com/VinciGit00/Scrapegraph-ai/commit/a37fbbcbcfc3ddd0cc66f586f279676b52c4abfe))
+
+
+### CI
+
+* **release:** 0.10.0-beta.3 [skip ci] ([ad32298](https://github.com/VinciGit00/Scrapegraph-ai/commit/ad32298e70fc626fd62c897e153b806f79dba9b9))
+* **release:** 0.10.0-beta.4 [skip ci] ([548bff9](https://github.com/VinciGit00/Scrapegraph-ai/commit/548bff9d77c8b4d2aadee40e966a06cc9d7fd4ab))
+* **release:** 0.10.0-beta.5 [skip ci] ([28c9dce](https://github.com/VinciGit00/Scrapegraph-ai/commit/28c9dce7cbda49750172bafd7767fa48a0c33859))
+* **release:** 0.10.0-beta.6 [skip ci] ([460d292](https://github.com/VinciGit00/Scrapegraph-ai/commit/460d292af21fabad3fdd2b66110913ccee22ba91))
 
 ### Bug Fixes
 
@@ -8,7 +36,9 @@
 ## [0.10.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.4...v0.10.0-beta.5) (2024-05-09)
 
 
+
 ### Bug Fixes
+
 
 * fixed bugs for csv and xml ([324e977](https://github.com/VinciGit00/Scrapegraph-ai/commit/324e977b853ecaa55bac4bf86e7cd927f7f43d0d))
 
