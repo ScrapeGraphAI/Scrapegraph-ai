@@ -266,13 +266,13 @@ If you have used our library for research purposes please quote us with the foll
 ```
 ## Sponsors
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="Scrapegraph-ai Logo" style="width: 100px;">
+  <a href="https://serpapi.com/"><img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;"></a>
 </p>
 
 ## Authors
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors Logos">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors_logos">
 </p>
 
 |                    | Contact Info         |
