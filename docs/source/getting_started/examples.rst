@@ -44,9 +44,12 @@ Local models
 
 Remember to have installed in your pc ollama `ollama <https://ollama.com/>`
 Remember to pull the right model for LLM and for the embeddings, like:
+
 .. code-block:: bash
 
    ollama pull llama3
+   ollama pull nomic-embed-text
+   ollama pull mistral
 
 After that, you can run the following code, using only your machine resources brum brum brum:
 

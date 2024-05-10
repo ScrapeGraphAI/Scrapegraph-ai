@@ -1,18 +1,18 @@
 """
-Basic example of scraping pipeline using JSONScraperGraph from JSON documents
+Basic example of scraping pipeline using XMLScraperGraph from XML documents
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import JSONScraperGraph
+from scrapegraphai.graphs import XMLScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
 # ************************************************
-# Read the JSON file
+# Read the XML file
 # ************************************************
 
-FILE_NAME = "inputs/example.json"
+FILE_NAME = "inputs/books.xml"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
@@ -25,7 +25,7 @@ with open(file_path, 'r', encoding="utf-8") as file:
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
+        "model": "ollama/llama3",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "model_tokens": 2000, # set context length arbitrarily
@@ -35,27 +35,28 @@ graph_config = {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
         "base_url": "http://localhost:11434",
-    }
+    },
+    "verbose": True,
 }
 
 # ************************************************
-# Create the JSONScraperGraph instance and run it
+# Create the XMLScraperGraph instance and run it
 # ************************************************
 
-json_scraper_graph = JSONScraperGraph(
+xml_scraper_graph = XMLScraperGraph(
     prompt="List me all the authors, title and genres of the books",
     source=text,  # Pass the content of the file, not the file object
     config=graph_config
 )
 
-result = json_scraper_graph.run()
+result = xml_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = json_scraper_graph.get_execution_info()
+graph_exec_info = xml_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
 # Save to json or csv

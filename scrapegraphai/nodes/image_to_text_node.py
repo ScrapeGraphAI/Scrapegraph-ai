@@ -2,7 +2,7 @@
 ImageToTextNode Module
 """
 
-from typing import List
+from typing import List, Optional
 from .base_node import BaseNode
 
 
@@ -21,12 +21,12 @@ class ImageToTextNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "ImageToText".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None,
                  node_name: str = "ImageToText"):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.verbose = False if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state: dict) -> dict:
         """

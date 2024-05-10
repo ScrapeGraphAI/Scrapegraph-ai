@@ -2,15 +2,20 @@
 Basic example of scraping pipeline using CSVScraperGraph from CSV documents
 """
 
+import os
 import pandas as pd
 from scrapegraphai.graphs import CSVScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 # ************************************************
-# Read the csv file
+# Read the CSV file
 # ************************************************
 
-text = pd.read_csv("inputs/username.csv")
+FILE_NAME = "inputs/username.csv"
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, FILE_NAME)
+
+text = pd.read_csv(file_path)
 
 # ************************************************
 # Define the configuration for the graph
@@ -18,15 +23,18 @@ text = pd.read_csv("inputs/username.csv")
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
+        "model": "ollama/llama3",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "model_tokens": 2000, # set context length arbitrarily
+        "base_url": "http://localhost:11434",
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "temperature": 0,
-    }
+        "base_url": "http://localhost:11434",
+    },
+    "verbose": True,
 }
 
 # ************************************************

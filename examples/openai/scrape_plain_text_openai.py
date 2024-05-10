@@ -39,7 +39,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
+    prompt="List me all the projects with their description.",
     source=text,
     config=graph_config
 )
