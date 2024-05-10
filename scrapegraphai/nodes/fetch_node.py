@@ -8,9 +8,7 @@ from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader
 from .base_node import BaseNode
-from ..utils.cleanup_html import cleanup_html
-import requests
-from bs4 import BeautifulSoup
+from ..utils.remover import remover
 
 
 class FetchNode(BaseNode):
@@ -35,7 +33,6 @@ class FetchNode(BaseNode):
 
     def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None, node_name: str = "Fetch"):
         super().__init__(node_name, "node", input, output, 1)
-
 
         self.headless = True if node_config is None else node_config.get(
             "headless", True)
@@ -97,22 +94,10 @@ class FetchNode(BaseNode):
             pass
 
         elif not source.startswith("http"):
-            compressed_document = [Document(page_content=cleanup_html(source), metadata={
+            compressed_document = [Document(page_content=remover(source), metadata={
                 "source": "local_dir"
             })]
 
-        elif self.useSoup:
-            response = requests.get(source)
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.text, 'html.parser')
-                links = soup.find_all('a')
-                link_urls = []
-                for link in links:
-                    if 'href' in link.attrs:
-                        link_urls.append(link['href'])
-                compressed_document = [Document(page_content=cleanup_html(soup.prettify(), link_urls))]
-            else:
-                print(f"Failed to retrieve contents from the webpage at url: {url}")
         else:
             if self.node_config is not None and self.node_config.get("endpoint") is not None:
 
@@ -129,7 +114,7 @@ class FetchNode(BaseNode):
 
             document = loader.load()
             compressed_document = [
-                Document(page_content=cleanup_html(str(document[0].page_content)))]
+                Document(page_content=remover(str(document[0].page_content)))]
 
         state.update({self.output[0]: compressed_document})
         return state

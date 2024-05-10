@@ -6,3 +6,4 @@ from .convert_to_csv import convert_to_csv
 from .convert_to_json import convert_to_json
 from .prettify_exec_info import prettify_exec_info
 from .proxy_rotation import proxy_generator
+from .remover import remover
