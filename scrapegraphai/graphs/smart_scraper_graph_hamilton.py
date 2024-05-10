@@ -35,10 +35,10 @@ def parse_node(fetch_node: Document, chunk_size: int) -> list[Document]:
 
     pass
 
-def rag_node(parse_node: list[Document]) -> list[Document]:
+def rag_node(parse_node: list[Document], llm_model: object, embedder_model: object) -> list[Document]:
     pass
 
-def generate_answer_node(rag_node: list[Document]) -> str:
+def generate_answer_node(rag_node: list[Document], llm_model: object) -> str:
     pass
 
 
