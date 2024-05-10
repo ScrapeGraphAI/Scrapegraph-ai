@@ -4,16 +4,16 @@ AbstractGraph Module
 from abc import ABC, abstractmethod
 from typing import Optional
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
+from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings, BedrockEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, Claude
 
 
 class AbstractGraph(ABC):
     """
     Scaffolding class for creating a graph representation and executing it.
 
-    Attributes:
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
@@ -162,7 +162,7 @@ class AbstractGraph(ABC):
                     try:
                         self.model_token = models_tokens["ollama"][llm_params["model"]]
                     except KeyError as exc:
-                        raise KeyError("Model not supported") from exc
+                        self.model_token = 8192
                 else:
                     self.model_token = 8192
             except AttributeError:

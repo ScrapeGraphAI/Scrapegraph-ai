@@ -30,7 +30,7 @@ class CSVScraperGraph(AbstractGraph):
         Creates the graph of nodes representing the workflow for web scraping.
         """
         fetch_node = FetchNode(
-            input="csv_dir",
+            input="csv",
             output=["doc"],
         )
         parse_node = ParseNode(
