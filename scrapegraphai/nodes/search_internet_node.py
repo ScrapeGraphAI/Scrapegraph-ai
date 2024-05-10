@@ -2,7 +2,7 @@
 SearchInternetNode Module
 """
 
-from typing import List
+from typing import List, Optional
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from ..utils.research_web import search_on_web
@@ -27,12 +27,14 @@ class SearchInternetNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "SearchInternet".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
                  node_name: str = "SearchInternet"):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
-        self.llm_model = node_config["llm"]
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.llm_model = node_config["llm_model"]
+        self.verbose = False if node_config is None else node_config.get(
+            "verbose", False)
+        self.max_results = node_config.get("max_results", 3)
 
     def execute(self, state: dict) -> dict:
         """
@@ -67,10 +69,13 @@ class SearchInternetNode(BaseNode):
 
         search_template = """
         PROMPT:
-        Given the following user prompt, return a query that can be
+        You are a search engine and you need to generate a search query based on the user's prompt. \n
+        Given the following user prompt, return a query that can be 
         used to search the internet for relevant information. \n
         You should return only the query string without any additional sentences. \n
-        You are taught to reply directly giving the search query. \n
+        For example, if the user prompt is "What is the capital of France?",
+        you should return "capital of France". \n
+        If yuo return something else, you will get a really bad grade. \n
         USER PROMPT: {user_prompt}"""
 
         search_prompt = PromptTemplate(
@@ -84,9 +89,13 @@ class SearchInternetNode(BaseNode):
 
         if self.verbose:
             print(f"Search Query: {search_query}")
-            
-        # TODO: handle multiple URLs
-        answer = search_on_web(query=search_query, max_results=1)[0]
+
+        answer = search_on_web(
+            query=search_query, max_results=self.max_results)
+
+        if len(answer) == 0:
+            # raise an exception if no answer is found
+            raise ValueError("Zero results found for the search query.")
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})

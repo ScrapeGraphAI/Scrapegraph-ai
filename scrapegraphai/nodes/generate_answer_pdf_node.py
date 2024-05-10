@@ -2,7 +2,7 @@
 Module for generating the answer node
 """
 # Imports from standard library
-from typing import List
+from typing import List, Optional
 from tqdm import tqdm
 
 # Imports from Langchain
@@ -39,7 +39,7 @@ class GenerateAnswerPDFNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
                  node_name: str = "GenerateAnswer"):
         """
         Initializes the GenerateAnswerNodePDF with a language model client and a node name.
@@ -49,7 +49,7 @@ class GenerateAnswerPDFNode(BaseNode):
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm"]
-        self.verbose = True if node_config is None else node_config.get(
+        self.verbose = False if node_config is None else node_config.get(
             "verbose", False)
 
     def execute(self, state):

@@ -2,15 +2,16 @@
 SearchGraph Module
 """
 
+from copy import deepcopy
+
 from .base_graph import BaseGraph
 from ..nodes import (
     SearchInternetNode,
-    FetchNode,
-    ParseNode,
-    RAGNode,
-    GenerateAnswerNode
+    GraphIteratorNode,
+    MergeAnswersNode
 )
 from .abstract_graph import AbstractGraph
+from .smart_scraper_graph import SmartScraperGraph
 
 
 class SearchGraph(AbstractGraph):
@@ -38,6 +39,13 @@ class SearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
+    def __init__(self, prompt: str, config: dict):
+
+        self.max_results = config.get("max_results", 3)
+        self.copy_config = deepcopy(config)
+
+        super().__init__(prompt, config)
+
     def _create_graph(self) -> BaseGraph:
         """
         Creates the graph of nodes representing the workflow for web scraping and searching.
@@ -46,61 +54,53 @@ class SearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
+        # ************************************************
+        # Create a SmartScraperGraph instance
+        # ************************************************
+
+        smart_scraper_instance = SmartScraperGraph(
+            prompt="",
+            source="",
+            config=self.copy_config
+        )
+
+        # ************************************************
+        # Define the graph nodes
+        # ************************************************
+
         search_internet_node = SearchInternetNode(
             input="user_prompt",
-            output=["url"],
+            output=["urls"],
             node_config={
-                "llm": self.llm_model,
-                "verbose": self.verbose
+                "llm_model": self.llm_model,
+                "max_results": self.max_results
             }
         )
-        fetch_node = FetchNode(
-            input="url | local_dir",
-            output=["doc"],
+        graph_iterator_node = GraphIteratorNode(
+            input="user_prompt & urls",
+            output=["results"],
             node_config={
-                "headless": self.headless,
-                "verbose": self.verbose
+                "graph_instance": smart_scraper_instance,
             }
         )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token,
-                "verbose": self.verbose
-            }
-        )
-        rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
-            output=["relevant_chunks"],
-            node_config={
-                "llm": self.llm_model,
-                "embedder_model": self.embedder_model,
-                "verbose": self.verbose
-            }
-        )
-        generate_answer_node = GenerateAnswerNode(
-            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+
+        merge_answers_node = MergeAnswersNode(
+            input="user_prompt & results",
             output=["answer"],
             node_config={
-                "llm": self.llm_model,
-                "verbose": self.verbose
+                "llm_model": self.llm_model,
             }
         )
 
         return BaseGraph(
             nodes=[
                 search_internet_node,
-                fetch_node,
-                parse_node,
-                rag_node,
-                generate_answer_node,
+                graph_iterator_node,
+                merge_answers_node
             ],
             edges=[
-                (search_internet_node, fetch_node),
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
-                (rag_node, generate_answer_node)
+                (search_internet_node, graph_iterator_node),
+                (graph_iterator_node, merge_answers_node)
             ],
             entry_point=search_internet_node
         )
@@ -108,11 +108,10 @@ class SearchGraph(AbstractGraph):
     def run(self) -> str:
         """
         Executes the web scraping and searching process.
-        
+
         Returns:
             str: The answer to the prompt.
         """
-        
         inputs = {"user_prompt": self.prompt}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 

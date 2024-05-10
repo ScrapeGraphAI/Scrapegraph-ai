@@ -60,10 +60,6 @@ class ScriptCreatorGraph(AbstractGraph):
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
-            node_config={
-                "headless": self.headless,
-                "verbose": self.verbose
-            }
         )
         parse_node = ParseNode(
             input="doc",
@@ -76,8 +72,7 @@ class ScriptCreatorGraph(AbstractGraph):
         generate_scraper_node = GenerateScraperNode(
             input="user_prompt & (doc)",
             output=["answer"],
-            node_config={"llm": self.llm_model,
-                         "verbose": self.verbose},
+            node_config={"llm_model": self.llm_model},
             library=self.library,
             website=self.source
         )
@@ -106,4 +101,4 @@ class ScriptCreatorGraph(AbstractGraph):
         inputs = {"user_prompt": self.prompt, self.input_key: self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
-        return self.final_state.get("answer", "No answer found.")
+        return self.final_state.get("answer", "No answer found ")

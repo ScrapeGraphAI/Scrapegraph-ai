@@ -1,27 +1,167 @@
-## [0.9.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.8.0...v0.9.0) (2024-05-04)
+## [0.11.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.1...v0.11.0-beta.2) (2024-05-10)
 
 
 ### Features
 
-* Enable end users to pass model instances of HuggingFaceHub ([7599234](https://github.com/VinciGit00/Scrapegraph-ai/commit/7599234ab9563ca4ee9b7f5b2d0267daac621ecf))
+* revert fetch_node ([864aa91](https://github.com/VinciGit00/Scrapegraph-ai/commit/864aa91326c360992326e04811d272e55eac8355))
+
+## [0.11.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0...v0.11.0-beta.1) (2024-05-10)
+
+
+### Features
+
+* Add support for passing pdf path as source ([f10f3b1](https://github.com/VinciGit00/Scrapegraph-ai/commit/f10f3b1438e0c625b7f2fa52faeb5a6c12116113))
+* update info ([4ed0fb8](https://github.com/VinciGit00/Scrapegraph-ai/commit/4ed0fb89c3e6068190a7775bedcb6ae65ba59d18))
 
 
 ### Bug Fixes
 
-* trailing whitespace ([2878695](https://github.com/VinciGit00/Scrapegraph-ai/commit/2878695d5f35cc9d81f24e4844fdc1988d10cb26))
-
-
-### Build
-
-* **deps:** bump tqdm from 4.66.1 to 4.66.3 ([0a17c74](https://github.com/VinciGit00/Scrapegraph-ai/commit/0a17c74e50d0457aec289e81183e9c779c735842))
-* **deps:** bump tqdm from 4.66.1 to 4.66.3 ([aff6f98](https://github.com/VinciGit00/Scrapegraph-ai/commit/aff6f983b02a37ced21826847a6ace5fb15ecf3d))
+* add json integration ([0ab31c3](https://github.com/VinciGit00/Scrapegraph-ai/commit/0ab31c3fdbd56652ed306e60109301f60e8042d3))
+* Augment the information getting fetched from a webpage ([f8ce3d5](https://github.com/VinciGit00/Scrapegraph-ai/commit/f8ce3d5916eab926275d59d4d48b0d89ec9cd43f))
+* fixed bugs for csv and xml ([324e977](https://github.com/VinciGit00/Scrapegraph-ai/commit/324e977b853ecaa55bac4bf86e7cd927f7f43d0d))
+* limit python version to < 3.12 ([a37fbbc](https://github.com/VinciGit00/Scrapegraph-ai/commit/a37fbbcbcfc3ddd0cc66f586f279676b52c4abfe))
 
 
 ### CI
 
-* **release:** 0.8.0-beta.1 [skip ci] ([d277b34](https://github.com/VinciGit00/Scrapegraph-ai/commit/d277b349a98848749a7e38ea3c511271bced3b71))
-* **release:** 0.8.0-beta.2 [skip ci] ([892500a](https://github.com/VinciGit00/Scrapegraph-ai/commit/892500afe93c4d96dcffe897b382977a22079b83))
-* **release:** 0.9.0-beta.1 [skip ci] ([14615a7](https://github.com/VinciGit00/Scrapegraph-ai/commit/14615a73c71bb5250772a75c415c57cb153660f8))
+* **release:** 0.10.0-beta.3 [skip ci] ([ad32298](https://github.com/VinciGit00/Scrapegraph-ai/commit/ad32298e70fc626fd62c897e153b806f79dba9b9))
+* **release:** 0.10.0-beta.4 [skip ci] ([548bff9](https://github.com/VinciGit00/Scrapegraph-ai/commit/548bff9d77c8b4d2aadee40e966a06cc9d7fd4ab))
+* **release:** 0.10.0-beta.5 [skip ci] ([28c9dce](https://github.com/VinciGit00/Scrapegraph-ai/commit/28c9dce7cbda49750172bafd7767fa48a0c33859))
+* **release:** 0.10.0-beta.6 [skip ci] ([460d292](https://github.com/VinciGit00/Scrapegraph-ai/commit/460d292af21fabad3fdd2b66110913ccee22ba91))
+
+### Bug Fixes
+
+* add json integration ([0ab31c3](https://github.com/VinciGit00/Scrapegraph-ai/commit/0ab31c3fdbd56652ed306e60109301f60e8042d3))
+
+## [0.10.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.4...v0.10.0-beta.5) (2024-05-09)
+
+
+
+### Bug Fixes
+
+
+* fixed bugs for csv and xml ([324e977](https://github.com/VinciGit00/Scrapegraph-ai/commit/324e977b853ecaa55bac4bf86e7cd927f7f43d0d))
+
+## [0.10.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.3...v0.10.0-beta.4) (2024-05-09)
+
+
+### Features
+
+* Add support for passing pdf path as source ([f10f3b1](https://github.com/VinciGit00/Scrapegraph-ai/commit/f10f3b1438e0c625b7f2fa52faeb5a6c12116113))
+
+
+### Bug Fixes
+
+* limit python version to < 3.12 ([a37fbbc](https://github.com/VinciGit00/Scrapegraph-ai/commit/a37fbbcbcfc3ddd0cc66f586f279676b52c4abfe))
+
+## [0.10.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.2...v0.10.0-beta.3) (2024-05-09)
+
+
+### Features
+
+* update info ([4ed0fb8](https://github.com/VinciGit00/Scrapegraph-ai/commit/4ed0fb89c3e6068190a7775bedcb6ae65ba59d18))
+
+## [0.10.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0-beta.1...v0.10.0-beta.2) (2024-05-08)
+
+
+### Bug Fixes
+
+* **examples:** local, mixed models and fixed SearchGraph embeddings problem ([6b71ec1](https://github.com/VinciGit00/Scrapegraph-ai/commit/6b71ec1d2be953220b6767bc429f4cf6529803fd))
+* **examples:** openai std examples ([186c0d0](https://github.com/VinciGit00/Scrapegraph-ai/commit/186c0d035d1d211aff33c38c449f2263d9716a07))
+* removed .lock file for deployment ([d4c7d4e](https://github.com/VinciGit00/Scrapegraph-ai/commit/d4c7d4e7fcc2110beadcb2fc91efc657ec6a485c))
+
+
+### Docs
+
+* update README.md ([17ec992](https://github.com/VinciGit00/Scrapegraph-ai/commit/17ec992b498839e001277e7bc3f0ebea49fbd00d))
+
+## [0.10.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0...v0.10.0-beta.1) (2024-05-06)
+
+
+### Features
+
+* add claude documentation ([5bdee55](https://github.com/VinciGit00/Scrapegraph-ai/commit/5bdee558760521bab818efc6725739e2a0f55d20))
+* add gemini embeddings ([79daa4c](https://github.com/VinciGit00/Scrapegraph-ai/commit/79daa4c112e076e9c5f7cd70bbbc6f5e4930832c))
+* add llava integration ([019b722](https://github.com/VinciGit00/Scrapegraph-ai/commit/019b7223dc969c87c3c36b6a42a19b4423b5d2af))
+* add new hugging_face models ([d5547a4](https://github.com/VinciGit00/Scrapegraph-ai/commit/d5547a450ccd8908f1cf73707142b3481fbc6baa))
+* Fix bug for gemini case when embeddings config not passed ([726de28](https://github.com/VinciGit00/Scrapegraph-ai/commit/726de288982700dab8ab9f22af8e26f01c6198a7))
+* fixed custom_graphs example and robots_node ([84fcb44](https://github.com/VinciGit00/Scrapegraph-ai/commit/84fcb44aaa36e84f775884138d04f4a60bb389be))
+* multiple graph instances ([dbb614a](https://github.com/VinciGit00/Scrapegraph-ai/commit/dbb614a8dd88d7667fe3daaf0263f5d6e9be1683))
+* **node:** multiple url search in SearchGraph + fixes ([930adb3](https://github.com/VinciGit00/Scrapegraph-ai/commit/930adb38f2154ba225342466bfd1846c47df72a0))
+* refactoring search function ([aeb1acb](https://github.com/VinciGit00/Scrapegraph-ai/commit/aeb1acbf05e63316c91672c99d88f8a6f338147f))
+
+
+### Bug Fixes
+
+* bug on .toml ([f7d66f5](https://github.com/VinciGit00/Scrapegraph-ai/commit/f7d66f51818dbdfddd0fa326f26265a3ab686b20))
+* **llm:** fixed gemini api_key ([fd01b73](https://github.com/VinciGit00/Scrapegraph-ai/commit/fd01b73b71b515206cfdf51c1d52136293494389))
+
+
+### CI
+
+* **release:** 0.9.0-beta.2 [skip ci] ([5aa600c](https://github.com/VinciGit00/Scrapegraph-ai/commit/5aa600cb0a85d320ad8dc786af26ffa46dd4d097))
+* **release:** 0.9.0-beta.3 [skip ci] ([da8c72c](https://github.com/VinciGit00/Scrapegraph-ai/commit/da8c72ce138bcfe2627924d25a67afcd22cfafd5))
+* **release:** 0.9.0-beta.4 [skip ci] ([8c5397f](https://github.com/VinciGit00/Scrapegraph-ai/commit/8c5397f67a9f05e0c00f631dd297b5527263a888))
+* **release:** 0.9.0-beta.5 [skip ci] ([532adb6](https://github.com/VinciGit00/Scrapegraph-ai/commit/532adb639d58640bc89e8b162903b2ed97be9853))
+* **release:** 0.9.0-beta.6 [skip ci] ([8c0b46e](https://github.com/VinciGit00/Scrapegraph-ai/commit/8c0b46eb40b446b270c665c11b2c6508f4d5f4be))
+* **release:** 0.9.0-beta.7 [skip ci] ([6911e21](https://github.com/VinciGit00/Scrapegraph-ai/commit/6911e21584767460c59c5a563c3fd010857cbb67))
+* **release:** 0.9.0-beta.8 [skip ci] ([739aaa3](https://github.com/VinciGit00/Scrapegraph-ai/commit/739aaa33c39c12e7ab7df8a0656cad140b35c9db))
+
+## [0.9.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.7...v0.9.0-beta.8) (2024-05-06)
+
+
+### Features
+
+* add llava integration ([019b722](https://github.com/VinciGit00/Scrapegraph-ai/commit/019b7223dc969c87c3c36b6a42a19b4423b5d2af))
+
+## [0.9.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.6...v0.9.0-beta.7) (2024-05-06)
+
+
+### Bug Fixes
+
+* **llm:** fixed gemini api_key ([fd01b73](https://github.com/VinciGit00/Scrapegraph-ai/commit/fd01b73b71b515206cfdf51c1d52136293494389))
+
+## [0.9.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.5...v0.9.0-beta.6) (2024-05-06)
+
+
+### Features
+
+* Fix bug for gemini case when embeddings config not passed ([726de28](https://github.com/VinciGit00/Scrapegraph-ai/commit/726de288982700dab8ab9f22af8e26f01c6198a7))
+
+## [0.9.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.4...v0.9.0-beta.5) (2024-05-06)
+
+
+### Features
+
+* fixed custom_graphs example and robots_node ([84fcb44](https://github.com/VinciGit00/Scrapegraph-ai/commit/84fcb44aaa36e84f775884138d04f4a60bb389be))
+* multiple graph instances ([dbb614a](https://github.com/VinciGit00/Scrapegraph-ai/commit/dbb614a8dd88d7667fe3daaf0263f5d6e9be1683))
+* **node:** multiple url search in SearchGraph + fixes ([930adb3](https://github.com/VinciGit00/Scrapegraph-ai/commit/930adb38f2154ba225342466bfd1846c47df72a0))
+
+## [0.9.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.3...v0.9.0-beta.4) (2024-05-05)
+
+
+### Features
+
+* add gemini embeddings ([79daa4c](https://github.com/VinciGit00/Scrapegraph-ai/commit/79daa4c112e076e9c5f7cd70bbbc6f5e4930832c))
+
+## [0.9.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.2...v0.9.0-beta.3) (2024-05-05)
+
+
+### Features
+
+* add claude documentation ([5bdee55](https://github.com/VinciGit00/Scrapegraph-ai/commit/5bdee558760521bab818efc6725739e2a0f55d20))
+
+## [0.9.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.9.0-beta.1...v0.9.0-beta.2) (2024-05-05)
+
+
+### Features
+
+* refactoring search function ([aeb1acb](https://github.com/VinciGit00/Scrapegraph-ai/commit/aeb1acbf05e63316c91672c99d88f8a6f338147f))
+
+
+### Bug Fixes
+
+* bug on .toml ([f7d66f5](https://github.com/VinciGit00/Scrapegraph-ai/commit/f7d66f51818dbdfddd0fa326f26265a3ab686b20))
 
 ## [0.9.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.8.0...v0.9.0-beta.1) (2024-05-04)
 

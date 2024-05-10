@@ -4,6 +4,8 @@ Example of custom graph using existing nodes
 
 import os
 from dotenv import load_dotenv
+
+from langchain_openai import OpenAIEmbeddings
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
@@ -20,7 +22,7 @@ graph_config = {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
         "temperature": 0,
-        "streaming": True
+        "streaming": False
     },
 }
 
@@ -29,33 +31,51 @@ graph_config = {
 # ************************************************
 
 llm_model = OpenAI(graph_config["llm"])
+embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
 
 # define the nodes for the graph
 robot_node = RobotsNode(
     input="url",
     output=["is_scrapable"],
-    node_config={"llm": llm_model}
+    node_config={
+        "llm_model": llm_model,
+        "force_scraping": True,
+        "verbose": True,
+        }
 )
 
 fetch_node = FetchNode(
     input="url | local_dir",
     output=["doc"],
-    node_config={"headless": True, "verbose": True}
+    node_config={
+        "verbose": True,
+        "headless": True,
+    }
 )
 parse_node = ParseNode(
     input="doc",
     output=["parsed_doc"],
-    node_config={"chunk_size": 4096}
+    node_config={
+        "chunk_size": 4096,
+        "verbose": True,
+    }
 )
 rag_node = RAGNode(
     input="user_prompt & (parsed_doc | doc)",
     output=["relevant_chunks"],
-    node_config={"llm": llm_model},
+    node_config={
+        "llm_model": llm_model,
+        "embedder_model": embedder,
+        "verbose": True,
+    }
 )
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
-    node_config={"llm": llm_model},
+    node_config={
+        "llm_model": llm_model,
+        "verbose": True,
+    }
 )
 
 # ************************************************
@@ -84,8 +104,8 @@ graph = BaseGraph(
 # ************************************************
 
 result, execution_info = graph.execute({
-    "user_prompt": "List me the projects with their description",
-    "url": "https://perinim.github.io/projects/"
+    "user_prompt": "Describe the content",
+    "url": "https://example.com/"
 })
 
 # get the answer from the result

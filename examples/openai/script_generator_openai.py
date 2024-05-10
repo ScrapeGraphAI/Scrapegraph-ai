@@ -43,3 +43,4 @@ print(result)
 
 graph_exec_info = script_creator_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
+
