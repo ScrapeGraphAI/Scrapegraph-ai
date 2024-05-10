@@ -1,3 +1,10 @@
+## [0.11.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.1...v0.11.0-beta.2) (2024-05-10)
+
+
+### Features
+
+* revert fetch_node ([864aa91](https://github.com/VinciGit00/Scrapegraph-ai/commit/864aa91326c360992326e04811d272e55eac8355))
+
 ## [0.11.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.0...v0.11.0-beta.1) (2024-05-10)
 
 
