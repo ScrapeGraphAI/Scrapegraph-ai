@@ -3,12 +3,13 @@ FetchNode Module
 """
 import pandas as pd
 import json
+import requests
 from typing import List, Optional
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader
 from .base_node import BaseNode
-from ..utils.remover import remover
+from ..utils.cleanup_html import cleanup_html
 
 
 class FetchNode(BaseNode):
@@ -38,6 +39,8 @@ class FetchNode(BaseNode):
             "headless", True)
         self.verbose = False if node_config is None else node_config.get(
             "verbose", False)
+        self.useSoup = True if node_config is None else node_config.get(
+            "useSoup", True)
 
     def execute(self, state):
         """
@@ -94,9 +97,17 @@ class FetchNode(BaseNode):
             pass
 
         elif not source.startswith("http"):
-            compressed_document = [Document(page_content=remover(source), metadata={
+            compressed_document = [Document(page_content=cleanup_html(source), metadata={
                 "source": "local_dir"
             })]
+        
+        elif self.useSoup:
+            response = requests.get(source)
+            if response.status_code == 200:
+                cleanedup_html = cleanup_html(response.text, source)
+                compressed_document = [Document(page_content=cleanedup_html)]
+            else:	
+                print(f"Failed to retrieve contents from the webpage at url: {url}")
 
         else:
             if self.node_config is not None and self.node_config.get("endpoint") is not None:
@@ -114,7 +125,7 @@ class FetchNode(BaseNode):
 
             document = loader.load()
             compressed_document = [
-                Document(page_content=remover(str(document[0].page_content)))]
+                Document(page_content=cleanup_html(str(document[0].page_content)))]
 
         state.update({self.output[0]: compressed_document})
         return state

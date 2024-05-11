@@ -3,9 +3,9 @@ Module for minimizing the code
 """
 from bs4 import BeautifulSoup
 from minify_html import minify
+from urllib.parse import urljoin
 
-
-def remover(html_content: str) -> str:
+def cleanup_html(html_content: str, base_url: str) -> str:
     """
     Processes HTML content by removing unnecessary tags, minifying the HTML, and extracting the title and body content.
 
@@ -33,11 +33,21 @@ def remover(html_content: str) -> str:
     for tag in soup.find_all(['script', 'style']):
         tag.extract()
 
+    # Links extraction
+    links = soup.find_all('a')
+    link_urls = []
+    for link in links:
+        if 'href' in link.attrs:
+            link_urls.append(urljoin(base_url, link['href']))
+
     # Body Extraction (if it exists)
     body_content = soup.find('body')
     if body_content:
         # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
-        return "Title: " + title + ", Body: " + minimized_body
+        print("Came here")
+        return "Title: " + title + ", Body: " + minimized_body + ", Links: " + str(link_urls)
 
-    return "Title: " + title + ", Body: No body content found"
+
+    print("No Came here")
+    return "Title: " + title + ", Body: No body content found" + ", Links: " + str(link_urls)
