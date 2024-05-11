@@ -18,3 +18,14 @@ Flexibility and Adaptability
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Traditional web scraping tools often rely on fixed patterns or manual configuration to extract data from web pages. ScrapegraphAI, leveraging the power of LLMs, adapts to changes in website structures, reducing the need for constant developer intervention. 
 This flexibility ensures that scrapers remain functional even when website layouts change.
+
+
+Overview
+========
+With ScrapegraphAI you first construct a pipeline of steps you want to execute by combining nodes into a graph.
+Executing the graph takes care of all the steps that are often part of scraping: fetching, parsing etc...
+Finally the scraped and processed data gets fed to an LLM which generates a response.
+
+.. image:: ../../assets/project_overview_diagram.png
+   :align: center
+   :alt: ScrapegraphAI Overview
