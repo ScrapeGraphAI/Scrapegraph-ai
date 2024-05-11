@@ -5,7 +5,6 @@ SearchLinkNode Module
 # Imports from standard library
 from typing import List, Optional
 from tqdm import tqdm
-from bs4 import BeautifulSoup
 
 
 # Imports from Langchain
@@ -19,15 +18,9 @@ from .base_node import BaseNode
 
 class SearchLinkNode(BaseNode):
     """
-    A node that can filter out the relevant links in the webpage content.
-    Node expects the aleready scrapped information and hence it is expected
+    A node that can filter out the relevant links in the webpage content for the user prompt.
+    Node expects the aleready scrapped links on the webpage and hence it is expected
     that this node be used after the FetchNode.
-    
-    For the links which are not incomplete and hence in-navigable. the node will complete
-    the url and return,
-    
-    For example: link /projects/rotary-pendulum-rl/ on https://perinim.github.io/projects/,
-    would be augmented to return https://perinim.github.io/projects/rotary-pendulum-rl/
 
     Attributes:
         llm_model: An instance of the language model client used for generating answers.
