@@ -8,7 +8,8 @@
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
 
-ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites, documents and XML files.
+ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, etc.).
+
 Just say which information you want to extract and the library will do it for you!
 
 <p align="center">
@@ -52,11 +53,16 @@ The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.r
 Check out also the docusaurus [documentation](https://scrapegraph-doc.onrender.com/).
 
 ## 💻 Usage
-You can use the `SmartScraper` class to extract information from a website using a prompt.
+There are three main scraping pipelines that can be used to extract information from a website (or local file):
+- `SmartScraperGraph`: single-page scraper that only needs a user prompt and an input source;
+- `SearchGraph`: multi-page scraper that extracts information from the top n search results of a search engine;
+- `SpeechGraph`: single-page scraper that extracts information from a website and generates an audio file.
 
-The `SmartScraper` class is a direct graph implementation that uses the most common nodes present in a web scraping pipeline. For more information, please see the [documentation](https://scrapegraph-ai.readthedocs.io/en/latest/).
-### Case 1: Extracting information using Ollama
-Remember to download the model on Ollama separately!
+It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
+
+### Case 1: SmartScraper using Local Models
+
+Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command.
 
 ```python
 from scrapegraphai.graphs import SmartScraperGraph
@@ -71,11 +77,12 @@ graph_config = {
     "embeddings": {
         "model": "ollama/nomic-embed-text",
         "base_url": "http://localhost:11434",  # set Ollama URL
-    }
+    },
+    "verbose": True,
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the articles",
+    prompt="List me all the projects with their descriptions",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects",
     config=graph_config
@@ -86,158 +93,85 @@ print(result)
 
 ```
 
-### Case 2: Extracting information using Docker
+The output will be a list of projects with their descriptions like the following:
 
-Note: before using the local model remember to create the docker container!
-```text
-    docker-compose up -d
-    docker exec -it ollama ollama pull stablelm-zephyr
-```
-You can use which models available on Ollama or your own model instead of stablelm-zephyr
 ```python
-from scrapegraphai.graphs import SmartScraperGraph
-
-graph_config = {
-    "llm": {
-        "model": "ollama/mistral",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        # "model_tokens": 2000, # set context length arbitrarily
-    },
-}
-
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the articles",
-    # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects",  
-    config=graph_config
-)
-
-result = smart_scraper_graph.run()
-print(result)
+{'projects': [{'title': 'Rotary Pendulum RL', 'description': 'Open Source project aimed at controlling a real life rotary pendulum using RL algorithms'}, {'title': 'DQN Implementation from scratch', 'description': 'Developed a Deep Q-Network algorithm to train a simple and double pendulum'}, ...]}
 ```
 
+### Case 2: SearchGraph using Mixed Models
 
-### Case 3: Extracting information using Openai model
+We use **Groq** for the LLM and **Ollama** for the embeddings.
+
 ```python
-from scrapegraphai.graphs import SmartScraperGraph
-OPENAI_API_KEY = "YOUR_API_KEY"
-
-graph_config = {
-    "llm": {
-        "api_key": OPENAI_API_KEY,
-        "model": "gpt-3.5-turbo",
-    },
-}
-
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the articles",
-    # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects",
-    config=graph_config
-)
-
-result = smart_scraper_graph.run()
-print(result)
-```
-
-### Case 4: Extracting information using Groq
-```python
-from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import prettify_exec_info
-
-groq_key = os.getenv("GROQ_APIKEY")
-
-graph_config = {
-    "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
-    },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        "base_url": "http://localhost:11434", 
-    },
-    "headless": False
-}
-
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description and the author.",
-    source="https://perinim.github.io/projects",
-    config=graph_config
-)
-
-result = smart_scraper_graph.run()
-print(result)
-```
-
-### Case 5: Extracting information using Azure
-```python
-from langchain_openai import AzureChatOpenAI
-from langchain_openai import AzureOpenAIEmbeddings
-
-lm_model_instance = AzureChatOpenAI(
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
-)
-
-embedder_model_instance = AzureOpenAIEmbeddings(
-    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-)
-graph_config = {
-    "llm": {"model_instance": llm_model_instance},
-    "embeddings": {"model_instance": embedder_model_instance}
-}
-
-smart_scraper_graph = SmartScraperGraph(
-    prompt="""List me all the events, with the following fields: company_name, event_name, event_start_date, event_start_time, 
-    event_end_date, event_end_time, location, event_mode, event_category, 
-    third_party_redirect, no_of_days, 
-    time_in_hours, hosted_or_attending, refreshments_type, 
-    registration_available, registration_link""",
-    source="https://www.hmhco.com/event",
-    config=graph_config
-)
-```
-
-### Case 6: Extracting information using Gemini 
-```python
-from scrapegraphai.graphs import SmartScraperGraph
-GOOGLE_APIKEY = "YOUR_API_KEY"
+from scrapegraphai.graphs import SearchGraph
 
 # Define the configuration for the graph
 graph_config = {
     "llm": {
-        "api_key": GOOGLE_APIKEY,
-        "model": "gemini-pro",
+        "model": "groq/gemma-7b-it",
+        "api_key": "GROQ_API_KEY",
+        "temperature": 0
     },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "max_results": 5,
 }
 
-# Create the SmartScraperGraph instance
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the articles",
-    source="https://perinim.github.io/projects",
+# Create the SearchGraph instance
+search_graph = SearchGraph(
+    prompt="List me all the traditional recipes from Chioggia",
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
+# Run the graph
+result = search_graph.run()
 print(result)
 ```
 
-The output for all 3 the cases will be a dictionary with the extracted information, for example:
+The output will be a list of recipes like the following:
 
-```bash
-{
-    'titles': [
-        'Rotary Pendulum RL'
-        ],
-    'descriptions': [
-        'Open Source project aimed at controlling a real life rotary pendulum using RL algorithms'
-        ]
-}
+```python
+{'recipes': [{'name': 'Sarde in Saòre'}, {'name': 'Bigoli in salsa'}, {'name': 'Seppie in umido'}, {'name': 'Moleche frite'}, {'name': 'Risotto alla pescatora'}, {'name': 'Broeto'}, {'name': 'Bibarasse in Cassopipa'}, {'name': 'Risi e bisi'}, {'name': 'Smegiassa Ciosota'}]}
 ```
+### Case 3: SpeechGraph using OpenAI
+
+You just need to pass the OpenAI API key and the model name.
+
+```python
+from scrapegraphai.graphs import SpeechGraph
+
+graph_config = {
+    "llm": {
+        "api_key": "OPENAI_API_KEY",
+        "model": "gpt-3.5-turbo",
+    },
+    "tts_model": {
+        "api_key": "OPENAI_API_KEY",
+        "model": "tts-1",
+        "voice": "alloy"
+    },
+    "output_path": "audio_summary.mp3",
+}
+
+# ************************************************
+# Create the SpeechGraph instance and run it
+# ************************************************
+
+speech_graph = SpeechGraph(
+    prompt="Make a detailed audio summary of the projects.",
+    source="https://perinim.github.io/projects/",
+    config=graph_config,
+)
+
+result = speech_graph.run()
+print(result)
+
+```
+
+The output will be an audio file with the summary of the projects on the page.
 
 ## 🤝 Contributing
 
@@ -252,6 +186,10 @@ Wanna visualize the roadmap in a more interactive way? Check out the [markmap](h
 
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
+## Sponsors
+<p align="center">
+  <a href="https://serpapi.com/"><img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;"></a>
+</p>
 
 ## 🎓 Citations
 If you have used our library for research purposes please quote us with the following reference:
@@ -264,15 +202,11 @@ If you have used our library for research purposes please quote us with the foll
     note = {A Python library for scraping leveraging large language models}
   }
 ```
-## Sponsors
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="Scrapegraph-ai Logo" style="width: 100px;">
-</p>
 
 ## Authors
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors Logos">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors_logos">
 </p>
 
 |                    | Contact Info         |
