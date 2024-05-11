@@ -45,9 +45,7 @@ def cleanup_html(html_content: str, base_url: str) -> str:
     if body_content:
         # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
-        print("Came here")
         return "Title: " + title + ", Body: " + minimized_body + ", Links: " + str(link_urls)
 
 
-    print("No Came here")
     return "Title: " + title + ", Body: No body content found" + ", Links: " + str(link_urls)

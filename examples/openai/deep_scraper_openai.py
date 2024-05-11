@@ -43,4 +43,5 @@ print(result)
 # ************************************************
 
 graph_exec_info = deep_scraper_graph.get_execution_info()
+print(deep_scraper_graph.get_state("relevant_links"))
 print(prettify_exec_info(graph_exec_info))

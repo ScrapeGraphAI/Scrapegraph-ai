@@ -39,12 +39,12 @@ class DeepScraperGraph(AbstractGraph):
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
     Example:
-        >>> smart_scraper = DeepScraperGraph(
+        >>> deep_scraper = DeepScraperGraph(
         ...     "List me all the job titles and detailed job description.",
-        ...     "https://en.wikipedia.org/wiki/Chioggia",
+        ...     "https://www.google.com/about/careers/applications/jobs/results/?location=Bangalore%20India",
         ...     {"llm": {"model": "gpt-3.5-turbo"}}
         ... )
-        >>> result = smart_scraper.run()
+        >>> result = deep_scraper.run()
         )
     """
 
