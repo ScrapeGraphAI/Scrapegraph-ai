@@ -55,8 +55,3 @@ def test_robots_node(setup):
     result = setup.execute(state)
 
     assert result is not None
-
-
-# If you need to run this script directly
-if __name__ == "__main__":
-    pytest.main()
