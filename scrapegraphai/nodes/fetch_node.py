@@ -49,6 +49,9 @@ class FetchNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.loader_kwargs = (
+            {} if node_config is None else node_config.get("loader_kwargs", {})
+        )
 
     def execute(self, state):
         """

@@ -22,6 +22,19 @@ graph_config = {
         "model": "gpt-3.5-turbo",
     },
     "verbose": True,
+    "headless": False,
+    "loader_kwargs": {
+        "proxy" : {
+            "server": "broker",
+            "criteria": {
+                "anonymous": True,
+                # "secure": True,
+                "countryset": {"IT"},
+                "timeout": 5.0,
+                "max_shape": 2
+            },
+        },
+    }
 }
 
 # ************************************************
