@@ -1,3 +1,10 @@
+## [0.11.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.3...v0.11.0-beta.4) (2024-05-12)
+
+
+### Features
+
+* add new prompt info ([e2350ed](https://github.com/VinciGit00/Scrapegraph-ai/commit/e2350eda6249d8e121344d12c92645a3887a5b76))
+
 ## [0.11.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.2...v0.11.0-beta.3) (2024-05-12)
 
 
