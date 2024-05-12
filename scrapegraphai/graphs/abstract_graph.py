@@ -7,7 +7,7 @@ from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings, BedrockEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, Claude
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, Claude, DeepSeek
 
 
 class AbstractGraph(ABC):
@@ -200,6 +200,12 @@ class AbstractGraph(ABC):
         elif "claude-3-" in llm_params["model"]:
             self.model_token = models_tokens["claude"]["claude3"]
             return Anthropic(llm_params)
+        elif "deepseek" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["deepseek"][llm_params["model"]]
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
+            return DeepSeek(llm_params)
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
