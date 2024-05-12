@@ -33,12 +33,13 @@ class GenerateAnswerNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None,
+    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
                  node_name: str = "GenerateAnswer"):
         super().__init__(node_name, "node", input, output, 2, node_config)
-        
+
         self.llm_model = node_config["llm_model"]
-        self.verbose = False if node_config is None else node_config.get("verbose", False)
+        self.verbose = False if node_config is None else node_config.get(
+            "verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -97,6 +98,7 @@ class GenerateAnswerNode(BaseNode):
         following content from a website.
         You are now asked to answer a user question about the content you have scraped.\n 
         You have scraped many chunks since the website is big and now you are asked to merge them into a single answer without repetitions (if there are any).\n
+        Make sure that if a maximum number of items is specified in the instructions that you get that maximum number and do not exceed it. \n
         Output instructions: {format_instructions}\n 
         User question: {question}\n
         Website content: {context}\n 
