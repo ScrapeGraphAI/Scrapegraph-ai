@@ -3,12 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to scrapegraphai-ai's documentation!
-=======================================
-
-Here you will find all the information you need to get started.
-The following sections will guide you through the installation process and the usage of the library.
-
 .. toctree::
    :maxdepth: 2
    :caption: Introduction
@@ -22,6 +16,19 @@ The following sections will guide you through the installation process and the u
 
    getting_started/installation
    getting_started/examples
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Scrapers
+
+   scrapers/graphs
+   scrapers/llm
+   scrapers/graph_config
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Modules
+
    modules/modules
 
 Indices and tables
