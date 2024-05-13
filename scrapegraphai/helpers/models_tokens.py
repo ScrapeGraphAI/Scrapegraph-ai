@@ -39,7 +39,8 @@ models_tokens = {
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,
         "stablelm-zephyr": 8192,
-        "nomic-embed-text": 8192
+        "nomic-embed-text": 8192,
+        "mxbai-embed-large'": 8192
     },
     "groq": {
         "llama3-8b-8192": 8192,
@@ -101,6 +102,12 @@ models_tokens = {
         "cognitivecomputations/dolphin-2.9-llama3-8b-gguf": 8192,
         "cognitivecomputations/dolphin-2.8-mistral-7b-v02": 32768,
         "cognitivecomputations/dolphin-2.5-mixtral-8x7b": 32768,
-        "TheBloke/dolphin-2.7-mixtral-8x7b-GGUF": 32768
+        "TheBloke/dolphin-2.7-mixtral-8x7b-GGUF": 32768,
+        "deepseek-ai/DeepSeek-V2": 131072,
+        "deepseek-ai/DeepSeek-V2-Chat": 131072
+    },
+    "deepseek": {
+        "deepseek-chat": 32768,
+        "deepseek-coder": 16384
     }
 }

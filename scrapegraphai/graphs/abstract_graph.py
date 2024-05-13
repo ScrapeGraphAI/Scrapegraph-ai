@@ -5,17 +5,16 @@ from abc import ABC, abstractmethod
 from typing import Optional
 from langchain_aws import BedrockEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
+from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings, BedrockEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ..helpers import models_tokens
-from ..models import Anthropic, AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI
-from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, Claude, DeepSeek
 
 
 class AbstractGraph(ABC):
     """
     Scaffolding class for creating a graph representation and executing it.
 
-    Attributes:
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
@@ -60,8 +59,11 @@ class AbstractGraph(ABC):
             "verbose", False)
         self.headless = True if config is None else config.get(
             "headless", True)
+        self.loader_kwargs = config.get("loader_kwargs", {})
+
         common_params = {"headless": self.headless,
                          "verbose": self.verbose,
+                         "loader_kwargs": self.loader_kwargs,
                          "llm_model": self.llm_model,
                          "embedder_model": self.embedder_model}
         self.set_common_params(common_params, overwrite=False)
@@ -164,7 +166,7 @@ class AbstractGraph(ABC):
                     try:
                         self.model_token = models_tokens["ollama"][llm_params["model"]]
                     except KeyError as exc:
-                        raise KeyError("Model not supported") from exc
+                        self.model_token = 8192
                 else:
                     self.model_token = 8192
             except AttributeError:
@@ -202,6 +204,12 @@ class AbstractGraph(ABC):
         elif "claude-3-" in llm_params["model"]:
             self.model_token = models_tokens["claude"]["claude3"]
             return Anthropic(llm_params)
+        elif "deepseek" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["deepseek"][llm_params["model"]]
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
+            return DeepSeek(llm_params)
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
