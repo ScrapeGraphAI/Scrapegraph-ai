@@ -3,10 +3,11 @@ AbstractGraph Module
 """
 from abc import ABC, abstractmethod
 from typing import Optional
+from langchain_aws import BedrockEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
+from ..models import Anthropic, AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 
 
@@ -146,12 +147,12 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return Gemini(llm_params)
-        elif "claude" in llm_params["model"]:
+        elif llm_params["model"].startswith("claude"):
             try:
                 self.model_token = models_tokens["claude"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return Claude(llm_params)
+            return Anthropic(llm_params)
         elif "ollama" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
