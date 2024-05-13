@@ -30,7 +30,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description.",
+    prompt="List me all the links in the page",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
     config=graph_config

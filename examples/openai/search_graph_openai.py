@@ -17,7 +17,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4-turbo",
     },
     "max_results": 2,
     "verbose": True,
@@ -28,7 +28,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me the best escursions near Trento",
+    prompt="List me the heir of the British throne.",
     config=graph_config
 )
 

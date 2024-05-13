@@ -51,7 +51,8 @@ class FetchNode(BaseNode):
             False if node_config is None else node_config.get("verbose", False)
         )
         self.useSoup = (
-          True if node_config is None else node_config.get("useSoup", True)
+          False if node_config is None else node_config.get("useSoup", False)
+        )
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
         )
@@ -117,7 +118,7 @@ class FetchNode(BaseNode):
             pass
 
         elif not source.startswith("http"):
-            compressed_document = [Document(page_content=cleanup_html(source),
+            compressed_document = [Document(page_content=cleanup_html(data, source),
                                             metadata={"source": "local_dir"}
                                            )]
         
@@ -127,7 +128,7 @@ class FetchNode(BaseNode):
                 cleanedup_html = cleanup_html(response.text, source)
                 compressed_document = [Document(page_content=cleanedup_html)]
             else:	
-                print(f"Failed to retrieve contents from the webpage at url: {url}")
+                print(f"Failed to retrieve contents from the webpage at url: {source}")
 
         else:
             loader_kwargs = {}
@@ -139,7 +140,7 @@ class FetchNode(BaseNode):
 
             document = loader.load()
             compressed_document = [
-                Document(page_content=cleanup_html(str(document[0].page_content)))
+                Document(page_content=cleanup_html(str(document[0].page_content), source), metadata={"source": source})
             ]
 
         state.update({self.output[0]: compressed_document})
