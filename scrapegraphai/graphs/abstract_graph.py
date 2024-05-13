@@ -7,7 +7,7 @@ from langchain_aws import BedrockEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from ..helpers import models_tokens
-from ..models import Anthropic, AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
+from ..models import Anthropic, AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 
 
