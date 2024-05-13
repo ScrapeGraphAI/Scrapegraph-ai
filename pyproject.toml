@@ -1,20 +1,38 @@
 [tool.poetry]
 name = "scrapegraphai"
 
-version = "0.11.0b2"
+version = "0.11.0b7"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     "Marco Vinciguerra <mvincig11@gmail.com>",
     "Marco Perini <perinim.98@gmail.com>",
-    "Lorenzo Padoan <lorenzo.padoan977@gmail.com>"
+    "Lorenzo Padoan <lorenzo.padoan977@gmail.com>",
 ]
 license = "MIT"
 readme = "README.md"
 homepage = "https://scrapegraph-ai.readthedocs.io/"
 repository = "https://github.com/VinciGit00/Scrapegraph-ai"
 documentation = "https://scrapegraph-doc.onrender.com/"
-keywords = ["scrapegraph", "scrapegraphai", "langchain", "ai", "artificial intelligence", "gpt", "machine learning", "rag", "nlp", "natural language processing", "openai", "scraping", "web scraping", "web scraping library", "web scraping tool", "webscraping", "graph"]
+keywords = [
+    "scrapegraph",
+    "scrapegraphai",
+    "langchain",
+    "ai",
+    "artificial intelligence",
+    "gpt",
+    "machine learning",
+    "rag",
+    "nlp",
+    "natural language processing",
+    "openai",
+    "scraping",
+    "web scraping",
+    "web scraping library",
+    "web scraping tool",
+    "webscraping",
+    "graph",
+]
 classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries :: Python Modules",
@@ -46,6 +64,7 @@ yahoo-search-py = "^0.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "8.0.0"
+pytest-mock = "3.14.0"
 
 [tool.poetry.group.docs]
 optional = true
@@ -57,4 +76,3 @@ sphinx-rtd-theme = "2.0.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-

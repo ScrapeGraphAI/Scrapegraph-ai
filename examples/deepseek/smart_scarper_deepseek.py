@@ -14,15 +14,15 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+deepseek_key = os.getenv("DEEPSEEK_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "deepseek-chat",
+        "openai_api_key": deepseek_key,
+        "openai_api_base": 'https://api.deepseek.com/v1',
     },
     "verbose": True,
-    "headless": False,
 }
 
 # ************************************************

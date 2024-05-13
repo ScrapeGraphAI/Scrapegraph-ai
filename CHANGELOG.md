@@ -1,3 +1,65 @@
+## [0.11.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.6...v0.11.0-beta.7) (2024-05-13)
+
+
+### Bug Fixes
+
+* bug for claude ([d0167de](https://github.com/VinciGit00/Scrapegraph-ai/commit/d0167dee71779a3c1e1e042e17a41134b93b3c78))
+
+
+### Docs
+
+* **refactor:** changed example ([c7ec114](https://github.com/VinciGit00/Scrapegraph-ai/commit/c7ec114274da64f0b61cee80afe908a36ad26b78))
+
+## [0.11.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.5...v0.11.0-beta.6) (2024-05-13)
+
+
+### Bug Fixes
+
+* **fetch-node:** removed isSoup from default ([0c15947](https://github.com/VinciGit00/Scrapegraph-ai/commit/0c1594737f878ed5672f4c889fdf9b4e0d7ec49a))
+
+## [0.11.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.4...v0.11.0-beta.5) (2024-05-13)
+
+
+### Features
+
+* **webdriver-backend:** add dynamic import scripts from module and file ([db2234b](https://github.com/VinciGit00/Scrapegraph-ai/commit/db2234bf5d2f2589b080cd4136f33c4f4443bdfb))
+* **proxy-rotation:** add parse (IP address) or search (from broker) functionality for proxy rotation ([2170131](https://github.com/VinciGit00/Scrapegraph-ai/commit/217013181da06abe8d71d9db70e809ea4ebd8236))
+* added proxy rotation ([0c36a7e](https://github.com/VinciGit00/Scrapegraph-ai/commit/0c36a7ec1f32ee073d9e0f534a2cb97aba3d7a1f))
+* **safe-web-driver:** enchanced the original `AsyncChromiumLoader` web driver with proxy protection and flexible kwargs and backend ([768719c](https://github.com/VinciGit00/Scrapegraph-ai/commit/768719cce80953fa6cbe283e442420116c438f16))
+
+
+### Bug Fixes
+
+* **pytest:** add dependency for mocking testing functions ([2f4fd45](https://github.com/VinciGit00/Scrapegraph-ai/commit/2f4fd45700ebf1db0c429b5a6249386d1a111615))
+* **chromium-loader:** ensure it subclasses langchain's base loader ([b54d984](https://github.com/VinciGit00/Scrapegraph-ai/commit/b54d984c134c8cbc432fd111bb161d3d53cf4a85))
+* **proxy-rotation:** removed duplicated arg and passed the loader_kwarhs correctly to the node ([1e9a564](https://github.com/VinciGit00/Scrapegraph-ai/commit/1e9a56461632999c5dc09f5aa930c14c954025ad))
+* **proxy-rotation:** removed max_shape duplicate ([5d6d996](https://github.com/VinciGit00/Scrapegraph-ai/commit/5d6d996e8f6132101d4c3af835d74f0674baffa1))
+
+
+### Docs
+
+* **refactor:** added proxy-rotation usage and refactor readthedocs ([e256b75](https://github.com/VinciGit00/Scrapegraph-ai/commit/e256b758b2ada641f97b23b1cf6c6b0174563d8a))
+
+## [0.11.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.3...v0.11.0-beta.4) (2024-05-12)
+
+
+### Features
+
+* add new prompt info ([e2350ed](https://github.com/VinciGit00/Scrapegraph-ai/commit/e2350eda6249d8e121344d12c92645a3887a5b76))
+
+## [0.11.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.2...v0.11.0-beta.3) (2024-05-12)
+
+
+### Features
+
+* add support for deepseek-chat ([156b67b](https://github.com/VinciGit00/Scrapegraph-ai/commit/156b67b91e1798f67082123e2c0087d358a32d4d)), closes [#222](https://github.com/VinciGit00/Scrapegraph-ai/issues/222)
+
+
+### Docs
+
+* add diagram showing general structure/flow of the library ([13ae918](https://github.com/VinciGit00/Scrapegraph-ai/commit/13ae9180ac5e7ef11dad1a210cf8790e797397dd))
+* update overview diagram with more models ([b441b30](https://github.com/VinciGit00/Scrapegraph-ai/commit/b441b30a5c60dda105964f69bd4cef06825f5c74))
+
 ## [0.11.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.1...v0.11.0-beta.2) (2024-05-10)
 
 
