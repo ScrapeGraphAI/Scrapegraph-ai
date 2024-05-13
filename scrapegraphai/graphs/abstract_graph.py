@@ -3,11 +3,12 @@ AbstractGraph Module
 """
 from abc import ABC, abstractmethod
 from typing import Optional
+from langchain_aws import BedrockEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings, BedrockEmbeddings
+from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, Claude, DeepSeek
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, DeepSeek
 
 
 class AbstractGraph(ABC):
@@ -153,7 +154,7 @@ class AbstractGraph(ABC):
                 self.model_token = models_tokens["claude"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return Claude(llm_params)
+            return Anthropic(llm_params)
         elif "ollama" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
