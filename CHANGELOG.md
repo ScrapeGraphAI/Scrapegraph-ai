@@ -1,3 +1,10 @@
+## [0.11.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.5...v0.11.0-beta.6) (2024-05-13)
+
+
+### Bug Fixes
+
+* **fetch-node:** removed isSoup from default ([0c15947](https://github.com/VinciGit00/Scrapegraph-ai/commit/0c1594737f878ed5672f4c889fdf9b4e0d7ec49a))
+
 ## [0.11.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.4...v0.11.0-beta.5) (2024-05-13)
 
 
