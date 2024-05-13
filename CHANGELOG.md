@@ -1,3 +1,15 @@
+## [0.11.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.6...v0.11.0-beta.7) (2024-05-13)
+
+
+### Bug Fixes
+
+* bug for claude ([d0167de](https://github.com/VinciGit00/Scrapegraph-ai/commit/d0167dee71779a3c1e1e042e17a41134b93b3c78))
+
+
+### Docs
+
+* **refactor:** changed example ([c7ec114](https://github.com/VinciGit00/Scrapegraph-ai/commit/c7ec114274da64f0b61cee80afe908a36ad26b78))
+
 ## [0.11.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.5...v0.11.0-beta.6) (2024-05-13)
 
 
