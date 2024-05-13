@@ -22,6 +22,7 @@ graph_config = {
         "model": "gpt-3.5-turbo",
     },
     "verbose": True,
+    "headless": False,
 }
 
 # ************************************************

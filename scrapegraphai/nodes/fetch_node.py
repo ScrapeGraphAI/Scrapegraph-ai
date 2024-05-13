@@ -1,13 +1,16 @@
 """ 
 FetchNode Module
 """
-import pandas as pd
+
 import json
 import requests
 from typing import List, Optional
-from langchain_community.document_loaders import AsyncChromiumLoader
-from langchain_core.documents import Document
+
+import pandas as pd
 from langchain_community.document_loaders import PyPDFLoader
+from langchain_core.documents import Document
+
+from ..docloaders import ChromiumLoader
 from .base_node import BaseNode
 from ..utils.cleanup_html import cleanup_html
 
@@ -15,8 +18,8 @@ from ..utils.cleanup_html import cleanup_html
 class FetchNode(BaseNode):
     """
     A node responsible for fetching the HTML content of a specified URL and updating
-    the graph's state with this content. It uses the AsyncChromiumLoader to fetch the
-    content asynchronously.
+    the graph's state with this content. It uses ChromiumLoader to fetch
+    the content from a web page asynchronously (with proxy protection).
 
     This node acts as a starting point in many scraping workflows, preparing the state
     with the necessary HTML content for further processing by subsequent nodes in the graph.
@@ -32,15 +35,26 @@ class FetchNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Fetch".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None, node_name: str = "Fetch"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "Fetch",
+    ):
         super().__init__(node_name, "node", input, output, 1)
 
-        self.headless = True if node_config is None else node_config.get(
-            "headless", True)
-        self.verbose = False if node_config is None else node_config.get(
-            "verbose", False)
-        self.useSoup = True if node_config is None else node_config.get(
-            "useSoup", True)
+        self.headless = (
+            True if node_config is None else node_config.get("headless", True)
+        )
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
+        self.useSoup = (
+          True if node_config is None else node_config.get("useSoup", True)
+        self.loader_kwargs = (
+            {} if node_config is None else node_config.get("loader_kwargs", {})
+        )
 
     def execute(self, state):
         """
@@ -67,10 +81,14 @@ class FetchNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         source = input_data[0]
-        if self.input == "json_dir" or self.input == "xml_dir" or self.input == "csv_dir":
-            compressed_document = [Document(page_content=source, metadata={
-                "source": "local_dir"
-            })]
+        if (
+            self.input == "json_dir"
+            or self.input == "xml_dir"
+            or self.input == "csv_dir"
+        ):
+            compressed_document = [
+                Document(page_content=source, metadata={"source": "local_dir"})
+            ]
         # if it is a local directory
 
         # handling for pdf
@@ -79,27 +97,29 @@ class FetchNode(BaseNode):
             compressed_document = loader.load()
 
         elif self.input == "csv":
-            compressed_document = [Document(page_content=str(pd.read_csv(source)), metadata={
-                "source": "csv"
-            })]
+            compressed_document = [
+                Document(
+                    page_content=str(pd.read_csv(source)), metadata={"source": "csv"}
+                )
+            ]
         elif self.input == "json":
             f = open(source)
-            compressed_document = [Document(page_content=str(json.load(f)), metadata={
-                "source": "json"
-            })]
+            compressed_document = [
+                Document(page_content=str(json.load(f)), metadata={"source": "json"})
+            ]
         elif self.input == "xml":
-            with open(source, 'r', encoding='utf-8') as f:
+            with open(source, "r", encoding="utf-8") as f:
                 data = f.read()
-            compressed_document = [Document(page_content=data, metadata={
-                "source": "xml"
-            })]
+            compressed_document = [
+                Document(page_content=data, metadata={"source": "xml"})
+            ]
         elif self.input == "pdf_dir":
             pass
 
         elif not source.startswith("http"):
-            compressed_document = [Document(page_content=cleanup_html(source), metadata={
-                "source": "local_dir"
-            })]
+            compressed_document = [Document(page_content=cleanup_html(source),
+                                            metadata={"source": "local_dir"}
+                                           )]
         
         elif self.useSoup:
             response = requests.get(source)
@@ -110,22 +130,17 @@ class FetchNode(BaseNode):
                 print(f"Failed to retrieve contents from the webpage at url: {url}")
 
         else:
-            if self.node_config is not None and self.node_config.get("endpoint") is not None:
+            loader_kwargs = {}
 
-                loader = AsyncChromiumLoader(
-                    [source],
-                    proxies={"http": self.node_config["endpoint"]},
-                    headless=self.headless,
-                )
-            else:
-                loader = AsyncChromiumLoader(
-                    [source],
-                    headless=self.headless,
-                )
+            if self.node_config is not None:
+                loader_kwargs = self.node_config.get("loader_kwargs", {})
+
+            loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
 
             document = loader.load()
             compressed_document = [
-                Document(page_content=cleanup_html(str(document[0].page_content)))]
+                Document(page_content=cleanup_html(str(document[0].page_content)))
+            ]
 
         state.update({self.output[0]: compressed_document})
         return state
