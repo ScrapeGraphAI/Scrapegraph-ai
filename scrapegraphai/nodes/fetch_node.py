@@ -3,6 +3,7 @@ FetchNode Module
 """
 
 import json
+import requests
 from typing import List, Optional
 
 import pandas as pd
@@ -10,8 +11,8 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 
 from ..docloaders import ChromiumLoader
-from ..utils.remover import remover
 from .base_node import BaseNode
+from ..utils.cleanup_html import cleanup_html
 
 
 class FetchNode(BaseNode):
@@ -49,6 +50,8 @@ class FetchNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.useSoup = (
+          True if node_config is None else node_config.get("useSoup", True)
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
         )
@@ -114,9 +117,17 @@ class FetchNode(BaseNode):
             pass
 
         elif not source.startswith("http"):
-            compressed_document = [
-                Document(page_content=remover(source), metadata={"source": "local_dir"})
-            ]
+            compressed_document = [Document(page_content=cleanup_html(source),
+                                            metadata={"source": "local_dir"}
+                                           )]
+        
+        elif self.useSoup:
+            response = requests.get(source)
+            if response.status_code == 200:
+                cleanedup_html = cleanup_html(response.text, source)
+                compressed_document = [Document(page_content=cleanedup_html)]
+            else:	
+                print(f"Failed to retrieve contents from the webpage at url: {url}")
 
         else:
             loader_kwargs = {}
@@ -128,7 +139,7 @@ class FetchNode(BaseNode):
 
             document = loader.load()
             compressed_document = [
-                Document(page_content=remover(str(document[0].page_content)))
+                Document(page_content=cleanup_html(str(document[0].page_content)))
             ]
 
         state.update({self.output[0]: compressed_document})

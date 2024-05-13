@@ -1,13 +1,14 @@
 """ 
-Basic example of scraping pipeline using ScriptCreatorGraph
+Basic example of scraping pipeline using SmartScraper
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import ScriptCreatorGraph
+from scrapegraphai.graphs import DeepScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
+
 
 # ************************************************
 # Define the configuration for the graph
@@ -18,29 +19,29 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4",
     },
-    "library": "beautifulsoup"
+    "verbose": True,
 }
 
 # ************************************************
-# Create the ScriptCreatorGraph instance and run it
+# Create the SmartScraperGraph instance and run it
 # ************************************************
 
-script_creator_graph = ScriptCreatorGraph(
-    prompt="List me all the projects with their description.",
+deep_scraper_graph = DeepScraperGraph(
+    prompt="List me all the job titles and detailed job description.",
     # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects",
+    source="https://www.google.com/about/careers/applications/jobs/results/?location=Bangalore%20India",
     config=graph_config
 )
 
-result = script_creator_graph.run()
+result = deep_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = script_creator_graph.get_execution_info()
+graph_exec_info = deep_scraper_graph.get_execution_info()
+print(deep_scraper_graph.get_state("relevant_links"))
 print(prettify_exec_info(graph_exec_info))
-

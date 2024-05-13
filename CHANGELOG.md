@@ -1,3 +1,23 @@
+## [0.11.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.3...v0.11.0-beta.4) (2024-05-12)
+
+
+### Features
+
+* add new prompt info ([e2350ed](https://github.com/VinciGit00/Scrapegraph-ai/commit/e2350eda6249d8e121344d12c92645a3887a5b76))
+
+## [0.11.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.2...v0.11.0-beta.3) (2024-05-12)
+
+
+### Features
+
+* add support for deepseek-chat ([156b67b](https://github.com/VinciGit00/Scrapegraph-ai/commit/156b67b91e1798f67082123e2c0087d358a32d4d)), closes [#222](https://github.com/VinciGit00/Scrapegraph-ai/issues/222)
+
+
+### Docs
+
+* add diagram showing general structure/flow of the library ([13ae918](https://github.com/VinciGit00/Scrapegraph-ai/commit/13ae9180ac5e7ef11dad1a210cf8790e797397dd))
+* update overview diagram with more models ([b441b30](https://github.com/VinciGit00/Scrapegraph-ai/commit/b441b30a5c60dda105964f69bd4cef06825f5c74))
+
 ## [0.11.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.1...v0.11.0-beta.2) (2024-05-10)
 
 
