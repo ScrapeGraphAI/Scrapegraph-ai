@@ -161,7 +161,13 @@ def _search_proxy(proxy: Proxy) -> ProxySettings:
     Returns:
         A 'playwright' compliant proxy configuration.
     """
-    server = search_proxy_servers(**proxy.get("criteria", {}))[0]
+
+
+    # remove max_shape from criteria 
+    criteria = proxy.get("criteria", {}).copy()
+    criteria.pop("max_shape", None)
+
+    server = search_proxy_servers(max_shape=1, **criteria)[0]
 
     return {"server": server}
 

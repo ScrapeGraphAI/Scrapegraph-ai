@@ -28,10 +28,10 @@ graph_config = {
             "server": "broker",
             "criteria": {
                 "anonymous": True,
-                # "secure": True,
+                "secure": True,
                 "countryset": {"IT"},
-                "timeout": 5.0,
-                "max_shape": 2
+                "timeout": 10.0,
+                "max_shape": 3
             },
         },
     }
