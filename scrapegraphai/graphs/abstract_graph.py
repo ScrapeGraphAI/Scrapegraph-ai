@@ -190,12 +190,13 @@ class AbstractGraph(ABC):
         elif "bedrock" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
             model_id = llm_params["model"]
-
+            client = llm_params.get('client', None)
             try:
                 self.model_token = models_tokens["bedrock"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return Bedrock({
+                "client": client,
                 "model_id": model_id,
                 "model_kwargs": {
                     "temperature": llm_params["temperature"],
@@ -289,11 +290,12 @@ class AbstractGraph(ABC):
             return GoogleGenerativeAIEmbeddings(model=embedder_config["model"])
         elif "bedrock" in embedder_config["model"]:
             embedder_config["model"] = embedder_config["model"].split("/")[-1]
+            client = embedder_config.get('client', None)
             try:
                 models_tokens["bedrock"][embedder_config["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return BedrockEmbeddings(client=None, model_id=embedder_config["model"])
+            return BedrockEmbeddings(client=client, model_id=embedder_config["model"])
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
