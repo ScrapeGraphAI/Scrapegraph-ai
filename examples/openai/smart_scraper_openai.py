@@ -23,18 +23,6 @@ graph_config = {
     },
     "verbose": True,
     "headless": False,
-    "loader_kwargs": {
-        "proxy" : {
-            "server": "broker",
-            "criteria": {
-                "anonymous": True,
-                "secure": True,
-                "countryset": {"IT"},
-                "timeout": 10.0,
-                "max_shape": 3
-            },
-        },
-    }
 }
 
 # ************************************************
