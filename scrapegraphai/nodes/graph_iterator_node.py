@@ -11,7 +11,7 @@ from tqdm.asyncio import tqdm
 from .base_node import BaseNode
 
 
-_default_batchsize = 4
+_default_batchsize = 2
 
 
 class GraphIteratorNode(BaseNode):
@@ -118,7 +118,7 @@ class GraphIteratorNode(BaseNode):
 
         # creates a deepcopy of the graph instance for each endpoint
         for url in urls:
-            instance = copy.deepcopy(graph_instance)
+            instance = copy.copy(graph_instance)
             instance.source = url
 
             participants.append(instance)
