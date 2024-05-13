@@ -148,7 +148,7 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return Gemini(llm_params)
-        elif "claude" in llm_params["model"]:
+        elif llm_params["model"].startswith("claude"):
             try:
                 self.model_token = models_tokens["claude"][llm_params["model"]]
             except KeyError as exc:
