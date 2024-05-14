@@ -13,3 +13,4 @@ from .xml_scraper_graph import XMLScraperGraph
 from .json_scraper_graph import JSONScraperGraph
 from .csv_scraper_graph import CSVScraperGraph
 from .pdf_scraper_graph import PDFScraperGraph
+from .omni_scraper_graph import OmniScraperGraph

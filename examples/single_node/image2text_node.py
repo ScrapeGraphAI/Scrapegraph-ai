@@ -43,7 +43,10 @@ image_to_text_node = ImageToTextNode(
 # ************************************************
 
 state = {
-    "img_url": "https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/assets/scrapegraphai_logo.png?raw=true"
+    "img_url": [
+        "https://perinim.github.io/assets/img/rotary_pybullet.jpg",
+        "https://perinim.github.io/assets/img/value-policy-heatmaps.jpg",
+    ],
 }
 
 result = image_to_text_node.execute(state)
