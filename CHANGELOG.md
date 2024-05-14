@@ -1,3 +1,10 @@
+## [0.11.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0...v0.11.1) (2024-05-14)
+
+
+### Bug Fixes
+
+* **docs:** requirements-dev ([b0a67ba](https://github.com/VinciGit00/Scrapegraph-ai/commit/b0a67ba387e7d3a3dca7b82fe3e5b39c6a34c3ba))
+
 ## [0.11.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.10.1...v0.11.0) (2024-05-14)
 
 
