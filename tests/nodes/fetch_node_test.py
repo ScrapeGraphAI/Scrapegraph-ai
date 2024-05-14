@@ -1,5 +1,5 @@
 """
-Module for testinh robot_node
+Module for testinh fetch_node
 """
 import pytest
 from scrapegraphai.nodes import FetchNode
@@ -14,7 +14,7 @@ def setup():
     # Define the node
     # ************************************************
 
-    robots_node = FetchNode(
+    fetch_node = FetchNode(
         input="url | local_dir",
         output=["doc"],
         node_config={
@@ -22,14 +22,14 @@ def setup():
         }
     )
 
-    return robots_node
+    return fetch_node
 
 # ************************************************
 # Test the node
 # ************************************************
 
 
-def test_robots_node(setup):
+def test_fetch_node(setup):
     """
     Run the tests
     """
@@ -40,8 +40,3 @@ def test_robots_node(setup):
     result = setup.execute(state)
 
     assert result is not None
-
-
-# If you need to run this script directly
-if __name__ == "__main__":
-    pytest.main()

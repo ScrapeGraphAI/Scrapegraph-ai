@@ -1,5 +1,5 @@
 """
-Models token 
+Models token
 """
 
 models_tokens = {
@@ -39,8 +39,20 @@ models_tokens = {
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,
         "stablelm-zephyr": 8192,
+        "command-r-plus": 12800,
+        "command-r": 12800,
+        "mistral:7b-instruct": 32768,
+        "llama3:70b-instruct": 8192,
+        "mixtral:8x22b-instruct": 65536,
+        "wizardlm2:8x22b": 65536,
+        "dbrx": 32768,
+        "dbrx:instruct": 32768,
+        "nous-hermes2:34b": 4096,
+        # embedding models
         "nomic-embed-text": 8192,
-        "mxbai-embed-large'": 8192
+        "snowflake-arctic-embed:335m": 8192,
+        "snowflake-arctic-embed:l": 8192,
+        "mxbai-embed-large": 512,
     },
     "groq": {
         "llama3-8b-8192": 8192,
