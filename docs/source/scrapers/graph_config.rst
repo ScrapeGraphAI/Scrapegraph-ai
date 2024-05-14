@@ -1,3 +1,5 @@
+.. _Configuration:
+
 Additional Parameters
 =====================
 

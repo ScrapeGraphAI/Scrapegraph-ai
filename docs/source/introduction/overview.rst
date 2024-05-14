@@ -24,12 +24,14 @@ This flexibility ensures that scrapers remain functional even when website layou
 We support many Large Language Models (LLMs) including GPT, Gemini, Groq, Azure, Hugging Face etc.
 as well as local models which can run on your machine using Ollama.
 
-Diagram
-=======
+Library Diagram
+===============
+
 With ScrapegraphAI you first construct a pipeline of steps you want to execute by combining nodes into a graph.
 Executing the graph takes care of all the steps that are often part of scraping: fetching, parsing etc...
 Finally the scraped and processed data gets fed to an LLM which generates a response.
 
 .. image:: ../../assets/project_overview_diagram.png
    :align: center
+   :width: 70%
    :alt: ScrapegraphAI Overview

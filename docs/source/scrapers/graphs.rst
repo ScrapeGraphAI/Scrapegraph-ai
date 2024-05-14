@@ -9,7 +9,9 @@ There are currently three types of graphs available in the library:
 - **SearchGraph**: multi-page scraper that only requires a user-defined prompt to extract information from a search engine using LLM. It is built on top of SmartScraperGraph.
 - **SpeechGraph**: text-to-speech pipeline that generates an answer as well as a requested audio file. It is built on top of SmartScraperGraph and requires a user-defined prompt and a URL (or local file).
 
-**Note:** they all use a graph configuration to set up LLM models and other parameters. To find out more about the configurations, check the `LLM`_ and `Configuration`_ sections.
+.. note::
+
+   They all use a graph configuration to set up LLM models and other parameters. To find out more about the configurations, check the :ref:`LLM` and :ref:`Configuration` sections.
 
 SmartScraperGraph
 ^^^^^^^^^^^^^^^^^

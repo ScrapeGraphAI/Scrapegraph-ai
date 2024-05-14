@@ -24,6 +24,7 @@
    scrapers/graphs
    scrapers/llm
    scrapers/graph_config
+   scrapers/benchmarks
 
 .. toctree::
    :maxdepth: 2

@@ -21,7 +21,9 @@ The library is available on PyPI, so it can be installed using the following com
 
    pip install scrapegraphai
 
-**Note:** It is higly recommended to install the library in a virtual environment (conda, venv, etc.)
+.. important::
+   
+   It is higly recommended to install the library in a virtual environment (conda, venv, etc.)
 
 If your clone the repository, you can install the library using `poetry <https://python-poetry.org/docs/>`_:
 

@@ -1,3 +1,5 @@
+.. _llm:
+
 LLM
 ===
 
@@ -7,7 +9,9 @@ These models are specified inside the graph configuration dictionary and can be 
 - **Local Models**: These models are hosted on the local machine and can be used without any API key.
 - **API-based Models**: These models are hosted on the cloud and require an API key to access them (eg. OpenAI, Groq, etc).
 
-**Note**: If the emebedding model is not specified, the library will use the default one for that LLM, if available.
+.. note::
+
+    If the emebedding model is not specified, the library will use the default one for that LLM, if available.
 
 Local Models
 ------------
