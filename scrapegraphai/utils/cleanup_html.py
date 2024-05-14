@@ -3,9 +3,10 @@ Module for minimizing the code
 """
 from bs4 import BeautifulSoup
 from minify_html import minify
+from urllib.parse import urljoin
 
 
-def remover(html_content: str) -> str:
+def cleanup_html(html_content: str, base_url: str) -> str:
     """
     Processes HTML content by removing unnecessary tags, minifying the HTML, and extracting the title and body content.
 
@@ -33,11 +34,32 @@ def remover(html_content: str) -> str:
     for tag in soup.find_all(['script', 'style']):
         tag.extract()
 
+    # Links extraction
+    links = soup.find_all('a')
+    link_urls = []
+    for link in links:
+        if 'href' in link.attrs:
+            link_urls.append(urljoin(base_url, link['href']))
+
+    # Images extraction
+    images = soup.find_all('img')
+    image_urls = []
+    for image in images:
+        if 'src' in image.attrs:
+            # if http or https is not present in the image url, join it with the base url
+            if 'http' not in image['src']:
+                image_urls.append(urljoin(base_url, image['src']))
+            else:
+                image_urls.append(image['src'])
+
     # Body Extraction (if it exists)
     body_content = soup.find('body')
     if body_content:
         # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
-        return "Title: " + title + ", Body: " + minimized_body
 
-    return "Title: " + title + ", Body: No body content found"
+        return title, minimized_body, link_urls, image_urls
+        # return "Title: " + title + ", Body: " + minimized_body + ", Links: " + str(link_urls) + ", Images: " + str(image_urls)
+
+    # throw an error if no body content is found
+    raise ValueError("No HTML body content found, please try setting the 'headless' flag to False in the graph configuration.")

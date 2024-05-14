@@ -1,7 +1,9 @@
 Examples
 ========
 
-Here some example of the different ways to scrape with ScrapegraphAI
+Let's suppose you want to scrape a website to get a list of projects with their descriptions.
+You can use the `SmartScraperGraph` class to do that.
+The following examples show how to use the `SmartScraperGraph` class with OpenAI models and local models.
 
 OpenAI models
 ^^^^^^^^^^^^^
@@ -78,7 +80,7 @@ After that, you can run the following code, using only your machine resources br
    # ************************************************
 
    smart_scraper_graph = SmartScraperGraph(
-      prompt="List me all the news with their description.",
+      prompt="List me all the projects with their description.",
       # also accepts a string with the already downloaded HTML code
       source="https://perinim.github.io/projects",
       config=graph_config
@@ -87,3 +89,4 @@ After that, you can run the following code, using only your machine resources br
    result = smart_scraper_graph.run()
    print(result)
 
+To find out how you can customize the `graph_config` dictionary, by using different LLM and adding new parameters, check the `Scrapers` section!

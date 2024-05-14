@@ -28,7 +28,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me the best escursions near Trento",
+    prompt="List me Chioggia's famous dishes",
     config=graph_config
 )
 

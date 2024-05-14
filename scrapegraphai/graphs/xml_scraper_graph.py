@@ -56,8 +56,8 @@ class XMLScraperGraph(AbstractGraph):
         """
 
         fetch_node = FetchNode(
-            input="xml_dir",
-            output=["doc"]
+            input="xml | xml_dir",
+            output=["doc", "link_urls", "img_urls"]
         )
         parse_node = ParseNode(
             input="doc",
