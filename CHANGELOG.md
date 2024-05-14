@@ -1,3 +1,17 @@
+## [0.11.0-beta.11](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.10...v0.11.0-beta.11) (2024-05-14)
+
+
+### Features
+
+* **omni-search:** added omni search graph and updated docs ([fcb3abb](https://github.com/VinciGit00/Scrapegraph-ai/commit/fcb3abb01d505f634309f9ae3c686bbcaab65107))
+* **gpt-4o:** image to text single node test ([90955ca](https://github.com/VinciGit00/Scrapegraph-ai/commit/90955ca52f1e3277072e843fb8d578deea27d09f))
+* **omni-scraper:** working OmniScraperGraph with images ([a296927](https://github.com/VinciGit00/Scrapegraph-ai/commit/a2969276245cbedb97741975ea707dab2695f71e))
+
+
+### Bug Fixes
+
+* **fetch_node:** bug in handling local files ([a6e1813](https://github.com/VinciGit00/Scrapegraph-ai/commit/a6e1813ddd36cc8d7c915e6ea0525835d64d10a2))
+
 ## [0.11.0-beta.10](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.9...v0.11.0-beta.10) (2024-05-14)
 
 
