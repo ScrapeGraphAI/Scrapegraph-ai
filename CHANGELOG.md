@@ -1,3 +1,31 @@
+## [0.11.0-beta.9](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.8...v0.11.0-beta.9) (2024-05-14)
+
+
+### Bug Fixes
+
+* crash asyncio due dependency version ([2563773](https://github.com/VinciGit00/Scrapegraph-ai/commit/25637734479a0da293860cf404a618eb5f49c7e2))
+
+
+### chore
+
+* update models_tokens.py with new model configurations ([d9752b1](https://github.com/VinciGit00/Scrapegraph-ai/commit/d9752b1619c6f86fdc407c898c8c9b443a50cb07))
+
+
+### Docs
+
+* fixed speechgraphexample ([4bf90f3](https://github.com/VinciGit00/Scrapegraph-ai/commit/4bf90f32a8fbb5a06279ec3002200961458a1250))
+* fixed unused param and install ([cc28d5a](https://github.com/VinciGit00/Scrapegraph-ai/commit/cc28d5a64f6e0e061f697262302403db875bc6fe))
+* **readme:** improve main readme ([ae5655f](https://github.com/VinciGit00/Scrapegraph-ai/commit/ae5655fdde810e80d20d7918b0b2232e29ee3f56))
+* **concurrent:** refactor theme and added benchmarck searchgraph ([ced2bbc](https://github.com/VinciGit00/Scrapegraph-ai/commit/ced2bbcdc9672396e3c8afdc1f7f65c4194d29fd))
+* update instructions to use with LocalAI ([198420c](https://github.com/VinciGit00/Scrapegraph-ai/commit/198420c505544c88805e719e2fc864f061c7de05))
+* Update README.md ([772e064](https://github.com/VinciGit00/Scrapegraph-ai/commit/772e064c55f38ea296511f737dec9a412e0dbf4e))
+* updated sponsor logo ([f8d8d71](https://github.com/VinciGit00/Scrapegraph-ai/commit/f8d8d71589ffc9ccde13259b50d309c7949beeb8))
+
+
+### CI
+
+* **release:** 0.10.1 [skip ci] ([d359814](https://github.com/VinciGit00/Scrapegraph-ai/commit/d359814c4a640aa1e3bcde3f3bb3688b03f608d9))
+
 ## [0.11.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.7...v0.11.0-beta.8) (2024-05-13)
 
 
