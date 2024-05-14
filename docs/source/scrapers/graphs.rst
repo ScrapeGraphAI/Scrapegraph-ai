@@ -3,15 +3,79 @@ Graphs
 
 Graphs are scraping pipelines aimed at solving specific tasks. They are composed by nodes which can be configured individually to address different aspects of the task (fetching data, extracting information, etc.).
 
-There are currently three types of graphs available in the library:
+There are three types of graphs available in the library:
 
 - **SmartScraperGraph**: one-page scraper that requires a user-defined prompt and a URL (or local file) to extract information from using LLM.
 - **SearchGraph**: multi-page scraper that only requires a user-defined prompt to extract information from a search engine using LLM. It is built on top of SmartScraperGraph.
 - **SpeechGraph**: text-to-speech pipeline that generates an answer as well as a requested audio file. It is built on top of SmartScraperGraph and requires a user-defined prompt and a URL (or local file).
 
+With the introduction of `GPT-4o`, two new powerful graphs have been created:
+
+- **OmniScraperGraph**: similar to `SmartScraperGraph`, but with the ability to scrape images and describe them.
+- **OmniSearchGraph**: similar to `SearchGraph`, but with the ability to scrape images and describe them.
+
 .. note::
 
    They all use a graph configuration to set up LLM models and other parameters. To find out more about the configurations, check the :ref:`LLM` and :ref:`Configuration` sections.
+
+OmniScraperGraph
+^^^^^^^^^^^^^^^^
+
+.. image:: ../../assets/omniscrapergraph.png
+   :align: center
+   :width: 90%
+   :alt: OmniScraperGraph
+|
+
+First we define the graph configuration, which includes the LLM model and other parameters. Then we create an instance of the OmniScraperGraph class, passing the prompt, source, and configuration as arguments. Finally, we run the graph and print the result.
+It will fetch the data from the source and extract the information based on the prompt in JSON format.
+
+.. code-block:: python
+
+   from scrapegraphai.graphs import OmniScraperGraph
+
+   graph_config = {
+      "llm": {...},
+   }
+
+   omni_scraper_graph = OmniScraperGraph(
+      prompt="List me all the projects with their titles and image links and descriptions.",
+      source="https://perinim.github.io/projects",
+      config=graph_config
+   )
+
+   result = omni_scraper_graph.run()
+   print(result)
+
+OmniSearchGraph
+^^^^^^^^^^^^^^^
+
+.. image:: ../../assets/omnisearchgraph.png
+   :align: center
+   :width: 80%
+   :alt: OmniSearchGraph
+|
+
+Similar to OmniScraperGraph, we define the graph configuration, create multiple of the OmniSearchGraph class, and run the graph.
+It will create a search query, fetch the first n results from the search engine, run n OmniScraperGraph instances, and return the results in JSON format.
+
+.. code-block:: python
+
+   from scrapegraphai.graphs import OmniSearchGraph
+
+   graph_config = {
+      "llm": {...},
+   }
+
+   # Create the OmniSearchGraph instance
+   omni_search_graph = OmniSearchGraph(
+      prompt="List me all Chioggia's famous dishes and describe their pictures.",
+      config=graph_config
+   )
+
+   # Run the graph
+   result = omni_search_graph.run()
+   print(result)
 
 SmartScraperGraph
 ^^^^^^^^^^^^^^^^^

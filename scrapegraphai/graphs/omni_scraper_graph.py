@@ -29,6 +29,7 @@ class OmniScraperGraph(AbstractGraph):
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
+        max_images (int): The maximum number of images to process.
 
     Args:
         prompt (str): The prompt for the graph.
@@ -48,7 +49,7 @@ class OmniScraperGraph(AbstractGraph):
     def __init__(self, prompt: str, source: str, config: dict):
 
         self.max_images = 5 if config is None else config.get("max_images", 5)
-        
+
         super().__init__(prompt, config, source)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"

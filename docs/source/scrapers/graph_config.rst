@@ -10,6 +10,8 @@ Some interesting ones are:
 - `headless`: If set to `False`, the web browser will be opened on the URL requested and close right after the HTML is fetched.
 - `max_results`: The maximum number of results to be fetched from the search engine. Useful in `SearchGraph`.
 - `output_path`: The path where the output files will be saved. Useful in `SpeechGraph`.
+- `loader_kwargs`: A dictionary with additional parameters to be passed to the `Loader` class, such as `proxy`.
+- `max_images`: The maximum number of images to be analyzed. Useful in `OmniScraperGraph` and `OmniSearchGraph`.
 
 Proxy Rotation
 ^^^^^^^^^^^^^^
