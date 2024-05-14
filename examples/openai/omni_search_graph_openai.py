@@ -1,14 +1,12 @@
-""" 
-Basic example of scraping pipeline using SmartScraper
+"""
+Example of OmniSearchGraph
 """
 
-import os
+import os, json
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import OmniSearchGraph
 from scrapegraphai.utils import prettify_exec_info
-
 load_dotenv()
-
 
 # ************************************************
 # Define the configuration for the graph
@@ -21,27 +19,27 @@ graph_config = {
         "api_key": openai_key,
         "model": "gpt-4o",
     },
+    "max_results": 2,
+    "max_images": 5,
     "verbose": True,
-    "headless": False,
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the OmniSearchGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
-    # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects/",
+omni_search_graph = OmniSearchGraph(
+    prompt="List me all Chioggia's famous dishes and describe their pictures.",
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
-print(result)
+result = omni_search_graph.run()
+print(json.dumps(result, indent=2))
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = smart_scraper_graph.get_execution_info()
+graph_exec_info = omni_search_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
+

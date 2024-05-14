@@ -56,8 +56,8 @@ class PDFScraperGraph(AbstractGraph):
         """
 
         fetch_node = FetchNode(
-            input='pdf',
-            output=["doc"],
+            input='pdf | pdf_dir',
+            output=["doc", "link_urls", "img_urls"],
         )
         parse_node = ParseNode(
             input="doc",
