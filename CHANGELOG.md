@@ -1,3 +1,10 @@
+## [0.11.0-beta.10](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.9...v0.11.0-beta.10) (2024-05-14)
+
+
+### Features
+
+* add gpt-4o ([52a4a3b](https://github.com/VinciGit00/Scrapegraph-ai/commit/52a4a3b22d6871b14801a5edbd28aa32a1a2580d)), closes [#232](https://github.com/VinciGit00/Scrapegraph-ai/issues/232)
+
 ## [0.11.0-beta.9](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.8...v0.11.0-beta.9) (2024-05-14)
 
 
