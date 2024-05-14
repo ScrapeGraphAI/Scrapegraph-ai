@@ -1,3 +1,16 @@
+## [0.11.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.7...v0.11.0-beta.8) (2024-05-13)
+
+
+### Features
+
+* **parallel-exeuction:** add asyncio event loop dispatcher with semaphore for parallel graph instances ([627cbee](https://github.com/VinciGit00/Scrapegraph-ai/commit/627cbeeb2096eb4cd5da45015d37fceb7fe7840a))
+* **batchsize:** tested different batch sizes and systems ([a8d5e7d](https://github.com/VinciGit00/Scrapegraph-ai/commit/a8d5e7db050e15306780ffca47f998ebaf5c1216))
+
+
+### Bug Fixes
+
+* **asyncio:** replaced deepcopy with copy due to serialization problems ([dedc733](https://github.com/VinciGit00/Scrapegraph-ai/commit/dedc73304755c2d540a121d143173f60fb448bbb))
+
 ## [0.11.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0-beta.6...v0.11.0-beta.7) (2024-05-13)
 
 
