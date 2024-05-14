@@ -83,37 +83,49 @@ class FetchNode(BaseNode):
 
         source = input_data[0]
         if (
-            self.input == "json_dir"
-            or self.input == "xml_dir"
-            or self.input == "csv_dir"
+            input_keys[0] == "json_dir"
+            or input_keys[0] == "xml_dir"
+            or input_keys[0] == "csv_dir"
         ):
             compressed_document = [
                 Document(page_content=source, metadata={"source": "local_dir"})
             ]
-        # if it is a local directory
-
+            state.update({self.output[0]: compressed_document})
+            return state
+        
         # handling for pdf
-        elif self.input == "pdf":
+        elif input_keys[0] == "pdf":
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
+            state.update({self.output[0]: compressed_document})
+            return state
 
-        elif self.input == "csv":
+        elif input_keys[0] == "csv":
             compressed_document = [
                 Document(
                     page_content=str(pd.read_csv(source)), metadata={"source": "csv"}
                 )
             ]
-        elif self.input == "json":
+            state.update({self.output[0]: compressed_document})
+            return state
+        
+        elif input_keys[0] == "json":
             f = open(source)
             compressed_document = [
                 Document(page_content=str(json.load(f)), metadata={"source": "json"})
             ]
-        elif self.input == "xml":
+            state.update({self.output[0]: compressed_document})
+            return state
+        
+        elif input_keys[0] == "xml":
             with open(source, "r", encoding="utf-8") as f:
                 data = f.read()
             compressed_document = [
                 Document(page_content=data, metadata={"source": "xml"})
             ]
+            state.update({self.output[0]: compressed_document})
+            return state
+        
         elif self.input == "pdf_dir":
             pass
 
