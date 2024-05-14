@@ -4,6 +4,7 @@ ImageToTextNode Module
 
 from typing import List, Optional
 from .base_node import BaseNode
+from ..utils.logging import get_logger
 
 
 class ImageToTextNode(BaseNode):
@@ -42,7 +43,8 @@ class ImageToTextNode(BaseNode):
         """
 
         if self.verbose:
-            print("---GENERATING TEXT FROM IMAGE---")
+            logger = get_logger("image to text node")
+            logger.info(f"--- Executing {self.node_name} Node ---")
             
         input_keys = self.get_input_keys(state)
         input_data = [state[key] for key in input_keys]

@@ -9,7 +9,7 @@ from langchain.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from .base_node import BaseNode
 from ..helpers import robots_dictionary
-
+from ..utils.logging import get_logger
 
 class RobotsNode(BaseNode):
     """
@@ -61,9 +61,10 @@ class RobotsNode(BaseNode):
             ValueError: If the website is not scrapeable based on the robots.txt file and
                         scraping is not enforced.
         """
+        logger = get_logger("robots node")
 
         if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+            logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -121,17 +122,17 @@ class RobotsNode(BaseNode):
 
             if "no" in is_scrapable:
                 if self.verbose:
-                    print("\033[31m(Scraping this website is not allowed)\033[0m")
+                    logger.warning("\033[31m(Scraping this website is not allowed)\033[0m")
                     
                 if not self.force_scraping:
                     raise ValueError(
                         'The website you selected is not scrapable')
                 else:
                     if self.verbose:
-                        print("\033[33m(WARNING: Scraping this website is not allowed but you decided to force it)\033[0m")
+                        logger.warning("\033[33m(WARNING: Scraping this website is not allowed but you decided to force it)\033[0m")
             else:
                 if self.verbose:
-                    print("\033[32m(Scraping this website is allowed)\033[0m")
+                    logger.warning("\033[32m(Scraping this website is allowed)\033[0m")
 
         state.update({self.output[0]: is_scrapable})
         return state

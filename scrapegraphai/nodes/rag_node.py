@@ -8,6 +8,7 @@ from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
+from ..utils.logging import get_logger
 
 from .base_node import BaseNode
 
@@ -55,9 +56,10 @@ class RAGNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating that the
                         necessary information for compressing the content is missing.
         """
+        logger = get_logger("rag node")
 
         if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+            logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -80,7 +82,7 @@ class RAGNode(BaseNode):
             chunked_docs.append(doc)
 
         if self.verbose:
-            print("--- (updated chunks metadata) ---")
+            logger.info("--- (updated chunks metadata) ---")
 
         # check if embedder_model is provided, if not use llm_model
         self.embedder_model = self.embedder_model if self.embedder_model else self.llm_model

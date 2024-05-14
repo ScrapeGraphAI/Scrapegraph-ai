@@ -6,7 +6,7 @@ from typing import List, Optional
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_transformers import Html2TextTransformer
 from .base_node import BaseNode
-
+from ..utils.logging import get_logger
 
 class ParseNode(BaseNode):
     """
@@ -49,7 +49,8 @@ class ParseNode(BaseNode):
         """
 
         if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+            logger = get_logger("fetch node")
+            logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

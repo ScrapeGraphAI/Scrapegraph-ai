@@ -10,6 +10,7 @@ from tqdm import tqdm
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableParallel
+from ..utils.logging import get_logger
 
 # Imports from the library
 from .base_node import BaseNode
@@ -63,7 +64,8 @@ class GenerateScraperNode(BaseNode):
         """
 
         if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+            logger = get_logger("generate scraper node")
+            logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

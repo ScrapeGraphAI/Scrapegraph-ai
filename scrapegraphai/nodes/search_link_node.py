@@ -5,7 +5,7 @@ SearchLinkNode Module
 # Imports from standard library
 from typing import List, Optional
 from tqdm import tqdm
-
+from ..utils.logging import get_logger
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
@@ -59,7 +59,8 @@ class SearchLinkNode(BaseNode):
         """
 
         if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+            logger = get_logger("search link node")
+            logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

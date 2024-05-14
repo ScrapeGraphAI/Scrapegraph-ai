@@ -6,7 +6,7 @@ from typing import List, Optional
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from .base_node import BaseNode
-
+from ..utils.logging import get_logger
 
 class GetProbableTagsNode(BaseNode):
     """
@@ -25,11 +25,12 @@ class GetProbableTagsNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GetProbableTags".
     """
 
-    def __init__(self, input: str, output: List[str], model_config: dict,
+    def __init__(self, input: str, output: List[str], node_config: dict,
                  node_name: str = "GetProbableTags"):
-        super().__init__(node_name, "node", input, output, 2, model_config)
+        super().__init__(node_name, "node", input, output, 2, node_config)
 
-        self.llm_model = model_config["llm_model"]
+        self.llm_model = node_config["llm_model"]
+        self.verbose = False if node_config is None else node_config.get("verbose", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -49,7 +50,9 @@ class GetProbableTagsNode(BaseNode):
                       necessary information for generating tag predictions is missing.
         """
 
-        print(f"--- Executing {self.node_name} Node ---")
+        if self.verbose:
+            logger = get_logger("get probable tags node")
+            logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
