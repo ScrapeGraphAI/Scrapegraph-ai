@@ -19,3 +19,5 @@ from .generate_answer_csv_node import GenerateAnswerCSVNode
 from .generate_answer_pdf_node import GenerateAnswerPDFNode
 from .graph_iterator_node import GraphIteratorNode
 from .merge_answers_node import MergeAnswersNode
+from .generate_answer_omni_node import GenerateAnswerOmniNode
+from .search_node_with_context import SearchLinksWithContext

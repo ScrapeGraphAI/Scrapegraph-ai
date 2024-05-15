@@ -1,5 +1,5 @@
 """ 
-SearchGraph Module
+OmniSearchGraph Module
 """
 
 from copy import copy
@@ -11,12 +11,12 @@ from ..nodes import (
     MergeAnswersNode
 )
 from .abstract_graph import AbstractGraph
-from .smart_scraper_graph import SmartScraperGraph
+from .omni_scraper_graph import OmniScraperGraph
 
 
-class SearchGraph(AbstractGraph):
+class OmniSearchGraph(AbstractGraph):
     """ 
-    SearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
+    OmniSearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
     It only requires a user prompt to search the internet and generate an answer.
 
     Attributes:
@@ -26,15 +26,16 @@ class SearchGraph(AbstractGraph):
         headless (bool): A flag to run the browser in headless mode.
         verbose (bool): A flag to display the execution information.
         model_token (int): The token limit for the language model.
+        max_results (int): The maximum number of results to return.
 
     Args:
         prompt (str): The user prompt to search the internet.
         config (dict): Configuration parameters for the graph.
 
     Example:
-        >>> search_graph = SearchGraph(
+        >>> omni_search_graph = OmniSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "gpt-4o"}}
         ... )
         >>> result = search_graph.run()
     """
@@ -55,10 +56,10 @@ class SearchGraph(AbstractGraph):
         """
 
         # ************************************************
-        # Create a SmartScraperGraph instance
+        # Create a OmniScraperGraph instance
         # ************************************************
 
-        smart_scraper_instance = SmartScraperGraph(
+        omni_scraper_instance = OmniScraperGraph(
             prompt="",
             source="",
             config=self.copy_config
@@ -80,7 +81,7 @@ class SearchGraph(AbstractGraph):
             input="user_prompt & urls",
             output=["results"],
             node_config={
-                "graph_instance": smart_scraper_instance,
+                "graph_instance": omni_scraper_instance,
             }
         )
 

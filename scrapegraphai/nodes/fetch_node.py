@@ -83,50 +83,65 @@ class FetchNode(BaseNode):
 
         source = input_data[0]
         if (
-            self.input == "json_dir"
-            or self.input == "xml_dir"
-            or self.input == "csv_dir"
+            input_keys[0] == "json_dir"
+            or input_keys[0] == "xml_dir"
+            or input_keys[0] == "csv_dir"
         ):
             compressed_document = [
                 Document(page_content=source, metadata={"source": "local_dir"})
             ]
-        # if it is a local directory
-
+            state.update({self.output[0]: compressed_document})
+            return state
+        
         # handling for pdf
-        elif self.input == "pdf":
+        elif input_keys[0] == "pdf":
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
+            state.update({self.output[0]: compressed_document})
+            return state
 
-        elif self.input == "csv":
+        elif input_keys[0] == "csv":
             compressed_document = [
                 Document(
                     page_content=str(pd.read_csv(source)), metadata={"source": "csv"}
                 )
             ]
-        elif self.input == "json":
+            state.update({self.output[0]: compressed_document})
+            return state
+        
+        elif input_keys[0] == "json":
             f = open(source)
             compressed_document = [
                 Document(page_content=str(json.load(f)), metadata={"source": "json"})
             ]
-        elif self.input == "xml":
+            state.update({self.output[0]: compressed_document})
+            return state
+        
+        elif input_keys[0] == "xml":
             with open(source, "r", encoding="utf-8") as f:
                 data = f.read()
             compressed_document = [
                 Document(page_content=data, metadata={"source": "xml"})
             ]
+            state.update({self.output[0]: compressed_document})
+            return state
+        
         elif self.input == "pdf_dir":
             pass
 
         elif not source.startswith("http"):
-            compressed_document = [Document(page_content=cleanup_html(data, source),
+            title, minimized_body, link_urls, image_urls = cleanup_html(source, source)
+            parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+            compressed_document = [Document(page_content=parsed_content,
                                             metadata={"source": "local_dir"}
                                            )]
         
         elif self.useSoup:
             response = requests.get(source)
             if response.status_code == 200:
-                cleanedup_html = cleanup_html(response.text, source)
-                compressed_document = [Document(page_content=cleanedup_html)]
+                title, minimized_body, link_urls, image_urls = cleanup_html(response.text, source)
+                parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+                compressed_document = [Document(page_content=parsed_content)]
             else:	
                 self.logger.warning(f"Failed to retrieve contents from the webpage at url: {source}")
 
@@ -137,11 +152,15 @@ class FetchNode(BaseNode):
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
             loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
-
             document = loader.load()
+            
+            title, minimized_body, link_urls, image_urls = cleanup_html(str(document[0].page_content), source)
+            parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+            
             compressed_document = [
-                Document(page_content=cleanup_html(str(document[0].page_content), source), metadata={"source": source})
+                Document(page_content=parsed_content, metadata={"source": source})
             ]
 
-        state.update({self.output[0]: compressed_document})
+        state.update({self.output[0]: compressed_document, self.output[1]: link_urls, self.output[2]: image_urls})
+
         return state

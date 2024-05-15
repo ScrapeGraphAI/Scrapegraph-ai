@@ -71,8 +71,16 @@ class SearchLinkNode(BaseNode):
         prompt_relevant_links = """
             You are a website scraper and you have just scraped the following content from a website.
             Content: {content}
-            You are now asked to find all relevant links from the extracted webpage content related
-            to prompt {user_prompt}. Only pick links which are valid and relevant
+            
+            You are now tasked with identifying all hyper links within the content that are potentially
+            relevant to the user task: {user_prompt}
+            
+            Assume relevance broadly, including any links that might be related or potentially useful 
+            in relation to the task.
+            
+            Please list only valid URLs and make sure to err on the side of inclusion if it's uncertain 
+            whether the content at the link is directly relevant.
+
             Output only a list of relevant links in the format:
             [
                 "link1",

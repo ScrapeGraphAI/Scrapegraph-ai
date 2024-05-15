@@ -70,7 +70,7 @@ class ParseNode(BaseNode):
         docs_transformed = docs_transformed[0]
 
         chunks = text_splitter.split_text(docs_transformed.page_content)
-
+    
         state.update({self.output[0]: chunks})
 
         return state
