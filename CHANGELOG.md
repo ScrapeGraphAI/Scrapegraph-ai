@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.1...v1.2.2) (2024-05-15)
+
+
+### Bug Fixes
+
+* come back to the old version ([cc5adef](https://github.com/VinciGit00/Scrapegraph-ai/commit/cc5adefd29eb2d0d7127515c4a4a72eabbc7eaa8))
+
 ## [1.2.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.0...v1.2.1) (2024-05-15)
 
 
