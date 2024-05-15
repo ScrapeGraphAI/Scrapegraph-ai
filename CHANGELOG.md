@@ -1,3 +1,16 @@
+## [1.1.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.0.1...v1.1.0) (2024-05-15)
+
+
+### Features
+
+* add turboscraper (alfa) ([51aa109](https://github.com/VinciGit00/Scrapegraph-ai/commit/51aa109e420a71101664906f0849f39ea2a3f91a))
+* new search_graph ([67d5fbf](https://github.com/VinciGit00/Scrapegraph-ai/commit/67d5fbf816275940c89802e033b9e7796436c410))
+
+
+### Docs
+
+* **rye:** replaced poetry with rye ([efb781f](https://github.com/VinciGit00/Scrapegraph-ai/commit/efb781f950b23f442706d54a578230aba9e9796a))
+
 ## [1.0.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.0.0...v1.0.1) (2024-05-15)
 
 
