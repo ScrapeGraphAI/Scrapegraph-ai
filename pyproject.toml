@@ -1,7 +1,7 @@
 [project]
 name = "scrapegraphai"
 
-version = "1.0.0"
+version = "1.0.1"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
@@ -10,7 +10,6 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 dependencies = [
-    # python = ">=3.9, <3.12"
     "langchain==0.1.15",
     "langchain-openai==0.1.6",
     "langchain-google-genai==1.0.3",

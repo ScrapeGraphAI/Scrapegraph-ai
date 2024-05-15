@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.0.0...v1.0.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* **searchgraph:** used shallow copy to serialize obj ([096b665](https://github.com/VinciGit00/Scrapegraph-ai/commit/096b665c0152593c19402e555c0850cdd3b2a2c0))
+
 ## [1.0.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.1...v1.0.0) (2024-05-15)
 
 
