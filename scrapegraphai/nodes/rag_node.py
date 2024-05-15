@@ -56,10 +56,9 @@ class RAGNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating that the
                         necessary information for compressing the content is missing.
         """
-        logger = get_logger("rag node")
 
         if self.verbose:
-            logger.info(f"--- Executing {self.node_name} Node ---")
+            self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -82,7 +81,7 @@ class RAGNode(BaseNode):
             chunked_docs.append(doc)
 
         if self.verbose:
-            logger.info("--- (updated chunks metadata) ---")
+           self.logger.info("--- (updated chunks metadata) ---")
 
         # check if embedder_model is provided, if not use llm_model
         self.embedder_model = self.embedder_model if self.embedder_model else self.llm_model
@@ -110,7 +109,7 @@ class RAGNode(BaseNode):
         compressed_docs = compression_retriever.invoke(user_prompt)
 
         if self.verbose:
-            print("--- (tokens compressed and vector stored) ---")
+            self.logger.info("--- (tokens compressed and vector stored) ---")
 
         state.update({self.output[0]: compressed_docs})
         return state

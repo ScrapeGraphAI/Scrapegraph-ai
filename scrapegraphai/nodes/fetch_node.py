@@ -74,8 +74,7 @@ class FetchNode(BaseNode):
                     necessary information to perform the operation is missing.
         """
         if self.verbose:
-            logger = get_logger("fetch node")
-            logger.info(f"--- Executing {self.node_name} Node ---")
+            self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -129,7 +128,7 @@ class FetchNode(BaseNode):
                 cleanedup_html = cleanup_html(response.text, source)
                 compressed_document = [Document(page_content=cleanedup_html)]
             else:	
-                logger.warning(f"Failed to retrieve contents from the webpage at url: {source}")
+                self.logger.warning(f"Failed to retrieve contents from the webpage at url: {source}")
 
         else:
             loader_kwargs = {}

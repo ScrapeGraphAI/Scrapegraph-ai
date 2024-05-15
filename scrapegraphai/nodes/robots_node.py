@@ -122,17 +122,17 @@ class RobotsNode(BaseNode):
 
             if "no" in is_scrapable:
                 if self.verbose:
-                    logger.warning("\033[31m(Scraping this website is not allowed)\033[0m")
+                    self.logger.warning("\033[31m(Scraping this website is not allowed)\033[0m")
                     
                 if not self.force_scraping:
                     raise ValueError(
                         'The website you selected is not scrapable')
                 else:
                     if self.verbose:
-                        logger.warning("\033[33m(WARNING: Scraping this website is not allowed but you decided to force it)\033[0m")
+                        self.logger.warning("\033[33m(WARNING: Scraping this website is not allowed but you decided to force it)\033[0m")
             else:
                 if self.verbose:
-                    logger.warning("\033[32m(Scraping this website is allowed)\033[0m")
+                    self.logger.warning("\033[32m(Scraping this website is allowed)\033[0m")
 
         state.update({self.output[0]: is_scrapable})
         return state

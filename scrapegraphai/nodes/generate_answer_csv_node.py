@@ -1,4 +1,5 @@
 """
+gg
 Module for generating the answer node
 """
 # Imports from standard library
@@ -73,8 +74,7 @@ class GenerateAnswerCSVNode(BaseNode):
         """
 
         if self.verbose:
-            logger = get_logger("generate_answer csv node")
-            logger.info(f"--- Executing {self.node_name} Node ---")
+            self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

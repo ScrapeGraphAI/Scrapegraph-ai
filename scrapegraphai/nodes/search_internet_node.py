@@ -54,10 +54,9 @@ class SearchInternetNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating that the
                         necessary information for generating the answer is missing.
         """
-        logger = get_logger("search interne node")
 
         if self.verbose:
-            logger.info(f"--- Executing {self.node_name} Node ---")
+            self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         input_keys = self.get_input_keys(state)
 
@@ -89,7 +88,7 @@ class SearchInternetNode(BaseNode):
         search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
 
         if self.verbose:
-            logger.info(f"Search Query: {search_query}")
+            self.logger.info(f"Search Query: {search_query}")
 
 
         answer = search_on_web(

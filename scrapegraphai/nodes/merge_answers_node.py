@@ -54,8 +54,7 @@ class MergeAnswersNode(BaseNode):
         """
 
         if self.verbose:
-            logger = get_logger("fetch node")
-            logger.info(f"--- Executing {self.node_name} Node ---")
+            self.ogger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

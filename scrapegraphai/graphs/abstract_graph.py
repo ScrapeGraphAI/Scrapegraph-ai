@@ -10,7 +10,7 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ..helpers import models_tokens
 from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
-
+from ..utils.logging import get_logger
 
 class AbstractGraph(ABC):
     """
@@ -61,6 +61,7 @@ class AbstractGraph(ABC):
         self.headless = True if config is None else config.get(
             "headless", True)
         self.loader_kwargs = config.get("loader_kwargs", {})
+        self.logger = get_logger("graph")
 
         common_params = {"headless": self.headless,
                          "verbose": self.verbose,
@@ -79,7 +80,7 @@ class AbstractGraph(ABC):
 
         for node in self.graph.nodes:
             node.update_config(params, overwrite)
-
+        
     def _set_model_token(self, llm):
 
         if 'Azure' in str(type(llm)):

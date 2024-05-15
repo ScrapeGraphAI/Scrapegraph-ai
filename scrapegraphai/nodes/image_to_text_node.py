@@ -43,8 +43,7 @@ class ImageToTextNode(BaseNode):
         """
 
         if self.verbose:
-            logger = get_logger("image to text node")
-            logger.info(f"--- Executing {self.node_name} Node ---")
+            self.logger.info(f"--- Executing {self.node_name} Node ---")
             
         input_keys = self.get_input_keys(state)
         input_data = [state[key] for key in input_keys]
