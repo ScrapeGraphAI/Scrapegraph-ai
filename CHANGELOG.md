@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.0...v1.2.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* removed unused ([5587a64](https://github.com/VinciGit00/Scrapegraph-ai/commit/5587a64d23451a6a216000fe83b2ce1cc8f7141b))
+
 ## [1.2.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.1.0...v1.2.0) (2024-05-15)
 
 
