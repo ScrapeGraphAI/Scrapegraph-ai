@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.2...v1.2.3) (2024-05-15)
+
+
+### Bug Fixes
+
+* **deepcopy:** reaplced to shallow copy ([999c930](https://github.com/VinciGit00/Scrapegraph-ai/commit/999c930f424430a3d3d7ff604afbd2bf6d27c7ad))
+
 ## [1.2.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.1...v1.2.2) (2024-05-15)
 
 
