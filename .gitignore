@@ -15,7 +15,6 @@ dist/
 *.egg
 MANIFEST
 *.python-version
-*.lock
 
 docs/build/
 docs/source/_templates/
