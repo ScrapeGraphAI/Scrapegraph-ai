@@ -1,3 +1,53 @@
+## [1.2.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.0...v1.2.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* removed unused ([5587a64](https://github.com/VinciGit00/Scrapegraph-ai/commit/5587a64d23451a6a216000fe83b2ce1cc8f7141b))
+
+## [1.2.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.1.0...v1.2.0) (2024-05-15)
+
+
+### Features
+
+* add finalize_node() ([6e7283e](https://github.com/VinciGit00/Scrapegraph-ai/commit/6e7283ed8fc42408d718e8776f9fd3856960ffdb))
+
+## [1.1.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.0.1...v1.1.0) (2024-05-15)
+
+
+### Features
+
+* add turboscraper (alfa) ([51aa109](https://github.com/VinciGit00/Scrapegraph-ai/commit/51aa109e420a71101664906f0849f39ea2a3f91a))
+* new search_graph ([67d5fbf](https://github.com/VinciGit00/Scrapegraph-ai/commit/67d5fbf816275940c89802e033b9e7796436c410))
+
+
+### Docs
+
+* **rye:** replaced poetry with rye ([efb781f](https://github.com/VinciGit00/Scrapegraph-ai/commit/efb781f950b23f442706d54a578230aba9e9796a))
+
+## [1.0.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.0.0...v1.0.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* **searchgraph:** used shallow copy to serialize obj ([096b665](https://github.com/VinciGit00/Scrapegraph-ai/commit/096b665c0152593c19402e555c0850cdd3b2a2c0))
+
+## [1.0.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.1...v1.0.0) (2024-05-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **package manager:** move from poetry to rye
+
+### chore
+
+* **package manager:** move from poetry to rye ([8fc2510](https://github.com/VinciGit00/Scrapegraph-ai/commit/8fc2510b3704990ff96f5f74abb5b800bca9af98)), closes [#198](https://github.com/VinciGit00/Scrapegraph-ai/issues/198)
+
+
+### Docs
+
+* **main-readme:** fixed some typos ([78d1940](https://github.com/VinciGit00/Scrapegraph-ai/commit/78d19402351f18b3ed3a9d7e4200ad22ad0d064a))
+
 ## [0.11.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0...v0.11.1) (2024-05-14)
 
 
