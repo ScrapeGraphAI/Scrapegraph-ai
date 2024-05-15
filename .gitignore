@@ -14,6 +14,8 @@ dist/
 *.egg-info/
 *.egg
 MANIFEST
+*.python-version
+*.lock
 
 docs/build/
 docs/source/_templates/
@@ -31,6 +33,5 @@ examples/graph_examples/ScrapeGraphAI_generated_graph
 examples/**/result.csv
 examples/**/result.json
 main.py
-*.python-version
-*.lock
+
  
