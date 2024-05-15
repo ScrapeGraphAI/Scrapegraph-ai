@@ -1,3 +1,10 @@
+## [1.2.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.1.0...v1.2.0-beta.1) (2024-05-15)
+
+
+### Features
+
+* add finalize_node() ([6e7283e](https://github.com/VinciGit00/Scrapegraph-ai/commit/6e7283ed8fc42408d718e8776f9fd3856960ffdb))
+
 ## [1.1.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.0.1...v1.1.0) (2024-05-15)
 
 
