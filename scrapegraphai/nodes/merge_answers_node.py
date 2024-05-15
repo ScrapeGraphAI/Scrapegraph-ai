@@ -4,6 +4,7 @@ MergeAnswersNode Module
 
 # Imports from standard library
 from typing import List, Optional
+from tqdm import tqdm
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
@@ -38,8 +39,7 @@ class MergeAnswersNode(BaseNode):
 
     def execute(self, state: dict) -> dict:
         """
-        Executes the node's logic to merge the answers from multiple graph instances into a 
-        single answer.
+        Executes the node's logic to merge the answers from multiple graph instances into a single answer.
 
         Args:
             state (dict): The current state of the graph. The input keys will be used

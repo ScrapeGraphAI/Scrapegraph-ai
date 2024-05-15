@@ -25,13 +25,11 @@ The library is available on PyPI, so it can be installed using the following com
    
    It is higly recommended to install the library in a virtual environment (conda, venv, etc.)
 
-If you clone the repository, you can install the library using `rye <https://rye-up.com/>`_. Follow the installation instruction from the website and then run:
+If your clone the repository, you can install the library using `poetry <https://python-poetry.org/docs/>`_:
 
 .. code-block:: bash
 
-   rye pin 3.10
-   rye sync
-   rye build
+   poetry install
 
 Additionally on Windows when using WSL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

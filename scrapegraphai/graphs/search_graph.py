@@ -2,7 +2,7 @@
 SearchGraph Module
 """
 
-from copy import copy
+from copy import deepcopy
 
 from .base_graph import BaseGraph
 from ..nodes import (
@@ -42,7 +42,7 @@ class SearchGraph(AbstractGraph):
     def __init__(self, prompt: str, config: dict):
 
         self.max_results = config.get("max_results", 3)
-        self.copy_config = copy(config)
+        self.copy_config = deepcopy(config)
 
         super().__init__(prompt, config)
 
