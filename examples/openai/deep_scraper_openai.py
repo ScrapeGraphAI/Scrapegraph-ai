@@ -22,6 +22,7 @@ graph_config = {
         "model": "gpt-4",
     },
     "verbose": True,
+    "max_depth": 1
 }
 
 # ************************************************
@@ -31,7 +32,7 @@ graph_config = {
 deep_scraper_graph = DeepScraperGraph(
     prompt="List me all the job titles and detailed job description.",
     # also accepts a string with the already downloaded HTML code
-    source="https://www.google.com/about/careers/applications/jobs/results/?location=Bangalore%20India",
+    source="https://www.uber.com/us/en/careers/list/?query=",
     config=graph_config
 )
 

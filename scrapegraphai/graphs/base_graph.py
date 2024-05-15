@@ -132,7 +132,11 @@ class BaseGraph:
                 cb_total["successful_requests"] += cb["successful_requests"]
                 cb_total["total_cost_USD"] += cb["total_cost_USD"]
 
-                if current_node in self.edges:
+                # Do not execute the graph from this point on if previous node gave a signal
+                if 'skip_branch' in result:
+                    print(f"---- Not executing sub-graph since {current_node.node_name} \
+                    raised a stop signal ---")
+                elif current_node in self.edges:
                     current_node_connections = self.edges[current_node]
                     if current_node.node_type == 'conditional_node':
                         # Assert that there are exactly two out edges from the conditional node
