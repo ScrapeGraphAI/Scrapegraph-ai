@@ -4,6 +4,7 @@ BaseNode Module
 
 from abc import ABC, abstractmethod
 from typing import Optional, List
+from ..utils.logging import get_logger
 import re
 
 
@@ -48,6 +49,7 @@ class BaseNode(ABC):
         self.output = output
         self.min_input_len = min_input_len
         self.node_config = node_config
+        self.logger = get_logger("node")
 
         if node_type not in ["node", "conditional_node"]:
             raise ValueError(
