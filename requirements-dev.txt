@@ -1,3 +1,3 @@
 sphinx==7.1.2
-sphinx-rtd-theme==2.0.0
+sphinx-wagtail-theme==6.3.0
 pytest==8.0.0

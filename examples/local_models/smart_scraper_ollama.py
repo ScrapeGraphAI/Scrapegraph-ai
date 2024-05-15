@@ -9,7 +9,7 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
+        "model": "ollama/mistral",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
@@ -27,9 +27,9 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description.",
+    prompt="List me all the titles",
     # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects",
+    source="https://www.wired.com/",
     config=graph_config
 )
 

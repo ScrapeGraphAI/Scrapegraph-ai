@@ -1,60 +1,82 @@
-[tool.poetry]
+[project]
 name = "scrapegraphai"
 
-version = "0.11.0b2"
+version = "1.1.0"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
-    "Marco Vinciguerra <mvincig11@gmail.com>",
-    "Marco Perini <perinim.98@gmail.com>",
-    "Lorenzo Padoan <lorenzo.padoan977@gmail.com>"
+    { name = "Marco Vinciguerra", email = "mvincig11@gmail.com" },
+    { name = "Marco Perini", email = "perinim.98@gmail.com" },
+    { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
+dependencies = [
+    "langchain==0.1.15",
+    "langchain-openai==0.1.6",
+    "langchain-google-genai==1.0.3",
+    "langchain-groq==0.1.3",
+    "langchain-aws==0.1.3",
+    "langchain-anthropic==0.1.11",
+    "html2text==2024.2.26",
+    "faiss-cpu==1.8.0",
+    "beautifulsoup4==4.12.3",
+    "pandas==2.2.2",
+    "python-dotenv==1.0.1",
+    "tiktoken==0.6.0",
+    "tqdm==4.66.4",
+    "graphviz==0.20.3",
+    "minify-html==0.15.0",
+    "free-proxy==1.1.1",
+    "playwright==1.43.0",
+    "google==3.0.0",
+    "yahoo-search-py==0.3",
+]
+
 license = "MIT"
 readme = "README.md"
 homepage = "https://scrapegraph-ai.readthedocs.io/"
 repository = "https://github.com/VinciGit00/Scrapegraph-ai"
 documentation = "https://scrapegraph-doc.onrender.com/"
-keywords = ["scrapegraph", "scrapegraphai", "langchain", "ai", "artificial intelligence", "gpt", "machine learning", "rag", "nlp", "natural language processing", "openai", "scraping", "web scraping", "web scraping library", "web scraping tool", "webscraping", "graph"]
+keywords = [
+    "scrapegraph",
+    "scrapegraphai",
+    "langchain",
+    "ai",
+    "artificial intelligence",
+    "gpt",
+    "machine learning",
+    "rag",
+    "nlp",
+    "natural language processing",
+    "openai",
+    "scraping",
+    "web scraping",
+    "web scraping library",
+    "web scraping tool",
+    "webscraping",
+    "graph",
+]
 classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-
-[tool.poetry.dependencies]
-python = ">=3.9, <3.12"
-langchain = "0.1.15"
-langchain-openai = "^0.1.6"
-langchain-google-genai = "^1.0.3"
-langchain-groq = "^0.1.3"
-langchain-aws = "^0.1.3"
-langchain-anthropic = "^0.1.11"
-html2text = "^2024.2.26"
-faiss-cpu = "^1.8.0"
-beautifulsoup4 = "^4.12.3"
-pandas = "^2.2.2"
-python-dotenv = "^1.0.1"
-tiktoken = "^0.6.0"
-tqdm = "^4.66.4"
-graphviz = "^0.20.3"
-minify-html = "^0.15.0"
-free-proxy = "^1.1.1"
-playwright = "^1.43.0"
-google = "^3.0.0"
-yahoo-search-py = "^0.3"
-
-[tool.poetry.dev-dependencies]
-pytest = "8.0.0"
-
-[tool.poetry.group.docs]
-optional = true
-
-[tool.poetry.group.docs.dependencies]
-sphinx = "7.1.2"
-sphinx-rtd-theme = "2.0.0"
+requires-python = ">= 3.9, < 3.12"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest==8.0.0",
+    "pytest-mock==3.14.0"
+]
+
+[tool.rye.group.docs]
+optional = true
+
+[tool.rye.group.docs.dependencies]
+sphinx = "7.1.2"
+sphinx-rtd-theme = "2.0.0"

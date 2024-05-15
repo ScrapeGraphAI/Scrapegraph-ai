@@ -3,11 +3,13 @@ AbstractGraph Module
 """
 from abc import ABC, abstractmethod
 from typing import Optional
+from langchain_aws import BedrockEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings, BedrockEmbeddings
+from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, Claude
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
+from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 
 
 class AbstractGraph(ABC):
@@ -58,8 +60,11 @@ class AbstractGraph(ABC):
             "verbose", False)
         self.headless = True if config is None else config.get(
             "headless", True)
+        self.loader_kwargs = config.get("loader_kwargs", {})
+
         common_params = {"headless": self.headless,
                          "verbose": self.verbose,
+                         "loader_kwargs": self.loader_kwargs,
                          "llm_model": self.llm_model,
                          "embedder_model": self.embedder_model}
         self.set_common_params(common_params, overwrite=False)
@@ -145,12 +150,12 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return Gemini(llm_params)
-        elif "claude" in llm_params["model"]:
+        elif llm_params["model"].startswith("claude"):
             try:
                 self.model_token = models_tokens["claude"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return Claude(llm_params)
+            return Anthropic(llm_params)
         elif "ollama" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
@@ -186,12 +191,13 @@ class AbstractGraph(ABC):
         elif "bedrock" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
             model_id = llm_params["model"]
-
+            client = llm_params.get('client', None)
             try:
                 self.model_token = models_tokens["bedrock"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return Bedrock({
+                "client": client,
                 "model_id": model_id,
                 "model_kwargs": {
                     "temperature": llm_params["temperature"],
@@ -200,6 +206,12 @@ class AbstractGraph(ABC):
         elif "claude-3-" in llm_params["model"]:
             self.model_token = models_tokens["claude"]["claude3"]
             return Anthropic(llm_params)
+        elif "deepseek" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["deepseek"][llm_params["model"]]
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
+            return DeepSeek(llm_params)
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
@@ -279,11 +291,12 @@ class AbstractGraph(ABC):
             return GoogleGenerativeAIEmbeddings(model=embedder_config["model"])
         elif "bedrock" in embedder_config["model"]:
             embedder_config["model"] = embedder_config["model"].split("/")[-1]
+            client = embedder_config.get('client', None)
             try:
                 models_tokens["bedrock"][embedder_config["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return BedrockEmbeddings(client=None, model_id=embedder_config["model"])
+            return BedrockEmbeddings(client=client, model_id=embedder_config["model"])
         else:
             raise ValueError(
                 "Model provided by the configuration not supported")
