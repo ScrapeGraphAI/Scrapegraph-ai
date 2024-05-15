@@ -1,15 +1,12 @@
 #!/bin/bash
 cd ..
 
-poetry update
+rye self update
 # Install dependencies using Poetry
-poetry install
-
-# Check for any potential issues in the project
-poetry check
+rye sync
 
 # Build the project
-poetry build
+rye build
 
 # Publish the project to PyPI
-poetry publish
+rye publish
