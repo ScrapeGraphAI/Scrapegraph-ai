@@ -1,3 +1,19 @@
+## [1.0.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.1...v1.0.0) (2024-05-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **package manager:** move from poetry to rye
+
+### chore
+
+* **package manager:** move from poetry to rye ([8fc2510](https://github.com/VinciGit00/Scrapegraph-ai/commit/8fc2510b3704990ff96f5f74abb5b800bca9af98)), closes [#198](https://github.com/VinciGit00/Scrapegraph-ai/issues/198)
+
+
+### Docs
+
+* **main-readme:** fixed some typos ([78d1940](https://github.com/VinciGit00/Scrapegraph-ai/commit/78d19402351f18b3ed3a9d7e4200ad22ad0d064a))
+
 ## [0.11.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v0.11.0...v0.11.1) (2024-05-14)
 
 
