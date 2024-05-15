@@ -19,7 +19,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "gpt-4",
+        "model": "gpt-3.5-turbo",
     },
     "verbose": True,
 }
@@ -29,9 +29,9 @@ graph_config = {
 # ************************************************
 
 deep_scraper_graph = DeepScraperGraph(
-    prompt="List me all the job titles and detailed job description.",
+    prompt="List me all the contacts",
     # also accepts a string with the already downloaded HTML code
-    source="https://www.google.com/about/careers/applications/jobs/results/?location=Bangalore%20India",
+    source="https://davittoriogift.com/en/home/a",
     config=graph_config
 )
 
