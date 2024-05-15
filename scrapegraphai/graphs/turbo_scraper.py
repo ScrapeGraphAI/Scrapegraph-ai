@@ -7,14 +7,17 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     RAGNode,
-    GenerateAnswerNode
+    SearchLinksWithContext,
+    GraphIteratorNode,
+    MergeAnswersNode
 )
+from .search_graph import SearchGraph
 from .abstract_graph import AbstractGraph
 
 
 class SmartScraperGraph(AbstractGraph):
     """
-    SmartScraper is a scraping pipeline that automates the process of 
+    SmartScraper is a scraping pipeline that automates the process of
     extracting information from web pages
     using a natural language model to interpret and answer prompts.
 
@@ -23,7 +26,7 @@ class SmartScraperGraph(AbstractGraph):
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, 
+        embedder_model: An instance of an embedding model client,
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
@@ -55,13 +58,16 @@ class SmartScraperGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
+        smart_scraper_graph = SmartScraperGraph(
+            prompt="",
+            source="",
+            config=self.llm_model
+        )
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc", "link_urls", "img_urls"],
-            node_config={
-                "loader_kwargs": self.config.get("loader_kwargs", {}),
-            }
+            output=["doc"]
         )
+
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
@@ -69,6 +75,7 @@ class SmartScraperGraph(AbstractGraph):
                 "chunk_size": self.model_token
             }
         )
+
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
@@ -77,11 +84,30 @@ class SmartScraperGraph(AbstractGraph):
                 "embedder_model": self.embedder_model
             }
         )
-        generate_answer_node = GenerateAnswerNode(
+
+        search_link_with_context_node = SearchLinksWithContext(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model
+            }
+        )
+
+        graph_iterator_node = GraphIteratorNode(
+            input="user_prompt & urls",
+            output=["results"],
+            node_config={
+                "graph_instance": smart_scraper_graph,
+                "verbose": True,
+            }
+        )
+
+        merge_answers_node = MergeAnswersNode(
+            input="user_prompt & results",
+            output=["answer"],
+            node_config={
+                "llm_model": self.llm_model,
+                "verbose": True,
             }
         )
 
@@ -90,12 +116,18 @@ class SmartScraperGraph(AbstractGraph):
                 fetch_node,
                 parse_node,
                 rag_node,
-                generate_answer_node,
+                search_link_with_context_node,
+                graph_iterator_node,
+                merge_answers_node
+
             ],
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
-                (rag_node, generate_answer_node)
+                (rag_node, search_link_with_context_node),
+                (search_link_with_context_node, graph_iterator_node),
+                (graph_iterator_node, merge_answers_node),
+
             ],
             entry_point=fetch_node
         )

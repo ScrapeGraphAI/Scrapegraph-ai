@@ -162,4 +162,5 @@ class FetchNode(BaseNode):
             ]
 
         state.update({self.output[0]: compressed_document, self.output[1]: link_urls, self.output[2]: image_urls})
+
         return state
