@@ -61,10 +61,9 @@ class RobotsNode(BaseNode):
             ValueError: If the website is not scrapeable based on the robots.txt file and
                         scraping is not enforced.
         """
-        logger = get_logger("robots node")
 
         if self.verbose:
-            logger.info(f"--- Executing {self.node_name} Node ---")
+            self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -97,12 +96,12 @@ class RobotsNode(BaseNode):
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
             loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
-            if "ollama" in self.llm_model.model_name:
-                self.llm_model.model_name = self.llm_model.model_name.split("/")[-1]
-                model = self.llm_model.model_name.split("/")[-1]
+            if "ollama" in self.llm_model["model_name"]:
+                self.llm_model["model_name"] = self.llm_model["model_name"].split("/")[-1]
+                model = self.llm_model["model_name"].split("/")[-1]
 
             else:
-                model = self.llm_model.model_name
+                model = self.llm_model["model_name"]
             try:
                 agent = robots_dictionary[model]
 
