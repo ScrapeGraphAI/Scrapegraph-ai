@@ -14,11 +14,8 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git
-      - name: Install Python Env and Poetry
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
-      - run: pip install poetry
+      - name: Install the latest version of rye
+        uses: eifinger/setup-rye@v3
       - name: Install Node Env
         uses: actions/setup-node@v4
         with:
@@ -30,8 +27,8 @@ jobs:
           persist-credentials: false
       - name: Build app
         run: |
-          poetry install
-          poetry build
+          rye sync --no-lock
+          rye build
         id: build_cache
         if: success()
       - name: Cache build
