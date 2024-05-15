@@ -103,5 +103,5 @@ class SearchLinkNode(BaseNode):
             answer = merge_chain.invoke(
                 {"content": chunk.page_content, "user_prompt": user_prompt})
             relevant_links += answer
-        state.update({self.output[0]: relevant_links})
+        state.update({self.output[0]: list(set(relevant_links))})
         return state
