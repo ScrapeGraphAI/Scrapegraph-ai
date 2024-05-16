@@ -132,24 +132,21 @@ class BaseGraph:
                 cb_total["successful_requests"] += cb["successful_requests"]
                 cb_total["total_cost_USD"] += cb["total_cost_USD"]
 
-                # Do not execute the graph from this point on if previous node gave a signal
-                if 'skip_branch' in result:
-                    print(f"---- Not executing sub-graph since {current_node.node_name} \
-                    raised a stop signal ---")
-                elif current_node in self.edges:
-                    current_node_connections = self.edges[current_node]
-                    if current_node.node_type == 'conditional_node':
+               
+               
+                current_node_connections = self.edges[current_node]
+                if current_node.node_type == 'conditional_node':
                         # Assert that there are exactly two out edges from the conditional node
-                        if len(current_node_connections) != 2:
-                            raise ValueError(f"Conditional node should have exactly two out connections {current_node_connections.node_name}")
-                        if result["next_node"] == 0:
-                            queue.append(current_node_connections[0])
-                        else:
-                            queue.append(current_node_connections[1])
+                    if len(current_node_connections) != 2:
+                        raise ValueError(f"Conditional node should have exactly two out connections {current_node_connections.node_name}")
+                    if result["next_node"] == 0:
+                        queue.append(current_node_connections[0])
+                    else:
+                        queue.append(current_node_connections[1])
                         # remove the conditional node result
                         del result["next_node"]
-                    else:
-                        queue.extend(node for node in current_node_connections)
+                else:
+                    queue.extend(node for node in current_node_connections)
 
 
                 exec_info.append({

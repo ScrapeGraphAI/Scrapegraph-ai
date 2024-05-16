@@ -110,14 +110,6 @@ class GraphIteratorNode(BaseNode):
         else:
             graph_instance.config["graph_depth"] = 1
 
-        # Check if max depth is reached
-        if "max_depth" in graph_instance.config and \
-        graph_instance.config["graph_depth"] > graph_instance.config["max_depth"]:
-            print("Max search depth is reached. Terminating search")
-            state.update({"skip_branch": "True"})
-            return state
-
-        # sets the prompt for the graph instance
         graph_instance.prompt = user_prompt
 
         participants = []
