@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.3...v1.2.4) (2024-05-17)
+
+
+### Bug Fixes
+
+* **deepcopy:** switch whether we have obj in the config ([d4d913c](https://github.com/VinciGit00/Scrapegraph-ai/commit/d4d913c8a360b907ebe1fbf3764e00b69783afe8))
+
 ## [1.2.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.2...v1.2.3) (2024-05-15)
 
 
