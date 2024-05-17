@@ -1,3 +1,15 @@
+## [1.3.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.4...v1.3.0-beta.1) (2024-05-17)
+
+
+### Features
+
+* **base_graph:** alligned with main ([73fa31d](https://github.com/VinciGit00/Scrapegraph-ai/commit/73fa31db0f791d1fd63b489ac88cc6e595aa07f9))
+
+
+### CI
+
+* **release:** 1.2.0-beta.1 [skip ci] ([fd3e0aa](https://github.com/VinciGit00/Scrapegraph-ai/commit/fd3e0aa5823509dfb46b4f597521c24d4eb345f1))
+
 ## [1.2.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.3...v1.2.4) (2024-05-17)
 
 
