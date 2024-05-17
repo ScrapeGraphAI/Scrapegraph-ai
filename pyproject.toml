@@ -1,7 +1,7 @@
 [project]
 name = "scrapegraphai"
 
-version = "1.2.0b1"
+version = "1.2.4"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
@@ -10,6 +10,7 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 dependencies = [
+    # python = ">=3.9, <3.12"
     "langchain==0.1.15",
     "langchain-openai==0.1.6",
     "langchain-google-genai==1.0.3",
@@ -61,13 +62,11 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-requires-python = ">= 3.9, < 3.12"
-
+requires-python = ">= 3.9"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
 
 [tool.rye]
 managed = true

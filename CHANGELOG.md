@@ -1,4 +1,32 @@
-## [1.2.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.1.0...v1.2.0-beta.1) (2024-05-15)
+## [1.2.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.3...v1.2.4) (2024-05-17)
+
+
+### Bug Fixes
+
+* **deepcopy:** switch whether we have obj in the config ([d4d913c](https://github.com/VinciGit00/Scrapegraph-ai/commit/d4d913c8a360b907ebe1fbf3764e00b69783afe8))
+
+## [1.2.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.2...v1.2.3) (2024-05-15)
+
+
+### Bug Fixes
+
+* **deepcopy:** reaplced to shallow copy ([999c930](https://github.com/VinciGit00/Scrapegraph-ai/commit/999c930f424430a3d3d7ff604afbd2bf6d27c7ad))
+
+## [1.2.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.1...v1.2.2) (2024-05-15)
+
+
+### Bug Fixes
+
+* come back to the old version ([cc5adef](https://github.com/VinciGit00/Scrapegraph-ai/commit/cc5adefd29eb2d0d7127515c4a4a72eabbc7eaa8))
+
+## [1.2.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.0...v1.2.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* removed unused ([5587a64](https://github.com/VinciGit00/Scrapegraph-ai/commit/5587a64d23451a6a216000fe83b2ce1cc8f7141b))
+
+## [1.2.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.1.0...v1.2.0) (2024-05-15)
 
 
 ### Features

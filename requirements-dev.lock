@@ -64,7 +64,7 @@ free-proxy==1.1.1
 frozenlist==1.4.1
     # via aiohttp
     # via aiosignal
-fsspec==2024.3.1
+fsspec==2024.5.0
     # via huggingface-hub
 google==3.0.0
     # via scrapegraphai
@@ -93,7 +93,6 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 groq==0.5.0
     # via langchain-groq
 grpcio==1.63.0
@@ -157,7 +156,7 @@ langchain-openai==0.1.6
     # via scrapegraphai
 langchain-text-splitters==0.0.1
     # via langchain
-langsmith==0.1.57
+langsmith==0.1.58
     # via langchain
     # via langchain-community
     # via langchain-core
@@ -301,7 +300,7 @@ tzdata==2024.1
     # via pandas
 uritemplate==4.1.1
     # via google-api-python-client
-urllib3==1.26.18
+urllib3==2.2.1
     # via botocore
     # via requests
     # via yahoo-search-py
