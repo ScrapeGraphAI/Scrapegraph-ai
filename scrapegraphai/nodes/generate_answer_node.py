@@ -13,7 +13,7 @@ from langchain_core.runnables import RunnableParallel
 
 # Imports from the library
 from .base_node import BaseNode
-from ..helpers.helpers import template_chunks, template_no_chunks, template_merge
+from ..helpers import template_chunks, template_no_chunks, template_merge
 
 class GenerateAnswerNode(BaseNode):
     """
