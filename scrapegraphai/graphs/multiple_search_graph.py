@@ -14,6 +14,8 @@ from .abstract_graph import AbstractGraph
 from .smart_scraper_graph import SmartScraperGraph
 
 from typing import List, Optional
+
+
 class MultipleSearchGraph(AbstractGraph):
     """ 
     MultipleSearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
@@ -39,7 +41,7 @@ class MultipleSearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema:Optional[dict]= None):
+    def __init__(self, prompt: str, source: List[str], config: dict):
 
         self.max_results = config.get("max_results", 3)
 
@@ -48,7 +50,7 @@ class MultipleSearchGraph(AbstractGraph):
         else:
             self.copy_config = deepcopy(config)
 
-        super().__init__(prompt, config)
+        super().__init__(prompt, config, source)
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -65,7 +67,7 @@ class MultipleSearchGraph(AbstractGraph):
         smart_scraper_instance = SmartScraperGraph(
             prompt="",
             source="",
-            config=self.copy_config
+            config=self.copy_config,
         )
 
         # ************************************************
@@ -85,6 +87,7 @@ class MultipleSearchGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "schema": self.config.get("schema", None),
             }
         )
 

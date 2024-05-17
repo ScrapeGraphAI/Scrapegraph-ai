@@ -81,7 +81,8 @@ class SmartScraperGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
-                "llm_model": self.llm_model
+                "llm_model": self.llm_model,
+                "schema": self.config.get("schema", None),
             }
         )
 
