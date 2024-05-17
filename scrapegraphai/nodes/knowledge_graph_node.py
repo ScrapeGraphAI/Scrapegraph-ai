@@ -12,7 +12,7 @@ from langchain_core.output_parsers import JsonOutputParser
 
 # Imports from the library
 from .base_node import BaseNode
-
+from ..utils import create_graph, add_customizations, create_interactive_graph
 
 class KnowledgeGraphNode(BaseNode):
     """
@@ -65,31 +65,36 @@ class KnowledgeGraphNode(BaseNode):
         user_prompt = input_data[0]
         answer_dict = input_data[1]
 
-        output_parser = JsonOutputParser()
-        format_instructions = output_parser.get_format_instructions()
+        # Build the graph
+        graph = create_graph(answer_dict)
+        # Create the interactive graph
+        create_interactive_graph(graph, output_file='knowledge_graph.html')
 
-        template_merge = """
-        You are a website scraper and you have just scraped some content from multiple websites.\n
-        You are now asked to provide an answer to a USER PROMPT based on the content you have scraped.\n
-        You need to merge the content from the different websites into a single answer without repetitions (if there are any). \n
-        The scraped contents are in a JSON format and you need to merge them based on the context and providing a correct JSON structure.\n
-        OUTPUT INSTRUCTIONS: {format_instructions}\n
-        USER PROMPT: {user_prompt}\n
-        WEBSITE CONTENT: {website_content}
-        """
+        # output_parser = JsonOutputParser()
+        # format_instructions = output_parser.get_format_instructions()
 
-        prompt_template = PromptTemplate(
-            template=template_merge,
-            input_variables=["user_prompt"],
-            partial_variables={
-                "format_instructions": format_instructions,
-                "website_content": answers_str,
-            },
-        )
+        # template_merge = """
+        # You are a website scraper and you have just scraped some content from multiple websites.\n
+        # You are now asked to provide an answer to a USER PROMPT based on the content you have scraped.\n
+        # You need to merge the content from the different websites into a single answer without repetitions (if there are any). \n
+        # The scraped contents are in a JSON format and you need to merge them based on the context and providing a correct JSON structure.\n
+        # OUTPUT INSTRUCTIONS: {format_instructions}\n
+        # USER PROMPT: {user_prompt}\n
+        # WEBSITE CONTENT: {website_content}
+        # """
 
-        merge_chain = prompt_template | self.llm_model | output_parser
-        answer = merge_chain.invoke({"user_prompt": user_prompt})
+        # prompt_template = PromptTemplate(
+        #     template=template_merge,
+        #     input_variables=["user_prompt"],
+        #     partial_variables={
+        #         "format_instructions": format_instructions,
+        #         "website_content": answers_str,
+        #     },
+        # )
+
+        # merge_chain = prompt_template | self.llm_model | output_parser
+        # answer = merge_chain.invoke({"user_prompt": user_prompt})
 
         # Update the state with the generated answer
-        state.update({self.output[0]: answer})
+        state.update({self.output[0]: graph})
         return state

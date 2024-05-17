@@ -32,5 +32,6 @@ examples/graph_examples/ScrapeGraphAI_generated_graph
 examples/**/result.csv
 examples/**/result.json
 main.py
-
+lib/
+*.html
  

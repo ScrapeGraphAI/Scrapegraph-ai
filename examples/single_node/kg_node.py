@@ -50,6 +50,7 @@ graph_config = {
         "model": "gpt-4o",
         "temperature": 0,
     },
+    "verbose": True,
 }
 
 # ************************************************
@@ -59,11 +60,9 @@ graph_config = {
 llm_model = OpenAI(graph_config["llm"])
 
 robots_node = KnowledgeGraphNode(
-    input="answer & user_prompt",
+    input="user_prompt & answer_dict",
     output=["is_scrapable"],
-    node_config={"llm_model": llm_model,
-                 "headless": False
-                 }
+    node_config={"llm_model": llm_model}
 )
 
 # ************************************************
@@ -71,7 +70,8 @@ robots_node = KnowledgeGraphNode(
 # ************************************************
 
 state = {
-    "url": "https://twitter.com/home"
+    "user_prompt": "What are the job postings?",
+    "answer_dict": job_postings
 }
 
 result = robots_node.execute(state)
