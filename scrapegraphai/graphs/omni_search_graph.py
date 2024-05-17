@@ -2,7 +2,7 @@
 OmniSearchGraph Module
 """
 
-from copy import copy
+from copy import copy, deepcopy
 
 from .base_graph import BaseGraph
 from ..nodes import (
@@ -43,7 +43,11 @@ class OmniSearchGraph(AbstractGraph):
     def __init__(self, prompt: str, config: dict):
 
         self.max_results = config.get("max_results", 3)
-        self.copy_config = copy(config)
+
+        if all(isinstance(value, str) for value in config.values()):
+            self.copy_config = copy(config)
+        else:
+            self.copy_config = deepcopy(config)
 
         super().__init__(prompt, config)
 
