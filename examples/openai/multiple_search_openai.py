@@ -25,11 +25,41 @@ graph_config = {
     "headless": False,
 }
 
+schema= """{ 
+    "Job Postings": { 
+        "Company A": [ 
+            { 
+                "title": "Software Engineer", 
+                "description": "Develop and maintain software applications.", 
+                "location": "New York, NY", 
+                "date_posted": "2024-05-01", 
+                "requirements": ["Python", "Django", "REST APIs"] 
+            }, 
+            { 
+                "title": "Data Scientist", 
+                "description": "Analyze and interpret complex data.", 
+                "location": "San Francisco, CA", 
+                "date_posted": "2024-05-05", 
+                "requirements": ["Python", "Machine Learning", "SQL"] 
+            } 
+        ], 
+        "Company B": [ 
+            { 
+                "title": "Project Manager", 
+                "description": "Manage software development projects.", 
+                "location": "Boston, MA", 
+                "date_posted": "2024-04-20", 
+                "requirements": ["Project Management", "Agile", "Scrum"] 
+            } 
+        ] 
+    } 
+}"""
+
 multiple_search_graph = MultipleSearchGraph(
     prompt="List me all the projects with their description",
-    # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects/",
-    config=graph_config
+    source= ["https://perinim.github.io/projects/", "https://perinim.github.io/projects/"],
+    config=graph_config,
+    schema = schema
 )
 
 result = multiple_search_graph.run()

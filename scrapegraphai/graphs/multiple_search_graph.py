@@ -7,12 +7,13 @@ from copy import copy, deepcopy
 from .base_graph import BaseGraph
 from ..nodes import (
     GraphIteratorNode,
-    MergeAnswersNode
+    MergeAnswersNode,
+    KnowledgeGraphNode
 )
 from .abstract_graph import AbstractGraph
 from .smart_scraper_graph import SmartScraperGraph
 
-
+from typing import List, Optional
 class MultipleSearchGraph(AbstractGraph):
     """ 
     MultipleSearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
@@ -38,7 +39,7 @@ class MultipleSearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict):
+    def __init__(self, prompt: str, source: List[str], config: dict, schema:Optional[dict]= None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -87,13 +88,23 @@ class MultipleSearchGraph(AbstractGraph):
             }
         )
 
+        knowledge_graph_node = KnowledgeGraphNode(
+            input="user_prompt & answer",
+            output=["kg"],
+            node_config={
+                "llm_model": self.llm_model,
+            }
+        )
+
         return BaseGraph(
             nodes=[
                 graph_iterator_node,
-                merge_answers_node
+                merge_answers_node,
+                knowledge_graph_node
             ],
             edges=[
-                (graph_iterator_node, merge_answers_node)
+                (graph_iterator_node, merge_answers_node),
+                (merge_answers_node, knowledge_graph_node)
             ],
             entry_point=graph_iterator_node
         )
@@ -105,7 +116,7 @@ class MultipleSearchGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
-        inputs = {"user_prompt": self.prompt}
+        inputs = {"user_prompt": self.prompt, "urls": self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
         return self.final_state.get("answer", "No answer found.")
