@@ -40,11 +40,12 @@ class AbstractGraph(ABC):
         >>> result = my_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict, source: Optional[str] = None):
+    def __init__(self, prompt: str, config: dict, source: Optional[str] = None, schema: Optional[dict]=None):
 
         self.prompt = prompt
         self.source = source
         self.config = config
+        self.schema = schema
         self.llm_model = self._create_llm(config["llm"], chat=True)
         self.embedder_model = self._create_default_embedder(llm_config=config["llm"]
                                                             ) if "embeddings" not in config else self._create_embedder(
@@ -66,7 +67,8 @@ class AbstractGraph(ABC):
                          "verbose": self.verbose,
                          "loader_kwargs": self.loader_kwargs,
                          "llm_model": self.llm_model,
-                         "embedder_model": self.embedder_model}
+                         "embedder_model": self.embedder_model,
+                         "schema": self.schema}
         self.set_common_params(common_params, overwrite=False)
 
     def set_common_params(self, params: dict, overwrite=False):
