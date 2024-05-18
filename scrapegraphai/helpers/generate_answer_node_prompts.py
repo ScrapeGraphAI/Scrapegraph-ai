@@ -1,7 +1,7 @@
 """
 Generate answer node prompts
 """
-template_chunks_gen_answ = """
+template_chunks = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n 
@@ -12,7 +12,7 @@ Output instructions: {format_instructions}\n
 Content of {chunk_id}: {context}. \n
 """
 
-template_chunks_with_schema_gen_answ  = """
+template_chunks_with_schema  = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n 
@@ -24,7 +24,7 @@ Output instructions: {format_instructions}\n
 Content of {chunk_id}: {context}. \n
 """
 
-template_no_chunks_gen_answ  = """
+template_no_chunks  = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n
@@ -35,7 +35,7 @@ User question: {question}\n
 Website content:  {context}\n 
 """
 
-template_no_chunks_with_schema_gen_answ  = """
+template_no_chunks_with_schema  = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n
@@ -48,7 +48,7 @@ Website content:  {context}\n
 """
 
 
-template_merge_gen_answ = """
+template_merge = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n 
