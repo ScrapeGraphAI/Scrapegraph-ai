@@ -12,7 +12,7 @@ from langchain_core.output_parsers import JsonOutputParser
 
 # Imports from the library
 from .base_node import BaseNode
-from ..utils import create_graph, add_customizations, create_interactive_graph
+from ..utils import create_graph, create_interactive_graph
 
 class KnowledgeGraphNode(BaseNode):
     """
