@@ -10,6 +10,36 @@ from scrapegraphai.utils import prettify_exec_info
 load_dotenv()
 
 
+schema= """{ 
+    "Job Postings": { 
+        "Company x": [ 
+            { 
+                "title": "...", 
+                "description": "...", 
+                "location": "...", 
+                "date_posted": "..", 
+                "requirements": ["...", "...", "..."] 
+            }, 
+            { 
+                "title": "...", 
+                "description": "...", 
+                "location": "...", 
+                "date_posted": "..", 
+                "requirements": ["...", "...", "..."] 
+            } 
+        ], 
+        "Company y": [ 
+            { 
+                "title": "...", 
+                "description": "...", 
+                "location": "...", 
+                "date_posted": "..", 
+                "requirements": ["...", "...", "..."] 
+            } 
+        ] 
+    } 
+}"""
+
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
@@ -19,47 +49,23 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "gpt-4o",
+        "model": "gpt-3.5-turbo",
     },
     "verbose": True,
     "headless": False,
+    "schema": schema,
 }
 
-schema= """{ 
-    "Job Postings": { 
-        "Company A": [ 
-            { 
-                "title": "Software Engineer", 
-                "description": "Develop and maintain software applications.", 
-                "location": "New York, NY", 
-                "date_posted": "2024-05-01", 
-                "requirements": ["Python", "Django", "REST APIs"] 
-            }, 
-            { 
-                "title": "Data Scientist", 
-                "description": "Analyze and interpret complex data.", 
-                "location": "San Francisco, CA", 
-                "date_posted": "2024-05-05", 
-                "requirements": ["Python", "Machine Learning", "SQL"] 
-            } 
-        ], 
-        "Company B": [ 
-            { 
-                "title": "Project Manager", 
-                "description": "Manage software development projects.", 
-                "location": "Boston, MA", 
-                "date_posted": "2024-04-20", 
-                "requirements": ["Project Management", "Agile", "Scrum"] 
-            } 
-        ] 
-    } 
-}"""
+
 
 multiple_search_graph = MultipleSearchGraph(
     prompt="List me all the projects with their description",
-    source= ["https://perinim.github.io/projects/", "https://perinim.github.io/projects/"],
+    source= [
+        "https://www.linkedin.com/jobs/machine-learning-engineer-offerte-di-lavoro/?currentJobId=3889037104&originalSubdomain=it",
+        "https://www.glassdoor.com/Job/italy-machine-learning-engineer-jobs-SRCH_IL.0,5_IN120_KO6,31.html",
+        "https://it.indeed.com/jobs?q=ML+engineer&vjk=3c2e6d27601ffaaa"
+        ],
     config=graph_config,
-    schema = schema
 )
 
 result = multiple_search_graph.run()
