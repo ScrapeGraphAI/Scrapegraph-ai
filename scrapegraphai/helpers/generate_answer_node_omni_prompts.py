@@ -2,7 +2,7 @@
 Generate answer node omni prompts helper
 """
 
-template_chunks = """
+template_chunks_omni = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n 
@@ -13,7 +13,7 @@ Output instructions: {format_instructions}\n
 Content of {chunk_id}: {context}. \n
 """
 
-template_no_chunks = """
+template_no_chunk_omni = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n
@@ -26,7 +26,7 @@ Website content:  {context}\n
 Image descriptions: {img_desc}\n
 """
 
-template_merge = """
+template_merge_omni = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to answer a user question about the content you have scraped.\n 

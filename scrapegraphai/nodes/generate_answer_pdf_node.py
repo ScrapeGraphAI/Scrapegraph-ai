@@ -12,7 +12,7 @@ from langchain_core.runnables import RunnableParallel
 
 # Imports from the library
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_pdf_prompts import template_chunks, template_no_chunks, template_merge
+from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
 
 class GenerateAnswerPDFNode(BaseNode):
     """
@@ -93,14 +93,14 @@ class GenerateAnswerPDFNode(BaseNode):
         for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
             if len(doc) == 1:
                 prompt = PromptTemplate(
-                    template=template_no_chunks,
+                    template=template_no_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                        "format_instructions": format_instructions},
                 )
             else:
                 prompt = PromptTemplate(
-                    template=template_chunks,
+                    template=template_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                        "chunk_id": i + 1,
@@ -118,7 +118,7 @@ class GenerateAnswerPDFNode(BaseNode):
             answer = map_chain.invoke({"question": user_prompt})
             # Merge the answers from the chunks
             merge_prompt = PromptTemplate(
-                template=template_merge,
+                template=template_merge_pdf,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )

@@ -13,7 +13,7 @@ from langchain_core.runnables import RunnableParallel
 
 # Imports from the library
 from .base_node import BaseNode
-from ..helpers import template_chunks, template_no_chunks, template_merge, template_chunks_with_schema, template_no_chunks_with_schema
+from ..helpers import template_chunks_gen_answ, template_no_chunks_gen_answ, template_merge_gen_answ, template_chunks_with_schema_gen_answ, template_chunks_with_schema_gen_answ
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -77,13 +77,13 @@ class GenerateAnswerNode(BaseNode):
         for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
             if self.node_config["schema"] is None and len(doc) == 1:
                 prompt = PromptTemplate(
-                    template=template_no_chunks,
+                    template=template_no_chunks_gen_answ,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                        "format_instructions": format_instructions})
             elif self.node_config["schema"] is not None and len(doc) == 1:
                  prompt = PromptTemplate(
-                    template=template_no_chunks_with_schema,
+                    template=template_chunks_with_schema_gen_answ,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                        "format_instructions": format_instructions,
@@ -91,14 +91,14 @@ class GenerateAnswerNode(BaseNode):
                                        })
             elif self.node_config["schema"] is None and len(doc) > 1:
                 prompt = PromptTemplate(
-                    template=template_chunks,
+                    template=template_chunks_gen_answ,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                         "chunk_id": i + 1,
                                         "format_instructions": format_instructions})
             elif self.node_config["schema"] is not None and len(doc) > 1:
                 prompt = PromptTemplate(
-                    template=template_chunks_with_schema,
+                    template=template_chunks_with_schema_gen_answ,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                         "chunk_id": i + 1,
@@ -116,7 +116,7 @@ class GenerateAnswerNode(BaseNode):
             answer = map_chain.invoke({"question": user_prompt})
             # Merge the answers from the chunks
             merge_prompt = PromptTemplate(
-                template=template_merge,
+                template=template_merge_gen_answ,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )

@@ -1,7 +1,7 @@
 """
 Generate anwer node pdf prompt
 """
-template_chunks = """
+template_chunks_pdf = """
         You are a  scraper and you have just scraped the
         following content from a PDF.
         You are now asked to answer a user question about the content you have scraped.\n 
@@ -12,7 +12,7 @@ template_chunks = """
         Content of {chunk_id}: {context}. \n
         """
 
-template_no_chunks = """
+template_no_chunks_pdf = """
         You are a PDF scraper and you have just scraped the
         following content from a PDF.
         You are now asked to answer a user question about the content you have scraped.\n
@@ -23,7 +23,7 @@ template_no_chunks = """
         PDF content:  {context}\n 
 """
 
-template_merge = """
+template_merge_pdf = """
 You are a PDF scraper and you have just scraped the
 following content from a PDF.
 You are now asked to answer a user question about the content you have scraped.\n 
