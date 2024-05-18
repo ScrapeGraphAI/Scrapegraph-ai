@@ -49,6 +49,7 @@ models_tokens = {
         "dbrx": 32768,
         "dbrx:instruct": 32768,
         "nous-hermes2:34b": 4096,
+        "orca-mini": 2048,
         # embedding models
         "nomic-embed-text": 8192,
         "snowflake-arctic-embed:335m": 8192,
