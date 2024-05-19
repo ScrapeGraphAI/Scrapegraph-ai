@@ -69,6 +69,7 @@ class ChromiumLoader(BaseLoader):
 
         """
         from playwright.async_api import async_playwright
+        from undetected_playwright import Malenia
 
         logger.info("Starting scraping...")
         results = ""
@@ -77,7 +78,9 @@ class ChromiumLoader(BaseLoader):
                 headless=self.headless, proxy=self.proxy, **self.browser_config
             )
             try:
-                page = await browser.new_page()
+                context = await browser.new_context()
+                await Malenia.apply_stealth(context)
+                page = await context.new_page()
                 await page.goto(url)
                 results = await page.content()  # Simply get the HTML content
                 logger.info("Content scraped")

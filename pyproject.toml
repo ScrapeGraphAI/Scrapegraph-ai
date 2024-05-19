@@ -30,6 +30,7 @@ dependencies = [
     "playwright==1.43.0",
     "google==3.0.0",
     "yahoo-search-py==0.3",
+    "undetected-playwright==0.3.0",
 ]
 
 license = "MIT"
