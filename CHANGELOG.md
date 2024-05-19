@@ -1,3 +1,10 @@
+## [1.4.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2024-05-19)
+
+
+### Features
+
+* **docloaders:** undetected-playwright ([7b3ee4e](https://github.com/VinciGit00/Scrapegraph-ai/commit/7b3ee4e71e4af04edeb47999d70d398b67c93ac4))
+
 ## [1.4.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.3.0...v1.4.0-beta.1) (2024-05-19)
 
 
