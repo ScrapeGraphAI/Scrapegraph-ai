@@ -27,6 +27,8 @@ models_tokens = {
     },
     "gemini": {
         "gemini-pro": 128000,
+        "gemini-1.5-flash-latest":128000,
+        "gemini-1.5-pro-latest":128000,
         "models/embedding-001": 2048
     },
 
