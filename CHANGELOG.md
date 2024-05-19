@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.4...v1.3.0) (2024-05-19)
+
+
+### Features
+
+* add new model ([8c7afa7](https://github.com/VinciGit00/Scrapegraph-ai/commit/8c7afa7570f0a104578deb35658168435cfe5ae1))
+
 ## [1.2.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.3...v1.2.4) (2024-05-17)
 
 
