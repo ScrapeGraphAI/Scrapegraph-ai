@@ -100,8 +100,7 @@ class RobotsNode(BaseNode):
                 self.llm_model.model_name = self.llm_model.model_name.split("/")[-1]
                 model = self.llm_model.model_name.split("/")[-1]
             elif hasattr(self.llm_model, "model_id"):  # Bedrock uses model IDs, not model names
-                self.llm_model.model_name = self.llm_model.model_id.split("/")[-1]
-                model = self.llm_model.model_name
+                model = self.llm_model.model_id.split("/")[-1]
             else:
                 model = self.llm_model.model_name
             try:
