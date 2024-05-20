@@ -96,10 +96,12 @@ class RobotsNode(BaseNode):
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
             loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
-            if "ollama" in self.llm_model.model_name:
+            if hasattr(self.llm_model, "model_name") and "ollama" in self.llm_model.model_name:
                 self.llm_model.model_name = self.llm_model.model_name.split("/")[-1]
                 model = self.llm_model.model_name.split("/")[-1]
-
+            elif hasattr(self.llm_model, "model_id"):  # Bedrock uses model IDs, not model names
+                self.llm_model.model_name = self.llm_model.model_id.split("/")[-1]
+                model = self.llm_model.model_name
             else:
                 model = self.llm_model.model_name
             try:
