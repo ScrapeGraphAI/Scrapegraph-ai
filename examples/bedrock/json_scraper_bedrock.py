@@ -42,7 +42,7 @@ graph_config = {
 # ************************************************
 
 json_scraper_graph = JSONScraperGraph(
-    prompt="List me all questions and options, no answers.",
+    prompt="List me all questions and options in the math section, no answers.",
     source=text,  # Pass the content of the file, not the file object
     config=graph_config
 )
