@@ -90,6 +90,7 @@ graph = BaseGraph(
     entry_point=fetch_node,
     use_burr=True,
     burr_config={
+        "project_name": "smart-scraper-graph",
         "app_instance_id": str(uuid.uuid4()),
         "inputs": {
             "llm_model": graph_config["llm"].get("model", "gpt-3.5-turbo"),
@@ -101,9 +102,9 @@ graph = BaseGraph(
 # Execute the graph
 # ************************************************
 
-result, execution_info = graph.execute({
-    "user_prompt": "Describe the content",
-    "url": "https://example.com/"
+result, exec_info = graph.execute({
+    "user_prompt": "List me all the projects with their description",
+    "url": "https://perinim.github.io/projects/"
 })
 
 # get the answer from the result

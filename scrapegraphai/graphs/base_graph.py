@@ -164,6 +164,7 @@ class BaseGraph:
         self.initial_state = initial_state
         if self.use_burr:
             bridge = BurrBridge(self, self.burr_config)
-            return bridge.execute(initial_state)
+            result = bridge.execute(initial_state)
+            return (result["_state"], [])
         else:
             return self._execute_standard(initial_state)

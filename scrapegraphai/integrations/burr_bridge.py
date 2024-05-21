@@ -8,7 +8,6 @@ from typing import Any, Dict, List, Tuple
 
 from burr import tracking
 from burr.core import Application, ApplicationBuilder, State, Action, default
-from burr.core.action import action
 from burr.lifecycle import PostRunStepHook, PreRunStepHook
 
 
@@ -40,7 +39,7 @@ class BurrNodeBridge(Action):
         return parse_boolean_expression(self.node.input)
 
     def run(self, state: State, **run_kwargs) -> dict:
-        node_inputs = {key: state[key] for key in self.reads}
+        node_inputs = {key: state[key] for key in self.reads if key in state}
         result_state = self.node.execute(node_inputs, **run_kwargs)
         return result_state
 
@@ -49,7 +48,7 @@ class BurrNodeBridge(Action):
         return self.node.output
 
     def update(self, result: dict, state: State) -> State:
-        return state.update(**state)
+        return state.update(**result)
 
 
 def parse_boolean_expression(expression: str) -> List[str]:
@@ -92,7 +91,8 @@ class BurrBridge:
     def __init__(self, base_graph, burr_config):
         self.base_graph = base_graph
         self.burr_config = burr_config
-        self.tracker = tracking.LocalTrackingClient(project="smart-scraper-graph")
+        self.project_name = burr_config.get("project_name", "default-project")
+        self.tracker = tracking.LocalTrackingClient(project=self.project_name)
         self.app_instance_id = burr_config.get("app_instance_id", "default-instance")
         self.burr_inputs = burr_config.get("inputs", {})
         self.burr_app = None
@@ -111,7 +111,7 @@ class BurrBridge:
         actions = self._create_actions()
         transitions = self._create_transitions()
         hooks = [PrintLnHook()]
-        burr_state = self._convert_state_to_burr(initial_state)
+        burr_state = State(initial_state)
 
         app = (
             ApplicationBuilder()
@@ -136,31 +136,9 @@ class BurrBridge:
 
         actions = {}
         for node in self.base_graph.nodes:
-            action_func = self._create_action(node)
+            action_func = BurrNodeBridge(node)
             actions[node.node_name] = action_func
         return actions
-
-    def _create_action(self, node) -> Any:
-        """
-        Create a Burr action function from a base graph node.
-
-        Args:
-            node (Node): The base graph node to convert to a Burr action.
-
-        Returns:
-            function: The Burr action function.
-        """
-
-        # @action(reads=parse_boolean_expression(node.input), writes=node.output)
-        # def dynamic_action(state: State, **kwargs):
-        #     node_inputs = {key: state[key] for key in self._parse_boolean_expression(node.input)}
-        #     result_state = node.execute(node_inputs, **kwargs)
-        #     return result_state, state.update(**result_state)
-        #
-        # return dynamic_action
-        # import pdb
-        # pdb.set_trace()
-        return BurrNodeBridge(node)
 
     def _create_transitions(self) -> List[Tuple[str, str, Any]]:
         """
@@ -174,22 +152,6 @@ class BurrBridge:
         for from_node, to_node in self.base_graph.edges.items():
             transitions.append((from_node, to_node, default))
         return transitions
-
-    def _convert_state_to_burr(self, state: Dict[str, Any]) -> State:
-        """
-        Convert a dictionary state to a Burr state.
-
-        Args:
-            state (dict): The dictionary state to convert.
-
-        Returns:
-            State: The Burr state instance.
-        """
-
-        burr_state = State()
-        for key, value in state.items():
-            setattr(burr_state, key, value)
-        return burr_state
 
     def _convert_state_from_burr(self, burr_state: State) -> Dict[str, Any]:
         """
@@ -223,7 +185,6 @@ class BurrBridge:
         # TODO: to fix final nodes detection
         final_nodes = [self.burr_app.graph.actions[-1].name]
 
-        # TODO: fix inputs
         last_action, result, final_state = self.burr_app.run(
             halt_after=final_nodes,
             inputs=self.burr_inputs
