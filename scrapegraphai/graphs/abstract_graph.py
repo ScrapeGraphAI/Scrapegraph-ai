@@ -231,6 +231,8 @@ class AbstractGraph(ABC):
                                                 model="models/embedding-001")
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
+        elif isinstance(self.llm_model, DeepSeek):
+            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)   
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureOpenAI):
