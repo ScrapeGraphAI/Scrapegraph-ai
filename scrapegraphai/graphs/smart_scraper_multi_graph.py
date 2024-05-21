@@ -1,25 +1,25 @@
 """ 
-MultipleSearchGraph Module
+SmartScraperMultiGraph Module
 """
 
 from copy import copy, deepcopy
+from typing import List, Optional
 
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+from .smart_scraper_graph import SmartScraperGraph
+
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode,
     KnowledgeGraphNode
 )
-from .abstract_graph import AbstractGraph
-from .smart_scraper_graph import SmartScraperGraph
-
-from typing import List, Optional
 
 
-class MultipleSearchGraph(AbstractGraph):
+class SmartScraperMultiGraph(AbstractGraph):
     """ 
-    MultipleSearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
-    It only requires a user prompt to search the internet and generate an answer.
+    SmartScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and generates answers to a given prompt.
+    It only requires a user prompt and a list of URLs.
 
     Attributes:
         prompt (str): The user prompt to search the internet.
@@ -31,7 +31,9 @@ class MultipleSearchGraph(AbstractGraph):
 
     Args:
         prompt (str): The user prompt to search the internet.
+        source (List[str]): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (Optional[str]): The schema for the graph output.
 
     Example:
         >>> search_graph = MultipleSearchGraph(
@@ -41,7 +43,7 @@ class MultipleSearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict):
+    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[str] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -50,7 +52,7 @@ class MultipleSearchGraph(AbstractGraph):
         else:
             self.copy_config = deepcopy(config)
 
-        super().__init__(prompt, config, source)
+        super().__init__(prompt, config, source, schema)
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -87,15 +89,7 @@ class MultipleSearchGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.config.get("schema", None),
-            }
-        )
-
-        knowledge_graph_node = KnowledgeGraphNode(
-            input="user_prompt & answer",
-            output=["kg"],
-            node_config={
-                "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 
@@ -103,11 +97,9 @@ class MultipleSearchGraph(AbstractGraph):
             nodes=[
                 graph_iterator_node,
                 merge_answers_node,
-                knowledge_graph_node
             ],
             edges=[
                 (graph_iterator_node, merge_answers_node),
-                (merge_answers_node, knowledge_graph_node)
             ],
             entry_point=graph_iterator_node
         )

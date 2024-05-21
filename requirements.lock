@@ -45,6 +45,9 @@ certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
+colorama==0.4.6
+    # via ipython
+    # via tqdm
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
@@ -99,6 +102,7 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 groq==0.5.0
     # via langchain-groq
 grpcio==1.63.0
@@ -208,8 +212,6 @@ pandas==2.2.2
     # via scrapegraphai
 parso==0.8.4
     # via jedi
-pexpect==4.9.0
-    # via ipython
 playwright==1.43.0
     # via scrapegraphai
 prompt-toolkit==3.0.43
@@ -224,8 +226,6 @@ protobuf==4.25.3
     # via googleapis-common-protos
     # via grpcio-status
     # via proto-plus
-ptyprocess==0.7.0
-    # via pexpect
 pure-eval==0.2.2
     # via stack-data
 pyasn1==0.6.0

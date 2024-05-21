@@ -14,6 +14,7 @@ from langchain_core.output_parsers import JsonOutputParser
 from .base_node import BaseNode
 from ..utils import create_graph, create_interactive_graph
 
+
 class KnowledgeGraphNode(BaseNode):
     """
     A node responsible for generating a knowledge graph from a dictionary.

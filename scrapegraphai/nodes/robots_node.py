@@ -4,9 +4,11 @@ RobotsNode Module
 
 from typing import List, Optional
 from urllib.parse import urlparse
+
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser
+
 from .base_node import BaseNode
 from ..helpers import robots_dictionary
 

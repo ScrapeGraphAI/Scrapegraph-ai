@@ -15,6 +15,7 @@ from langchain_core.runnables import RunnableParallel
 from .base_node import BaseNode
 from ..helpers import template_chunks, template_no_chunks, template_merge, template_chunks_with_schema, template_no_chunks_with_schema
 
+
 class GenerateAnswerNode(BaseNode):
     """
     A node that generates an answer using a large language model (LLM) based on the user's input

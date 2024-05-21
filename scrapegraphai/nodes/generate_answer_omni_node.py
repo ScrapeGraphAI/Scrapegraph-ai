@@ -15,6 +15,7 @@ from langchain_core.runnables import RunnableParallel
 from .base_node import BaseNode
 from ..helpers.generate_answer_node_omni_prompts import template_no_chunk_omni, template_chunks_omni, template_merge_omni
 
+
 class GenerateAnswerOmniNode(BaseNode):
     """
     A node that generates an answer using a large language model (LLM) based on the user's input

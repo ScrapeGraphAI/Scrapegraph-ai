@@ -10,10 +10,9 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 
-from ..helpers.generate_answer_node_csv_prompts import template_chunks_csv, template_no_chunks_csv, template_merge_csv
-
 # Imports from the library
 from .base_node import BaseNode
+from ..helpers.generate_answer_node_csv_prompts import template_chunks_csv, template_no_chunks_csv, template_merge_csv
 
 
 class GenerateAnswerCSVNode(BaseNode):

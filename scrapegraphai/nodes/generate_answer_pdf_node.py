@@ -14,6 +14,7 @@ from langchain_core.runnables import RunnableParallel
 from .base_node import BaseNode
 from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
 
+
 class GenerateAnswerPDFNode(BaseNode):
     """
     A node that generates an answer using a language model (LLM) based on the user's input

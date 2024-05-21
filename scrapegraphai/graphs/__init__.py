@@ -15,4 +15,4 @@ from .csv_scraper_graph import CSVScraperGraph
 from .pdf_scraper_graph import PDFScraperGraph
 from .omni_scraper_graph import OmniScraperGraph
 from .omni_search_graph import OmniSearchGraph
-from .multiple_search_graph import MultipleSearchGraph
+from .smart_scraper_multi_graph import SmartScraperMultiGraph

@@ -2,14 +2,17 @@
 PDFScraperGraph Module
 """
 
+from typing import Optional
+
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+
 from ..nodes import (
     FetchNode,
     ParseNode,
     RAGNode,
     GenerateAnswerNode
 )
-from .abstract_graph import AbstractGraph
 
 
 class PDFScraperGraph(AbstractGraph):
@@ -21,6 +24,7 @@ class PDFScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
         configured for generating embeddings.
@@ -32,6 +36,7 @@ class PDFScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
 
     Example:
         >>> pdf_scraper = PDFScraperGraph(
@@ -42,8 +47,8 @@ class PDFScraperGraph(AbstractGraph):
         >>> result = pdf_scraper.run()
     """
 
-    def __init__(self, prompt: str, source: str, config: dict):
-        super().__init__(prompt, config, source)
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+        super().__init__(prompt, config, source, schema)
 
         self.input_key = "pdf" if source.endswith("pdf") else "pdf_dir"
 
@@ -79,6 +84,7 @@ class PDFScraperGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "schema": self.schema,
             }
         )
 
