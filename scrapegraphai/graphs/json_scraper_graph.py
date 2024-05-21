@@ -2,14 +2,17 @@
 JSONScraperGraph Module
 """
 
+from typing import Optional
+
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+
 from ..nodes import (
     FetchNode,
     ParseNode,
     RAGNode,
     GenerateAnswerNode
 )
-from .abstract_graph import AbstractGraph
 
 
 class JSONScraperGraph(AbstractGraph):
@@ -20,6 +23,7 @@ class JSONScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
         configured for generating embeddings.
@@ -30,6 +34,7 @@ class JSONScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
 
     Example:
         >>> json_scraper = JSONScraperGraph(
@@ -40,8 +45,8 @@ class JSONScraperGraph(AbstractGraph):
         >>> result = json_scraper.run()
     """
 
-    def __init__(self, prompt: str, source: str, config: dict):
-        super().__init__(prompt, config, source)
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+        super().__init__(prompt, config, source, schema)
 
         self.input_key = "json" if source.endswith("json") else "json_dir"
 
@@ -76,7 +81,8 @@ class JSONScraperGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
-                "llm_model": self.llm_model
+                "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 

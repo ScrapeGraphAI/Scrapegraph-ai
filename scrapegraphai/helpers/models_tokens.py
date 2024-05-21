@@ -38,6 +38,7 @@ models_tokens = {
         "llava": 4096,
         "llava_next": 4096,
         "mistral": 8192,
+        "falcon": 2048,
         "codellama": 16000,
         "dolphin-mixtral": 32000,
         "mistral-openorca": 32000,

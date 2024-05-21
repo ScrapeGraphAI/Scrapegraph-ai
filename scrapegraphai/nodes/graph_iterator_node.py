@@ -10,7 +10,6 @@ from tqdm.asyncio import tqdm
 
 from .base_node import BaseNode
 
-
 _default_batchsize = 16
 
 

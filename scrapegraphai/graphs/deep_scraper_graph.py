@@ -2,7 +2,11 @@
 DeepScraperGraph Module
 """
 
+from typing import Optional
+
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+
 from ..nodes import (
     FetchNode,
     SearchLinkNode,
@@ -12,7 +16,6 @@ from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
-from .abstract_graph import AbstractGraph
 
 
 class DeepScraperGraph(AbstractGraph):
@@ -30,15 +33,19 @@ class DeepScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
+        
     Args:
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
+
     Example:
         >>> deep_scraper = DeepScraperGraph(
         ...     "List me all the job titles and detailed job description.",
@@ -49,8 +56,10 @@ class DeepScraperGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict):
-        super().__init__(prompt, config, source)
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    
+        super().__init__(prompt, config, source, schema)
+
         self.input_key = "url" if source.startswith("http") else "local_dir"
 
     def _create_repeated_graph(self) -> BaseGraph:
@@ -84,7 +93,8 @@ class DeepScraperGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
-                "llm_model": self.llm_model
+                "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
         search_node = SearchLinkNode(
@@ -108,6 +118,7 @@ class DeepScraperGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 

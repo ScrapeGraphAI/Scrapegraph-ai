@@ -1,5 +1,5 @@
 """
-MergeAnswersNode Module
+KnowledgeGraphNode Module
 """
 
 # Imports from standard library
@@ -12,11 +12,12 @@ from langchain_core.output_parsers import JsonOutputParser
 
 # Imports from the library
 from .base_node import BaseNode
+from ..utils import create_graph, create_interactive_graph
 
 
-class MergeAnswersNode(BaseNode):
+class KnowledgeGraphNode(BaseNode):
     """
-    A node responsible for merging the answers from multiple graph instances into a single answer.
+    A node responsible for generating a knowledge graph from a dictionary.
 
     Attributes:
         llm_model: An instance of a language model client, configured for generating answers.
@@ -30,7 +31,7 @@ class MergeAnswersNode(BaseNode):
     """
 
     def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
-                 node_name: str = "MergeAnswers"):
+                 node_name: str = "KnowledgeGraph"):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]
@@ -39,7 +40,7 @@ class MergeAnswersNode(BaseNode):
 
     def execute(self, state: dict) -> dict:
         """
-        Executes the node's logic to merge the answers from multiple graph instances into a single answer.
+        Executes the node's logic to create a knowledge graph from a dictionary.
 
         Args:
             state (dict): The current state of the graph. The input keys will be used
@@ -63,41 +64,38 @@ class MergeAnswersNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
-        answers = input_data[1]
+        answer_dict = input_data[1]
 
-        # merge the answers in one string
-        answers_str = ""
-        for i, answer in enumerate(answers):
-            answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
+        # Build the graph
+        graph = create_graph(answer_dict)
+        # Create the interactive graph
+        create_interactive_graph(graph, output_file='knowledge_graph.html')
 
-        output_parser = JsonOutputParser()
-        format_instructions = output_parser.get_format_instructions()
+        # output_parser = JsonOutputParser()
+        # format_instructions = output_parser.get_format_instructions()
 
-        template_merge = """
-        You are a website scraper and you have just scraped some content from multiple websites.\n
-        You are now asked to provide an answer to a USER PROMPT based on the content you have scraped.\n
-        You need to merge the content from the different websites into a single answer without repetitions (if there are any). \n
-        The scraped contents are in a JSON format and you need to merge them based on the context and providing a correct JSON structure.\n
-        OUTPUT INSTRUCTIONS: {format_instructions}\n
-        You must format the output with the following schema, if not None:\n
-        SCHEMA: {schema}\n
-        USER PROMPT: {user_prompt}\n
-        WEBSITE CONTENT: {website_content}
-        """
+        # template_merge = """
+        # You are a website scraper and you have just scraped some content from multiple websites.\n
+        # You are now asked to provide an answer to a USER PROMPT based on the content you have scraped.\n
+        # You need to merge the content from the different websites into a single answer without repetitions (if there are any). \n
+        # The scraped contents are in a JSON format and you need to merge them based on the context and providing a correct JSON structure.\n
+        # OUTPUT INSTRUCTIONS: {format_instructions}\n
+        # USER PROMPT: {user_prompt}\n
+        # WEBSITE CONTENT: {website_content}
+        # """
 
-        prompt_template = PromptTemplate(
-            template=template_merge,
-            input_variables=["user_prompt"],
-            partial_variables={
-                "format_instructions": format_instructions,
-                "website_content": answers_str,
-                "schema": self.node_config.get("schema", None),
-            },
-        )
+        # prompt_template = PromptTemplate(
+        #     template=template_merge,
+        #     input_variables=["user_prompt"],
+        #     partial_variables={
+        #         "format_instructions": format_instructions,
+        #         "website_content": answers_str,
+        #     },
+        # )
 
-        merge_chain = prompt_template | self.llm_model | output_parser
-        answer = merge_chain.invoke({"user_prompt": user_prompt})
+        # merge_chain = prompt_template | self.llm_model | output_parser
+        # answer = merge_chain.invoke({"user_prompt": user_prompt})
 
         # Update the state with the generated answer
-        state.update({self.output[0]: answer})
+        state.update({self.output[0]: graph})
         return state

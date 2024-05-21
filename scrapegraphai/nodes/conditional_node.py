@@ -1,6 +1,7 @@
 """ 
 Module for implementing the conditional node
 """
+
 from .base_node import BaseNode
 
 

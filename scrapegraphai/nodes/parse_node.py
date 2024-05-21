@@ -3,8 +3,10 @@ ParseNode Module
 """
 
 from typing import List, Optional
+
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_transformers import Html2TextTransformer
+
 from .base_node import BaseNode
 
 
