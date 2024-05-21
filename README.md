@@ -191,6 +191,7 @@ Wanna visualize the roadmap in a more interactive way? Check out the [markmap](h
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 10%;">
   </a>
 </div>
+
 ## 🎓 Citations
 If you have used our library for research purposes please quote us with the following reference:
 ```text
