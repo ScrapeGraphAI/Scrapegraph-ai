@@ -8,11 +8,15 @@
 #   with-sources: false
 
 -e file:.
+aiofiles==23.2.1
+    # via burr
 aiohttp==3.9.5
     # via langchain
     # via langchain-community
 aiosignal==1.3.1
     # via aiohttp
+altair==5.3.0
+    # via streamlit
 annotated-types==0.6.0
     # via pydantic
 anthropic==0.25.9
@@ -22,27 +26,50 @@ anyio==4.3.0
     # via groq
     # via httpx
     # via openai
+    # via starlette
+    # via watchfiles
 async-timeout==4.0.3
     # via aiohttp
     # via langchain
 attrs==23.2.0
     # via aiohttp
+    # via jsonschema
+    # via referencing
 beautifulsoup4==4.12.3
     # via google
     # via scrapegraphai
+blinker==1.8.2
+    # via streamlit
 boto3==1.34.105
     # via langchain-aws
 botocore==1.34.105
     # via boto3
     # via s3transfer
+burr==0.17.1
+    # via scrapegraphai
 cachetools==5.3.3
     # via google-auth
+    # via streamlit
 certifi==2024.2.2
     # via httpcore
     # via httpx
     # via requests
 charset-normalizer==3.3.2
     # via requests
+click==8.1.7
+    # via burr
+    # via streamlit
+    # via typer
+    # via uvicorn
+colorama==0.4.6
+    # via click
+    # via loguru
+    # via tqdm
+    # via uvicorn
+contourpy==1.2.1
+    # via matplotlib
+cycler==0.12.1
+    # via matplotlib
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
@@ -52,12 +79,25 @@ distro==1.9.0
     # via anthropic
     # via groq
     # via openai
+dnspython==2.6.1
+    # via email-validator
+email-validator==2.1.1
+    # via fastapi
 exceptiongroup==1.2.1
     # via anyio
 faiss-cpu==1.8.0
     # via scrapegraphai
+fastapi==0.111.0
+    # via burr
+    # via fastapi-pagination
+fastapi-cli==0.0.4
+    # via fastapi
+fastapi-pagination==0.12.24
+    # via burr
 filelock==3.14.0
     # via huggingface-hub
+fonttools==4.51.0
+    # via matplotlib
 free-proxy==1.1.1
     # via scrapegraphai
 frozenlist==1.4.1
@@ -65,6 +105,10 @@ frozenlist==1.4.1
     # via aiosignal
 fsspec==2024.3.1
     # via huggingface-hub
+gitdb==4.0.11
+    # via gitpython
+gitpython==3.1.43
+    # via streamlit
 google==3.0.0
     # via scrapegraphai
 google-ai-generativelanguage==0.6.3
@@ -89,6 +133,7 @@ googleapis-common-protos==1.63.0
     # via google-api-core
     # via grpcio-status
 graphviz==0.20.3
+    # via burr
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
@@ -102,6 +147,7 @@ grpcio-status==1.62.2
     # via google-api-core
 h11==0.14.0
     # via httpcore
+    # via uvicorn
 html2text==2024.2.26
     # via scrapegraphai
 httpcore==1.0.5
@@ -109,8 +155,11 @@ httpcore==1.0.5
 httplib2==0.22.0
     # via google-api-python-client
     # via google-auth-httplib2
+httptools==0.6.1
+    # via uvicorn
 httpx==0.27.0
     # via anthropic
+    # via fastapi
     # via groq
     # via openai
     # via yahoo-search-py
@@ -118,9 +167,15 @@ huggingface-hub==0.23.0
     # via tokenizers
 idna==3.7
     # via anyio
+    # via email-validator
     # via httpx
     # via requests
     # via yarl
+jinja2==3.1.4
+    # via altair
+    # via burr
+    # via fastapi
+    # via pydeck
 jmespath==1.0.1
     # via boto3
     # via botocore
@@ -129,6 +184,12 @@ jsonpatch==1.33
     # via langchain-core
 jsonpointer==2.4
     # via jsonpatch
+jsonschema==4.22.0
+    # via altair
+jsonschema-specifications==2023.12.1
+    # via jsonschema
+kiwisolver==1.4.5
+    # via matplotlib
 langchain==0.1.15
     # via scrapegraphai
 langchain-anthropic==0.1.11
@@ -158,10 +219,20 @@ langsmith==0.1.57
     # via langchain
     # via langchain-community
     # via langchain-core
+loguru==0.7.2
+    # via burr
 lxml==5.2.2
     # via free-proxy
+markdown-it-py==3.0.0
+    # via rich
+markupsafe==2.1.5
+    # via jinja2
 marshmallow==3.21.2
     # via dataclasses-json
+matplotlib==3.9.0
+    # via burr
+mdurl==0.1.2
+    # via markdown-it-py
 minify-html==0.15.0
     # via scrapegraphai
 multidict==6.0.5
@@ -170,21 +241,39 @@ multidict==6.0.5
 mypy-extensions==1.0.0
     # via typing-inspect
 numpy==1.26.4
+    # via altair
+    # via contourpy
     # via faiss-cpu
     # via langchain
     # via langchain-aws
     # via langchain-community
+    # via matplotlib
     # via pandas
+    # via pyarrow
+    # via pydeck
+    # via sf-hamilton
+    # via streamlit
 openai==1.30.1
+    # via burr
     # via langchain-openai
 orjson==3.10.3
+    # via fastapi
     # via langsmith
 packaging==23.2
+    # via altair
     # via huggingface-hub
     # via langchain-core
     # via marshmallow
+    # via matplotlib
+    # via streamlit
 pandas==2.2.2
+    # via altair
     # via scrapegraphai
+    # via sf-hamilton
+    # via streamlit
+pillow==10.3.0
+    # via matplotlib
+    # via streamlit
 playwright==1.43.0
     # via scrapegraphai
 proto-plus==1.23.0
@@ -197,6 +286,9 @@ protobuf==4.25.3
     # via googleapis-common-protos
     # via grpcio-status
     # via proto-plus
+    # via streamlit
+pyarrow==16.1.0
+    # via streamlit
 pyasn1==0.6.0
     # via pyasn1-modules
     # via rsa
@@ -204,6 +296,9 @@ pyasn1-modules==0.4.0
     # via google-auth
 pydantic==2.7.1
     # via anthropic
+    # via burr
+    # via fastapi
+    # via fastapi-pagination
     # via google-generativeai
     # via groq
     # via langchain
@@ -213,15 +308,24 @@ pydantic==2.7.1
     # via yahoo-search-py
 pydantic-core==2.18.2
     # via pydantic
+pydeck==0.9.1
+    # via streamlit
 pyee==11.1.0
     # via playwright
+pygments==2.18.0
+    # via rich
 pyparsing==3.1.2
     # via httplib2
+    # via matplotlib
 python-dateutil==2.9.0.post0
     # via botocore
+    # via matplotlib
     # via pandas
 python-dotenv==1.0.1
     # via scrapegraphai
+    # via uvicorn
+python-multipart==0.0.9
+    # via fastapi
 pytz==2024.1
     # via pandas
 pyyaml==6.0.1
@@ -229,24 +333,42 @@ pyyaml==6.0.1
     # via langchain
     # via langchain-community
     # via langchain-core
+    # via uvicorn
+referencing==0.35.1
+    # via jsonschema
+    # via jsonschema-specifications
 regex==2024.5.10
     # via tiktoken
 requests==2.31.0
+    # via burr
     # via free-proxy
     # via google-api-core
     # via huggingface-hub
     # via langchain
     # via langchain-community
     # via langsmith
+    # via streamlit
     # via tiktoken
+rich==13.7.1
+    # via streamlit
+    # via typer
+rpds-py==0.18.1
+    # via jsonschema
+    # via referencing
 rsa==4.9
     # via google-auth
 s3transfer==0.10.1
     # via boto3
 selectolax==0.3.21
     # via yahoo-search-py
+sf-hamilton==1.62.0
+    # via burr
+shellingham==1.5.4
+    # via typer
 six==1.16.0
     # via python-dateutil
+smmap==5.0.1
+    # via gitdb
 sniffio==1.3.1
     # via anthropic
     # via anyio
@@ -258,23 +380,39 @@ soupsieve==2.5
 sqlalchemy==2.0.30
     # via langchain
     # via langchain-community
+starlette==0.37.2
+    # via fastapi
+streamlit==1.34.0
+    # via burr
 tenacity==8.3.0
     # via langchain
     # via langchain-community
     # via langchain-core
+    # via streamlit
 tiktoken==0.6.0
     # via langchain-openai
     # via scrapegraphai
 tokenizers==0.19.1
     # via anthropic
+toml==0.10.2
+    # via streamlit
+toolz==0.12.1
+    # via altair
+tornado==6.4
+    # via streamlit
 tqdm==4.66.4
     # via google-generativeai
     # via huggingface-hub
     # via openai
     # via scrapegraphai
+typer==0.12.3
+    # via fastapi-cli
 typing-extensions==4.11.0
+    # via altair
     # via anthropic
     # via anyio
+    # via fastapi
+    # via fastapi-pagination
     # via google-generativeai
     # via groq
     # via huggingface-hub
@@ -282,18 +420,36 @@ typing-extensions==4.11.0
     # via pydantic
     # via pydantic-core
     # via pyee
+    # via sf-hamilton
     # via sqlalchemy
+    # via streamlit
+    # via typer
     # via typing-inspect
+    # via uvicorn
 typing-inspect==0.9.0
     # via dataclasses-json
+    # via sf-hamilton
 tzdata==2024.1
     # via pandas
+ujson==5.10.0
+    # via fastapi
 uritemplate==4.1.1
     # via google-api-python-client
 urllib3==1.26.18
     # via botocore
     # via requests
     # via yahoo-search-py
+uvicorn==0.29.0
+    # via burr
+    # via fastapi
+watchdog==4.0.0
+    # via streamlit
+watchfiles==0.21.0
+    # via uvicorn
+websockets==12.0
+    # via uvicorn
+win32-setctime==1.1.0
+    # via loguru
 yahoo-search-py==0.3
     # via scrapegraphai
 yarl==1.9.4

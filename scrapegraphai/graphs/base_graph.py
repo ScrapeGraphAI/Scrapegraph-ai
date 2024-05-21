@@ -7,6 +7,8 @@ import warnings
 from langchain_community.callbacks import get_openai_callback
 from typing import Tuple
 
+from ..integrations import BurrBridge
+
 
 class BaseGraph:
     """
@@ -40,20 +42,27 @@ class BaseGraph:
         ...        (parse_node, rag_node),
         ...        (rag_node, generate_answer_node)
         ...    ],
-        ...    entry_point=fetch_node
+        ...    entry_point=fetch_node,
+        ...    use_burr=True,
+        ...    burr_config={"app_instance_id": "example-instance"}
         ... )
     """
 
-    def __init__(self, nodes: list, edges: list, entry_point: str):
+    def __init__(self, nodes: list, edges: list, entry_point: str, use_burr: bool = False, burr_config: dict = None):
 
         self.nodes = nodes
         self.edges = self._create_edges({e for e in edges})
         self.entry_point = entry_point.node_name
+        self.initial_state = {}
 
         if nodes[0].node_name != entry_point.node_name:
             # raise a warning if the entry point is not the first node in the list
             warnings.warn(
                 "Careful! The entry point node is different from the first node if the graph.")
+        
+        # Burr configuration
+        self.use_burr = use_burr
+        self.burr_config = burr_config or {}
 
     def _create_edges(self, edges: list) -> dict:
         """
@@ -71,11 +80,9 @@ class BaseGraph:
             edge_dict[from_node.node_name] = to_node.node_name
         return edge_dict
 
-    def execute(self, initial_state: dict) -> Tuple[dict, list]:
+    def _execute_standard(self, initial_state: dict) -> Tuple[dict, list]:
         """
-        Executes the graph by traversing nodes starting from the entry point. The execution
-        follows the edges based on the result of each node's execution and continues until
-        it reaches a node with no outgoing edges.
+        Executes the graph by traversing nodes starting from the entry point using the standard method.
 
         Args:
             initial_state (dict): The initial state to pass to the entry point node.
@@ -83,8 +90,7 @@ class BaseGraph:
         Returns:
             Tuple[dict, list]: A tuple containing the final state and a list of execution info.
         """
-
-        current_node_name = self.nodes[0]
+        current_node_name = self.entry_point
         state = initial_state
 
         # variables for tracking execution info
@@ -98,18 +104,17 @@ class BaseGraph:
             "total_cost_USD": 0.0,
         }
 
-        for index in self.nodes:
-
+        while current_node_name:
             curr_time = time.time()
-            current_node = index
+            current_node = next(node for node in self.nodes if node.node_name == current_node_name)
 
             with get_openai_callback() as cb:
                 result = current_node.execute(state)
                 node_exec_time = time.time() - curr_time
                 total_exec_time += node_exec_time
 
-                cb = {
-                    "node_name": index.node_name,
+                cb_data = {
+                    "node_name": current_node.node_name,
                     "total_tokens": cb.total_tokens,
                     "prompt_tokens": cb.prompt_tokens,
                     "completion_tokens": cb.completion_tokens,
@@ -118,15 +123,13 @@ class BaseGraph:
                     "exec_time": node_exec_time,
                 }
 
-                exec_info.append(
-                    cb
-                )
+                exec_info.append(cb_data)
 
-                cb_total["total_tokens"] += cb["total_tokens"]
-                cb_total["prompt_tokens"] += cb["prompt_tokens"]
-                cb_total["completion_tokens"] += cb["completion_tokens"]
-                cb_total["successful_requests"] += cb["successful_requests"]
-                cb_total["total_cost_USD"] += cb["total_cost_USD"]
+                cb_total["total_tokens"] += cb_data["total_tokens"]
+                cb_total["prompt_tokens"] += cb_data["prompt_tokens"]
+                cb_total["completion_tokens"] += cb_data["completion_tokens"]
+                cb_total["successful_requests"] += cb_data["successful_requests"]
+                cb_total["total_cost_USD"] += cb_data["total_cost_USD"]
 
             if current_node.node_type == "conditional_node":
                 current_node_name = result
@@ -137,12 +140,30 @@ class BaseGraph:
 
         exec_info.append({
             "node_name": "TOTAL RESULT",
-            "total_tokens":  cb_total["total_tokens"],
-            "prompt_tokens":  cb_total["prompt_tokens"],
+            "total_tokens": cb_total["total_tokens"],
+            "prompt_tokens": cb_total["prompt_tokens"],
             "completion_tokens": cb_total["completion_tokens"],
             "successful_requests": cb_total["successful_requests"],
-            "total_cost_USD":   cb_total["total_cost_USD"],
+            "total_cost_USD": cb_total["total_cost_USD"],
             "exec_time": total_exec_time,
         })
 
         return state, exec_info
+
+    def execute(self, initial_state: dict) -> Tuple[dict, list]:
+        """
+        Executes the graph by either using BurrBridge or the standard method.
+
+        Args:
+            initial_state (dict): The initial state to pass to the entry point node.
+
+        Returns:
+            Tuple[dict, list]: A tuple containing the final state and a list of execution info.
+        """
+
+        self.initial_state = initial_state
+        if self.use_burr:
+            bridge = BurrBridge(self, self.burr_config)
+            return bridge.execute(initial_state)
+        else:
+            return self._execute_standard(initial_state)

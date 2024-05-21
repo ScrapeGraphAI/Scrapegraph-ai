@@ -25,7 +25,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from tqdm import tqdm
 
 if __name__ == '__main__':
-    from scrapegraphai.utils.remover import remover
+    from scrapegraphai.utils import cleanup_html
 else:
     from ..utils.remover import remover
 
