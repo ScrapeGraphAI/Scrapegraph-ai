@@ -3,6 +3,8 @@ Example of custom graph using existing nodes
 """
 
 import os
+import uuid
+
 from dotenv import load_dotenv
 
 from langchain_openai import OpenAIEmbeddings
@@ -88,7 +90,7 @@ graph = BaseGraph(
     entry_point=fetch_node,
     use_burr=True,
     burr_config={
-        "app_instance_id": "custom_graph_openai",
+        "app_instance_id": str(uuid.uuid4()),
         "inputs": {
             "llm_model": graph_config["llm"].get("model", "gpt-3.5-turbo"),
         }
