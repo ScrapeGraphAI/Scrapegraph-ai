@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.3.0...v1.3.1) (2024-05-21)
+
+
+### Bug Fixes
+
+* add deepseek embeddings ([659fad7](https://github.com/VinciGit00/Scrapegraph-ai/commit/659fad770a5b6ace87511513e5233a3bc1269009))
+
 ## [1.3.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.4...v1.3.0) (2024-05-19)
 
 
