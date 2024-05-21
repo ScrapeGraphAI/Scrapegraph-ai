@@ -186,6 +186,9 @@ Wanna visualize the roadmap in a more interactive way? Check out the [markmap](h
 <p align="center">
   <a href="https://serpapi.com?utm_source=scrapegraphai"><img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;"></a>
 </p>
+<p align="center">
+  <a href="dashboard.statproxies.com/?refferal=scrapegraph"><img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 10%;"></a>
+</p>
 
 ## 🎓 Citations
 If you have used our library for research purposes please quote us with the following reference:
