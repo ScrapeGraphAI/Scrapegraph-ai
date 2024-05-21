@@ -53,6 +53,11 @@ class AbstractGraph(ABC):
         self.embedder_model = self._create_default_embedder(llm_config=config["llm"]
                                                             ) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
+        self.verbose = False if config is None else config.get(
+            "verbose", False)
+        self.headless = True if config is None else config.get(
+            "headless", True)
+        self.loader_kwargs = config.get("loader_kwargs", {})
 
         # Create the graph
         self.graph = self._create_graph()

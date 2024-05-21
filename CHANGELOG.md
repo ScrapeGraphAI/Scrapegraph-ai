@@ -1,3 +1,32 @@
+## [1.4.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2024-05-19)
+
+
+### Features
+
+* **docloaders:** undetected-playwright ([7b3ee4e](https://github.com/VinciGit00/Scrapegraph-ai/commit/7b3ee4e71e4af04edeb47999d70d398b67c93ac4))
+
+## [1.4.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.3.0...v1.4.0-beta.1) (2024-05-19)
+
+
+### Features
+
+* **base_graph:** alligned with main ([73fa31d](https://github.com/VinciGit00/Scrapegraph-ai/commit/73fa31db0f791d1fd63b489ac88cc6e595aa07f9))
+
+
+### CI
+
+* **release:** 1.2.0-beta.1 [skip ci] ([fd3e0aa](https://github.com/VinciGit00/Scrapegraph-ai/commit/fd3e0aa5823509dfb46b4f597521c24d4eb345f1))
+* **release:** 1.3.0-beta.1 [skip ci] ([191db0b](https://github.com/VinciGit00/Scrapegraph-ai/commit/191db0bc779e4913713b47b68ec4162a347da3ea))
+
+## [1.3.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.4...v1.3.0) (2024-05-19)
+
+
+
+### Features
+
+* add new model ([8c7afa7](https://github.com/VinciGit00/Scrapegraph-ai/commit/8c7afa7570f0a104578deb35658168435cfe5ae1))
+
+
 ## [1.2.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.3...v1.2.4) (2024-05-17)
 
 

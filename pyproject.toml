@@ -1,7 +1,7 @@
 [project]
 name = "scrapegraphai"
 
-version = "1.2.4"
+version = "1.4.0b2"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
@@ -32,6 +32,7 @@ dependencies = [
     "yahoo-search-py==0.3",
     "networkx==3.3",
     "pyvis==0.3.2",
+    "undetected-playwright==0.3.0",
 ]
 
 license = "MIT"
