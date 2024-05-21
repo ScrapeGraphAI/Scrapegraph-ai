@@ -16,12 +16,57 @@ class PrintLnHook(PostRunStepHook, PreRunStepHook):
     """
     Hook to print the action name before and after it is executed.
     """
-    
+
     def pre_run_step(self, *, state: "State", action: "Action", **future_kwargs: Any):
         print(f"Starting action: {action.name}")
 
     def post_run_step(self, *, state: "State", action: "Action", **future_kwargs: Any):
         print(f"Finishing action: {action.name}")
+
+
+class BurrNodeBridge(Action):
+    """Bridge class to convert a base graph node to a Burr action.
+    This is nice because we can dynamically declare the inputs/outputs (and not rely on function-parsing).
+    """
+
+    def __init__(self, node):
+        """Instantiates a BurrNodeBridge object.
+        """
+        super(BurrNodeBridge, self).__init__()
+        self.node = node
+
+    @property
+    def reads(self) -> list[str]:
+        return parse_boolean_expression(self.node.input)
+
+    def run(self, state: State, **run_kwargs) -> dict:
+        node_inputs = {key: state[key] for key in self.reads}
+        result_state = self.node.execute(node_inputs, **run_kwargs)
+        return result_state
+
+    @property
+    def writes(self) -> list[str]:
+        return self.node.output
+
+    def update(self, result: dict, state: State) -> State:
+        return state.update(**state)
+
+
+def parse_boolean_expression(expression: str) -> List[str]:
+    """
+    Parse a boolean expression to extract the keys used in the expression, without boolean operators.
+
+    Args:
+        expression (str): The boolean expression to parse.
+
+    Returns:
+        list: A list of unique keys used in the expression.
+    """
+
+    # Use regular expression to extract all unique keys
+    keys = re.findall(r'\w+', expression)
+    return list(set(keys))  # Remove duplicates
+
 
 class BurrBridge:
     """
@@ -106,12 +151,16 @@ class BurrBridge:
             function: The Burr action function.
         """
 
-        @action(reads=self._parse_boolean_expression(node.input), writes=node.output)
-        def dynamic_action(state: State, **kwargs):
-            node_inputs = {key: state[key] for key in self._parse_boolean_expression(node.input)}
-            result_state = node.execute(node_inputs, **kwargs)
-            return result_state, state.update(**result_state)
-        return dynamic_action
+        # @action(reads=parse_boolean_expression(node.input), writes=node.output)
+        # def dynamic_action(state: State, **kwargs):
+        #     node_inputs = {key: state[key] for key in self._parse_boolean_expression(node.input)}
+        #     result_state = node.execute(node_inputs, **kwargs)
+        #     return result_state, state.update(**result_state)
+        #
+        # return dynamic_action
+        # import pdb
+        # pdb.set_trace()
+        return BurrNodeBridge(node)
 
     def _create_transitions(self) -> List[Tuple[str, str, Any]]:
         """
@@ -125,22 +174,7 @@ class BurrBridge:
         for from_node, to_node in self.base_graph.edges.items():
             transitions.append((from_node, to_node, default))
         return transitions
-    
-    def _parse_boolean_expression(self, expression: str) -> List[str]:
-        """
-        Parse a boolean expression to extract the keys used in the expression, without boolean operators.
 
-        Args:
-            expression (str): The boolean expression to parse.
-
-        Returns:
-            list: A list of unique keys used in the expression.
-        """
-
-        # Use regular expression to extract all unique keys
-        keys = re.findall(r'\w+', expression)
-        return list(set(keys))  # Remove duplicates
-    
     def _convert_state_to_burr(self, state: Dict[str, Any]) -> State:
         """
         Convert a dictionary state to a Burr state.
@@ -172,7 +206,7 @@ class BurrBridge:
         for key in burr_state.__dict__.keys():
             state[key] = getattr(burr_state, key)
         return state
-    
+
     def execute(self, initial_state: Dict[str, Any] = {}) -> Dict[str, Any]:
         """
         Execute the Burr application with the given initial state.
@@ -185,7 +219,7 @@ class BurrBridge:
         """
 
         self.burr_app = self._initialize_burr_app(initial_state)
-        
+
         # TODO: to fix final nodes detection
         final_nodes = [self.burr_app.graph.actions[-1].name]
 
