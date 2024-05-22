@@ -7,8 +7,6 @@ import warnings
 from langchain_community.callbacks import get_openai_callback
 from typing import Tuple
 
-from ..integrations import BurrBridge
-
 
 class BaseGraph:
     """
@@ -163,6 +161,9 @@ class BaseGraph:
 
         self.initial_state = initial_state
         if self.use_burr:
+
+            from ..integrations import BurrBridge
+            
             bridge = BurrBridge(self, self.burr_config)
             result = bridge.execute(initial_state)
             return (result["_state"], [])

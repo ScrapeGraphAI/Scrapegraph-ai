@@ -6,6 +6,11 @@ Bridge class to integrate Burr into ScrapeGraphAI graphs
 import re
 from typing import Any, Dict, List, Tuple
 
+try:
+    import burr
+except ImportError:
+    raise ImportError("burr package is not installed. Please install it with 'pip install scrapegraphai[burr]'")
+
 from burr import tracking
 from burr.core import Application, ApplicationBuilder, State, Action, default
 from burr.lifecycle import PostRunStepHook, PreRunStepHook
