@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.3.1...v1.3.2) (2024-05-22)
+
+
+### Bug Fixes
+
+* pdf scraper bug ([f2dffe5](https://github.com/VinciGit00/Scrapegraph-ai/commit/f2dffe534f51aa83aed5ac491243604a443f4373))
+
 ## [1.3.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.3.0...v1.3.1) (2024-05-21)
 
 
