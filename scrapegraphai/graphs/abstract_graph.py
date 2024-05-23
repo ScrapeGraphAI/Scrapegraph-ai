@@ -282,30 +282,31 @@ class AbstractGraph(ABC):
         if 'model_instance' in embedder_config:
             return embedder_config['model_instance']
         # Instantiate the embedding model based on the model name
-        if "openai" in embedder_config["model"]:
+        if "openai" in embedder_config["model"].split("/")[0]:
             return OpenAIEmbeddings(api_key=embedder_config["api_key"])
         elif "azure" in embedder_config["model"]:
             return AzureOpenAIEmbeddings()
-        elif "ollama" in embedder_config["model"]:
+        elif "ollama" in embedder_config["model"].split("/")[0]:
+            print("ciao")
             embedder_config["model"] = embedder_config["model"].split("ollama/")[-1]
             try:
                 models_tokens["ollama"][embedder_config["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return OllamaEmbeddings(**embedder_config)
-        elif "hugging_face" in embedder_config["model"]:
+        elif "hugging_face" in embedder_config["model"].split("/")[0]:
             try:
                 models_tokens["hugging_face"][embedder_config["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported")from exc
             return HuggingFaceHubEmbeddings(model=embedder_config["model"])
-        elif "gemini" in embedder_config["model"]:
+        elif "gemini" in embedder_config["model"].split("/")[0]:
             try:
                 models_tokens["gemini"][embedder_config["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported")from exc
             return GoogleGenerativeAIEmbeddings(model=embedder_config["model"])
-        elif "bedrock" in embedder_config["model"]:
+        elif "bedrock" in embedder_config["model"].split("/")[0]:
             embedder_config["model"] = embedder_config["model"].split("/")[-1]
             client = embedder_config.get('client', None)
             try:
@@ -313,10 +314,6 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return BedrockEmbeddings(client=client, model_id=embedder_config["model"])
-        else:
-            raise ValueError(
-                "Model provided by the configuration not supported")
-
     def get_state(self, key=None) -> dict:
         """""
         Get the final state of the graph.
