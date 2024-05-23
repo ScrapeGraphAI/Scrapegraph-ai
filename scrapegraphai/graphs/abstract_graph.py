@@ -157,7 +157,7 @@ class AbstractGraph(ABC):
                 raise KeyError("Model not supported") from exc
             return Anthropic(llm_params)
         elif "ollama" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("/")[-1]
+            llm_params["model"] = llm_params["model"].split("ollama/")[-1]
 
             # allow user to set model_tokens in config
             try:
@@ -273,7 +273,7 @@ class AbstractGraph(ABC):
         elif "azure" in embedder_config["model"]:
             return AzureOpenAIEmbeddings()
         elif "ollama" in embedder_config["model"]:
-            embedder_config["model"] = embedder_config["model"].split("/")[-1]
+            embedder_config["model"] = embedder_config["model"].split("ollama/")[-1]
             try:
                 models_tokens["ollama"][embedder_config["model"]]
             except KeyError as exc:
