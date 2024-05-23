@@ -181,6 +181,7 @@ class AbstractGraph(ABC):
                     try:
                         self.model_token = models_tokens["ollama"][llm_params["model"]]
                     except KeyError as exc:
+                        print("model not found, using default token size (8192)")
                         self.model_token = 8192
                 else:
                     self.model_token = 8192
@@ -191,16 +192,18 @@ class AbstractGraph(ABC):
         elif "hugging_face" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["hugging_face"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return HuggingFace(llm_params)
         elif "groq" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
             try:
                 self.model_token = models_tokens["groq"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return Groq(llm_params)
         elif "bedrock" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
@@ -208,8 +211,9 @@ class AbstractGraph(ABC):
             client = llm_params.get('client', None)
             try:
                 self.model_token = models_tokens["bedrock"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return Bedrock({
                 "client": client,
                 "model_id": model_id,
@@ -218,13 +222,18 @@ class AbstractGraph(ABC):
                 }
             })
         elif "claude-3-" in llm_params["model"]:
-            self.model_token = models_tokens["claude"]["claude3"]
+            try:
+                self.model_token = models_tokens["claude"]["claude3"]
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return Anthropic(llm_params)
         elif "deepseek" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["deepseek"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return DeepSeek(llm_params)
         else:
             raise ValueError(
@@ -312,10 +321,7 @@ class AbstractGraph(ABC):
                 models_tokens["bedrock"][embedder_config["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return BedrockEmbeddings(client=client, model_id=embedder_config["model"])
-        else:
-            raise ValueError(
-                "Model provided by the configuration not supported")
+            return BedrockEmbeddings(client=client, model_id=embedder_config["model"])  
 
     def get_state(self, key=None) -> dict:
         """""
