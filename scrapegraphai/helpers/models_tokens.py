@@ -50,6 +50,13 @@ models_tokens = {
         "llava:34b": 4096,
         "llava_next": 4096,
         "mistral": 8192,
+        "falcon": 2048,
+        "codellama": 16000,
+        "dolphin-mixtral": 32000,
+        "mistral-openorca": 32000,
+        "stablelm-zephyr": 8192,
+        "command-r-plus": 12800,
+        "command-r": 12800,
         "mistral:7b-instruct": 32768,
         "mistral-openorca": 32000,
         "mixtral:8x22b-instruct": 65536,
@@ -98,6 +105,9 @@ models_tokens = {
         "mistral.mistral-7b-instruct-v0:2": 32768,
         "mistral.mixtral-8x7b-instruct-v0:1": 32768,
         "mistral.mistral-large-2402-v1:0": 32768,
+		# Embedding models
+		"amazon.titan-embed-text-v1": 8000,
+		"amazon.titan-embed-text-v2:0": 8000,
         "cohere.embed-english-v3": 512,
         "cohere.embed-multilingual-v3": 512
     },

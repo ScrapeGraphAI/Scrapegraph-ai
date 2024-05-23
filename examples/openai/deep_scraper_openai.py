@@ -22,6 +22,7 @@ graph_config = {
         "model": "gpt-4",
     },
     "verbose": True,
+    "max_depth": 1
 }
 
 # ************************************************

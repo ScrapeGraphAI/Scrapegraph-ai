@@ -2,7 +2,11 @@
 OmniScraperGraph Module
 """
 
+from typing import Optional
+
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+
 from ..nodes import (
     FetchNode,
     ParseNode,
@@ -10,8 +14,8 @@ from ..nodes import (
     RAGNode,
     GenerateAnswerOmniNode
 )
-from scrapegraphai.models import OpenAIImageToText
-from .abstract_graph import AbstractGraph
+
+from ..models import OpenAIImageToText
 
 
 class OmniScraperGraph(AbstractGraph):
@@ -24,6 +28,7 @@ class OmniScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
         configured for generating embeddings.
@@ -35,6 +40,7 @@ class OmniScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
 
     Example:
         >>> omni_scraper = OmniScraperGraph(
@@ -46,11 +52,11 @@ class OmniScraperGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
 
         self.max_images = 5 if config is None else config.get("max_images", 5)
 
-        super().__init__(prompt, config, source)
+        super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
         
@@ -96,7 +102,8 @@ class OmniScraperGraph(AbstractGraph):
             input="user_prompt & (relevant_chunks | parsed_doc | doc) & img_desc",
             output=["answer"],
             node_config={
-                "llm_model": self.llm_model
+                "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 

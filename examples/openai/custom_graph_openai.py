@@ -46,7 +46,7 @@ robot_node = RobotsNode(
 
 fetch_node = FetchNode(
     input="url | local_dir",
-    output=["doc"],
+    output=["doc", "link_urls", "img_urls"],
     node_config={
         "verbose": True,
         "headless": True,

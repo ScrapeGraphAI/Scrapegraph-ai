@@ -10,7 +10,6 @@ from tqdm.asyncio import tqdm
 
 from .base_node import BaseNode
 
-
 _default_batchsize = 16
 
 
@@ -104,7 +103,12 @@ class GraphIteratorNode(BaseNode):
         if graph_instance is None:
             raise ValueError("graph instance is required for concurrent execution")
 
-        # sets the prompt for the graph instance
+        # Assign depth level to the graph
+        if "graph_depth" in graph_instance.config:
+            graph_instance.config["graph_depth"] += 1
+        else:
+            graph_instance.config["graph_depth"] = 1
+
         graph_instance.prompt = user_prompt
 
         participants = []

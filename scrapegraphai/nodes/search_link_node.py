@@ -6,7 +6,6 @@ SearchLinkNode Module
 from typing import List, Optional
 from tqdm import tqdm
 
-
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser

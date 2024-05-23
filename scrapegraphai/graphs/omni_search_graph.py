@@ -3,15 +3,17 @@ OmniSearchGraph Module
 """
 
 from copy import copy, deepcopy
+from typing import Optional
 
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+from .omni_scraper_graph import OmniScraperGraph
+
 from ..nodes import (
     SearchInternetNode,
     GraphIteratorNode,
     MergeAnswersNode
 )
-from .abstract_graph import AbstractGraph
-from .omni_scraper_graph import OmniScraperGraph
 
 
 class OmniSearchGraph(AbstractGraph):
@@ -31,6 +33,7 @@ class OmniSearchGraph(AbstractGraph):
     Args:
         prompt (str): The user prompt to search the internet.
         config (dict): Configuration parameters for the graph.
+        schema (Optional[str]): The schema for the graph output.
 
     Example:
         >>> omni_search_graph = OmniSearchGraph(
@@ -40,7 +43,7 @@ class OmniSearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict):
+    def __init__(self, prompt: str, config: dict, schema: Optional[str] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -49,7 +52,7 @@ class OmniSearchGraph(AbstractGraph):
         else:
             self.copy_config = deepcopy(config)
 
-        super().__init__(prompt, config)
+        super().__init__(prompt, config, schema)
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -94,6 +97,7 @@ class OmniSearchGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 

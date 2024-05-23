@@ -1,4 +1,5 @@
-## [1.4.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.3.2...v1.4.0) (2024-05-22)
+
+## [1.4.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2024-05-19)
 
 
 ### Features
@@ -19,12 +20,15 @@
 
 * add deepseek embeddings ([659fad7](https://github.com/VinciGit00/Scrapegraph-ai/commit/659fad770a5b6ace87511513e5233a3bc1269009))
 
+
 ## [1.3.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.4...v1.3.0) (2024-05-19)
+
 
 
 ### Features
 
 * add new model ([8c7afa7](https://github.com/VinciGit00/Scrapegraph-ai/commit/8c7afa7570f0a104578deb35658168435cfe5ae1))
+
 
 ## [1.2.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.2.3...v1.2.4) (2024-05-17)
 

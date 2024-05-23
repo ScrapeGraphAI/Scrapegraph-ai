@@ -45,5 +45,3 @@ def test_script_creator_graph(graph_config: dict):
     graph_exec_info = smart_scraper_graph.get_execution_info()
 
     assert graph_exec_info is not None
-
-    print(prettify_exec_info(graph_exec_info))

@@ -18,8 +18,8 @@ openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-4o",
+        "api_key":openai_key,
+        "model": "gpt-3.5-turbo",
     },
     "verbose": True,
     "headless": False,
@@ -33,7 +33,7 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()
