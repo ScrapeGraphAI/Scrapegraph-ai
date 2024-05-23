@@ -8,6 +8,7 @@ from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ..helpers import models_tokens
+from ..utils.logging import set_verbosity
 from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 
@@ -55,14 +56,16 @@ class AbstractGraph(ABC):
         self.execution_info = None
 
         # Set common configuration parameters
-        self.verbose = False if config is None else config.get(
+    
+        verbose = False if config is None else config.get(
             "verbose", False)
+        set_verbosity(config.get("verbose", "info"))
         self.headless = True if config is None else config.get(
             "headless", True)
         self.loader_kwargs = config.get("loader_kwargs", {})
 
         common_params = {"headless": self.headless,
-                         "verbose": self.verbose,
+                     
                          "loader_kwargs": self.loader_kwargs,
                          "llm_model": self.llm_model,
                          "embedder_model": self.embedder_model}

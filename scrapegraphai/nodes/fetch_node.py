@@ -73,8 +73,8 @@ class FetchNode(BaseNode):
             KeyError: If the input key is not found in the state, indicating that the
                     necessary information to perform the operation is missing.
         """
-        if self.verbose:
-            self.logger.info(f"--- Executing {self.node_name} Node ---")
+    
+        logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
