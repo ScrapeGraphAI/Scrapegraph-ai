@@ -23,7 +23,10 @@ models_tokens = {
     "azure": {
         "gpt-3.5-turbo": 4096,
         "gpt-4": 8192,
-        "gpt-4-32k": 32768
+        "gpt-4-0613": 8192,
+        "gpt-4-32k": 32768,
+        "gpt-4-32k-0613": 32768,
+        "gpt-4o": 128000,
     },
     "gemini": {
         "gemini-pro": 128000,
@@ -141,7 +144,8 @@ models_tokens = {
         "cognitivecomputations/dolphin-2.5-mixtral-8x7b": 32768,
         "TheBloke/dolphin-2.7-mixtral-8x7b-GGUF": 32768,
         "deepseek-ai/DeepSeek-V2": 131072,
-        "deepseek-ai/DeepSeek-V2-Chat": 131072
+        "deepseek-ai/DeepSeek-V2-Chat": 131072,
+        "claude-3-haiku": 200000
     },
     "deepseek": {
         "deepseek-chat": 32768,
