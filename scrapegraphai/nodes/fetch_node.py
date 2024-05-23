@@ -86,13 +86,14 @@ class FetchNode(BaseNode):
             input_keys[0] == "json_dir"
             or input_keys[0] == "xml_dir"
             or input_keys[0] == "csv_dir"
+            or input_keys[0] == "pdf_dir"
         ):
             compressed_document = [
                 Document(page_content=source, metadata={"source": "local_dir"})
             ]
             state.update({self.output[0]: compressed_document})
             return state
-        
+   
         # handling for pdf
         elif input_keys[0] == "pdf":
             loader = PyPDFLoader(source)
@@ -108,7 +109,7 @@ class FetchNode(BaseNode):
             ]
             state.update({self.output[0]: compressed_document})
             return state
-        
+    
         elif input_keys[0] == "json":
             f = open(source)
             compressed_document = [

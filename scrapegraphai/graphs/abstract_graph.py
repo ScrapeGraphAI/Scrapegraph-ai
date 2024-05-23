@@ -7,6 +7,8 @@ from langchain_aws import BedrockEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from ..helpers import models_tokens
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, DeepSeek
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 
 from ..helpers import models_tokens
@@ -169,7 +171,7 @@ class AbstractGraph(ABC):
                 raise KeyError("Model not supported") from exc
             return Anthropic(llm_params)
         elif "ollama" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("/")[-1]
+            llm_params["model"] = llm_params["model"].split("ollama/")[-1]
 
             # allow user to set model_tokens in config
             try:
@@ -243,6 +245,8 @@ class AbstractGraph(ABC):
                                                 model="models/embedding-001")
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
+        elif isinstance(self.llm_model, DeepSeek):
+            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)   
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureOpenAI):
@@ -283,7 +287,7 @@ class AbstractGraph(ABC):
         elif "azure" in embedder_config["model"]:
             return AzureOpenAIEmbeddings()
         elif "ollama" in embedder_config["model"]:
-            embedder_config["model"] = embedder_config["model"].split("/")[-1]
+            embedder_config["model"] = embedder_config["model"].split("ollama/")[-1]
             try:
                 models_tokens["ollama"][embedder_config["model"]]
             except KeyError as exc:
