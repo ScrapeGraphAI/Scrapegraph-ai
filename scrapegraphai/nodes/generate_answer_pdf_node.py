@@ -49,7 +49,7 @@ class GenerateAnswerPDFNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.verbose = False if node_config is None else node_config.get(
             "verbose", False)
 
