@@ -5,9 +5,10 @@ GraphIterator Module
 import asyncio
 import copy
 from typing import List, Optional
-from ..utils.logging import get_logger
+
 from tqdm.asyncio import tqdm
 
+from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 
@@ -59,9 +60,9 @@ class GraphIteratorNode(BaseNode):
         """
         batchsize = self.node_config.get("batchsize", _default_batchsize)
 
-        if self.verbose:
-            self.logger.info(f"--- Executing {self.node_name} Node with batchsize {batchsize} ---")
-
+        self.logger.info(
+            f"--- Executing {self.node_name} Node with batchsize {batchsize} ---"
+        )
 
         try:
             eventloop = asyncio.get_event_loop()

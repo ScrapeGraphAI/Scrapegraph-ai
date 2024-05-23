@@ -3,21 +3,22 @@ BlocksIndentifier Module
 """
 
 from typing import List, Optional
+
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.documents import Document
-from .base_node import BaseNode
 
+from .base_node import BaseNode
 
 
 class BlocksIndentifier(BaseNode):
     """
     A node responsible to identify the blocks in the HTML content of a specified HTML content
-    e.g products in a E-commerce, flights in a travel website etc. 
+    e.g products in a E-commerce, flights in a travel website etc.
 
     Attributes:
         headless (bool): A flag indicating whether the browser should run in headless mode.
         verbose (bool): A flag indicating whether to print verbose output during execution.
-    
+
     Args:
         input (str): Boolean expression defining the input keys needed from the state.
         output (List[str]): List of output keys to be updated in the state.
@@ -25,11 +26,21 @@ class BlocksIndentifier(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "BlocksIndentifier".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict], node_name: str = "BlocksIndentifier"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict],
+        node_name: str = "BlocksIndentifier",
+    ):
         super().__init__(node_name, "node", input, output, 1)
 
-        self.headless = True if node_config is None else node_config.get("headless", True)
-        self.verbose = True if node_config is None else node_config.get("verbose", False)
+        self.headless = (
+            True if node_config is None else node_config.get("headless", True)
+        )
+        self.verbose = (
+            True if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state):
         """
@@ -47,8 +58,7 @@ class BlocksIndentifier(BaseNode):
             KeyError: If the input key is not found in the state, indicating that the
                     necessary information to perform the operation is missing.
         """
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)

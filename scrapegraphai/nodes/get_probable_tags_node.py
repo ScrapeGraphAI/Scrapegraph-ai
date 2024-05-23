@@ -3,16 +3,19 @@ GetProbableTagsNode Module
 """
 
 from typing import List, Optional
+
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
-from .base_node import BaseNode
+
 from ..utils.logging import get_logger
+from .base_node import BaseNode
+
 
 class GetProbableTagsNode(BaseNode):
     """
-    A node that utilizes a language model to identify probable HTML tags within a document that 
+    A node that utilizes a language model to identify probable HTML tags within a document that
     are likely to contain the information relevant to a user's query. This node generates a prompt
-    describing the task, submits it to the language model, and processes the output to produce a 
+    describing the task, submits it to the language model, and processes the output to produce a
     list of probable tags.
 
     Attributes:
@@ -25,17 +28,24 @@ class GetProbableTagsNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GetProbableTags".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: dict,
-                 node_name: str = "GetProbableTags"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: dict,
+        node_name: str = "GetProbableTags",
+    ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = False if node_config is None else node_config.get("verbose", False)
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state: dict) -> dict:
         """
-        Generates a list of probable HTML tags based on the user's input and updates the state 
-        with this list. The method constructs a prompt for the language model, submits it, and 
+        Generates a list of probable HTML tags based on the user's input and updates the state
+        with this list. The method constructs a prompt for the language model, submits it, and
         parses the output to identify probable tags.
 
         Args:
@@ -50,8 +60,7 @@ class GetProbableTagsNode(BaseNode):
                       necessary information for generating tag predictions is missing.
         """
 
-        if self.verbose:
-            self.logger.info(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -78,7 +87,9 @@ class GetProbableTagsNode(BaseNode):
             template=template,
             input_variables=["question"],
             partial_variables={
-                "format_instructions": format_instructions, "webpage": url},
+                "format_instructions": format_instructions,
+                "webpage": url,
+            },
         )
 
         # Execute the chain to get probable tags
