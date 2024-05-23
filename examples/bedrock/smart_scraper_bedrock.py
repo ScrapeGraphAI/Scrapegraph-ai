@@ -1,42 +1,47 @@
+""" 
+Basic example of scraping pipeline using SmartScraper
 """
-Smartscraper example on bedrock
-"""
-import boto3
 
+import os
+from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.utils import prettify_exec_info
 
-# 0a. Initialize session
-# If not required delete it
-session = boto3.Session(
-    aws_access_key_id="...",
-    aws_secret_access_key="...",
-    aws_session_token="...",
-    region_name="us-east-1"
-)
+load_dotenv()
 
-# 0b. Initialize client
-client = session.client("bedrock-runtime")
 
-# 1. Define graph configuration
-config = {
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
+openai_key = os.getenv("OPENAI_APIKEY")
+
+graph_config = {
     "llm": {
-        "client": client,
-        "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
-        "temperature": 0.0,
-        "format": "json"
+        "api_key": openai_key,
+        "model": "gpt-4o",
     },
-    "embeddings": {
-        "client": client,
-        "model": "bedrock/cohere.embed-multilingual-v3",
-    },
+    "verbose": True,
+    "headless": False,
 }
 
-# 2. Create graph instance
-graph = SmartScraperGraph(
-    prompt="List me all the articles",
-    source="https://perinim.github.io/projects",
-    config=config
+# ************************************************
+# Create the SmartScraperGraph instance and run it
+# ************************************************
+
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the projects with their description",
+    # also accepts a string with the already downloaded HTML code
+    source="https://perinim.github.io/projects/",
+    config=graph_config
 )
 
-# 3. Scrape away!
-print(graph.run())
+result = smart_scraper_graph.run()
+print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))

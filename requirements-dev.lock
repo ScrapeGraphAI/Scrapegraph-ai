@@ -22,6 +22,8 @@ anyio==4.3.0
     # via groq
     # via httpx
     # via openai
+asttokens==2.4.1
+    # via stack-data
 async-timeout==4.0.3
     # via aiohttp
     # via langchain
@@ -43,9 +45,15 @@ certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
+colorama==0.4.6
+    # via ipython
+    # via pytest
+    # via tqdm
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
+decorator==5.1.1
+    # via ipython
 defusedxml==0.7.1
     # via langchain-anthropic
 distro==1.9.0
@@ -54,7 +62,10 @@ distro==1.9.0
     # via openai
 exceptiongroup==1.2.1
     # via anyio
+    # via ipython
     # via pytest
+executing==2.0.1
+    # via stack-data
 faiss-cpu==1.8.0
     # via scrapegraphai
 filelock==3.14.0
@@ -93,6 +104,7 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 groq==0.5.0
     # via langchain-groq
 grpcio==1.63.0
@@ -123,12 +135,20 @@ idna==3.7
     # via yarl
 iniconfig==2.0.0
     # via pytest
+ipython==8.24.0
+    # via pyvis
+jedi==0.19.1
+    # via ipython
+jinja2==3.1.4
+    # via pyvis
 jmespath==1.0.1
     # via boto3
     # via botocore
 jsonpatch==1.33
     # via langchain
     # via langchain-core
+jsonpickle==3.0.4
+    # via pyvis
 jsonpointer==2.4
     # via jsonpatch
 langchain==0.1.15
@@ -162,8 +182,12 @@ langsmith==0.1.58
     # via langchain-core
 lxml==5.2.2
     # via free-proxy
+markupsafe==2.1.5
+    # via jinja2
 marshmallow==3.21.2
     # via dataclasses-json
+matplotlib-inline==0.1.7
+    # via ipython
 minify-html==0.15.0
     # via scrapegraphai
 multidict==6.0.5
@@ -171,6 +195,9 @@ multidict==6.0.5
     # via yarl
 mypy-extensions==1.0.0
     # via typing-inspect
+networkx==3.3
+    # via pyvis
+    # via scrapegraphai
 numpy==1.26.4
     # via faiss-cpu
     # via langchain
@@ -188,10 +215,14 @@ packaging==23.2
     # via pytest
 pandas==2.2.2
     # via scrapegraphai
+parso==0.8.4
+    # via jedi
 playwright==1.43.0
     # via scrapegraphai
 pluggy==1.5.0
     # via pytest
+prompt-toolkit==3.0.43
+    # via ipython
 proto-plus==1.23.0
     # via google-ai-generativelanguage
     # via google-api-core
@@ -202,6 +233,8 @@ protobuf==4.25.3
     # via googleapis-common-protos
     # via grpcio-status
     # via proto-plus
+pure-eval==0.2.2
+    # via stack-data
 pyasn1==0.6.0
     # via pyasn1-modules
     # via rsa
@@ -220,6 +253,8 @@ pydantic-core==2.18.2
     # via pydantic
 pyee==11.1.0
     # via playwright
+pygments==2.18.0
+    # via ipython
 pyparsing==3.1.2
     # via httplib2
 pytest==8.0.0
@@ -232,6 +267,8 @@ python-dotenv==1.0.1
     # via scrapegraphai
 pytz==2024.1
     # via pandas
+pyvis==0.3.2
+    # via scrapegraphai
 pyyaml==6.0.1
     # via huggingface-hub
     # via langchain
@@ -254,6 +291,7 @@ s3transfer==0.10.1
 selectolax==0.3.21
     # via yahoo-search-py
 six==1.16.0
+    # via asttokens
     # via python-dateutil
 sniffio==1.3.1
     # via anthropic
@@ -266,6 +304,8 @@ soupsieve==2.5
 sqlalchemy==2.0.30
     # via langchain
     # via langchain-community
+stack-data==0.6.3
+    # via ipython
 tenacity==8.3.0
     # via langchain
     # via langchain-community
@@ -282,12 +322,16 @@ tqdm==4.66.4
     # via huggingface-hub
     # via openai
     # via scrapegraphai
+traitlets==5.14.3
+    # via ipython
+    # via matplotlib-inline
 typing-extensions==4.11.0
     # via anthropic
     # via anyio
     # via google-generativeai
     # via groq
     # via huggingface-hub
+    # via ipython
     # via openai
     # via pydantic
     # via pydantic-core
@@ -304,6 +348,8 @@ urllib3==2.2.1
     # via botocore
     # via requests
     # via yahoo-search-py
+wcwidth==0.2.13
+    # via prompt-toolkit
 yahoo-search-py==0.3
     # via scrapegraphai
 yarl==1.9.4

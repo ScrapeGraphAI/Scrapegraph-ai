@@ -20,7 +20,7 @@ graph_config = {
         "model": "gpt-4o",
     },
     "max_results": 2,
-    "max_images": 5,
+    "max_images": 1,
     "verbose": True,
 }
 

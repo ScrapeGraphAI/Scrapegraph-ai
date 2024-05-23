@@ -3,15 +3,17 @@ SearchGraph Module
 """
 
 from copy import copy, deepcopy
+from typing import Optional
 
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+from .smart_scraper_graph import SmartScraperGraph
+
 from ..nodes import (
     SearchInternetNode,
     GraphIteratorNode,
     MergeAnswersNode
 )
-from .abstract_graph import AbstractGraph
-from .smart_scraper_graph import SmartScraperGraph
 
 
 class SearchGraph(AbstractGraph):
@@ -30,6 +32,7 @@ class SearchGraph(AbstractGraph):
     Args:
         prompt (str): The user prompt to search the internet.
         config (dict): Configuration parameters for the graph.
+        schema (Optional[str]): The schema for the graph output.
 
     Example:
         >>> search_graph = SearchGraph(
@@ -39,7 +42,7 @@ class SearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict):
+    def __init__(self, prompt: str, config: dict, schema: Optional[str] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -48,7 +51,7 @@ class SearchGraph(AbstractGraph):
         else:
             self.copy_config = deepcopy(config)
 
-        super().__init__(prompt, config)
+        super().__init__(prompt, config, schema)
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -93,6 +96,7 @@ class SearchGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 

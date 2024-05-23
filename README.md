@@ -22,10 +22,6 @@ The reference page for Scrapegraph-ai is available on the official page of pypy:
 ```bash
 pip install scrapegraphai
 ```
-you will also need to install Playwright for javascript-based scraping:
-```bash
-playwright install
-```
 
 **Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
 
@@ -49,6 +45,7 @@ There are three main scraping pipelines that can be used to extract information 
 - `SmartScraperGraph`: single-page scraper that only needs a user prompt and an input source;
 - `SearchGraph`: multi-page scraper that extracts information from the top n search results of a search engine;
 - `SpeechGraph`: single-page scraper that extracts information from a website and generates an audio file.
+- `SmartScraperMultiGraph`: multiple page scraper given a single prompt
 
 It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
 
