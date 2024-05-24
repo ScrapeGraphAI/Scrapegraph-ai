@@ -12,7 +12,6 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 dependencies = [
-    # python = ">=3.9, <3.12"
     "langchain==0.1.15",
     "langchain-openai==0.1.6",
     "langchain-google-genai==1.0.3",
@@ -32,8 +31,6 @@ dependencies = [
     "playwright==1.43.0",
     "google==3.0.0",
     "yahoo-search-py==0.3",
-    "networkx==3.3",
-    "pyvis==0.3.2",
     "undetected-playwright==0.3.0",
 ]
 
