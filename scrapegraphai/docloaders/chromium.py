@@ -1,14 +1,13 @@
 import asyncio
-import logging
 from typing import Any, AsyncIterator, Iterator, List, Optional
 
 from langchain_community.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
 
-from ..utils import Proxy, dynamic_import, parse_or_search_proxy
+from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
 
-logger = logging.getLogger(__name__)
+logger = get_logger("web-loader")
 
 
 class ChromiumLoader(BaseLoader):

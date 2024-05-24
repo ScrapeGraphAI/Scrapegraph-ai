@@ -3,9 +3,11 @@ SearchInternetNode Module
 """
 
 from typing import List, Optional
-from tqdm import tqdm
+
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
+from tqdm import tqdm
+
 from .base_node import BaseNode
 
 
@@ -27,12 +29,18 @@ class SearchLinksWithContext(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
-                 node_name: str = "GenerateAnswer"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "GenerateAnswer",
+    ):
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm_model"]
-        self.verbose = True if node_config is None else node_config.get(
-            "verbose", False)
+        self.verbose = (
+            True if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state: dict) -> dict:
         """
@@ -51,8 +59,7 @@ class SearchLinksWithContext(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -90,25 +97,30 @@ class SearchLinksWithContext(BaseNode):
         result = []
 
         # Use tqdm to add progress bar
-        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+        for i, chunk in enumerate(
+            tqdm(doc, desc="Processing chunks", disable=not self.verbose)
+        ):
             if len(doc) == 1:
                 prompt = PromptTemplate(
                     template=template_no_chunks,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                       "format_instructions": format_instructions},
+                    partial_variables={
+                        "context": chunk.page_content,
+                        "format_instructions": format_instructions,
+                    },
                 )
             else:
                 prompt = PromptTemplate(
                     template=template_chunks,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                       "chunk_id": i + 1,
-                                       "format_instructions": format_instructions},
+                    partial_variables={
+                        "context": chunk.page_content,
+                        "chunk_id": i + 1,
+                        "format_instructions": format_instructions,
+                    },
                 )
 
-            result.extend(
-                prompt | self.llm_model | output_parser)
+            result.extend(prompt | self.llm_model | output_parser)
 
         state["urls"] = result
         return state

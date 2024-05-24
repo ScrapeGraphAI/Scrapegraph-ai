@@ -3,13 +3,17 @@ RAGNode Module
 """
 
 from typing import List, Optional
+
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import EmbeddingsFilter, DocumentCompressorPipeline
+from langchain.retrievers.document_compressors import (
+    DocumentCompressorPipeline,
+    EmbeddingsFilter,
+)
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
-from ..utils.logging import get_logger
 
+from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 
@@ -32,13 +36,20 @@ class RAGNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Parse".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict]=None, node_name: str = "RAG"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "RAG",
+    ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]
         self.embedder_model = node_config.get("embedder_model", None)
-        self.verbose = False if node_config is None else node_config.get(
-            "verbose", False)
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state: dict) -> dict:
         """
@@ -57,8 +68,7 @@ class RAGNode(BaseNode):
                         necessary information for compressing the content is missing.
         """
 
-        if self.verbose:
-            self.logger.info(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -80,15 +90,15 @@ class RAGNode(BaseNode):
             )
             chunked_docs.append(doc)
 
-        if self.verbose:
-           self.logger.info("--- (updated chunks metadata) ---")
+        self.logger.info("--- (updated chunks metadata) ---")
 
         # check if embedder_model is provided, if not use llm_model
-        self.embedder_model = self.embedder_model if self.embedder_model else self.llm_model
+        self.embedder_model = (
+            self.embedder_model if self.embedder_model else self.llm_model
+        )
         embeddings = self.embedder_model
 
-        retriever = FAISS.from_documents(
-            chunked_docs, embeddings).as_retriever()
+        retriever = FAISS.from_documents(chunked_docs, embeddings).as_retriever()
 
         redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
         # similarity_threshold could be set, now k=20
@@ -108,9 +118,7 @@ class RAGNode(BaseNode):
 
         compressed_docs = compression_retriever.invoke(user_prompt)
 
-        if self.verbose:
-            self.logger.info("--- (tokens compressed and vector stored) ---")
+        self.logger.info("--- (tokens compressed and vector stored) ---")
 
         state.update({self.output[0]: compressed_docs})
         return state
-

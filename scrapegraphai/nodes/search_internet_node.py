@@ -3,11 +3,14 @@ SearchInternetNode Module
 """
 
 from typing import List, Optional
+
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
+
+from ..utils.logging import get_logger
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
-from ..utils.logging import get_logger
+
 
 class SearchInternetNode(BaseNode):
     """
@@ -27,13 +30,19 @@ class SearchInternetNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "SearchInternet".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
-                 node_name: str = "SearchInternet"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "SearchInternet",
+    ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = False if node_config is None else node_config.get(
-            "verbose", False)
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
         self.max_results = node_config.get("max_results", 3)
 
     def execute(self, state: dict) -> dict:
@@ -55,8 +64,7 @@ class SearchInternetNode(BaseNode):
                         necessary information for generating the answer is missing.
         """
 
-        if self.verbose:
-            self.logger.info(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         input_keys = self.get_input_keys(state)
 
@@ -87,12 +95,9 @@ class SearchInternetNode(BaseNode):
         search_answer = search_prompt | self.llm_model | output_parser
         search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
 
-        if self.verbose:
-            self.logger.info(f"Search Query: {search_query}")
+        self.logger.info(f"Search Query: {search_query}")
 
-
-        answer = search_on_web(
-            query=search_query, max_results=self.max_results)
+        answer = search_on_web(query=search_query, max_results=self.max_results)
 
         if len(answer) == 0:
             # raise an exception if no answer is found
