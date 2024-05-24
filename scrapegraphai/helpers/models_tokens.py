@@ -5,6 +5,7 @@ Models token
 models_tokens = {
     "openai": {
         "gpt-3.5-turbo-0125": 16385,
+        "gpt-3.5": 4096,
         "gpt-3.5-turbo": 4096,
         "gpt-3.5-turbo-1106": 16385,
         "gpt-3.5-turbo-instruct": 4096,
