@@ -11,8 +11,7 @@ from .smart_scraper_graph import SmartScraperGraph
 
 from ..nodes import (
     GraphIteratorNode,
-    MergeAnswersNode,
-    KnowledgeGraphNode
+    MergeAnswersNode
 )
 
 

@@ -9,5 +9,4 @@ from .proxy_rotation import Proxy, parse_or_search_proxy, search_proxy_servers
 from .save_audio_from_bytes import save_audio_from_bytes
 from .sys_dynamic_import import dynamic_import, srcfile_import
 from .cleanup_html import cleanup_html
-from .knowledge_graph import create_graph, create_interactive_graph, create_interactive_graph_retrieval
 from .logging import *
