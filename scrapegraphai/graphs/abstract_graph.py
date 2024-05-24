@@ -21,6 +21,7 @@ from ..models import (
     HuggingFace,
     Ollama,
     OpenAI,
+    OneApi
 )
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning
 
@@ -54,19 +55,20 @@ class AbstractGraph(ABC):
         ...         # Implementation of graph creation here
         ...         return graph
         ...
-        >>> my_graph = MyGraph("Example Graph", {"llm": {"model": "gpt-3.5-turbo"}}, "example_source")
+        >>> my_graph = MyGraph("Example Graph", 
+        {"llm": {"model": "gpt-3.5-turbo"}}, "example_source")
         >>> result = my_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict, source: Optional[str] = None, schema: Optional[str] = None):
+    def __init__(self, prompt: str, config: dict, 
+                 source: Optional[str] = None, schema: Optional[str] = None):
 
         self.prompt = prompt
         self.source = source
         self.config = config
         self.schema = schema
         self.llm_model = self._create_llm(config["llm"], chat=True)
-        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]
-                                                            ) if "embeddings" not in config else self._create_embedder(
+        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]                                                            ) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
         self.verbose = False if config is None else config.get(
             "verbose", False)
@@ -98,7 +100,7 @@ class AbstractGraph(ABC):
             "llm_model": self.llm_model,
             "embedder_model": self.embedder_model
             }
-        
+       
         self.set_common_params(common_params, overwrite=False)
 
     def set_common_params(self, params: dict, overwrite=False):
@@ -163,7 +165,14 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return OpenAI(llm_params)
-
+        elif "oneapi" in llm_params["model"]:
+            # take the model after the last dash
+            llm_params["model"] = llm_params["model"].split("/")[-1]
+            try:
+                self.model_token = models_tokens["oneapi"][llm_params["model"]]
+            except KeyError as exc:
+                raise KeyError("Model Model not supported") from exc
+            return OneApi(llm_params)
         elif "azure" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
