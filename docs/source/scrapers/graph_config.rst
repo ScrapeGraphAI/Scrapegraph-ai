@@ -11,7 +11,37 @@ Some interesting ones are:
 - `max_results`: The maximum number of results to be fetched from the search engine. Useful in `SearchGraph`.
 - `output_path`: The path where the output files will be saved. Useful in `SpeechGraph`.
 - `loader_kwargs`: A dictionary with additional parameters to be passed to the `Loader` class, such as `proxy`.
+- `burr_kwargs`: A dictionary with additional parameters to enable `Burr` graphical user interface.
 - `max_images`: The maximum number of images to be analyzed. Useful in `OmniScraperGraph` and `OmniSearchGraph`.
+
+Burr Integration
+^^^^^^^^^^^^^^^^
+
+`Burr` is an open source python library that allows the creation and management of state machine applications. Discover more about it `here <https://github.com/DAGWorks-Inc/burr>`_.
+It is possible to enable a local hosted webapp to visualize the scraping pipelines and the data flow.
+First, we need to install the `burr` library as follows:
+
+.. code-block:: bash
+
+    pip install scrapegraphai[burr]
+
+and then run the graphical user interface as follows:
+
+.. code-block:: bash
+
+    burr
+
+To log your graph execution in the platform, you need to set the `burr_kwargs` parameter in the graph configuration as follows:
+
+.. code-block:: python
+
+    graph_config = {
+        "llm":{...},
+        "burr_kwargs": {
+            "project_name": "test-scraper",
+            "app_instance_id":"some_id",
+        }
+    }
 
 Proxy Rotation
 ^^^^^^^^^^^^^^
