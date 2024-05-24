@@ -9,7 +9,6 @@ from .abstract_graph import AbstractGraph
 
 from ..nodes import (
     FetchNode,
-    ParseNode,
     RAGNode,
     GenerateAnswerNode
 )
@@ -62,13 +61,6 @@ class JSONScraperGraph(AbstractGraph):
             input="json | json_dir",
             output=["doc", "link_urls", "img_urls"],
         )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token
-            }
-        )
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
@@ -89,13 +81,11 @@ class JSONScraperGraph(AbstractGraph):
         return BaseGraph(
             nodes=[
                 fetch_node,
-                parse_node,
                 rag_node,
                 generate_answer_node,
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
+                (fetch_node, rag_node),
                 (rag_node, generate_answer_node)
             ],
             entry_point=fetch_node

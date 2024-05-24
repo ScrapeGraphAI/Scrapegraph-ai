@@ -9,7 +9,6 @@ from .abstract_graph import AbstractGraph
 
 from ..nodes import (
     FetchNode,
-    ParseNode,
     RAGNode,
     GenerateAnswerCSVNode
 )
@@ -35,17 +34,10 @@ class CSVScraperGraph(AbstractGraph):
         """
         fetch_node = FetchNode(
             input="csv | csv_dir",
-            output=["doc", "link_urls", "img_urls"],
-        )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token,
-            }
+            output=["doc"],
         )
         rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
+            input="user_prompt & doc",
             output=["relevant_chunks"],
             node_config={
                 "llm_model": self.llm_model,
@@ -53,7 +45,7 @@ class CSVScraperGraph(AbstractGraph):
             }
         )
         generate_answer_node = GenerateAnswerCSVNode(
-            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+            input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
@@ -64,13 +56,11 @@ class CSVScraperGraph(AbstractGraph):
         return BaseGraph(
             nodes=[
                 fetch_node,
-                parse_node,
                 rag_node,
                 generate_answer_node,
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
+                (fetch_node, rag_node),
                 (rag_node, generate_answer_node)
             ],
             entry_point=fetch_node
