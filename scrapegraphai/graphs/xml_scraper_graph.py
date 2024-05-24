@@ -9,7 +9,6 @@ from .abstract_graph import AbstractGraph
 
 from ..nodes import (
     FetchNode,
-    ParseNode,
     RAGNode,
     GenerateAnswerNode
 )
@@ -64,15 +63,8 @@ class XMLScraperGraph(AbstractGraph):
             input="xml | xml_dir",
             output=["doc", "link_urls", "img_urls"]
         )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token
-            }
-        )
         rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
+            input="user_prompt & doc",
             output=["relevant_chunks"],
             node_config={
                 "llm_model": self.llm_model,
@@ -80,7 +72,7 @@ class XMLScraperGraph(AbstractGraph):
             }
         )
         generate_answer_node = GenerateAnswerNode(
-            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+            input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
@@ -91,13 +83,11 @@ class XMLScraperGraph(AbstractGraph):
         return BaseGraph(
             nodes=[
                 fetch_node,
-                parse_node,
                 rag_node,
                 generate_answer_node,
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
+                (fetch_node, rag_node),
                 (rag_node, generate_answer_node)
             ],
             entry_point=fetch_node

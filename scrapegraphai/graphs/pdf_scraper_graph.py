@@ -9,6 +9,7 @@ from .abstract_graph import AbstractGraph
 
 from ..nodes import (
     FetchNode,
+    RAGNode,
     GenerateAnswerPDFNode
 )
 
@@ -60,10 +61,18 @@ class PDFScraperGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input='pdf | pdf_dir',
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
+        )
+        rag_node = RAGNode(
+            input="user_prompt & doc",
+            output=["relevant_chunks"],
+            node_config={
+                "llm_model": self.llm_model,
+                "embedder_model": self.embedder_model
+            }
         )
         generate_answer_node_pdf = GenerateAnswerPDFNode(
-            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+            input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
@@ -73,10 +82,12 @@ class PDFScraperGraph(AbstractGraph):
         return BaseGraph(
             nodes=[
                 fetch_node,
+                rag_node,
                 generate_answer_node_pdf,
             ],
             edges=[
-                (fetch_node, generate_answer_node_pdf)
+                (fetch_node, rag_node),
+                (rag_node, generate_answer_node_pdf)
             ],
             entry_point=fetch_node
         )

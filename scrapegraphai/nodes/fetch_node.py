@@ -89,8 +89,9 @@ class FetchNode(BaseNode):
             or input_keys[0] == "pdf_dir"
         ):
             compressed_document = [
-                Document(page_content=source, metadata={"source": "local_dir"})
+                source
             ]
+            
             state.update({self.output[0]: compressed_document})
             return state
    
