@@ -1,14 +1,17 @@
 """
 Module for generating the answer node
 """
+
 # Imports from standard library
 from typing import List, Optional
-from tqdm import tqdm
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
+from tqdm import tqdm
+
+from ..utils.logging import get_logger
 
 # Imports from the library
 from .base_node import BaseNode
@@ -24,15 +27,15 @@ class GenerateAnswerPDFNode(BaseNode):
 
     Attributes:
         llm: An instance of a language model client, configured for generating answers.
-        node_name (str): The unique identifier name for the node, defaulting 
+        node_name (str): The unique identifier name for the node, defaulting
         to "GenerateAnswerNodePDF".
-        node_type (str): The type of the node, set to "node" indicating a 
+        node_type (str): The type of the node, set to "node" indicating a
         standard operational node.
 
     Args:
-        llm: An instance of the language model client (e.g., ChatOpenAI) used 
+        llm: An instance of the language model client (e.g., ChatOpenAI) used
         for generating answers.
-        node_name (str, optional): The unique identifier name for the node. 
+        node_name (str, optional): The unique identifier name for the node.
         Defaults to "GenerateAnswerNodePDF".
 
     Methods:
@@ -40,8 +43,13 @@ class GenerateAnswerPDFNode(BaseNode):
                         updating the state with the generated answer under the 'answer' key.
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
-                 node_name: str = "GenerateAnswer"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "GenerateAnswer",
+    ):
         """
         Initializes the GenerateAnswerNodePDF with a language model client and a node name.
         Args:
@@ -49,9 +57,10 @@ class GenerateAnswerPDFNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
-        self.llm_model = node_config["llm_model"]
-        self.verbose = False if node_config is None else node_config.get(
-            "verbose", False)
+        self.llm_model = node_config["llm"]
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state):
         """
@@ -72,8 +81,7 @@ class GenerateAnswerPDFNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -91,21 +99,27 @@ class GenerateAnswerPDFNode(BaseNode):
         chains_dict = {}
 
         # Use tqdm to add progress bar
-        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+        for i, chunk in enumerate(
+            tqdm(doc, desc="Processing chunks", disable=not self.verbose)
+        ):
             if len(doc) == 1:
                 prompt = PromptTemplate(
                     template=template_no_chunks_pdf,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                       "format_instructions": format_instructions},
+                    partial_variables={
+                        "context": chunk.page_content,
+                        "format_instructions": format_instructions,
+                    },
                 )
             else:
                 prompt = PromptTemplate(
                     template=template_chunks_pdf,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                       "chunk_id": i + 1,
-                                       "format_instructions": format_instructions},
+                    partial_variables={
+                        "context": chunk.page_content,
+                        "chunk_id": i + 1,
+                        "format_instructions": format_instructions,
+                    },
                 )
 
             # Dynamically name the chains based on their index
@@ -124,8 +138,7 @@ class GenerateAnswerPDFNode(BaseNode):
                 partial_variables={"format_instructions": format_instructions},
             )
             merge_chain = merge_prompt | self.llm_model | output_parser
-            answer = merge_chain.invoke(
-                {"context": answer, "question": user_prompt})
+            answer = merge_chain.invoke({"context": answer, "question": user_prompt})
         else:
             # Chain
             single_chain = list(chains_dict.values())[0]

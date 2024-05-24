@@ -11,6 +11,8 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 
+from ..utils.logging import get_logger
+
 # Imports from the library
 from .base_node import BaseNode
 
@@ -32,13 +34,19 @@ class SearchLinkNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
     """
 
-    def __init__(self, input: str, output: List[str], node_config: Optional[dict] = None,
-                 node_name: str = "GenerateLinks"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "GenerateLinks",
+    ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = False if node_config is None else node_config.get(
-            "verbose", False)
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state: dict) -> dict:
         """
@@ -57,8 +65,7 @@ class SearchLinkNode(BaseNode):
                         necessary information for generating the answer is missing.
         """
 
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -92,7 +99,13 @@ class SearchLinkNode(BaseNode):
             """
         relevant_links = []
 
-        for i, chunk in enumerate(tqdm(parsed_content_chunks, desc="Processing chunks", disable=not self.verbose)):
+        for i, chunk in enumerate(
+            tqdm(
+                parsed_content_chunks,
+                desc="Processing chunks",
+                disable=not self.verbose,
+            )
+        ):
             merge_prompt = PromptTemplate(
                 template=prompt_relevant_links,
                 input_variables=["content", "user_prompt"],
@@ -100,7 +113,8 @@ class SearchLinkNode(BaseNode):
             merge_chain = merge_prompt | self.llm_model | output_parser
             # merge_chain = merge_prompt | self.llm_model
             answer = merge_chain.invoke(
-                {"content": chunk.page_content, "user_prompt": user_prompt})
+                {"content": chunk.page_content, "user_prompt": user_prompt}
+            )
             relevant_links += answer
         state.update({self.output[0]: relevant_links})
         return state

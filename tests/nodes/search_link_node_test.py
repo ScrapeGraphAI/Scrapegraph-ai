@@ -1,6 +1,6 @@
 import pytest
 from scrapegraphai.models import Ollama
-from scrapegraphai.nodes import RobotsNode
+from scrapegraphai.nodes import SearchLinkNode
 
 @pytest.fixture
 def setup():
@@ -25,11 +25,11 @@ def setup():
 
     llm_model = Ollama(graph_config["llm"])
 
-    robots_node = RobotsNode(
-        input="url",
-        output=["is_scrapable"],
+    search_link_node = SearchLinkNode(
+        input=["user_prompt", "parsed_content_chunks"],
+        output=["relevant_links"],
         node_config={"llm_model": llm_model,
-                     "headless": False
+                     "verbose": False
                      }
     )
 
@@ -38,21 +38,27 @@ def setup():
     # ************************************************
 
     initial_state = {
-        "url": "https://twitter.com/home"
+        "user_prompt": "Example user prompt",
+        "parsed_content_chunks": [
+            {"page_content": "Example page content 1"},
+            {"page_content": "Example page content 2"},
+            # Add more example page content dictionaries as needed
+        ]
     }
 
-    return robots_node, initial_state
+    return search_link_node, initial_state
 
 # ************************************************
 # Test the node
 # ************************************************
 
-def test_robots_node(setup):
+def test_search_link_node(setup):
     """
     Run the tests
     """
-    robots_node, initial_state = setup  # Estrai l'oggetto RobotsNode e lo stato iniziale dalla tupla
+    search_link_node, initial_state = setup  # Extract the SearchLinkNode object and the initial state from the tuple
 
-    result = robots_node.execute(initial_state)
+    result = search_link_node.execute(initial_state)
 
+    # Assert that the result is not None
     assert result is not None
