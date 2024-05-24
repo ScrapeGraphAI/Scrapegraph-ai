@@ -1,3 +1,11 @@
+## [1.5.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.0-beta.1...v1.5.0-beta.2) (2024-05-24)
+
+
+### Bug Fixes
+
+* **pdf_scraper:** fix the pdf scraper gaph ([d00cde6](https://github.com/VinciGit00/Scrapegraph-ai/commit/d00cde60309935e283ba9116cf0b114e53cb9640))
+* **local_file:** fixed textual input pdf, csv, json and xml graph ([8d5eb0b](https://github.com/VinciGit00/Scrapegraph-ai/commit/8d5eb0bb0d5d008a63a96df94ce3842320376b8e))
+
 ## [1.5.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.4.0...v1.5.0-beta.1) (2024-05-24)
 
 
