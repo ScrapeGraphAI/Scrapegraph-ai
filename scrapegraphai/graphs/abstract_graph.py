@@ -269,7 +269,8 @@ class AbstractGraph(ABC):
             return embedder_config['model_instance']
         # Instantiate the embedding model based on the model name
         if "openai" in embedder_config["model"]:
-            return OpenAIEmbeddings(api_key=embedder_config["api_key"])
+            kwargs = {"model": embedder_config["model"].split("/")[-1]} if '/' in embedder_config["model"] else {}
+            return OpenAIEmbeddings(api_key=embedder_config["api_key"], **kwargs)
         elif "azure" in embedder_config["model"]:
             return AzureOpenAIEmbeddings()
         elif "ollama" in embedder_config["model"]:
