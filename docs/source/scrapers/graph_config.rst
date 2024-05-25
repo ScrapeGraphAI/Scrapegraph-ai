@@ -14,6 +14,8 @@ Some interesting ones are:
 - `burr_kwargs`: A dictionary with additional parameters to enable `Burr` graphical user interface.
 - `max_images`: The maximum number of images to be analyzed. Useful in `OmniScraperGraph` and `OmniSearchGraph`.
 
+.. _Burr:
+
 Burr Integration
 ^^^^^^^^^^^^^^^^
 
@@ -42,6 +44,8 @@ To log your graph execution in the platform, you need to set the `burr_kwargs` p
             "app_instance_id":"some_id",
         }
     }
+
+.. _Proxy:
 
 Proxy Rotation
 ^^^^^^^^^^^^^^
