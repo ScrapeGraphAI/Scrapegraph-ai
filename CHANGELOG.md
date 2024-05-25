@@ -1,3 +1,19 @@
+## [1.5.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.0-beta.3...v1.5.0-beta.4) (2024-05-25)
+
+
+### Features
+
+* **burr:** added burr integration in graphs and optional burr installation ([ac10128](https://github.com/VinciGit00/Scrapegraph-ai/commit/ac10128ff3af35c52b48c79d085e458524e8e48a))
+* **burr-bridge:** BurrBridge class to integrate inside BaseGraph ([6cbd84f](https://github.com/VinciGit00/Scrapegraph-ai/commit/6cbd84f254ebc1f1c68699273bdd8fcdb0fe26d4))
+* **burr:** first burr integration and docs ([19b27bb](https://github.com/VinciGit00/Scrapegraph-ai/commit/19b27bbe852f134cf239fc1945e7906bc24d7098))
+* **burr-node:** working burr bridge ([654a042](https://github.com/VinciGit00/Scrapegraph-ai/commit/654a04239640a89d9fa408ccb2e4485247ab84df))
+
+
+### Docs
+
+* **burr:** added dependecies and switched to furo ([819f071](https://github.com/VinciGit00/Scrapegraph-ai/commit/819f071f2dc64d090cb05c3571aff6c9cb9196d7))
+* **graph:** added new graphs and schema ([d27cad5](https://github.com/VinciGit00/Scrapegraph-ai/commit/d27cad591196b932c1bbcbaa936479a030ac67b5))
+
 ## [1.5.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.0-beta.2...v1.5.0-beta.3) (2024-05-24)
 
 
