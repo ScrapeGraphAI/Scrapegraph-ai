@@ -1,3 +1,4 @@
+
 rye pin 3.10
 
 # Install dependencies using Poetry

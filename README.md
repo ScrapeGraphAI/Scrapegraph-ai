@@ -7,7 +7,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
-
 ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, etc.).
 
 Just say which information you want to extract and the library will do it for you!
@@ -22,10 +21,6 @@ The reference page for Scrapegraph-ai is available on the official page of pypy:
 
 ```bash
 pip install scrapegraphai
-```
-you will also need to install Playwright for javascript-based scraping:
-```bash
-playwright install
 ```
 
 **Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
@@ -50,6 +45,7 @@ There are three main scraping pipelines that can be used to extract information 
 - `SmartScraperGraph`: single-page scraper that only needs a user prompt and an input source;
 - `SearchGraph`: multi-page scraper that extracts information from the top n search results of a search engine;
 - `SpeechGraph`: single-page scraper that extracts information from a website and generates an audio file.
+- `SmartScraperMultiGraph`: multiple page scraper given a single prompt
 
 It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
 
@@ -184,9 +180,14 @@ Wanna visualize the roadmap in a more interactive way? Check out the [markmap](h
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
 ## Sponsors
-<p align="center">
-  <a href="https://serpapi.com?utm_source=scrapegraphai"><img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;"></a>
-</p>
+<div style="text-align: center;">
+  <a href="https://serpapi.com?utm_source=scrapegraphai">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
+  </a>
+  <a href="https://dashboard.statproxies.com/?refferal=scrapegraph">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 10%;">
+  </a>
+</div>
 
 ## 🎓 Citations
 If you have used our library for research purposes please quote us with the following reference:

@@ -2,14 +2,16 @@
 XMLScraperGraph Module
 """
 
+from typing import Optional
+
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+
 from ..nodes import (
     FetchNode,
-    ParseNode,
     RAGNode,
     GenerateAnswerNode
 )
-from .abstract_graph import AbstractGraph
 
 
 class XMLScraperGraph(AbstractGraph):
@@ -21,6 +23,7 @@ class XMLScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
         configured for generating embeddings.
@@ -32,6 +35,7 @@ class XMLScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
 
     Example:
         >>> xml_scraper = XMLScraperGraph(
@@ -42,8 +46,8 @@ class XMLScraperGraph(AbstractGraph):
         >>> result = xml_scraper.run()
     """
 
-    def __init__(self, prompt: str, source: str, config: dict):
-        super().__init__(prompt, config, source)
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+        super().__init__(prompt, config, source, schema)
 
         self.input_key = "xml" if source.endswith("xml") else "xml_dir"
 
@@ -59,15 +63,8 @@ class XMLScraperGraph(AbstractGraph):
             input="xml | xml_dir",
             output=["doc", "link_urls", "img_urls"]
         )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token
-            }
-        )
         rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
+            input="user_prompt & doc",
             output=["relevant_chunks"],
             node_config={
                 "llm_model": self.llm_model,
@@ -75,23 +72,22 @@ class XMLScraperGraph(AbstractGraph):
             }
         )
         generate_answer_node = GenerateAnswerNode(
-            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+            input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],
             node_config={
-                "llm_model": self.llm_model
+                "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 
         return BaseGraph(
             nodes=[
                 fetch_node,
-                parse_node,
                 rag_node,
                 generate_answer_node,
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
+                (fetch_node, rag_node),
                 (rag_node, generate_answer_node)
             ],
             entry_point=fetch_node

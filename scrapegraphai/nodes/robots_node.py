@@ -4,11 +4,19 @@ RobotsNode Module
 
 from typing import List, Optional
 from urllib.parse import urlparse
+
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser
+
 from .base_node import BaseNode
+from langchain.output_parsers import CommaSeparatedListOutputParser
+from langchain.prompts import PromptTemplate
+from langchain_community.document_loaders import AsyncChromiumLoader
+
 from ..helpers import robots_dictionary
+from ..utils.logging import get_logger
+from .base_node import BaseNode
 
 
 class RobotsNode(BaseNode):
@@ -34,16 +42,22 @@ class RobotsNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "Robots".
     """
 
-    def __init__(self, input: str, output: List[str],  node_config: Optional[dict]=None,
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "Robots",
 
-                 node_name: str = "Robots"):
+    ):
         super().__init__(node_name, "node", input, output, 1)
 
         self.llm_model = node_config["llm_model"]
 
-        self.force_scraping = force_scraping
-        self.verbose = True if node_config is None else node_config.get(
-            "verbose", False)
+        self.force_scraping = False if node_config is None else node_config.get("force_scraping", False)
+        self.verbose = (
+            True if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state: dict) -> dict:
         """
@@ -65,8 +79,7 @@ class RobotsNode(BaseNode):
                         scraping is not enforced.
         """
 
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -91,21 +104,21 @@ class RobotsNode(BaseNode):
             """
 
         if not source.startswith("http"):
-            raise ValueError(
-                "Operation not allowed")
+            raise ValueError("Operation not allowed")
 
         else:
             parsed_url = urlparse(source)
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
             loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
-            if "ollama" in self.llm_model.model_name:
-                self.llm_model.model_name = self.llm_model.model_name.split(
-                    "/")[-1]
-                model = self.llm_model.model_name.split("/")[-1]
+            if "ollama" in self.llm_model["model_name"]:
+                self.llm_model["model_name"] = self.llm_model["model_name"].split("/")[
+                    -1
+                ]
+                model = self.llm_model["model_name"].split("/")[-1]
 
             else:
-                model = self.llm_model.model_name
+                model = self.llm_model["model_name"]
             try:
                 agent = robots_dictionary[model]
 
@@ -115,27 +128,25 @@ class RobotsNode(BaseNode):
             prompt = PromptTemplate(
                 template=template,
                 input_variables=["path"],
-                partial_variables={"context": document,
-                                   "agent": agent
-                                   },
+                partial_variables={"context": document, "agent": agent},
             )
 
             chain = prompt | self.llm_model | output_parser
             is_scrapable = chain.invoke({"path": source})[0]
 
             if "no" in is_scrapable:
-                if self.verbose:
-                    print("\033[31m(Scraping this website is not allowed)\033[0m")
+                self.logger.warning(
+                    "\033[31m(Scraping this website is not allowed)\033[0m"
+                )
 
                 if not self.force_scraping:
-                    raise ValueError(
-                        'The website you selected is not scrapable')
+                    raise ValueError("The website you selected is not scrapable")
                 else:
-                    if self.verbose:
-                        print("\033[33m(WARNING: Scraping this website is not allowed but you decided to force it)\033[0m")
+                    self.logger.warning(
+                        "\033[33m(WARNING: Scraping this website is not allowed but you decided to force it)\033[0m"
+                    )
             else:
-                if self.verbose:
-                    print("\033[32m(Scraping this website is allowed)\033[0m")
+                self.logger.warning("\033[32m(Scraping this website is allowed)\033[0m")
 
         state.update({self.output[0]: is_scrapable})
         return state

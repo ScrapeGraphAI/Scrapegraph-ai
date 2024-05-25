@@ -81,6 +81,8 @@ cycler==0.12.1
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
+decorator==5.1.1
+    # via ipython
 defusedxml==0.7.1
     # via langchain-anthropic
 distro==1.9.0
@@ -95,7 +97,10 @@ email-validator==2.1.1
     # via fastapi
 exceptiongroup==1.2.1
     # via anyio
+    # via ipython
     # via pytest
+executing==2.0.1
+    # via stack-data
 faiss-cpu==1.8.0
     # via scrapegraphai
 fastapi==0.111.0
@@ -114,6 +119,7 @@ free-proxy==1.1.1
 frozenlist==1.4.1
     # via aiohttp
     # via aiosignal
+fsspec==2024.5.0
 fsspec==2024.5.0
     # via huggingface-hub
 furo==2024.5.6
@@ -202,6 +208,8 @@ jmespath==1.0.1
 jsonpatch==1.33
     # via langchain
     # via langchain-core
+jsonpickle==3.0.4
+    # via pyvis
 jsonpointer==2.4
     # via jsonpatch
 jsonschema==4.22.0
@@ -260,6 +268,9 @@ multidict==6.0.5
     # via yarl
 mypy-extensions==1.0.0
     # via typing-inspect
+networkx==3.3
+    # via pyvis
+    # via scrapegraphai
 numpy==1.26.4
     # via altair
     # via contourpy
@@ -298,8 +309,11 @@ pillow==10.3.0
     # via streamlit
 playwright==1.43.0
     # via scrapegraphai
+    # via undetected-playwright
 pluggy==1.5.0
     # via pytest
+prompt-toolkit==3.0.43
+    # via ipython
 proto-plus==1.23.0
     # via google-ai-generativelanguage
     # via google-api-core
@@ -340,6 +354,8 @@ pygments==2.18.0
     # via furo
     # via rich
     # via sphinx
+pygments==2.18.0
+    # via ipython
 pyparsing==3.1.2
     # via httplib2
     # via matplotlib
@@ -357,6 +373,8 @@ python-multipart==0.0.9
     # via fastapi
 pytz==2024.1
     # via pandas
+pyvis==0.3.2
+    # via scrapegraphai
 pyyaml==6.0.1
     # via huggingface-hub
     # via langchain
@@ -396,6 +414,7 @@ sf-hamilton==1.63.0
 shellingham==1.5.4
     # via typer
 six==1.16.0
+    # via asttokens
     # via python-dateutil
 smmap==5.0.1
     # via gitdb
@@ -434,6 +453,8 @@ starlette==0.37.2
     # via fastapi
 streamlit==1.34.0
     # via burr
+stack-data==0.6.3
+    # via ipython
 tenacity==8.3.0
     # via langchain
     # via langchain-community
@@ -459,6 +480,9 @@ tqdm==4.66.4
     # via scrapegraphai
 typer==0.12.3
     # via fastapi-cli
+traitlets==5.14.3
+    # via ipython
+    # via matplotlib-inline
 typing-extensions==4.11.0
     # via altair
     # via anthropic
@@ -468,6 +492,7 @@ typing-extensions==4.11.0
     # via google-generativeai
     # via groq
     # via huggingface-hub
+    # via ipython
     # via openai
     # via pydantic
     # via pydantic-core
@@ -483,6 +508,8 @@ typing-inspect==0.9.0
     # via sf-hamilton
 tzdata==2024.1
     # via pandas
+undetected-playwright==0.3.0
+    # via scrapegraphai
 ujson==5.10.0
     # via fastapi
 uritemplate==4.1.1

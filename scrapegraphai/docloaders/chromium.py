@@ -1,14 +1,13 @@
 import asyncio
-import logging
 from typing import Any, AsyncIterator, Iterator, List, Optional
 
 from langchain_community.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
 
-from ..utils import Proxy, dynamic_import, parse_or_search_proxy
+from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
 
-logger = logging.getLogger(__name__)
+logger = get_logger("web-loader")
 
 
 class ChromiumLoader(BaseLoader):
@@ -69,6 +68,7 @@ class ChromiumLoader(BaseLoader):
 
         """
         from playwright.async_api import async_playwright
+        from undetected_playwright import Malenia
 
         logger.info("Starting scraping...")
         results = ""
@@ -77,7 +77,9 @@ class ChromiumLoader(BaseLoader):
                 headless=self.headless, proxy=self.proxy, **self.browser_config
             )
             try:
-                page = await browser.new_page()
+                context = await browser.new_context()
+                await Malenia.apply_stealth(context)
+                page = await context.new_page()
                 await page.goto(url)
                 results = await page.content()  # Simply get the HTML content
                 logger.info("Content scraped")

@@ -2,14 +2,16 @@
 PDFScraperGraph Module
 """
 
+from typing import Optional
+
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+
 from ..nodes import (
     FetchNode,
-    ParseNode,
     RAGNode,
-    GenerateAnswerNode
+    GenerateAnswerPDFNode
 )
-from .abstract_graph import AbstractGraph
 
 
 class PDFScraperGraph(AbstractGraph):
@@ -21,6 +23,7 @@ class PDFScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
         configured for generating embeddings.
@@ -32,6 +35,7 @@ class PDFScraperGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
 
     Example:
         >>> pdf_scraper = PDFScraperGraph(
@@ -42,7 +46,7 @@ class PDFScraperGraph(AbstractGraph):
         >>> result = pdf_scraper.run()
     """
 
-    def __init__(self, prompt: str, source: str, config: dict):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
         super().__init__(prompt, config, source)
 
         self.input_key = "pdf" if source.endswith("pdf") else "pdf_dir"
@@ -57,25 +61,18 @@ class PDFScraperGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input='pdf | pdf_dir',
-            output=["doc", "link_urls", "img_urls"],
-        )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token,
-            }
+            output=["doc"],
         )
         rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
+            input="user_prompt & doc",
             output=["relevant_chunks"],
             node_config={
                 "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model,
+                "embedder_model": self.embedder_model
             }
         )
-        generate_answer_node = GenerateAnswerNode(
-            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+        generate_answer_node_pdf = GenerateAnswerPDFNode(
+            input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
@@ -85,14 +82,12 @@ class PDFScraperGraph(AbstractGraph):
         return BaseGraph(
             nodes=[
                 fetch_node,
-                parse_node,
                 rag_node,
-                generate_answer_node,
+                generate_answer_node_pdf,
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, rag_node),
-                (rag_node, generate_answer_node)
+                (fetch_node, rag_node),
+                (rag_node, generate_answer_node_pdf)
             ],
             entry_point=fetch_node
         )

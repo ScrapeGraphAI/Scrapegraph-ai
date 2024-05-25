@@ -2,15 +2,20 @@
 DeepScraperGraph Module
 """
 
+from typing import Optional
+
 from .base_graph import BaseGraph
+from .abstract_graph import AbstractGraph
+
 from ..nodes import (
     FetchNode,
     SearchLinkNode,
     ParseNode,
     RAGNode,
-    GenerateAnswerNode
+    GenerateAnswerNode,
+    GraphIteratorNode,
+    MergeAnswersNode
 )
-from .abstract_graph import AbstractGraph
 
 
 class DeepScraperGraph(AbstractGraph):
@@ -18,26 +23,29 @@ class DeepScraperGraph(AbstractGraph):
     [WIP]
 
     DeepScraper is a scraping pipeline that automates the process of 
-    extracting information from web pages
-    using a natural language model to interpret and answer prompts.
+    extracting information from web pages using a natural language model 
+    to interpret and answer prompts.
 
-    Unlike SmartScraper, DeepScraper can navigate to the links within the input webpage,
-    to fuflfil the task within the prompt.
-
+    Unlike SmartScraper, DeepScraper can navigate to the links within,
+    the input webpage to fuflfil the task within the prompt.
     
     Attributes:
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
+        
     Args:
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
+
     Example:
         >>> deep_scraper = DeepScraperGraph(
         ...     "List me all the job titles and detailed job description.",
@@ -48,14 +56,17 @@ class DeepScraperGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict):
-        super().__init__(prompt, config, source)
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    
+        super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
 
-    def _create_graph(self) -> BaseGraph:
+    def _create_repeated_graph(self) -> BaseGraph:
         """
-        Creates the graph of nodes representing the workflow for web scraping.
+        Creates the graph that can be repeatedly executed to conduct search on
+        hyperlinks within the webpage.
+
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
@@ -78,6 +89,14 @@ class DeepScraperGraph(AbstractGraph):
                 "embedder_model": self.embedder_model
             }
         )
+        generate_answer_node = GenerateAnswerNode(
+            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+            output=["answer"],
+            node_config={
+                "llm_model": self.llm_model,
+                "schema": self.schema
+            }
+        )
         search_node = SearchLinkNode(
             input="user_prompt & relevant_chunks",
             output=["relevant_links"],
@@ -86,22 +105,60 @@ class DeepScraperGraph(AbstractGraph):
                 "embedder_model": self.embedder_model
             }
         )
+        graph_iterator_node = GraphIteratorNode(
+            input="user_prompt & relevant_links",
+            output=["results"],
+            node_config={
+                "graph_instance": None,
+                "batchsize": 1
+            }
+        )
+        merge_answers_node = MergeAnswersNode(
+            input="user_prompt & results",
+            output=["answer"],
+            node_config={
+                "llm_model": self.llm_model,
+                "schema": self.schema
+            }
+        )
 
         return BaseGraph(
             nodes=[
                 fetch_node,
                 parse_node,
                 rag_node,
-                search_node
+                generate_answer_node,
+                search_node,
+                graph_iterator_node,
+                merge_answers_node
             ],
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, rag_node),
-                (rag_node, search_node)
-
+                (rag_node, generate_answer_node),
+                (rag_node, search_node),
+                (search_node, graph_iterator_node),
+                (graph_iterator_node, merge_answers_node)
             ],
             entry_point=fetch_node
         )
+
+
+
+    def _create_graph(self) -> BaseGraph:
+        """
+        Creates the graph of nodes representing the workflow for web scraping
+        n-levels deep.
+
+        Returns:
+            BaseGraph: A graph instance representing the web scraping workflow.
+        """
+
+        base_graph = self._create_repeated_graph()
+        graph_iterator_node = list(filter(lambda x: x.node_name == "GraphIterator", base_graph.nodes))[0]
+        # Graph iterator will repeat the same graph for multiple hyperlinks found within input webpage
+        graph_iterator_node.node_config["graph_instance"] = self
+        return base_graph
 
     def run(self) -> str:
         """
