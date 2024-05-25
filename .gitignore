@@ -21,6 +21,7 @@ docs/source/_templates/
 docs/source/_static/
 .env
 venv/
+.venv/
 .vscode/
 
 # exclude pdf, mp3
@@ -28,6 +29,7 @@ venv/
 *.mp3
 *.sqlite
 *.google-cookie
+*.python-version
 examples/graph_examples/ScrapeGraphAI_generated_graph
 examples/**/result.csv
 examples/**/result.json

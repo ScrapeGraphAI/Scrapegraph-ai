@@ -18,5 +18,4 @@ playwright==1.43.0
 langchain-aws==0.1.2
 langchain-anthropic==0.1.11 
 yahoo-search-py==0.3
-pypdf==4.2.0
 undetected-playwright==0.3.0

@@ -45,9 +45,9 @@ beautifulsoup4==4.12.3
     # via scrapegraphai
 blinker==1.8.2
     # via streamlit
-boto3==1.34.110
+boto3==1.34.113
     # via langchain-aws
-botocore==1.34.110
+botocore==1.34.113
     # via boto3
     # via s3transfer
 burr==0.19.1
@@ -107,7 +107,7 @@ fastapi-pagination==0.12.24
     # via burr
 filelock==3.14.0
     # via huggingface-hub
-fonttools==4.51.0
+fonttools==4.52.1
     # via matplotlib
 free-proxy==1.1.1
     # via scrapegraphai
@@ -130,7 +130,7 @@ google-api-core==2.19.0
     # via google-ai-generativelanguage
     # via google-api-python-client
     # via google-generativeai
-google-api-python-client==2.129.0
+google-api-python-client==2.130.0
     # via google-generativeai
 google-auth==2.29.0
     # via google-ai-generativelanguage
@@ -151,7 +151,7 @@ graphviz==0.20.3
 greenlet==3.0.3
     # via playwright
     # via sqlalchemy
-groq==0.7.0
+groq==0.8.0
     # via langchain-groq
 grpcio==1.64.0
     # via google-api-core
@@ -194,7 +194,7 @@ jinja2==3.1.4
     # via fastapi
     # via pydeck
     # via sphinx
-jiter==0.1.0
+jiter==0.4.0
     # via anthropic
 jmespath==1.0.1
     # via boto3
@@ -235,7 +235,7 @@ langchain-openai==0.1.6
     # via scrapegraphai
 langchain-text-splitters==0.0.2
     # via langchain
-langsmith==0.1.60
+langsmith==0.1.63
     # via langchain
     # via langchain-community
     # via langchain-core
@@ -273,7 +273,7 @@ numpy==1.26.4
     # via pydeck
     # via sf-hamilton
     # via streamlit
-openai==1.30.1
+openai==1.30.3
     # via burr
     # via langchain-openai
 orjson==3.10.3
@@ -433,7 +433,7 @@ sqlalchemy==2.0.30
     # via langchain-community
 starlette==0.37.2
     # via fastapi
-streamlit==1.34.0
+streamlit==1.35.0
     # via burr
 tenacity==8.3.0
     # via langchain
@@ -460,7 +460,7 @@ tqdm==4.66.4
     # via scrapegraphai
 typer==0.12.3
     # via fastapi-cli
-typing-extensions==4.11.0
+typing-extensions==4.12.0
     # via altair
     # via anthropic
     # via anyio
@@ -497,7 +497,7 @@ urllib3==2.2.1
 uvicorn==0.29.0
     # via burr
     # via fastapi
-watchdog==4.0.0
+watchdog==4.0.1
     # via streamlit
 watchfiles==0.21.0
     # via uvicorn
