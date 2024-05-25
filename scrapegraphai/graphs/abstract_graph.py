@@ -4,6 +4,7 @@ AbstractGraph Module
 
 from abc import ABC, abstractmethod
 from typing import Optional
+import uuid
 
 from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
@@ -100,6 +101,16 @@ class AbstractGraph(ABC):
             }
         
         self.set_common_params(common_params, overwrite=False)
+
+        # set burr config
+        self.burr_kwargs = config.get("burr_kwargs", None)
+        if self.burr_kwargs is not None:
+            self.graph.use_burr = True
+            if "app_instance_id" not in self.burr_kwargs:
+                # set a random uuid for the app_instance_id to avoid conflicts
+                self.burr_kwargs["app_instance_id"] = str(uuid.uuid4())
+
+            self.graph.burr_config = self.burr_kwargs
 
     def set_common_params(self, params: dict, overwrite=False):
         """

@@ -36,9 +36,9 @@ dependencies = [
 
 license = "MIT"
 readme = "README.md"
-homepage = "https://scrapegraph-ai.readthedocs.io/"
+homepage = "https://scrapegraphai.com/"
 repository = "https://github.com/VinciGit00/Scrapegraph-ai"
-documentation = "https://scrapegraph-doc.onrender.com/"
+documentation = "https://scrapegraph-ai.readthedocs.io/en/latest/"
 keywords = [
     "scrapegraph",
     "scrapegraphai",
@@ -66,6 +66,10 @@ classifiers = [
 ]
 requires-python = ">=3.9,<3.12"
 
+[project.optional-dependencies]
+burr = ["burr[start]==0.19.1"]
+docs = ["sphinx==6.0", "furo==2024.5.6"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -74,12 +78,7 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "pytest==8.0.0",
-    "pytest-mock==3.14.0"
+    "pytest-mock==3.14.0",
+    "-e file:.[burr]",
+    "-e file:.[docs]",
 ]
-
-[tool.rye.group.docs]
-optional = true
-
-[tool.rye.group.docs.dependencies]
-sphinx = "7.1.2"
-sphinx-rtd-theme = "2.0.0"
