@@ -57,7 +57,7 @@ class GenerateAnswerPDFNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
@@ -95,7 +95,7 @@ class GenerateAnswerPDFNode(BaseNode):
         output_parser = JsonOutputParser()
         format_instructions = output_parser.get_format_instructions()
 
-       
+
         chains_dict = {}
 
         # Use tqdm to add progress bar
