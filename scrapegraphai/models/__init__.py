@@ -13,3 +13,4 @@ from .groq import Groq
 from .bedrock import Bedrock
 from .anthropic import Anthropic
 from .deepseek import DeepSeek
+from .oneapi import OneApi
