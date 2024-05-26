@@ -5,6 +5,7 @@ Bridge class to integrate Burr into ScrapeGraphAI graphs
 
 import re
 from typing import Any, Dict, List, Tuple
+import inspect
 
 try:
     import burr
@@ -54,6 +55,9 @@ class BurrNodeBridge(Action):
 
     def update(self, result: dict, state: State) -> State:
         return state.update(**result)
+    
+    def get_source(self) -> str:
+        return inspect.getsource(self.node.__class__)
 
 
 def parse_boolean_expression(expression: str) -> List[str]:

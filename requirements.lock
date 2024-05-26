@@ -22,9 +22,6 @@ anyio==4.3.0
     # via groq
     # via httpx
     # via openai
-async-timeout==4.0.3
-    # via aiohttp
-    # via langchain
 attrs==23.2.0
     # via aiohttp
 beautifulsoup4==4.12.3
@@ -54,8 +51,6 @@ distro==1.9.0
     # via anthropic
     # via groq
     # via openai
-exceptiongroup==1.2.1
-    # via anyio
 faiss-cpu==1.8.0
     # via scrapegraphai
 filelock==3.14.0
@@ -115,7 +110,6 @@ httpx==0.27.0
     # via anthropic
     # via groq
     # via openai
-    # via yahoo-search-py
 huggingface-hub==0.23.1
     # via tokenizers
 idna==3.7
@@ -215,7 +209,6 @@ pydantic==2.7.1
     # via langchain-core
     # via langsmith
     # via openai
-    # via yahoo-search-py
 pydantic-core==2.18.2
     # via pydantic
 pyee==11.1.0
@@ -248,8 +241,6 @@ rsa==4.9
     # via google-auth
 s3transfer==0.10.1
     # via boto3
-selectolax==0.3.21
-    # via yahoo-search-py
 six==1.16.0
     # via python-dateutil
 sniffio==1.3.1
@@ -279,7 +270,6 @@ tqdm==4.66.4
     # via scrapegraphai
 typing-extensions==4.12.0
     # via anthropic
-    # via anyio
     # via google-generativeai
     # via groq
     # via huggingface-hub
@@ -300,8 +290,5 @@ uritemplate==4.1.1
 urllib3==2.2.1
     # via botocore
     # via requests
-    # via yahoo-search-py
-yahoo-search-py==0.3
-    # via scrapegraphai
 yarl==1.9.4
     # via aiohttp
