@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using SmartScraper and OneAPI
 """
 
 from scrapegraphai.graphs import SmartScraperGraph
@@ -46,7 +46,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="该网站为XXXXX,请提取出标题、发布时间、发布来源以及内容摘要,并以中文回答。",
+    prompt="该网站为XXXXX,请提取出标题、发布时间、发布来源以及内容摘要,并以中文回答",
     # 也可以使用已下载的 HTML 代码的字符串
     source="http://XXXX",
     schema=schema,
