@@ -1,10 +1,11 @@
 """ 
-Basic example of scraping pipeline using SmartScraper with schema
+Basic example of scraping pipeline using SmartScraper
 """
 
-import os, json
+import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
@@ -33,15 +34,15 @@ schema= """
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+deepseek_key = os.getenv("DEEPSEEK_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key":openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "deepseek-chat",
+        "openai_api_key": deepseek_key,
+        "openai_api_base": 'https://api.deepseek.com/v1',
     },
     "verbose": True,
-    "headless": False,
 }
 
 # ************************************************
@@ -49,11 +50,19 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
+    prompt="List me all the projects with their description.",
+    # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
     schema=schema,
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))

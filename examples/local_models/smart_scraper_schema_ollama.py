@@ -1,17 +1,12 @@
 """ 
 Basic example of scraping pipeline using SmartScraper with schema
 """
-
-import os, json
-from dotenv import load_dotenv
+import json
 from scrapegraphai.graphs import SmartScraperGraph
-
-load_dotenv()
-
+from scrapegraphai.utils import prettify_exec_info
 # ************************************************
-# Define the output schema for the graph
+# Define the configuration for the graph
 # ************************************************
-
 schema= """
     { 
     "Projects": [
@@ -29,19 +24,20 @@ schema= """
     } 
 """
 
-# ************************************************
-# Define the configuration for the graph
-# ************************************************
-
-openai_key = os.getenv("OPENAI_APIKEY")
-
 graph_config = {
     "llm": {
-        "api_key":openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "ollama/mistral",
+        "temperature": 0,
+        "format": "json",  # Ollama needs the format to be specified explicitly
+        # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
+    },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
     "verbose": True,
-    "headless": False,
+    "headless": False
 }
 
 # ************************************************

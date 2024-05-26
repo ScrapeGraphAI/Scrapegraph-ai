@@ -2,16 +2,15 @@
 Basic example of scraping pipeline using SmartScraper with schema
 """
 
-import os, json
+import os
 from dotenv import load_dotenv
+from scrapegraphai.utils import prettify_exec_info
 from scrapegraphai.graphs import SmartScraperGraph
-
 load_dotenv()
 
 # ************************************************
 # Define the output schema for the graph
 # ************************************************
-
 schema= """
     { 
     "Projects": [
@@ -33,15 +32,13 @@ schema= """
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key":openai_key,
-        "model": "gpt-3.5-turbo",
+        "api_key": gemini_key,
+        "model": "gemini-pro",
     },
-    "verbose": True,
-    "headless": False,
 }
 
 # ************************************************
@@ -49,11 +46,19 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
-    source="https://perinim.github.io/projects/",
+    prompt="List me all the news with their description.",
+    # also accepts a string with the already downloaded HTML code
+    source="https://www.wired.com",
     schema=schema,
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))

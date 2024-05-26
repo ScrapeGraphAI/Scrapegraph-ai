@@ -5,6 +5,7 @@ Basic example of scraping pipeline using SmartScraper with schema
 import os, json
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
@@ -33,27 +34,42 @@ schema= """
 # Define the configuration for the graph
 # ************************************************
 
+groq_key = os.getenv("GROQ_APIKEY")
 openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key":openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
-    "verbose": True,
-    "headless": False,
+    "embeddings": {
+        "api_key": openai_key,
+        "model": "openai",
+    },
+    "headless": False
 }
+
+
 
 # ************************************************
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
+    prompt="List me all the projects with their description.",
+    # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
     schema=schema,
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))
