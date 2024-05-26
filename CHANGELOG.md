@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.0...v1.5.1) (2024-05-26)
+
+
+### Bug Fixes
+
+* **pdf-example:** added pdf example and coauthor ([a796169](https://github.com/VinciGit00/Scrapegraph-ai/commit/a7961691df4ac78ddb9b05e467af187d98e4bafb))
+* **schema:** added schema ([8d76c4b](https://github.com/VinciGit00/Scrapegraph-ai/commit/8d76c4b3cbb90f61cfe0062583da13ed10501ecf))
+
 ## [1.5.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.4.0...v1.5.0) (2024-05-26)
 
 
