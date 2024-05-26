@@ -1,3 +1,11 @@
+## [1.5.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.1...v1.5.2) (2024-05-26)
+
+
+### Bug Fixes
+
+* fixed typo ([54e8216](https://github.com/VinciGit00/Scrapegraph-ai/commit/54e82163f077b90422eb0ba1202167d0ed0e7814))
+* Update __init__.py ([8f2c8d5](https://github.com/VinciGit00/Scrapegraph-ai/commit/8f2c8d5d1289b0dd2417df955310b4323f2df2d2))
+
 ## [1.5.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.0...v1.5.1) (2024-05-26)
 
 
