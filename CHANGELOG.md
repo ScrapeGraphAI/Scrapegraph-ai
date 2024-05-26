@@ -1,3 +1,16 @@
+## [1.5.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.0-beta.4...v1.5.0-beta.5) (2024-05-26)
+
+
+### Features
+
+* **version:** python 3.12 is now supported 🚀 ([5fb9115](https://github.com/VinciGit00/Scrapegraph-ai/commit/5fb9115330141ac2c1dd97490284d4f1fa2c01c3))
+
+
+### Docs
+
+* **faq:** added faq section and refined installation ([545374c](https://github.com/VinciGit00/Scrapegraph-ai/commit/545374c17e9101a240fd1fbc380ce813c5aa6c2e))
+* updated requirements ([e43b801](https://github.com/VinciGit00/Scrapegraph-ai/commit/e43b8018f5f360b88c52e45ff4e1b4221386ea8e))
+
 ## [1.5.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.0-beta.3...v1.5.0-beta.4) (2024-05-25)
 
 
