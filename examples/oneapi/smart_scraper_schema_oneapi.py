@@ -1,7 +1,7 @@
 """ 
-Basic example of scraping pipeline using SmartScraper with schema
+Basic example of scraping pipeline using SmartScraper
 """
-import json
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -25,20 +25,20 @@ schema= """
     } 
 """
 
+# ************************************************
+# Define the configuration for the graph
+# *********************************************
+
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
+        "api_key": "***************************",
+        "model": "oneapi/qwen-turbo",
+        "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
-    "verbose": True,
-    "headless": False
+        "base_url": "http://127.0.0.1:11434",  # 设置 Ollama URL
+    }
 }
 
 # ************************************************
@@ -46,11 +46,16 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
-    source="https://perinim.github.io/projects/",
+    prompt="该网站为XXXXX,请提取出标题、发布时间、发布来源以及内容摘要,并以中文回答。",
+    # 也可以使用已下载的 HTML 代码的字符串
+    source="http://XXXX",
     schema=schema,
     config=graph_config
 )
 
+# ************************************************
+# Get graph execution info
+# ************************************************
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
+print(prettify_exec_info(result))
