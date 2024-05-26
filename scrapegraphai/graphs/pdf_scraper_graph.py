@@ -47,7 +47,7 @@ class PDFScraperGraph(AbstractGraph):
     """
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
-        super().__init__(prompt, config, source)
+        super().__init__(prompt, config, source, schema)
 
         self.input_key = "pdf" if source.endswith("pdf") else "pdf_dir"
 
@@ -76,6 +76,7 @@ class PDFScraperGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "schema": self.schema
             }
         )
 

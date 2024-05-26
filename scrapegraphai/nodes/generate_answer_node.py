@@ -82,28 +82,36 @@ class GenerateAnswerNode(BaseNode):
         chains_dict = {}
 
         # Use tqdm to add progress bar
-        for i, chunk in enumerate(
-            tqdm(doc, desc="Processing chunks", disable=not self.verbose)
-        ):
-            if len(doc) == 1:
+        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+            if self.node_config["schema"] is None and len(doc) == 1:
                 prompt = PromptTemplate(
                     template=template_no_chunks,
                     input_variables=["question"],
-                    partial_variables={
-                        "context": chunk.page_content,
-                        "format_instructions": format_instructions,
-                    },
-                )
-            else:
+                    partial_variables={"context": chunk.page_content,
+                                       "format_instructions": format_instructions})
+            elif self.node_config["schema"] is not None and len(doc) == 1:
+                 prompt = PromptTemplate(
+                    template=template_no_chunks_with_schema,
+                    input_variables=["question"],
+                    partial_variables={"context": chunk.page_content,
+                                       "format_instructions": format_instructions,
+                                       "schema": self.node_config["schema"]
+                                       })
+            elif self.node_config["schema"] is None and len(doc) > 1:
                 prompt = PromptTemplate(
                     template=template_chunks,
                     input_variables=["question"],
-                    partial_variables={
-                        "context": chunk.page_content,
-                        "chunk_id": i + 1,
-                        "format_instructions": format_instructions,
-                    },
-                )
+                    partial_variables={"context": chunk.page_content,
+                                        "chunk_id": i + 1,
+                                        "format_instructions": format_instructions})
+            elif self.node_config["schema"] is not None and len(doc) > 1:
+                prompt = PromptTemplate(
+                    template=template_chunks_with_schema,
+                    input_variables=["question"],
+                    partial_variables={"context": chunk.page_content,
+                                        "chunk_id": i + 1,
+                                        "format_instructions": format_instructions,
+                                        "schema": self.node_config["schema"]})
 
             # Dynamically name the chains based on their index
             chain_name = f"chunk{i+1}"

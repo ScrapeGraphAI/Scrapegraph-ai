@@ -15,7 +15,7 @@ from ..utils.logging import get_logger
 
 # Imports from the library
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
+from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf, template_chunks_pdf_with_schema, template_no_chunks_pdf_with_schema
 
 
 class GenerateAnswerPDFNode(BaseNode):
@@ -57,7 +57,7 @@ class GenerateAnswerPDFNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
-        self.llm_model = node_config["llm"]
+        self.llm_model = node_config["llm_model"]
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
