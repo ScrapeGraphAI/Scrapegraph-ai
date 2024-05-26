@@ -1,15 +1,32 @@
 """
 AbstractGraph Module
 """
+
 from abc import ABC, abstractmethod
 from typing import Optional
+import uuid
+
 from langchain_aws import BedrockEmbeddings
-from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
+from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
+
+from ..helpers import models_tokens
+from ..models import (
+    Anthropic,
+    AzureOpenAI,
+    Bedrock,
+    Gemini,
+    Groq,
+    HuggingFace,
+    Ollama,
+    OpenAI,
+)
+from ..utils.logging import set_verbosity_debug, set_verbosity_warning
+
 from ..helpers import models_tokens
 from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, DeepSeek
-from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 
 
 class AbstractGraph(ABC):
@@ -19,6 +36,7 @@ class AbstractGraph(ABC):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
+        schema (str): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client,
                         configured for generating embeddings.
@@ -29,6 +47,7 @@ class AbstractGraph(ABC):
         prompt (str): The prompt for the graph.
         config (dict): Configuration parameters for the graph.
         source (str, optional): The source of the graph.
+        schema (str, optional): The schema for the graph output.
 
     Example:
         >>> class MyGraph(AbstractGraph):
@@ -40,15 +59,21 @@ class AbstractGraph(ABC):
         >>> result = my_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict, source: Optional[str] = None):
+    def __init__(self, prompt: str, config: dict, source: Optional[str] = None, schema: Optional[str] = None):
 
         self.prompt = prompt
         self.source = source
         self.config = config
+        self.schema = schema
         self.llm_model = self._create_llm(config["llm"], chat=True)
         self.embedder_model = self._create_default_embedder(llm_config=config["llm"]
                                                             ) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
+        self.verbose = False if config is None else config.get(
+            "verbose", False)
+        self.headless = True if config is None else config.get(
+            "headless", True)
+        self.loader_kwargs = config.get("loader_kwargs", {})
 
         # Create the graph
         self.graph = self._create_graph()
@@ -56,18 +81,36 @@ class AbstractGraph(ABC):
         self.execution_info = None
 
         # Set common configuration parameters
-        self.verbose = False if config is None else config.get(
-            "verbose", False)
-        self.headless = True if config is None else config.get(
-            "headless", True)
+
+        verbose = bool(config and config.get("verbose"))
+
+        if verbose:
+            set_verbosity_debug()
+        else:
+            set_verbosity_warning()
+
+        self.headless = True if config is None else config.get("headless", True)
         self.loader_kwargs = config.get("loader_kwargs", {})
 
-        common_params = {"headless": self.headless,
-                         "verbose": self.verbose,
-                         "loader_kwargs": self.loader_kwargs,
-                         "llm_model": self.llm_model,
-                         "embedder_model": self.embedder_model}
+        common_params = {
+            "headless": self.headless,
+            "verbose": self.verbose,
+            "loader_kwargs": self.loader_kwargs,
+            "llm_model": self.llm_model,
+            "embedder_model": self.embedder_model
+            }
+        
         self.set_common_params(common_params, overwrite=False)
+
+        # set burr config
+        self.burr_kwargs = config.get("burr_kwargs", None)
+        if self.burr_kwargs is not None:
+            self.graph.use_burr = True
+            if "app_instance_id" not in self.burr_kwargs:
+                # set a random uuid for the app_instance_id to avoid conflicts
+                self.burr_kwargs["app_instance_id"] = str(uuid.uuid4())
+
+            self.graph.burr_config = self.burr_kwargs
 
     def set_common_params(self, params: dict, overwrite=False):
         """
@@ -82,22 +125,22 @@ class AbstractGraph(ABC):
 
     def _set_model_token(self, llm):
 
-        if 'Azure' in str(type(llm)):
+        if "Azure" in str(type(llm)):
             try:
                 self.model_token = models_tokens["azure"][llm.model_name]
             except KeyError:
                 raise KeyError("Model not supported")
 
-        elif 'HuggingFaceEndpoint' in str(type(llm)):
-            if 'mistral' in llm.repo_id:
+        elif "HuggingFaceEndpoint" in str(type(llm)):
+            if "mistral" in llm.repo_id:
                 try:
-                    self.model_token = models_tokens['mistral'][llm.repo_id]
+                    self.model_token = models_tokens["mistral"][llm.repo_id]
                 except KeyError:
                     raise KeyError("Model not supported")
-        elif 'Google' in str(type(llm)):
+        elif "Google" in str(type(llm)):
             try:
-                if 'gemini' in llm.model:
-                    self.model_token = models_tokens['gemini'][llm.model]
+                if "gemini" in llm.model:
+                    self.model_token = models_tokens["gemini"][llm.model]
             except KeyError:
                 raise KeyError("Model not supported")
 
@@ -115,17 +158,14 @@ class AbstractGraph(ABC):
             KeyError: If the model is not supported.
         """
 
-        llm_defaults = {
-            "temperature": 0,
-            "streaming": False
-        }
+        llm_defaults = {"temperature": 0, "streaming": False}
         llm_params = {**llm_defaults, **llm_config}
 
         # If model instance is passed directly instead of the model details
-        if 'model_instance' in llm_params:
+        if "model_instance" in llm_params:
             if chat:
-                self._set_model_token(llm_params['model_instance'])
-            return llm_params['model_instance']
+                self._set_model_token(llm_params["model_instance"])
+            return llm_params["model_instance"]
 
         # Instantiate the language model based on the model name
         if "gpt-" in llm_params["model"]:
@@ -157,7 +197,7 @@ class AbstractGraph(ABC):
                 raise KeyError("Model not supported") from exc
             return Anthropic(llm_params)
         elif "ollama" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("/")[-1]
+            llm_params["model"] = llm_params["model"].split("ollama/")[-1]
 
             # allow user to set model_tokens in config
             try:
@@ -167,6 +207,7 @@ class AbstractGraph(ABC):
                     try:
                         self.model_token = models_tokens["ollama"][llm_params["model"]]
                     except KeyError as exc:
+                        print("model not found, using default token size (8192)")
                         self.model_token = 8192
                 else:
                     self.model_token = 8192
@@ -177,44 +218,53 @@ class AbstractGraph(ABC):
         elif "hugging_face" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["hugging_face"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return HuggingFace(llm_params)
         elif "groq" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
             try:
                 self.model_token = models_tokens["groq"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return Groq(llm_params)
         elif "bedrock" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
             model_id = llm_params["model"]
-            client = llm_params.get('client', None)
+            client = llm_params.get("client", None)
             try:
                 self.model_token = models_tokens["bedrock"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return Bedrock({
-                "client": client,
-                "model_id": model_id,
-                "model_kwargs": {
-                    "temperature": llm_params["temperature"],
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
+            return Bedrock(
+                {
+                    "client": client,
+                    "model_id": model_id,
+                    "model_kwargs": {
+                        "temperature": llm_params["temperature"],
+                    },
                 }
-            })
+            )
         elif "claude-3-" in llm_params["model"]:
-            self.model_token = models_tokens["claude"]["claude3"]
+            try:
+                self.model_token = models_tokens["claude"]["claude3"]
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return Anthropic(llm_params)
         elif "deepseek" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["deepseek"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
             return DeepSeek(llm_params)
         else:
-            raise ValueError(
-                "Model provided by the configuration not supported")
+            raise ValueError("Model provided by the configuration not supported")
 
     def _create_default_embedder(self, llm_config=None) -> object:
         """
@@ -227,8 +277,9 @@ class AbstractGraph(ABC):
             ValueError: If the model is not supported.
         """
         if isinstance(self.llm_model, Gemini):
-            return GoogleGenerativeAIEmbeddings(google_api_key=llm_config['api_key'],
-                                                model="models/embedding-001")
+            return GoogleGenerativeAIEmbeddings(
+                google_api_key=llm_config["api_key"], model="models/embedding-001"
+            )
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
         elif isinstance(self.llm_model, DeepSeek):
@@ -265,15 +316,15 @@ class AbstractGraph(ABC):
         Raises:
             KeyError: If the model is not supported.
         """
-        if 'model_instance' in embedder_config:
-            return embedder_config['model_instance']
+        if "model_instance" in embedder_config:
+            return embedder_config["model_instance"]
         # Instantiate the embedding model based on the model name
         if "openai" in embedder_config["model"]:
             return OpenAIEmbeddings(api_key=embedder_config["api_key"])
         elif "azure" in embedder_config["model"]:
             return AzureOpenAIEmbeddings()
         elif "ollama" in embedder_config["model"]:
-            embedder_config["model"] = embedder_config["model"].split("/")[-1]
+            embedder_config["model"] = embedder_config["model"].split("ollama/")[-1]
             try:
                 models_tokens["ollama"][embedder_config["model"]]
             except KeyError as exc:
@@ -283,28 +334,27 @@ class AbstractGraph(ABC):
             try:
                 models_tokens["hugging_face"][embedder_config["model"]]
             except KeyError as exc:
-                raise KeyError("Model not supported")from exc
+                raise KeyError("Model not supported") from exc
             return HuggingFaceHubEmbeddings(model=embedder_config["model"])
         elif "gemini" in embedder_config["model"]:
             try:
                 models_tokens["gemini"][embedder_config["model"]]
             except KeyError as exc:
-                raise KeyError("Model not supported")from exc
+                raise KeyError("Model not supported") from exc
             return GoogleGenerativeAIEmbeddings(model=embedder_config["model"])
         elif "bedrock" in embedder_config["model"]:
             embedder_config["model"] = embedder_config["model"].split("/")[-1]
-            client = embedder_config.get('client', None)
+            client = embedder_config.get("client", None)
             try:
                 models_tokens["bedrock"][embedder_config["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return BedrockEmbeddings(client=client, model_id=embedder_config["model"])
         else:
-            raise ValueError(
-                "Model provided by the configuration not supported")
+            raise ValueError("Model provided by the configuration not supported")
 
     def get_state(self, key=None) -> dict:
-        """""
+        """ ""
         Get the final state of the graph.
 
         Args:

@@ -4,12 +4,14 @@ GenerateScraperNode Module
 
 # Imports from standard library
 from typing import List, Optional
-from tqdm import tqdm
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableParallel
+from tqdm import tqdm
+
+from ..utils.logging import get_logger
 
 # Imports from the library
 from .base_node import BaseNode
@@ -36,15 +38,24 @@ class GenerateScraperNode(BaseNode):
 
     """
 
-    def __init__(self, input: str, output: List[str], library: str, website: str, 
-                 node_config: Optional[dict]=None, node_name: str = "GenerateScraper"):
+    def __init__(
+        self,
+        input: str,
+        output: List[str],
+        library: str,
+        website: str,
+        node_config: Optional[dict] = None,
+        node_name: str = "GenerateScraper",
+    ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]
         self.library = library
         self.source = website
-        
-        self.verbose = False if node_config is None else node_config.get("verbose", False)
+
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
 
     def execute(self, state: dict) -> dict:
         """
@@ -62,8 +73,7 @@ class GenerateScraperNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
@@ -92,17 +102,20 @@ class GenerateScraperNode(BaseNode):
         """
         print("source:", self.source)
         if len(doc) > 1:
-            raise NotImplementedError("Currently GenerateScraperNode cannot handle more than 1 context chunks")
+            raise NotImplementedError(
+                "Currently GenerateScraperNode cannot handle more than 1 context chunks"
+            )
         else:
             template = template_no_chunks
 
         prompt = PromptTemplate(
             template=template,
             input_variables=["question"],
-            partial_variables={"context": doc[0],
-                               "library": self.library,
-                               "source": self.source
-                               },
+            partial_variables={
+                "context": doc[0],
+                "library": self.library,
+                "source": self.source,
+            },
         )
         map_chain = prompt | self.llm_model | output_parser
 

@@ -8,8 +8,8 @@ from typing import List, Optional
 
 from tqdm.asyncio import tqdm
 
+from ..utils.logging import get_logger
 from .base_node import BaseNode
-
 
 _default_batchsize = 16
 
@@ -59,8 +59,9 @@ class GraphIteratorNode(BaseNode):
         """
         batchsize = self.node_config.get("batchsize", _default_batchsize)
 
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node with batchsize {batchsize} ---")
+        self.logger.info(
+            f"--- Executing {self.node_name} Node with batchsize {batchsize} ---"
+        )
 
         try:
             eventloop = asyncio.get_event_loop()
@@ -104,7 +105,12 @@ class GraphIteratorNode(BaseNode):
         if graph_instance is None:
             raise ValueError("graph instance is required for concurrent execution")
 
-        # sets the prompt for the graph instance
+        # Assign depth level to the graph
+        if "graph_depth" in graph_instance.config:
+            graph_instance.config["graph_depth"] += 1
+        else:
+            graph_instance.config["graph_depth"] = 1
+
         graph_instance.prompt = user_prompt
 
         participants = []

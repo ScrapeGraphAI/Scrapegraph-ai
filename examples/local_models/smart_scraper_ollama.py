@@ -20,6 +20,7 @@ graph_config = {
         # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
     "verbose": True,
+    "headless": False
 }
 
 # ************************************************

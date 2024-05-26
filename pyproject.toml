@@ -1,7 +1,9 @@
 [project]
 name = "scrapegraphai"
 
-version = "1.4.0"
+
+version = "1.5.0b5"
+
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
@@ -10,7 +12,6 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 dependencies = [
-    # python = ">=3.9, <3.12"
     "langchain==0.1.15",
     "langchain-openai==0.1.6",
     "langchain-google-genai==1.0.3",
@@ -29,14 +30,14 @@ dependencies = [
     "free-proxy==1.1.1",
     "playwright==1.43.0",
     "google==3.0.0",
-    "yahoo-search-py==0.3",
+    "undetected-playwright==0.3.0",
 ]
 
 license = "MIT"
 readme = "README.md"
-homepage = "https://scrapegraph-ai.readthedocs.io/"
+homepage = "https://scrapegraphai.com/"
 repository = "https://github.com/VinciGit00/Scrapegraph-ai"
-documentation = "https://scrapegraph-doc.onrender.com/"
+documentation = "https://scrapegraph-ai.readthedocs.io/en/latest/"
 keywords = [
     "scrapegraph",
     "scrapegraphai",
@@ -62,7 +63,11 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-requires-python = ">= 3.9"
+requires-python = ">=3.9,<4.0"
+
+[project.optional-dependencies]
+burr = ["burr[start]==0.19.1"]
+docs = ["sphinx==6.0", "furo==2024.5.6"]
 
 [build-system]
 requires = ["hatchling"]
@@ -72,12 +77,7 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "pytest==8.0.0",
-    "pytest-mock==3.14.0"
+    "pytest-mock==3.14.0",
+    "-e file:.[burr]",
+    "-e file:.[docs]",
 ]
-
-[tool.rye.group.docs]
-optional = true
-
-[tool.rye.group.docs.dependencies]
-sphinx = "7.1.2"
-sphinx-rtd-theme = "2.0.0"

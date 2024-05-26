@@ -5,6 +5,7 @@ Models token
 models_tokens = {
     "openai": {
         "gpt-3.5-turbo-0125": 16385,
+        "gpt-3.5": 4096,
         "gpt-3.5-turbo": 4096,
         "gpt-3.5-turbo-1106": 16385,
         "gpt-3.5-turbo-instruct": 4096,
@@ -23,7 +24,10 @@ models_tokens = {
     "azure": {
         "gpt-3.5-turbo": 4096,
         "gpt-4": 8192,
-        "gpt-4-32k": 32768
+        "gpt-4-0613": 8192,
+        "gpt-4-32k": 32768,
+        "gpt-4-32k-0613": 32768,
+        "gpt-4o": 128000,
     },
     "gemini": {
         "gemini-pro": 128000,
@@ -47,6 +51,13 @@ models_tokens = {
         "llava:34b": 4096,
         "llava_next": 4096,
         "mistral": 8192,
+        "falcon": 2048,
+        "codellama": 16000,
+        "dolphin-mixtral": 32000,
+        "mistral-openorca": 32000,
+        "stablelm-zephyr": 8192,
+        "command-r-plus": 12800,
+        "command-r": 12800,
         "mistral:7b-instruct": 32768,
         "mistral-openorca": 32000,
         "mixtral:8x22b-instruct": 65536,
@@ -95,6 +106,9 @@ models_tokens = {
         "mistral.mistral-7b-instruct-v0:2": 32768,
         "mistral.mixtral-8x7b-instruct-v0:1": 32768,
         "mistral.mistral-large-2402-v1:0": 32768,
+		# Embedding models
+		"amazon.titan-embed-text-v1": 8000,
+		"amazon.titan-embed-text-v2:0": 8000,
         "cohere.embed-english-v3": 512,
         "cohere.embed-multilingual-v3": 512
     },
@@ -131,7 +145,8 @@ models_tokens = {
         "cognitivecomputations/dolphin-2.5-mixtral-8x7b": 32768,
         "TheBloke/dolphin-2.7-mixtral-8x7b-GGUF": 32768,
         "deepseek-ai/DeepSeek-V2": 131072,
-        "deepseek-ai/DeepSeek-V2-Chat": 131072
+        "deepseek-ai/DeepSeek-V2-Chat": 131072,
+        "claude-3-haiku": 200000
     },
     "deepseek": {
         "deepseek-chat": 32768,

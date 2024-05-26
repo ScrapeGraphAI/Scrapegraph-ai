@@ -22,10 +22,6 @@ The reference page for Scrapegraph-ai is available on the official page of pypy:
 ```bash
 pip install scrapegraphai
 ```
-you will also need to install Playwright for javascript-based scraping:
-```bash
-playwright install
-```
 
 **Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
 
@@ -49,6 +45,7 @@ There are three main scraping pipelines that can be used to extract information 
 - `SmartScraperGraph`: single-page scraper that only needs a user prompt and an input source;
 - `SearchGraph`: multi-page scraper that extracts information from the top n search results of a search engine;
 - `SpeechGraph`: single-page scraper that extracts information from a website and generates an audio file.
+- `SmartScraperMultiGraph`: multiple page scraper given a single prompt
 
 It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
 
@@ -171,7 +168,7 @@ Feel free to contribute and join our Discord server to discuss with us improveme
 
 Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
-[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/gkxQDAjfeX)
+[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
@@ -182,13 +179,14 @@ Wanna visualize the roadmap in a more interactive way? Check out the [markmap](h
 
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
+
 ## Sponsors
 <div style="text-align: center;">
   <a href="https://serpapi.com?utm_source=scrapegraphai">
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
   </a>
   <a href="https://dashboard.statproxies.com/?refferal=scrapegraph">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 10%;">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 15%;">
   </a>
 </div>
 

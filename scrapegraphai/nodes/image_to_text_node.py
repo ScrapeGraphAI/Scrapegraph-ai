@@ -3,6 +3,8 @@ ImageToTextNode Module
 """
 
 from typing import List, Optional
+
+from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 
@@ -22,16 +24,18 @@ class ImageToTextNode(BaseNode):
     """
 
     def __init__(
-            self,
-            input: str,
-            output: List[str],
-            node_config: Optional[dict]=None,
-            node_name: str = "ImageToText",
-        ):
+        self,
+        input: str,
+        output: List[str],
+        node_config: Optional[dict] = None,
+        node_name: str = "ImageToText",
+    ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = False if node_config is None else node_config.get("verbose", False)
+        self.verbose = (
+            False if node_config is None else node_config.get("verbose", False)
+        )
         self.max_images = 5 if node_config is None else node_config.get("max_images", 5)
 
     def execute(self, state: dict) -> dict:
@@ -47,9 +51,8 @@ class ImageToTextNode(BaseNode):
             dict: The updated state with the input key containing the text extracted from the image.
         """
 
-        if self.verbose:
-            print(f"--- Executing {self.node_name} Node ---")
-            
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
+
         input_keys = self.get_input_keys(state)
         input_data = [state[key] for key in input_keys]
         urls = input_data[0]
@@ -62,9 +65,9 @@ class ImageToTextNode(BaseNode):
         # Skip the image-to-text conversion
         if self.max_images < 1:
             return state
-        
+
         img_desc = []
-        for url in urls[:self.max_images]:
+        for url in urls[: self.max_images]:
             try:
                 text_answer = self.llm_model.run(url)
             except Exception as e:

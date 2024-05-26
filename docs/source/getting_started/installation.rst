@@ -25,11 +25,18 @@ The library is available on PyPI, so it can be installed using the following com
    
    It is higly recommended to install the library in a virtual environment (conda, venv, etc.)
 
-If your clone the repository, you can install the library using `poetry <https://python-poetry.org/docs/>`_:
+If your clone the repository, it is recommended to use a package manager like `rye <https://rye.astral.sh/>`_.
+To install the library using rye, you can run the following command:
 
 .. code-block:: bash
 
-   poetry install
+   rye pin 3.10
+   rye sync
+   rye build
+
+.. caution::
+   
+      **Rye** must be installed first by following the instructions on the `official website <https://rye.astral.sh/>`_.
 
 Additionally on Windows when using WSL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

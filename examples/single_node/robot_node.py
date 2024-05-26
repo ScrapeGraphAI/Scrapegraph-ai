@@ -11,7 +11,7 @@ from scrapegraphai.nodes import RobotsNode
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
+        "model_name": "ollama/llama3",
         "temperature": 0,
         "streaming": True
     },
