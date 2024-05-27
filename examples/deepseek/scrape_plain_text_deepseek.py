@@ -3,13 +3,9 @@ Basic example of scraping pipeline using SmartScraper from text
 """
 
 import os
-import json
-
 from dotenv import load_dotenv
-
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-
 load_dotenv()
 
 # ************************************************
@@ -28,29 +24,28 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # Define the configuration for the graph
 # ************************************************
 
+deepseek_key = os.getenv("DEEPSEEK_APIKEY")
+
 graph_config = {
     "llm": {
-        "client": "client_name",
-        "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
-        "temperature": 0.0
+        "model": "deepseek-chat",
+        "openai_api_key": deepseek_key,
+        "openai_api_base": 'https://api.deepseek.com/v1',
     },
-    "embeddings": {
-        "model": "bedrock/cohere.embed-multilingual-v3"
-    }
+    "verbose": True,
 }
-
 # ************************************************
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description.",
+    prompt="List me all the news with their description.",
     source=text,
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
 
 # ************************************************
 # Get graph execution info
