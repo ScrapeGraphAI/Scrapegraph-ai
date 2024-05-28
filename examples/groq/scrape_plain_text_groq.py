@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using SmartScraper from text
 """
 
 import os
@@ -9,13 +9,23 @@ from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
+# ************************************************
+# Read the text file
+# ************************************************
+
+FILE_NAME = "inputs/plain_html_example.txt"
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, FILE_NAME)
+
+# It could be also a http request using the request model
+with open(file_path, 'r', encoding="utf-8") as file:
+    text = file.read()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
 groq_key = os.getenv("GROQ_APIKEY")
-openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
@@ -23,10 +33,7 @@ graph_config = {
         "api_key": groq_key,
         "temperature": 0
     },
-    "embeddings": {
-        "api_key": openai_key,
-        "model": "openai",
-    },
+    "verbose": True,
     "headless": False
 }
 
@@ -36,8 +43,7 @@ graph_config = {
 
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description.",
-    # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects/",
+    source=text,
     config=graph_config
 )
 

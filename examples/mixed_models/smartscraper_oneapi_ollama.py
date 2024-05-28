@@ -14,6 +14,10 @@ graph_config = {
         "api_key": "***************************",
         "model": "oneapi/qwen-turbo",
         "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
+    },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "base_url": "http://127.0.0.1:11434",  # 设置 Ollama URL
     }
 }
 

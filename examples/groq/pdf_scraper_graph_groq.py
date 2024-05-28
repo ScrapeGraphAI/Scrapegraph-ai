@@ -1,3 +1,6 @@
+"""
+Example of pdf_scraper_graph 
+"""
 import os, json
 from dotenv import load_dotenv
 from scrapegraphai.graphs import PDFScraperGraph
@@ -8,16 +11,17 @@ load_dotenv()
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
-openai_key = os.getenv("OPENAI_APIKEY")
+groq_key = os.getenv("GROQ_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
     "verbose": True,
 }
+
 
 source = """
     The Divine Comedy, Italian La Divina Commedia, original name La commedia, long narrative poem written in Italian 
