@@ -17,7 +17,7 @@ Just say which information you want to extract and the library will do it for yo
 
 ## 🚀 Quick install
 
-The reference page for Scrapegraph-ai is available on the official page of pypy: [pypi](https://pypi.org/project/scrapegraphai/).
+The reference page for Scrapegraph-ai is available on the official page of PyPI: [pypi](https://pypi.org/project/scrapegraphai/).
 
 ```bash
 pip install scrapegraphai
