@@ -28,6 +28,7 @@ with open(file_path, 'r', encoding="utf-8") as file:
 
 graph_config = {
     "llm": {
+        "client": "client_name",
         "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
         "temperature": 0.0
     },
@@ -59,4 +60,3 @@ print(prettify_exec_info(graph_exec_info))
 # Save to json or csv
 convert_to_csv(result, "result")
 convert_to_json(result, "result")
-

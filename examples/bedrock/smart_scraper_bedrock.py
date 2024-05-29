@@ -14,15 +14,15 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
-
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-4o",
+        "client": "client_name",
+        "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
+        "temperature": 0.0
     },
-    "verbose": True,
-    "headless": False,
+    "embeddings": {
+        "model": "bedrock/cohere.embed-multilingual-v3"
+    }
 }
 
 # ************************************************

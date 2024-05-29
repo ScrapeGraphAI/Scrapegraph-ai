@@ -28,8 +28,6 @@ llm_model_instance = HuggingFaceEndpoint(
 )
 
 
-
-
 embedder_model_instance = HuggingFaceInferenceAPIEmbeddings(
     api_key=HUGGINGFACEHUB_API_TOKEN, model_name="sentence-transformers/all-MiniLM-l6-v2"
 )

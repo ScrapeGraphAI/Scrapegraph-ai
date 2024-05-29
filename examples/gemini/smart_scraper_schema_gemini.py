@@ -1,33 +1,44 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using SmartScraper with schema
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-
+from scrapegraphai.graphs import SmartScraperGraph
 load_dotenv()
 
+# ************************************************
+# Define the output schema for the graph
+# ************************************************
+schema= """
+    { 
+    "Projects": [
+        "Project #": 
+            { 
+                "title": "...", 
+                "description": "...", 
+            }, 
+        "Project #": 
+            { 
+                "title": "...", 
+                "description": "...", 
+            } 
+        ] 
+    } 
+"""
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-groq_key = os.getenv("GROQ_APIKEY")
-openai_key = os.getenv("OPENAI_APIKEY")
+gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "api_key": gemini_key,
+        "model": "gemini-pro",
     },
-    "embeddings": {
-        "api_key": openai_key,
-        "model": "openai",
-    },
-    "headless": False
 }
 
 # ************************************************
@@ -35,9 +46,10 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description.",
+    prompt="List me all the news with their description.",
     # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects/",
+    source="https://www.wired.com",
+    schema=schema,
     config=graph_config
 )
 

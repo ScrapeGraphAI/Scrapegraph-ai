@@ -40,8 +40,6 @@ certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
-colorama==0.4.6
-    # via tqdm
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
@@ -89,7 +87,6 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 groq==0.8.0
     # via langchain-groq
 grpcio==1.64.0
@@ -287,7 +284,7 @@ undetected-playwright==0.3.0
     # via scrapegraphai
 uritemplate==4.1.1
     # via google-api-python-client
-urllib3==2.2.1
+urllib3==1.26.18
     # via botocore
     # via requests
 yarl==1.9.4

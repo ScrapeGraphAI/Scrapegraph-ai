@@ -57,6 +57,7 @@ class FetchNode(BaseNode):
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
         )
+        self.slow_mo = (0 if node_config is None else  node_config.get("slow_mo", 0))
 
     def execute(self, state):
         """
@@ -156,7 +157,7 @@ class FetchNode(BaseNode):
             if self.node_config is not None:
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
-            loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
+            loader = ChromiumLoader([source], headless=self.headless, slow_mo=self.slow_mo, **loader_kwargs)
             document = loader.load()
 
             title, minimized_body, link_urls, image_urls = cleanup_html(

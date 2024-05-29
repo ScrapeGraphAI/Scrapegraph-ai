@@ -29,6 +29,7 @@ class ChromiumLoader(BaseLoader):
         backend: str = "playwright",
         headless: bool = True,
         proxy: Optional[Proxy] = None,
+        slow_mo: Optional[int] = None,
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
@@ -53,6 +54,7 @@ class ChromiumLoader(BaseLoader):
         self.backend = backend
         self.browser_config = kwargs
         self.headless = headless
+        self.slow_mo = slow_mo 
         self.proxy = parse_or_search_proxy(proxy) if proxy else None
         self.urls = urls
 
@@ -74,7 +76,8 @@ class ChromiumLoader(BaseLoader):
         results = ""
         async with async_playwright() as p:
             browser = await p.chromium.launch(
-                headless=self.headless, proxy=self.proxy, **self.browser_config
+                headless=self.headless, proxy=self.proxy,
+                slow_mo= self.slow_mo, **self.browser_config
             )
             try:
                 context = await browser.new_context()

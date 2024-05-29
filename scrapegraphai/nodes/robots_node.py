@@ -4,16 +4,13 @@ RobotsNode Module
 
 from typing import List, Optional
 from urllib.parse import urlparse
-
 from langchain_community.document_loaders import AsyncChromiumLoader
-from langchain.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser
-
+from langchain.prompts import PromptTemplate
+from ..docloaders import ChromiumLoader
 from .base_node import BaseNode
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
-from langchain_community.document_loaders import AsyncChromiumLoader
-
 from ..helpers import robots_dictionary
 from ..utils.logging import get_logger
 from .base_node import BaseNode
@@ -109,7 +106,7 @@ class RobotsNode(BaseNode):
         else:
             parsed_url = urlparse(source)
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
-            loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
+            loader =  ChromiumLoader(base_url, headless=True, slow_mo=0)
             document = loader.load()
             if "ollama" in self.llm_model["model_name"]:
                 self.llm_model["model_name"] = self.llm_model["model_name"].split("/")[
