@@ -9,18 +9,31 @@ from langchain_openai import OpenAIEmbeddings
 from scrapegraphai.models import OpenAI
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+from langchain_community.llms import HuggingFaceEndpoint
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+
 load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
+
+HUGGINGFACEHUB_API_TOKEN = os.getenv('HUGGINGFACEHUB_API_TOKEN')
+
+repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
+
+llm_model_instance = HuggingFaceEndpoint(
+    repo_id=repo_id, max_length=128, temperature=0.5, token=HUGGINGFACEHUB_API_TOKEN
+)
+
+embedder_model_instance = HuggingFaceInferenceAPIEmbeddings(
+    api_key=HUGGINGFACEHUB_API_TOKEN, model_name="sentence-transformers/all-MiniLM-l6-v2"
+)
+
 graph_config = {
-    "llm": {
-        "api_key": os.getenv("ANTHROPIC_API_KEY"),
-        "model": "claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+    "llm": {"model_instance": llm_model_instance},
+    "embeddings": {"model_instance": embedder_model_instance}
 }
 
 # ************************************************

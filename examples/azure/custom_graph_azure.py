@@ -4,9 +4,9 @@ Example of custom graph using existing nodes
 
 import os
 from dotenv import load_dotenv
-
 from langchain_openai import OpenAIEmbeddings
-from scrapegraphai.models import OpenAI
+from langchain_openai import AzureChatOpenAI
+from langchain_openai import AzureOpenAIEmbeddings
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
 load_dotenv()
@@ -15,27 +15,34 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
+llm_model_instance = AzureChatOpenAI(
+    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
+)
+
+embedder_model_instance = AzureOpenAIEmbeddings(
+    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
+    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
+)
+
+# ************************************************
+# Create the JSONScraperGraph instance and run it
+# ************************************************
+
 graph_config = {
-    "llm": {
-        "api_key": os.getenv("ANTHROPIC_API_KEY"),
-        "model": "claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+    "llm": {"model_instance": llm_model_instance},
+    "embeddings": {"model_instance": embedder_model_instance}
 }
-
-# ************************************************
-# Define the graph nodes
-# ************************************************
-
-llm_model = OpenAI(graph_config["llm"])
-embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
-
 # define the nodes for the graph
 robot_node = RobotsNode(
     input="url",
     output=["is_scrapable"],
     node_config={
-        "llm_model": llm_model,
+        "llm_model": llm_model_instance,
         "force_scraping": True,
         "verbose": True,
         }
@@ -61,8 +68,8 @@ rag_node = RAGNode(
     input="user_prompt & (parsed_doc | doc)",
     output=["relevant_chunks"],
     node_config={
-        "llm_model": llm_model,
-        "embedder_model": embedder,
+        "llm_model": llm_model_instance,
+        "embedder_model": embedder_model_instance,
         "verbose": True,
     }
 )
@@ -70,7 +77,7 @@ generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
     node_config={
-        "llm_model": llm_model,
+        "llm_model": llm_model_instance,
         "verbose": True,
     }
 )

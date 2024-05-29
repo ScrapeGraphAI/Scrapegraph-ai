@@ -1,51 +1,44 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using ScriptCreatorGraph
 """
 
-import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
+
 load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-groq_key = os.getenv("GROQ_APIKEY")
-
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "api_key": "***************************",
+        "model": "oneapi/qwen-turbo",
+        "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
-    "headless": False,
-    "verbose": True,
+    "library": "beautifulsoup"
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the ScriptCreatorGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description and the author.",
+script_creator_graph = ScriptCreatorGraph(
+    prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects",
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
+result = script_creator_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = smart_scraper_graph.get_execution_info()
+graph_exec_info = script_creator_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
+

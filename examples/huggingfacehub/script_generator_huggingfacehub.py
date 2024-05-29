@@ -1,38 +1,19 @@
 """ 
-Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
+Basic example of scraping pipeline using ScriptCreatorGraph
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
 from langchain_community.llms import HuggingFaceEndpoint
 from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 
-# ************************************************
-# Define the output schema for the graph
-# ************************************************
-
-schema= """
-    { 
-    "Projects": [
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            }, 
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            } 
-        ] 
-    } 
-"""
-
-## required environment variable in .env
-#HUGGINGFACEHUB_API_TOKEN
 load_dotenv()
+
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
 
 HUGGINGFACEHUB_API_TOKEN = os.getenv('HUGGINGFACEHUB_API_TOKEN')
 # ************************************************
@@ -57,19 +38,24 @@ graph_config = {
     "llm": {"model_instance": llm_model_instance},
     "embeddings": {"model_instance": embedder_model_instance}
 }
+# ************************************************
+# Create the ScriptCreatorGraph instance and run it
+# ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
-    source="https://perinim.github.io/projects/",
-    schema=schema,
+script_creator_graph = ScriptCreatorGraph(
+    prompt="List me all the projects with their description.",
+    # also accepts a string with the already downloaded HTML code
+    source="https://perinim.github.io/projects",
     config=graph_config
 )
-result = smart_scraper_graph.run()
+
+result = script_creator_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = smart_scraper_graph.get_execution_info()
+graph_exec_info = script_creator_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
+

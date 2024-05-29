@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
+Basic example of scraping pipeline using SmartScraper from text
 """
 
 import os
@@ -9,35 +9,25 @@ from scrapegraphai.utils import prettify_exec_info
 from langchain_community.llms import HuggingFaceEndpoint
 from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 
-# ************************************************
-# Define the output schema for the graph
-# ************************************************
-
-schema= """
-    { 
-    "Projects": [
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            }, 
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            } 
-        ] 
-    } 
-"""
-
-## required environment variable in .env
-#HUGGINGFACEHUB_API_TOKEN
 load_dotenv()
 
+# ************************************************
+# Read the text file
+# ************************************************
+
+FILE_NAME = "inputs/plain_html_example.txt"
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, FILE_NAME)
+
+# It could be also a http request using the request model
+with open(file_path, 'r', encoding="utf-8") as file:
+    text = file.read()
+
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
 HUGGINGFACEHUB_API_TOKEN = os.getenv('HUGGINGFACEHUB_API_TOKEN')
-# ************************************************
-# Initialize the model instances
-# ************************************************
 
 repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
 
@@ -58,12 +48,16 @@ graph_config = {
     "embeddings": {"model_instance": embedder_model_instance}
 }
 
+# ************************************************
+# Create the SmartScraperGraph instance and run it
+# ************************************************
+
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
-    source="https://perinim.github.io/projects/",
-    schema=schema,
+    prompt="List me all the projects with their description.",
+    source=text,
     config=graph_config
 )
+
 result = smart_scraper_graph.run()
 print(result)
 

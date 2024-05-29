@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
+Basic example of scraping pipeline using SmartScraper from text
 """
 
 import os
@@ -7,49 +7,39 @@ from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
-
-# required environment variables in .env
-# HUGGINGFACEHUB_API_TOKEN
-# ANTHROPIC_API_KEY
 load_dotenv()
 
 # ************************************************
-# Define the output schema for the graph
+# Read the text file
 # ************************************************
 
-schema= """
-    { 
-    "Projects": [
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            }, 
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            } 
-        ] 
-    } 
-"""
+FILE_NAME = "inputs/plain_html_example.txt"
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, FILE_NAME)
+
+# It could be also a http request using the request model
+with open(file_path, 'r', encoding="utf-8") as file:
+    text = file.read()
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Define the configuration for the graph
 # ************************************************
 
 graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
         "model": "claude-3-haiku-20240307",
-        "max_tokens": 4000},
+        "max_tokens": 4000
+        },
 }
 
+# ************************************************
+# Create the SmartScraperGraph instance and run it
+# ************************************************
+
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
-    # also accepts a string with the already downloaded HTML code
-    schema=schema,
-    source="https://perinim.github.io/projects/",
+    prompt="List me all the projects with their description.",
+    source=text,
     config=graph_config
 )
 
