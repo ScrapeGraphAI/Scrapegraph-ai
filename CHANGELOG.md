@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.2...v1.5.3) (2024-05-30)
+
+
+### Bug Fixes
+
+* typo in generate_screper_node ([c4ce361](https://github.com/VinciGit00/Scrapegraph-ai/commit/c4ce36111f17526fd167c613a58ae09e361b62e1))
+
 ## [1.5.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.1...v1.5.2) (2024-05-26)
 
 
