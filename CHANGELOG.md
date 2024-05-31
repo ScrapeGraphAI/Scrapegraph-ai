@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.3...v1.5.4) (2024-05-31)
+
+
+### Bug Fixes
+
+* **3.9:** python 3.9 logging fix ([8be27ba](https://github.com/VinciGit00/Scrapegraph-ai/commit/8be27bad8022e75379309deccc8f6878ee1a362d))
+
 ## [1.5.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.2...v1.5.3) (2024-05-30)
 
 
