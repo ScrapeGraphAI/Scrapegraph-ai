@@ -1,16 +1,18 @@
-## [1.5.3-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.3-beta.1...v1.5.3-beta.2) (2024-05-30)
+## [1.5.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.3...v1.5.4) (2024-05-31)
 
-
-### Bug Fixes
-
-* typo in prompt ([4639f0c](https://github.com/VinciGit00/Scrapegraph-ai/commit/4639f0cac5029c6802a6caded7103d247f4f06dd))
-
-## [1.5.3-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.2...v1.5.3-beta.1) (2024-05-29)
 
 
 ### Bug Fixes
 
-* oneapi model ([4fcb990](https://github.com/VinciGit00/Scrapegraph-ai/commit/4fcb9902fe4c147c61a1622a919ade338c03b8d8))
+* **3.9:** python 3.9 logging fix ([8be27ba](https://github.com/VinciGit00/Scrapegraph-ai/commit/8be27bad8022e75379309deccc8f6878ee1a362d))
+
+## [1.5.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.2...v1.5.3) (2024-05-30)
+
+
+
+### Bug Fixes
+
+* typo in generate_screper_node ([c4ce361](https://github.com/VinciGit00/Scrapegraph-ai/commit/c4ce36111f17526fd167c613a58ae09e361b62e1))
 
 ## [1.5.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.1...v1.5.2) (2024-05-26)
 
