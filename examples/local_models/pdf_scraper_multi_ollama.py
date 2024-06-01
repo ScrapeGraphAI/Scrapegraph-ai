@@ -1,6 +1,7 @@
 """
 Module for showing how PDFScraper multi works
 """
+import json
 from scrapegraphai.graphs import PdfScraperMultiGraph
 
 graph_config = {
@@ -56,14 +57,16 @@ Independent Variable (IV): Exposure to social media.
 Dependent Variable (DV): Mental health outcomes.
 Exogenous Shock: staggered introduction of Facebook across U.S. colleges.
 """
-results = []
-for source in sources:
-    pdf_scraper_graph = PdfScraperMultiGraph(
-        prompt=prompt,
-        source=source,
-        config=graph_config
-    )
-    result = pdf_scraper_graph.run()
-    results.append(result)
+# *******************************************************
+# Create the SmartScraperMultiGraph instance and run it
+# *******************************************************
 
-print(results)
+multiple_search_graph = PdfScraperMultiGraph(
+    prompt=prompt,
+    source= sources,
+    schema=None,
+    config=graph_config
+)
+
+result = multiple_search_graph.run()
+print(json.dumps(result, indent=4))
