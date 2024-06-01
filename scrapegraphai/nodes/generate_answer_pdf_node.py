@@ -48,7 +48,7 @@ class GenerateAnswerPDFNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateAnswer",
+        node_name: str = "GenerateAnswerPDF",
     ):
         """
         Initializes the GenerateAnswerNodePDF with a language model client and a node name.

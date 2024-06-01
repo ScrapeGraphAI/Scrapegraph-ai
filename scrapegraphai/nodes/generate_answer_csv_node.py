@@ -49,7 +49,7 @@ class GenerateAnswerCSVNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateAnswer",
+        node_name: str = "GenerateAnswerCSV",
     ):
         """
         Initializes the GenerateAnswerNodeCsv with a language model client and a node name.
