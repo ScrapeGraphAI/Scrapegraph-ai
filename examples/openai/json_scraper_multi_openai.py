@@ -3,22 +3,20 @@ Module for showing how PDFScraper multi works
 """
 import os
 import json
+from dotenv import load_dotenv
 from scrapegraphai.graphs import JSONScraperMultiGraph
+
+load_dotenv()
+
+openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        "model_tokens": 4000,
+        "api_key": openai_key,
+        "model": "gpt-3.5-turbo",
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-    },
-    "verbose": True,
-    "headless": False,
 }
+
 FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)

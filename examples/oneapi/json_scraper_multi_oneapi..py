@@ -7,17 +7,10 @@ from scrapegraphai.graphs import JSONScraperMultiGraph
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        "model_tokens": 4000,
-    },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-    },
-    "verbose": True,
-    "headless": False,
+        "api_key": "***************************",
+        "model": "oneapi/qwen-turbo",
+        "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
+    }
 }
 FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
