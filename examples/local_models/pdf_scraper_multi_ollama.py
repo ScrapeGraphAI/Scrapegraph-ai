@@ -16,7 +16,6 @@ graph_config = {
         "temperature": 0,
     },
     "verbose": True,
-    "headless": False,
 }
 
 # Covert to list

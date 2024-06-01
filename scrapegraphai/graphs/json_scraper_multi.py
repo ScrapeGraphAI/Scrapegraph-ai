@@ -1,5 +1,5 @@
 """ 
-JsonScraperMultiGraph Module
+JSONScraperMultiGraph Module
 """
 
 from copy import copy, deepcopy
@@ -15,9 +15,9 @@ from ..nodes import (
 )
 
 
-class JsonScraperMultiGraph(AbstractGraph):
+class JSONScraperMultiGraph(AbstractGraph):
     """ 
-    JsonScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and generates answers to a given prompt.
+    JSONScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
 
     Attributes:

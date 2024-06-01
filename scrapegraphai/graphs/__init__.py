@@ -17,4 +17,4 @@ from .omni_scraper_graph import OmniScraperGraph
 from .omni_search_graph import OmniSearchGraph
 from .smart_scraper_multi_graph import SmartScraperMultiGraph
 from .pdf_scraper_multi import PdfScraperMultiGraph
-from .json_scraper_multi import JsonScraperMultiGraph
+from .json_scraper_multi import JSONScraperMultiGraph
