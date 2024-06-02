@@ -1,3 +1,10 @@
+## [1.6.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.5-beta.1...v1.6.0-beta.1) (2024-06-02)
+
+
+### Features
+
+* add forcing format as json ([5cfc101](https://github.com/VinciGit00/Scrapegraph-ai/commit/5cfc10178abf0b7a3e0b2229512396e243305438))
+
 ## [1.5.5-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.4...v1.5.5-beta.1) (2024-05-31)
 
 
