@@ -44,6 +44,7 @@ class GenerateAnswerOmniNode(BaseNode):
         super().__init__(node_name, "node", input, output, 3, node_config)
 
         self.llm_model = node_config["llm_model"]
+        self.llm_model.format="json"
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
