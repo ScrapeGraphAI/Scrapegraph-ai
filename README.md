@@ -164,6 +164,16 @@ print(result)
 
 The output will be an audio file with the summary of the projects on the page.
 
+## Sponsors
+<div style="text-align: center;">
+  <a href="https://serpapi.com?utm_source=scrapegraphai">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
+  </a>
+  <a href="https://dashboard.statproxies.com/?refferal=scrapegraph">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 15%;">
+  </a>
+</div>
+
 ## 🤝 Contributing
 
 Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
@@ -181,16 +191,6 @@ Wanna visualize the roadmap in a more interactive way? Check out the [markmap](h
 
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
-
-## Sponsors
-<div style="text-align: center;">
-  <a href="https://serpapi.com?utm_source=scrapegraphai">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
-  </a>
-  <a href="https://dashboard.statproxies.com/?refferal=scrapegraph">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 15%;">
-  </a>
-</div>
 
 ## 🎓 Citations
 If you have used our library for research purposes please quote us with the following reference:
