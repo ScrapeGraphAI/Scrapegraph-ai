@@ -48,7 +48,7 @@ class GenerateAnswerPDFNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateAnswer",
+        node_name: str = "GenerateAnswerPDF",
     ):
         """
         Initializes the GenerateAnswerNodePDF with a language model client and a node name.
@@ -96,9 +96,7 @@ class GenerateAnswerPDFNode(BaseNode):
         output_parser = JsonOutputParser()
         format_instructions = output_parser.get_format_instructions()
 
-       
         chains_dict = {}
-
         # Use tqdm to add progress bar
         for i, chunk in enumerate(
             tqdm(doc, desc="Processing chunks", disable=not self.verbose)
@@ -108,7 +106,7 @@ class GenerateAnswerPDFNode(BaseNode):
                     template=template_no_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context":chunk,
                         "format_instructions": format_instructions,
                     },
                 )
@@ -117,7 +115,7 @@ class GenerateAnswerPDFNode(BaseNode):
                     template=template_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context":chunk,
                         "chunk_id": i + 1,
                         "format_instructions": format_instructions,
                     },

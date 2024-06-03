@@ -10,7 +10,6 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
-
 from ..utils.logging import get_logger
 
 # Imports from the library
