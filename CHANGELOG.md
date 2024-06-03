@@ -1,3 +1,10 @@
+## [1.6.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.2...v1.6.0-beta.3) (2024-06-03)
+
+
+### Features
+
+* removed a bug ([8de720d](https://github.com/VinciGit00/Scrapegraph-ai/commit/8de720d37958e31b73c5c89bc21f474f3303b42b))
+
 ## [1.6.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.1...v1.6.0-beta.2) (2024-06-03)
 
 
