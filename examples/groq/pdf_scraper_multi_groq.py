@@ -15,6 +15,11 @@ graph_config = {
         "api_key": groq_key,
         "temperature": 0
     },
+     "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
     "library": "beautifulsoup"
 }
 
