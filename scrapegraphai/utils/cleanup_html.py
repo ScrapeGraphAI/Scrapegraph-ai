@@ -35,11 +35,7 @@ def cleanup_html(html_content: str, base_url: str) -> str:
         tag.extract()
 
     # Links extraction
-    links = soup.find_all('a')
-    link_urls = []
-    for link in links:
-        if 'href' in link.attrs:
-            link_urls.append(urljoin(base_url, link['href']))
+    link_urls = [urljoin(base_url, link['href']) for link in soup.find_all('a', href=True)]
 
     # Images extraction
     images = soup.find_all('img')
