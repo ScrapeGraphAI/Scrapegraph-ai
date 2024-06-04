@@ -1,3 +1,10 @@
+## [1.6.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.4...v1.6.0-beta.5) (2024-06-04)
+
+
+### Features
+
+* refactoring of an in if ([244aada](https://github.com/VinciGit00/Scrapegraph-ai/commit/244aada2de1f3bc88782fa90e604e8b936b79aa4))
+
 ## [1.6.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.3...v1.6.0-beta.4) (2024-06-03)
 
 
