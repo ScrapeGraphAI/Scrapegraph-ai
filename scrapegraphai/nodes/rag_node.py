@@ -3,6 +3,7 @@ RAGNode Module
 """
 
 from typing import List, Optional
+import os
 
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
@@ -98,7 +99,18 @@ class RAGNode(BaseNode):
         )
         embeddings = self.embedder_model
 
-        retriever = FAISS.from_documents(chunked_docs, embeddings).as_retriever()
+        #------
+        index = FAISS.from_documents(chunked_docs, embeddings)
+        # Define the folder name
+        folder_name = "cache"
+        # Check if the folder exists, if not, create it
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+        # Save the index to the folder
+        index.save_local(folder_name)
+
+        retriever = index.as_retriever()
+        #------
 
         redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
         # similarity_threshold could be set, now k=20
