@@ -99,18 +99,18 @@ class RAGNode(BaseNode):
         )
         embeddings = self.embedder_model
 
-        #------
-        index = FAISS.from_documents(chunked_docs, embeddings)
-        # Define the folder name
-        folder_name = "cache"
-        # Check if the folder exists, if not, create it
-        if not os.path.exists(folder_name):
-            os.makedirs(folder_name)
-        # Save the index to the folder
-        index.save_local(folder_name)
+        if self.node_config.get("cache", False):
+            index = FAISS.from_documents(chunked_docs, embeddings)
+            folder_name = "cache"
+
+            if not os.path.exists(folder_name):
+                os.makedirs(folder_name)
+
+            index.save_local(folder_name)
+        else:
+            index = FAISS.from_documents(chunked_docs, embeddings)
 
         retriever = index.as_retriever()
-        #------
 
         redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
         # similarity_threshold could be set, now k=20
