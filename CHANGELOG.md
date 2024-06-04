@@ -1,3 +1,10 @@
+## [1.6.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.5...v1.6.0-beta.6) (2024-06-04)
+
+
+### Features
+
+* refactoring of abstract graph ([fff89f4](https://github.com/VinciGit00/Scrapegraph-ai/commit/fff89f431f60b5caa4dd87643a1bb8895bf96d48))
+
 ## [1.6.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.4...v1.6.0-beta.5) (2024-06-04)
 
 
