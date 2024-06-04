@@ -182,7 +182,7 @@ print(result)
 
 ## 📈 路线图
 
-在[这里](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/README.md)!查看项目路线图! 🚀
+在[这里](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/README.md)查看项目路线图! 🚀
 
 想要以更互动的方式可视化路线图？请查看 [markmap](https://markmap.js.org/repl) 通过将 markdown 内容复制粘贴到编辑器中进行可视化！
 
