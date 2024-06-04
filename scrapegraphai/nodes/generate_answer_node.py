@@ -46,7 +46,7 @@ class GenerateAnswerNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm_model"]
 
-        if isinstance(node_config["llm_model"], Ollama) or isinstance(node_config["llm_model"], OpenAI):
+        if isinstance(node_config["llm_model"], Ollama):
             self.llm_model.format="json"
         self.verbose = (
             True if node_config is None else node_config.get("verbose", False)
