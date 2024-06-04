@@ -69,7 +69,8 @@ class AbstractGraph(ABC):
         self.config = config
         self.schema = schema
         self.llm_model = self._create_llm(config["llm"], chat=True)
-        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]                                                            ) if "embeddings" not in config else self._create_embedder(
+        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]                                                            
+                                                            ) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
         self.verbose = False if config is None else config.get(
             "verbose", False)
@@ -101,7 +102,6 @@ class AbstractGraph(ABC):
             "llm_model": self.llm_model,
             "embedder_model": self.embedder_model
             }
-       
         self.set_common_params(common_params, overwrite=False)
 
         # set burr config
@@ -291,8 +291,6 @@ class AbstractGraph(ABC):
             )
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
-        elif isinstance(self.llm_model, DeepSeek):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)   
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureOpenAI):
