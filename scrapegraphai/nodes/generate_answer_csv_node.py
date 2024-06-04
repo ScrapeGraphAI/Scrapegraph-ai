@@ -8,7 +8,7 @@ from typing import List, Optional
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import JsonOutputParser, PydanticOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 
@@ -58,8 +58,8 @@ class GenerateAnswerCSVNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
+        
         self.llm_model = node_config["llm_model"]
-        self.llm_model.format="json"
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
@@ -94,7 +94,12 @@ class GenerateAnswerCSVNode(BaseNode):
         user_prompt = input_data[0]
         doc = input_data[1]
 
-        output_parser = JsonOutputParser()
+        # Initialize the output parser
+        if self.node_config["schema"] is not None:
+            output_parser = PydanticOutputParser(pydantic_object=self.node_config["schema"])
+        else:
+            output_parser = JsonOutputParser()
+
         format_instructions = output_parser.get_format_instructions()
    
         chains_dict = {}
@@ -144,6 +149,9 @@ class GenerateAnswerCSVNode(BaseNode):
             # Chain
             single_chain = list(chains_dict.values())[0]
             answer = single_chain.invoke({"question": user_prompt})
+
+        if type(answer) == PydanticOutputParser:
+            answer = answer.model_dump()
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})

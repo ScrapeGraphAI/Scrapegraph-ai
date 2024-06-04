@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import JsonOutputParser, PydanticOutputParser
 from tqdm import tqdm
 
 from ..utils.logging import get_logger
@@ -79,7 +79,14 @@ class MergeAnswersNode(BaseNode):
         for i, answer in enumerate(answers):
             answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
 
-        output_parser = JsonOutputParser()
+        # Initialize the output parser
+        if self.node_config["schema"] is not None:
+            output_parser = PydanticOutputParser(
+                pydantic_object=self.node_config["schema"]
+            )
+        else:
+            output_parser = JsonOutputParser()
+
         format_instructions = output_parser.get_format_instructions()
 
         template_merge = """
@@ -88,8 +95,6 @@ class MergeAnswersNode(BaseNode):
         You need to merge the content from the different websites into a single answer without repetitions (if there are any). \n
         The scraped contents are in a JSON format and you need to merge them based on the context and providing a correct JSON structure.\n
         OUTPUT INSTRUCTIONS: {format_instructions}\n
-        You must format the output with the following schema, if not None:\n
-        SCHEMA: {schema}\n
         USER PROMPT: {user_prompt}\n
         WEBSITE CONTENT: {website_content}
         """
@@ -100,12 +105,14 @@ class MergeAnswersNode(BaseNode):
             partial_variables={
                 "format_instructions": format_instructions,
                 "website_content": answers_str,
-                "schema": self.node_config.get("schema", None),
             },
         )
 
         merge_chain = prompt_template | self.llm_model | output_parser
         answer = merge_chain.invoke({"user_prompt": user_prompt})
+
+        if type(answer) == PydanticOutputParser:
+            answer = answer.model_dump()
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})
