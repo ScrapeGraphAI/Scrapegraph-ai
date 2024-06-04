@@ -378,6 +378,16 @@ class AbstractGraph(ABC):
             return self.final_state[key]
         return self.final_state
 
+    def append_node(self, node):
+        """
+        Add a node to the graph.
+
+        Args:
+            node (BaseNode): The node to add to the graph.
+        """
+
+        self.graph.append_node(node)
+
     def get_execution_info(self):
         """
         Returns the execution information of the graph.
