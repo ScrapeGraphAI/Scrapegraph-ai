@@ -10,7 +10,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser, PydanticOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
-
+from ..models import Ollama
 from ..utils.logging import get_logger
 
 # Imports from the library
@@ -59,6 +59,8 @@ class GenerateAnswerPDFNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
         
         self.llm_model = node_config["llm_model"]
+        if isinstance(node_config["llm_model"], Ollama):
+            self.llm_model.format="json"
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
