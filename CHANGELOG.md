@@ -1,3 +1,17 @@
+## [1.5.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.4...v1.5.5) (2024-06-05)
+
+
+### Bug Fixes
+
+* bug on generate_answer_node ([1d38ed1](https://github.com/VinciGit00/Scrapegraph-ai/commit/1d38ed146afae95dae1f35ac51180a1882bf8a29))
+
+
+### Docs
+
+* add Japanese README ([4559ab6](https://github.com/VinciGit00/Scrapegraph-ai/commit/4559ab6db845a0d94371a09d0ed1e1623eed9ee2))
+* update japanese.md ([f0042a8](https://github.com/VinciGit00/Scrapegraph-ai/commit/f0042a8e33f8fb8b113681ee0a9995d329bb0faa))
+* update README.md ([871e398](https://github.com/VinciGit00/Scrapegraph-ai/commit/871e398a26786d264dbd1b2743864ed2cc12b3da))
+
 ## [1.5.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.3...v1.5.4) (2024-05-31)
 
 
