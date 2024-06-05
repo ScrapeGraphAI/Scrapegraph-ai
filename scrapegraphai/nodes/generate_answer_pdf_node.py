@@ -7,7 +7,7 @@ from typing import List, Optional
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import JsonOutputParser, PydanticOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 
@@ -15,7 +15,7 @@ from ..utils.logging import get_logger
 
 # Imports from the library
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf, template_chunks_pdf_with_schema, template_no_chunks_pdf_with_schema
+from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
 
 
 class GenerateAnswerPDFNode(BaseNode):
@@ -57,8 +57,8 @@ class GenerateAnswerPDFNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
+        
         self.llm_model = node_config["llm_model"]
-        self.llm_model.format="json"
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
@@ -93,7 +93,12 @@ class GenerateAnswerPDFNode(BaseNode):
         user_prompt = input_data[0]
         doc = input_data[1]
 
-        output_parser = JsonOutputParser()
+        # Initialize the output parser
+        if self.node_config["schema"] is not None:
+            output_parser = PydanticOutputParser(pydantic_object=self.node_config["schema"])
+        else:
+            output_parser = JsonOutputParser()
+
         format_instructions = output_parser.get_format_instructions()
 
         chains_dict = {}

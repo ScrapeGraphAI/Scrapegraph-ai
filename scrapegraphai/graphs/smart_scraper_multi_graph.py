@@ -4,6 +4,7 @@ SmartScraperMultiGraph Module
 
 from copy import copy, deepcopy
 from typing import List, Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -42,7 +43,7 @@ class SmartScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 

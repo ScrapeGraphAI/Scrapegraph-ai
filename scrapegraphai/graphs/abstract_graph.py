@@ -3,8 +3,9 @@ AbstractGraph Module
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Union
 import uuid
+from pydantic import BaseModel
 
 from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
@@ -62,7 +63,7 @@ class AbstractGraph(ABC):
     """
 
     def __init__(self, prompt: str, config: dict, 
-                 source: Optional[str] = None, schema: Optional[str] = None):
+                 source: Optional[str] = None, schema: Optional[BaseModel] = None):
 
         self.prompt = prompt
         self.source = source
@@ -351,6 +352,16 @@ class AbstractGraph(ABC):
         if key is not None:
             return self.final_state[key]
         return self.final_state
+
+    def append_node(self, node):
+        """
+        Add a node to the graph.
+
+        Args:
+            node (BaseNode): The node to add to the graph.
+        """
+
+        self.graph.append_node(node)
 
     def get_execution_info(self):
         """
