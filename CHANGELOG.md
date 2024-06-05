@@ -1,3 +1,10 @@
+## [1.6.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.7...v1.6.0-beta.8) (2024-06-05)
+
+
+### Features
+
+* add json as output ([5d20186](https://github.com/VinciGit00/Scrapegraph-ai/commit/5d20186bf20fb2384f2a9e7e81c2e875ff50a4f3))
+
 ## [1.6.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.6...v1.6.0-beta.7) (2024-06-05)
 
 
