@@ -96,8 +96,8 @@ class GenerateAnswerPDFNode(BaseNode):
         doc = input_data[1]
 
         # Initialize the output parser
-        if self.node_config["schema"] is not None:
-            output_parser = PydanticOutputParser(pydantic_object=self.node_config["schema"])
+        if self.node_config.get("schema",None) is not None:
+            output_parser = PydanticOutputParser(pydantic_object=self.node_config.get("schema", None))
         else:
             output_parser = JsonOutputParser()
 
