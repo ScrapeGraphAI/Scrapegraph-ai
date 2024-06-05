@@ -47,7 +47,7 @@ class RobotsNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "Robots",
+        node_name: str = "RobotNode",
 
     ):
         super().__init__(node_name, "node", input, output, 1)

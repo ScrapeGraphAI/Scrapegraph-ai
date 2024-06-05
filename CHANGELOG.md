@@ -1,3 +1,41 @@
+## [1.6.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.5...v1.6.0-beta.6) (2024-06-04)
+
+
+### Features
+
+* refactoring of abstract graph ([fff89f4](https://github.com/VinciGit00/Scrapegraph-ai/commit/fff89f431f60b5caa4dd87643a1bb8895bf96d48))
+
+## [1.6.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.4...v1.6.0-beta.5) (2024-06-04)
+
+
+### Features
+
+* refactoring of an in if ([244aada](https://github.com/VinciGit00/Scrapegraph-ai/commit/244aada2de1f3bc88782fa90e604e8b936b79aa4))
+
+## [1.6.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.3...v1.6.0-beta.4) (2024-06-03)
+
+
+### Features
+
+* fix an if ([c8d556d](https://github.com/VinciGit00/Scrapegraph-ai/commit/c8d556da4e4b8730c6c35f1d448270b8e26923f2))
+
+## [1.6.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.2...v1.6.0-beta.3) (2024-06-03)
+
+
+### Features
+
+* removed a bug ([8de720d](https://github.com/VinciGit00/Scrapegraph-ai/commit/8de720d37958e31b73c5c89bc21f474f3303b42b))
+
+## [1.6.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.1...v1.6.0-beta.2) (2024-06-03)
+
+
+### Features
+
+* add csv scraper and xml scraper multi ([b408655](https://github.com/VinciGit00/Scrapegraph-ai/commit/b4086550cc9dc42b2fd91ee7ef60c6a2c2ac3fd2))
+* add json multiscraper ([5bda918](https://github.com/VinciGit00/Scrapegraph-ai/commit/5bda918a39e4b50d86d784b4c592cc2ea1a68986))
+* add pdf scraper multi graph ([f5cbd80](https://github.com/VinciGit00/Scrapegraph-ai/commit/f5cbd80c977f51233ac1978d8450fcf0ec2ff461))
+* removed rag node ([930f673](https://github.com/VinciGit00/Scrapegraph-ai/commit/930f67374752561903462a25728c739946f9449b))
+
 ## [1.6.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.5-beta.1...v1.6.0-beta.1) (2024-06-02)
 
 

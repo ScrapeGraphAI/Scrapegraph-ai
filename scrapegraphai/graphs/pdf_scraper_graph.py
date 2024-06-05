@@ -1,3 +1,4 @@
+
 """
 PDFScraperGraph Module
 """
@@ -64,8 +65,9 @@ class PDFScraperGraph(AbstractGraph):
             input='pdf | pdf_dir',
             output=["doc"],
         )
+
         rag_node = RAGNode(
-            input="user_prompt & doc",
+            input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
             node_config={
                 "llm_model": self.llm_model,

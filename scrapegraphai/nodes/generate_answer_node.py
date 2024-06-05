@@ -12,7 +12,7 @@ from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 
 from ..utils.logging import get_logger
-
+from ..models import Ollama, Groq, OpenAI
 # Imports from the library
 from .base_node import BaseNode
 from ..helpers import template_chunks, template_no_chunks, template_merge
@@ -46,6 +46,10 @@ class GenerateAnswerNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
         
         self.llm_model = node_config["llm_model"]
+
+        if isinstance(node_config["llm_model"], Ollama):
+            self.llm_model.format="json"
+
         self.verbose = (
             True if node_config is None else node_config.get("verbose", False)
         )
