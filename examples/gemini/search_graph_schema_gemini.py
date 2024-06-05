@@ -2,21 +2,39 @@
 Example of Search Graph
 """
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
+from pydantic import BaseModel, Field
+from typing import List
+
+# ************************************************
+# Define the output schema for the graph
+# ************************************************
+
+class Dish(BaseModel):
+    name: str = Field(description="The name of the dish")
+    description: str = Field(description="The description of the dish")
+
+class Dishes(BaseModel):
+    dishes: List[Dish]
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
+gemini_key = os.getenv("GOOGLE_APIKEY")
+
 graph_config = {
     "llm": {
-        "api_key": "***************************",
-        "model": "oneapi/qwen-turbo",
-        "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
-    }
+        "api_key": gemini_key,
+        "model": "gemini-pro",
+    },
 }
-
 
 # ************************************************
 # Create the SearchGraph instance and run it
@@ -24,7 +42,8 @@ graph_config = {
 
 search_graph = SearchGraph(
     prompt="List me Chioggia's famous dishes",
-    config=graph_config
+    config=graph_config,
+    schema=Dishes
 )
 
 result = search_graph.run()

@@ -1,9 +1,22 @@
 """
 Example of Search Graph
 """
-
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
+from pydantic import BaseModel, Field
+from typing import List
+
+# ************************************************
+# Define the output schema for the graph
+# ************************************************
+
+class Dish(BaseModel):
+    name: str = Field(description="The name of the dish")
+    description: str = Field(description="The description of the dish")
+
+class Dishes(BaseModel):
+    dishes: List[Dish]
 
 # ************************************************
 # Define the configuration for the graph
@@ -11,12 +24,19 @@ from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_i
 
 graph_config = {
     "llm": {
-        "api_key": "***************************",
-        "model": "oneapi/qwen-turbo",
-        "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
-    }
+        "model": "ollama/mistral",
+        "temperature": 0,
+        "format": "json",  # Ollama needs the format to be specified explicitly
+        # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
+    },
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "verbose": True,
+    "headless": False
 }
-
 
 # ************************************************
 # Create the SearchGraph instance and run it
@@ -24,7 +44,8 @@ graph_config = {
 
 search_graph = SearchGraph(
     prompt="List me Chioggia's famous dishes",
-    config=graph_config
+    config=graph_config,
+    schema=Dishes
 )
 
 result = search_graph.run()
