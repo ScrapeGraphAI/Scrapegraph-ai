@@ -154,5 +154,15 @@ models_tokens = {
     "deepseek": {
         "deepseek-chat": 32768,
         "deepseek-coder": 16384
+    },
+    "ernie": {
+        "ernie-bot-turbo": 4096,
+        "ernie-bot": 4096,
+        "ernie-bot-2": 4096,
+        "ernie-bot-2-base": 4096,
+        "ernie-bot-2-base-zh": 4096,
+        "ernie-bot-2-base-en": 4096,
+        "ernie-bot-2-base-en-zh": 4096,
+        "ernie-bot-2-base-zh-en": 4096,
     }
 }
