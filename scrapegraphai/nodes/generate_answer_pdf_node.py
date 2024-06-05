@@ -7,7 +7,7 @@ from typing import List, Optional
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser, PydanticOutputParser
+from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from ..models import Ollama
@@ -96,8 +96,8 @@ class GenerateAnswerPDFNode(BaseNode):
         doc = input_data[1]
 
         # Initialize the output parser
-        if self.node_config.get("schema",None) is not None:
-            output_parser = PydanticOutputParser(pydantic_object=self.node_config.get("schema", None))
+        if self.node_config.get("schema", None) is not None:
+            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
 

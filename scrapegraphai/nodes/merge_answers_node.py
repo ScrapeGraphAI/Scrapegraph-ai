@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser, PydanticOutputParser
+from langchain_core.output_parsers import JsonOutputParser
 from tqdm import tqdm
 
 from ..utils.logging import get_logger
@@ -80,10 +80,8 @@ class MergeAnswersNode(BaseNode):
             answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
 
         # Initialize the output parser
-        if self.node_config["schema"] is not None:
-            output_parser = PydanticOutputParser(
-                pydantic_object=self.node_config["schema"]
-            )
+        if self.node_config.get("schema", None) is not None:
+            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
 
@@ -110,9 +108,6 @@ class MergeAnswersNode(BaseNode):
 
         merge_chain = prompt_template | self.llm_model | output_parser
         answer = merge_chain.invoke({"user_prompt": user_prompt})
-
-        if type(answer) == PydanticOutputParser:
-            answer = answer.model_dump()
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})
