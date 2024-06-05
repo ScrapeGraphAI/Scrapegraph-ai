@@ -1,3 +1,10 @@
+## [1.5.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.5...v1.5.6) (2024-06-05)
+
+
+### Bug Fixes
+
+* getter ([67d83cf](https://github.com/VinciGit00/Scrapegraph-ai/commit/67d83cff46d8ea606b8972c364ab4c56e6fa4fe4))
+
 ## [1.5.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.4...v1.5.5) (2024-06-05)
 
 
