@@ -199,7 +199,7 @@ print(result)
     title = {Scrapegraph-ai},
     year = {2024},
     url = {https://github.com/VinciGit00/Scrapegraph-ai},
-    note = {大規模言語モデルを利用したクローリングのためのPythonライブラリ}
+    note = {A Python library for scraping leveraging large language models}
   }
 ```
 ## 作者
