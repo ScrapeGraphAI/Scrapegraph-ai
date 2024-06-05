@@ -1,3 +1,11 @@
+## [1.6.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.6...v1.6.0-beta.7) (2024-06-05)
+
+
+### Features
+
+* **pydantic:** added pydantic output schema ([376f758](https://github.com/VinciGit00/Scrapegraph-ai/commit/376f758a76e3e111dc34416dedf8e294dc190963))
+* **append_node:** append node to existing graph ([f8b08e0](https://github.com/VinciGit00/Scrapegraph-ai/commit/f8b08e0b33ca31124c2773f47a624eeb0a4f302f))
+
 ## [1.6.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.5...v1.6.0-beta.6) (2024-06-04)
 
 
