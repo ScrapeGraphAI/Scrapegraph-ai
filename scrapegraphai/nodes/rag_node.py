@@ -99,14 +99,15 @@ class RAGNode(BaseNode):
         )
         embeddings = self.embedder_model
 
-        if self.node_config.get("cache", False):
-            index = FAISS.from_documents(chunked_docs, embeddings)
-            folder_name = "cache"
+        folder_name = "cache"
 
-            if not os.path.exists(folder_name):
-                os.makedirs(folder_name)
+        if self.node_config.get("cache", False) and not os.path.exists(folder_name):
+            index = FAISS.from_documents(chunked_docs, embeddings)
+            os.makedirs(folder_name)
 
             index.save_local(folder_name)
+        if self.node_config.get("cache", False) and os.path.exists(folder_name):
+            index = FAISS.load_local(folder_path=folder_name, embeddings=embeddings)
         else:
             index = FAISS.from_documents(chunked_docs, embeddings)
 
