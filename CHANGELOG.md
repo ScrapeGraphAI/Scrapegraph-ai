@@ -1,3 +1,10 @@
+## [1.5.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.6...v1.5.7) (2024-06-06)
+
+
+### Bug Fixes
+
+* update openai tts class ([10672d6](https://github.com/VinciGit00/Scrapegraph-ai/commit/10672d6ebb06d950bbf8b66cc9a2d420c183013d))
+
 ## [1.5.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.5...v1.5.6) (2024-06-05)
 
 
