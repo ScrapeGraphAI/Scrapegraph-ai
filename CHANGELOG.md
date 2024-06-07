@@ -1,3 +1,15 @@
+## [1.6.0-beta.9](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.8...v1.6.0-beta.9) (2024-06-07)
+
+
+### Features
+
+* **indexify-node:** add example ([5d1fbf8](https://github.com/VinciGit00/Scrapegraph-ai/commit/5d1fbf806a20746931ebb7fcb32c383d9d549d93))
+
+
+### Bug Fixes
+
+* **schema:** fixed json output ([5c9843f](https://github.com/VinciGit00/Scrapegraph-ai/commit/5c9843f1410a78568892635e53872793d5ba0d6f))
+
 ## [1.6.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.7...v1.6.0-beta.8) (2024-06-05)
 
 
