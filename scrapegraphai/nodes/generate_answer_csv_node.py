@@ -8,7 +8,7 @@ from typing import List, Optional
 
 # Imports from Langchain
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser, PydanticOutputParser
+from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 
@@ -96,7 +96,7 @@ class GenerateAnswerCSVNode(BaseNode):
 
         # Initialize the output parser
         if self.node_config.get("schema", None) is not None:
-            output_parser = PydanticOutputParser(pydantic_object=self.node_config.get("schema", None))
+            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
 
@@ -149,9 +149,6 @@ class GenerateAnswerCSVNode(BaseNode):
             # Chain
             single_chain = list(chains_dict.values())[0]
             answer = single_chain.invoke({"question": user_prompt})
-
-        if type(answer) == PydanticOutputParser:
-            answer = answer.model_dump()
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})

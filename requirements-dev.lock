@@ -185,10 +185,6 @@ idna==3.7
     # via yarl
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==7.1.0
-    # via sphinx
-importlib-resources==6.4.0
-    # via matplotlib
 iniconfig==2.0.0
     # via pytest
 jinja2==3.1.4
@@ -475,7 +471,6 @@ typing-extensions==4.12.0
     # via pyee
     # via sf-hamilton
     # via sqlalchemy
-    # via starlette
     # via streamlit
     # via typer
     # via typing-inspect
@@ -507,6 +502,3 @@ win32-setctime==1.1.0
     # via loguru
 yarl==1.9.4
     # via aiohttp
-zipp==3.19.1
-    # via importlib-metadata
-    # via importlib-resources
