@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using SmartScraper with schema
 """
 
 import os, json

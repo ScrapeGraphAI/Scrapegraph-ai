@@ -2,7 +2,7 @@
 name = "scrapegraphai"
 
 
-version = "1.5.0b3"
+version = "1.5.4"
 
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
@@ -30,7 +30,6 @@ dependencies = [
     "free-proxy==1.1.1",
     "playwright==1.43.0",
     "google==3.0.0",
-    "yahoo-search-py==0.3",
     "undetected-playwright==0.3.0",
 ]
 
@@ -64,7 +63,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-requires-python = ">=3.9,<3.12"
+requires-python = ">=3.9,<4.0"
 
 [project.optional-dependencies]
 burr = ["burr[start]==0.19.1"]

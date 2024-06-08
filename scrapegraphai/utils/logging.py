@@ -8,7 +8,7 @@ import os
 import sys
 import threading
 from functools import lru_cache
-
+from typing import Optional
 
 _library_name = __name__.split(".", maxsplit=1)[0]
 
@@ -43,7 +43,7 @@ def _set_library_root_logger() -> None:
         library_root_logger.propagate = False
 
 
-def get_logger(name: str | None = None) -> logging.Logger:
+def get_logger(name: Optional[str] = None) -> logging.Logger:
     _set_library_root_logger()
     return logging.getLogger(name or _library_name)
 

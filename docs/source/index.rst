@@ -32,6 +32,15 @@
 
    modules/modules
 
+.. toctree::
+   :hidden:
+   :caption: EXTERNAL RESOURCES
+
+   GitHub <https://github.com/VinciGit00/Scrapegraph-ai>
+   Discord <https://discord.gg/uJN7TYcpNa>
+   Linkedin <https://www.linkedin.com/company/scrapegraphai/>
+   Twitter <https://twitter.com/scrapegraphai>
+
 Indices and tables
 ==================
 

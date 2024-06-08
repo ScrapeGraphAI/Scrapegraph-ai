@@ -80,6 +80,9 @@ models_tokens = {
         "snowflake-arctic-embed:l": 8192,
         "mxbai-embed-large": 512,
     },
+    "oneapi": {
+        "qwen-turbo": 16380
+    },
     "groq": {
         "llama3-8b-8192": 8192,
         "llama3-70b-8192": 8192,
