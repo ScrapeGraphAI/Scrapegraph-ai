@@ -66,7 +66,7 @@ classifiers = [
 requires-python = ">=3.9,<4.0"
 
 [project.optional-dependencies]
-burr = ["burr[start]==0.19.1"]
+burr = ["burr[start]==0.22.1"]
 docs = ["sphinx==6.0", "furo==2024.5.6"]
 
 [build-system]
