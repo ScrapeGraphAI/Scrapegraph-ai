@@ -100,7 +100,7 @@ class GenerateScraperNode(BaseNode):
         SOURCE: {source}
         QUESTION: {question}
         """
-        print("source:", self.source)
+
         if len(doc) > 1:
             raise NotImplementedError(
                 "Currently GenerateScraperNode cannot handle more than 1 context chunks"
