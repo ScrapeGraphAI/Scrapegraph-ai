@@ -1,4 +1,17 @@
-## [1.6.0-beta.11](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.10...v1.6.0-beta.11) (2024-06-09)
+## [1.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.7...v1.6.0) (2024-06-09)
+
+
+### Features
+
+* Add tests for RobotsNode and update test setup ([dedfa2e](https://github.com/VinciGit00/Scrapegraph-ai/commit/dedfa2eaf02b7e9b68a116515053c1daae6e4a31))
+
+
+### Test
+
+* Enhance JSON scraping pipeline test ([d845a1b](https://github.com/VinciGit00/Scrapegraph-ai/commit/d845a1ba7d6e7f7574b92b51b6d5326bbfb3d1c6))
+
+## [1.5.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.6...v1.5.7) (2024-06-06)
+
 
 
 ### Bug Fixes
