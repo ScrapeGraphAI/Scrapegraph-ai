@@ -24,28 +24,11 @@ source = """
     the Beatrice of his earlier poetry, through the celestial spheres of Paradise.
 """
 
-schema = """
-    {
-        "type": "object",
-        "properties": {
-            "summary": {
-                "type": "string"
-            },
-            "topics": {
-                "type": "array",
-                "items": {
-                    "type": "string"
-                }
-            }
-        }
-    }
-"""
 
 pdf_scraper_graph = PDFScraperGraph(
     prompt="Summarize the text and find the main topics",
     source=source,
     config=graph_config,
-    schema=schema,
 )
 result = pdf_scraper_graph.run()
 

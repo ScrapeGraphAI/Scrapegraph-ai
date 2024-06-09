@@ -3,6 +3,8 @@ Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
 """
 
 import os
+from typing import List
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
@@ -17,22 +19,12 @@ load_dotenv()
 # Define the output schema for the graph
 # ************************************************
 
-schema= """
-    { 
-    "Projects": [
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            }, 
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            } 
-        ] 
-    } 
-"""
+class Project(BaseModel):
+    title: str = Field(description="The title of the project")
+    description: str = Field(description="The description of the project")
+
+class Projects(BaseModel):
+    projects: List[Project]
 
 # ************************************************
 # Create the SmartScraperGraph instance and run it
@@ -48,7 +40,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description",
     # also accepts a string with the already downloaded HTML code
-    schema=schema,
+    schema=Projects,
     source="https://perinim.github.io/projects/",
     config=graph_config
 )

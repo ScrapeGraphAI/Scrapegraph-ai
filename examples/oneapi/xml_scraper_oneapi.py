@@ -23,7 +23,7 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+openai_key = os.getenv("ONEAPI_KEY")
 
 graph_config = {
     "llm": {

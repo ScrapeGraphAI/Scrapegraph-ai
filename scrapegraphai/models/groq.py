@@ -4,7 +4,6 @@ Groq Module
 
 from langchain_groq import ChatGroq
 
-
 class Groq(ChatGroq):
     """
     A wrapper for the Groq class that provides default configuration

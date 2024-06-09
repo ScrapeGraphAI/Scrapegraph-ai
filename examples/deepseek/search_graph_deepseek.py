@@ -20,6 +20,11 @@ graph_config = {
         "openai_api_key": deepseek_key,
         "openai_api_base": 'https://api.deepseek.com/v1',
     },
+     "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
     "max_results": 2,
     "verbose": True,
 }

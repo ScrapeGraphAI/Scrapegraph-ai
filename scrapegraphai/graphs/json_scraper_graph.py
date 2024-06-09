@@ -3,6 +3,7 @@ JSONScraperGraph Module
 """
 
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -44,7 +45,7 @@ class JSONScraperGraph(AbstractGraph):
         >>> result = json_scraper.run()
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "json" if source.endswith("json") else "json_dir"
