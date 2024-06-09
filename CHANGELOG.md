@@ -1,3 +1,31 @@
+## [1.6.0-beta.11](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.10...v1.6.0-beta.11) (2024-06-09)
+
+
+### Bug Fixes
+
+* bug on generate_answer_node ([1d38ed1](https://github.com/VinciGit00/Scrapegraph-ai/commit/1d38ed146afae95dae1f35ac51180a1882bf8a29))
+* getter ([67d83cf](https://github.com/VinciGit00/Scrapegraph-ai/commit/67d83cff46d8ea606b8972c364ab4c56e6fa4fe4))
+* update openai tts class ([10672d6](https://github.com/VinciGit00/Scrapegraph-ai/commit/10672d6ebb06d950bbf8b66cc9a2d420c183013d))
+
+
+### Docs
+
+* add Japanese README ([4559ab6](https://github.com/VinciGit00/Scrapegraph-ai/commit/4559ab6db845a0d94371a09d0ed1e1623eed9ee2))
+* update japanese.md ([f0042a8](https://github.com/VinciGit00/Scrapegraph-ai/commit/f0042a8e33f8fb8b113681ee0a9995d329bb0faa))
+* update README.md ([871e398](https://github.com/VinciGit00/Scrapegraph-ai/commit/871e398a26786d264dbd1b2743864ed2cc12b3da))
+
+
+### Test
+
+* Enhance JSON scraping pipeline test ([d845a1b](https://github.com/VinciGit00/Scrapegraph-ai/commit/d845a1ba7d6e7f7574b92b51b6d5326bbfb3d1c6))
+
+
+### CI
+
+* **release:** 1.5.5 [skip ci] ([3629215](https://github.com/VinciGit00/Scrapegraph-ai/commit/36292150daf6449d6af58fc18ced1771e70e45cc))
+* **release:** 1.5.6 [skip ci] ([49cdadf](https://github.com/VinciGit00/Scrapegraph-ai/commit/49cdadf11722abe5b60b49f1c7f90186771356cc))
+* **release:** 1.5.7 [skip ci] ([c17daca](https://github.com/VinciGit00/Scrapegraph-ai/commit/c17daca409fd3aaa5eaf0c3372c14127aeaf7d3d))
+
 ## [1.6.0-beta.10](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0-beta.9...v1.6.0-beta.10) (2024-06-08)
 
 
