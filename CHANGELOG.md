@@ -1,3 +1,53 @@
+## [1.7.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.7.0-beta.1) (2024-06-09)
+
+
+### Features
+
+* add csv scraper and xml scraper multi ([b408655](https://github.com/VinciGit00/Scrapegraph-ai/commit/b4086550cc9dc42b2fd91ee7ef60c6a2c2ac3fd2))
+* **indexify-node:** add example ([5d1fbf8](https://github.com/VinciGit00/Scrapegraph-ai/commit/5d1fbf806a20746931ebb7fcb32c383d9d549d93))
+* add forcing format as json ([5cfc101](https://github.com/VinciGit00/Scrapegraph-ai/commit/5cfc10178abf0b7a3e0b2229512396e243305438))
+* add json as output ([5d20186](https://github.com/VinciGit00/Scrapegraph-ai/commit/5d20186bf20fb2384f2a9e7e81c2e875ff50a4f3))
+* add json multiscraper ([5bda918](https://github.com/VinciGit00/Scrapegraph-ai/commit/5bda918a39e4b50d86d784b4c592cc2ea1a68986))
+* add pdf scraper multi graph ([f5cbd80](https://github.com/VinciGit00/Scrapegraph-ai/commit/f5cbd80c977f51233ac1978d8450fcf0ec2ff461))
+* **pydantic:** added pydantic output schema ([376f758](https://github.com/VinciGit00/Scrapegraph-ai/commit/376f758a76e3e111dc34416dedf8e294dc190963))
+* **append_node:** append node to existing graph ([f8b08e0](https://github.com/VinciGit00/Scrapegraph-ai/commit/f8b08e0b33ca31124c2773f47a624eeb0a4f302f))
+* fix an if ([c8d556d](https://github.com/VinciGit00/Scrapegraph-ai/commit/c8d556da4e4b8730c6c35f1d448270b8e26923f2))
+* refactoring of abstract graph ([fff89f4](https://github.com/VinciGit00/Scrapegraph-ai/commit/fff89f431f60b5caa4dd87643a1bb8895bf96d48))
+* refactoring of an in if ([244aada](https://github.com/VinciGit00/Scrapegraph-ai/commit/244aada2de1f3bc88782fa90e604e8b936b79aa4))
+* removed a bug ([8de720d](https://github.com/VinciGit00/Scrapegraph-ai/commit/8de720d37958e31b73c5c89bc21f474f3303b42b))
+* removed rag node ([930f673](https://github.com/VinciGit00/Scrapegraph-ai/commit/930f67374752561903462a25728c739946f9449b))
+* **version:** update burr version ([cfa1336](https://github.com/VinciGit00/Scrapegraph-ai/commit/cfa13368f4d5c7dd8be27aabe19c7602d24686da))
+
+
+### Bug Fixes
+
+* **schema:** fixed json output ([5c9843f](https://github.com/VinciGit00/Scrapegraph-ai/commit/5c9843f1410a78568892635e53872793d5ba0d6f))
+* oneapi model ([4fcb990](https://github.com/VinciGit00/Scrapegraph-ai/commit/4fcb9902fe4c147c61a1622a919ade338c03b8d8))
+* typo in prompt ([4639f0c](https://github.com/VinciGit00/Scrapegraph-ai/commit/4639f0cac5029c6802a6caded7103d247f4f06dd))
+
+
+### Docs
+
+* stylize badges in readme ([8696ade](https://github.com/VinciGit00/Scrapegraph-ai/commit/8696adede79cf9557c49a8b30a095b76ec3d02f6))
+
+
+### CI
+
+* **release:** 1.5.3-beta.1 [skip ci] ([6ea1d2c](https://github.com/VinciGit00/Scrapegraph-ai/commit/6ea1d2c4d0aaf7a341a2ea6ea7070438a7610fe4))
+* **release:** 1.5.3-beta.2 [skip ci] ([b57bcef](https://github.com/VinciGit00/Scrapegraph-ai/commit/b57bcef5c18530ce03ff6ec65e9e33d00d9f6515))
+* **release:** 1.5.5-beta.1 [skip ci] ([38d138e](https://github.com/VinciGit00/Scrapegraph-ai/commit/38d138e36faa718632b7560fab197c25e24da9de))
+* **release:** 1.6.0-beta.1 [skip ci] ([1d217e4](https://github.com/VinciGit00/Scrapegraph-ai/commit/1d217e4ae682ddf16d911b6db6973dc05445660c))
+* **release:** 1.6.0-beta.10 [skip ci] ([4d0d8fa](https://github.com/VinciGit00/Scrapegraph-ai/commit/4d0d8fa453f411927f49d75b9f67fb08ab168759))
+* **release:** 1.6.0-beta.11 [skip ci] ([3453ac0](https://github.com/VinciGit00/Scrapegraph-ai/commit/3453ac01f5da9148c8d10f29724b4a1c20d0a6e8))
+* **release:** 1.6.0-beta.2 [skip ci] ([ed1dc0b](https://github.com/VinciGit00/Scrapegraph-ai/commit/ed1dc0be08faf7e050f627c175897ae9c0eccbcf))
+* **release:** 1.6.0-beta.3 [skip ci] ([b70cb37](https://github.com/VinciGit00/Scrapegraph-ai/commit/b70cb37c623d56f5508650937bc314724ceec0e9))
+* **release:** 1.6.0-beta.4 [skip ci] ([08a14ef](https://github.com/VinciGit00/Scrapegraph-ai/commit/08a14efdd334ae645cb5cfe0dec04332659b99d5))
+* **release:** 1.6.0-beta.5 [skip ci] ([dde0c7e](https://github.com/VinciGit00/Scrapegraph-ai/commit/dde0c7e27deb55a0005691d402406a13ee507420))
+* **release:** 1.6.0-beta.6 [skip ci] ([ac8e7c1](https://github.com/VinciGit00/Scrapegraph-ai/commit/ac8e7c12fe677a357b8b1b8d42a1aca8503de727))
+* **release:** 1.6.0-beta.7 [skip ci] ([cab5f68](https://github.com/VinciGit00/Scrapegraph-ai/commit/cab5f6828cac926a82d9ecfe7a97596aaabfa385))
+* **release:** 1.6.0-beta.8 [skip ci] ([7a6f016](https://github.com/VinciGit00/Scrapegraph-ai/commit/7a6f016f9231f92e1bb99059e08b431ce99b14cf))
+* **release:** 1.6.0-beta.9 [skip ci] ([ca8aff8](https://github.com/VinciGit00/Scrapegraph-ai/commit/ca8aff8d8849552159ff1b86fd175fa5e9fe7c1f))
+
 ## [1.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.7...v1.6.0) (2024-06-09)
 
 
