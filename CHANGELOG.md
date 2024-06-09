@@ -5,7 +5,6 @@
 
 * **version:** update burr version ([cfa1336](https://github.com/VinciGit00/Scrapegraph-ai/commit/cfa13368f4d5c7dd8be27aabe19c7602d24686da))
 
-
 ### Docs
 
 * stylize badges in readme ([8696ade](https://github.com/VinciGit00/Scrapegraph-ai/commit/8696adede79cf9557c49a8b30a095b76ec3d02f6))

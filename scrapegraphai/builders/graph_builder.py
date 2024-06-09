@@ -6,6 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
 from ..models import OpenAI, Gemini
 from ..helpers import nodes_metadata, graph_schema
+from ..models.ernie import Ernie
 
 
 class GraphBuilder:
@@ -73,6 +74,8 @@ class GraphBuilder:
             return OpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
             return Gemini(llm_params)
+        elif "ernie" in llm_params["model"]:
+            return Ernie(llm_params)
         raise ValueError("Model not supported")
 
     def _generate_nodes_description(self):

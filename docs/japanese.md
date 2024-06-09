@@ -1,7 +1,4 @@
-
-# 🕷️ ScrapeGraphAI: You Only Scrape Once
-[English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
-
+# 🕷️ ScrapeGraphAI: 一度のクロールで完結
 [![Downloads](https://img.shields.io/pepy/dt/scrapegraphai?style=for-the-badge)](https://pepy.tech/project/scrapegraphai)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
 [![Pylint](https://img.shields.io/github/actions/workflow/status/VinciGit00/Scrapegraph-ai/pylint.yml?style=for-the-badge)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/pylint.yml)
@@ -9,95 +6,93 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
-ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, etc.).
+ScrapeGraphAIは、大規模言語モデルと直接グラフロジックを使用して、ウェブサイトやローカルドキュメント（XML、HTML、JSONなど）のクローリングパイプラインを作成するPythonライブラリです。
 
-Just say which information you want to extract and the library will do it for you!
+クロールしたい情報をライブラリに伝えるだけで、残りはすべてライブラリが行います！
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
 </p>
 
-## 🚀 Quick install
+## 🚀 インストール方法
 
-The reference page for Scrapegraph-ai is available on the official page of PyPI: [pypi](https://pypi.org/project/scrapegraphai/).
+Scrapegraph-aiの参照ページはPyPIの公式サイトで見ることができます: [pypi](https://pypi.org/project/scrapegraphai/)。
 
 ```bash
 pip install scrapegraphai
 ```
+**注意**: 他のライブラリとの競合を避けるため、このライブラリは仮想環境でのインストールを推奨します 🐱
 
-**Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
+## 🔍 デモ
 
-## 🔍 Demo
-Official streamlit demo:
+公式のStreamlitデモ：
 
 [![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-ai-web-dashboard.streamlit.app)
 
-Try it directly on the web using Google Colab:
+Google Colabで直接試す：
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
-## 📖 Documentation
+## 📖 ドキュメント
 
-The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
+ScrapeGraphAIのドキュメントは[こちら](https://scrapegraph-ai.readthedocs.io/en/latest/)で見ることができます。
 
-Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
+Docusaurusの[バージョン](https://scrapegraph-doc.onrender.com/)もご覧ください。
 
-## 💻 Usage
-There are three main scraping pipelines that can be used to extract information from a website (or local file):
-- `SmartScraperGraph`: single-page scraper that only needs a user prompt and an input source;
-- `SearchGraph`: multi-page scraper that extracts information from the top n search results of a search engine;
-- `SpeechGraph`: single-page scraper that extracts information from a website and generates an audio file.
-- `SmartScraperMultiGraph`: multiple page scraper given a single prompt
+## 💻 使い方
 
-It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
+ウェブサイト（またはローカルファイル）から情報を抽出するための3つの主要なクローリングパイプラインがあります：
 
-### Case 1: SmartScraper using Local Models
+- `SmartScraperGraph`: 単一ページのクローラー。ユーザープロンプトと入力ソースのみが必要です。
+- `SearchGraph`: 複数ページのクローラー。検索エンジンの上位n個の検索結果から情報を抽出します。
+- `SpeechGraph`: 単一ページのクローラー。ウェブサイトから情報を抽出し、音声ファイルを生成します。
+- `SmartScraperMultiGraph`: 複数ページのクローラー。プロンプトを与えると、
+**OpenAI**、**Groq**、**Azure**、**Gemini**などの異なるLLMをAPI経由で使用することができます。また、**Ollama**のローカルモデルを使用することもできます。
 
-Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command.
+### 例 1: ローカルモデルを使用したSmartScraper
+[Ollama](https://ollama.com/)がインストールされていること、および`ollama pull`コマンドでモデルがダウンロードされていることを確認してください。
 
-```python
+``` python
 from scrapegraphai.graphs import SmartScraperGraph
 
 graph_config = {
     "llm": {
         "model": "ollama/mistral",
         "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        "base_url": "http://localhost:11434",  # set Ollama URL
+        "format": "json",  # Ollamaではフォーマットを明示的に指定する必要があります
+        "base_url": "http://localhost:11434",  # OllamaのURLを設定
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
-        "base_url": "http://localhost:11434",  # set Ollama URL
+        "base_url": "http://localhost:11434",  # OllamaのURLを設定
     },
     "verbose": True,
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their descriptions",
-    # also accepts a string with the already downloaded HTML code
+    prompt="すべてのプロジェクトとその説明をリストしてください",
+    # ダウンロード済みのHTMLコードの文字列も受け付けます
     source="https://perinim.github.io/projects",
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
 print(result)
-
 ```
 
-The output will be a list of projects with their descriptions like the following:
+出力は、プロジェクトとその説明のリストになります：
 
 ```python
 {'projects': [{'title': 'Rotary Pendulum RL', 'description': 'Open Source project aimed at controlling a real life rotary pendulum using RL algorithms'}, {'title': 'DQN Implementation from scratch', 'description': 'Developed a Deep Q-Network algorithm to train a simple and double pendulum'}, ...]}
 ```
 
-### Case 2: SearchGraph using Mixed Models
-
-We use **Groq** for the LLM and **Ollama** for the embeddings.
+### 例 2: 混合モデルを使用したSearchGraph
+**Groq**をLLMとして、**Ollama**を埋め込みモデルとして使用します。
 
 ```python
 from scrapegraphai.graphs import SearchGraph
 
-# Define the configuration for the graph
+# グラフの設定を定義
 graph_config = {
     "llm": {
         "model": "groq/gemma-7b-it",
@@ -106,30 +101,31 @@ graph_config = {
     },
     "embeddings": {
         "model": "ollama/nomic-embed-text",
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # OllamaのURLを任意に設定
     },
     "max_results": 5,
 }
 
-# Create the SearchGraph instance
+# SearchGraphインスタンスを作成
 search_graph = SearchGraph(
-    prompt="List me all the traditional recipes from Chioggia",
+    prompt="Chioggiaの伝統的なレシピをすべてリストしてください",
     config=graph_config
 )
 
-# Run the graph
+# グラフを実行
 result = search_graph.run()
 print(result)
 ```
 
-The output will be a list of recipes like the following:
+出力は、レシピのリストになります：
 
 ```python
 {'recipes': [{'name': 'Sarde in Saòre'}, {'name': 'Bigoli in salsa'}, {'name': 'Seppie in umido'}, {'name': 'Moleche frite'}, {'name': 'Risotto alla pescatora'}, {'name': 'Broeto'}, {'name': 'Bibarasse in Cassopipa'}, {'name': 'Risi e bisi'}, {'name': 'Smegiassa Ciosota'}]}
 ```
-### Case 3: SpeechGraph using OpenAI
 
-You just need to pass the OpenAI API key and the model name.
+### 例 3: OpenAIを使用したSpeechGraph
+
+OpenAI APIキーとモデル名を渡すだけです。
 
 ```python
 from scrapegraphai.graphs import SpeechGraph
@@ -148,23 +144,22 @@ graph_config = {
 }
 
 # ************************************************
-# Create the SpeechGraph instance and run it
+# SpeechGraphインスタンスを作成して実行
 # ************************************************
 
 speech_graph = SpeechGraph(
-    prompt="Make a detailed audio summary of the projects.",
+    prompt="プロジェクトの詳細な音声要約を作成してください。",
     source="https://perinim.github.io/projects/",
     config=graph_config,
 )
 
 result = speech_graph.run()
 print(result)
-
 ```
+出力は、ページ上のプロジェクトの要約を含む音声ファイルになります。
 
-The output will be an audio file with the summary of the projects on the page.
+## スポンサー
 
-## Sponsors
 <div style="text-align: center;">
   <a href="https://serpapi.com?utm_source=scrapegraphai">
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
@@ -174,26 +169,30 @@ The output will be an audio file with the summary of the projects on the page.
   </a>
 </div>
 
-## 🤝 Contributing
+## 🤝 貢献
 
-Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
+貢献を歓迎し、Discordサーバーで改善や提案について話し合います！
 
-Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
+[貢献ガイド](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md)をご覧ください。
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
-## 📈 Roadmap
-Check out the project roadmap [here](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/README.md)! 🚀
 
-Wanna visualize the roadmap in a more interactive way? Check out the [markmap](https://markmap.js.org/repl) visualization by copy pasting the markdown content in the editor!
+## 📈 ロードマップ
 
-## ❤️ Contributors
+[こちら](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/README.md)でプロジェクトのロードマップをご覧ください！ 🚀
+
+よりインタラクティブな方法でロードマップを視覚化したいですか？[markmap](https://markmap.js.org/repl)をチェックして、マークダウンの内容をエディタにコピー＆ペーストして視覚化してください！
+
+## ❤️ 貢献者
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
 
-## 🎓 Citations
-If you have used our library for research purposes please quote us with the following reference:
+
+## 🎓 引用
+
+研究目的で当社のライブラリを使用する場合は、以下の参考文献を引用してください：
 ```text
   @misc{scrapegraph-ai,
     author = {Marco Perini, Lorenzo Padoan, Marco Vinciguerra},
@@ -203,24 +202,24 @@ If you have used our library for research purposes please quote us with the foll
     note = {A Python library for scraping leveraging large language models}
   }
 ```
-
-## Authors
+## 作者
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors_logos">
 </p>
 
-|                    | Contact Info         |
+## 連絡先
+|                    | 連絡先         |
 |--------------------|----------------------|
 | Marco Vinciguerra  | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-vinciguerra-7ba365242/)    |
 | Marco Perini       | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)   |
 | Lorenzo Padoan     | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/lorenzo-padoan-4521a2154/)  |
 
-## 📜 License
+## 📜 ライセンス
 
-ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) file for more information.
+ScrapeGraphAIはMITライセンスの下で提供されています。詳細は[LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE)ファイルをご覧ください。
 
-## Acknowledgements
+## 謝辞
 
-- We would like to thank all the contributors to the project and the open-source community for their support.
-- ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
+- プロジェクトの貢献者とオープンソースコミュニティのサポートに感謝します。
+- ScrapeGraphAIはデータ探索と研究目的のみに使用されます。このライブラリの不正使用については一切責任を負いません。

@@ -25,6 +25,7 @@ from ..models import (
     OpenAI,
     OneApi
 )
+from ..models.ernie import Ernie
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning
 
 from ..helpers import models_tokens
@@ -250,6 +251,13 @@ class AbstractGraph(ABC):
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
             return DeepSeek(llm_params)
+        elif "ernie" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["ernie"][llm_params["model"]]
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
+            return Ernie(llm_params)
         else:
             raise ValueError("Model provided by the configuration not supported")
 

@@ -93,20 +93,35 @@ class GenerateAnswerNode(BaseNode):
 
         # Use tqdm to add progress bar
         for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
-            if len(doc) == 1:
+            if self.node_config.get("schema", None) is None and len(doc) == 1:
                 prompt = PromptTemplate(
                     template=template_no_chunks,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                        "format_instructions": format_instructions})
-                
-            else:
+            elif self.node_config.get("schema", None) is not None and len(doc) == 1:
+                 prompt = PromptTemplate(
+                    template=template_no_chunks_with_schema,
+                    input_variables=["question"],
+                    partial_variables={"context": chunk.page_content,
+                                       "format_instructions": format_instructions,
+                                       "schema": self.node_config.get("schema", None)
+                                       })
+            elif self.node_config.get("schema", None) is None and len(doc) > 1:
                 prompt = PromptTemplate(
                     template=template_chunks,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                         "chunk_id": i + 1,
                                         "format_instructions": format_instructions})
+            elif self.node_config.get("schema", None) is not None and len(doc) > 1:
+                prompt = PromptTemplate(
+                    template=template_chunks_with_schema,
+                    input_variables=["question"],
+                    partial_variables={"context": chunk.page_content,
+                                        "chunk_id": i + 1,
+                                        "format_instructions": format_instructions,
+                                        "schema": self.node_config.get("schema", None)})
 
             # Dynamically name the chains based on their index
             chain_name = f"chunk{i+1}"

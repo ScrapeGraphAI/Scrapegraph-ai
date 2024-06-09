@@ -9,7 +9,6 @@ from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser
 
-from .base_node import BaseNode
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_community.document_loaders import AsyncChromiumLoader
@@ -17,7 +16,6 @@ from langchain_community.document_loaders import AsyncChromiumLoader
 from ..helpers import robots_dictionary
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-
 
 class RobotsNode(BaseNode):
     """
@@ -54,7 +52,9 @@ class RobotsNode(BaseNode):
 
         self.llm_model = node_config["llm_model"]
 
-        self.force_scraping = False if node_config is None else node_config.get("force_scraping", False)
+        self.force_scraping = (
+            False if node_config is None else node_config.get("force_scraping", False)
+        )
         self.verbose = (
             True if node_config is None else node_config.get("verbose", False)
         )
@@ -111,14 +111,11 @@ class RobotsNode(BaseNode):
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
             loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
-            if "ollama" in self.llm_model["model_name"]:
-                self.llm_model["model_name"] = self.llm_model["model_name"].split("/")[
-                    -1
-                ]
-                model = self.llm_model["model_name"].split("/")[-1]
-
+            if "ollama" in self.llm_model.model_name:
+                self.llm_model.model_name = self.llm_model.model_name.split("/")[-1]
+                model = self.llm_model.model_name.split("/")[-1]
             else:
-                model = self.llm_model["model_name"]
+                model = self.llm_model.model_name
             try:
                 agent = robots_dictionary[model]
 

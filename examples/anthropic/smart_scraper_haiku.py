@@ -9,7 +9,6 @@ from scrapegraphai.utils import prettify_exec_info
 
 
 # required environment variables in .env
-# HUGGINGFACEHUB_API_TOKEN
 # ANTHROPIC_API_KEY
 load_dotenv()
 
