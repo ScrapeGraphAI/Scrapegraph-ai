@@ -1,55 +1,61 @@
+"""
+Module for the tests
+"""
+import os
 import pytest
-from scrapegraphai.models import Ollama
-from scrapegraphai.nodes import RobotsNode
-from unittest.mock import patch, MagicMock
+from scrapegraphai.graphs import SmartScraperGraph
 
 @pytest.fixture
-def setup():
+def sample_text():
     """
-    Setup the RobotsNode and initial state for testing.
+    Example of text fixture.
     """
-    # Define the configuration for the graph
-    graph_config = {
+    file_name = "inputs/plain_html_example.txt"
+    curr_dir = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(curr_dir, file_name)
+
+    with open(file_path, 'r', encoding="utf-8") as file:
+        text = file.read()
+
+    return text
+
+@pytest.fixture
+def graph_config():
+    """
+    Configuration of the graph fixture.
+    """
+    return {
         "llm": {
-            "model_name": "ollama/llama3",
+            "model": "ollama/mistral",
             "temperature": 0,
-            "streaming": True
+            "format": "json",
+            "base_url": "http://localhost:11434",
         },
+        "embeddings": {
+            "model": "ollama/nomic-embed-text",
+            "temperature": 0,
+            "base_url": "http://localhost:11434",
+        }
     }
 
-    # Instantiate the LLM model with the configuration
-    llm_model = Ollama(graph_config["llm"])
-
-    # Define the RobotsNode with necessary configurations
-    robots_node = RobotsNode(
-        input="url",
-        output=["is_scrapable"],
-        node_config={
-            "llm_model": llm_model,
-            "headless": False
-        }
+def test_scraping_pipeline(sample_text, graph_config):
+    """
+    Test the SmartScraperGraph scraping pipeline.
+    """
+    smart_scraper_graph = SmartScraperGraph(
+        prompt="List me all the news with their description.",
+        source=sample_text,
+        config=graph_config
     )
 
-    # Define the initial state for the node
-    initial_state = {
-        "url": "https://twitter.com/home"
-    }
+    result = smart_scraper_graph.run()
 
-    return robots_node, initial_state
-
-def test_robots_node(setup):
-    """
-    Test the RobotsNode execution.
-    """
-    robots_node, initial_state = setup
-
-    # Patch the execute method to avoid actual network calls and return a mock response
-    with patch.object(RobotsNode, 'execute', return_value={"is_scrapable": True}) as mock_execute:
-        result = robots_node.execute(initial_state)
-
-        # Check if the result is not None
-        assert result is not None
-        # Additional assertion to check the returned value
-        assert result["is_scrapable"] is True
-        # Ensure the execute method was called once
-        mock_execute.assert_called_once_with(initial_state)
+    assert result is not None
+    # Additional assertions to check the structure of the result
+    assert isinstance(result, dict)  # Assuming the result is a dictionary
+    assert "news" in result  # Assuming the result should contain a key "news"
+    assert "is_scrapable" in result
+    assert isinstance(result["is_scrapable"], bool)
+    assert result["is_scrapable"] is True
+    # Ensure the execute method was called once
+    mock_execute.assert_called_once_with(initial_state)
