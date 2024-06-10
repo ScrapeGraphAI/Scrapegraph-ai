@@ -1,3 +1,14 @@
+## [1.7.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.1...v1.7.0-beta.2) (2024-06-10)
+
+
+### Features
+
+* Add tests for RobotsNode and update test setup ([b0511ae](https://github.com/VinciGit00/Scrapegraph-ai/commit/b0511aeaaac55570c8dad25b7cac7237bd20ef4c))
+* Add tests for SmartScraperGraph using sample text and configuration fixtures ([@tejhande](https://github.com/tejhande)) ([c927145](https://github.com/VinciGit00/Scrapegraph-ai/commit/c927145bd06693d0fad02b2285b426276b7d61a8))
+* Add tests for SmartScraperGraph using sample text and configuration fixtures ([@tejhande](https://github.com/tejhande)) ([9e7038c](https://github.com/VinciGit00/Scrapegraph-ai/commit/9e7038c5962563f53e0d44943d5c604cb1a2b035))
+* Add tests for SmartScraperGraph using sample text and configuration fixtures ([@tejhande](https://github.com/tejhande)) ([c286b16](https://github.com/VinciGit00/Scrapegraph-ai/commit/c286b1649e75d6c655698f38d695b58e3efa6270))
+* Add tests for SmartScraperGraph using sample text and configuration fixtures ([@tejhande](https://github.com/tejhande)) ([08f1be6](https://github.com/VinciGit00/Scrapegraph-ai/commit/08f1be682b0509f1e06148269fec1fa2897c394e))
+
 ## [1.7.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.7.0-beta.1) (2024-06-09)
 
 
