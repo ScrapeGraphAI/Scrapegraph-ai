@@ -1,5 +1,5 @@
 """
-Module for the tests
+Module for the tests.
 """
 import os
 import pytest
