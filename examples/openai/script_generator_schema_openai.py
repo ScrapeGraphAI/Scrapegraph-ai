@@ -5,28 +5,37 @@ Basic example of scraping pipeline using ScriptCreatorGraph
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import ScriptCreatorGraph
-from langchain_openai import AzureChatOpenAI
-from langchain_openai import AzureOpenAIEmbeddings
 from scrapegraphai.utils import prettify_exec_info
+
+from pydantic import BaseModel, Field
+from typing import List
 
 load_dotenv()
 
 # ************************************************
+# Define the schema for the graph
+# ************************************************
+
+class Project(BaseModel):
+    title: str = Field(description="The title of the project")
+    description: str = Field(description="The description of the project")
+
+class Projects(BaseModel):
+    projects: List[Project]
+
+# ************************************************
 # Define the configuration for the graph
 # ************************************************
-llm_model_instance = AzureChatOpenAI(
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
-)
 
-embedder_model_instance = AzureOpenAIEmbeddings(
-    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-)
+openai_key = os.getenv("OPENAI_APIKEY")
+
 graph_config = {
-    "llm": {"model_instance": llm_model_instance},
-    "embeddings": {"model_instance": embedder_model_instance},
-    "library": "beautifulsoup"
+    "llm": {
+        "api_key": openai_key,
+        "model": "gpt-3.5-turbo",
+    },
+    "library": "beautifulsoup",
+    "verbose": True,
 }
 
 # ************************************************
@@ -37,7 +46,8 @@ script_creator_graph = ScriptCreatorGraph(
     prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects",
-    config=graph_config
+    config=graph_config,
+    schema=Projects
 )
 
 result = script_creator_graph.run()

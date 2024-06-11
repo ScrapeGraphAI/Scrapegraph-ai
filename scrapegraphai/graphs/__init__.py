@@ -20,3 +20,4 @@ from .pdf_scraper_multi import PdfScraperMultiGraph
 from .json_scraper_multi import JSONScraperMultiGraph
 from .csv_scraper_graph_multi import CSVScraperMultiGraph
 from .xml_scraper_graph_multi import XMLScraperMultiGraph
+from .script_creator_multi_graph import ScriptCreatorMultiGraph
