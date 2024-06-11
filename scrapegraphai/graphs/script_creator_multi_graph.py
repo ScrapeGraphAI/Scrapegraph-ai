@@ -67,6 +67,7 @@ class ScriptCreatorMultiGraph(AbstractGraph):
             prompt="",
             source="",
             config=self.copy_config,
+            schema=self.schema
         )
 
         # ************************************************
@@ -75,15 +76,15 @@ class ScriptCreatorMultiGraph(AbstractGraph):
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
-            output=["results"],
+            output=["scripts"],
             node_config={
                 "graph_instance": script_generator_instance,
             }
         )
 
         merge_scripts_node = MergeGeneratedScriptsNode(
-            input="user_prompt & results",
-            output=["scripts"],
+            input="user_prompt & scripts",
+            output=["merged_script"],
             node_config={
                 "llm_model": self.llm_model,
                 "schema": self.schema
@@ -108,7 +109,5 @@ class ScriptCreatorMultiGraph(AbstractGraph):
             str: The answer to the prompt.
         """
         inputs = {"user_prompt": self.prompt, "urls": self.source}
-        print("self.prompt", self.prompt)
         self.final_state, self.execution_info = self.graph.execute(inputs)
-        print("self.prompt", self.final_state)
-        return self.final_state.get("scripts", [])
+        return self.final_state.get("merged_script", "Failed to generate the script.")
