@@ -43,11 +43,14 @@ The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.r
 Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
 
 ## 💻 Usage
-There are three main scraping pipelines that can be used to extract information from a website (or local file):
+There are multiple standard scraping pipelines that can be used to extract information from a website (or local file):
 - `SmartScraperGraph`: single-page scraper that only needs a user prompt and an input source;
 - `SearchGraph`: multi-page scraper that extracts information from the top n search results of a search engine;
 - `SpeechGraph`: single-page scraper that extracts information from a website and generates an audio file.
-- `SmartScraperMultiGraph`: multiple page scraper given a single prompt
+- `ScriptCreatorGraph`: single-page scraper that extracts information from a website and generates a Python script.
+
+- `SmartScraperMultiGraph`: multi-page scraper that extracts information from multiple pages given a single prompt and a list of sources;
+- `ScriptCreatorMultiGraph`: multi-page scraper that generates a Python script for extracting information from multiple pages given a single prompt and a list of sources.
 
 It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
 
