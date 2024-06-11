@@ -51,6 +51,7 @@ class RAGNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.cache_path = node_config.get("cache_path", False)
 
     def execute(self, state: dict) -> dict:
         """
@@ -99,15 +100,20 @@ class RAGNode(BaseNode):
         )
         embeddings = self.embedder_model
 
-        folder_name = self.node_config.get("cache", "cache")
+        folder_name = self.node_config.get("cache_path", "cache")
 
-        if self.node_config.get("cache", False) and not os.path.exists(folder_name):
+        if self.node_config.get("cache_path", False) and not os.path.exists(folder_name):
             index = FAISS.from_documents(chunked_docs, embeddings)
             os.makedirs(folder_name)
-
             index.save_local(folder_name)
-        if self.node_config.get("cache", False) and os.path.exists(folder_name):
-            index = FAISS.load_local(folder_path=folder_name, embeddings=embeddings)
+            self.logger.info("--- (indexes saved to cache) ---")
+
+        elif self.node_config.get("cache_path", False) and os.path.exists(folder_name):
+            index = FAISS.load_local(folder_path=folder_name,
+                                     embeddings=embeddings,
+                                     allow_dangerous_deserialization=True)
+            self.logger.info("--- (indexes loaded from cache) ---")
+
         else:
             index = FAISS.from_documents(chunked_docs, embeddings)
 

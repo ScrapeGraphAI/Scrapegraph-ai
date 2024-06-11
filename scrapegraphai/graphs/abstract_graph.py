@@ -76,6 +76,7 @@ class AbstractGraph(ABC):
         self.headless = True if config is None else config.get(
             "headless", True)
         self.loader_kwargs = config.get("loader_kwargs", {})
+        self.cache_path = config.get("cache_path", False)
 
         # Create the graph
         self.graph = self._create_graph()
@@ -91,15 +92,13 @@ class AbstractGraph(ABC):
         else:
             set_verbosity_warning()
 
-        self.headless = True if config is None else config.get("headless", True)
-        self.loader_kwargs = config.get("loader_kwargs", {})
-
         common_params = {
             "headless": self.headless,
             "verbose": self.verbose,
             "loader_kwargs": self.loader_kwargs,
             "llm_model": self.llm_model,
-            "embedder_model": self.embedder_model
+            "embedder_model": self.embedder_model,
+            "cache_path": self.cache_path,
             }
        
         self.set_common_params(common_params, overwrite=False)
