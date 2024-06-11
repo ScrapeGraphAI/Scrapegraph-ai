@@ -50,7 +50,7 @@ boto3==1.34.113
 botocore==1.34.113
     # via boto3
     # via s3transfer
-burr==0.19.1
+burr==0.22.1
     # via burr
     # via scrapegraphai
 cachetools==5.3.3
@@ -185,6 +185,10 @@ idna==3.7
     # via yarl
 imagesize==1.4.1
     # via sphinx
+importlib-metadata==7.1.0
+    # via sphinx
+importlib-resources==6.4.0
+    # via matplotlib
 iniconfig==2.0.0
     # via pytest
 jinja2==3.1.4
@@ -388,6 +392,8 @@ rsa==4.9
     # via google-auth
 s3transfer==0.10.1
     # via boto3
+semchunk==1.0.1
+    # via scrapegraphai
 sf-hamilton==1.63.0
     # via burr
 shellingham==1.5.4
@@ -454,6 +460,7 @@ tqdm==4.66.4
     # via huggingface-hub
     # via openai
     # via scrapegraphai
+    # via semchunk
 typer==0.12.3
     # via fastapi-cli
 typing-extensions==4.12.0
@@ -471,6 +478,7 @@ typing-extensions==4.12.0
     # via pyee
     # via sf-hamilton
     # via sqlalchemy
+    # via starlette
     # via streamlit
     # via typer
     # via typing-inspect
@@ -502,3 +510,6 @@ win32-setctime==1.1.0
     # via loguru
 yarl==1.9.4
     # via aiohttp
+zipp==3.19.2
+    # via importlib-metadata
+    # via importlib-resources

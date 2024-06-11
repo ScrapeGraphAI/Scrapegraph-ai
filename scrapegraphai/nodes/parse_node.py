@@ -3,8 +3,7 @@ ParseNode Module
 """
 
 from typing import List, Optional
-
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
 from ..utils.logging import get_logger
 from .base_node import BaseNode
@@ -67,20 +66,16 @@ class ParseNode(BaseNode):
 
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
-
-        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=self.node_config.get("chunk_size", 4096),
-            chunk_overlap=0,
-        )
-
         # Parse the document
         docs_transformed = input_data[0]
         if self.parse_html:
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
         docs_transformed = docs_transformed[0]
 
-        chunks = text_splitter.split_text(docs_transformed.page_content)
-
+        chunks = chunk(text=docs_transformed.page_content,
+                        chunk_size= self.node_config.get("chunk_size", 4096),
+                        token_counter=lambda x: len(x.split()),
+                        memoize=False)
         state.update({self.output[0]: chunks})
 
         return state
