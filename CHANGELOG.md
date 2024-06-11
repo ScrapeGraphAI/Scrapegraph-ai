@@ -1,3 +1,27 @@
+## [1.7.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.2...v1.7.0-beta.3) (2024-06-11)
+
+
+### Features
+
+* add caching ([d790361](https://github.com/VinciGit00/Scrapegraph-ai/commit/d79036149a3197a385b73553f29df66d36480c38))
+* add dynamic caching ([7ed2fe8](https://github.com/VinciGit00/Scrapegraph-ai/commit/7ed2fe8ef0d16fd93cb2ff88840bcaa643349e33))
+* add new chunking function ([e1f045b](https://github.com/VinciGit00/Scrapegraph-ai/commit/e1f045b2809fc7db0c252f4c6f2f9a435c66ba91))
+* **merge:** add scriptcreatormulti, rag cache and semchunk ([15421ef](https://github.com/VinciGit00/Scrapegraph-ai/commit/15421eff7009b80293f7d84df5086d22944dfb99))
+* **schema:** merge scripts to follow pydantic schema ([5d692bf](https://github.com/VinciGit00/Scrapegraph-ai/commit/5d692bff9e4f124146dd37e573f7c3c0aa8d9a23))
+* refactoring of rag node ([7a13a68](https://github.com/VinciGit00/Scrapegraph-ai/commit/7a13a6819ff35a6f6197ee837d0eb8ea65e31776))
+
+
+### Bug Fixes
+
+* **cache:** correctly pass the node arguments and logging ([c881f64](https://github.com/VinciGit00/Scrapegraph-ai/commit/c881f64209a86a69ddd3105f5d0360d9ed183490))
+* **node:** fixed generate answer node pydantic schema ([ab00f23](https://github.com/VinciGit00/Scrapegraph-ai/commit/ab00f23d859c64995ccfe329b24379cf3c14d73c))
+
+
+### Docs
+
+* **cache:** added cache_path param ([edddb68](https://github.com/VinciGit00/Scrapegraph-ai/commit/edddb682d06262088885e340b7b73cc70adf9583))
+* **scriptcreator:** enhance documentation ([650c3aa](https://github.com/VinciGit00/Scrapegraph-ai/commit/650c3aaa60dab169358c2c04bfca9dee8d1a5d68))
+
 ## [1.7.0-beta.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.1...v1.7.0-beta.2) (2024-06-10)
 
 
