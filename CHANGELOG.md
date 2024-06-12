@@ -1,3 +1,10 @@
+## [1.7.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.3...v1.7.0-beta.4) (2024-06-12)
+
+
+### Bug Fixes
+
+* common params ([6b4cdf9](https://github.com/VinciGit00/Scrapegraph-ai/commit/6b4cdf92b82fa143e4217a2e5da46d04f2585de8))
+
 ## [1.7.0-beta.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.2...v1.7.0-beta.3) (2024-06-11)
 
 
