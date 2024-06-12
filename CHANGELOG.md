@@ -1,3 +1,10 @@
+## [1.7.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.4...v1.7.0-beta.5) (2024-06-12)
+
+
+### Features
+
+* update fetch node ([1e7f334](https://github.com/VinciGit00/Scrapegraph-ai/commit/1e7f3349f3192ca1b9c54b110619171c5248816c))
+
 ## [1.7.0-beta.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.3...v1.7.0-beta.4) (2024-06-12)
 
 
