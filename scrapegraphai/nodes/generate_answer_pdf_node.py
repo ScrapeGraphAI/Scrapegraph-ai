@@ -113,7 +113,7 @@ class GenerateAnswerPDFNode(BaseNode):
                     template=template_no_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={
-                        "context":chunk,
+                        "context":chunk.page_content,
                         "format_instructions": format_instructions,
                     },
                 )
@@ -150,5 +150,5 @@ class GenerateAnswerPDFNode(BaseNode):
             answer = merge_chain.invoke({"context": answer, "question": user_prompt})
 
         # Update the state with the generated answer
-        state.update({self.output[0]: answer})
+        state.update({self.output[0]: answer.get("Response", {})})
         return state
