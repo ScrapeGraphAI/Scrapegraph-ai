@@ -70,12 +70,20 @@ class ParseNode(BaseNode):
         docs_transformed = input_data[0]
         if self.parse_html:
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
-        docs_transformed = docs_transformed[0]
+            docs_transformed = docs_transformed[0]
 
-        chunks = chunk(text=docs_transformed.page_content,
-                        chunk_size= self.node_config.get("chunk_size", 4096),
-                        token_counter=lambda x: len(x.split()),
-                        memoize=False)
+            chunks = chunk(text=docs_transformed.page_content,
+                            chunk_size= self.node_config.get("chunk_size", 4096),
+                            token_counter=lambda x: len(x.split()),
+                            memoize=False)
+        else:
+            docs_transformed = docs_transformed[0]
+
+            chunks = chunk(text=docs_transformed,
+                            chunk_size= self.node_config.get("chunk_size", 4096),
+                            token_counter=lambda x: len(x.split()),
+                            memoize=False)
+                          
         state.update({self.output[0]: chunks})
 
         return state

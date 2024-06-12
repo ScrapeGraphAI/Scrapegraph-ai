@@ -3,8 +3,8 @@ SmartScraperGraph Module
 """
 
 from typing import Optional
+import logging
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 
@@ -70,6 +70,7 @@ class SmartScraperGraph(AbstractGraph):
             }
         )
         logging.info("FetchNode configured with headless: %s", self.config.get("headless", True))
+
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],

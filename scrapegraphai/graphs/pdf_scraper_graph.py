@@ -11,6 +11,7 @@ from .abstract_graph import AbstractGraph
 
 from ..nodes import (
     FetchNode,
+    ParseNode,
     RAGNode,
     GenerateAnswerPDFNode
 )
@@ -66,6 +67,15 @@ class PDFScraperGraph(AbstractGraph):
             output=["doc"],
         )
 
+        parse_node = ParseNode(
+            input="doc",
+            output=["parsed_doc"],
+            node_config={
+                "parse_html": False,
+                "chunk_size": self.model_token
+            }
+        )
+
         rag_node = RAGNode(
             input="user_prompt & (parsed_doc | doc)",
             output=["relevant_chunks"],
@@ -86,11 +96,13 @@ class PDFScraperGraph(AbstractGraph):
         return BaseGraph(
             nodes=[
                 fetch_node,
+                parse_node,
                 rag_node,
                 generate_answer_node_pdf,
             ],
             edges=[
-                (fetch_node, rag_node),
+                (fetch_node, parse_node),
+                (parse_node, rag_node),
                 (rag_node, generate_answer_node_pdf)
             ],
             entry_point=fetch_node
