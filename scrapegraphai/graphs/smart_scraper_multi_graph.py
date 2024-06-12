@@ -2,7 +2,6 @@
 SmartScraperMultiGraph Module
 """
 
-from copy import copy, deepcopy
 from typing import List, Optional
 
 from .base_graph import BaseGraph
@@ -46,10 +45,21 @@ class SmartScraperMultiGraph(AbstractGraph):
 
         self.max_results = config.get("max_results", 3)
 
-        if all(isinstance(value, str) for value in config.values()):
-            self.copy_config = copy(config)
-        else:
-            self.copy_config = deepcopy(config)
+        # Custom deepcopy function to handle non-picklable objects
+        def custom_deepcopy(obj):
+            if isinstance(obj, dict):
+                return {k: custom_deepcopy(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [custom_deepcopy(v) for v in obj]
+            elif hasattr(obj, '__dict__'):
+                new_obj = obj.__class__()
+                for attr in obj.__dict__:
+                    setattr(new_obj, attr, custom_deepcopy(getattr(obj, attr)))
+                return new_obj
+            else:
+                return obj
+
+        self.copy_config = custom_deepcopy(config)
 
         super().__init__(prompt, config, source, schema)
 
