@@ -2,28 +2,20 @@
 Basic example of scraping pipeline using SmartScraper with schema
 """
 import json
+from typing import List
+from pydantic import BaseModel, Field
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-schema= """
-    { 
-    "Projects": [
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            }, 
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            } 
-        ] 
-    } 
-"""
+class Project(BaseModel):
+    title: str = Field(description="The title of the project")
+    description: str = Field(description="The description of the project")
+
+class Projects(BaseModel):
+    projects: List[Project]
 
 graph_config = {
     "llm": {
@@ -48,7 +40,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description",
     source="https://perinim.github.io/projects/",
-    schema=schema,
+    schema=Projects,
     config=graph_config
 )
 

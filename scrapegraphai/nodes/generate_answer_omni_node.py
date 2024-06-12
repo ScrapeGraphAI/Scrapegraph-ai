@@ -10,7 +10,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
-
+from ..models import Ollama
 # Imports from the library
 from .base_node import BaseNode
 from ..helpers.generate_answer_node_omni_prompts import template_no_chunk_omni, template_chunks_omni, template_merge_omni
@@ -44,6 +44,9 @@ class GenerateAnswerOmniNode(BaseNode):
         super().__init__(node_name, "node", input, output, 3, node_config)
 
         self.llm_model = node_config["llm_model"]
+        if isinstance(node_config["llm_model"], Ollama):
+            self.llm_model.format="json"
+            
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
@@ -77,7 +80,12 @@ class GenerateAnswerOmniNode(BaseNode):
         doc = input_data[1]
         imag_desc = input_data[2]
 
-        output_parser = JsonOutputParser()
+        # Initialize the output parser
+        if self.node_config.get("schema", None) is not None:
+            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+        else:
+            output_parser = JsonOutputParser()
+
         format_instructions = output_parser.get_format_instructions()
 
 

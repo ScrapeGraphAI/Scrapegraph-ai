@@ -41,11 +41,7 @@ def cleanup_html(html_content: str, base_url: str) -> str:
         tag.extract()
 
     # Links extraction
-    links = soup.find_all('a')
-    link_urls = []
-    for link in links:
-        if 'href' in link.attrs:
-            link_urls.append(urljoin(base_url, link['href']))
+    link_urls = [urljoin(base_url, link['href']) for link in soup.find_all('a', href=True)]
 
     # Images extraction
     images = soup.find_all('img')
@@ -65,7 +61,7 @@ def cleanup_html(html_content: str, base_url: str) -> str:
         minimized_body = minify(str(body_content))
         return title, minimized_body, link_urls, image_urls
 
-    # Add fallback mechanism
     else:
         logging.error(f'No body content found in HTML: {html_content}')
         raise ValueError(f"No HTML body content found, please try setting the 'headless' flag to False in the graph configuration. HTML content: {html_content}")
+

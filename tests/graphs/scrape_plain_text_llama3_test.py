@@ -1,15 +1,14 @@
 """
-Module for the tests
+Module for the tests.
 """
 import os
 import pytest
 from scrapegraphai.graphs import SmartScraperGraph
 
-
 @pytest.fixture
 def sample_text():
     """
-    Example of text
+    Example of text fixture.
     """
     file_name = "inputs/plain_html_example.txt"
     curr_dir = os.path.dirname(os.path.realpath(__file__))
@@ -20,11 +19,10 @@ def sample_text():
 
     return text
 
-
 @pytest.fixture
 def graph_config():
     """
-    Configuration of the graph
+    Configuration of the graph fixture.
     """
     return {
         "llm": {
@@ -40,10 +38,9 @@ def graph_config():
         }
     }
 
-
-def test_scraping_pipeline(sample_text: str, graph_config: dict):
+def test_scraping_pipeline(sample_text, graph_config):
     """
-    Start of the scraping pipeline
+    Test the SmartScraperGraph scraping pipeline.
     """
     smart_scraper_graph = SmartScraperGraph(
         prompt="List me all the news with their description.",
@@ -54,3 +51,6 @@ def test_scraping_pipeline(sample_text: str, graph_config: dict):
     result = smart_scraper_graph.run()
 
     assert result is not None
+    # Additional assertions to check the structure of the result can be added here
+    assert isinstance(result, dict)  # Assuming the result is a dictionary
+    assert "news" in result  # Assuming the result should contain a key "news"

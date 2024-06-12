@@ -3,6 +3,7 @@ Module for creating the smart scraper
 """
 
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -20,7 +21,7 @@ class CSVScraperGraph(AbstractGraph):
     information from web pages using a natural language model to interpret and answer prompts.
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
         """
         Initializes the CSVScraperGraph with a prompt, source, and configuration.
         """

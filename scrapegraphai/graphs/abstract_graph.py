@@ -3,8 +3,9 @@ AbstractGraph Module
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Union
 import uuid
+from pydantic import BaseModel
 
 from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
@@ -63,7 +64,7 @@ class AbstractGraph(ABC):
     """
 
     def __init__(self, prompt: str, config: dict, 
-                 source: Optional[str] = None, schema: Optional[str] = None):
+                 source: Optional[str] = None, schema: Optional[BaseModel] = None):
 
         self.prompt = prompt
         self.source = source
@@ -77,6 +78,7 @@ class AbstractGraph(ABC):
         self.headless = True if config is None else config.get(
             "headless", True)
         self.loader_kwargs = config.get("loader_kwargs", {})
+        self.cache_path = config.get("cache_path", False)
 
         # Create the graph
         self.graph = self._create_graph()
@@ -92,15 +94,13 @@ class AbstractGraph(ABC):
         else:
             set_verbosity_warning()
 
-        self.headless = True if config is None else config.get("headless", True)
-        self.loader_kwargs = config.get("loader_kwargs", {})
-
         common_params = {
             "headless": self.headless,
             "verbose": self.verbose,
             "loader_kwargs": self.loader_kwargs,
             "llm_model": self.llm_model,
-            "embedder_model": self.embedder_model
+            "embedder_model": self.embedder_model,
+            "cache_path": self.cache_path,
             }
        
         self.set_common_params(common_params, overwrite=False)
@@ -125,28 +125,7 @@ class AbstractGraph(ABC):
 
         for node in self.graph.nodes:
             node.update_config(params, overwrite)
-
-    def _set_model_token(self, llm):
-
-        if "Azure" in str(type(llm)):
-            try:
-                self.model_token = models_tokens["azure"][llm.model_name]
-            except KeyError:
-                raise KeyError("Model not supported")
-
-        elif "HuggingFaceEndpoint" in str(type(llm)):
-            if "mistral" in llm.repo_id:
-                try:
-                    self.model_token = models_tokens["mistral"][llm.repo_id]
-                except KeyError:
-                    raise KeyError("Model not supported")
-        elif "Google" in str(type(llm)):
-            try:
-                if "gemini" in llm.model:
-                    self.model_token = models_tokens["gemini"][llm.model]
-            except KeyError:
-                raise KeyError("Model not supported")
-
+    
     def _create_llm(self, llm_config: dict, chat=False) -> object:
         """
         Create a large language model instance based on the configuration provided.
@@ -166,8 +145,6 @@ class AbstractGraph(ABC):
 
         # If model instance is passed directly instead of the model details
         if "model_instance" in llm_params:
-            if chat:
-                self._set_model_token(llm_params["model_instance"])
             return llm_params["model_instance"]
 
         # Instantiate the language model based on the model name
@@ -299,8 +276,6 @@ class AbstractGraph(ABC):
             )
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
-        elif isinstance(self.llm_model, DeepSeek):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)   
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureOpenAI):
@@ -384,6 +359,16 @@ class AbstractGraph(ABC):
         if key is not None:
             return self.final_state[key]
         return self.final_state
+
+    def append_node(self, node):
+        """
+        Add a node to the graph.
+
+        Args:
+            node (BaseNode): The node to add to the graph.
+        """
+
+        self.graph.append_node(node)
 
     def get_execution_info(self):
         """

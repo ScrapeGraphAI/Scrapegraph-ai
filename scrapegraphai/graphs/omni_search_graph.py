@@ -4,6 +4,7 @@ OmniSearchGraph Module
 
 from copy import copy, deepcopy
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -43,7 +44,7 @@ class OmniSearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 

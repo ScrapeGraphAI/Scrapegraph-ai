@@ -81,7 +81,7 @@ models_tokens = {
         "mxbai-embed-large": 512,
     },
     "oneapi": {
-        "qwen-turbo": 16380
+        "qwen-turbo": 6000 
     },
     "groq": {
         "llama3-8b-8192": 8192,
