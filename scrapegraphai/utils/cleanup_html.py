@@ -24,6 +24,12 @@ def cleanup_html(html_content: str, base_url: str) -> str:
     This function is particularly useful for preparing HTML content for environments where bandwidth usage needs to be minimized.
     """
 
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+
+    # Add logging to capture the HTML content before parsing
+    logging.debug(f'HTML content before parsing: {html_content}')
+
     soup = BeautifulSoup(html_content, 'html.parser')
 
     # Title Extraction
@@ -53,9 +59,9 @@ def cleanup_html(html_content: str, base_url: str) -> str:
     if body_content:
         # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
-
         return title, minimized_body, link_urls, image_urls
-        # return "Title: " + title + ", Body: " + minimized_body + ", Links: " + str(link_urls) + ", Images: " + str(image_urls)
 
-    # throw an error if no body content is found
-    raise ValueError("No HTML body content found, please try setting the 'headless' flag to False in the graph configuration.")
+    else:
+        logging.error(f'No body content found in HTML: {html_content}')
+        raise ValueError(f"No HTML body content found, please try setting the 'headless' flag to False in the graph configuration. HTML content: {html_content}")
+
