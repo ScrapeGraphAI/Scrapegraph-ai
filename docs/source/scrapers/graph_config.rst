@@ -13,6 +13,7 @@ Some interesting ones are:
 - `loader_kwargs`: A dictionary with additional parameters to be passed to the `Loader` class, such as `proxy`.
 - `burr_kwargs`: A dictionary with additional parameters to enable `Burr` graphical user interface.
 - `max_images`: The maximum number of images to be analyzed. Useful in `OmniScraperGraph` and `OmniSearchGraph`.
+- `cache_path`: The path where the cache files will be saved. If already exists, the cache will be loaded from this path.
 
 .. _Burr:
 

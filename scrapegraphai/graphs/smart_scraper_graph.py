@@ -66,8 +66,10 @@ class SmartScraperGraph(AbstractGraph):
             output=["doc", "link_urls", "img_urls"],
             node_config={
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
+                "headless": self.config.get("headless", True)  # Ensure headless flag is passed
             }
         )
+        logging.info("FetchNode configured with headless: %s", self.config.get("headless", True))
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],

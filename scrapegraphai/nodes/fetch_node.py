@@ -131,6 +131,9 @@ class FetchNode(BaseNode):
             pass
 
         elif not source.startswith("http"):
+            self.logger.info(f"Fetching local HTML content from: {source}")
+            if not source.strip():
+                raise ValueError("No HTML body content found in the local source.")
             title, minimized_body, link_urls, image_urls = cleanup_html(source, source)
             parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
             compressed_document = [
@@ -138,8 +141,11 @@ class FetchNode(BaseNode):
             ]
 
         elif self.useSoup:
+            self.logger.info(f"Fetching HTML content using requests from: {source}")
             response = requests.get(source)
             if response.status_code == 200:
+                if not response.text.strip():
+                    raise ValueError("No HTML body content found in the response.")
                 title, minimized_body, link_urls, image_urls = cleanup_html(
                     response.text, source
                 )
@@ -151,6 +157,7 @@ class FetchNode(BaseNode):
                 )
 
         else:
+            self.logger.info(f"Fetching HTML content using ChromiumLoader from: {source}")
             loader_kwargs = {}
 
             if self.node_config is not None:
@@ -158,6 +165,9 @@ class FetchNode(BaseNode):
 
             loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
             document = loader.load()
+
+            if not document or not document[0].page_content.strip():
+                raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
 
             title, minimized_body, link_urls, image_urls = cleanup_html(
                 str(document[0].page_content), source

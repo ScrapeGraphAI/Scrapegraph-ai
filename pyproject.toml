@@ -2,7 +2,7 @@
 name = "scrapegraphai"
 
 
-version = "1.7.0b2"
+version = "1.7.0b4"
 
 
 
@@ -32,6 +32,7 @@ dependencies = [
     "playwright==1.43.0",
     "google==3.0.0",
     "undetected-playwright==0.3.0",
+    "semchunk==1.0.1",
 ]
 
 license = "MIT"
