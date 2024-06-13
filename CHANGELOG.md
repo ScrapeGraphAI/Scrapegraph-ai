@@ -1,3 +1,20 @@
+## [1.7.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.5...v1.7.0-beta.6) (2024-06-13)
+
+
+### Bug Fixes
+
+* test for fetch node ([49c7e0e](https://github.com/VinciGit00/Scrapegraph-ai/commit/49c7e0eaab6fc7a9242054b7d3f375369af9bcdc))
+
+
+### Docs
+
+* fix label&logo for github action badges ([071f3d1](https://github.com/VinciGit00/Scrapegraph-ai/commit/071f3d19066eee6deb62a671132acf8a5b8ac927))
+
+
+### Test
+
+* fix tests for fetch node with proper mock&refactor ([17dd936](https://github.com/VinciGit00/Scrapegraph-ai/commit/17dd936af7cfd1d0822202d908e50ab11893bddd))
+
 ## [1.7.0-beta.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.4...v1.7.0-beta.5) (2024-06-12)
 
 
