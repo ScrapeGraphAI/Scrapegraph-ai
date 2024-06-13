@@ -39,7 +39,7 @@ def test_fetch_json():
         input="json",
         output=["doc"],
     )
-    result = node.execute({"json": "tests/nodes/inputs/example.json"})
+    result = node.execute({"json": "inputs/example.json"})
     assert result is not None
 
 
@@ -48,7 +48,7 @@ def test_fetch_xml():
         input="xml",
         output=["doc"],
     )
-    result = node.execute({"xml": "tests/nodes/inputs/books.xml"})
+    result = node.execute({"xml": "inputs/books.xml"})
     assert result is not None
 
 
@@ -57,7 +57,7 @@ def test_fetch_csv():
         input="csv",
         output=["doc"],
     )
-    result = node.execute({"csv": "tests/nodes/inputs/username.csv"})
+    result = node.execute({"csv": "inputs/username.csv"})
     assert result is not None
 
 
@@ -66,6 +66,6 @@ def test_fetch_txt():
         input="txt",
         output=["doc", "links", "images"],
     )
-    with open("tests/nodes/inputs/plain_html_example.txt") as f:
+    with open("inputs/plain_html_example.txt") as f:
         result = node.execute({"txt": f.read()})
     assert result is not None
