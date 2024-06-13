@@ -131,7 +131,7 @@ class FetchNode(BaseNode):
             pass
 
         elif not source.startswith("http"):
-            self.logger.info(f"Fetching local HTML content from: {source}")
+            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             if not source.strip():
                 raise ValueError("No HTML body content found in the local source.")
             title, minimized_body, link_urls, image_urls = cleanup_html(source, source)
@@ -141,7 +141,7 @@ class FetchNode(BaseNode):
             ]
 
         elif self.useSoup:
-            self.logger.info(f"Fetching HTML content using requests from: {source}")
+            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             response = requests.get(source)
             if response.status_code == 200:
                 if not response.text.strip():
@@ -157,7 +157,7 @@ class FetchNode(BaseNode):
                 )
 
         else:
-            self.logger.info(f"Fetching HTML content using ChromiumLoader from: {source}")
+            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             loader_kwargs = {}
 
             if self.node_config is not None:
