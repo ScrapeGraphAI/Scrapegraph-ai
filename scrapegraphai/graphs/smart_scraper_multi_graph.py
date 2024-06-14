@@ -51,6 +51,8 @@ class SmartScraperMultiGraph(AbstractGraph):
             self.copy_config = copy(config)
         else:
             self.copy_config = deepcopy(config)
+        
+        self.copy_schema = deepcopy(schema)
 
         super().__init__(prompt, config, source, schema)
 
@@ -70,6 +72,7 @@ class SmartScraperMultiGraph(AbstractGraph):
             prompt="",
             source="",
             config=self.copy_config,
+            schema=self.copy_schema
         )
 
         # ************************************************

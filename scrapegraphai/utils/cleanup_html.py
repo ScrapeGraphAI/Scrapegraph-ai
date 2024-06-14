@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from minify_html import minify
 from urllib.parse import urljoin
 
-
 def cleanup_html(html_content: str, base_url: str) -> str:
     """
     Processes HTML content by removing unnecessary tags, minifying the HTML, and extracting the title and body content.
@@ -23,12 +22,6 @@ def cleanup_html(html_content: str, base_url: str) -> str:
 
     This function is particularly useful for preparing HTML content for environments where bandwidth usage needs to be minimized.
     """
-
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
-
-    # Add logging to capture the HTML content before parsing
-    logging.debug(f'HTML content before parsing: {html_content}')
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -62,6 +55,5 @@ def cleanup_html(html_content: str, base_url: str) -> str:
         return title, minimized_body, link_urls, image_urls
 
     else:
-        logging.error(f'No body content found in HTML: {html_content}')
         raise ValueError(f"No HTML body content found, please try setting the 'headless' flag to False in the graph configuration. HTML content: {html_content}")
 

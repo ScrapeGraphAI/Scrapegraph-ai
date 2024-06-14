@@ -1,104 +1,71 @@
-import os
-import pytest
-from unittest.mock import patch, MagicMock
 from scrapegraphai.nodes import FetchNode
+from langchain_core.documents import Document
 
-def get_file_path(file_name):
-    """
-    Helper function to get the absolute file path.
-    """
-    curr_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(curr_dir, file_name)
-    return file_path
 
-@patch('scrapegraphai.nodes.FetchNode.execute')
-def test_fetch_node_html(mock_execute):
+def test_fetch_html(mocker):
+    title = "ScrapeGraph AI"
+    link_url = "https://github.com/VinciGit00/Scrapegraph-ai"
+    img_url = "https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png"
+    content = f"""
+    <html>
+      <head>
+        <title>{title}</title>
+      </head>
+      <body>
+        <a href="{link_url}">ScrapeGraphAI: You Only Scrape Once</a>
+        <img src="{img_url}" alt="Scrapegraph-ai Logo">
+      </body>
+    </html>
     """
-    Test FetchNode with HTML input.
-    """
-    mock_execute.return_value = MagicMock()
-    fetch_node = FetchNode(
+    mock_loader_cls = mocker.patch("scrapegraphai.nodes.fetch_node.ChromiumLoader")
+    mock_loader = mock_loader_cls.return_value
+    mock_loader.load.return_value = [Document(page_content=content)]
+    node = FetchNode(
         input="url | local_dir",
-        output=["doc"],
-        node_config={
-            "headless": False
-        }
+        output=["doc", "links", "images"],
+        node_config={"headless": False},
     )
-    state = {
-        "url": "https://twitter.com/home"
-    }
-    result = fetch_node.execute(state)
-    assert result is not None
-    mock_execute.assert_called_once_with(state)
+    result = node.execute({"url": "https://scrapegraph-ai.com/example"})
 
-@patch('scrapegraphai.nodes.FetchNode.execute')
-def test_fetch_node_json(mock_execute):
-    """
-    Test FetchNode with JSON input.
-    """
-    mock_execute.return_value = MagicMock()
-    file_path_json = get_file_path("inputs/example.json")
-    state_json = {
-        "json": file_path_json
-    }
-    fetch_node_json = FetchNode(
+    mock_loader.load.assert_called_once()
+    doc = result["doc"][0]
+    assert title in doc.page_content
+    assert link_url in result["links"]
+    assert img_url in result["images"]
+
+
+def test_fetch_json():
+    node = FetchNode(
         input="json",
         output=["doc"],
     )
-    result_json = fetch_node_json.execute(state_json)
-    assert result_json is not None
-    mock_execute.assert_called_once_with(state_json)
+    result = node.execute({"json": "inputs/example.json"})
+    assert result is not None
 
-@patch('scrapegraphai.nodes.FetchNode.execute')
-def test_fetch_node_xml(mock_execute):
-    """
-    Test FetchNode with XML input.
-    """
-    mock_execute.return_value = MagicMock()
-    file_path_xml = get_file_path("inputs/books.xml")
-    state_xml = {
-        "xml": file_path_xml
-    }
-    fetch_node_xml = FetchNode(
+
+def test_fetch_xml():
+    node = FetchNode(
         input="xml",
         output=["doc"],
     )
-    result_xml = fetch_node_xml.execute(state_xml)
-    assert result_xml is not None
-    mock_execute.assert_called_once_with(state_xml)
+    result = node.execute({"xml": "inputs/books.xml"})
+    assert result is not None
 
-@patch('scrapegraphai.nodes.FetchNode.execute')
-def test_fetch_node_csv(mock_execute):
-    """
-    Test FetchNode with CSV input.
-    """
-    mock_execute.return_value = MagicMock()
-    file_path_csv = get_file_path("inputs/username.csv")
-    state_csv = {
-        "csv": file_path_csv
-    }
-    fetch_node_csv = FetchNode(
+
+def test_fetch_csv():
+    node = FetchNode(
         input="csv",
         output=["doc"],
     )
-    result_csv = fetch_node_csv.execute(state_csv)
-    assert result_csv is not None
-    mock_execute.assert_called_once_with(state_csv)
+    result = node.execute({"csv": "inputs/username.csv"})
+    assert result is not None
 
-@patch('scrapegraphai.nodes.FetchNode.execute')
-def test_fetch_node_txt(mock_execute):
-    """
-    Test FetchNode with TXT input.
-    """
-    mock_execute.return_value = MagicMock()
-    file_path_txt = get_file_path("inputs/plain_html_example.txt")
-    state_txt = {
-        "txt": file_path_txt
-    }
-    fetch_node_txt = FetchNode(
+
+def test_fetch_txt():
+    node = FetchNode(
         input="txt",
-        output=["doc"],
+        output=["doc", "links", "images"],
     )
-    result_txt = fetch_node_txt.execute(state_txt)
-    assert result_txt is not None
-    mock_execute.assert_called_once_with(state_txt)
+    with open("inputs/plain_html_example.txt") as f:
+        result = node.execute({"txt": f.read()})
+    assert result is not None
