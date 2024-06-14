@@ -150,5 +150,5 @@ class GenerateAnswerPDFNode(BaseNode):
             answer = merge_chain.invoke({"context": answer, "question": user_prompt})
 
         # Update the state with the generated answer
-        state.update({self.output[0]: answer.get("Response", {})})
+        state.update({self.output[0]: answer})
         return state
