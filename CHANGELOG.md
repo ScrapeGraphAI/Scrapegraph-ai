@@ -1,3 +1,21 @@
+## [1.7.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.6...v1.7.0-beta.7) (2024-06-14)
+
+
+### Features
+
+* add Parse_Node ([e6c7940](https://github.com/VinciGit00/Scrapegraph-ai/commit/e6c7940a57929c2ed8c9fda1a6e375cc87a2b7f4))
+
+
+### Bug Fixes
+
+* **pdf:** correctly read .pdf files ([203de83](https://github.com/VinciGit00/Scrapegraph-ai/commit/203de834051ea1d6443841921f3aa3e6adbd9174))
+* **multi:** updated multi pdf scraper with schema ([91c5b5a](https://github.com/VinciGit00/Scrapegraph-ai/commit/91c5b5af43134671f4d5c801ee315f935b4fed4f))
+
+
+### Docs
+
+* better logging ([283b61f](https://github.com/VinciGit00/Scrapegraph-ai/commit/283b61fafcc805e7f866e1acf68ffd6581ace1a9))
+
 ## [1.7.0-beta.6](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.5...v1.7.0-beta.6) (2024-06-13)
 
 
