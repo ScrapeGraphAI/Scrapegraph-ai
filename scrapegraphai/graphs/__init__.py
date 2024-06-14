@@ -16,8 +16,8 @@ from .pdf_scraper_graph import PDFScraperGraph
 from .omni_scraper_graph import OmniScraperGraph
 from .omni_search_graph import OmniSearchGraph
 from .smart_scraper_multi_graph import SmartScraperMultiGraph
-from .pdf_scraper_multi import PdfScraperMultiGraph
-from .json_scraper_multi import JSONScraperMultiGraph
-from .csv_scraper_graph_multi import CSVScraperMultiGraph
-from .xml_scraper_graph_multi import XMLScraperMultiGraph
+from .pdf_scraper_multi_graph import PdfScraperMultiGraph
+from .json_scraper_multi_graph import JSONScraperMultiGraph
+from .csv_scraper_multi_graph import CSVScraperMultiGraph
+from .xml_scraper_multi_graph import XMLScraperMultiGraph
 from .script_creator_multi_graph import ScriptCreatorMultiGraph

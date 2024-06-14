@@ -53,6 +53,8 @@ class OmniSearchGraph(AbstractGraph):
         else:
             self.copy_config = deepcopy(config)
 
+        self.copy_schema = deepcopy(schema)
+
         super().__init__(prompt, config, schema)
 
     def _create_graph(self) -> BaseGraph:
@@ -70,7 +72,8 @@ class OmniSearchGraph(AbstractGraph):
         omni_scraper_instance = OmniScraperGraph(
             prompt="",
             source="",
-            config=self.copy_config
+            config=self.copy_config,
+            schema=self.copy_schema
         )
 
         # ************************************************
