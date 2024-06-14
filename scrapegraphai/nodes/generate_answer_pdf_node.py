@@ -113,13 +113,13 @@ class GenerateAnswerPDFNode(BaseNode):
                     template=template_no_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={
-                        "context":chunk,
+                        "context":chunk.page_content,
                         "format_instructions": format_instructions,
                     },
                 )
-       
                 chain =  prompt | self.llm_model | output_parser
                 answer = chain.invoke({"question": user_prompt})
+                
             else:
                 prompt = PromptTemplate(
                     template=template_chunks_pdf,

@@ -95,8 +95,10 @@ class FetchNode(BaseNode):
             
             state.update({self.output[0]: compressed_document})
             return state
-        # handling for pdf
+        # handling pdf
         elif input_keys[0] == "pdf":
+            
+            # TODO: fix bytes content issue
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
             state.update({self.output[0]: compressed_document})
