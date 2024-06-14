@@ -105,6 +105,9 @@ class GenerateAnswerOmniNode(BaseNode):
                         "img_desc": imag_desc,
                     },
                 )
+
+                chain =  prompt | self.llm_model | output_parser
+                answer = chain.invoke({"question": user_prompt})
             else:
                 prompt = PromptTemplate(
                     template=template_chunks_omni,
@@ -136,10 +139,6 @@ class GenerateAnswerOmniNode(BaseNode):
             )
             merge_chain = merge_prompt | self.llm_model | output_parser
             answer = merge_chain.invoke({"context": answer, "question": user_prompt})
-        else:
-            # Chain
-            single_chain = list(chains_dict.values())[0]
-            answer = single_chain.invoke({"question": user_prompt})
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})
