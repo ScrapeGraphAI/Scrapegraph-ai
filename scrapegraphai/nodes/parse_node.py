@@ -5,6 +5,7 @@ ParseNode Module
 from typing import List, Optional
 from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
+from langchain_core.documents import Document
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
@@ -79,10 +80,17 @@ class ParseNode(BaseNode):
         else:
             docs_transformed = docs_transformed[0]
 
-            chunks = chunk(text=docs_transformed,
+            if type(docs_transformed) == Document:
+                chunks = chunk(text=docs_transformed.page_content,
                             chunk_size= self.node_config.get("chunk_size", 4096),
                             token_counter=lambda x: len(x.split()),
                             memoize=False)
+            else:
+                
+                chunks = chunk(text=docs_transformed,
+                                chunk_size= self.node_config.get("chunk_size", 4096),
+                                token_counter=lambda x: len(x.split()),
+                                memoize=False)
                           
         state.update({self.output[0]: chunks})
 

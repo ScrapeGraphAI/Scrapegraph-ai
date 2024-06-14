@@ -32,7 +32,7 @@ source = """
 
 pdf_scraper_graph = PDFScraperGraph(
     prompt="Summarize the text and find the main topics",
-    source="a.pdf",
+    source="Laureaconanniaccademici.pdf",
     config=graph_config,
 )
 result = pdf_scraper_graph.run()
