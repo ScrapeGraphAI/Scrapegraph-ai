@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.6.1) (2024-06-15)
+
+
+### Bug Fixes
+
+* removed duplicate from ollama dictionary ([dcd216e](https://github.com/VinciGit00/Scrapegraph-ai/commit/dcd216e3457bdbbbc7b8dc27783866b748e322fa))
+
 ## [1.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.7...v1.6.0) (2024-06-09)
 
 
