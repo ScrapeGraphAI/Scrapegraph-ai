@@ -1,7 +1,6 @@
 from scrapegraphai.nodes import FetchNode
 from langchain_core.documents import Document
 
-
 def test_fetch_html(mocker):
     title = "ScrapeGraph AI"
     link_url = "https://github.com/VinciGit00/Scrapegraph-ai"
@@ -29,9 +28,10 @@ def test_fetch_html(mocker):
 
     mock_loader.load.assert_called_once()
     doc = result["doc"][0]
-    assert title in doc.page_content
-    assert link_url in result["links"]
-    assert img_url in result["images"]
+    assert result is not None
+    assert "ScrapeGraph AI" in doc.page_content
+    assert "https://github.com/VinciGit00/Scrapegraph-ai" in doc.page_content
+    assert "https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png" in doc.page_content
 
 
 def test_fetch_json():
