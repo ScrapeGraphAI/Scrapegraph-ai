@@ -1,3 +1,10 @@
+## [1.7.0-beta.9](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.8...v1.7.0-beta.9) (2024-06-16)
+
+
+### Bug Fixes
+
+* fix robot node ([2419003](https://github.com/VinciGit00/Scrapegraph-ai/commit/24190039996b9cbe04952f6734d996e0cdb15296))
+
 ## [1.7.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.7...v1.7.0-beta.8) (2024-06-16)
 
 
