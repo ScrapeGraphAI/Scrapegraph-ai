@@ -1,3 +1,15 @@
+## [1.7.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.7...v1.7.0-beta.8) (2024-06-16)
+
+
+### Bug Fixes
+
+* shallow copy config of create_embedder ([62b372b](https://github.com/VinciGit00/Scrapegraph-ai/commit/62b372b675a45ca4d031f337b6f8728151689442))
+
+
+### Refactor
+
+* add missing schemas and renamed files ([09cb6e9](https://github.com/VinciGit00/Scrapegraph-ai/commit/09cb6e964eaa41587237c622a1ea8894722d87cb))
+
 ## [1.7.0-beta.7](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.6...v1.7.0-beta.7) (2024-06-14)
 
 
