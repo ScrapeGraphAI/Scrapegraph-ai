@@ -103,7 +103,7 @@ class AbstractGraph(ABC):
             "cache_path": self.cache_path,
             }
        
-        self.set_common_params(common_params, overwrite=False)
+        self.set_common_params(common_params, overwrite=True)
 
         # set burr config
         self.burr_kwargs = config.get("burr_kwargs", None)

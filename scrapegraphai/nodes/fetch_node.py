@@ -43,7 +43,7 @@ class FetchNode(BaseNode):
         node_config: Optional[dict] = None,
         node_name: str = "Fetch",
     ):
-        super().__init__(node_name, "node", input, output, 1)
+        super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.headless = (
             True if node_config is None else node_config.get("headless", True)
