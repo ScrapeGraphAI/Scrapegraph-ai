@@ -111,11 +111,11 @@ class RobotsNode(BaseNode):
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
             loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
-            if "ollama" in self.llm_model.model_name:
-                self.llm_model.model_name = self.llm_model.model_name.split("/")[-1]
-                model = self.llm_model.model_name.split("/")[-1]
+            if "ollama" in self.llm_model.model:
+                self.llm_model.model = self.llm_model.model.split("/")[-1]
+                model = self.llm_model.model.split("/")[-1]
             else:
-                model = self.llm_model.model_name
+                model = self.llm_model.model
             try:
                 agent = robots_dictionary[model]
 

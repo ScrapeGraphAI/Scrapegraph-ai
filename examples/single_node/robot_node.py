@@ -11,10 +11,15 @@ from scrapegraphai.nodes import RobotsNode
 
 graph_config = {
     "llm": {
-        "model_name": "ollama/llama3",
+        "model": "ollama/llama3",
         "temperature": 0,
         "streaming": True
     },
+     "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    }
 }
 
 # ************************************************

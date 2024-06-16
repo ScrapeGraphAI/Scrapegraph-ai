@@ -1,61 +1,74 @@
-"""
-Module for the tests
-"""
-import os
 import pytest
-from scrapegraphai.graphs import SmartScraperGraph
+from unittest.mock import MagicMock
+
+from scrapegraphai.models import Ollama
+from scrapegraphai.nodes import RobotsNode
 
 @pytest.fixture
-def sample_text():
-    """
-    Example of text fixture.
-    """
-    file_name = "inputs/plain_html_example.txt"
-    curr_dir = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(curr_dir, file_name)
-
-    with open(file_path, 'r', encoding="utf-8") as file:
-        text = file.read()
-
-    return text
+def mock_llm_model():
+    mock_model = MagicMock()
+    mock_model.model = "ollama/llama3"
+    mock_model.__call__ = MagicMock(return_value=["yes"])
+    return mock_model
 
 @pytest.fixture
-def graph_config():
-    """
-    Configuration of the graph fixture.
-    """
-    return {
-        "llm": {
-            "model": "ollama/mistral",
-            "temperature": 0,
-            "format": "json",
-            "base_url": "http://localhost:11434",
-        },
-        "embeddings": {
-            "model": "ollama/nomic-embed-text",
-            "temperature": 0,
-            "base_url": "http://localhost:11434",
-        }
-    }
-
-def test_scraping_pipeline(sample_text, graph_config):
-    """
-    Test the SmartScraperGraph scraping pipeline.
-    """
-    smart_scraper_graph = SmartScraperGraph(
-        prompt="List me all the news with their description.",
-        source=sample_text,
-        config=graph_config
+def robots_node(mock_llm_model):
+    return RobotsNode(
+        input="url",
+        output=["is_scrapable"],
+        node_config={"llm_model": mock_llm_model, "headless": False}
     )
 
-    result = smart_scraper_graph.run()
+def test_robots_node_scrapable(robots_node):
+    state = {
+        "url": "https://perinim.github.io/robots.txt"
+    }
 
-    assert result is not None
-    # Additional assertions to check the structure of the result
-    assert isinstance(result, dict)  # Assuming the result is a dictionary
-    assert "news" in result  # Assuming the result should contain a key "news"
-    assert "is_scrapable" in result
-    assert isinstance(result["is_scrapable"], bool)
-    assert result["is_scrapable"] is True
-    # Ensure the execute method was called once
-    mock_execute.assert_called_once_with(initial_state)
+    # Mocking AsyncChromiumLoader to return a fake robots.txt content
+    robots_node.AsyncChromiumLoader = MagicMock(return_value=MagicMock(load=MagicMock(return_value="User-agent: *\nAllow: /")))
+
+    # Execute the node
+    result_state, result = robots_node.execute(state)
+
+    # Check the updated state
+    assert result_state["is_scrapable"] == "yes"
+    assert result == ("is_scrapable", "yes")
+
+def test_robots_node_not_scrapable(robots_node):
+    state = {
+        "url": "https://twitter.com/home"
+    }
+
+    # Mocking AsyncChromiumLoader to return a fake robots.txt content
+    robots_node.AsyncChromiumLoader = MagicMock(return_value=MagicMock(load=MagicMock(return_value="User-agent: *\nDisallow: /")))
+
+    # Mock the LLM response to return "no"
+    robots_node.llm_model.__call__.return_value = ["no"]
+
+    # Execute the node and expect a ValueError because force_scraping is False by default
+    with pytest.raises(ValueError):
+        robots_node.execute(state)
+
+def test_robots_node_force_scrapable(robots_node):
+    state = {
+        "url": "https://twitter.com/home"
+    }
+
+    # Mocking AsyncChromiumLoader to return a fake robots.txt content
+    robots_node.AsyncChromiumLoader = MagicMock(return_value=MagicMock(load=MagicMock(return_value="User-agent: *\nDisallow: /")))
+
+    # Mock the LLM response to return "no"
+    robots_node.llm_model.__call__.return_value = ["no"]
+
+    # Set force_scraping to True
+    robots_node.force_scraping = True
+
+    # Execute the node
+    result_state, result = robots_node.execute(state)
+
+    # Check the updated state
+    assert result_state["is_scrapable"] == "no"
+    assert result == ("is_scrapable", "no")
+
+if __name__ == "__main__":
+    pytest.main()
