@@ -141,7 +141,8 @@ class DeepScraperGraph(AbstractGraph):
                 (search_node, graph_iterator_node),
                 (graph_iterator_node, merge_answers_node)
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
 
