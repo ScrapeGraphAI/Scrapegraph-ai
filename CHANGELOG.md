@@ -1,3 +1,15 @@
+## [1.7.0-beta.11](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.10...v1.7.0-beta.11) (2024-06-17)
+
+
+### Features
+
+* **telemetry:** add telemetry module ([080a318](https://github.com/VinciGit00/Scrapegraph-ai/commit/080a318ff68652a3c81a6890cd40fd20c48ac6d0))
+
+
+### Docs
+
+* refactor graph section and added telemetry ([39bf4c9](https://github.com/VinciGit00/Scrapegraph-ai/commit/39bf4c960d703a321af64e3b1b41ca9a1a15794e))
+
 ## [1.7.0-beta.10](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.9...v1.7.0-beta.10) (2024-06-17)
 
 
