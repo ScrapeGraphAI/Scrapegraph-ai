@@ -3,6 +3,7 @@ DeepScraperGraph Module
 """
 
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -56,7 +57,7 @@ class DeepScraperGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
     
         super().__init__(prompt, config, source, schema)
 
@@ -140,7 +141,8 @@ class DeepScraperGraph(AbstractGraph):
                 (search_node, graph_iterator_node),
                 (graph_iterator_node, merge_answers_node)
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
 

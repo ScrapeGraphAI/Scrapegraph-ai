@@ -3,8 +3,9 @@ AbstractGraph Module
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Union
 import uuid
+from pydantic import BaseModel
 
 from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
@@ -25,7 +26,7 @@ from ..models import (
     OneApi
 )
 from ..models.ernie import Ernie
-from ..utils.logging import set_verbosity_debug, set_verbosity_warning
+from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
 
 from ..helpers import models_tokens
 from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, DeepSeek
@@ -63,7 +64,7 @@ class AbstractGraph(ABC):
     """
 
     def __init__(self, prompt: str, config: dict, 
-                 source: Optional[str] = None, schema: Optional[str] = None):
+                 source: Optional[str] = None, schema: Optional[BaseModel] = None):
 
         self.prompt = prompt
         self.source = source
@@ -77,6 +78,7 @@ class AbstractGraph(ABC):
         self.headless = True if config is None else config.get(
             "headless", True)
         self.loader_kwargs = config.get("loader_kwargs", {})
+        self.cache_path = config.get("cache_path", False)
 
         # Create the graph
         self.graph = self._create_graph()
@@ -88,22 +90,20 @@ class AbstractGraph(ABC):
         verbose = bool(config and config.get("verbose"))
 
         if verbose:
-            set_verbosity_debug()
+            set_verbosity_info()
         else:
             set_verbosity_warning()
-
-        self.headless = True if config is None else config.get("headless", True)
-        self.loader_kwargs = config.get("loader_kwargs", {})
 
         common_params = {
             "headless": self.headless,
             "verbose": self.verbose,
             "loader_kwargs": self.loader_kwargs,
             "llm_model": self.llm_model,
-            "embedder_model": self.embedder_model
+            "embedder_model": self.embedder_model,
+            "cache_path": self.cache_path,
             }
        
-        self.set_common_params(common_params, overwrite=False)
+        self.set_common_params(common_params, overwrite=True)
 
         # set burr config
         self.burr_kwargs = config.get("burr_kwargs", None)
@@ -125,28 +125,7 @@ class AbstractGraph(ABC):
 
         for node in self.graph.nodes:
             node.update_config(params, overwrite)
-
-    def _set_model_token(self, llm):
-
-        if "Azure" in str(type(llm)):
-            try:
-                self.model_token = models_tokens["azure"][llm.model_name]
-            except KeyError:
-                raise KeyError("Model not supported")
-
-        elif "HuggingFaceEndpoint" in str(type(llm)):
-            if "mistral" in llm.repo_id:
-                try:
-                    self.model_token = models_tokens["mistral"][llm.repo_id]
-                except KeyError:
-                    raise KeyError("Model not supported")
-        elif "Google" in str(type(llm)):
-            try:
-                if "gemini" in llm.model:
-                    self.model_token = models_tokens["gemini"][llm.model]
-            except KeyError:
-                raise KeyError("Model not supported")
-
+    
     def _create_llm(self, llm_config: dict, chat=False) -> object:
         """
         Create a large language model instance based on the configuration provided.
@@ -166,8 +145,6 @@ class AbstractGraph(ABC):
 
         # If model instance is passed directly instead of the model details
         if "model_instance" in llm_params:
-            if chat:
-                self._set_model_token(llm_params["model_instance"])
             return llm_params["model_instance"]
 
         # Instantiate the language model based on the model name
@@ -298,9 +275,10 @@ class AbstractGraph(ABC):
                 google_api_key=llm_config["api_key"], model="models/embedding-001"
             )
         if isinstance(self.llm_model, OpenAI):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
+            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key, base_url=self.llm_model.openai_api_base)
         elif isinstance(self.llm_model, DeepSeek):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)   
+
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureOpenAI):
@@ -333,40 +311,41 @@ class AbstractGraph(ABC):
         Raises:
             KeyError: If the model is not supported.
         """
+        embedder_params = {**embedder_config}
         if "model_instance" in embedder_config:
-            return embedder_config["model_instance"]
+            return embedder_params["model_instance"]
         # Instantiate the embedding model based on the model name
-        if "openai" in embedder_config["model"]:
-            return OpenAIEmbeddings(api_key=embedder_config["api_key"])
-        elif "azure" in embedder_config["model"]:
+        if "openai" in embedder_params["model"]:
+            return OpenAIEmbeddings(api_key=embedder_params["api_key"])
+        elif "azure" in embedder_params["model"]:
             return AzureOpenAIEmbeddings()
-        elif "ollama" in embedder_config["model"]:
-            embedder_config["model"] = embedder_config["model"].split("ollama/")[-1]
+        elif "ollama" in embedder_params["model"]:
+            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
             try:
-                models_tokens["ollama"][embedder_config["model"]]
+                models_tokens["ollama"][embedder_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return OllamaEmbeddings(**embedder_config)
-        elif "hugging_face" in embedder_config["model"]:
+            return OllamaEmbeddings(**embedder_params)
+        elif "hugging_face" in embedder_params["model"]:
             try:
-                models_tokens["hugging_face"][embedder_config["model"]]
+                models_tokens["hugging_face"][embedder_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return HuggingFaceHubEmbeddings(model=embedder_config["model"])
-        elif "gemini" in embedder_config["model"]:
+            return HuggingFaceHubEmbeddings(model=embedder_params["model"])
+        elif "gemini" in embedder_params["model"]:
             try:
-                models_tokens["gemini"][embedder_config["model"]]
+                models_tokens["gemini"][embedder_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return GoogleGenerativeAIEmbeddings(model=embedder_config["model"])
-        elif "bedrock" in embedder_config["model"]:
-            embedder_config["model"] = embedder_config["model"].split("/")[-1]
-            client = embedder_config.get("client", None)
+            return GoogleGenerativeAIEmbeddings(model=embedder_params["model"])
+        elif "bedrock" in embedder_params["model"]:
+            embedder_params["model"] = embedder_params["model"].split("/")[-1]
+            client = embedder_params.get("client", None)
             try:
-                models_tokens["bedrock"][embedder_config["model"]]
+                models_tokens["bedrock"][embedder_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return BedrockEmbeddings(client=client, model_id=embedder_config["model"])
+            return BedrockEmbeddings(client=client, model_id=embedder_params["model"])
         else:
             raise ValueError("Model provided by the configuration not supported")
 
@@ -384,6 +363,16 @@ class AbstractGraph(ABC):
         if key is not None:
             return self.final_state[key]
         return self.final_state
+
+    def append_node(self, node):
+        """
+        Add a node to the graph.
+
+        Args:
+            node (BaseNode): The node to add to the graph.
+        """
+
+        self.graph.append_node(node)
 
     def get_execution_info(self):
         """

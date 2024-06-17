@@ -43,7 +43,7 @@ class FetchNode(BaseNode):
         node_config: Optional[dict] = None,
         node_name: str = "Fetch",
     ):
-        super().__init__(node_name, "node", input, output, 1)
+        super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.headless = (
             True if node_config is None else node_config.get("headless", True)
@@ -95,8 +95,10 @@ class FetchNode(BaseNode):
             
             state.update({self.output[0]: compressed_document})
             return state
-        # handling for pdf
+        # handling pdf
         elif input_keys[0] == "pdf":
+            
+            # TODO: fix bytes content issue
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
             state.update({self.output[0]: compressed_document})
@@ -131,6 +133,9 @@ class FetchNode(BaseNode):
             pass
 
         elif not source.startswith("http"):
+            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
+            if not source.strip():
+                raise ValueError("No HTML body content found in the local source.")
             title, minimized_body, link_urls, image_urls = cleanup_html(source, source)
             parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
             compressed_document = [
@@ -138,8 +143,11 @@ class FetchNode(BaseNode):
             ]
 
         elif self.useSoup:
+            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             response = requests.get(source)
             if response.status_code == 200:
+                if not response.text.strip():
+                    raise ValueError("No HTML body content found in the response.")
                 title, minimized_body, link_urls, image_urls = cleanup_html(
                     response.text, source
                 )
@@ -151,6 +159,7 @@ class FetchNode(BaseNode):
                 )
 
         else:
+            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             loader_kwargs = {}
 
             if self.node_config is not None:
@@ -158,6 +167,9 @@ class FetchNode(BaseNode):
 
             loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
             document = loader.load()
+
+            if not document or not document[0].page_content.strip():
+                raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
 
             title, minimized_body, link_urls, image_urls = cleanup_html(
                 str(document[0].page_content), source

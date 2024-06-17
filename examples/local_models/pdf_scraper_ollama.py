@@ -5,7 +5,7 @@ from scrapegraphai.graphs import PDFScraperGraph
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
+        "model": "ollama/mistral",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         "model_tokens": 4000,

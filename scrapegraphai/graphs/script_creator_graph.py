@@ -3,6 +3,7 @@ ScriptCreatorGraph Module
 """
 
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -46,7 +47,7 @@ class ScriptCreatorGraph(AbstractGraph):
         >>> result = script_creator.run()
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
 
         self.library = config['library']
 
@@ -94,7 +95,8 @@ class ScriptCreatorGraph(AbstractGraph):
                 (fetch_node, parse_node),
                 (parse_node, generate_scraper_node),
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:

@@ -3,6 +3,7 @@ OmniScraperGraph Module
 """
 
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -52,7 +53,7 @@ class OmniScraperGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
 
         self.max_images = 5 if config is None else config.get("max_images", 5)
 
@@ -121,7 +122,8 @@ class OmniScraperGraph(AbstractGraph):
                 (image_to_text_node, rag_node),
                 (rag_node, generate_answer_omni_node)
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:

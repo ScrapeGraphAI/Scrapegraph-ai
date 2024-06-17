@@ -1,12 +1,10 @@
-"""
-BaseGraph Module
-"""
-
 import time
 import warnings
 from langchain_community.callbacks import get_openai_callback
 from typing import Tuple
 
+# Import telemetry functions
+from ..telemetry import log_graph_execution, log_event
 
 class BaseGraph:
     """
@@ -46,11 +44,12 @@ class BaseGraph:
         ... )
     """
 
-    def __init__(self, nodes: list, edges: list, entry_point: str, use_burr: bool = False, burr_config: dict = None):
-
+    def __init__(self, nodes: list, edges: list, entry_point: str, use_burr: bool = False, burr_config: dict = None, graph_name: str = "Custom"):
         self.nodes = nodes
+        self.raw_edges = edges
         self.edges = self._create_edges({e for e in edges})
         self.entry_point = entry_point.node_name
+        self.graph_name = graph_name
         self.initial_state = {}
 
         if nodes[0].node_name != entry_point.node_name:
@@ -102,12 +101,46 @@ class BaseGraph:
             "total_cost_USD": 0.0,
         }
 
+        start_time = time.time()
+        error_node = None
+        source_type = None
+        llm_model = None
+        embedder_model = None
+
         while current_node_name:
             curr_time = time.time()
             current_node = next(node for node in self.nodes if node.node_name == current_node_name)
 
+            # check if there is a "source" key in the node config
+            if current_node.__class__.__name__ == "FetchNode":
+                # get the second key name of the state dictionary
+                source_type = list(state.keys())[1]
+                # quick fix for local_dir source type
+                if source_type == "local_dir":
+                    source_type = "html_dir"
+
+            # check if there is an "llm_model" variable in the class
+            if hasattr(current_node, "llm_model") and llm_model is None:
+                llm_model = current_node.llm_model
+                if hasattr(llm_model, "model_name"):
+                    llm_model = llm_model.model_name
+                elif hasattr(llm_model, "model"):
+                    llm_model = llm_model.model
+
+            # check if there is an "embedder_model" variable in the class
+            if hasattr(current_node, "embedder_model") and embedder_model is None:
+                embedder_model = current_node.embedder_model
+                if hasattr(embedder_model, "model_name"):
+                    embedder_model = embedder_model.model_name
+                elif hasattr(embedder_model, "model"):
+                    embedder_model = embedder_model.model
+
             with get_openai_callback() as cb:
-                result = current_node.execute(state)
+                try:
+                    result = current_node.execute(state)
+                except Exception as e:
+                    error_node = current_node.node_name
+                    raise e
                 node_exec_time = time.time() - curr_time
                 total_exec_time += node_exec_time
 
@@ -146,6 +179,17 @@ class BaseGraph:
             "exec_time": total_exec_time,
         })
 
+        # Log the graph execution telemetry
+        graph_execution_time = time.time() - start_time
+        log_graph_execution(
+            graph_name=self.graph_name,
+            llm_model=llm_model,
+            embedder_model=embedder_model,
+            source_type=source_type,
+            execution_time=graph_execution_time,
+            error_node=error_node
+        )
+
         return state, exec_info
 
     def execute(self, initial_state: dict) -> Tuple[dict, list]:
@@ -161,7 +205,6 @@ class BaseGraph:
 
         self.initial_state = initial_state
         if self.use_burr:
-
             from ..integrations import BurrBridge
             
             bridge = BurrBridge(self, self.burr_config)
@@ -169,3 +212,24 @@ class BaseGraph:
             return (result["_state"], [])
         else:
             return self._execute_standard(initial_state)
+    
+    def append_node(self, node):
+        """
+        Adds a node to the graph.
+
+        Args:
+            node (BaseNode): The node instance to add to the graph.
+        """
+        
+        # if node name already exists in the graph, raise an exception
+        if node.node_name in {n.node_name for n in self.nodes}:
+            raise ValueError(f"Node with name '{node.node_name}' already exists in the graph. You can change it by setting the 'node_name' attribute.")
+        
+        # get the last node in the list
+        last_node = self.nodes[-1]
+        # add the edge connecting the last node to the new node
+        self.raw_edges.append((last_node, node))
+        # add the node to the list of nodes
+        self.nodes.append(node)
+        # update the edges connecting the last node to the new node
+        self.edges = self._create_edges({e for e in self.raw_edges})

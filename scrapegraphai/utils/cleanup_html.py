@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from minify_html import minify
 from urllib.parse import urljoin
 
-
 def cleanup_html(html_content: str, base_url: str) -> str:
     """
     Processes HTML content by removing unnecessary tags, minifying the HTML, and extracting the title and body content.
@@ -35,11 +34,7 @@ def cleanup_html(html_content: str, base_url: str) -> str:
         tag.extract()
 
     # Links extraction
-    links = soup.find_all('a')
-    link_urls = []
-    for link in links:
-        if 'href' in link.attrs:
-            link_urls.append(urljoin(base_url, link['href']))
+    link_urls = [urljoin(base_url, link['href']) for link in soup.find_all('a', href=True)]
 
     # Images extraction
     images = soup.find_all('img')
@@ -57,9 +52,8 @@ def cleanup_html(html_content: str, base_url: str) -> str:
     if body_content:
         # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
-
         return title, minimized_body, link_urls, image_urls
-        # return "Title: " + title + ", Body: " + minimized_body + ", Links: " + str(link_urls) + ", Images: " + str(image_urls)
 
-    # throw an error if no body content is found
-    raise ValueError("No HTML body content found, please try setting the 'headless' flag to False in the graph configuration.")
+    else:
+        raise ValueError(f"No HTML body content found, please try setting the 'headless' flag to False in the graph configuration. HTML content: {html_content}")
+

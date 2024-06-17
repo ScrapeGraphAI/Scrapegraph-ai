@@ -4,6 +4,7 @@ SearchGraph Module
 
 from copy import copy, deepcopy
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -42,7 +43,7 @@ class SearchGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -50,6 +51,8 @@ class SearchGraph(AbstractGraph):
             self.copy_config = copy(config)
         else:
             self.copy_config = deepcopy(config)
+        
+        self.copy_schema = deepcopy(schema)
 
         super().__init__(prompt, config, schema)
 
@@ -68,7 +71,8 @@ class SearchGraph(AbstractGraph):
         smart_scraper_instance = SmartScraperGraph(
             prompt="",
             source="",
-            config=self.copy_config
+            config=self.copy_config,
+            schema=self.copy_schema
         )
 
         # ************************************************
@@ -110,7 +114,8 @@ class SearchGraph(AbstractGraph):
                 (search_internet_node, graph_iterator_node),
                 (graph_iterator_node, merge_answers_node)
             ],
-            entry_point=search_internet_node
+            entry_point=search_internet_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:

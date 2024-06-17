@@ -2,7 +2,7 @@
 Basic example of scraping pipeline using SmartScraper
 """
 
-import os
+import os, json
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
@@ -21,7 +21,7 @@ graph_config = {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
     },
-    "verbose": False,
+    "verbose": True,
     "headless": False,
 }
 
@@ -37,7 +37,7 @@ smart_scraper_graph = SmartScraperGraph(
 )
 
 result = smart_scraper_graph.run()
-print(result)
+print(json.dumps(result, indent=4))
 
 # ************************************************
 # Get graph execution info

@@ -3,6 +3,7 @@ XMLScraperGraph Module
 """
 
 from typing import Optional
+from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -46,7 +47,7 @@ class XMLScraperGraph(AbstractGraph):
         >>> result = xml_scraper.run()
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "xml" if source.endswith("xml") else "xml_dir"
@@ -90,7 +91,8 @@ class XMLScraperGraph(AbstractGraph):
                 (fetch_node, rag_node),
                 (rag_node, generate_answer_node)
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:

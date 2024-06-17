@@ -29,6 +29,7 @@ class ChromiumLoader(BaseLoader):
         backend: str = "playwright",
         headless: bool = True,
         proxy: Optional[Proxy] = None,
+        load_state: str = "domcontentloaded",
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
@@ -55,6 +56,7 @@ class ChromiumLoader(BaseLoader):
         self.headless = headless
         self.proxy = parse_or_search_proxy(proxy) if proxy else None
         self.urls = urls
+        self.load_state = load_state
 
     async def ascrape_playwright(self, url: str) -> str:
         """
@@ -81,6 +83,7 @@ class ChromiumLoader(BaseLoader):
                 await Malenia.apply_stealth(context)
                 page = await context.new_page()
                 await page.goto(url)
+                await page.wait_for_load_state(self.load_state)
                 results = await page.content()  # Simply get the HTML content
                 logger.info("Content scraped")
             except Exception as e:

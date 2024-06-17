@@ -1,55 +1,74 @@
 import pytest
+from unittest.mock import MagicMock
+
 from scrapegraphai.models import Ollama
 from scrapegraphai.nodes import RobotsNode
-from unittest.mock import patch, MagicMock
 
 @pytest.fixture
-def setup():
-    """
-    Setup the RobotsNode and initial state for testing.
-    """
-    # Define the configuration for the graph
-    graph_config = {
-        "llm": {
-            "model_name": "ollama/llama3",
-            "temperature": 0,
-            "streaming": True
-        },
-    }
+def mock_llm_model():
+    mock_model = MagicMock()
+    mock_model.model = "ollama/llama3"
+    mock_model.__call__ = MagicMock(return_value=["yes"])
+    return mock_model
 
-    # Instantiate the LLM model with the configuration
-    llm_model = Ollama(graph_config["llm"])
-
-    # Define the RobotsNode with necessary configurations
-    robots_node = RobotsNode(
+@pytest.fixture
+def robots_node(mock_llm_model):
+    return RobotsNode(
         input="url",
         output=["is_scrapable"],
-        node_config={
-            "llm_model": llm_model,
-            "headless": False
-        }
+        node_config={"llm_model": mock_llm_model, "headless": False}
     )
 
-    # Define the initial state for the node
-    initial_state = {
+def test_robots_node_scrapable(robots_node):
+    state = {
+        "url": "https://perinim.github.io/robots.txt"
+    }
+
+    # Mocking AsyncChromiumLoader to return a fake robots.txt content
+    robots_node.AsyncChromiumLoader = MagicMock(return_value=MagicMock(load=MagicMock(return_value="User-agent: *\nAllow: /")))
+
+    # Execute the node
+    result_state, result = robots_node.execute(state)
+
+    # Check the updated state
+    assert result_state["is_scrapable"] == "yes"
+    assert result == ("is_scrapable", "yes")
+
+def test_robots_node_not_scrapable(robots_node):
+    state = {
         "url": "https://twitter.com/home"
     }
 
-    return robots_node, initial_state
+    # Mocking AsyncChromiumLoader to return a fake robots.txt content
+    robots_node.AsyncChromiumLoader = MagicMock(return_value=MagicMock(load=MagicMock(return_value="User-agent: *\nDisallow: /")))
 
-def test_robots_node(setup):
-    """
-    Test the RobotsNode execution.
-    """
-    robots_node, initial_state = setup
+    # Mock the LLM response to return "no"
+    robots_node.llm_model.__call__.return_value = ["no"]
 
-    # Patch the execute method to avoid actual network calls and return a mock response
-    with patch.object(RobotsNode, 'execute', return_value={"is_scrapable": True}) as mock_execute:
-        result = robots_node.execute(initial_state)
+    # Execute the node and expect a ValueError because force_scraping is False by default
+    with pytest.raises(ValueError):
+        robots_node.execute(state)
 
-        # Check if the result is not None
-        assert result is not None
-        # Additional assertion to check the returned value
-        assert result["is_scrapable"] is True
-        # Ensure the execute method was called once
-        mock_execute.assert_called_once_with(initial_state)
+def test_robots_node_force_scrapable(robots_node):
+    state = {
+        "url": "https://twitter.com/home"
+    }
+
+    # Mocking AsyncChromiumLoader to return a fake robots.txt content
+    robots_node.AsyncChromiumLoader = MagicMock(return_value=MagicMock(load=MagicMock(return_value="User-agent: *\nDisallow: /")))
+
+    # Mock the LLM response to return "no"
+    robots_node.llm_model.__call__.return_value = ["no"]
+
+    # Set force_scraping to True
+    robots_node.force_scraping = True
+
+    # Execute the node
+    result_state, result = robots_node.execute(state)
+
+    # Check the updated state
+    assert result_state["is_scrapable"] == "no"
+    assert result == ("is_scrapable", "no")
+
+if __name__ == "__main__":
+    pytest.main()

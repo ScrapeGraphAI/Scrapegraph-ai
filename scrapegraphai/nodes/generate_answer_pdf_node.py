@@ -10,12 +10,12 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
-
+from ..models import Ollama
 from ..utils.logging import get_logger
 
 # Imports from the library
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf, template_chunks_pdf_with_schema, template_no_chunks_pdf_with_schema
+from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
 
 
 class GenerateAnswerPDFNode(BaseNode):
@@ -48,7 +48,7 @@ class GenerateAnswerPDFNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateAnswer",
+        node_name: str = "GenerateAnswerPDF",
     ):
         """
         Initializes the GenerateAnswerNodePDF with a language model client and a node name.
@@ -57,7 +57,10 @@ class GenerateAnswerPDFNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
+        
         self.llm_model = node_config["llm_model"]
+        if isinstance(node_config["llm_model"], Ollama):
+            self.llm_model.format="json"
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
@@ -92,12 +95,15 @@ class GenerateAnswerPDFNode(BaseNode):
         user_prompt = input_data[0]
         doc = input_data[1]
 
-        output_parser = JsonOutputParser()
+        # Initialize the output parser
+        if self.node_config.get("schema", None) is not None:
+            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+        else:
+            output_parser = JsonOutputParser()
+
         format_instructions = output_parser.get_format_instructions()
 
-       
         chains_dict = {}
-
         # Use tqdm to add progress bar
         for i, chunk in enumerate(
             tqdm(doc, desc="Processing chunks", disable=not self.verbose)
@@ -107,16 +113,19 @@ class GenerateAnswerPDFNode(BaseNode):
                     template=template_no_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context":chunk.page_content,
                         "format_instructions": format_instructions,
                     },
                 )
+                chain =  prompt | self.llm_model | output_parser
+                answer = chain.invoke({"question": user_prompt})
+                
             else:
                 prompt = PromptTemplate(
                     template=template_chunks_pdf,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context":chunk,
                         "chunk_id": i + 1,
                         "format_instructions": format_instructions,
                     },
@@ -139,10 +148,6 @@ class GenerateAnswerPDFNode(BaseNode):
             )
             merge_chain = merge_prompt | self.llm_model | output_parser
             answer = merge_chain.invoke({"context": answer, "question": user_prompt})
-        else:
-            # Chain
-            single_chain = list(chains_dict.values())[0]
-            answer = single_chain.invoke({"question": user_prompt})
 
         # Update the state with the generated answer
         state.update({self.output[0]: answer})
