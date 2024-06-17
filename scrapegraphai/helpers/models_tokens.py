@@ -6,7 +6,7 @@ models_tokens = {
     "openai": {
         "gpt-3.5-turbo-0125": 16385,
         "gpt-3.5": 4096,
-        "gpt-3.5-turbo": 4096,
+        "gpt-3.5-turbo": 16385,
         "gpt-3.5-turbo-1106": 16385,
         "gpt-3.5-turbo-instruct": 4096,
         "gpt-4-0125-preview": 128000,
@@ -64,7 +64,7 @@ models_tokens = {
                "mxbai-embed-large": 512 
     },
     "oneapi": {
-        "qwen-turbo": 16380
+        "qwen-turbo": 6000 
     },
     "groq": {
         "llama3-8b-8192": 8192,

@@ -25,7 +25,8 @@ embedder_model_instance = AzureOpenAIEmbeddings(
 )
 graph_config = {
     "llm": {"model_instance": llm_model_instance},
-    "embeddings": {"model_instance": embedder_model_instance}
+    "embeddings": {"model_instance": embedder_model_instance},
+    "library": "beautifulsoup"
 }
 
 # ************************************************

@@ -49,6 +49,7 @@ class BaseGraph:
     def __init__(self, nodes: list, edges: list, entry_point: str, use_burr: bool = False, burr_config: dict = None):
 
         self.nodes = nodes
+        self.raw_edges = edges
         self.edges = self._create_edges({e for e in edges})
         self.entry_point = entry_point.node_name
         self.initial_state = {}
@@ -169,3 +170,24 @@ class BaseGraph:
             return (result["_state"], [])
         else:
             return self._execute_standard(initial_state)
+    
+    def append_node(self, node):
+        """
+        Adds a node to the graph.
+
+        Args:
+            node (BaseNode): The node instance to add to the graph.
+        """
+        
+        # if node name already exists in the graph, raise an exception
+        if node.node_name in {n.node_name for n in self.nodes}:
+            raise ValueError(f"Node with name '{node.node_name}' already exists in the graph. You can change it by setting the 'node_name' attribute.")
+        
+        # get the last node in the list
+        last_node = self.nodes[-1]
+        # add the edge connecting the last node to the new node
+        self.raw_edges.append((last_node, node))
+        # add the node to the list of nodes
+        self.nodes.append(node)
+        # update the edges connecting the last node to the new node
+        self.edges = self._create_edges({e for e in self.raw_edges})

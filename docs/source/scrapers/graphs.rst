@@ -6,10 +6,14 @@ Graphs are scraping pipelines aimed at solving specific tasks. They are composed
 There are several types of graphs available in the library, each with its own purpose and functionality. The most common ones are:
 
 - **SmartScraperGraph**: one-page scraper that requires a user-defined prompt and a URL (or local file) to extract information using LLM.
-- **SmartScraperMultiGraph**: multi-page scraper that requires a user-defined prompt and a list of URLs (or local files) to extract information using LLM. It is built on top of SmartScraperGraph.
 - **SearchGraph**: multi-page scraper that only requires a user-defined prompt to extract information from a search engine using LLM. It is built on top of SmartScraperGraph.
 - **SpeechGraph**: text-to-speech pipeline that generates an answer as well as a requested audio file. It is built on top of SmartScraperGraph and requires a user-defined prompt and a URL (or local file).
 - **ScriptCreatorGraph**: script generator that creates a Python script to scrape a website using the specified library (e.g. BeautifulSoup). It requires a user-defined prompt and a URL (or local file).
+
+There are also two additional graphs that can handle multiple sources:
+
+- **SmartScraperMultiGraph**: similar to `SmartScraperGraph`, but with the ability to handle multiple sources.
+- **ScriptCreatorMultiGraph**: similar to `ScriptCreatorGraph`, but with the ability to handle multiple sources.
 
 With the introduction of `GPT-4o`, two new powerful graphs have been created:
 
@@ -187,3 +191,36 @@ It will fetch the data from the source, extract the information based on the pro
 
    result = speech_graph.run()
    print(result)
+
+
+ScriptCreatorGraph & ScriptCreatorMultiGraph
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: ../../assets/scriptcreatorgraph.png
+   :align: center
+   :width: 90%
+   :alt: ScriptCreatorGraph
+
+First we define the graph configuration, which includes the LLM model and other parameters.
+Then we create an instance of the ScriptCreatorGraph class, passing the prompt, source, and configuration as arguments. Finally, we run the graph and print the result.
+
+.. code-block:: python
+
+   from scrapegraphai.graphs import ScriptCreatorGraph
+
+   graph_config = {
+      "llm": {...},
+      "library": "beautifulsoup4"
+   }
+
+   script_creator_graph = ScriptCreatorGraph(
+      prompt="Create a Python script to scrape the projects.",
+      source="https://perinim.github.io/projects/",
+      config=graph_config,
+      schema=schema
+   )
+
+   result = script_creator_graph.run()
+   print(result)
+
+**ScriptCreatorMultiGraph** is similar to ScriptCreatorGraph, but it can handle multiple sources. We define the graph configuration, create an instance of the ScriptCreatorMultiGraph class, and run the graph.

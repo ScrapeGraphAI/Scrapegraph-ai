@@ -5,6 +5,7 @@ name = "scrapegraphai"
 version = "1.6.1"
 
 
+
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     { name = "Marco Vinciguerra", email = "mvincig11@gmail.com" },
@@ -31,6 +32,7 @@ dependencies = [
     "playwright==1.43.0",
     "google==3.0.0",
     "undetected-playwright==0.3.0",
+    "semchunk==1.0.1",
 ]
 
 license = "MIT"
@@ -66,7 +68,7 @@ classifiers = [
 requires-python = ">=3.9,<4.0"
 
 [project.optional-dependencies]
-burr = ["burr[start]==0.19.1"]
+burr = ["burr[start]==0.22.1"]
 docs = ["sphinx==6.0", "furo==2024.5.6"]
 
 [build-system]

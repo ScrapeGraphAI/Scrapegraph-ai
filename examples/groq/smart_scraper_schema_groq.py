@@ -3,6 +3,8 @@ Basic example of scraping pipeline using SmartScraper with schema
 """
 
 import os, json
+from typing import List
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
@@ -13,22 +15,12 @@ load_dotenv()
 # Define the output schema for the graph
 # ************************************************
 
-schema= """
-    { 
-    "Projects": [
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            }, 
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            } 
-        ] 
-    } 
-"""
+class Project(BaseModel):
+    title: str = Field(description="The title of the project")
+    description: str = Field(description="The description of the project")
+
+class Projects(BaseModel):
+    projects: List[Project]
 
 # ************************************************
 # Define the configuration for the graph
@@ -42,6 +34,11 @@ graph_config = {
         "api_key": groq_key,
         "temperature": 0
     },
+     "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
     "headless": False
 }
 
@@ -53,7 +50,7 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
-    schema=schema,
+    schema=Projects,
     config=graph_config
 )
 

@@ -12,31 +12,14 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
-
-""" 
-Basic example of scraping pipeline using SmartScraper
-"""
-
-import os, json
-from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperMultiGraph
-
 load_dotenv()
-
-# ************************************************
-# Define the configuration for the graph
-# ************************************************
-
-openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-4o",
-    },
-    "verbose": True,
-    "headless": False,
+        "api_key": os.getenv("ANTHROPIC_API_KEY"),
+        "model": "claude-3-haiku-20240307",
+        "max_tokens": 4000
+        },
 }
 
 # *******************************************************

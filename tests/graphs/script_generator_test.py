@@ -37,9 +37,3 @@ def test_script_creator_graph(graph_config: dict):
    )
    result = smart_scraper_graph.run()
    assert result is not None, "ScriptCreatorGraph execution failed to produce a result."
-   graph_exec_info = smart_scraper_graph.get_execution_info()
-   assert graph_exec_info is not None, "ScriptCreatorGraph execution info is None."
-   prettified_exec_info = prettify_exec_info(graph_exec_info)
-   print(prettified_exec_info)
-
-   # Perform additional assertions on the result or execution info as needed

@@ -19,6 +19,11 @@ graph_config = {
         "api_key": groq_key,
         "temperature": 0
     },
+     "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
     "verbose": True,
 }
 
@@ -34,28 +39,10 @@ source = """
     the Beatrice of his earlier poetry, through the celestial spheres of Paradise.
 """
 
-schema = """
-    {
-        "type": "object",
-        "properties": {
-            "summary": {
-                "type": "string"
-            },
-            "topics": {
-                "type": "array",
-                "items": {
-                    "type": "string"
-                }
-            }
-        }
-    }
-"""
-
 pdf_scraper_graph = PDFScraperGraph(
     prompt="Summarize the text and find the main topics",
     source=source,
     config=graph_config,
-    schema=schema,
 )
 result = pdf_scraper_graph.run()
 
