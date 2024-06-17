@@ -122,7 +122,8 @@ class OmniScraperGraph(AbstractGraph):
                 (image_to_text_node, rag_node),
                 (rag_node, generate_answer_omni_node)
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:

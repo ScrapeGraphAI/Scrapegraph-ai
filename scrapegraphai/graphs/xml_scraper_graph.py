@@ -91,7 +91,8 @@ class XMLScraperGraph(AbstractGraph):
                 (fetch_node, rag_node),
                 (rag_node, generate_answer_node)
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:

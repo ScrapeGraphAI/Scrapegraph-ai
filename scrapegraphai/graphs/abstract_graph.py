@@ -26,7 +26,7 @@ from ..models import (
     OneApi
 )
 from ..models.ernie import Ernie
-from ..utils.logging import set_verbosity_debug, set_verbosity_warning
+from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
 
 from ..helpers import models_tokens
 from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, DeepSeek
@@ -90,7 +90,7 @@ class AbstractGraph(ABC):
         verbose = bool(config and config.get("verbose"))
 
         if verbose:
-            set_verbosity_debug()
+            set_verbosity_info()
         else:
             set_verbosity_warning()
 

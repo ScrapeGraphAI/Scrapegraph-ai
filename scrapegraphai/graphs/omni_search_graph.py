@@ -115,7 +115,8 @@ class OmniSearchGraph(AbstractGraph):
                 (search_internet_node, graph_iterator_node),
                 (graph_iterator_node, merge_answers_node)
             ],
-            entry_point=search_internet_node
+            entry_point=search_internet_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:

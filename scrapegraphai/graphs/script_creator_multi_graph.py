@@ -99,7 +99,8 @@ class ScriptCreatorMultiGraph(AbstractGraph):
             edges=[
                 (graph_iterator_node, merge_scripts_node),
             ],
-            entry_point=graph_iterator_node
+            entry_point=graph_iterator_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:
