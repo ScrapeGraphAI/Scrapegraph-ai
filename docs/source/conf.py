@@ -36,4 +36,7 @@ html_theme_options = {
     "source_repository": "https://github.com/VinciGit00/Scrapegraph-ai/",
     "source_branch": "main",
     "source_directory": "docs/source/",
+    'navigation_with_keys': True,
+    'sidebar_hide_name': False,
 }
+

@@ -95,7 +95,8 @@ class ScriptCreatorGraph(AbstractGraph):
                 (fetch_node, parse_node),
                 (parse_node, generate_scraper_node),
             ],
-            entry_point=fetch_node
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
         )
 
     def run(self) -> str:
