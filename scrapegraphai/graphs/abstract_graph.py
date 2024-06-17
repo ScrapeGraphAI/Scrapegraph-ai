@@ -320,7 +320,7 @@ class AbstractGraph(ABC):
         elif "azure" in embedder_params["model"]:
             return AzureOpenAIEmbeddings()
         elif "ollama" in embedder_params["model"]:
-            embedder_params["model"] = embedder_params["model"].split("ollama/")[-1]
+            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
             try:
                 models_tokens["ollama"][embedder_params["model"]]
             except KeyError as exc:

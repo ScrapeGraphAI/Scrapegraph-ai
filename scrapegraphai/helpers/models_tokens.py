@@ -59,7 +59,8 @@ models_tokens = {
                "qwen:110b": 32000, 
                "stablelm-zephyr": 8192, 
                "wizardlm2:8x22b": 65536, 
-               # embedding models 
+               # embedding models
+               "shaw/dmeta-embedding-zh": 8192,
                "snowflake-arctic-embed": 8192, 
                "mxbai-embed-large": 512 
     },
