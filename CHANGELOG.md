@@ -1,3 +1,10 @@
+## [1.7.0-beta.12](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.11...v1.7.0-beta.12) (2024-06-17)
+
+
+### Bug Fixes
+
+* add chinese embedding model ([03ffebc](https://github.com/VinciGit00/Scrapegraph-ai/commit/03ffebc52de3fc6f80a968880e8ade3e3cdf95ec))
+
 ## [1.7.0-beta.11](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.10...v1.7.0-beta.11) (2024-06-17)
 
 
