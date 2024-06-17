@@ -1,8 +1,12 @@
-## [1.7.0-beta.9](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.8...v1.7.0-beta.9) (2024-06-16)
+## [1.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.6.1) (2024-06-15)
+=======
 
 
 ### Bug Fixes
 
+* removed duplicate from ollama dictionary ([dcd216e](https://github.com/VinciGit00/Scrapegraph-ai/commit/dcd216e3457bdbbbc7b8dc27783866b748e322fa))
+
+## [1.6.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.5.7...v1.6.0) (2024-06-09)
 * fix robot node ([2419003](https://github.com/VinciGit00/Scrapegraph-ai/commit/24190039996b9cbe04952f6734d996e0cdb15296))
 
 ## [1.7.0-beta.8](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.7...v1.7.0-beta.8) (2024-06-16)
