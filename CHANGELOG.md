@@ -1,3 +1,15 @@
+## [1.7.0-beta.10](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.9...v1.7.0-beta.10) (2024-06-17)
+
+
+### Bug Fixes
+
+* removed duplicate from ollama dictionary ([dcd216e](https://github.com/VinciGit00/Scrapegraph-ai/commit/dcd216e3457bdbbbc7b8dc27783866b748e322fa))
+
+
+### CI
+
+* **release:** 1.6.1 [skip ci] ([44fbd71](https://github.com/VinciGit00/Scrapegraph-ai/commit/44fbd71742a57a4b10f22ed33781bb67aa77e58d))
+
 ## [1.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.6.1) (2024-06-15)
 =======
 
