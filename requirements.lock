@@ -22,9 +22,6 @@ anyio==4.3.0
     # via groq
     # via httpx
     # via openai
-async-timeout==4.0.3
-    # via aiohttp
-    # via langchain
 attrs==23.2.0
     # via aiohttp
 beautifulsoup4==4.12.3
@@ -43,8 +40,6 @@ certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
-colorama==0.4.6
-    # via tqdm
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
@@ -54,8 +49,6 @@ distro==1.9.0
     # via anthropic
     # via groq
     # via openai
-exceptiongroup==1.2.1
-    # via anyio
 faiss-cpu==1.8.0
     # via scrapegraphai
 filelock==3.14.0
@@ -94,7 +87,6 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 groq==0.8.0
     # via langchain-groq
 grpcio==1.64.0
@@ -278,7 +270,6 @@ tqdm==4.66.4
     # via semchunk
 typing-extensions==4.12.0
     # via anthropic
-    # via anyio
     # via google-generativeai
     # via groq
     # via huggingface-hub
