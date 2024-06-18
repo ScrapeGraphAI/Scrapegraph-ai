@@ -26,7 +26,8 @@ def search_on_web(query: str, search_engine: str = "Google", max_results: int = 
         >>> search_on_web("example query", search_engine="Google", max_results=5)
         ['http://example.com', 'http://example.org', ...]
 
-    This function allows switching between Google and DuckDuckGo to perform internet searches, returning a list of result URLs.
+    This function allows switching between Google and DuckDuckGo to perform 
+    internet searches, returning a list of result URLs.
     """
 
     if search_engine.lower() == "google":
