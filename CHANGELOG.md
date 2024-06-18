@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0...v1.7.1) (2024-06-18)
+
+
+### Bug Fixes
+
+* add new embedding models ([1d0cbbc](https://github.com/VinciGit00/Scrapegraph-ai/commit/1d0cbbc6d6e8c50299bb38b3bfa5e241488ff6f4))
+
 ## [1.7.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.1...v1.7.0) (2024-06-17)
 
 
