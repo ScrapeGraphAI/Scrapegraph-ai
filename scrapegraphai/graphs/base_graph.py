@@ -140,6 +140,16 @@ class BaseGraph:
                     result = current_node.execute(state)
                 except Exception as e:
                     error_node = current_node.node_name
+                    
+                    graph_execution_time = time.time() - start_time
+                    log_graph_execution(
+                        graph_name=self.graph_name,
+                        llm_model=llm_model,
+                        embedder_model=embedder_model,
+                        source_type=source_type,
+                        execution_time=graph_execution_time,
+                        error_node=error_node
+                    )
                     raise e
                 node_exec_time = time.time() - curr_time
                 total_exec_time += node_exec_time
@@ -187,7 +197,7 @@ class BaseGraph:
             embedder_model=embedder_model,
             source_type=source_type,
             execution_time=graph_execution_time,
-            error_node=error_node
+            total_tokens=cb_total["total_tokens"] if cb_total["total_tokens"] > 0 else None,
         )
 
         return state, exec_info
