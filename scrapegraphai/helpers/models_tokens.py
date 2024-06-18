@@ -60,7 +60,10 @@ models_tokens = {
                "stablelm-zephyr": 8192, 
                "wizardlm2:8x22b": 65536, 
                # embedding models
-               "shaw/dmeta-embedding-zh": 8192,
+               "shaw/dmeta-embedding-zh-small-q4": 8192,
+               "shaw/dmeta-embedding-zh-q4": 8192,
+               "chevalblanc/acge_text_embedding": 8192,
+               "martcreation/dmeta-embedding-zh": 8192,
                "snowflake-arctic-embed": 8192, 
                "mxbai-embed-large": 512 
     },
