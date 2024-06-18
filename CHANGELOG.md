@@ -1,3 +1,10 @@
+## [1.7.0-beta.13](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.12...v1.7.0-beta.13) (2024-06-18)
+
+
+### Bug Fixes
+
+* updated for schema changes ([aedda44](https://github.com/VinciGit00/Scrapegraph-ai/commit/aedda448682ce5a921a62e661bffb02478bab75f))
+
 ## [1.7.0-beta.12](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.11...v1.7.0-beta.12) (2024-06-17)
 
 
