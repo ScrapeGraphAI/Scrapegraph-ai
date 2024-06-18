@@ -5,6 +5,8 @@ ScriptCreatorMultiGraph Module
 from copy import copy, deepcopy
 from typing import List, Optional
 
+from pydantic import BaseModel
+
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .script_creator_graph import ScriptCreatorGraph
@@ -30,7 +32,7 @@ class ScriptCreatorMultiGraph(AbstractGraph):
         prompt (str): The user prompt to search the internet.
         source (List[str]): The source of the graph.
         config (dict): Configuration parameters for the graph.
-        schema (Optional[str]): The schema for the graph output.
+        schema (Optional[BaseModel]): The schema for the graph output.
     Example:
         >>> script_graph = ScriptCreatorMultiGraph(
         ...     "What is Chioggia famous for?",
@@ -41,7 +43,7 @@ class ScriptCreatorMultiGraph(AbstractGraph):
         >>> result = script_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 

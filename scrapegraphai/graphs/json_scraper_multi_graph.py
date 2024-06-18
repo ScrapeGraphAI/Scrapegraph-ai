@@ -33,7 +33,7 @@ class JSONScraperMultiGraph(AbstractGraph):
         prompt (str): The user prompt to search the internet.
         source (List[str]): The source of the graph.
         config (dict): Configuration parameters for the graph.
-        schema (Optional[str]): The schema for the graph output.
+        schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
         >>> search_graph = MultipleSearchGraph(
