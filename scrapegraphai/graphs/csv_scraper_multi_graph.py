@@ -5,6 +5,8 @@ CSVScraperMultiGraph Module
 from copy import copy, deepcopy
 from typing import List, Optional
 
+from pydantic import BaseModel
+
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .csv_scraper_graph import CSVScraperGraph
@@ -32,7 +34,7 @@ class CSVScraperMultiGraph(AbstractGraph):
         prompt (str): The user prompt to search the internet.
         source (List[str]): The source of the graph.
         config (dict): Configuration parameters for the graph.
-        schema (Optional[str]): The schema for the graph output.
+        schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
         >>> search_graph = MultipleSearchGraph(
@@ -42,7 +44,7 @@ class CSVScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[str] = None):
+    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 

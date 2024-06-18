@@ -28,7 +28,7 @@ class SpeechGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
-        schema (str): The schema for the graph output.
+        schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
@@ -39,7 +39,7 @@ class SpeechGraph(AbstractGraph):
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
-        schema (str): The schema for the graph output.
+        schema (BaseModel): The schema for the graph output.
 
     Example:
         >>> speech_graph = SpeechGraph(
