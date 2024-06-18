@@ -1,3 +1,15 @@
+## [1.7.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.1...v1.7.2) (2024-06-18)
+
+
+### Bug Fixes
+
+* total tokens and docs ([c787090](https://github.com/VinciGit00/Scrapegraph-ai/commit/c7870905e10da85b81761ab2c3f71220bafe9f22))
+
+
+### Docs
+
+* fixed readme по русский ([2373073](https://github.com/VinciGit00/Scrapegraph-ai/commit/23730735bac7e87ddaf6cdbc1edd1598a315413b))
+
 ## [1.7.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0...v1.7.1) (2024-06-18)
 
 
