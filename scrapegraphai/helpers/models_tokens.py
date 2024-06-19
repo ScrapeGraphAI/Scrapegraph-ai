@@ -1,7 +1,3 @@
-"""
-Models token
-"""
-
 models_tokens = {
     "openai": {
         "gpt-3.5-turbo-0125": 16385,
@@ -31,10 +27,11 @@ models_tokens = {
     },
     "gemini": {
         "gemini-pro": 128000,
-        "gemini-1.5-flash-latest":128000,
-        "gemini-1.5-pro-latest":128000,
+        "gemini-1.5-flash-latest": 128000,
+        "gemini-1.5-pro-latest": 128000,
         "models/embedding-001": 2048
     },
+<<<<<<< Updated upstream
     "ollama": { "command-r": 12800, 
                "codellama": 16000, 
                "dbrx": 32768, 
@@ -63,6 +60,39 @@ models_tokens = {
                "shaw/dmeta-embedding-zh": 8192,
                "snowflake-arctic-embed": 8192, 
                "mxbai-embed-large": 512 
+=======
+    "ollama": {
+        "command-r": 12800,
+        "codellama": 16000,
+        "dbrx": 32768,
+        "deepseek-coder:33b": 16000,
+        "falcon": 2048,
+        "llama2": 4096,
+        "llama3": 8192,
+        "scrapegraph": 8192,
+        "llava": 4096,
+        "mixtral:8x22b-instruct": 65536,
+        "mistral-openorca": 32000,
+        "nomic-embed-text": 8192,
+        "nous-hermes2:34b": 4096,
+        "orca-mini": 2048,
+        "phi3:3.8b": 12800,
+        "qwen:0.5b": 32000,
+        "qwen:1.8b": 32000,
+        "qwen:4b": 32000,
+        "qwen:14b": 32000,
+        "qwen:32b": 32000,
+        "qwen:72b": 32000,
+        "qwen:110b": 32000,
+        "stablelm-zephyr": 8192,
+        "wizardlm2:8x22b": 65536,
+        "shaw/dmeta-embedding-zh-small-q4": 8192,
+        "shaw/dmeta-embedding-zh-q4": 8192,
+        "chevalblanc/acge_text_embedding": 8192,
+        "martcreation/dmeta-embedding-zh": 8192,
+        "snowflake-arctic-embed": 8192,
+        "mxbai-embed-large": 512,
+>>>>>>> Stashed changes
     },
     "oneapi": {
         "qwen-turbo": 6000 
@@ -93,9 +123,8 @@ models_tokens = {
         "mistral.mistral-7b-instruct-v0:2": 32768,
         "mistral.mixtral-8x7b-instruct-v0:1": 32768,
         "mistral.mistral-large-2402-v1:0": 32768,
-		# Embedding models
-		"amazon.titan-embed-text-v1": 8000,
-		"amazon.titan-embed-text-v2:0": 8000,
+        "amazon.titan-embed-text-v1": 8000,
+        "amazon.titan-embed-text-v2:0": 8000,
         "cohere.embed-english-v3": 512,
         "cohere.embed-multilingual-v3": 512
     },
@@ -147,6 +176,6 @@ models_tokens = {
         "ernie-bot-2-base-zh": 4096,
         "ernie-bot-2-base-en": 4096,
         "ernie-bot-2-base-en-zh": 4096,
-        "ernie-bot-2-base-zh-en": 4096,
+        "ernie-bot-2-base-zh-en": 4096
     }
 }
