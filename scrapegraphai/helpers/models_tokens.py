@@ -31,7 +31,6 @@ models_tokens = {
         "gemini-1.5-pro-latest": 128000,
         "models/embedding-001": 2048
     },
-<<<<<<< Updated upstream
     "ollama": { "command-r": 12800, 
                "codellama": 16000, 
                "dbrx": 32768, 
@@ -60,39 +59,6 @@ models_tokens = {
                "shaw/dmeta-embedding-zh": 8192,
                "snowflake-arctic-embed": 8192, 
                "mxbai-embed-large": 512 
-=======
-    "ollama": {
-        "command-r": 12800,
-        "codellama": 16000,
-        "dbrx": 32768,
-        "deepseek-coder:33b": 16000,
-        "falcon": 2048,
-        "llama2": 4096,
-        "llama3": 8192,
-        "scrapegraph": 8192,
-        "llava": 4096,
-        "mixtral:8x22b-instruct": 65536,
-        "mistral-openorca": 32000,
-        "nomic-embed-text": 8192,
-        "nous-hermes2:34b": 4096,
-        "orca-mini": 2048,
-        "phi3:3.8b": 12800,
-        "qwen:0.5b": 32000,
-        "qwen:1.8b": 32000,
-        "qwen:4b": 32000,
-        "qwen:14b": 32000,
-        "qwen:32b": 32000,
-        "qwen:72b": 32000,
-        "qwen:110b": 32000,
-        "stablelm-zephyr": 8192,
-        "wizardlm2:8x22b": 65536,
-        "shaw/dmeta-embedding-zh-small-q4": 8192,
-        "shaw/dmeta-embedding-zh-q4": 8192,
-        "chevalblanc/acge_text_embedding": 8192,
-        "martcreation/dmeta-embedding-zh": 8192,
-        "snowflake-arctic-embed": 8192,
-        "mxbai-embed-large": 512,
->>>>>>> Stashed changes
     },
     "oneapi": {
         "qwen-turbo": 6000 
