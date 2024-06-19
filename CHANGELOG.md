@@ -1,3 +1,11 @@
+## [1.7.0-beta.14](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.13...v1.7.0-beta.14) (2024-06-19)
+
+
+### Features
+
+* add new search engine avaiability and new tests ([073d226](https://github.com/VinciGit00/Scrapegraph-ai/commit/073d226723f5f03b960865d07408905b7a506180))
+* add research with bing + test function ([aa2160c](https://github.com/VinciGit00/Scrapegraph-ai/commit/aa2160c108764745a696ffc16038f370e9702c14))
+
 ## [1.7.0-beta.13](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.12...v1.7.0-beta.13) (2024-06-18)
 
 
