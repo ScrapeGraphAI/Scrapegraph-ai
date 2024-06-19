@@ -139,7 +139,7 @@ models_tokens = {
         "claude-3-haiku": 200000
     },
     "deepseek": {
-        "deepseek-chat": 32768,
+        "deepseek-chat": 28672,
         "deepseek-coder": 16384
     },
     "ernie": {
