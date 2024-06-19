@@ -167,10 +167,10 @@ class FetchNode(BaseNode):
             if not document or not document[0].page_content.strip():
                 raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
 
-            parsed_content = convert_to_md(source)
+            parsed_content = convert_to_md(document[0].page_content)
 
             compressed_document = [
-                Document(page_content=parsed_content, metadata={"source": source})
+                Document(page_content=parsed_content, metadata={"source": parsed_content})
             ]
 
         state.update(
