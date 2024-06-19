@@ -11,7 +11,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 
 from ..docloaders import ChromiumLoader
-from ..utils.cleanup_html import cleanup_html
+from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
@@ -136,8 +136,7 @@ class FetchNode(BaseNode):
             self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             if not source.strip():
                 raise ValueError("No HTML body content found in the local source.")
-            title, minimized_body, link_urls, image_urls = cleanup_html(source, source)
-            parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+            parsed_content = convert_to_md(source)
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "local_dir"})
             ]
@@ -148,10 +147,7 @@ class FetchNode(BaseNode):
             if response.status_code == 200:
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
-                title, minimized_body, link_urls, image_urls = cleanup_html(
-                    response.text, source
-                )
-                parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+                parsed_content = convert_to_md(source)
                 compressed_document = [Document(page_content=parsed_content)]
             else:
                 self.logger.warning(
@@ -171,10 +167,7 @@ class FetchNode(BaseNode):
             if not document or not document[0].page_content.strip():
                 raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
 
-            title, minimized_body, link_urls, image_urls = cleanup_html(
-                str(document[0].page_content), source
-            )
-            parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+            parsed_content = convert_to_md(source)
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": source})
@@ -183,8 +176,6 @@ class FetchNode(BaseNode):
         state.update(
             {
                 self.output[0]: compressed_document,
-                self.output[1]: link_urls,
-                self.output[2]: image_urls,
             }
         )
 
