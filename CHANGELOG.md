@@ -1,3 +1,15 @@
+## [1.7.3](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.2...v1.7.3) (2024-06-19)
+
+
+### Bug Fixes
+
+* reduced model tokens ([88f9def](https://github.com/VinciGit00/Scrapegraph-ai/commit/88f9def69d80c2f5b1a81878fcd0e385b25ed65f))
+
+
+### Docs
+
+* **version:** fixed compatible versions ([ecb7601](https://github.com/VinciGit00/Scrapegraph-ai/commit/ecb7601be79137f4c520614c53d52aa07bb18f6a))
+
 ## [1.7.2](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.1...v1.7.2) (2024-06-18)
 
 
