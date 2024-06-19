@@ -28,7 +28,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the titles",
+    prompt="List me all the titles of the articles",
     # also accepts a string with the already downloaded HTML code
     source="https://www.wired.com/",
     config=graph_config
