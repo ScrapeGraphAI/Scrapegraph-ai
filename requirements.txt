@@ -19,3 +19,4 @@ langchain-aws==0.1.2
 undetected-playwright==0.3.0
 semchunk==1.0.1
 html2text==2024.2.26
+trafilatura==1.10.0
