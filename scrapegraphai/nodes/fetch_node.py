@@ -170,7 +170,7 @@ class FetchNode(BaseNode):
             parsed_content = convert_to_md(document[0].page_content)
 
             compressed_document = [
-                Document(page_content=parsed_content, metadata={"source": parsed_content})
+                Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
 
         state.update(
