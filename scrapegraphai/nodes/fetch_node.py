@@ -14,6 +14,7 @@ from ..docloaders import ChromiumLoader
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
+from ..models import OpenAI
 
 
 class FetchNode(BaseNode):
@@ -56,6 +57,12 @@ class FetchNode(BaseNode):
         )
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
+        )
+        self.llm_model = (
+            {} if node_config is None else node_config.get("llm_model", {})
+        )
+        self.force = (
+            {} if node_config is None else node_config.get("force", {})
         )
 
     def execute(self, state):
@@ -136,7 +143,12 @@ class FetchNode(BaseNode):
             self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             if not source.strip():
                 raise ValueError("No HTML body content found in the local source.")
-            parsed_content = convert_to_md(source)
+
+            parsed_content = source
+
+            if  isinstance(self.llm_model, OpenAI) and self.input == "-----" or self.force:
+                parsed_content = convert_to_md(source)
+
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "local_dir"})
             ]
@@ -147,7 +159,11 @@ class FetchNode(BaseNode):
             if response.status_code == 200:
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
-                parsed_content = convert_to_md(source)
+
+                parsed_content = source
+
+                if  isinstance(self.llm_model, OpenAI) and self.input == "-----" or self.force:
+                    parsed_content = convert_to_md(source)
                 compressed_document = [Document(page_content=parsed_content)]
             else:
                 self.logger.warning(
@@ -166,8 +182,10 @@ class FetchNode(BaseNode):
 
             if not document or not document[0].page_content.strip():
                 raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
+            parsed_content = document[0].page_content
 
-            parsed_content = convert_to_md(document[0].page_content)
+            if  isinstance(self.llm_model, OpenAI) and self.input == "-----" or self.force:
+                parsed_content = convert_to_md(document[0].page_content)
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})

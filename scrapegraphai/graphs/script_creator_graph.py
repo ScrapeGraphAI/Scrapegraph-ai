@@ -64,7 +64,7 @@ class ScriptCreatorGraph(AbstractGraph):
         """
 
         fetch_node = FetchNode(
-            input="url | local_dir",
+            input="url_for_script | local_dir",
             output=["doc", "link_urls", "img_urls"],
         )
         parse_node = ParseNode(
