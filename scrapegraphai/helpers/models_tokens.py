@@ -75,6 +75,7 @@ models_tokens = {
         "llama3-70b-8192": 8192,
         "mixtral-8x7b-32768": 32768,
         "gemma-7b-it": 8192,
+        "claude-3-haiku-20240307'": 8192
     },
     "claude": {
         "claude_instant": 100000,
