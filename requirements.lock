@@ -28,7 +28,6 @@ babel==2.15.0
     # via courlan
 beautifulsoup4==4.12.3
     # via google
-    # via markdownify
     # via scrapegraphai
 boto3==1.34.129
     # via langchain-aws
@@ -175,16 +174,8 @@ lxml==5.2.2
     # via trafilatura
 lxml-html-clean==0.1.1
     # via lxml
-markdown-it-py==3.0.0
-    # via mdformat
-markdownify==0.12.1
-    # via scrapegraphai
 marshmallow==3.21.3
     # via dataclasses-json
-mdformat==0.7.17
-    # via scrapegraphai
-mdurl==0.1.2
-    # via markdown-it-py
 minify-html==0.15.0
     # via scrapegraphai
 multidict==6.0.5
@@ -238,8 +229,6 @@ pydantic-core==2.18.4
     # via pydantic
 pyee==11.1.0
     # via playwright
-pyhtml2md==1.6.0
-    # via scrapegraphai
 pyparsing==3.1.2
     # via httplib2
 python-dateutil==2.9.0.post0
@@ -275,7 +264,6 @@ s3transfer==0.10.1
 semchunk==1.0.1
     # via scrapegraphai
 six==1.16.0
-    # via markdownify
     # via python-dateutil
 sniffio==1.3.1
     # via anthropic

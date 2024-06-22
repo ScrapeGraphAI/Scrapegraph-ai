@@ -2,7 +2,6 @@
 convert_to_md modul
 """
 import html2text
-import mdformat
 from trafilatura import extract
 
 

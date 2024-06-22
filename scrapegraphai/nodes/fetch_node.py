@@ -9,7 +9,7 @@ import pandas as pd
 import requests
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
-
+from ..utils.cleanup_html import cleanup_html
 from ..docloaders import ChromiumLoader
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
@@ -164,7 +164,7 @@ class FetchNode(BaseNode):
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
 
-                parsed_content = source
+                parsed_content = cleanup_html(response, source)
 
                 if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator:
                     parsed_content = convert_to_md(source)

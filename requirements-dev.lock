@@ -40,7 +40,6 @@ babel==2.15.0
 beautifulsoup4==4.12.3
     # via furo
     # via google
-    # via markdownify
     # via scrapegraphai
 blinker==1.8.2
     # via streamlit
@@ -246,18 +245,13 @@ lxml==5.2.2
 lxml-html-clean==0.1.1
     # via lxml
 markdown-it-py==3.0.0
-    # via mdformat
     # via rich
-markdownify==0.12.1
-    # via scrapegraphai
 markupsafe==2.1.5
     # via jinja2
 marshmallow==3.21.3
     # via dataclasses-json
 matplotlib==3.9.0
     # via burr
-mdformat==0.7.17
-    # via scrapegraphai
 mdurl==0.1.2
     # via markdown-it-py
 minify-html==0.15.0
@@ -347,8 +341,6 @@ pygments==2.18.0
     # via furo
     # via rich
     # via sphinx
-pyhtml2md==1.6.0
-    # via scrapegraphai
 pyparsing==3.1.2
     # via httplib2
     # via matplotlib
@@ -409,7 +401,6 @@ sf-hamilton==1.66.1
 shellingham==1.5.4
     # via typer
 six==1.16.0
-    # via markdownify
     # via python-dateutil
 smmap==5.0.1
     # via gitdb
