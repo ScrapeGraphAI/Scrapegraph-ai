@@ -62,9 +62,11 @@ class FetchNode(BaseNode):
             {} if node_config is None else node_config.get("llm_model", {})
         )
         self.force = (
-            {} if node_config is None else node_config.get("force", False)
+            False if node_config is None else node_config.get("force", False)
         )
-        self.script_creator = node_config.get("script_creator", False)
+        self.script_creator = (
+            False if node_config is None else node_config.get("script_creator", False)
+        )
 
 
     def execute(self, state):
@@ -101,12 +103,12 @@ class FetchNode(BaseNode):
             compressed_document = [
                 source
             ]
-            
+  
             state.update({self.output[0]: compressed_document})
             return state
         # handling pdf
         elif input_keys[0] == "pdf":
-            
+
             # TODO: fix bytes content issue
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
