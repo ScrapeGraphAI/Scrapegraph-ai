@@ -55,7 +55,7 @@ class BaseGraph:
         if nodes[0].node_name != entry_point.node_name:
             # raise a warning if the entry point is not the first node in the list
             warnings.warn(
-                "Careful! The entry point node is different from the first node if the graph.")
+                "Careful! The entry point node is different from the first node in the graph.")
         
         # Burr configuration
         self.use_burr = use_burr
