@@ -11,6 +11,7 @@
 aiohttp==3.9.5
     # via langchain
     # via langchain-community
+    # via langchain-fireworks
 aiosignal==1.3.1
     # via aiohttp
 annotated-types==0.7.0
@@ -53,6 +54,8 @@ faiss-cpu==1.8.0
     # via scrapegraphai
 filelock==3.14.0
     # via huggingface-hub
+fireworks-ai==0.14.0
+    # via langchain-fireworks
 free-proxy==1.1.1
     # via scrapegraphai
 frozenlist==1.4.1
@@ -105,8 +108,11 @@ httplib2==0.22.0
     # via google-auth-httplib2
 httpx==0.27.0
     # via anthropic
+    # via fireworks-ai
     # via groq
     # via openai
+httpx-sse==0.4.0
+    # via fireworks-ai
 huggingface-hub==0.23.1
     # via tokenizers
 idna==3.7
@@ -137,10 +143,13 @@ langchain-core==0.1.52
     # via langchain-anthropic
     # via langchain-aws
     # via langchain-community
+    # via langchain-fireworks
     # via langchain-google-genai
     # via langchain-groq
     # via langchain-openai
     # via langchain-text-splitters
+langchain-fireworks==0.1.3
+    # via scrapegraphai
 langchain-google-genai==1.0.3
     # via scrapegraphai
 langchain-groq==0.1.3
@@ -171,6 +180,7 @@ numpy==1.26.4
     # via langchain-community
     # via pandas
 openai==1.30.3
+    # via langchain-fireworks
     # via langchain-openai
 orjson==3.10.3
     # via langsmith
@@ -180,6 +190,8 @@ packaging==23.2
     # via marshmallow
 pandas==2.2.2
     # via scrapegraphai
+pillow==10.3.0
+    # via fireworks-ai
 playwright==1.43.0
     # via scrapegraphai
     # via undetected-playwright
@@ -200,6 +212,7 @@ pyasn1-modules==0.4.0
     # via google-auth
 pydantic==2.7.1
     # via anthropic
+    # via fireworks-ai
     # via google-generativeai
     # via groq
     # via langchain
@@ -232,6 +245,7 @@ requests==2.32.2
     # via huggingface-hub
     # via langchain
     # via langchain-community
+    # via langchain-fireworks
     # via langsmith
     # via tiktoken
 rsa==4.9

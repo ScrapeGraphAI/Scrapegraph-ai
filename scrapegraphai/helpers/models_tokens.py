@@ -143,5 +143,10 @@ models_tokens = {
         "ernie-bot-2-base-en": 4096,
         "ernie-bot-2-base-en-zh": 4096,
         "ernie-bot-2-base-zh-en": 4096
-    }
+    },
+    "fireworks": {
+        "llama-v2-7b": 4096,
+        "mixtral-8x7b-instruct": 4096,
+        "nomic-ai/nomic-embed-text-v1.5": 8192        
+    },
 }

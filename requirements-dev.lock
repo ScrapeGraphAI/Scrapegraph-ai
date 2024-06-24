@@ -13,6 +13,7 @@ aiofiles==23.2.1
 aiohttp==3.9.5
     # via langchain
     # via langchain-community
+    # via langchain-fireworks
 aiosignal==1.3.1
     # via aiohttp
 alabaster==0.7.16
@@ -93,6 +94,8 @@ fastapi-pagination==0.12.24
     # via burr
 filelock==3.14.0
     # via huggingface-hub
+fireworks-ai==0.14.0
+    # via langchain-fireworks
 fonttools==4.52.1
     # via matplotlib
 free-proxy==1.1.1
@@ -158,8 +161,11 @@ httptools==0.6.1
 httpx==0.27.0
     # via anthropic
     # via fastapi
+    # via fireworks-ai
     # via groq
     # via openai
+httpx-sse==0.4.0
+    # via fireworks-ai
 huggingface-hub==0.23.1
     # via tokenizers
 idna==3.7
@@ -207,10 +213,13 @@ langchain-core==0.1.52
     # via langchain-anthropic
     # via langchain-aws
     # via langchain-community
+    # via langchain-fireworks
     # via langchain-google-genai
     # via langchain-groq
     # via langchain-openai
     # via langchain-text-splitters
+langchain-fireworks==0.1.3
+    # via scrapegraphai
 langchain-google-genai==1.0.3
     # via scrapegraphai
 langchain-groq==0.1.3
@@ -259,6 +268,7 @@ numpy==1.26.4
     # via streamlit
 openai==1.30.3
     # via burr
+    # via langchain-fireworks
     # via langchain-openai
 orjson==3.10.3
     # via fastapi
@@ -278,6 +288,7 @@ pandas==2.2.2
     # via sf-hamilton
     # via streamlit
 pillow==10.3.0
+    # via fireworks-ai
     # via matplotlib
     # via streamlit
 playwright==1.43.0
@@ -308,6 +319,7 @@ pydantic==2.7.1
     # via burr
     # via fastapi
     # via fastapi-pagination
+    # via fireworks-ai
     # via google-generativeai
     # via groq
     # via langchain
@@ -359,6 +371,7 @@ requests==2.32.2
     # via huggingface-hub
     # via langchain
     # via langchain-community
+    # via langchain-fireworks
     # via langsmith
     # via sphinx
     # via streamlit

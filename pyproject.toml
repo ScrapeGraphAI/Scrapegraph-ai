@@ -33,6 +33,7 @@ dependencies = [
     "google==3.0.0",
     "undetected-playwright==0.3.0",
     "semchunk==1.0.1",
+    "langchain-fireworks==0.1.3"
 ]
 
 license = "MIT"
