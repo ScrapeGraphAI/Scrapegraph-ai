@@ -60,7 +60,10 @@ models_tokens = {
                "stablelm-zephyr": 8192, 
                "wizardlm2:8x22b": 65536, 
                # embedding models
-               "shaw/dmeta-embedding-zh": 8192,
+               "shaw/dmeta-embedding-zh-small-q4": 8192,
+               "shaw/dmeta-embedding-zh-q4": 8192,
+               "chevalblanc/acge_text_embedding": 8192,
+               "martcreation/dmeta-embedding-zh": 8192,
                "snowflake-arctic-embed": 8192, 
                "mxbai-embed-large": 512 
     },
@@ -72,6 +75,7 @@ models_tokens = {
         "llama3-70b-8192": 8192,
         "mixtral-8x7b-32768": 32768,
         "gemma-7b-it": 8192,
+        "claude-3-haiku-20240307'": 8192
     },
     "claude": {
         "claude_instant": 100000,
@@ -136,7 +140,7 @@ models_tokens = {
         "claude-3-haiku": 200000
     },
     "deepseek": {
-        "deepseek-chat": 32768,
+        "deepseek-chat": 28672,
         "deepseek-coder": 16384
     },
     "ernie": {
