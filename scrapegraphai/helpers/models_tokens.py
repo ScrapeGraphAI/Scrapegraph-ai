@@ -81,7 +81,8 @@ models_tokens = {
         "claude_instant": 100000,
         "claude2": 9000,
         "claude2.1": 200000,
-        "claude3": 200000
+        "claude3": 200000,
+        "claude3.5": 200000
     },
     "bedrock": {
         "anthropic.claude-3-haiku-20240307-v1:0": 200000,
