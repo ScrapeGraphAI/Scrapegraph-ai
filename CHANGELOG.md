@@ -39,6 +39,7 @@
 ## [1.7.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.1...v1.7.0) (2024-06-17)
 
 
+
 ### Features
 
 * add caching ([d790361](https://github.com/VinciGit00/Scrapegraph-ai/commit/d79036149a3197a385b73553f29df66d36480c38))
@@ -135,6 +136,7 @@
 * **release:** 1.7.0-beta.7 [skip ci] ([7da6cd2](https://github.com/VinciGit00/Scrapegraph-ai/commit/7da6cd2ab2c3581599cd7516aaa56e2c2664f100))
 * **release:** 1.7.0-beta.8 [skip ci] ([a87702f](https://github.com/VinciGit00/Scrapegraph-ai/commit/a87702f107f3fd16ee73e1af1585cd763788bf46))
 * **release:** 1.7.0-beta.9 [skip ci] ([0c5d6e2](https://github.com/VinciGit00/Scrapegraph-ai/commit/0c5d6e2c82b9ee81c91cd2325948bb5a4eddcb31))
+
 
 ## [1.7.0-beta.12](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.11...v1.7.0-beta.12) (2024-06-17)
 
