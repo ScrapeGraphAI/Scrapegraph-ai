@@ -67,7 +67,9 @@ class FetchNode(BaseNode):
         self.script_creator = (
             False if node_config is None else node_config.get("script_creator", False)
         )
-
+        self.openai_md_enabled = (
+            False if node_config is None else node_config.get("script_creator", False)
+        )
 
     def execute(self, state):
         """
@@ -166,7 +168,7 @@ class FetchNode(BaseNode):
 
                 parsed_content = cleanup_html(response, source)
 
-                if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator:
+                if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator and not:
                     parsed_content = convert_to_md(source)
                 compressed_document = [Document(page_content=parsed_content)]
             else:
@@ -188,7 +190,7 @@ class FetchNode(BaseNode):
                 raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
             parsed_content = document[0].page_content
 
-            if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator:
+            if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
                 parsed_content = convert_to_md(document[0].page_content)
 
             compressed_document = [

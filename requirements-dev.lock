@@ -8,7 +8,7 @@
 #   with-sources: false
 
 -e file:.
-aiofiles==23.2.1
+aiofiles==24.1.0
     # via burr
 aiohttp==3.9.5
     # via langchain
@@ -21,7 +21,7 @@ altair==5.3.0
     # via streamlit
 annotated-types==0.7.0
     # via pydantic
-anthropic==0.28.1
+anthropic==0.30.0
     # via langchain-anthropic
 anyio==4.4.0
     # via anthropic
@@ -30,6 +30,9 @@ anyio==4.4.0
     # via openai
     # via starlette
     # via watchfiles
+async-timeout==4.0.3
+    # via aiohttp
+    # via langchain
 attrs==23.2.0
     # via aiohttp
     # via jsonschema
@@ -43,9 +46,9 @@ beautifulsoup4==4.12.3
     # via scrapegraphai
 blinker==1.8.2
     # via streamlit
-boto3==1.34.129
+boto3==1.34.134
     # via langchain-aws
-botocore==1.34.129
+botocore==1.34.134
     # via boto3
     # via s3transfer
 burr==0.22.1
@@ -88,8 +91,11 @@ dnspython==2.6.1
     # via email-validator
 docutils==0.19
     # via sphinx
-email-validator==2.1.2
+email-validator==2.2.0
     # via fastapi
+exceptiongroup==1.2.1
+    # via anyio
+    # via pytest
 faiss-cpu==1.8.0
     # via scrapegraphai
 fastapi==0.111.0
@@ -98,7 +104,7 @@ fastapi-cli==0.0.4
     # via fastapi
 fastapi-pagination==0.12.25
     # via burr
-filelock==3.15.3
+filelock==3.15.4
     # via huggingface-hub
 fonttools==4.53.0
     # via matplotlib
@@ -107,7 +113,7 @@ free-proxy==1.1.1
 frozenlist==1.4.1
     # via aiohttp
     # via aiosignal
-fsspec==2024.6.0
+fsspec==2024.6.1
     # via huggingface-hub
 furo==2024.5.6
     # via scrapegraphai
@@ -119,7 +125,7 @@ google==3.0.0
     # via scrapegraphai
 google-ai-generativelanguage==0.6.4
     # via google-generativeai
-google-api-core==2.19.0
+google-api-core==2.19.1
     # via google-ai-generativelanguage
     # via google-api-python-client
     # via google-generativeai
@@ -135,7 +141,7 @@ google-auth-httplib2==0.2.0
     # via google-api-python-client
 google-generativeai==0.5.4
     # via langchain-google-genai
-googleapis-common-protos==1.63.1
+googleapis-common-protos==1.63.2
     # via google-api-core
     # via grpcio-status
 graphviz==0.20.3
@@ -179,6 +185,10 @@ idna==3.7
     # via yarl
 imagesize==1.4.1
     # via sphinx
+importlib-metadata==8.0.0
+    # via sphinx
+importlib-resources==6.4.0
+    # via matplotlib
 iniconfig==2.0.0
     # via pytest
 jinja2==3.1.4
@@ -187,7 +197,7 @@ jinja2==3.1.4
     # via fastapi
     # via pydeck
     # via sphinx
-jiter==0.4.2
+jiter==0.5.0
     # via anthropic
 jmespath==1.0.1
     # via boto3
@@ -230,7 +240,7 @@ langchain-openai==0.1.6
     # via scrapegraphai
 langchain-text-splitters==0.0.2
     # via langchain
-langsmith==0.1.80
+langsmith==0.1.82
     # via langchain
     # via langchain-community
     # via langchain-core
@@ -274,7 +284,7 @@ numpy==1.26.4
     # via pydeck
     # via sf-hamilton
     # via streamlit
-openai==1.35.0
+openai==1.35.6
     # via burr
     # via langchain-openai
 orjson==3.10.5
@@ -392,11 +402,11 @@ rpds-py==0.18.1
     # via referencing
 rsa==4.9
     # via google-auth
-s3transfer==0.10.1
+s3transfer==0.10.2
     # via boto3
 semchunk==1.0.1
     # via scrapegraphai
-sf-hamilton==1.66.1
+sf-hamilton==1.67.0
     # via burr
 shellingham==1.5.4
     # via typer
@@ -437,9 +447,9 @@ sqlalchemy==2.0.31
     # via langchain-community
 starlette==0.37.2
     # via fastapi
-streamlit==1.35.0
+streamlit==1.36.0
     # via burr
-tenacity==8.4.1
+tenacity==8.4.2
     # via langchain
     # via langchain-community
     # via langchain-core
@@ -453,6 +463,8 @@ tokenizers==0.19.1
     # via anthropic
 toml==0.10.2
     # via streamlit
+tomli==2.0.1
+    # via pytest
 toolz==0.12.1
     # via altair
 tornado==6.4.1
@@ -468,7 +480,9 @@ trafilatura==1.10.0
 typer==0.12.3
     # via fastapi-cli
 typing-extensions==4.12.2
+    # via altair
     # via anthropic
+    # via anyio
     # via fastapi
     # via fastapi-pagination
     # via google-generativeai
@@ -480,9 +494,11 @@ typing-extensions==4.12.2
     # via pyee
     # via sf-hamilton
     # via sqlalchemy
+    # via starlette
     # via streamlit
     # via typer
     # via typing-inspect
+    # via uvicorn
 typing-inspect==0.9.0
     # via dataclasses-json
     # via sf-hamilton
@@ -496,7 +512,7 @@ undetected-playwright==0.3.0
     # via scrapegraphai
 uritemplate==4.1.1
     # via google-api-python-client
-urllib3==2.2.2
+urllib3==1.26.19
     # via botocore
     # via courlan
     # via htmldate
@@ -513,3 +529,6 @@ websockets==12.0
     # via uvicorn
 yarl==1.9.4
     # via aiohttp
+zipp==3.19.2
+    # via importlib-metadata
+    # via importlib-resources
