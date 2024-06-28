@@ -1,3 +1,10 @@
+## [1.7.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.4...v1.7.5) (2024-06-28)
+
+
+### Bug Fixes
+
+* add new claude model ([4d93641](https://github.com/VinciGit00/Scrapegraph-ai/commit/4d936410ccaa3a4b810065e0e84b49b15c09fb28))
+
 ## [1.7.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.3...v1.7.4) (2024-06-21)
 
 
