@@ -71,6 +71,10 @@ class FetchNode(BaseNode):
             False if node_config is None else node_config.get("script_creator", False)
         )
 
+        self.cut = (
+            False if node_config is None else node_config.get("cut", True)
+        )
+
     def execute(self, state):
         """
         Executes the node's logic to fetch HTML content from a specified URL and
@@ -105,7 +109,7 @@ class FetchNode(BaseNode):
             compressed_document = [
                 source
             ]
-  
+
             state.update({self.output[0]: compressed_document})
             return state
         # handling pdf
@@ -165,10 +169,13 @@ class FetchNode(BaseNode):
             if response.status_code == 200:
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
+                
+                parsed_content = response
+   
+                if not self.cut:
+                    parsed_content = cleanup_html(response, source)
 
-                parsed_content = cleanup_html(response, source)
-
-                if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator and not:
+                if  (isinstance(self.llm_model, OpenAI) and not self.script_creator) or (self.force and not self.script_creator):
                     parsed_content = convert_to_md(source)
                 compressed_document = [Document(page_content=parsed_content)]
             else:
