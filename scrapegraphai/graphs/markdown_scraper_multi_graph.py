@@ -1,5 +1,5 @@
-""" 
-XMLScraperMultiGraph Module
+"""
+MDScraperMultiGraph Module
 """
 
 from copy import copy, deepcopy
@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from .xml_scraper_graph import XMLScraperGraph
+from .markdown_scraper_graph import MDScraperGraph
 
 from ..nodes import (
     GraphIteratorNode,
@@ -16,11 +16,10 @@ from ..nodes import (
 )
 
 
-class XMLScraperMultiGraph(AbstractGraph):
-    """ 
-    XMLScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and 
-    generates answers to a given prompt.
-    It only requires a user prompt and a list of URLs.
+class MDScraperMultiGraph(AbstractGraph):
+    """
+    MDScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and 
+    generates answers to a given prompt. It only requires a user prompt and a list of URLs.
 
     Attributes:
         prompt (str): The user prompt to search the internet.
@@ -32,20 +31,20 @@ class XMLScraperMultiGraph(AbstractGraph):
 
     Args:
         prompt (str): The user prompt to search the internet.
-        source (List[str]): The source of the graph.
+        source (List[str]): The list of URLs to scrape.
         config (dict): Configuration parameters for the graph.
         schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
-        >>> search_graph = MultipleSearchGraph(
+        >>> search_graph = MDScraperMultiGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     ["http://example.com/page1", "http://example.com/page2"],
+        ...     {"llm_model": {"model": "gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
     """
 
     def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
-
         if all(isinstance(value, str) for value in config.values()):
             self.copy_config = copy(config)
         else:
@@ -62,22 +61,15 @@ class XMLScraperMultiGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
-
-        # ************************************************
         # Create a SmartScraperGraph instance
-        # ************************************************
-
-        smart_scraper_instance = XMLScraperGraph(
+        smart_scraper_instance = MDScraperGraph(
             prompt="",
             source="",
             config=self.copy_config,
             schema=self.copy_schema
         )
 
-        # ************************************************
         # Define the graph nodes
-        # ************************************************
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],

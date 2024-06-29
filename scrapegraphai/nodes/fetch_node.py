@@ -51,8 +51,8 @@ class FetchNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
-        self.useSoup = (
-            False if node_config is None else node_config.get("useSoup", False)
+        self.use_soup = (
+            False if node_config is None else node_config.get("use_soup", False)
         )
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
@@ -88,17 +88,17 @@ class FetchNode(BaseNode):
             or input_keys[0] == "xml_dir"
             or input_keys[0] == "csv_dir"
             or input_keys[0] == "pdf_dir"
+            or input_keys[0] == "md_dir"
         ):
             compressed_document = [
                 source
             ]
-            
+
             state.update({self.output[0]: compressed_document})
             return state
         # handling pdf
         elif input_keys[0] == "pdf":
-            
-            # TODO: fix bytes content issue
+
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
             state.update({self.output[0]: compressed_document})
@@ -128,6 +128,14 @@ class FetchNode(BaseNode):
             ]
             state.update({self.output[0]: compressed_document})
             return state
+        elif input_keys[0] == "md":
+            with open(source, "r", encoding="utf-8") as f:
+                data = f.read()
+            compressed_document = [
+                Document(page_content=data, metadata={"source": "md"})
+            ]
+            state.update({self.output[0]: compressed_document})
+            return state
 
         elif self.input == "pdf_dir":
             pass
@@ -142,7 +150,7 @@ class FetchNode(BaseNode):
                 Document(page_content=parsed_content, metadata={"source": "local_dir"})
             ]
 
-        elif self.useSoup:
+        elif self.use_soup:
             self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             response = requests.get(source)
             if response.status_code == 200:
@@ -169,12 +177,14 @@ class FetchNode(BaseNode):
             document = loader.load()
 
             if not document or not document[0].page_content.strip():
-                raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
+                raise ValueError("""No HTML body content found in the 
+                                 document fetched by ChromiumLoader.""")
 
             title, minimized_body, link_urls, image_urls = cleanup_html(
                 str(document[0].page_content), source
             )
-            parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+            parsed_content = f"""Title: {title}, Body: {minimized_body},
+                            Links: {link_urls}, Images: {image_urls}"""
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": source})

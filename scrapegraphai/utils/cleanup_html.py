@@ -56,4 +56,3 @@ def cleanup_html(html_content: str, base_url: str) -> str:
 
     else:
         raise ValueError(f"No HTML body content found, please try setting the 'headless' flag to False in the graph configuration. HTML content: {html_content}")
-
