@@ -7,7 +7,7 @@ for this project.
 Prerequisites
 ^^^^^^^^^^^^^
 
-- `Python >=3.9,<3.12 <https://www.python.org/downloads/>`_
+- `Python >=3.9 <https://www.python.org/downloads/>`_
 - `pip <https://pip.pypa.io/en/stable/getting-started/>`_
 - `Ollama <https://ollama.com/>`_ (optional for local models)
 
