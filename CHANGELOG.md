@@ -1,9 +1,23 @@
-## [1.7.5](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.4...v1.7.5) (2024-06-28)
+## [1.8.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.4...v1.8.0-beta.1) (2024-06-25)
+
+
+### Features
+
+* add new search engine avaiability and new tests ([073d226](https://github.com/VinciGit00/Scrapegraph-ai/commit/073d226723f5f03b960865d07408905b7a506180))
+* add research with bing + test function ([aa2160c](https://github.com/VinciGit00/Scrapegraph-ai/commit/aa2160c108764745a696ffc16038f370e9702c14))
+
 
 
 ### Bug Fixes
 
-* add new claude model ([4d93641](https://github.com/VinciGit00/Scrapegraph-ai/commit/4d936410ccaa3a4b810065e0e84b49b15c09fb28))
+* updated for schema changes ([aedda44](https://github.com/VinciGit00/Scrapegraph-ai/commit/aedda448682ce5a921a62e661bffb02478bab75f))
+
+
+### CI
+
+* **release:** 1.7.0-beta.13 [skip ci] ([ce0a47a](https://github.com/VinciGit00/Scrapegraph-ai/commit/ce0a47aee5edbb26fd82e41f6688a4bc48a10822))
+* **release:** 1.7.0-beta.14 [skip ci] ([ec77ff7](https://github.com/VinciGit00/Scrapegraph-ai/commit/ec77ff7ea4eb071469c2fb53e5959d4ea1f73ad6))
+
 
 ## [1.7.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.3...v1.7.4) (2024-06-21)
 
@@ -44,6 +58,7 @@
 * add new embedding models ([1d0cbbc](https://github.com/VinciGit00/Scrapegraph-ai/commit/1d0cbbc6d6e8c50299bb38b3bfa5e241488ff6f4))
 
 ## [1.7.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.1...v1.7.0) (2024-06-17)
+
 
 
 ### Features
@@ -142,6 +157,7 @@
 * **release:** 1.7.0-beta.7 [skip ci] ([7da6cd2](https://github.com/VinciGit00/Scrapegraph-ai/commit/7da6cd2ab2c3581599cd7516aaa56e2c2664f100))
 * **release:** 1.7.0-beta.8 [skip ci] ([a87702f](https://github.com/VinciGit00/Scrapegraph-ai/commit/a87702f107f3fd16ee73e1af1585cd763788bf46))
 * **release:** 1.7.0-beta.9 [skip ci] ([0c5d6e2](https://github.com/VinciGit00/Scrapegraph-ai/commit/0c5d6e2c82b9ee81c91cd2325948bb5a4eddcb31))
+
 
 ## [1.7.0-beta.12](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.0-beta.11...v1.7.0-beta.12) (2024-06-17)
 

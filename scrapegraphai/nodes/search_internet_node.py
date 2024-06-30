@@ -43,6 +43,7 @@ class SearchInternetNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.search_engine = node_config.get("search_engine", "google")
         self.max_results = node_config.get("max_results", 3)
 
     def execute(self, state: dict) -> dict:
@@ -97,7 +98,8 @@ class SearchInternetNode(BaseNode):
 
         self.logger.info(f"Search Query: {search_query}")
 
-        answer = search_on_web(query=search_query, max_results=self.max_results)
+        answer = search_on_web(query=search_query, max_results=self.max_results,
+                               search_engine=self.search_engine)
 
         if len(answer) == 0:
             # raise an exception if no answer is found

@@ -4,6 +4,9 @@ Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
 
 import os
 from dotenv import load_dotenv
+from typing import Dict
+
+from pydantic import BaseModel
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 from langchain_community.llms import HuggingFaceEndpoint
@@ -13,22 +16,12 @@ from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 # Define the output schema for the graph
 # ************************************************
 
-schema= """
-    { 
-    "Projects": [
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            }, 
-        "Project #": 
-            { 
-                "title": "...", 
-                "description": "...", 
-            } 
-        ] 
-    } 
-"""
+class Project(BaseModel):
+    title: str
+    description: str
+
+class Projects(BaseModel):
+    Projects: Dict[str, Project]
 
 ## required environment variable in .env
 #HUGGINGFACEHUB_API_TOKEN
@@ -61,7 +54,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description",
     source="https://perinim.github.io/projects/",
-    schema=schema,
+    schema=Projects,
     config=graph_config
 )
 result = smart_scraper_graph.run()
