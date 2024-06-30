@@ -7,6 +7,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import AsyncRunnable
 from tqdm import tqdm
+from ..utils.merge_results import merge_results
 from ..utils.logging import get_logger
 from ..models import Ollama, OpenAI
 from .base_node import BaseNode
@@ -14,15 +15,6 @@ from ..helpers import (
 template_chunks, template_no_chunks, template_merge,
 template_chunks_md, template_no_chunks_md, template_merge_md
 )
-
-def merge_results(answers, batch_answers):
-  # Combine answers from single-chunk processing and batch processing
-  merged_answers = answers + [answer["text"] for answer in batch_answers]
-
-  # Add separators between chunks
-  merged_answers = "\n".join(merged_answers)
-
-  return merged_answers
 
 class GenerateAnswerNode(BaseNode):
     """
