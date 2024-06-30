@@ -7,6 +7,7 @@
 * add research with bing + test function ([aa2160c](https://github.com/VinciGit00/Scrapegraph-ai/commit/aa2160c108764745a696ffc16038f370e9702c14))
 
 
+
 ### Bug Fixes
 
 * updated for schema changes ([aedda44](https://github.com/VinciGit00/Scrapegraph-ai/commit/aedda448682ce5a921a62e661bffb02478bab75f))
@@ -16,6 +17,7 @@
 
 * **release:** 1.7.0-beta.13 [skip ci] ([ce0a47a](https://github.com/VinciGit00/Scrapegraph-ai/commit/ce0a47aee5edbb26fd82e41f6688a4bc48a10822))
 * **release:** 1.7.0-beta.14 [skip ci] ([ec77ff7](https://github.com/VinciGit00/Scrapegraph-ai/commit/ec77ff7ea4eb071469c2fb53e5959d4ea1f73ad6))
+
 
 ## [1.7.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.3...v1.7.4) (2024-06-21)
 
