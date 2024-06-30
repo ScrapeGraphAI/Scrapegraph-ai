@@ -53,6 +53,9 @@ class GenerateAnswerNode(BaseNode):
         self.script_creator = (
             False if node_config is None else node_config.get("script_creator", False)
         )
+        self.is_md_scraper = (
+            False if node_config is None else node_config.get("is_md_scraper", False)
+        )
 
 
     def execute(self, state: dict) -> dict:
@@ -89,7 +92,7 @@ class GenerateAnswerNode(BaseNode):
 
         format_instructions = output_parser.get_format_instructions()
 
-        if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator:
+        if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
             template_no_chunks_prompt = template_no_chunks_md
             template_chunks_prompt = template_chunks_md
             template_merge_prompt = template_merge_md

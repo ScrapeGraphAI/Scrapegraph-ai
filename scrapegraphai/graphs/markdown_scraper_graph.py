@@ -77,6 +77,7 @@ class MDScraperGraph(AbstractGraph):
             node_config={
                 "llm_model": self.llm_model,
                 "schema": self.schema,
+                "is_md_scraper": True
             }
         )
 
