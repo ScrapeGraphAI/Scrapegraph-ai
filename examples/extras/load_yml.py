@@ -1,38 +1,28 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
-import os, json
+import yaml
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
-
-graph_config = {
-    "llm": {
-        "api_key": "s",
-        "model": "gpt-3.5-turbo",
-    },
-    "verbose": True,
-    "headless": False,
-}
+with open("example.yml", 'r') as file:
+    graph_config = yaml.safe_load(file)
 
 # ************************************************
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Extract me the python code inside the page",
-    source="https://www.exploit-db.com/exploits/51447",
+    prompt="List me all the titles",
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
 
 # ************************************************
 # Get graph execution info
