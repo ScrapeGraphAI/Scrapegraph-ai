@@ -9,11 +9,12 @@ import pandas as pd
 import requests
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
-
-from ..docloaders import ChromiumLoader
 from ..utils.cleanup_html import cleanup_html
+from ..docloaders import ChromiumLoader
+from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
+from ..models import OpenAI
 
 
 class FetchNode(BaseNode):
@@ -51,11 +52,27 @@ class FetchNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
-        self.useSoup = (
-            False if node_config is None else node_config.get("useSoup", False)
+        self.use_soup = (
+            False if node_config is None else node_config.get("use_soup", False)
         )
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
+        )
+        self.llm_model = (
+            {} if node_config is None else node_config.get("llm_model", {})
+        )
+        self.force = (
+            False if node_config is None else node_config.get("force", False)
+        )
+        self.script_creator = (
+            False if node_config is None else node_config.get("script_creator", False)
+        )
+        self.openai_md_enabled = (
+            False if node_config is None else node_config.get("script_creator", False)
+        )
+
+        self.cut = (
+            False if node_config is None else node_config.get("cut", True)
         )
 
     def execute(self, state):
@@ -88,17 +105,18 @@ class FetchNode(BaseNode):
             or input_keys[0] == "xml_dir"
             or input_keys[0] == "csv_dir"
             or input_keys[0] == "pdf_dir"
+            or input_keys[0] == "md_dir"
         ):
             compressed_document = [
                 source
             ]
-            
+
             state.update({self.output[0]: compressed_document})
             return state
         # handling pdf
         elif input_keys[0] == "pdf":
-            
-            # TODO: fix bytes content issue
+
+
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
             state.update({self.output[0]: compressed_document})
@@ -128,6 +146,14 @@ class FetchNode(BaseNode):
             ]
             state.update({self.output[0]: compressed_document})
             return state
+        elif input_keys[0] == "md":
+            with open(source, "r", encoding="utf-8") as f:
+                data = f.read()
+            compressed_document = [
+                Document(page_content=data, metadata={"source": "md"})
+            ]
+            state.update({self.output[0]: compressed_document})
+            return state
 
         elif self.input == "pdf_dir":
             pass
@@ -136,22 +162,30 @@ class FetchNode(BaseNode):
             self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             if not source.strip():
                 raise ValueError("No HTML body content found in the local source.")
-            title, minimized_body, link_urls, image_urls = cleanup_html(source, source)
-            parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+
+            parsed_content = source
+
+            if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator:
+                parsed_content = convert_to_md(source)
+
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "local_dir"})
             ]
 
-        elif self.useSoup:
+        elif self.use_soup:
             self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             response = requests.get(source)
             if response.status_code == 200:
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
-                title, minimized_body, link_urls, image_urls = cleanup_html(
-                    response.text, source
-                )
-                parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+                
+                parsed_content = response
+   
+                if not self.cut:
+                    parsed_content = cleanup_html(response, source)
+
+                if  (isinstance(self.llm_model, OpenAI) and not self.script_creator) or (self.force and not self.script_creator):
+                    parsed_content = convert_to_md(source)
                 compressed_document = [Document(page_content=parsed_content)]
             else:
                 self.logger.warning(
@@ -170,21 +204,19 @@ class FetchNode(BaseNode):
 
             if not document or not document[0].page_content.strip():
                 raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
+            parsed_content = document[0].page_content
 
-            title, minimized_body, link_urls, image_urls = cleanup_html(
-                str(document[0].page_content), source
-            )
-            parsed_content = f"Title: {title}, Body: {minimized_body}, Links: {link_urls}, Images: {image_urls}"
+            if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
+                parsed_content = convert_to_md(document[0].page_content)
+
 
             compressed_document = [
-                Document(page_content=parsed_content, metadata={"source": source})
+                Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
 
         state.update(
             {
                 self.output[0]: compressed_document,
-                self.output[1]: link_urls,
-                self.output[2]: image_urls,
             }
         )
 

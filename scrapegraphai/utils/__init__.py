@@ -10,3 +10,4 @@ from .save_audio_from_bytes import save_audio_from_bytes
 from .sys_dynamic_import import dynamic_import, srcfile_import
 from .cleanup_html import cleanup_html
 from .logging import *
+from .convert_to_md import convert_to_md

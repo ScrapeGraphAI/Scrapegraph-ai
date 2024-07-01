@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+This example shows how to do not process the html code in the fetch phase
 """
 
 import os, json
@@ -17,6 +17,7 @@ graph_config = {
         "api_key": "s",
         "model": "gpt-3.5-turbo",
     },
+    "cut": False,
     "verbose": True,
     "headless": False,
 }
