@@ -54,6 +54,8 @@ class GenerateScraperNode(BaseNode):
             False if node_config is None else node_config.get("verbose", False)
         )
 
+        self.additional_info = node_config.get("additional_info")
+
     def execute(self, state: dict) -> dict:
         """
         Generates a python script for scraping a website using the specified library.
@@ -106,6 +108,8 @@ class GenerateScraperNode(BaseNode):
         USER QUESTION: {question}
         SCHEMA INSTRUCTIONS: {schema_instructions}
         """
+        if self.additional_info is not None:
+            template_no_chunks += self.additional_info
 
         if len(doc) > 1:
             raise NotImplementedError(

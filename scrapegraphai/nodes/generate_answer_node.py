@@ -54,6 +54,7 @@ class GenerateAnswerNode(BaseNode):
             False if node_config is None else node_config.get("script_creator", False)
         )
 
+        self.additional_info = node_config.get("additional_info")
 
     def execute(self, state: dict) -> dict:
         """
@@ -98,6 +99,11 @@ class GenerateAnswerNode(BaseNode):
             template_chunks_prompt = template_chunks
             template_merge_prompt = template_merge
 
+        if self.additional_info is not None:
+            template_no_chunks_prompt += self.additional_info
+            template_chunks_prompt += self.additional_info
+            template_merge_prompt += self.additional_info
+
         chains_dict = {}
 
         # Use tqdm to add progress bar
@@ -118,7 +124,6 @@ class GenerateAnswerNode(BaseNode):
                     partial_variables={"context": chunk.page_content,
                                         "chunk_id": i + 1,
                                         "format_instructions": format_instructions})
-
             # Dynamically name the chains based on their index
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser

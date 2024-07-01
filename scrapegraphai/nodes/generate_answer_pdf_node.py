@@ -61,9 +61,12 @@ class GenerateAnswerPDFNode(BaseNode):
         self.llm_model = node_config["llm_model"]
         if isinstance(node_config["llm_model"], Ollama):
             self.llm_model.format="json"
+   
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+
+        self.additional_info = node_config.get("additional_info")
 
     def execute(self, state):
         """
@@ -100,6 +103,11 @@ class GenerateAnswerPDFNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
+  
+        if self.additional_info is not None:
+            template_no_chunks_pdf += self.additional_info
+            template_chunks_pdf += self.additional_info
+            template_merge_pdf += self.additional_info
 
         format_instructions = output_parser.get_format_instructions()
 

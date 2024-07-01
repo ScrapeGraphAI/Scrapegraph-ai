@@ -58,11 +58,14 @@ class GenerateAnswerCSVNode(BaseNode):
             node_name (str): name of the node
         """
         super().__init__(node_name, "node", input, output, 2, node_config)
-        
+
         self.llm_model = node_config["llm_model"]
+
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        
+        self.additional_info = node_config.get("additional_info")
 
     def execute(self, state):
         """
@@ -99,9 +102,14 @@ class GenerateAnswerCSVNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
+   
+        if self.additional_info is not None:
+            template_no_chunks_csv += self.additional_info
+            template_chunks_csv += self.additional_info
+            template_merge_csv += self.additional_info
 
         format_instructions = output_parser.get_format_instructions()
-   
+
         chains_dict = {}
 
         # Use tqdm to add progress bar

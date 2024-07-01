@@ -18,7 +18,6 @@ from ..nodes import (
 
 from ..models import OpenAIImageToText
 
-
 class OmniScraperGraph(AbstractGraph):
     """
     OmniScraper is a scraping pipeline that automates the process of 
@@ -60,7 +59,6 @@ class OmniScraperGraph(AbstractGraph):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-        
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -104,6 +102,7 @@ class OmniScraperGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "additional_info": self.config.get("additional_info"),
                 "schema": self.schema
             }
         )
