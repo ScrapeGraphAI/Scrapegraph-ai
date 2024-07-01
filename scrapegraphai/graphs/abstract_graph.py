@@ -10,9 +10,9 @@ from pydantic import BaseModel
 from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_vertexai import VertexAIEmbeddings
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-
 from ..helpers import models_tokens
 from ..models import (
     Anthropic,
@@ -23,7 +23,8 @@ from ..models import (
     HuggingFace,
     Ollama,
     OpenAI,
-    OneApi
+    OneApi,
+    VertexAI
 )
 from ..models.ernie import Ernie
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
@@ -71,7 +72,7 @@ class AbstractGraph(ABC):
         self.config = config
         self.schema = schema
         self.llm_model = self._create_llm(config["llm"], chat=True)
-        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]                                                            ) if "embeddings" not in config else self._create_embedder(
+        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]) if "embeddings" not in config else self._create_embedder(
             config["embeddings"])
         self.verbose = False if config is None else config.get(
             "verbose", False)
@@ -102,7 +103,7 @@ class AbstractGraph(ABC):
             "embedder_model": self.embedder_model,
             "cache_path": self.cache_path,
             }
-       
+
         self.set_common_params(common_params, overwrite=True)
 
         # set burr config
@@ -125,7 +126,7 @@ class AbstractGraph(ABC):
 
         for node in self.graph.nodes:
             node.update_config(params, overwrite)
-    
+
     def _create_llm(self, llm_config: dict, chat=False) -> object:
         """
         Create a large language model instance based on the configuration provided.
@@ -170,7 +171,6 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return AzureOpenAI(llm_params)
-
         elif "gemini" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["gemini"][llm_params["model"]]
@@ -183,6 +183,12 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return Anthropic(llm_params)
+        elif llm_params["model"].startswith("vertexai"):
+            try:
+                self.model_token = models_tokens["vertexai"][llm_params["model"]]
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
+            return VertexAI(llm_params)
         elif "ollama" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("ollama/")[-1]
 
@@ -275,10 +281,12 @@ class AbstractGraph(ABC):
                 google_api_key=llm_config["api_key"], model="models/embedding-001"
             )
         if isinstance(self.llm_model, OpenAI):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key, base_url=self.llm_model.openai_api_base)
+            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key, 
+                                    base_url=self.llm_model.openai_api_base)
         elif isinstance(self.llm_model, DeepSeek):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)   
-
+            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
+        elif isinstance(self.llm_model, VertexAI):
+            return VertexAIEmbeddings()
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureOpenAI):
