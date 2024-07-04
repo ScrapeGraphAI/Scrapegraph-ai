@@ -15,3 +15,4 @@ from .anthropic import Anthropic
 from .deepseek import DeepSeek
 from .oneapi import OneApi
 from .fireworks import Fireworks
+from .vertex import VertexAI
