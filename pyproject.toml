@@ -35,6 +35,7 @@ dependencies = [
     "semchunk==1.0.1",
     "html2text==2024.2.26",
     "trafilatura==1.10.0",
+    "langchain-fireworks==0.1.3"
 ]
 
 license = "MIT"

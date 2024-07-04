@@ -11,6 +11,7 @@ from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
+from langchain_fireworks import FireworksEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
 
 from ..helpers import models_tokens
@@ -23,7 +24,8 @@ from ..models import (
     HuggingFace,
     Ollama,
     OpenAI,
-    OneApi
+    OneApi,
+    Fireworks
 )
 from ..models.ernie import Ernie
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
@@ -102,7 +104,7 @@ class AbstractGraph(ABC):
             "embedder_model": self.embedder_model,
             "cache_path": self.cache_path,
             }
-       
+
         self.set_common_params(common_params, overwrite=True)
 
         # set burr config
@@ -125,7 +127,7 @@ class AbstractGraph(ABC):
 
         for node in self.graph.nodes:
             node.update_config(params, overwrite)
-    
+
     def _create_llm(self, llm_config: dict, chat=False) -> object:
         """
         Create a large language model instance based on the configuration provided.
@@ -160,8 +162,15 @@ class AbstractGraph(ABC):
             try:
                 self.model_token = models_tokens["oneapi"][llm_params["model"]]
             except KeyError as exc:
-                raise KeyError("Model Model not supported") from exc
+                raise KeyError("Model not supported") from exc
             return OneApi(llm_params)
+        elif "fireworks" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["fireworks"][llm_params["model"].split("/")[-1]]
+                llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
+            return Fireworks(llm_params)
         elif "azure" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
@@ -172,12 +181,14 @@ class AbstractGraph(ABC):
             return AzureOpenAI(llm_params)
 
         elif "gemini" in llm_params["model"]:
+            llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
                 self.model_token = models_tokens["gemini"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return Gemini(llm_params)
         elif llm_params["model"].startswith("claude"):
+            llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
                 self.model_token = models_tokens["claude"][llm_params["model"]]
             except KeyError as exc:
@@ -203,6 +214,7 @@ class AbstractGraph(ABC):
 
             return Ollama(llm_params)
         elif "hugging_face" in llm_params["model"]:
+            llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
                 self.model_token = models_tokens["hugging_face"][llm_params["model"]]
             except KeyError:
@@ -277,12 +289,13 @@ class AbstractGraph(ABC):
         if isinstance(self.llm_model, OpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key, base_url=self.llm_model.openai_api_base)
         elif isinstance(self.llm_model, DeepSeek):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)   
-
+            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureOpenAI):
             return AzureOpenAIEmbeddings()
+        elif isinstance(self.llm_model, Fireworks):
+            return FireworksEmbeddings(model=self.llm_model.model_name)
         elif isinstance(self.llm_model, Ollama):
             # unwrap the kwargs from the model whihc is a dict
             params = self.llm_model._lc_kwargs
@@ -333,6 +346,13 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return HuggingFaceHubEmbeddings(model=embedder_params["model"])
+        elif "fireworks" in embedder_params["model"]:
+            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
+            try:
+                models_tokens["fireworks"][embedder_params["model"]]
+            except KeyError as exc:
+                raise KeyError("Model not supported") from exc
+            return FireworksEmbeddings(model=embedder_params["model"])
         elif "gemini" in embedder_params["model"]:
             try:
                 models_tokens["gemini"][embedder_params["model"]]
