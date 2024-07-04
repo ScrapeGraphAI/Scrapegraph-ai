@@ -327,6 +327,7 @@ class AbstractGraph(ABC):
                 raise KeyError("Model not supported") from exc
             return OllamaEmbeddings(**embedder_params)
         elif "hugging_face" in embedder_params["model"]:
+            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
             try:
                 models_tokens["hugging_face"][embedder_params["model"]]
             except KeyError as exc:
