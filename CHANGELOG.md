@@ -1,4 +1,17 @@
-## [1.8.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.4...v1.8.0-beta.1) (2024-06-25)
+## [1.8.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.8.0...v1.8.1-beta.1) (2024-07-04)
+
+
+### Bug Fixes
+
+* add test ([3a537ee](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3a537eec6fef1743924a9aa5cef0ba2f8d44bf11))
+
+
+### Docs
+
+* **roadmap:** fix urls ([14faba4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/14faba4f00dd9f947f8dc5e0b51be49ea684179f))
+* **roadmap:** next steps ([3e644f4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e644f498f05eb505fbd4e94b144c81567569aaa))
+
+## [1.8.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.5...v1.8.0) (2024-06-30)
 
 
 ### Features
@@ -16,6 +29,28 @@
 
 * **release:** 1.7.0-beta.13 [skip ci] ([ce0a47a](https://github.com/VinciGit00/Scrapegraph-ai/commit/ce0a47aee5edbb26fd82e41f6688a4bc48a10822))
 * **release:** 1.7.0-beta.14 [skip ci] ([ec77ff7](https://github.com/VinciGit00/Scrapegraph-ai/commit/ec77ff7ea4eb071469c2fb53e5959d4ea1f73ad6))
+* **release:** 1.8.0-beta.1 [skip ci] ([bbfbbd9](https://github.com/VinciGit00/Scrapegraph-ai/commit/bbfbbd93be3c87c5f25e3c75ec7d677832d37467))
+
+## [1.8.0-beta.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.4...v1.8.0-beta.1) (2024-06-25)
+
+
+### Features
+
+* add new search engine avaiability and new tests ([073d226](https://github.com/VinciGit00/Scrapegraph-ai/commit/073d226723f5f03b960865d07408905b7a506180))
+* add research with bing + test function ([aa2160c](https://github.com/VinciGit00/Scrapegraph-ai/commit/aa2160c108764745a696ffc16038f370e9702c14))
+
+
+
+### Bug Fixes
+
+* updated for schema changes ([aedda44](https://github.com/VinciGit00/Scrapegraph-ai/commit/aedda448682ce5a921a62e661bffb02478bab75f))
+
+
+### CI
+
+* **release:** 1.7.0-beta.13 [skip ci] ([ce0a47a](https://github.com/VinciGit00/Scrapegraph-ai/commit/ce0a47aee5edbb26fd82e41f6688a4bc48a10822))
+* **release:** 1.7.0-beta.14 [skip ci] ([ec77ff7](https://github.com/VinciGit00/Scrapegraph-ai/commit/ec77ff7ea4eb071469c2fb53e5959d4ea1f73ad6))
+
 
 ## [1.7.4](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.3...v1.7.4) (2024-06-21)
 

@@ -78,7 +78,11 @@ models_tokens = {
         "claude2": 9000,
         "claude2.1": 200000,
         "claude3": 200000,
-        "claude3.5": 200000
+        "claude3.5": 200000,
+        "claude-3-opus-20240229": 200000,
+        "claude-3-sonnet-20240229": 200000,
+        "claude-3-haiku-20240307": 200000,
+        "claude-3-5-sonnet-20240620": 200000
     },
     "vertexai": {
         "gemini-1.5-flash": 128000,
