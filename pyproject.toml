@@ -1,10 +1,6 @@
 [project]
 name = "scrapegraphai"
-
-
 version = "1.8.1b1"
-
-
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     { name = "Marco Vinciguerra", email = "mvincig11@gmail.com" },
@@ -12,10 +8,10 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 dependencies = [
-    "langchain==0.1.15",
-    "langchain-openai==0.1.6",
-    "langchain-google-genai==1.0.3",
-    "langchain-google-vertexai==1.0.6",
+    "langchain", 
+    "langchain-google-genai",
+    "langchain-google-vertexai",
+    "langchain-openai",
     "langchain-groq==0.1.3",
     "langchain-aws==0.1.3",
     "langchain-anthropic==0.1.11",
@@ -91,5 +87,3 @@ dev-dependencies = [
 [tool.rye.scripts]
 pylint-local = "pylint scrapegraphai/**/*.py"
 pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
-pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text scrapegraphai/**/.py"
-

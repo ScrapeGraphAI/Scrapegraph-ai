@@ -14,7 +14,7 @@ load_dotenv()
 @pytest.fixture
 def graph_config():
     """Configuration of the graph"""
-    fireworks_api_key = os.getenv("FIREWORKS_APIKEY")    
+    fireworks_api_key = os.getenv("FIREWORKS_APIKEY")  
     return {
         "llm": {
             "api_key": fireworks_api_key,

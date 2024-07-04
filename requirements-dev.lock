@@ -94,6 +94,8 @@ distro==1.9.0
     # via openai
 dnspython==2.6.1
     # via email-validator
+docstring-parser==0.16
+    # via google-cloud-aiplatform
 docutils==0.19
     # via sphinx
 email-validator==2.1.1
@@ -136,6 +138,11 @@ google-ai-generativelanguage==0.6.4
 google-api-core==2.19.0
     # via google-ai-generativelanguage
     # via google-api-python-client
+    # via google-cloud-aiplatform
+    # via google-cloud-bigquery
+    # via google-cloud-core
+    # via google-cloud-resource-manager
+    # via google-cloud-storage
     # via google-generativeai
 google-api-python-client==2.130.0
     # via google-generativeai
@@ -144,13 +151,37 @@ google-auth==2.29.0
     # via google-api-core
     # via google-api-python-client
     # via google-auth-httplib2
+    # via google-cloud-aiplatform
+    # via google-cloud-bigquery
+    # via google-cloud-core
+    # via google-cloud-resource-manager
+    # via google-cloud-storage
     # via google-generativeai
 google-auth-httplib2==0.2.0
     # via google-api-python-client
+google-cloud-aiplatform==1.58.0
+    # via langchain-google-vertexai
+google-cloud-bigquery==3.25.0
+    # via google-cloud-aiplatform
+google-cloud-core==2.4.1
+    # via google-cloud-bigquery
+    # via google-cloud-storage
+google-cloud-resource-manager==1.12.3
+    # via google-cloud-aiplatform
+google-cloud-storage==2.17.0
+    # via google-cloud-aiplatform
+    # via langchain-google-vertexai
+google-crc32c==1.5.0
+    # via google-cloud-storage
+    # via google-resumable-media
 google-generativeai==0.5.4
     # via langchain-google-genai
+google-resumable-media==2.7.1
+    # via google-cloud-bigquery
+    # via google-cloud-storage
 googleapis-common-protos==1.63.0
     # via google-api-core
+    # via grpc-google-iam-v1
     # via grpcio-status
 graphviz==0.20.3
     # via burr
@@ -159,8 +190,12 @@ greenlet==3.0.3
     # via playwright
 groq==0.8.0
     # via langchain-groq
+grpc-google-iam-v1==0.13.1
+    # via google-cloud-resource-manager
 grpcio==1.64.0
     # via google-api-core
+    # via googleapis-common-protos
+    # via grpc-google-iam-v1
     # via grpcio-status
 grpcio-status==1.62.2
     # via google-api-core
@@ -243,12 +278,15 @@ langchain-core==0.1.52
     # via langchain-community
     # via langchain-fireworks
     # via langchain-google-genai
+    # via langchain-google-vertexai
     # via langchain-groq
     # via langchain-openai
     # via langchain-text-splitters
 langchain-fireworks==0.1.3
     # via scrapegraphai
 langchain-google-genai==1.0.3
+    # via scrapegraphai
+langchain-google-vertexai==1.0.4
     # via scrapegraphai
 langchain-groq==0.1.3
     # via scrapegraphai
@@ -301,6 +339,7 @@ numpy==1.26.4
     # via pyarrow
     # via pydeck
     # via sf-hamilton
+    # via shapely
     # via streamlit
 openai==1.30.3
     # via burr
@@ -311,6 +350,8 @@ orjson==3.10.3
     # via langsmith
 packaging==23.2
     # via altair
+    # via google-cloud-aiplatform
+    # via google-cloud-bigquery
     # via huggingface-hub
     # via langchain-core
     # via marshmallow
@@ -337,11 +378,16 @@ pluggy==1.5.0
 proto-plus==1.23.0
     # via google-ai-generativelanguage
     # via google-api-core
+    # via google-cloud-aiplatform
+    # via google-cloud-resource-manager
 protobuf==4.25.3
     # via google-ai-generativelanguage
     # via google-api-core
+    # via google-cloud-aiplatform
+    # via google-cloud-resource-manager
     # via google-generativeai
     # via googleapis-common-protos
+    # via grpc-google-iam-v1
     # via grpcio-status
     # via proto-plus
     # via streamlit
@@ -358,6 +404,7 @@ pydantic==2.7.1
     # via fastapi
     # via fastapi-pagination
     # via fireworks-ai
+    # via google-cloud-aiplatform
     # via google-generativeai
     # via groq
     # via langchain
@@ -384,6 +431,7 @@ pytest-mock==3.14.0
 python-dateutil==2.9.0.post0
     # via botocore
     # via dateparser
+    # via google-cloud-bigquery
     # via htmldate
     # via matplotlib
     # via pandas
@@ -411,6 +459,8 @@ requests==2.32.2
     # via burr
     # via free-proxy
     # via google-api-core
+    # via google-cloud-bigquery
+    # via google-cloud-storage
     # via huggingface-hub
     # via langchain
     # via langchain-community
@@ -433,6 +483,8 @@ semchunk==1.0.1
     # via scrapegraphai
 sf-hamilton==1.63.0
     # via burr
+shapely==2.0.4
+    # via google-cloud-aiplatform
 shellingham==1.5.4
     # via typer
 six==1.16.0
