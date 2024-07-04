@@ -22,7 +22,6 @@ altair==5.3.0
 annotated-types==0.7.0
     # via pydantic
 anthropic==0.30.0
-
     # via langchain-anthropic
 anyio==4.4.0
     # via anthropic
@@ -31,6 +30,8 @@ anyio==4.4.0
     # via openai
     # via starlette
     # via watchfiles
+astroid==3.2.2
+    # via pylint
 async-timeout==4.0.3
     # via aiohttp
     # via langchain
@@ -84,6 +85,8 @@ dateparser==1.2.0
     # via htmldate
 defusedxml==0.7.1
     # via langchain-anthropic
+dill==0.3.8
+    # via pylint
 distro==1.9.0
     # via anthropic
     # via groq
@@ -93,7 +96,6 @@ dnspython==2.6.1
 docutils==0.19
     # via sphinx
 email-validator==2.2.0
-
     # via fastapi
 exceptiongroup==1.2.1
     # via anyio
@@ -107,7 +109,6 @@ fastapi-cli==0.0.4
 fastapi-pagination==0.12.25
     # via burr
 filelock==3.15.4
-
     # via huggingface-hub
 fonttools==4.53.0
     # via matplotlib
@@ -117,7 +118,6 @@ frozenlist==1.4.1
     # via aiohttp
     # via aiosignal
 fsspec==2024.6.1
-
     # via huggingface-hub
 furo==2024.5.6
     # via scrapegraphai
@@ -153,6 +153,7 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 groq==0.9.0
     # via langchain-groq
 grpcio==1.64.1
@@ -195,6 +196,8 @@ importlib-resources==6.4.0
     # via matplotlib
 iniconfig==2.0.0
     # via pytest
+isort==5.13.2
+    # via pylint
 jinja2==3.1.4
     # via altair
     # via burr
@@ -266,6 +269,8 @@ marshmallow==3.21.3
     # via dataclasses-json
 matplotlib==3.9.0
     # via burr
+mccabe==0.7.0
+    # via pylint
 mdurl==0.1.2
     # via markdown-it-py
 minify-html==0.15.0
@@ -311,6 +316,8 @@ pandas==2.2.2
 pillow==10.3.0
     # via matplotlib
     # via streamlit
+platformdirs==4.2.2
+    # via pylint
 playwright==1.43.0
     # via scrapegraphai
     # via undetected-playwright
@@ -355,6 +362,7 @@ pygments==2.18.0
     # via furo
     # via rich
     # via sphinx
+pylint==3.2.5
 pyparsing==3.1.2
     # via httplib2
     # via matplotlib
@@ -468,7 +476,10 @@ tokenizers==0.19.1
 toml==0.10.2
     # via streamlit
 tomli==2.0.1
+    # via pylint
     # via pytest
+tomlkit==0.12.5
+    # via pylint
 toolz==0.12.1
     # via altair
 tornado==6.4.1
@@ -487,6 +498,7 @@ typing-extensions==4.12.2
     # via altair
     # via anthropic
     # via anyio
+    # via astroid
     # via fastapi
     # via fastapi-pagination
     # via google-generativeai
@@ -496,6 +508,7 @@ typing-extensions==4.12.2
     # via pydantic
     # via pydantic-core
     # via pyee
+    # via pylint
     # via sf-hamilton
     # via sqlalchemy
     # via starlette
@@ -517,13 +530,11 @@ undetected-playwright==0.3.0
 uritemplate==4.1.1
     # via google-api-python-client
 urllib3==1.26.19
-
     # via botocore
     # via courlan
     # via htmldate
     # via requests
     # via trafilatura
-
 uvicorn==0.30.1
     # via burr
     # via fastapi

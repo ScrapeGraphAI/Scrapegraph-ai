@@ -84,4 +84,11 @@ dev-dependencies = [
     "pytest-mock==3.14.0",
     "-e file:.[burr]",
     "-e file:.[docs]",
+    "pylint>=3.2.5",
 ]
+
+[tool.rye.scripts]
+pylint-local = "pylint scrapegraphai/**/*.py"
+pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
+pylint-score-ci = "pylint --disable=all --enable=metrics --output-format=text scrapegraphai/**/.py"
+
