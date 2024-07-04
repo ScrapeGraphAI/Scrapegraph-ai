@@ -46,10 +46,12 @@ class GenerateAnswerOmniNode(BaseNode):
         self.llm_model = node_config["llm_model"]
         if isinstance(node_config["llm_model"], Ollama):
             self.llm_model.format="json"
-            
+
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+
+        self.additional_info = node_config.get("additional_info")
 
     def execute(self, state: dict) -> dict:
         """
@@ -85,6 +87,14 @@ class GenerateAnswerOmniNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
+        template_no_chunk_omni_prompt = template_no_chunk_omni
+        template_chunks_omni_prompt = template_chunks_omni
+        template_merge_omni_prompt= template_merge_omni
+
+        if self.additional_info is not None:
+            template_no_chunk_omni_prompt = self.additional_info + template_no_chunk_omni_prompt
+            template_chunks_omni_prompt = self.additional_info + template_chunks_omni_prompt
+            template_merge_omni_prompt = self.additional_info + template_merge_omni_prompt
 
         format_instructions = output_parser.get_format_instructions()
 
@@ -97,7 +107,7 @@ class GenerateAnswerOmniNode(BaseNode):
         ):
             if len(doc) == 1:
                 prompt = PromptTemplate(
-                    template=template_no_chunk_omni,
+                    template=template_no_chunk_omni_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk.page_content,
@@ -110,7 +120,7 @@ class GenerateAnswerOmniNode(BaseNode):
                 answer = chain.invoke({"question": user_prompt})
             else:
                 prompt = PromptTemplate(
-                    template=template_chunks_omni,
+                    template=template_chunks_omni_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk.page_content,
@@ -130,7 +140,7 @@ class GenerateAnswerOmniNode(BaseNode):
             answer = map_chain.invoke({"question": user_prompt})
             # Merge the answers from the chunks
             merge_prompt = PromptTemplate(
-                template=template_merge_omni,
+                template=template_merge_omni_prompt,
                 input_variables=["context", "question"],
                 partial_variables={
                     "format_instructions": format_instructions,

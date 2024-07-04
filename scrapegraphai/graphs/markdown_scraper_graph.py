@@ -76,6 +76,7 @@ class MDScraperGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "additional_info": self.config.get("additional_info"),
                 "schema": self.schema,
             }
         )
