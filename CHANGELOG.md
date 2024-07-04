@@ -1,3 +1,16 @@
+## [1.8.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.8.0...v1.8.1-beta.1) (2024-07-04)
+
+
+### Bug Fixes
+
+* add test ([3a537ee](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3a537eec6fef1743924a9aa5cef0ba2f8d44bf11))
+
+
+### Docs
+
+* **roadmap:** fix urls ([14faba4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/14faba4f00dd9f947f8dc5e0b51be49ea684179f))
+* **roadmap:** next steps ([3e644f4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e644f498f05eb505fbd4e94b144c81567569aaa))
+
 ## [1.8.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.5...v1.8.0) (2024-06-30)
 
 
