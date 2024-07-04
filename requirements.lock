@@ -23,8 +23,13 @@ anyio==4.3.0
     # via groq
     # via httpx
     # via openai
+async-timeout==4.0.3
+    # via aiohttp
+    # via langchain
 attrs==23.2.0
     # via aiohttp
+babel==2.15.0
+    # via courlan
 beautifulsoup4==4.12.3
     # via google
     # via scrapegraphai
@@ -39,17 +44,26 @@ certifi==2024.2.2
     # via httpcore
     # via httpx
     # via requests
+    # via trafilatura
 charset-normalizer==3.3.2
+    # via htmldate
     # via requests
+    # via trafilatura
+courlan==1.2.0
+    # via trafilatura
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
+dateparser==1.2.0
+    # via htmldate
 defusedxml==0.7.1
     # via langchain-anthropic
 distro==1.9.0
     # via anthropic
     # via groq
     # via openai
+exceptiongroup==1.2.1
+    # via anyio
 faiss-cpu==1.8.0
     # via scrapegraphai
 filelock==3.14.0
@@ -90,6 +104,7 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 groq==0.8.0
     # via langchain-groq
 grpcio==1.64.0
@@ -101,6 +116,8 @@ h11==0.14.0
     # via httpcore
 html2text==2024.2.26
     # via scrapegraphai
+htmldate==1.8.1
+    # via trafilatura
 httpcore==1.0.5
     # via httpx
 httplib2==0.22.0
@@ -130,6 +147,8 @@ jsonpatch==1.33
     # via langchain-core
 jsonpointer==2.4
     # via jsonpatch
+justext==3.0.1
+    # via trafilatura
 langchain==0.1.15
     # via scrapegraphai
 langchain-anthropic==0.1.11
@@ -164,6 +183,12 @@ langsmith==0.1.63
     # via langchain-core
 lxml==5.2.2
     # via free-proxy
+    # via htmldate
+    # via justext
+    # via lxml-html-clean
+    # via trafilatura
+lxml-html-clean==0.1.1
+    # via lxml
 marshmallow==3.21.2
     # via dataclasses-json
 minify-html==0.15.0
@@ -227,10 +252,13 @@ pyparsing==3.1.2
     # via httplib2
 python-dateutil==2.9.0.post0
     # via botocore
+    # via dateparser
+    # via htmldate
     # via pandas
 python-dotenv==1.0.1
     # via scrapegraphai
 pytz==2024.1
+    # via dateparser
     # via pandas
 pyyaml==6.0.1
     # via huggingface-hub
@@ -238,6 +266,7 @@ pyyaml==6.0.1
     # via langchain-community
     # via langchain-core
 regex==2024.5.15
+    # via dateparser
     # via tiktoken
 requests==2.32.2
     # via free-proxy
@@ -274,6 +303,8 @@ tenacity==8.3.0
 tiktoken==0.6.0
     # via langchain-openai
     # via scrapegraphai
+tld==0.13
+    # via courlan
 tokenizers==0.19.1
     # via anthropic
 tqdm==4.66.4
@@ -282,8 +313,11 @@ tqdm==4.66.4
     # via openai
     # via scrapegraphai
     # via semchunk
+trafilatura==1.10.0
+    # via scrapegraphai
 typing-extensions==4.12.0
     # via anthropic
+    # via anyio
     # via google-generativeai
     # via groq
     # via huggingface-hub
@@ -297,12 +331,17 @@ typing-inspect==0.9.0
     # via dataclasses-json
 tzdata==2024.1
     # via pandas
+tzlocal==5.2
+    # via dateparser
 undetected-playwright==0.3.0
     # via scrapegraphai
 uritemplate==4.1.1
     # via google-api-python-client
 urllib3==1.26.18
     # via botocore
+    # via courlan
+    # via htmldate
     # via requests
+    # via trafilatura
 yarl==1.9.4
     # via aiohttp
