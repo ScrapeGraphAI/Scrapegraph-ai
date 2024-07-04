@@ -4,7 +4,7 @@ services:
     image: ollama/ollama
     container_name: ollama
     ports:
-      - "5000:5000"
+      - "11434:11434"
     volumes:
       - ollama_volume:/root/.ollama
     restart: unless-stopped
