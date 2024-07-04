@@ -102,11 +102,15 @@ class GenerateAnswerCSVNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
-   
+
+        template_no_chunks_csv_prompt = template_no_chunks_csv
+        template_chunks_csv_prompt = template_chunks_csv
+        template_merge_csv_prompt  = template_merge_csv
+
         if self.additional_info is not None:
-            template_no_chunks_csv += self.additional_info
-            template_chunks_csv += self.additional_info
-            template_merge_csv += self.additional_info
+            template_no_chunks_csv_prompt = self.additional_info + template_no_chunks_csv
+            template_chunks_csv_prompt = self.additional_info + template_chunks_csv
+            template_merge_csv_prompt = self.additional_info + template_merge_csv
 
         format_instructions = output_parser.get_format_instructions()
 
@@ -118,7 +122,7 @@ class GenerateAnswerCSVNode(BaseNode):
         ):
             if len(doc) == 1:
                 prompt = PromptTemplate(
-                    template=template_no_chunks_csv,
+                    template=template_no_chunks_csv_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk.page_content,
@@ -130,7 +134,7 @@ class GenerateAnswerCSVNode(BaseNode):
                 answer = chain.invoke({"question": user_prompt})
             else:
                 prompt = PromptTemplate(
-                    template=template_chunks_csv,
+                    template=template_chunks_csv_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk.page_content,
@@ -150,7 +154,7 @@ class GenerateAnswerCSVNode(BaseNode):
             answer = map_chain.invoke({"question": user_prompt})
             # Merge the answers from the chunks
             merge_prompt = PromptTemplate(
-                template=template_merge_csv,
+                template=template_merge_csv_prompt,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )

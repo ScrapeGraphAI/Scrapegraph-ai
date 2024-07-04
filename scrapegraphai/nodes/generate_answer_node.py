@@ -100,9 +100,9 @@ class GenerateAnswerNode(BaseNode):
             template_merge_prompt = template_merge
 
         if self.additional_info is not None:
-            template_no_chunks_prompt += self.additional_info
-            template_chunks_prompt += self.additional_info
-            template_merge_prompt += self.additional_info
+            template_no_chunks_prompt = self.additional_info + template_no_chunks_prompt
+            template_chunks_prompt = self.additional_info + template_chunks_prompt
+            template_merge_prompt = self.additional_info + template_merge_prompt
 
         chains_dict = {}
 

@@ -103,11 +103,14 @@ class GenerateAnswerPDFNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
-  
+        template_no_chunks_pdf_prompt = template_no_chunks_pdf
+        template_chunks_pdf_prompt = template_chunks_pdf
+        template_merge_pdf_prompt = template_merge_pdf
+
         if self.additional_info is not None:
-            template_no_chunks_pdf += self.additional_info
-            template_chunks_pdf += self.additional_info
-            template_merge_pdf += self.additional_info
+            template_no_chunks_pdf_prompt = self.additional_info + template_no_chunks_pdf_prompt
+            template_chunks_pdf_prompt = self.additional_info + template_chunks_pdf_prompt
+            template_merge_pdf_prompt = self.additional_info + template_merge_pdf_prompt
 
         format_instructions = output_parser.get_format_instructions()
 
@@ -118,7 +121,7 @@ class GenerateAnswerPDFNode(BaseNode):
         ):
             if len(doc) == 1:
                 prompt = PromptTemplate(
-                    template=template_no_chunks_pdf,
+                    template=template_no_chunks_pdf_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context":chunk.page_content,
@@ -130,7 +133,7 @@ class GenerateAnswerPDFNode(BaseNode):
                 
             else:
                 prompt = PromptTemplate(
-                    template=template_chunks_pdf,
+                    template=template_chunks_pdf_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context":chunk,
@@ -150,7 +153,7 @@ class GenerateAnswerPDFNode(BaseNode):
             answer = map_chain.invoke({"question": user_prompt})
             # Merge the answers from the chunks
             merge_prompt = PromptTemplate(
-                template=template_merge_pdf,
+                template=template_merge_pdf_prompt,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )
