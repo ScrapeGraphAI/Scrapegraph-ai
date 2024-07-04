@@ -29,6 +29,7 @@ Additionally, the following properties are collected:
        "source_type": source_type,
        "execution_time": execution_time,
        "error_node": error_node_name,
+       "total_tokens": total_tokens,
    }
 
 For more details, refer to the `telemetry.py <https://github.com/VinciGit00/Scrapegraph-ai/blob/main/scrapegraphai/telemetry/telemetry.py>`_ module.

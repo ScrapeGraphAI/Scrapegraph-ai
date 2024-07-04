@@ -2,22 +2,15 @@
 GenerateAnswerNode Module
 """
 
-# Imports from standard library
 from typing import List, Optional
-
-# Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
-
-
 from ..utils.logging import get_logger
-from ..models import Ollama
-# Imports from the library
+from ..models import Ollama, OpenAI
 from .base_node import BaseNode
-from ..helpers import template_chunks, template_no_chunks, template_merge
-
+from ..helpers import template_chunks, template_no_chunks, template_merge, template_chunks_md, template_no_chunks_md, template_merge_md
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -45,7 +38,7 @@ class GenerateAnswerNode(BaseNode):
         node_name: str = "GenerateAnswer",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
-      
+
         self.llm_model = node_config["llm_model"]
 
         if isinstance(node_config["llm_model"], Ollama):
@@ -54,6 +47,13 @@ class GenerateAnswerNode(BaseNode):
         self.verbose = (
             True if node_config is None else node_config.get("verbose", False)
         )
+        self.force = (
+            False if node_config is None else node_config.get("force", False)
+        )
+        self.script_creator = (
+            False if node_config is None else node_config.get("script_creator", False)
+        )
+
 
     def execute(self, state: dict) -> dict:
         """
@@ -89,22 +89,31 @@ class GenerateAnswerNode(BaseNode):
 
         format_instructions = output_parser.get_format_instructions()
 
+        if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator:
+            template_no_chunks_prompt = template_no_chunks_md
+            template_chunks_prompt = template_chunks_md
+            template_merge_prompt = template_merge_md
+        else:
+            template_no_chunks_prompt = template_no_chunks
+            template_chunks_prompt = template_chunks
+            template_merge_prompt = template_merge
+
         chains_dict = {}
 
         # Use tqdm to add progress bar
         for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
             if len(doc) == 1:
                 prompt = PromptTemplate(
-                    template=template_no_chunks,
+                    template=template_no_chunks_prompt,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                        "format_instructions": format_instructions})
                 chain =  prompt | self.llm_model | output_parser
                 answer = chain.invoke({"question": user_prompt})
-                
+
             else:
                 prompt = PromptTemplate(
-                    template=template_chunks,
+                    template=template_chunks_prompt,
                     input_variables=["question"],
                     partial_variables={"context": chunk.page_content,
                                         "chunk_id": i + 1,
@@ -121,7 +130,7 @@ class GenerateAnswerNode(BaseNode):
             answer = map_chain.invoke({"question": user_prompt})
             # Merge the answers from the chunks
             merge_prompt = PromptTemplate(
-                template=template_merge,
+                template = template_merge_prompt,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )

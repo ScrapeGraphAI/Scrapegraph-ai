@@ -2,23 +2,34 @@
 Basic example of scraping pipeline using SmartScraper
 """
 
-import os, json
+import os
+from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
+
+load_dotenv()
 
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
+openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
-    "llm": {
-        "api_key": "s",
-        "model": "gpt-3.5-turbo",
+  "llm": {
+        "model": "ollama/llama3",
+        "temperature": 0,
+        # "format": "json",  # Ollama needs the format to be specified explicitly
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
-    "verbose": True,
-    "headless": False,
+    "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "force": True,
+    "caching": True
 }
 
 # ************************************************
@@ -26,13 +37,14 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Extract me the python code inside the page",
-    source="https://www.exploit-db.com/exploits/51447",
+    prompt="List me all the projects with their description.",
+    # also accepts a string with the already downloaded HTML code
+    source="https://perinim.github.io/projects/",
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
 
 # ************************************************
 # Get graph execution info

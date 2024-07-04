@@ -46,8 +46,6 @@ class PdfScraperMultiGraph(AbstractGraph):
 
     def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
 
-        self.max_results = config.get("max_results", 3)
-
         if all(isinstance(value, str) for value in config.values()):
             self.copy_config = copy(config)
         else:

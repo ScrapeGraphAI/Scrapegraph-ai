@@ -1,26 +1,15 @@
-"""
-SmartScraperGraph Module
-"""
-
 from typing import Optional
 import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
+from ..nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode
 
-from ..nodes import (
-    FetchNode,
-    ParseNode,
-    RAGNode,
-    GenerateAnswerNode
-)
-
-
-class SmartScraperGraph(AbstractGraph):
+class MDScraperGraph(AbstractGraph):
     """
-    SmartScraper is a scraping pipeline that automates the process of 
-    extracting information from web pages
-    using a natural language model to interpret and answer prompts.
+    MDScraperGraph is a scraping pipeline that automates the process of 
+    extracting information from web pages using a natural language model to interpret 
+    and answer prompts.
 
     Attributes:
         prompt (str): The prompt for the graph.
@@ -28,8 +17,7 @@ class SmartScraperGraph(AbstractGraph):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, 
-        configured for generating embeddings.
+        embedder_model: An instance of an embedding model client, configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
 
@@ -40,19 +28,18 @@ class SmartScraperGraph(AbstractGraph):
         schema (BaseModel): The schema for the graph output.
 
     Example:
-        >>> smart_scraper = SmartScraperGraph(
+        >>> smart_scraper = MDScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
         ...     {"llm": {"model": "gpt-3.5-turbo"}}
         ... )
         >>> result = smart_scraper.run()
-        )
     """
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
         super().__init__(prompt, config, source, schema)
 
-        self.input_key = "url" if source.startswith("http") else "local_dir"
+        self.input_key = "md" if source.endswith("md") else "md_dir"
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -62,12 +49,9 @@ class SmartScraperGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow.
         """
         fetch_node = FetchNode(
-            input="url| local_dir",
-            output=["doc", "link_urls", "img_urls"],
+            input="md | md_dir",
+            output=["doc"],
             node_config={
-                "llm_model": self.llm_model,
-                "force": self.config.get("force", False),
-                "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
             }
         )
@@ -75,6 +59,7 @@ class SmartScraperGraph(AbstractGraph):
             input="doc",
             output=["parsed_doc"],
             node_config={
+                "parse_html": False,
                 "chunk_size": self.model_token
             }
         )
