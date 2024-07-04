@@ -62,9 +62,12 @@ class SmartScraperGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow.
         """
         fetch_node = FetchNode(
-            input="url | local_dir",
+            input="url| local_dir",
             output=["doc", "link_urls", "img_urls"],
             node_config={
+                "llm_model": self.llm_model,
+                "force": self.config.get("force", False),
+                "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
             }
         )
