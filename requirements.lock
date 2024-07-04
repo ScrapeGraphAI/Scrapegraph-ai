@@ -104,7 +104,6 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 groq==0.8.0
     # via langchain-groq
 grpcio==1.64.0
