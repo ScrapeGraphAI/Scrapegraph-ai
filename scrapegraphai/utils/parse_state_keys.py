@@ -101,18 +101,3 @@ def parse_expression(expression, state: dict) -> list:
             final_result.append(key)
 
     return final_result
-
-
-EXPRESSION = "user_input & (relevant_chunks | parsed_document | document)"
-state = {
-    "user_input": None,
-    "document": None,
-    "parsed_document": None,
-    "relevant_chunks": None,
-}
-
-try:
-    result = parse_expression(EXPRESSION, state)
-    print("Matched keys:", result)
-except ValueError as e:
-    print("Error:", e)

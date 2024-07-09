@@ -1,3 +1,41 @@
+## [1.9.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.1...v1.9.0-beta.2) (2024-07-05)
+
+
+### Bug Fixes
+
+* fix pyproject.toml ([7570bf8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7570bf8294e49bc54ec9e296aaadb763873390ca))
+
+## [1.9.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.8.1-beta.1...v1.9.0-beta.1) (2024-07-04)
+
+
+### Features
+
+* add fireworks integration ([df0e310](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/df0e3108299071b849d7e055bd11d72764d24f08))
+* add integration for infos ([3bf5f57](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3bf5f570a8f8e1b037a7ad3c9f583261a1536421))
+* add integrations for markdown files ([2804434](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2804434a9ee12c52ae8956a88b1778a4dd3ec32f))
+* add vertexai integration ([119514b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/119514bdfc2a16dfb8918b0c34ae7cc43a01384c))
+* improve md prompt recognition ([5fe694b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5fe694b6b4545a5091d16110318b992acfca4f58))
+
+
+### chore
+
+* **Docker:** fix port number ([afeb81f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/afeb81f77a884799192d79dcac85666190fb1c9d))
+* **CI:** fix pylint workflow ([583c321](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/583c32106e827f50235d8fc69511652fd4b07a35))
+* **rye:** rebuild lockfiles ([27c2dd2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/27c2dd23517a7e4b14fafd00320a8b81f73145dc))
+
+## [1.8.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.8.0...v1.8.1-beta.1) (2024-07-04)
+
+
+### Bug Fixes
+
+* add test ([3a537ee](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3a537eec6fef1743924a9aa5cef0ba2f8d44bf11))
+
+
+### Docs
+
+* **roadmap:** fix urls ([14faba4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/14faba4f00dd9f947f8dc5e0b51be49ea684179f))
+* **roadmap:** next steps ([3e644f4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e644f498f05eb505fbd4e94b144c81567569aaa))
+
 ## [1.8.0](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.7.5...v1.8.0) (2024-06-30)
 
 

@@ -1,7 +1,3 @@
-"""
-Models token
-"""
-
 models_tokens = {
     "openai": {
         "gpt-3.5-turbo-0125": 16385,
@@ -31,8 +27,8 @@ models_tokens = {
     },
     "gemini": {
         "gemini-pro": 128000,
-        "gemini-1.5-flash-latest":128000,
-        "gemini-1.5-pro-latest":128000,
+        "gemini-1.5-flash-latest": 128000,
+        "gemini-1.5-pro-latest": 128000,
         "models/embedding-001": 2048
     },
     "ollama": { "command-r": 12800, 
@@ -88,6 +84,11 @@ models_tokens = {
         "claude-3-haiku-20240307": 200000,
         "claude-3-5-sonnet-20240620": 200000
     },
+    "vertexai": {
+        "gemini-1.5-flash": 128000,
+        "gemini-1.5-pro": 128000,
+        "gemini-1.0-pro": 128000
+    },
     "bedrock": {
         "anthropic.claude-3-haiku-20240307-v1:0": 200000,
         "anthropic.claude-3-sonnet-20240229-v1:0": 200000,
@@ -102,9 +103,8 @@ models_tokens = {
         "mistral.mistral-7b-instruct-v0:2": 32768,
         "mistral.mixtral-8x7b-instruct-v0:1": 32768,
         "mistral.mistral-large-2402-v1:0": 32768,
-		# Embedding models
-		"amazon.titan-embed-text-v1": 8000,
-		"amazon.titan-embed-text-v2:0": 8000,
+        "amazon.titan-embed-text-v1": 8000,
+        "amazon.titan-embed-text-v2:0": 8000,
         "cohere.embed-english-v3": 512,
         "cohere.embed-multilingual-v3": 512
     },
@@ -156,6 +156,11 @@ models_tokens = {
         "ernie-bot-2-base-zh": 4096,
         "ernie-bot-2-base-en": 4096,
         "ernie-bot-2-base-en-zh": 4096,
-        "ernie-bot-2-base-zh-en": 4096,
-    }
+        "ernie-bot-2-base-zh-en": 4096
+    },
+    "fireworks": {
+        "llama-v2-7b": 4096,
+        "mixtral-8x7b-instruct": 4096,
+        "nomic-ai/nomic-embed-text-v1.5": 8192        
+    },
 }

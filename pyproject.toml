@@ -2,7 +2,7 @@
 name = "scrapegraphai"
 
 
-version = "1.8.0"
+version = "1.9.0b2"
 
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
@@ -12,9 +12,10 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 dependencies = [
-    "langchain==0.1.15",
-    "langchain-openai==0.1.6",
-    "langchain-google-genai==1.0.3",
+    "langchain", 
+    "langchain-google-genai",
+    "langchain-google-vertexai",
+    "langchain-openai",
     "langchain-groq==0.1.3",
     "langchain-aws==0.1.3",
     "langchain-anthropic==0.1.11",
@@ -32,6 +33,9 @@ dependencies = [
     "google==3.0.0",
     "undetected-playwright==0.3.0",
     "semchunk==1.0.1",
+    "html2text==2024.2.26",
+    "trafilatura==1.10.0",
+    "langchain-fireworks==0.1.3"
 ]
 
 license = "MIT"
@@ -81,4 +85,9 @@ dev-dependencies = [
     "pytest-mock==3.14.0",
     "-e file:.[burr]",
     "-e file:.[docs]",
+    "pylint>=3.2.5",
 ]
+
+[tool.rye.scripts]
+pylint-local = "pylint scrapegraphai/**/*.py"
+pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
