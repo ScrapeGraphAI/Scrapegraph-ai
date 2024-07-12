@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0...v1.9.1) (2024-07-12)
+
+
+### Bug Fixes
+
+* solve a burr integration ([881290b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/881290b5066b39c505532656671fbf65f8fc312c))
+
 ## [1.9.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.8.0...v1.9.0) (2024-07-09)
 
 
