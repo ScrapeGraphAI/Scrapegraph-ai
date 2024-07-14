@@ -1,3 +1,16 @@
+## [1.9.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.3...v1.9.0-beta.4) (2024-07-14)
+
+
+### Features
+
+* add searchngx integration ([5c92186](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c9218608140bf694fbfd96aa90276bc438bb475))
+
+
+### chore
+
+* correct search engine name ([7ba2f6a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7ba2f6ae0b9d2e9336e973e1f57ab8355c739e27))
+* remove unused import ([fd1b7cb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fd1b7cb24a7c252277607abde35826e3c58e34ef))
+
 ## [1.9.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.2...v1.9.0-beta.3) (2024-07-12)
 
 
