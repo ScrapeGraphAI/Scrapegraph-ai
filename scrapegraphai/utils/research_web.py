@@ -11,9 +11,9 @@ def search_on_web(query: str, search_engine: str = "Google", max_results: int = 
 
     Args:
         query (str): The search query to find on the internet.
-        search_engine (str, optional): Specifies the search engine to use, options include 'Google', 'DuckDuckGo', 'Bing', or 'SearcNGX'. Default is 'Google'.
+        search_engine (str, optional): Specifies the search engine to use, options include 'Google', 'DuckDuckGo', 'Bing', or 'SearXNG'. Default is 'Google'.
         max_results (int, optional): The maximum number of search results to return.
-        port (int, optional): The port number to use when searching with 'SearcNGX'. Default is 8080.
+        port (int, optional): The port number to use when searching with 'SearXNG'. Default is 8080.
 
     Returns:
         List[str]: A list of URLs as strings that are the search results.
@@ -53,7 +53,7 @@ def search_on_web(query: str, search_engine: str = "Google", max_results: int = 
             search_results.append(link)
         return search_results
     
-    elif search_engine.lower() == "searcngx":
+    elif search_engine.lower() == "searxng":
         url = f"http://localhost:{port}"
         params = {"q": query, "format": "json"}
     
@@ -66,4 +66,4 @@ def search_on_web(query: str, search_engine: str = "Google", max_results: int = 
         return limited_results
     
     else:
-        raise ValueError("The only search engines available are DuckDuckGo, Google, Bing, or SearcNGX")
+        raise ValueError("The only search engines available are DuckDuckGo, Google, Bing, or SearXNG")
