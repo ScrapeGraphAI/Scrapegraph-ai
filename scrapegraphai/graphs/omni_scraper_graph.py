@@ -12,7 +12,6 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     ImageToTextNode,
-    RAGNode,
     GenerateAnswerOmniNode
 )
 
@@ -89,14 +88,7 @@ class OmniScraperGraph(AbstractGraph):
                 "max_images": self.max_images
             }
         )
-        rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
-            output=["relevant_chunks"],
-            node_config={
-                "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model
-            }
-        )
+      
         generate_answer_omni_node = GenerateAnswerOmniNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc) & img_desc",
             output=["answer"],
@@ -112,14 +104,12 @@ class OmniScraperGraph(AbstractGraph):
                 fetch_node,
                 parse_node,
                 image_to_text_node,
-                rag_node,
                 generate_answer_omni_node,
             ],
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, image_to_text_node),
-                (image_to_text_node, rag_node),
-                (rag_node, generate_answer_omni_node)
+                (image_to_text_node, generate_answer_omni_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__
