@@ -125,7 +125,7 @@ class GenerateAnswerCSVNode(BaseNode):
                     template=template_no_chunks_csv_prompt,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context": chunk,
                         "format_instructions": format_instructions,
                     },
                 )
@@ -137,7 +137,7 @@ class GenerateAnswerCSVNode(BaseNode):
                     template=template_chunks_csv_prompt,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context": chunk,
                         "chunk_id": i + 1,
                         "format_instructions": format_instructions,
                     },

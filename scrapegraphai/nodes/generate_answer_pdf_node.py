@@ -124,7 +124,7 @@ class GenerateAnswerPDFNode(BaseNode):
                     template=template_no_chunks_pdf_prompt,
                     input_variables=["question"],
                     partial_variables={
-                        "context":chunk.page_content,
+                        "context":chunk,
                         "format_instructions": format_instructions,
                     },
                 )
