@@ -68,11 +68,8 @@ class SearchLinkNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
-        input_keys = self.get_input_keys(state)
 
-        user_prompt = state[input_keys[0]]
-        parsed_content_chunks = state[input_keys[1]]
+        parsed_content_chunks = state.get("doc")
         output_parser = JsonOutputParser()
 
         relevant_links = []
@@ -86,7 +83,8 @@ class SearchLinkNode(BaseNode):
         ):
             try:
                 # Primary approach: Regular expression to extract links
-                links = re.findall(r'(https?://\S+)', chunk.page_content)
+                links = re.findall(r'https?://[^\s"<>\]]+', str(chunk.page_content))
+
                 relevant_links += links
             except Exception as e:
                 # Fallback approach: Using the LLM to extract links
@@ -94,9 +92,6 @@ class SearchLinkNode(BaseNode):
                 prompt_relevant_links = """
                     You are a website scraper and you have just scraped the following content from a website.
                     Content: {content}
-                    
-                    You are now tasked with identifying all hyper links within the content that are potentially
-                    relevant to the user task: {user_prompt}
                     
                     Assume relevance broadly, including any links that might be related or potentially useful 
                     in relation to the task.
@@ -124,7 +119,7 @@ class SearchLinkNode(BaseNode):
                 )
                 merge_chain = merge_prompt | self.llm_model | output_parser
                 answer = merge_chain.invoke(
-                    {"content": chunk.page_content, "user_prompt": user_prompt}
+                    {"content": chunk.page_content}
                 )
                 relevant_links += answer
 
