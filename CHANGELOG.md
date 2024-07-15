@@ -1,3 +1,10 @@
+## [1.9.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.4...v1.9.0-beta.5) (2024-07-15)
+
+
+### Bug Fixes
+
+* search link node ([cf3ab55](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf3ab5564ae5c415c63d1771b32ea68f5169ca82))
+
 ## [1.9.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.3...v1.9.0-beta.4) (2024-07-14)
 
 
