@@ -41,7 +41,6 @@ attrs==23.2.0
     # via jsonschema
     # via referencing
 babel==2.15.0
-    # via courlan
     # via sphinx
 beautifulsoup4==4.12.3
     # via furo
@@ -63,11 +62,8 @@ certifi==2024.2.2
     # via httpcore
     # via httpx
     # via requests
-    # via trafilatura
 charset-normalizer==3.3.2
-    # via htmldate
     # via requests
-    # via trafilatura
 click==8.1.7
     # via burr
     # via streamlit
@@ -75,15 +71,11 @@ click==8.1.7
     # via uvicorn
 contourpy==1.2.1
     # via matplotlib
-courlan==1.2.0
-    # via trafilatura
 cycler==0.12.1
     # via matplotlib
 dataclasses-json==0.6.6
     # via langchain
     # via langchain-community
-dateparser==1.2.0
-    # via htmldate
 defusedxml==0.7.1
     # via langchain-anthropic
 dill==0.3.8
@@ -204,8 +196,6 @@ h11==0.14.0
     # via uvicorn
 html2text==2024.2.26
     # via scrapegraphai
-htmldate==1.8.1
-    # via trafilatura
 httpcore==1.0.5
     # via httpx
 httplib2==0.22.0
@@ -259,8 +249,6 @@ jsonschema==4.22.0
     # via altair
 jsonschema-specifications==2023.12.1
     # via jsonschema
-justext==3.0.1
-    # via trafilatura
 kiwisolver==1.4.5
     # via matplotlib
 langchain==0.1.15
@@ -302,12 +290,6 @@ loguru==0.7.2
     # via burr
 lxml==5.2.2
     # via free-proxy
-    # via htmldate
-    # via justext
-    # via lxml-html-clean
-    # via trafilatura
-lxml-html-clean==0.1.1
-    # via lxml
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.5
@@ -430,9 +412,7 @@ pytest==8.0.0
 pytest-mock==3.14.0
 python-dateutil==2.9.0.post0
     # via botocore
-    # via dateparser
     # via google-cloud-bigquery
-    # via htmldate
     # via matplotlib
     # via pandas
 python-dotenv==1.0.1
@@ -441,7 +421,6 @@ python-dotenv==1.0.1
 python-multipart==0.0.9
     # via fastapi
 pytz==2024.1
-    # via dateparser
     # via pandas
 pyyaml==6.0.1
     # via huggingface-hub
@@ -453,7 +432,6 @@ referencing==0.35.1
     # via jsonschema
     # via jsonschema-specifications
 regex==2024.5.15
-    # via dateparser
     # via tiktoken
 requests==2.32.2
     # via burr
@@ -534,8 +512,6 @@ tenacity==8.3.0
 tiktoken==0.6.0
     # via langchain-openai
     # via scrapegraphai
-tld==0.13
-    # via courlan
 tokenizers==0.19.1
     # via anthropic
 toml==0.10.2
@@ -555,8 +531,6 @@ tqdm==4.66.4
     # via openai
     # via scrapegraphai
     # via semchunk
-trafilatura==1.10.0
-    # via scrapegraphai
 typer==0.12.3
     # via fastapi-cli
 typing-extensions==4.12.0
@@ -586,8 +560,6 @@ typing-inspect==0.9.0
     # via sf-hamilton
 tzdata==2024.1
     # via pandas
-tzlocal==5.2
-    # via dateparser
 ujson==5.10.0
     # via fastapi
 undetected-playwright==0.3.0
@@ -596,10 +568,7 @@ uritemplate==4.1.1
     # via google-api-python-client
 urllib3==1.26.18
     # via botocore
-    # via courlan
-    # via htmldate
     # via requests
-    # via trafilatura
 uvicorn==0.29.0
     # via burr
     # via fastapi
