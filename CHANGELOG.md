@@ -1,3 +1,10 @@
+## [1.9.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.5...v1.9.0-beta.6) (2024-07-17)
+
+
+### Features
+
+* refactoring_to_md function ([602dd00](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/602dd00209ee1d72a1223fc4793759450921fcf9))
+
 ## [1.9.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.4...v1.9.0-beta.5) (2024-07-15)
 
 
