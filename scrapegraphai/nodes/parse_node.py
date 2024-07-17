@@ -50,48 +50,35 @@ class ParseNode(BaseNode):
 
         Args:
             state (dict): The current state of the graph. The input keys will be used to fetch the
-                            correct data from the state.
+                        correct data from the state.
 
         Returns:
             dict: The updated state with the output key containing the parsed content chunks.
 
         Raises:
-            KeyError: If the input keys are not found in the state, indicating that the
-                        necessary information for parsing the content is missing.
+            KeyError: If the input keys are not found in the state.
         """
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
+        # Fetch data using input keys
         input_keys = self.get_input_keys(state)
-
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
-        # Parse the document
         docs_transformed = input_data[0]
+
+        # Parse HTML if enabled
         if self.parse_html:
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
             docs_transformed = docs_transformed[0]
 
-            chunks = chunk(text=docs_transformed.page_content,
-                            chunk_size= self.node_config.get("chunk_size", 4096)-250,
-                            token_counter=lambda x: len(x.split()),
-                            memoize=False)
-        else:
-            docs_transformed = docs_transformed[0]
+        # Get text content
+        text_content = docs_transformed.page_content if type(docs_transformed) == Document else docs_transformed
 
-            if type(docs_transformed) == Document:
-                chunks = chunk(text=docs_transformed.page_content,
-                            chunk_size= self.node_config.get("chunk_size", 4096)-250,
-                            token_counter=lambda x: len(x.split()),
-                            memoize=False)
-            else:
+        # Chunk the text
+        chunk_size = self.node_config.get("chunk_size", 4096) - 250
+        chunks = chunk(text=text_content, chunk_size=chunk_size, token_counter=lambda x: len(x.split()), memoize=False)
 
-                chunks = chunk(text=docs_transformed,
-                                chunk_size= self.node_config.get("chunk_size", 4096)-250,
-                                token_counter=lambda x: len(x.split()),
-                                memoize=False)
-
+        # Update state with chunks
         state.update({self.output[0]: chunks})
 
         return state
