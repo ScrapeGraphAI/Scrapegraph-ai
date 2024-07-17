@@ -88,7 +88,6 @@ class BaseNode(ABC):
             param (dict): The dictionary to update node_config with.
             overwrite (bool): Flag indicating if the values of node_config should be overwritten if their value is not None.
         """
-        
         for key, val in params.items():
             if hasattr(self, key) and not overwrite:
                 continue

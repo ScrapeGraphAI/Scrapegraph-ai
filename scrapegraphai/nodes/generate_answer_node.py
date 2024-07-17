@@ -121,7 +121,7 @@ class GenerateAnswerNode(BaseNode):
                 answer = chain.invoke({"question": user_prompt})
                 break
 
-            prompt = PromptTemplate(
+                prompt = PromptTemplate(
                     template=template_chunks_prompt,
                     input_variables=["question"],
                     partial_variables={"context": chunk,
