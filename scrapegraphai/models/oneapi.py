@@ -1,5 +1,5 @@
 """ 
-OpenAI Module
+OneAPI Module
 """
 from langchain_openai import ChatOpenAI
 

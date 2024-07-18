@@ -1,5 +1,5 @@
 """ 
-bedrock configuration wrapper
+Bedrock Module
 """
 from langchain_aws import ChatBedrock
 
