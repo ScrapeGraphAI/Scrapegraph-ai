@@ -180,6 +180,7 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 groq==0.8.0
     # via langchain-groq
 grpc-google-iam-v1==0.13.1
@@ -509,7 +510,7 @@ tenacity==8.3.0
     # via langchain-community
     # via langchain-core
     # via streamlit
-tiktoken==0.6.0
+tiktoken==0.7.0
     # via langchain-openai
     # via scrapegraphai
 tokenizers==0.19.1
