@@ -24,7 +24,7 @@ dependencies = [
     "beautifulsoup4==4.12.3",
     "pandas==2.2.2",
     "python-dotenv==1.0.1",
-    "tiktoken==0.6.0",
+    "tiktoken==0.7",
     "tqdm==4.66.4",
     "graphviz==0.20.3",
     "minify-html==0.15.0",
