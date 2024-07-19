@@ -1,42 +1,27 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
-import os
-from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import SearchLinkGraph
 from scrapegraphai.utils import prettify_exec_info
-
-load_dotenv()
-
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-groq_key = os.getenv("GROQ_APIKEY")
-
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "api_key": "s",
+        "model": "gpt-3.5-turbo",
     },
-     "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
-    "headless": False
+    "verbose": True,
+    "headless": False,
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the SearchLinkGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description.",
-    # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects/",
+smart_scraper_graph = SearchLinkGraph(
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
