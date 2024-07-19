@@ -1,3 +1,10 @@
+## [1.10.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.1...v1.10.0-beta.2) (2024-07-19)
+
+
+### Features
+
+* add gpt4o omni ([431edb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/431edb7bb2504f4c1335c3ae3ce2f91867fa7222))
+
 ## [1.10.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.1...v1.10.0-beta.1) (2024-07-19)
 
 
