@@ -1,36 +1,4 @@
-## [1.9.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.5...v1.9.0-beta.6) (2024-07-17)
 
-
-### Features
-
-* refactoring_to_md function ([602dd00](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/602dd00209ee1d72a1223fc4793759450921fcf9))
-
-## [1.9.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.4...v1.9.0-beta.5) (2024-07-15)
-
-
-### Bug Fixes
-
-* search link node ([cf3ab55](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf3ab5564ae5c415c63d1771b32ea68f5169ca82))
-
-## [1.9.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.3...v1.9.0-beta.4) (2024-07-14)
-
-
-### Features
-
-* add searchngx integration ([5c92186](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c9218608140bf694fbfd96aa90276bc438bb475))
-
-
-### chore
-
-* correct search engine name ([7ba2f6a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7ba2f6ae0b9d2e9336e973e1f57ab8355c739e27))
-* remove unused import ([fd1b7cb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fd1b7cb24a7c252277607abde35826e3c58e34ef))
-
-## [1.9.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.2...v1.9.0-beta.3) (2024-07-12)
-
-
-### Bug Fixes
-
-* solve a burr integration ([881290b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/881290b5066b39c505532656671fbf65f8fc312c))
 
 ## [1.9.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0-beta.1...v1.9.0-beta.2) (2024-07-05)
 
