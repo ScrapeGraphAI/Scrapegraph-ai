@@ -102,7 +102,7 @@ class BurrBridge:
     def __init__(self, base_graph, burr_config):
         self.base_graph = base_graph
         self.burr_config = burr_config
-        self.project_name = burr_config.get("project_name", "scrapegraph: {}")
+        self.project_name = burr_config.get("project_name", "scrapegraph_project")
         self.app_instance_id = burr_config.get("app_instance_id", "default-instance")
         self.burr_inputs = burr_config.get("inputs", {})
         self.burr_app = None
