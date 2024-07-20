@@ -27,8 +27,13 @@ Additionally, the following properties are collected:
        "llm_model": llm_model_name,
        "embedder_model": embedder_model_name,
        "source_type": source_type,
+       "source": source,
        "execution_time": execution_time,
+       "prompt": prompt,
+       "schema": schema,
        "error_node": error_node_name,
+       "exception": exception,
+       "response": response,
        "total_tokens": total_tokens,
    }
 

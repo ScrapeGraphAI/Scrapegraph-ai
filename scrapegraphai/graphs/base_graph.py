@@ -106,18 +106,32 @@ class BaseGraph:
         source_type = None
         llm_model = None
         embedder_model = None
+        source = []
+        prompt = None
+        schema = None
 
         while current_node_name:
             curr_time = time.time()
             current_node = next(node for node in self.nodes if node.node_name == current_node_name)
 
+            
             # check if there is a "source" key in the node config
             if current_node.__class__.__name__ == "FetchNode":
                 # get the second key name of the state dictionary
                 source_type = list(state.keys())[1]
+                if state.get("user_prompt", None):
+                    prompt = state["user_prompt"] if type(state["user_prompt"]) == str else None
                 # quick fix for local_dir source type
                 if source_type == "local_dir":
                     source_type = "html_dir"
+                elif source_type == "url":
+                    if type(state[source_type]) == list:
+                        # iterate through the list of urls and see if they are strings
+                        for url in state[source_type]:
+                            if type(url) == str:
+                                source.append(url)
+                    elif type(state[source_type]) == str:
+                        source.append(state[source_type])
 
             # check if there is an "llm_model" variable in the class
             if hasattr(current_node, "llm_model") and llm_model is None:
@@ -135,6 +149,16 @@ class BaseGraph:
                 elif hasattr(embedder_model, "model"):
                     embedder_model = embedder_model.model
 
+            if hasattr(current_node, "node_config"):
+                if type(current_node.node_config) is dict:
+                    if current_node.node_config.get("schema", None) and schema is None:
+                        if type(current_node.node_config["schema"]) is not dict:
+                            # convert to dict
+                            try:
+                                schema = current_node.node_config["schema"].schema()
+                            except Exception as e:
+                                schema = None
+
             with get_openai_callback() as cb:
                 try:
                     result = current_node.execute(state)
@@ -144,11 +168,15 @@ class BaseGraph:
                     graph_execution_time = time.time() - start_time
                     log_graph_execution(
                         graph_name=self.graph_name,
+                        source=source,
+                        prompt=prompt,
+                        schema=schema,
                         llm_model=llm_model,
                         embedder_model=embedder_model,
                         source_type=source_type,
                         execution_time=graph_execution_time,
-                        error_node=error_node
+                        error_node=error_node,
+                        exception=str(e)
                     )
                     raise e
                 node_exec_time = time.time() - curr_time
@@ -191,11 +219,16 @@ class BaseGraph:
 
         # Log the graph execution telemetry
         graph_execution_time = time.time() - start_time
+        response = state.get("answer", None) if source_type == "url" else None
         log_graph_execution(
             graph_name=self.graph_name,
+            source=source,
+            prompt=prompt,
+            schema=schema,
             llm_model=llm_model,
             embedder_model=embedder_model,
             source_type=source_type,
+            response=response,
             execution_time=graph_execution_time,
             total_tokens=cb_total["total_tokens"] if cb_total["total_tokens"] > 0 else None,
         )

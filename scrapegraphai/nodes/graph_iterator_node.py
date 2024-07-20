@@ -126,7 +126,8 @@ class GraphIteratorNode(BaseNode):
         for url in urls:
             instance = copy.copy(graph_instance)
             instance.source = url
-
+            if url.startswith("http"):
+                instance.input_key = "url"
             participants.append(instance)
 
         futures = [_async_run(graph) for graph in participants]
