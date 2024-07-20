@@ -1,5 +1,5 @@
 """ 
-Ollama Module
+Ernie Module
 """
 from langchain_community.chat_models import ErnieBotChat
 

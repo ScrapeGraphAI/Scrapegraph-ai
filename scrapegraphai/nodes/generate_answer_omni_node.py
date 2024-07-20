@@ -110,7 +110,7 @@ class GenerateAnswerOmniNode(BaseNode):
                     template=template_no_chunk_omni_prompt,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context": chunk,
                         "format_instructions": format_instructions,
                         "img_desc": imag_desc,
                     },
@@ -123,7 +123,7 @@ class GenerateAnswerOmniNode(BaseNode):
                     template=template_chunks_omni_prompt,
                     input_variables=["question"],
                     partial_variables={
-                        "context": chunk.page_content,
+                        "context": chunk,
                         "chunk_id": i + 1,
                         "format_instructions": format_instructions,
                     },
