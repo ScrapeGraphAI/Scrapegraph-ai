@@ -1,4 +1,17 @@
-## [1.10.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.2...v1.10.0-beta.3) (2024-07-20)
+## [1.9.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.1...v1.9.2) (2024-07-20)
+
+
+### Bug Fixes
+
+* azure models ([03f4a3a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/03f4a3aa29c42a9a312c4afb6818de3450e7cedf))
+
+
+### chore
+
+* remove unused workflow ([5c6dd8d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c6dd8de4da08f09b5dd93c525d14b44778c9659))
+
+## [1.9.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.0...v1.9.1) (2024-07-12)
+
 
 
 ### Bug Fixes
