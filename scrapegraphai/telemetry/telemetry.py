@@ -156,14 +156,19 @@ def log_event(event: str, properties: Dict[str, any]):
         send_event_json(event_json)
 
 
-def log_graph_execution(graph_name: str, llm_model: str, embedder_model: str, source_type: str, execution_time: float, error_node: str = None, total_tokens: int = None):
+def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict, llm_model: str, embedder_model: str, source_type: str, execution_time: float, response: dict = None, error_node: str = None, exception: str = None, total_tokens: int = None):
     properties = {
         "graph_name": graph_name,
+        "source": source,
+        "prompt": prompt,
+        "schema": schema,
         "llm_model": llm_model,
         "embedder_model": embedder_model,
         "source_type": source_type,
+        "response": response,
         "execution_time": execution_time,
         "error_node": error_node,
+        "exception": exception,
         "total_tokens": total_tokens,
     }
     log_event("graph_execution", properties)

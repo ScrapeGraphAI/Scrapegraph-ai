@@ -82,7 +82,7 @@ class ChromiumLoader(BaseLoader):
                 context = await browser.new_context()
                 await Malenia.apply_stealth(context)
                 page = await context.new_page()
-                await page.goto(url)
+                await page.goto(url, wait_until="domcontentloaded")
                 await page.wait_for_load_state(self.load_state)
                 results = await page.content()  # Simply get the HTML content
                 logger.info("Content scraped")

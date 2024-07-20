@@ -16,11 +16,11 @@ models_tokens = {
         "gpt-4-32k": 32768,
         "gpt-4-32k-0613": 32768,
         "gpt-4o": 128000,
-        "gpt-4o-mini": 128000,
+        "gpt-4o-mini":128000,
 
     },
     "azure": {
-          "gpt-3.5-turbo-0125": 16385,
+        "gpt-3.5-turbo-0125": 16385,
         "gpt-3.5": 4096,
         "gpt-3.5-turbo": 16385,
         "gpt-3.5-turbo-1106": 16385,
