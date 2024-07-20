@@ -2,8 +2,6 @@
 convert_to_md modul
 """
 import html2text
-from trafilatura import extract
-
 
 def convert_to_md(html):
     """ Convert HTML to Markdown.
@@ -20,6 +18,6 @@ def convert_to_md(html):
     'This is a paragraph.\n\n# This is a heading.'
 
     Note: All the styles and links are ignored during the conversion. """
-
-    return extract(filecontent=html,include_images=True,
-                       include_links=True, include_tables=True, output_format="markdown")
+    h = html2text.HTML2Text()
+    h.ignore_links = False
+    return h.handle(html)
