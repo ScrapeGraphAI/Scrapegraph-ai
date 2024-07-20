@@ -5,7 +5,8 @@ Basic example of scraping pipeline using SmartScraper
 import os, json
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
@@ -14,7 +15,7 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "api_key": "s",
+        "api_key": os.getenv("OPENAI_API_KEY"),
         "model": "gpt-3.5-turbo",
     },
     "verbose": True,

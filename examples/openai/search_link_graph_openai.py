@@ -1,7 +1,7 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import SearchLinkGraph
 from scrapegraphai.utils import prettify_exec_info
 # ************************************************
 # Define the configuration for the graph
@@ -9,27 +9,19 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
-    },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "api_key": "s",
+        "model": "gpt-3.5-turbo",
     },
     "verbose": True,
-    "headless": False
+    "headless": False,
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the SearchLinkGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the titles",
-    source="https://perinim.github.io/projects",
+smart_scraper_graph = SearchLinkGraph(
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 

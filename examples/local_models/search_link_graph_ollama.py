@@ -1,7 +1,7 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import SearchLinkGraph
 from scrapegraphai.utils import prettify_exec_info
 # ************************************************
 # Define the configuration for the graph
@@ -24,12 +24,11 @@ graph_config = {
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the SearchLinkGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the titles",
-    source="https://perinim.github.io/projects",
+smart_scraper_graph = SearchLinkGraph(
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
