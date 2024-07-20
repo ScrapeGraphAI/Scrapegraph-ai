@@ -2,24 +2,22 @@
 Module for showing how JSONScraperMultiGraph multi works
 """
 import os
+from dotenv import load_dotenv
 import json
-from langchain_openai import AzureChatOpenAI
-from langchain_openai import AzureOpenAIEmbeddings
 from scrapegraphai.graphs import JSONScraperMultiGraph
 
-llm_model_instance = AzureChatOpenAI(
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
-)
+load_dotenv()
 
-embedder_model_instance = AzureOpenAIEmbeddings(
-    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-)
+
 graph_config = {
-    "llm": {"model_instance": llm_model_instance},
-    "embeddings": {"model_instance": embedder_model_instance}
+    "llm": {
+        "api_key": os.environ["AZURE_OPENAI_KEY"],
+        "model": "azure/gpt-3.5-turbo",
+    },
+    "verbose": True,
+    "headless": False
 }
+
 FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)

@@ -12,19 +12,12 @@ from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_i
 
 load_dotenv()
 
-groq_key = os.getenv("GROQ_APIKEY")
-
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "api_key": os.environ["AZURE_OPENAI_KEY"],
+        "model": "azure/gpt-3.5-turbo",
     },
-     "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
+    "verbose": True,
     "headless": False
 }
 
