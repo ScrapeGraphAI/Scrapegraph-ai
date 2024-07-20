@@ -14,7 +14,7 @@ class ConditionalNode(BaseNode):
     This node type is used to implement branching logic within the graph, allowing 
     for dynamic paths based on the data available in the current state.
 
-    It is expected thar exactly two edges are created out of this node.
+    It is expected that exactly two edges are created out of this node.
     The first node is chosen for execution if the key exists and has a non-empty value,
     and the second node is chosen if the key does not exist or is empty.
 

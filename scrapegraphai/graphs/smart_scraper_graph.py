@@ -11,7 +11,6 @@ from .abstract_graph import AbstractGraph
 from ..nodes import (
     FetchNode,
     ParseNode,
-    RAGNode,
     GenerateAnswerNode
 )
 
@@ -78,14 +77,7 @@ class SmartScraperGraph(AbstractGraph):
                 "chunk_size": self.model_token
             }
         )
-        rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
-            output=["relevant_chunks"],
-            node_config={
-                "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model
-            }
-        )
+
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
@@ -100,13 +92,11 @@ class SmartScraperGraph(AbstractGraph):
             nodes=[
                 fetch_node,
                 parse_node,
-                rag_node,
                 generate_answer_node,
             ],
             edges=[
                 (fetch_node, parse_node),
-                (parse_node, rag_node),
-                (rag_node, generate_answer_node)
+                (parse_node, generate_answer_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__

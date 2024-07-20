@@ -1,30 +1,30 @@
 """
 Example of Search Graph
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
 load_dotenv()
 
-FILE_NAME = "inputs/example.json"
-curr_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(curr_dir, FILE_NAME)
-
-with open(file_path, 'r', encoding="utf-8") as file:
-    text = file.read()
-
-# ************************************************
-# Initialize the model instances
-# ************************************************
+groq_key = os.getenv("GROQ_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure/gpt-3.5-turbo",
+        "model": "groq/gemma-7b-it",
+        "api_key": groq_key,
+        "temperature": 0
     },
-    "verbose": True,
+     "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
     "headless": False
 }
 

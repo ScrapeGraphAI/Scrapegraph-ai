@@ -1,33 +1,33 @@
 """
 Example of Search Graph
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
 load_dotenv()
 
-FILE_NAME = "inputs/example.json"
-curr_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(curr_dir, FILE_NAME)
-
-with open(file_path, 'r', encoding="utf-8") as file:
-    text = file.read()
-
-# ************************************************
-# Initialize the model instances
-# ************************************************
+fireworks_api_key = os.getenv("FIREWORKS_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure/gpt-3.5-turbo",
+        "api_key": fireworks_api_key,
+        "model": "fireworks/accounts/fireworks/models/mixtral-8x7b-instruct"
     },
+     "embeddings": {
+        "model": "ollama/nomic-embed-text",
+        "temperature": 0,
+        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+    },
+    "max_results": 2,
     "verbose": True,
-    "headless": False
+    "headless": False,
 }
-
 # ************************************************
 # Create the SearchGraph instance and run it
 # ************************************************

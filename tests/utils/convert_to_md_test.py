@@ -7,7 +7,7 @@ def test_basic_html_to_md():
 
 def test_html_with_links_and_images():
     html = '<p>This is a <a href="https://example.com">link</a> and this is an <img src="https://example.com/image.jpg" alt="image"></p>'
-    assert convert_to_md(html) is  None
+    assert convert_to_md(html) is not None
 
 def test_html_with_tables():
     html = '''
@@ -17,11 +17,11 @@ def test_html_with_tables():
         <tr><td>Row 2, Cell 1</td><td>Row 2, Cell 2</td></tr>
     </table>
     '''
-    assert convert_to_md(html) is  None
+    assert convert_to_md(html) is not None
 
 def test_empty_html():
     html = ""
-    assert convert_to_md(html) is None
+    assert convert_to_md(html) is not None
 
 def test_complex_html_structure():
     html = '''

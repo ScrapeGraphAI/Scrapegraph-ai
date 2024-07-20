@@ -115,16 +115,16 @@ class GenerateAnswerNode(BaseNode):
                 prompt = PromptTemplate(
                     template=template_no_chunks_prompt,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
+                    partial_variables={"context": chunk,
                                        "format_instructions": format_instructions})
                 chain =  prompt | self.llm_model | output_parser
                 answer = chain.invoke({"question": user_prompt})
+                break
 
-            else:
                 prompt = PromptTemplate(
                     template=template_chunks_prompt,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
+                    partial_variables={"context": chunk,
                                         "chunk_id": i + 1,
                                         "format_instructions": format_instructions})
             # Dynamically name the chains based on their index
