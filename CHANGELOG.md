@@ -1,3 +1,10 @@
+## [1.10.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.2...v1.10.0-beta.3) (2024-07-20)
+
+
+### Bug Fixes
+
+* add gpt o mini for azure ([77777c8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/77777c898d1fad40f340b06c5b36d35b65409ea6))
+
 ## [1.10.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.1...v1.10.0-beta.2) (2024-07-19)
 
 
