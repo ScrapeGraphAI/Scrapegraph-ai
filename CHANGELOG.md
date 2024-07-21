@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0...v1.10.1) (2024-07-21)
+
+
+### Bug Fixes
+
+* abstract_graph moel token bug ([ce6be37](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ce6be37fbc1095afe4df6a2fc206923e477190e5))
+
 ## [1.10.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.9.2...v1.10.0) (2024-07-20)
 
 
