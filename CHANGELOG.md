@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.1...v1.10.2) (2024-07-21)
+
+
+### Bug Fixes
+
+* telemetry version ([b0418b6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b0418b679cf45e1e680d2daadcc47e6e4f585575))
+
 ## [1.10.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0...v1.10.1) (2024-07-21)
 
 
