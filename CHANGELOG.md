@@ -1,5 +1,3 @@
-## [1.10.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.1...v1.10.2) (2024-07-21)
-
 
 ### Bug Fixes
 
@@ -20,13 +18,6 @@
 * add gpt4o omni ([431edb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/431edb7bb2504f4c1335c3ae3ce2f91867fa7222))
 * add searchngx integration ([5c92186](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c9218608140bf694fbfd96aa90276bc438bb475))
 * refactoring_to_md function ([602dd00](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/602dd00209ee1d72a1223fc4793759450921fcf9))
-
-
-### Bug Fixes
-
-* add gpt o mini for azure ([77777c8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/77777c898d1fad40f340b06c5b36d35b65409ea6))
-* parse_node ([07f1e23](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/07f1e23d235db1a0db2cb155f10b73b0bf882269))
-* search link node ([cf3ab55](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf3ab5564ae5c415c63d1771b32ea68f5169ca82))
 
 
 ### chore
@@ -53,8 +44,6 @@
 * **release:** 1.9.0-beta.4 [skip ci] ([2fa04b5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2fa04b58159abf7af890ebc0768fe23d51bf177f))
 * **release:** 1.9.0-beta.5 [skip ci] ([bb62439](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bb624399cfc3924825892dd48697fc298ad3b002))
 * **release:** 1.9.0-beta.6 [skip ci] ([54a69de](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/54a69de69e8077e02fd5584783ca62cc2e0ec5bb))
-
-## [1.10.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.4...v1.10.0-beta.5) (2024-07-20)
 
 
 ### Bug Fixes
