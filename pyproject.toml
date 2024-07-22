@@ -91,3 +91,4 @@ dev-dependencies = [
 [tool.rye.scripts]
 pylint-local = "pylint scrapegraphai/**/*.py"
 pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
+update-requirements = "python 'manual deployment/autorequirements.py'"
