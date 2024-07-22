@@ -35,7 +35,8 @@ dependencies = [
     "undetected-playwright==0.3.0",
     "semchunk==1.0.1",
     "html2text==2024.2.26",
-    "langchain-fireworks==0.1.3"
+    "langchain-fireworks==0.1.3",
+    "langchain-community==0.2.9"
 ]
 
 license = "MIT"

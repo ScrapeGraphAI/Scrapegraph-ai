@@ -1,4 +1,0 @@
-sphinx==7.1.2
-furo==2024.5.6
-pytest==8.0.0
-burr[start]==0.22.1
