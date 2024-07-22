@@ -14,6 +14,7 @@ aiohttp==3.9.5
     # via langchain
     # via langchain-community
     # via langchain-fireworks
+    # via langchain-nvidia-ai-endpoints
 aiosignal==1.3.1
     # via aiohttp
 alabaster==0.7.16
@@ -268,6 +269,7 @@ langchain-core==0.1.52
     # via langchain-google-genai
     # via langchain-google-vertexai
     # via langchain-groq
+    # via langchain-nvidia-ai-endpoints
     # via langchain-openai
     # via langchain-text-splitters
 langchain-fireworks==0.1.3
@@ -277,6 +279,8 @@ langchain-google-genai==1.0.3
 langchain-google-vertexai==1.0.4
     # via scrapegraphai
 langchain-groq==0.1.3
+    # via scrapegraphai
+langchain-nvidia-ai-endpoints==0.1.6
     # via scrapegraphai
 langchain-openai==0.1.6
     # via scrapegraphai
@@ -348,6 +352,7 @@ pandas==2.2.2
     # via streamlit
 pillow==10.3.0
     # via fireworks-ai
+    # via langchain-nvidia-ai-endpoints
     # via matplotlib
     # via streamlit
 platformdirs==4.2.2
