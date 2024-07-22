@@ -41,7 +41,7 @@ class ParseNode(BaseNode):
             False if node_config is None else node_config.get("verbose", False)
         )
         self.parse_html = (
-            True if node_config is None else node_config.get("parse_html", True)
+            True if node_config is None else node_config.get("parse_html", False)
         )
 
     def execute(self, state: dict) -> dict:

@@ -5,7 +5,7 @@ import asyncio
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables import AsyncRunnable
+from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from ..utils.merge_results import merge_results
 from ..utils.logging import get_logger
@@ -42,7 +42,7 @@ class GenerateAnswerNode(BaseNode):
         node_name: str = "GenerateAnswer",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
-      
+
         self.llm_model = node_config["llm_model"]
 
         self.verbose = (
@@ -112,34 +112,31 @@ class GenerateAnswerNode(BaseNode):
         chains_dict = {}
         answers = []
 
-        # Use tqdm to add progress bar
-        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
-            if len(doc) == 1:
+        if len(doc) == 1:
                 # No batching needed for single chunk
                 prompt = PromptTemplate(
                     template=template_no_chunks,
                     input_variables=["question"],
-                    partial_variables={"context": chunk,
-                                       "format_instructions": format_instructions})
-                chain =  prompt | self.llm_model | output_parser
+                    partial_variables={"context": doc,
+                                    "format_instructions": format_instructions})
+                chain = prompt | self.llm_model | output_parser
                 answer = chain.invoke({"question": user_prompt})
-                break
 
-            prompt = PromptTemplate(
-                    template=template_chunks_prompt,
-                    input_variables=["question"],
-                    partial_variables={"context": chunk,
+        else:
+            for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+                    prompt = PromptTemplate(
+                        template=template_chunks,
+                        input_variables=["question"],
+                        partial_variables={"context": chunk,
                                         "chunk_id": i + 1,
                                         "format_instructions": format_instructions})
-            # Dynamically name the chains based on their index
-            chain_name = f"chunk{i+1}"
-            chains_dict[chain_name] = prompt | self.llm_model | output_parser
+                    # Add chain to dictionary with dynamic name
+                    chain_name = f"chunk{i+1}"
+                    chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
-
-            # Batch process chains if there are multiple chunks
-        if len(chains_dict) > 1:
+           
             async def process_chains():
-                async_runner = AsyncRunnable()
+                async_runner = RunnableParallel()
                 for chain_name, chain in chains_dict.items():
                     async_runner.add(chain.abatch([{"question": user_prompt}] * len(doc)))
                 batch_results = await async_runner.run()
