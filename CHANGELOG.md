@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.2...v1.10.3) (2024-07-22)
+
+
+### Bug Fixes
+
+* parse_html node have a bug ([71f894e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71f894eee3468fac8ad2c724ad1f9fd4b5f64140))
+
 ## [1.10.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.1...v1.10.2) (2024-07-21)
 
 
