@@ -28,8 +28,8 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the titles",
-    source="https://perinim.github.io/projects",
+    prompt="List me all the titles of the website",
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
