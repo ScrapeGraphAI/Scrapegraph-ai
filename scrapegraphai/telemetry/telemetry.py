@@ -91,7 +91,7 @@ BASE_PROPERTIES = {
     "python_version": f"{platform.python_version()}/{platform.python_implementation()}",
     "distinct_id": g_anonymous_id,
     "scrapegraphai_version": VERSION,
-    "telemetry_version": "0.0.1",
+    "telemetry_version": "0.0.2",
 }
 
 
