@@ -12,12 +12,10 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     ImageToTextNode,
-    RAGNode,
     GenerateAnswerOmniNode
 )
 
 from ..models import OpenAIImageToText
-
 
 class OmniScraperGraph(AbstractGraph):
     """
@@ -60,7 +58,6 @@ class OmniScraperGraph(AbstractGraph):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-        
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -91,19 +88,13 @@ class OmniScraperGraph(AbstractGraph):
                 "max_images": self.max_images
             }
         )
-        rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
-            output=["relevant_chunks"],
-            node_config={
-                "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model
-            }
-        )
+      
         generate_answer_omni_node = GenerateAnswerOmniNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc) & img_desc",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
+                "additional_info": self.config.get("additional_info"),
                 "schema": self.schema
             }
         )
@@ -113,14 +104,12 @@ class OmniScraperGraph(AbstractGraph):
                 fetch_node,
                 parse_node,
                 image_to_text_node,
-                rag_node,
                 generate_answer_omni_node,
             ],
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, image_to_text_node),
-                (image_to_text_node, rag_node),
-                (rag_node, generate_answer_omni_node)
+                (image_to_text_node, generate_answer_omni_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__

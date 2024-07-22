@@ -3,7 +3,7 @@ SearchGraph Module
 """
 
 from copy import copy, deepcopy
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 
 from .base_graph import BaseGraph
@@ -15,6 +15,7 @@ from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
+
 
 
 class SearchGraph(AbstractGraph):
@@ -29,6 +30,7 @@ class SearchGraph(AbstractGraph):
         headless (bool): A flag to run the browser in headless mode.
         verbose (bool): A flag to display the execution information.
         model_token (int): The token limit for the language model.
+        considered_urls (List[str]): A list of URLs considered during the search.
 
     Args:
         prompt (str): The user prompt to search the internet.
@@ -41,10 +43,10 @@ class SearchGraph(AbstractGraph):
         ...     {"llm": {"model": "gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
+        >>> print(search_graph.get_considered_urls())
     """
 
     def __init__(self, prompt: str, config: dict, schema: Optional[BaseModel] = None):
-
         self.max_results = config.get("max_results", 3)
 
         if all(isinstance(value, str) for value in config.values()):
@@ -53,6 +55,7 @@ class SearchGraph(AbstractGraph):
             self.copy_config = deepcopy(config)
         
         self.copy_schema = deepcopy(schema)
+        self.considered_urls = []  # New attribute to store URLs
 
         super().__init__(prompt, config, schema)
 
@@ -64,10 +67,7 @@ class SearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
         # Create a SmartScraperGraph instance
-        # ************************************************
-
         smart_scraper_instance = SmartScraperGraph(
             prompt="",
             source="",
@@ -75,10 +75,7 @@ class SearchGraph(AbstractGraph):
             schema=self.copy_schema
         )
 
-        # ************************************************
         # Define the graph nodes
-        # ************************************************
-
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["urls"],
@@ -128,4 +125,17 @@ class SearchGraph(AbstractGraph):
         inputs = {"user_prompt": self.prompt}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
+        # Store the URLs after execution
+        if 'urls' in self.final_state:
+            self.considered_urls = self.final_state['urls']
+
         return self.final_state.get("answer", "No answer found.")
+
+    def get_considered_urls(self) -> List[str]:
+        """
+        Returns the list of URLs considered during the search.
+
+        Returns:
+            List[str]: A list of URLs considered during the search.
+        """
+        return self.considered_urls

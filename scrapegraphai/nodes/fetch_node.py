@@ -52,8 +52,8 @@ class FetchNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
-        self.useSoup = (
-            False if node_config is None else node_config.get("useSoup", False)
+        self.use_soup = (
+            False if node_config is None else node_config.get("use_soup", False)
         )
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
@@ -105,6 +105,7 @@ class FetchNode(BaseNode):
             or input_keys[0] == "xml_dir"
             or input_keys[0] == "csv_dir"
             or input_keys[0] == "pdf_dir"
+            or input_keys[0] == "md_dir"
         ):
             compressed_document = [
                 source
@@ -115,7 +116,7 @@ class FetchNode(BaseNode):
         # handling pdf
         elif input_keys[0] == "pdf":
 
-            # TODO: fix bytes content issue
+
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
             state.update({self.output[0]: compressed_document})
@@ -145,6 +146,14 @@ class FetchNode(BaseNode):
             ]
             state.update({self.output[0]: compressed_document})
             return state
+        elif input_keys[0] == "md":
+            with open(source, "r", encoding="utf-8") as f:
+                data = f.read()
+            compressed_document = [
+                Document(page_content=data, metadata={"source": "md"})
+            ]
+            state.update({self.output[0]: compressed_document})
+            return state
 
         elif self.input == "pdf_dir":
             pass
@@ -163,7 +172,7 @@ class FetchNode(BaseNode):
                 Document(page_content=parsed_content, metadata={"source": "local_dir"})
             ]
 
-        elif self.useSoup:
+        elif self.use_soup:
             self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             response = requests.get(source)
             if response.status_code == 200:
@@ -199,6 +208,7 @@ class FetchNode(BaseNode):
 
             if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
                 parsed_content = convert_to_md(document[0].page_content)
+
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})

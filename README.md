@@ -1,8 +1,8 @@
 
 # 🕷️ ScrapeGraphAI: You Only Scrape Once
 [English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
-| [코리아노](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
-| [русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md)
+| [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
+| [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md)
 
 
 [![Downloads](https://img.shields.io/pepy/dt/scrapegraphai?style=for-the-badge)](https://pepy.tech/project/scrapegraphai)
@@ -12,7 +12,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
-ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, etc.).
+ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, Markdown, etc.).
 
 Just say which information you want to extract and the library will do it for you!
 
@@ -191,9 +191,32 @@ Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegra
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
 ## 📈 Roadmap
-Check out the project roadmap [here](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/README.md)! 🚀
 
-Wanna visualize the roadmap in a more interactive way? Check out the [markmap](https://markmap.js.org/repl) visualization by copy pasting the markdown content in the editor!
+We are working on the following features! If you are interested in collaborating right-click on the feature and open in a new tab to file a PR. If you have doubts and wanna discuss them with us, just contact us on [discord](https://discord.gg/uJN7TYcpNa) or open a [Discussion](https://github.com/VinciGit00/Scrapegraph-ai/discussions) here on Github!
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#5C4B9B', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#ffffff', 'primaryBorderColor': '#5C4B9B', 'fontFamily': 'Arial', 'fontSize': '16px', 'textColor': '#5C4B9B' }}}%%
+graph LR
+    A[DeepSearch Graph] --> F[Use Existing Chromium Instances]
+    F --> B[Page Caching]
+    B --> C[Screenshot Scraping]
+    C --> D[Handle Dynamic Content]
+    D --> E[New Webdrivers]
+
+    style A fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
+    style F fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
+    style B fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
+    style C fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
+    style D fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
+    style E fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
+
+    click A href "https://github.com/VinciGit00/Scrapegraph-ai/issues/260" "Open DeepSearch Graph Issue"
+    click F href "https://github.com/VinciGit00/Scrapegraph-ai/issues/329" "Open Chromium Instances Issue"
+    click B href "https://github.com/VinciGit00/Scrapegraph-ai/issues/197" "Open Page Caching Issue"
+    click C href "https://github.com/VinciGit00/Scrapegraph-ai/issues/197" "Open Screenshot Scraping Issue"
+    click D href "https://github.com/VinciGit00/Scrapegraph-ai/issues/279" "Open Handle Dynamic Content Issue"
+    click E href "https://github.com/VinciGit00/Scrapegraph-ai/issues/171" "Open New Webdrivers Issue"
+```
 
 ## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)

@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from scrapegraphai.graphs import SearchGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 from pydantic import BaseModel, Field
 from typing import List
@@ -45,14 +44,3 @@ search_graph = SearchGraph(
 
 result = search_graph.run()
 print(result)
-
-# ************************************************
-# Get graph execution info
-# ************************************************
-
-graph_exec_info = search_graph.get_execution_info()
-print(prettify_exec_info(graph_exec_info))
-
-# Save to json and csv
-convert_to_csv(result, "result")
-convert_to_json(result, "result")

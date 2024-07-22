@@ -21,3 +21,6 @@ from .json_scraper_multi_graph import JSONScraperMultiGraph
 from .csv_scraper_multi_graph import CSVScraperMultiGraph
 from .xml_scraper_multi_graph import XMLScraperMultiGraph
 from .script_creator_multi_graph import ScriptCreatorMultiGraph
+from .markdown_scraper_graph import MDScraperGraph
+from .markdown_scraper_multi_graph import MDScraperMultiGraph
+from .search_link_graph import SearchLinkGraph

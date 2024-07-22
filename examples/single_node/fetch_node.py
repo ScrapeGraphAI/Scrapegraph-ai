@@ -9,7 +9,7 @@ from scrapegraphai.nodes import FetchNode
 # ************************************************
 
 
-robots_node = FetchNode(
+fetch_node = FetchNode(
     input="url | local_dir",
     output=["doc"],
     node_config={
@@ -25,6 +25,6 @@ state = {
     "url": "https://twitter.com/home"
 }
 
-result = robots_node.execute(state)
+result = fetch_node.execute(state)
 
 print(result)

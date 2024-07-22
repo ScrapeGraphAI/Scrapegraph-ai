@@ -54,7 +54,11 @@ class GenerateAnswerNode(BaseNode):
         self.script_creator = (
             False if node_config is None else node_config.get("script_creator", False)
         )
+        self.is_md_scraper = (
+            False if node_config is None else node_config.get("is_md_scraper", False)
+        )
 
+        self.additional_info = node_config.get("additional_info")
 
     def execute(self, state: dict) -> dict:
         """
@@ -90,7 +94,8 @@ class GenerateAnswerNode(BaseNode):
 
         format_instructions = output_parser.get_format_instructions()
 
-        if isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator:
+        if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
+
             template_no_chunks_prompt = template_no_chunks_md
             template_chunks_prompt = template_chunks_md
             template_merge_prompt = template_merge_md
@@ -98,6 +103,11 @@ class GenerateAnswerNode(BaseNode):
             template_no_chunks_prompt = template_no_chunks
             template_chunks_prompt = template_chunks
             template_merge_prompt = template_merge
+
+        if self.additional_info is not None:
+            template_no_chunks_prompt = self.additional_info + template_no_chunks_prompt
+            template_chunks_prompt = self.additional_info + template_chunks_prompt
+            template_merge_prompt = self.additional_info + template_merge_prompt
 
         chains_dict = {}
         answers = []
@@ -109,22 +119,22 @@ class GenerateAnswerNode(BaseNode):
                 prompt = PromptTemplate(
                     template=template_no_chunks,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                    "format_instructions": format_instructions})
-                chain = prompt | self.llm_model | output_parser
+                    partial_variables={"context": chunk,
+                                       "format_instructions": format_instructions})
+                chain =  prompt | self.llm_model | output_parser
                 answer = chain.invoke({"question": user_prompt})
-                
-            else:
-                # Prepare prompt with chunk information
-                prompt = PromptTemplate(
-                    template=template_chunks,
+                break
+
+            prompt = PromptTemplate(
+                    template=template_chunks_prompt,
                     input_variables=["question"],
-                    partial_variables={"context": chunk.page_content,
-                                    "chunk_id": i + 1,
-                                    "format_instructions": format_instructions})
-                # Add chain to dictionary with dynamic name
-                chain_name = f"chunk{i+1}"
-                chains_dict[chain_name] = prompt | self.llm_model | output_parser
+                    partial_variables={"context": chunk,
+                                        "chunk_id": i + 1,
+                                        "format_instructions": format_instructions})
+            # Dynamically name the chains based on their index
+            chain_name = f"chunk{i+1}"
+            chains_dict[chain_name] = prompt | self.llm_model | output_parser
+
 
             # Batch process chains if there are multiple chunks
         if len(chains_dict) > 1:

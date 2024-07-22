@@ -4,22 +4,10 @@ Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
 
 import os
 from dotenv import load_dotenv
-from langchain_openai import AzureChatOpenAI
-from langchain_openai import AzureOpenAIEmbeddings
 from scrapegraphai.graphs import JSONScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
-
-# required environment variable in .env
-# AZURE_OPENAI_ENDPOINT
-# AZURE_OPENAI_CHAT_DEPLOYMENT_NAME
-# MODEL_NAME
-# AZURE_OPENAI_API_KEY
-# OPENAI_API_TYPE
-# AZURE_OPENAI_API_VERSION
-# AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME
 load_dotenv()
-
 
 FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
@@ -32,23 +20,13 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # Initialize the model instances
 # ************************************************
 
-llm_model_instance = AzureChatOpenAI(
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
-)
-
-embedder_model_instance = AzureOpenAIEmbeddings(
-    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-)
-
-# ************************************************
-# Create the JSONScraperGraph instance and run it
-# ************************************************
-
 graph_config = {
-    "llm": {"model_instance": llm_model_instance},
-    "embeddings": {"model_instance": embedder_model_instance}
+    "llm": {
+        "api_key": os.environ["AZURE_OPENAI_KEY"],
+        "model": "azure/gpt-3.5-turbo",
+    },
+    "verbose": True,
+    "headless": False
 }
 
 smart_scraper_graph = JSONScraperGraph(

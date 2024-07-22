@@ -46,8 +46,6 @@ class XMLScraperMultiGraph(AbstractGraph):
 
     def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
 
-        self.max_results = config.get("max_results", 3)
-
         if all(isinstance(value, str) for value in config.values()):
             self.copy_config = copy(config)
         else:
@@ -116,7 +114,7 @@ class XMLScraperMultiGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
-        inputs = {"user_prompt": self.prompt, "jsons": self.source}
+        inputs = {"user_prompt": self.prompt, "xmls": self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
         return self.final_state.get("answer", "No answer found.")

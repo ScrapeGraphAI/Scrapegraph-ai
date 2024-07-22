@@ -40,11 +40,11 @@ class GraphBuilder:
         ValueError: If 'api_key' is not included in llm_config.
     """
 
-    def __init__(self, user_prompt: str, config: dict):
+    def __init__(self, prompt: str, config: dict):
         """
         Initializes the GraphBuilder with a user prompt and language model configuration.
         """
-        self.user_prompt = user_prompt
+        self.prompt = prompt
         self.config = config
         self.llm = self._create_llm(config["llm"])
         self.nodes_description = self._generate_nodes_description()
@@ -122,7 +122,7 @@ class GraphBuilder:
         Returns:
             dict: A JSON representation of the graph configuration.
         """
-        return self.chain.invoke(self.user_prompt)
+        return self.chain.invoke(self.prompt)
 
     @staticmethod
     def convert_json_to_graphviz(json_data, format: str = 'pdf'):
