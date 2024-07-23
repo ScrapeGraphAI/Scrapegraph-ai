@@ -23,7 +23,7 @@ def convert_to_md(html: str, url: str = None) -> str:
     h = html2text.HTML2Text()
     h.ignore_links = False
     h.body_width = 0
-    if url:
+    if url is not None:
         parsed_url = urlparse(url)
         domain = f"{parsed_url.scheme}://{parsed_url.netloc}"
         h.baseurl = domain
