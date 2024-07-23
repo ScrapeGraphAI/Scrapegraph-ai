@@ -13,7 +13,6 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 dependencies = [
-    "langchain-community==0.2.9",
     "langchain>=0.2.10",
     "langchain-fireworks>=0.1.3",
     "langchain_community>=0.2.9",
