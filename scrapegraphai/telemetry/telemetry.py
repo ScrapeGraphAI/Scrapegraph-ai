@@ -91,7 +91,7 @@ BASE_PROPERTIES = {
     "python_version": f"{platform.python_version()}/{platform.python_implementation()}",
     "distinct_id": g_anonymous_id,
     "scrapegraphai_version": VERSION,
-    "telemetry_version": "0.0.2",
+    "telemetry_version": "0.0.3",
 }
 
 
@@ -156,7 +156,7 @@ def log_event(event: str, properties: Dict[str, any]):
         send_event_json(event_json)
 
 
-def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict, llm_model: str, embedder_model: str, source_type: str, execution_time: float, response: dict = None, error_node: str = None, exception: str = None, total_tokens: int = None):
+def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict, llm_model: str, embedder_model: str, source_type: str, execution_time: float, response: dict = None, error_node: str = None, exception: str = None, total_tokens: int = None, is_library=True):
     properties = {
         "graph_name": graph_name,
         "source": source,
@@ -170,6 +170,7 @@ def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict, l
         "error_node": error_node,
         "exception": exception,
         "total_tokens": total_tokens,
+        "is_library": is_library
     }
     log_event("graph_execution", properties)
 
