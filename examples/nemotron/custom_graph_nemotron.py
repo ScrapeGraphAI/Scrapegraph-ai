@@ -15,12 +15,11 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
-     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
-    },
+    "llm": {
+        "api_key": os.getenv("NEMOTRON_KEY"),
+        "model": "claude-3-haiku-20240307",
+        },
 }
 
 # ************************************************
