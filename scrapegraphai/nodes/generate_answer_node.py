@@ -107,8 +107,6 @@ class GenerateAnswerNode(BaseNode):
             template_chunks_prompt = self.additional_info + template_chunks_prompt
             template_merge_prompt = self.additional_info + template_merge_prompt
 
-        chains_dict = {}
-
         if len(doc) == 1:
             prompt = PromptTemplate(
                 template=template_no_chunks_prompt,
@@ -121,7 +119,7 @@ class GenerateAnswerNode(BaseNode):
             state.update({self.output[0]: answer})
             return state
 
-        # Use tqdm to add progress bar
+        chains_dict = {}
         for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
 
             prompt = PromptTemplate(
