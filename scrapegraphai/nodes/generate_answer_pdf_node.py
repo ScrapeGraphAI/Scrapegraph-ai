@@ -131,7 +131,7 @@ class GenerateAnswerPDFNode(BaseNode):
             return state
         
         chains_dict = {}
-        # Use tqdm to add progress bar
+        
         for i, chunk in enumerate(
             tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
             prompt = PromptTemplate(
@@ -144,22 +144,21 @@ class GenerateAnswerPDFNode(BaseNode):
                     },
                 )
 
-            # Dynamically name the chains based on their index
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
-        # Use dictionary unpacking to pass the dynamically named chains to RunnableParallel
-        map_chain = RunnableParallel(**chains_dict)
-        # Chain
-        answer = map_chain.ainvoke({"question": user_prompt})
-        # Merge the answers from the chunks
+        async_runner = RunnableParallel(**chains_dict)
+
+        batch_results =  async_runner.invoke({"question": user_prompt})
+
         merge_prompt = PromptTemplate(
-            template=template_merge_pdf_prompt,
-            input_variables=["context", "question"],
-            partial_variables={"format_instructions": format_instructions},
-        )
+                template = template_merge_pdf_prompt,
+                input_variables=["context", "question"],
+                partial_variables={"format_instructions": format_instructions},
+            )
+
         merge_chain = merge_prompt | self.llm_model | output_parser
-        answer = merge_chain.invoke({"context": answer, "question": user_prompt})
+        answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
 
         state.update({self.output[0]: answer})
         return state
