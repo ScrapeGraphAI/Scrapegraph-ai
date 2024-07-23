@@ -150,6 +150,10 @@ class AbstractGraph(ABC):
 
         # If model instance is passed directly instead of the model details
         if "model_instance" in llm_params:
+            try:
+               self.model_token = llm_params["model_tokens"]
+            except KeyError as exc:
+               raise KeyError("model_tokens not specified") from exc
             return llm_params["model_instance"]
 
         # Instantiate the language model based on the model name
