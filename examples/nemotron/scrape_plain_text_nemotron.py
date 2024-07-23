@@ -1,25 +1,37 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using SmartScraper from text
 """
 
-import os, json
+import os
+from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-from dotenv import load_dotenv
+
 load_dotenv()
+
+# ************************************************
+# Read the text file
+# ************************************************
+
+FILE_NAME = "inputs/plain_html_example.txt"
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, FILE_NAME)
+
+# It could be also a http request using the request model
+with open(file_path, 'r', encoding="utf-8") as file:
+    text = file.read()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
+nemotron_key = os.getenv("NEMOTRON_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "gpt-3.5-turbo",
+        "api_key": nemotron_key,
+        "model": "nvidia/meta/llama3-70b-instruct",
     },
-    "verbose": True,
-    "headless": False,
 }
 
 # ************************************************
@@ -27,13 +39,13 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+    prompt="List me all the projects with their description.",
+    source=text,
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
 
 # ************************************************
 # Get graph execution info

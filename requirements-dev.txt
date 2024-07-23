@@ -1,0 +1,6 @@
+pytest==8.0.0
+pytest-mock==3.14.0
+burr[start]==0.22.1
+sphinx==6.0
+furo==2024.5.6
+pylint>=3.2.5

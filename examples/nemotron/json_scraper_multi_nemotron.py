@@ -8,13 +8,13 @@ from scrapegraphai.graphs import JSONScraperMultiGraph
 
 load_dotenv()
 
-openai_key = os.getenv("OPENAI_APIKEY")
+nemotron_key = os.getenv("NEMOTRON_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
-    }
+        "api_key": nemotron_key,
+        "model": "nvidia/meta/llama3-70b-instruct",
+    },
 }
 
 FILE_NAME = "inputs/example.json"

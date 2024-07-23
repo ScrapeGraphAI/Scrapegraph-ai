@@ -1,39 +1,36 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
-import os, json
-from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import prettify_exec_info
+import os
 from dotenv import load_dotenv
-load_dotenv()
+from scrapegraphai.graphs import SearchLinkGraph
+from scrapegraphai.utils import prettify_exec_info
 
+load_dotenv()
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-
 graph_config = {
     "llm": {
-        "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "gpt-3.5-turbo",
+        "api_key": os.getenv("NEMOTRON_APIKEY"),
+        "model": "nvidia/meta/llama3-70b-instruct",
     },
     "verbose": True,
     "headless": False,
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the SearchLinkGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+smart_scraper_graph = SearchLinkGraph(
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
 
 # ************************************************
 # Get graph execution info

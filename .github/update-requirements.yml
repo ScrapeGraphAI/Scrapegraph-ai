@@ -1,0 +1,26 @@
+name: Update requirements
+on:
+  push:
+    paths:
+      - 'pyproject.toml'
+      - '.github/workflows/update-requirements.yml'
+
+jobs:
+  update:
+    name: Update requirements
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install the latest version of rye
+        uses: eifinger/setup-rye@v3
+      - name: Build app
+        run: rye run update-requirements
+  commit:
+    name: Commit changes
+    run: |
+      git config --global user.name 'github-actions'
+      git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      git add .
+      git commit -m "ci: update requirements.txt [skip ci]"
+      git push
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
