@@ -1,3 +1,37 @@
+## [1.11.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.4...v1.11.0) (2024-07-23)
+
+
+### Features
+
+* add new toml ([fcb3220](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fcb3220868e7ef1127a7a47f40d0379be282e6eb))
+* add nvidia connection ([fc0dadb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fc0dadb8f812dfd636dec856921a971b58695ce3))
+
+
+### Bug Fixes
+
+* **md_conversion:** add absolute links md, added missing dependency ([12b5ead](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/12b5eada6ea783770afd630ede69b8cf867a7ded))
+
+
+### chore
+
+* **dependecies:** add script to auto-update requirements ([3289c7b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3289c7bf5ec58ac3d04e9e5e8e654af9abcee228))
+* **ci:** set up workflow for requirements auto-update ([295fc28](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/295fc28ceb02c78198f7fbe678352503b3259b6b))
+* update requirements.txt ([c7bac98](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c7bac98d2e79e5ab98fa65d7efa858a2cdda1622))
+* upgrade dependencies and scripts ([74d142e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/74d142eaae724b087eada9c0c876b40a2ccc7cae))
+* **pyproject:** upgrade dependencies ([0425124](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0425124c570f765b98fcf67ba6649f4f9fe76b15))
+
+
+### Docs
+
+* add hero image ([4182e23](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4182e23e3b8d8f141b119b6014ae3ff20b3892e3))
+* updated readme ([c377ae0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c377ae0544a78ebdc0d15f8d23b3846c26876c8c))
+
+
+### CI
+
+* **release:** 1.10.0-beta.6 [skip ci] ([254bde7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/254bde7008b41ffa434925e3ae84340c53a565bd))
+* **release:** 1.10.0-beta.7 [skip ci] ([1756e85](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1756e8522f3874de8afbef9ac327f9b3f1a49d07))
+* **release:** 1.10.0-beta.8 [skip ci] ([255e569](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/255e569172b1029bc2a723b2ec66bcf3d3ee3791))
 
 ## [1.10.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.7...v1.10.0-beta.8) (2024-07-23)
 
