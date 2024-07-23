@@ -7,7 +7,6 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
-from ..utils.merge_results import merge_results
 from ..utils.logging import get_logger
 from ..models import Ollama, OpenAI
 from .base_node import BaseNode
