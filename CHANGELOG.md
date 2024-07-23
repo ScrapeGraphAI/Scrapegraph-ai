@@ -1,3 +1,20 @@
+## [1.10.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.5...v1.10.0-beta.6) (2024-07-22)
+
+
+### Features
+
+* add new toml ([fcb3220](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fcb3220868e7ef1127a7a47f40d0379be282e6eb))
+
+
+### chore
+
+* **pyproject:** upgrade dependencies ([0425124](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0425124c570f765b98fcf67ba6649f4f9fe76b15))
+
+
+### Docs
+
+* **gpt-4o-mini:** added new gpt, fixed chromium lazy loading, ([99dc849](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/99dc8497d85289759286a973e4aecc3f924d3ada))
+
 ## [1.10.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.4...v1.10.0-beta.5) (2024-07-20)
 
 
