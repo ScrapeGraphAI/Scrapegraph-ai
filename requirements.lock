@@ -127,7 +127,6 @@ greenlet==3.0.3
     # via playwright
     # via sqlalchemy
 groq==0.9.0
-
     # via langchain-groq
 grpc-google-iam-v1==0.13.1
     # via google-cloud-resource-manager
@@ -175,7 +174,6 @@ langchain==0.2.10
 langchain-anthropic==0.1.20
     # via scrapegraphai
 langchain-aws==0.1.12
-
     # via scrapegraphai
 langchain-core==0.2.22
     # via langchain
@@ -191,7 +189,6 @@ langchain-core==0.2.22
 langchain-fireworks==0.1.5
     # via scrapegraphai
 langchain-google-genai==1.0.8
-
     # via scrapegraphai
 langchain-google-vertexai==1.0.7
     # via scrapegraphai
@@ -201,7 +198,6 @@ langchain-nvidia-ai-endpoints==0.1.6
     # via scrapegraphai
 langchain-openai==0.1.17
     # via scrapegraphai
-
 langchain-text-splitters==0.2.2
     # via langchain
 langsmith==0.1.93
@@ -218,7 +214,6 @@ multidict==6.0.5
     # via yarl
 multiprocess==0.70.16
     # via mpire
-
 numpy==1.26.4
     # via faiss-cpu
     # via langchain
@@ -327,7 +322,6 @@ soupsieve==2.5
 sqlalchemy==2.0.31
     # via langchain
 tenacity==8.5.0
-
     # via langchain
     # via langchain-core
 tiktoken==0.7.0
