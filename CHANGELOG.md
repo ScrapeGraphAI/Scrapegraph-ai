@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0...v1.11.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* md conversion ([5a45e9f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5a45e9f2d86a1c58b8ea321e3df9718bc00f9c28))
+
 ## [1.11.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.4...v1.11.0) (2024-07-23)
 
 
