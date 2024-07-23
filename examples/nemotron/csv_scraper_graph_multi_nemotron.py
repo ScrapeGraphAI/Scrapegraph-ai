@@ -3,8 +3,8 @@ Basic example of scraping pipeline using CSVScraperMultiGraph from CSV documents
 """
 
 import os
-from dotenv import load_dotenv
 import pandas as pd
+from dotenv import load_dotenv
 from scrapegraphai.graphs import CSVScraperMultiGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
@@ -22,13 +22,12 @@ text = pd.read_csv(file_path)
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
-     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
-    },
+    "llm": {
+        "api_key": os.getenv("NEMOTRON_APIKEY"),
+        "model": "nvidia/meta/llama3-70b-instruct",
+    }
 }
 
 # ************************************************
