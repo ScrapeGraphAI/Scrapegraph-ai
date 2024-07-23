@@ -1,3 +1,10 @@
+## [1.10.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.7...v1.10.0-beta.8) (2024-07-23)
+
+
+### Bug Fixes
+
+* **md_conversion:** add absolute links md, added missing dependency ([12b5ead](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/12b5eada6ea783770afd630ede69b8cf867a7ded))
+
 ## [1.10.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.6...v1.10.0-beta.7) (2024-07-23)
 
 
