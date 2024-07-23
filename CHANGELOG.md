@@ -1,3 +1,17 @@
+## [1.10.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.6...v1.10.0-beta.7) (2024-07-23)
+
+
+### Features
+
+* add nvidia connection ([fc0dadb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fc0dadb8f812dfd636dec856921a971b58695ce3))
+
+
+### chore
+
+* **dependecies:** add script to auto-update requirements ([3289c7b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3289c7bf5ec58ac3d04e9e5e8e654af9abcee228))
+* **ci:** set up workflow for requirements auto-update ([295fc28](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/295fc28ceb02c78198f7fbe678352503b3259b6b))
+* update requirements.txt ([c7bac98](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c7bac98d2e79e5ab98fa65d7efa858a2cdda1622))
+
 ## [1.10.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.5...v1.10.0-beta.6) (2024-07-22)
 
 
