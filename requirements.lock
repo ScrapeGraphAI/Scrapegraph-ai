@@ -11,14 +11,13 @@
 aiohttp==3.9.5
     # via langchain
     # via langchain-fireworks
-    # via langchain-nvidia-ai-endpoints
 aiosignal==1.3.1
     # via aiohttp
 annotated-types==0.7.0
     # via pydantic
 anthropic==0.31.2
     # via langchain-anthropic
-anyio==4.4.0
+anyio==4.3.0
     # via anthropic
     # via groq
     # via httpx
@@ -31,36 +30,32 @@ attrs==23.2.0
 beautifulsoup4==4.12.3
     # via google
     # via scrapegraphai
-boto3==1.34.146
+boto3==1.34.145
     # via langchain-aws
-botocore==1.34.146
+botocore==1.34.145
     # via boto3
     # via s3transfer
-cachetools==5.4.0
+cachetools==5.3.3
     # via google-auth
-certifi==2024.7.4
+certifi==2024.2.2
     # via httpcore
     # via httpx
     # via requests
 charset-normalizer==3.3.2
     # via requests
-dataclasses-json==0.6.7
-    # via langchain-community
 defusedxml==0.7.1
     # via langchain-anthropic
-dill==0.3.8
-    # via multiprocess
 distro==1.9.0
     # via anthropic
     # via groq
     # via openai
 docstring-parser==0.16
     # via google-cloud-aiplatform
-exceptiongroup==1.2.2
+exceptiongroup==1.2.1
     # via anyio
-faiss-cpu==1.8.0.post1
+faiss-cpu==1.8.0
     # via scrapegraphai
-filelock==3.15.4
+filelock==3.14.0
     # via huggingface-hub
 fireworks-ai==0.14.0
     # via langchain-fireworks
@@ -69,13 +64,13 @@ free-proxy==1.1.1
 frozenlist==1.4.1
     # via aiohttp
     # via aiosignal
-fsspec==2024.6.1
+fsspec==2024.5.0
     # via huggingface-hub
 google==3.0.0
     # via scrapegraphai
 google-ai-generativelanguage==0.6.6
     # via google-generativeai
-google-api-core==2.19.1
+google-api-core==2.19.0
     # via google-ai-generativelanguage
     # via google-api-python-client
     # via google-cloud-aiplatform
@@ -84,9 +79,9 @@ google-api-core==2.19.1
     # via google-cloud-resource-manager
     # via google-cloud-storage
     # via google-generativeai
-google-api-python-client==2.137.0
+google-api-python-client==2.130.0
     # via google-generativeai
-google-auth==2.32.0
+google-auth==2.29.0
     # via google-ai-generativelanguage
     # via google-api-core
     # via google-api-python-client
@@ -99,16 +94,16 @@ google-auth==2.32.0
     # via google-generativeai
 google-auth-httplib2==0.2.0
     # via google-api-python-client
-google-cloud-aiplatform==1.59.0
+google-cloud-aiplatform==1.58.0
     # via langchain-google-vertexai
 google-cloud-bigquery==3.25.0
     # via google-cloud-aiplatform
 google-cloud-core==2.4.1
     # via google-cloud-bigquery
     # via google-cloud-storage
-google-cloud-resource-manager==1.12.4
+google-cloud-resource-manager==1.12.3
     # via google-cloud-aiplatform
-google-cloud-storage==2.18.0
+google-cloud-storage==2.17.0
     # via google-cloud-aiplatform
     # via langchain-google-vertexai
 google-crc32c==1.5.0
@@ -119,7 +114,7 @@ google-generativeai==0.7.2
 google-resumable-media==2.7.1
     # via google-cloud-bigquery
     # via google-cloud-storage
-googleapis-common-protos==1.63.2
+googleapis-common-protos==1.63.0
     # via google-api-core
     # via grpc-google-iam-v1
     # via grpcio-status
@@ -127,11 +122,12 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-groq==0.9.0
+    # via sqlalchemy
+groq==0.8.0
     # via langchain-groq
 grpc-google-iam-v1==0.13.1
     # via google-cloud-resource-manager
-grpcio==1.65.1
+grpcio==1.64.0
     # via google-api-core
     # via googleapis-common-protos
     # via grpc-google-iam-v1
@@ -154,30 +150,27 @@ httpx==0.27.0
     # via openai
 httpx-sse==0.4.0
     # via fireworks-ai
-huggingface-hub==0.24.0
+huggingface-hub==0.23.1
     # via tokenizers
 idna==3.7
     # via anyio
     # via httpx
     # via requests
     # via yarl
-jiter==0.5.0
+jiter==0.4.0
     # via anthropic
 jmespath==1.0.1
     # via boto3
     # via botocore
 jsonpatch==1.33
     # via langchain-core
-jsonpointer==3.0.0
+jsonpointer==2.4
     # via jsonpatch
 langchain==0.2.10
-    # via langchain-community
     # via scrapegraphai
 langchain-anthropic==0.1.20
     # via scrapegraphai
-langchain-aws==0.1.12
-    # via scrapegraphai
-langchain-community==0.2.9
+langchain-aws==0.1.11
     # via scrapegraphai
 langchain-core==0.2.22
     # via langchain
@@ -187,18 +180,15 @@ langchain-core==0.2.22
     # via langchain-google-genai
     # via langchain-google-vertexai
     # via langchain-groq
-    # via langchain-nvidia-ai-endpoints
     # via langchain-openai
     # via langchain-text-splitters
-langchain-fireworks==0.1.5
+langchain-fireworks==0.1.3
     # via scrapegraphai
-langchain-google-genai==1.0.8
+langchain-google-genai==1.0.7
     # via scrapegraphai
-langchain-google-vertexai==1.0.7
+langchain-google-vertexai==1.0.4
     # via scrapegraphai
 langchain-groq==0.1.6
-    # via scrapegraphai
-langchain-nvidia-ai-endpoints==0.1.6
     # via scrapegraphai
 langchain-openai==0.1.17
     # via scrapegraphai
@@ -209,19 +199,11 @@ langsmith==0.1.93
     # via langchain-core
 lxml==5.2.2
     # via free-proxy
-marshmallow==3.21.3
-    # via dataclasses-json
 minify-html==0.15.0
     # via scrapegraphai
-mpire==2.10.2
-    # via semchunk
 multidict==6.0.5
     # via aiohttp
     # via yarl
-multiprocess==0.70.16
-    # via mpire
-mypy-extensions==1.0.0
-    # via typing-inspect
 numpy==1.26.4
     # via faiss-cpu
     # via langchain
@@ -231,23 +213,21 @@ numpy==1.26.4
 openai==1.37.0
     # via langchain-fireworks
     # via langchain-openai
-orjson==3.10.6
+orjson==3.10.3
     # via langsmith
-packaging==24.1
-    # via faiss-cpu
+packaging==23.2
     # via google-cloud-aiplatform
     # via google-cloud-bigquery
     # via huggingface-hub
     # via langchain-core
 pandas==2.2.2
     # via scrapegraphai
-pillow==10.4.0
+pillow==10.3.0
     # via fireworks-ai
-    # via langchain-nvidia-ai-endpoints
-playwright==1.45.0
+playwright==1.43.0
     # via scrapegraphai
     # via undetected-playwright
-proto-plus==1.24.0
+proto-plus==1.23.0
     # via google-ai-generativelanguage
     # via google-api-core
     # via google-cloud-aiplatform
@@ -267,7 +247,7 @@ pyasn1==0.6.0
     # via rsa
 pyasn1-modules==0.4.0
     # via google-auth
-pydantic==2.8.2
+pydantic==2.7.1
     # via anthropic
     # via fireworks-ai
     # via google-cloud-aiplatform
@@ -277,12 +257,10 @@ pydantic==2.8.2
     # via langchain-core
     # via langsmith
     # via openai
-pydantic-core==2.20.1
+pydantic-core==2.18.2
     # via pydantic
 pyee==11.1.0
     # via playwright
-pygments==2.18.0
-    # via mpire
 pyparsing==3.1.2
     # via httplib2
 python-dateutil==2.9.0.post0
@@ -299,7 +277,7 @@ pyyaml==6.0.1
     # via langchain-core
 regex==2024.5.15
     # via tiktoken
-requests==2.32.3
+requests==2.32.2
     # via free-proxy
     # via google-api-core
     # via google-cloud-bigquery
@@ -311,11 +289,11 @@ requests==2.32.3
     # via tiktoken
 rsa==4.9
     # via google-auth
-s3transfer==0.10.2
+s3transfer==0.10.1
     # via boto3
-semchunk==2.2.0
+semchunk==1.0.1
     # via scrapegraphai
-shapely==2.0.5
+shapely==2.0.4
     # via google-cloud-aiplatform
 six==1.16.0
     # via python-dateutil
@@ -327,10 +305,9 @@ sniffio==1.3.1
     # via openai
 soupsieve==2.5
     # via beautifulsoup4
-sqlalchemy==2.0.31
+sqlalchemy==2.0.30
     # via langchain
-    # via langchain-community
-tenacity==8.5.0
+tenacity==8.3.0
     # via langchain
     # via langchain-core
 tiktoken==0.7.0
@@ -341,11 +318,10 @@ tokenizers==0.19.1
 tqdm==4.66.4
     # via google-generativeai
     # via huggingface-hub
-    # via mpire
     # via openai
     # via scrapegraphai
     # via semchunk
-typing-extensions==4.12.2
+typing-extensions==4.12.0
     # via anthropic
     # via anyio
     # via google-generativeai
@@ -362,7 +338,7 @@ undetected-playwright==0.3.0
     # via scrapegraphai
 uritemplate==4.1.1
     # via google-api-python-client
-urllib3==1.26.19
+urllib3==1.26.18
     # via botocore
     # via requests
 yarl==1.9.4

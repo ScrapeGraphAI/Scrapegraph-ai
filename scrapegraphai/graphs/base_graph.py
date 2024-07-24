@@ -220,8 +220,6 @@ class BaseGraph:
         # Log the graph execution telemetry
         graph_execution_time = time.time() - start_time
         response = state.get("answer", None) if source_type == "url" else None
-        content = state.get("parsed_doc", None) if response is not None else None
-        
         log_graph_execution(
             graph_name=self.graph_name,
             source=source,
@@ -230,7 +228,6 @@ class BaseGraph:
             llm_model=llm_model,
             embedder_model=embedder_model,
             source_type=source_type,
-            content=content,
             response=response,
             execution_time=graph_execution_time,
             total_tokens=cb_total["total_tokens"] if cb_total["total_tokens"] > 0 else None,

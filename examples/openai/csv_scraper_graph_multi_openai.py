@@ -22,13 +22,13 @@ text = pd.read_csv(file_path)
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
-     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
-    },
+    "llm": {
+        "api_key": "***************************",
+        "model": "oneapi/qwen-turbo",
+        "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
+    }
 }
 
 # ************************************************

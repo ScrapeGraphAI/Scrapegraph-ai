@@ -83,24 +83,6 @@ models_tokens = {
     "oneapi": {
         "qwen-turbo": 6000 
     },
-    "nvidia": {
-        "meta/llama3-70b-instruct": 419,
-        "meta/llama3-8b-instruct": 419,
-        "nemotron-4-340b-instruct": 1024,
-        "databricks/dbrx-instruct": 4096, 
-        "google/codegemma-7b": 8192, 
-        "google/gemma-2b": 2048, 
-        "google/gemma-7b": 8192, 
-        "google/recurrentgemma-2b": 2048, 
-        "meta/codellama-70b": 16384, 
-        "meta/llama2-70b": 4096, 
-        "microsoft/phi-3-mini-128k-instruct": 122880, 
-        "mistralai/mistral-7b-instruct-v0.2": 4096, 
-        "mistralai/mistral-large": 8192, 
-        "mistralai/mixtral-8x22b-instruct-v0.1": 32768, 
-        "mistralai/mixtral-8x7b-instruct-v0.1": 8192, 
-        "snowflake/arctic": 16384, 
-    },
     "groq": {
         "llama3-8b-8192": 8192,
         "llama3-70b-8192": 8192,

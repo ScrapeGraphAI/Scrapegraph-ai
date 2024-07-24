@@ -2,9 +2,8 @@
 convert_to_md modul
 """
 import html2text
-from urllib.parse import urlparse
 
-def convert_to_md(html: str, url: str = None) -> str:
+def convert_to_md(html):
     """ Convert HTML to Markdown.
     This function uses the html2text library to convert the provided HTML content to Markdown 
     format.

@@ -14,7 +14,6 @@ from langchain_google_vertexai import VertexAIEmbeddings
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 from langchain_fireworks import FireworksEmbeddings
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
-from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings
 from ..helpers import models_tokens
 from ..models import (
     Anthropic,
@@ -27,8 +26,7 @@ from ..models import (
     OpenAI,
     OneApi,
     Fireworks,
-    VertexAI,
-    Nvidia
+    VertexAI
 )
 from ..models.ernie import Ernie
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
@@ -186,13 +184,6 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return AzureOpenAI(llm_params)
-        elif "nvidia" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
-                llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return Nvidia(llm_params)
         elif "gemini" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
@@ -318,8 +309,6 @@ class AbstractGraph(ABC):
             return AzureOpenAIEmbeddings()
         elif isinstance(self.llm_model, Fireworks):
             return FireworksEmbeddings(model=self.llm_model.model_name)
-        elif isinstance(self.llm_model, Nvidia):
-            return NVIDIAEmbeddings(model=self.llm_model.model_name)
         elif isinstance(self.llm_model, Ollama):
             # unwrap the kwargs from the model whihc is a dict
             params = self.llm_model._lc_kwargs
@@ -356,14 +345,6 @@ class AbstractGraph(ABC):
             return OpenAIEmbeddings(api_key=embedder_params["api_key"])
         elif "azure" in embedder_params["model"]:
             return AzureOpenAIEmbeddings()
-        if "nvidia" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["nvidia"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return NVIDIAEmbeddings(model=embedder_params["model"], 
-                                    nvidia_api_key=embedder_params["api_key"])
         elif "ollama" in embedder_params["model"]:
             embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
             try:

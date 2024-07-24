@@ -14,7 +14,7 @@ graph_config = {
     "llm": {
         "api_key": openai_key,
         "model": "gpt-3.5-turbo",
-    }
+    },
 }
 
 FILE_NAME = "inputs/example.json"
