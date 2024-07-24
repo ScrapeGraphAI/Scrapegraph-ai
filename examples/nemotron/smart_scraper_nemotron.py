@@ -15,8 +15,8 @@ load_dotenv()
 
 graph_config = {
     "llm": {
-        "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "gpt-3.5-turbo",
+        "api_key": os.getenv("NEMOTRON_KEY"),
+        "model": "nvidia/meta/llama3-70b-instruct",
     },
     "verbose": True,
     "headless": False,
@@ -27,8 +27,8 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+    prompt="Extract me the python code inside the page",
+    source="https://www.exploit-db.com/exploits/51447",
     config=graph_config
 )
 
