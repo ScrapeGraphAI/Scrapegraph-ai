@@ -1,3 +1,10 @@
+## [1.11.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.1...v1.11.0-beta.2) (2024-07-24)
+
+
+### Features
+
+* pdate models_tokens.py ([377d679](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/377d679eecd62611c0c9a3cba8202c6f0719ed31))
+
 ## [1.11.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.4...v1.11.0-beta.1) (2024-07-23)
 
 
