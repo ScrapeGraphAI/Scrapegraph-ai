@@ -9,7 +9,7 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
+        "model": "ollama/llama3.1",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
