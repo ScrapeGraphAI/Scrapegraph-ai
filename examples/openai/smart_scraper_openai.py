@@ -27,8 +27,8 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Extract me the python code inside the page",
-    source="https://www.exploit-db.com/exploits/51447",
+    prompt="List me what does the company do, the name and a contact email.",
+    source="https://scrapegraphai.com/",
     config=graph_config
 )
 
