@@ -1,3 +1,15 @@
+## [1.11.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.3...v1.11.0-beta.4) (2024-07-25)
+
+
+### Features
+
+* add generate_answer node paralellization ([0c4b290](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0c4b2908d98efbb2b0a6faf68618a801d726bb5f))
+
+
+### chore
+
+* rebuild requirements ([2edad66](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2edad66788cbd92f197e3b37db13c44bfa39e36a))
+
 ## [1.11.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.2...v1.11.0-beta.3) (2024-07-25)
 
 
