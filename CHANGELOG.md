@@ -1,3 +1,15 @@
+## [1.11.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.2...v1.11.3) (2024-07-25)
+
+
+### Bug Fixes
+
+* add llama 3.1 ([f872bdd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f872bdd24f9874660eea04f9ade570c96b6e7e93))
+
+
+### Docs
+
+* prev version ([5c08eea](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c08eea189d7ede6f29399a67d897aa3b3f6a7b0))
+
 ## [1.11.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.1...v1.11.2) (2024-07-23)
 
 
