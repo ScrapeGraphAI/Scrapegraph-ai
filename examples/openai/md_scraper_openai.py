@@ -1,5 +1,5 @@
 """
-Basic example of scraping pipeline using MDScraperGraph from XML documents
+Basic example of scraping pipeline using MDScraperGraph from MD documents
 """
 
 import os
@@ -9,7 +9,7 @@ from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_i
 load_dotenv()
 
 # ************************************************
-# Read the XML file
+# Read the MD file
 # ************************************************
 
 FILE_NAME = "inputs/markdown_example.md"
