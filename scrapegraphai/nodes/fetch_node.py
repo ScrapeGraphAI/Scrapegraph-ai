@@ -10,7 +10,7 @@ import requests
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from ..utils.cleanup_html import cleanup_html
-from ..docloaders import ChromiumLoader
+from ..docloaders import ChromiumLoader, FirecrawlLoader
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
@@ -20,7 +20,7 @@ from ..models import OpenAI
 class FetchNode(BaseNode):
     """
     A node responsible for fetching the HTML content of a specified URL and updating
-    the graph's state with this content. It uses ChromiumLoader to fetch
+    the graph's state with this content. It uses ChromiumLoader or FirecrawlLoader to fetch
     the content from a web page asynchronously (with proxy protection).
 
     This node acts as a starting point in many scraping workflows, preparing the state
@@ -199,11 +199,14 @@ class FetchNode(BaseNode):
             if self.node_config is not None:
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
-            loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
+            if loader_kwargs.get("scraping_backend", "chromium") == "firecrawl":
+                loader = FirecrawlLoader([source], headless=self.headless, **loader_kwargs)
+            else:
+                loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
             document = loader.load()
 
             if not document or not document[0].page_content.strip():
-                raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
+                raise ValueError("No HTML body content found in the document fetched by the Loader (ChromiumLoader or FirecrawlLoader).")
             parsed_content = document[0].page_content
 
             if  isinstance(self.llm_model, OpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
