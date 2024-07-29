@@ -8,6 +8,7 @@ import uuid
 from pydantic import BaseModel
 
 from langchain_community.chat_models import ChatOllama
+from langchain_openai import ChatOpenAI
 
 from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
@@ -21,7 +22,6 @@ from ..helpers import models_tokens
 from ..models import (
     Anthropic,
     AzureOpenAI,
-    OpenAI,
     Bedrock,
     Gemini,
     Groq,
@@ -37,7 +37,7 @@ from langchain.chat_models import init_chat_model
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
 
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, OpenAI, Bedrock, Gemini, Groq, HuggingFace, Anthropic, DeepSeek
+from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Anthropic, DeepSeek
 
 
 class AbstractGraph(ABC):
@@ -311,7 +311,7 @@ class AbstractGraph(ABC):
             return GoogleGenerativeAIEmbeddings(
                 google_api_key=llm_config["api_key"], model="models/embedding-001"
             )
-        if isinstance(self.llm_model, OpenAI):
+        if isinstance(self.llm_model, ChatOpenAI):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key, 
                                     base_url=self.llm_model.openai_api_base)
         elif isinstance(self.llm_model, DeepSeek):
