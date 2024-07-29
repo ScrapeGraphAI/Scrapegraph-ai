@@ -163,9 +163,10 @@ class AbstractGraph(ABC):
         if "gpt-" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["openai"][llm_params["model"]]
+                llm_params["model_provider"] = "openai"
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return OpenAI(llm_params)
+            return init_chat_model(**llm_params)
         elif "oneapi" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
