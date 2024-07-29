@@ -7,6 +7,8 @@ from typing import Optional, Union
 import uuid
 from pydantic import BaseModel
 
+from langchain_community.chat_models import ChatOllama
+
 from langchain_aws import BedrockEmbeddings
 from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -19,22 +21,23 @@ from ..helpers import models_tokens
 from ..models import (
     Anthropic,
     AzureOpenAI,
+    OpenAI,
     Bedrock,
     Gemini,
     Groq,
     HuggingFace,
-    Ollama,
-    OpenAI,
     OneApi,
     Fireworks,
     VertexAI,
     Nvidia
 )
 from ..models.ernie import Ernie
+from langchain.chat_models import init_chat_model
+
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
 
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Ollama, OpenAI, Anthropic, DeepSeek
+from ..models import AzureOpenAI, OpenAI, Bedrock, Gemini, Groq, HuggingFace, Anthropic, DeepSeek
 
 
 class AbstractGraph(ABC):
@@ -213,8 +216,10 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return VertexAI(llm_params)
+
         elif "ollama" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("ollama/")[-1]
+            llm_params["model_provider"] = "ollama"
 
             # allow user to set model_tokens in config
             try:
@@ -231,7 +236,8 @@ class AbstractGraph(ABC):
             except AttributeError:
                 self.model_token = 8192
 
-            return Ollama(llm_params)
+            return init_chat_model(**llm_params)
+
         elif "hugging_face" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
@@ -320,7 +326,7 @@ class AbstractGraph(ABC):
             return FireworksEmbeddings(model=self.llm_model.model_name)
         elif isinstance(self.llm_model, Nvidia):
             return NVIDIAEmbeddings(model=self.llm_model.model_name)
-        elif isinstance(self.llm_model, Ollama):
+        elif isinstance(self.llm_model, ChatOllama):
             # unwrap the kwargs from the model whihc is a dict
             params = self.llm_model._lc_kwargs
             # remove streaming and temperature
