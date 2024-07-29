@@ -3,33 +3,28 @@ AbstractGraph Module
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional, Union
+from typing import Optional
 import uuid
 from pydantic import BaseModel
 
 from langchain_community.chat_models import ChatOllama
 from langchain_openai import ChatOpenAI
 
-from langchain_aws import BedrockEmbeddings
-from langchain_community.embeddings import HuggingFaceHubEmbeddings, OllamaEmbeddings
+from langchain_aws import BedrockEmbeddings, ChatBedrock
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_google_vertexai import VertexAIEmbeddings
+from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
-from langchain_fireworks import FireworksEmbeddings
-from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings
+from langchain_fireworks import FireworksEmbeddings, ChatFireworks
+from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings, ChatOpenAI, AzureChatOpenAI
 from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings
 from ..helpers import models_tokens
 from ..models import (
-    Anthropic,
-    AzureOpenAI,
-    Bedrock,
-    Gemini,
-    Groq,
-    HuggingFace,
     OneApi,
-    Fireworks,
-    VertexAI,
-    Nvidia
+    Nvidia,
+    DeepSeek
 )
 from ..models.ernie import Ernie
 from langchain.chat_models import init_chat_model
@@ -37,7 +32,6 @@ from langchain.chat_models import init_chat_model
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
 
 from ..helpers import models_tokens
-from ..models import AzureOpenAI, Bedrock, Gemini, Groq, HuggingFace, Anthropic, DeepSeek
 
 
 class AbstractGraph(ABC):
@@ -181,7 +175,8 @@ class AbstractGraph(ABC):
                 llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return Fireworks(llm_params)
+            llm_params["model_provider"] = "fireworks"
+            return init_chat_model(**llm_params)
         elif "azure" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
@@ -189,7 +184,8 @@ class AbstractGraph(ABC):
                 self.model_token = models_tokens["azure"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return AzureOpenAI(llm_params)
+            llm_params["model_provider"] = "azure_openai"
+            return init_chat_model(**llm_params)
         elif "nvidia" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
@@ -203,20 +199,23 @@ class AbstractGraph(ABC):
                 self.model_token = models_tokens["gemini"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return Gemini(llm_params)
+            llm_params["model_provider"] = "google_genai "
+            return init_chat_model(**llm_params)
         elif llm_params["model"].startswith("claude"):
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
                 self.model_token = models_tokens["claude"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return Anthropic(llm_params)
+            llm_params["model_provider"] = "anthropic"
+            return init_chat_model(**llm_params)
         elif llm_params["model"].startswith("vertexai"):
             try:
                 self.model_token = models_tokens["vertexai"][llm_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return VertexAI(llm_params)
+            llm_params["model_provider"] = "google_vertexai"
+            return init_chat_model(**llm_params)
 
         elif "ollama" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("ollama/")[-1]
@@ -246,7 +245,8 @@ class AbstractGraph(ABC):
             except KeyError:
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
-            return HuggingFace(llm_params)
+            llm_params["model_provider"] = "hugging_face"
+            return init_chat_model(**llm_params)
         elif "groq" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
 
@@ -255,7 +255,8 @@ class AbstractGraph(ABC):
             except KeyError:
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
-            return Groq(llm_params)
+            llm_params["model_provider"] = "groq"
+            return init_chat_model(**llm_params)
         elif "bedrock" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
             model_id = llm_params["model"]
@@ -265,22 +266,16 @@ class AbstractGraph(ABC):
             except KeyError:
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
-            return Bedrock(
-                {
-                    "client": client,
-                    "model_id": model_id,
-                    "model_kwargs": {
-                        "temperature": llm_params["temperature"],
-                    },
-                }
-            )
+            llm_params["model_provider"] = "bedrock"
+            return init_chat_model(**llm_params)
         elif "claude-3-" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["claude"]["claude3"]
             except KeyError:
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
-            return Anthropic(llm_params)
+            llm_params["model_provider"] = "anthropic"
+            return init_chat_model(**llm_params)
         elif "deepseek" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["deepseek"][llm_params["model"]]
@@ -308,7 +303,7 @@ class AbstractGraph(ABC):
         Raises:
             ValueError: If the model is not supported.
         """
-        if isinstance(self.llm_model, Gemini):
+        if isinstance(self.llm_model, ChatGoogleGenerativeAI):
             return GoogleGenerativeAIEmbeddings(
                 google_api_key=llm_config["api_key"], model="models/embedding-001"
             )
@@ -317,13 +312,13 @@ class AbstractGraph(ABC):
                                     base_url=self.llm_model.openai_api_base)
         elif isinstance(self.llm_model, DeepSeek):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
-        elif isinstance(self.llm_model, VertexAI):
+        elif isinstance(self.llm_model, ChatVertexAI):
             return VertexAIEmbeddings()
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
-        elif isinstance(self.llm_model, AzureOpenAI):
+        elif isinstance(self.llm_model, AzureChatOpenAI):
             return AzureOpenAIEmbeddings()
-        elif isinstance(self.llm_model, Fireworks):
+        elif isinstance(self.llm_model, ChatFireworks):
             return FireworksEmbeddings(model=self.llm_model.model_name)
         elif isinstance(self.llm_model, Nvidia):
             return NVIDIAEmbeddings(model=self.llm_model.model_name)
@@ -335,9 +330,9 @@ class AbstractGraph(ABC):
             params.pop("temperature", None)
 
             return OllamaEmbeddings(**params)
-        elif isinstance(self.llm_model, HuggingFace):
-            return HuggingFaceHubEmbeddings(model=self.llm_model.model)
-        elif isinstance(self.llm_model, Bedrock):
+        elif isinstance(self.llm_model, ChatHuggingFace):
+            return HuggingFaceEmbeddings(model=self.llm_model.model)
+        elif isinstance(self.llm_model, ChatBedrock):
             return BedrockEmbeddings(client=None, model_id=self.llm_model.model_id)
         else:
             raise ValueError("Embedding Model missing or not supported")
@@ -384,7 +379,7 @@ class AbstractGraph(ABC):
                 models_tokens["hugging_face"][embedder_params["model"]]
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return HuggingFaceHubEmbeddings(model=embedder_params["model"])
+            return HuggingFaceEmbeddings(model=embedder_params["model"])
         elif "fireworks" in embedder_params["model"]:
             embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
             try:
