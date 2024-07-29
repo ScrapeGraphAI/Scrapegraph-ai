@@ -6,12 +6,10 @@ from typing import List, Optional
 
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
-
+from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
-from ..models import Ollama
-
 
 class SearchInternetNode(BaseNode):
     """
@@ -97,7 +95,7 @@ class SearchInternetNode(BaseNode):
         search_answer = search_prompt | self.llm_model | output_parser
         
         # Ollama: Use no json format when creating the search query
-        if isinstance(self.llm_model, Ollama) and self.llm_model.format == 'json':
+        if isinstance(self.llm_model, ChatOllama) and self.llm_model.format == 'json':
             self.llm_model.format = None
             search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
             self.llm_model.format = 'json'

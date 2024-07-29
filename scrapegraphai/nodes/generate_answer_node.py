@@ -9,6 +9,7 @@ from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
+from langchain_openai import ChatOpenAI
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..helpers import template_chunks, template_no_chunks, template_merge, template_chunks_md, template_no_chunks_md, template_merge_md
