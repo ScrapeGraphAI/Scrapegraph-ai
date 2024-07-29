@@ -34,7 +34,9 @@ dependencies = [
     "undetected-playwright>=0.3.0",
     "semchunk>=1.0.1",
     "langchain-fireworks>=0.1.3",
-    "langchain-community>=0.2.9"
+    "langchain-community>=0.2.9",
+    "firecrawl-py>=0.0.2",
+
 ]
 
 license = "MIT"
