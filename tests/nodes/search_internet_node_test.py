@@ -1,5 +1,5 @@
 import unittest
-from scrapegraphai.models import Ollama
+from langchain_community.chat_models import ChatOllama
 from scrapegraphai.nodes import SearchInternetNode
 
 class TestSearchInternetNode(unittest.TestCase):
@@ -18,7 +18,7 @@ class TestSearchInternetNode(unittest.TestCase):
         }
 
         # Define the model
-        self.llm_model = Ollama(self.graph_config["llm"])
+        self.llm_model = ChatOllama(self.graph_config["llm"])
 
         # Initialize the SearchInternetNode
         self.search_node = SearchInternetNode(

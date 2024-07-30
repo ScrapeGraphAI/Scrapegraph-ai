@@ -10,6 +10,7 @@
 -e file:.
 aiohttp==3.9.5
     # via langchain
+    # via langchain-community
     # via langchain-fireworks
     # via langchain-nvidia-ai-endpoints
 aiosignal==1.3.1
@@ -62,6 +63,8 @@ faiss-cpu==1.8.0.post1
     # via scrapegraphai
 filelock==3.15.4
     # via huggingface-hub
+    # via torch
+    # via transformers
 fireworks-ai==0.14.0
     # via langchain-fireworks
 free-proxy==1.1.1
@@ -71,6 +74,7 @@ frozenlist==1.4.1
     # via aiosignal
 fsspec==2024.6.1
     # via huggingface-hub
+    # via torch
 google==3.0.0
     # via scrapegraphai
 google-ai-generativelanguage==0.6.6
@@ -155,17 +159,24 @@ httpx==0.27.0
 httpx-sse==0.4.0
     # via fireworks-ai
 huggingface-hub==0.24.0
+    # via langchain-huggingface
+    # via sentence-transformers
     # via tokenizers
+    # via transformers
 idna==3.7
     # via anyio
     # via httpx
     # via requests
     # via yarl
+jinja2==3.1.4
+    # via torch
 jiter==0.5.0
     # via anthropic
 jmespath==1.0.1
     # via boto3
     # via botocore
+joblib==1.4.2
+    # via scikit-learn
 jsonpatch==1.33
     # via langchain-core
 jsonpointer==3.0.0
@@ -183,10 +194,12 @@ langchain-core==0.2.22
     # via langchain
     # via langchain-anthropic
     # via langchain-aws
+    # via langchain-community
     # via langchain-fireworks
     # via langchain-google-genai
     # via langchain-google-vertexai
     # via langchain-groq
+    # via langchain-huggingface
     # via langchain-nvidia-ai-endpoints
     # via langchain-openai
     # via langchain-text-splitters
@@ -198,6 +211,8 @@ langchain-google-vertexai==1.0.7
     # via scrapegraphai
 langchain-groq==0.1.6
     # via scrapegraphai
+langchain-huggingface==0.0.3
+    # via scrapegraphai
 langchain-nvidia-ai-endpoints==0.1.6
     # via scrapegraphai
 langchain-openai==0.1.17
@@ -206,15 +221,20 @@ langchain-text-splitters==0.2.2
     # via langchain
 langsmith==0.1.93
     # via langchain
+    # via langchain-community
     # via langchain-core
 lxml==5.2.2
     # via free-proxy
+markupsafe==2.1.5
+    # via jinja2
 marshmallow==3.21.3
     # via dataclasses-json
 minify-html==0.15.0
     # via scrapegraphai
 mpire==2.10.2
     # via semchunk
+mpmath==1.3.0
+    # via sympy
 multidict==6.0.5
     # via aiohttp
     # via yarl
@@ -222,12 +242,19 @@ multiprocess==0.70.16
     # via mpire
 mypy-extensions==1.0.0
     # via typing-inspect
+networkx==3.2.1
+    # via torch
 numpy==1.26.4
     # via faiss-cpu
     # via langchain
     # via langchain-aws
+    # via langchain-community
     # via pandas
+    # via scikit-learn
+    # via scipy
+    # via sentence-transformers
     # via shapely
+    # via transformers
 openai==1.37.0
     # via langchain-fireworks
     # via langchain-openai
@@ -239,11 +266,14 @@ packaging==24.1
     # via google-cloud-bigquery
     # via huggingface-hub
     # via langchain-core
+    # via marshmallow
+    # via transformers
 pandas==2.2.2
     # via scrapegraphai
 pillow==10.4.0
     # via fireworks-ai
     # via langchain-nvidia-ai-endpoints
+    # via sentence-transformers
 playwright==1.45.0
     # via scrapegraphai
     # via undetected-playwright
@@ -296,9 +326,12 @@ pytz==2024.1
 pyyaml==6.0.1
     # via huggingface-hub
     # via langchain
+    # via langchain-community
     # via langchain-core
+    # via transformers
 regex==2024.5.15
     # via tiktoken
+    # via transformers
 requests==2.32.3
     # via free-proxy
     # via google-api-core
@@ -306,15 +339,26 @@ requests==2.32.3
     # via google-cloud-storage
     # via huggingface-hub
     # via langchain
+    # via langchain-community
     # via langchain-fireworks
     # via langsmith
     # via tiktoken
+    # via transformers
 rsa==4.9
     # via google-auth
 s3transfer==0.10.2
     # via boto3
+safetensors==0.4.3
+    # via transformers
+scikit-learn==1.5.1
+    # via sentence-transformers
+scipy==1.13.1
+    # via scikit-learn
+    # via sentence-transformers
 semchunk==2.2.0
     # via scrapegraphai
+sentence-transformers==3.0.1
+    # via langchain-huggingface
 shapely==2.0.5
     # via google-cloud-aiplatform
 six==1.16.0
@@ -330,14 +374,23 @@ soupsieve==2.5
 sqlalchemy==2.0.31
     # via langchain
     # via langchain-community
+sympy==1.13.1
+    # via torch
 tenacity==8.5.0
     # via langchain
+    # via langchain-community
     # via langchain-core
+threadpoolctl==3.5.0
+    # via scikit-learn
 tiktoken==0.7.0
     # via langchain-openai
     # via scrapegraphai
 tokenizers==0.19.1
     # via anthropic
+    # via langchain-huggingface
+    # via transformers
+torch==2.2.2
+    # via sentence-transformers
 tqdm==4.66.4
     # via google-generativeai
     # via huggingface-hub
@@ -345,6 +398,11 @@ tqdm==4.66.4
     # via openai
     # via scrapegraphai
     # via semchunk
+    # via sentence-transformers
+    # via transformers
+transformers==4.43.3
+    # via langchain-huggingface
+    # via sentence-transformers
 typing-extensions==4.12.2
     # via anthropic
     # via anyio
@@ -356,6 +414,10 @@ typing-extensions==4.12.2
     # via pydantic-core
     # via pyee
     # via sqlalchemy
+    # via torch
+    # via typing-inspect
+typing-inspect==0.9.0
+    # via dataclasses-json
 tzdata==2024.1
     # via pandas
 undetected-playwright==0.3.0
