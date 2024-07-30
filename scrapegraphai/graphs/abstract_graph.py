@@ -19,14 +19,14 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 from langchain_fireworks import FireworksEmbeddings, ChatFireworks
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings, ChatOpenAI, AzureChatOpenAI
-from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings
+from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings, ChatNVIDIA
+from langchain_community.chat_models import ErnieBotChat
 from ..helpers import models_tokens
 from ..models import (
     OneApi,
-    Nvidia,
     DeepSeek
 )
-from ..models.ernie import Ernie
+
 from langchain.chat_models import init_chat_model
 
 from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
@@ -192,7 +192,7 @@ class AbstractGraph(ABC):
                 llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return Nvidia(llm_params)
+            return ChatNVIDIA(llm_params)
         elif "gemini" in llm_params["model"]:
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
@@ -289,7 +289,7 @@ class AbstractGraph(ABC):
             except KeyError:
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
-            return Ernie(llm_params)
+            return ErnieBotChat(llm_params)
         else:
             raise ValueError("Model provided by the configuration not supported")
 
@@ -320,7 +320,7 @@ class AbstractGraph(ABC):
             return AzureOpenAIEmbeddings()
         elif isinstance(self.llm_model, ChatFireworks):
             return FireworksEmbeddings(model=self.llm_model.model_name)
-        elif isinstance(self.llm_model, Nvidia):
+        elif isinstance(self.llm_model, ChatNVIDIA):
             return NVIDIAEmbeddings(model=self.llm_model.model_name)
         elif isinstance(self.llm_model, ChatOllama):
             # unwrap the kwargs from the model whihc is a dict
