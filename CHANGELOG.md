@@ -1,3 +1,25 @@
+## [1.11.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.4...v1.11.0-beta.5) (2024-07-30)
+
+
+### Features
+
+* fix tests ([1db164e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1db164e9e682eefbc1414989a043fefa2e9009c2))
+
+
+### chore
+
+* remove unused import ([88710f1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/88710f1a7c7d50f57108456112da30d1a12a1ba1))
+
+
+### Refactor
+
+* **Ollama:** integrate new LangChain chat init ([d177afb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d177afb68be036465ede1f567d2562b145d77d36))
+* **OpenAI:** integrate new LangChain chat init ([5e3eb6e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5e3eb6e43df4bd4c452d34b49f254235e9ff1b22))
+* remove LangChain wrappers ([2c5f934](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2c5f934f101e319ec4e61009d4c464ca4626c1ff))
+* remove LangChain wrappers for Ollama ([25066b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/25066b2bc51517e50058231664230b8edef365b9))
+* remove redundant LangChain wrappers ([9275486](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/927548624034b3c30eca60011d216720102d1815))
+* remove redundant wrappers for Ernie and Nvidia ([bc2c996](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bc2c9967d2f13ade6eeb7b23e9b423f6e79aa890))
+
 ## [1.11.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.3...v1.11.0-beta.4) (2024-07-25)
 
 
