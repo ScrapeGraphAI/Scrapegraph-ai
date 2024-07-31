@@ -36,6 +36,7 @@ dependencies = [
     "langchain-fireworks>=0.1.3",
     "langchain-community>=0.2.9",
     "langchain-huggingface>=0.0.3",
+    "browserbase==0.3.0"
 ]
 
 license = "MIT"
