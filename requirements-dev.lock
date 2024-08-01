@@ -54,6 +54,8 @@ boto3==1.34.146
 botocore==1.34.146
     # via boto3
     # via s3transfer
+browserbase==0.3.0
+    # via scrapegraphai
 burr==0.22.1
     # via scrapegraphai
 cachetools==5.4.0
@@ -208,6 +210,7 @@ httptools==0.6.1
     # via uvicorn
 httpx==0.27.0
     # via anthropic
+    # via browserbase
     # via fastapi
     # via fireworks-ai
     # via groq
@@ -383,6 +386,7 @@ pillow==10.4.0
 platformdirs==4.2.2
     # via pylint
 playwright==1.45.0
+    # via browserbase
     # via scrapegraphai
     # via undetected-playwright
 pluggy==1.5.0
@@ -412,6 +416,7 @@ pyasn1-modules==0.4.0
     # via google-auth
 pydantic==2.8.2
     # via anthropic
+    # via browserbase
     # via burr
     # via fastapi
     # via fastapi-pagination
