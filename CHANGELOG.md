@@ -1,3 +1,10 @@
+## [1.11.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.5...v1.11.0-beta.6) (2024-07-31)
+
+
+### Features
+
+* intregration of firebase ([4caed54](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4caed545e5030460b2d5e46f9ad90546ce36f0ee))
+
 ## [1.11.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.4...v1.11.0-beta.5) (2024-07-30)
 
 
