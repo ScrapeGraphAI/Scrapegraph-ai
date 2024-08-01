@@ -1,3 +1,15 @@
+## [1.11.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.7...v1.11.0-beta.8) (2024-08-01)
+
+
+### Features
+
+* add integration in the abstract grapgh ([5ecdbe7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5ecdbe715f4bb223fa1be834fda07ccea2a51cb9))
+
+
+### Bug Fixes
+
+* fixed bug on fetch_node ([968c69e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/968c69e217d9c180b9b8c2aa52ca59b9a1733525))
+
 ## [1.11.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.6...v1.11.0-beta.7) (2024-08-01)
 
 
