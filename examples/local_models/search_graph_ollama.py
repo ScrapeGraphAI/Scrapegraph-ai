@@ -16,11 +16,6 @@ graph_config = {
         # "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
     "max_results": 5,
     "verbose": True,
 }

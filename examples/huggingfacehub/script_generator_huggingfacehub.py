@@ -36,7 +36,6 @@ embedder_model_instance = HuggingFaceInferenceAPIEmbeddings(
 
 graph_config = {
     "llm": {"model_instance": llm_model_instance},
-    "embeddings": {"model_instance": embedder_model_instance}
 }
 # ************************************************
 # Create the ScriptCreatorGraph instance and run it
