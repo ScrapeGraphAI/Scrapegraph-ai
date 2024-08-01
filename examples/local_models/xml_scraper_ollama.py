@@ -30,11 +30,6 @@ graph_config = {
         # "model_tokens": 2000, # set context length arbitrarily
         "base_url": "http://localhost:11434",
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        "base_url": "http://localhost:11434",
-    },
     "verbose": True,
 }
 

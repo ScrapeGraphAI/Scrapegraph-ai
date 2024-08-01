@@ -29,8 +29,6 @@ class AbstractGraph(ABC):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client,
-                        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
 
@@ -85,7 +83,6 @@ class AbstractGraph(ABC):
             "verbose": self.verbose,
             "loader_kwargs": self.loader_kwargs,
             "llm_model": self.llm_model,
-            "embedder_model": self.embedder_model,
             "cache_path": self.cache_path,
             }
 
