@@ -11,10 +11,6 @@ graph_config = {
         "format": "json",  # Ollama needs the format to be specified explicitly
         "model_tokens": 4000,
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-    },
     "verbose": True,
 }
 

@@ -7,31 +7,17 @@ from typing import Optional
 import uuid
 from pydantic import BaseModel
 
-from langchain_community.chat_models import ChatOllama
-from langchain_openai import ChatOpenAI
-
-from langchain_aws import BedrockEmbeddings, ChatBedrock
-from langchain_huggingface import ChatHuggingFace, HuggingFaceEmbeddings
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
-from langchain_fireworks import FireworksEmbeddings, ChatFireworks
-from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings, ChatOpenAI, AzureChatOpenAI
-from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings, ChatNVIDIA
 from langchain_community.chat_models import ErnieBotChat
+from langchain_nvidia_ai_endpoints import ChatNVIDIA
+from langchain.chat_models import init_chat_model
+
 from ..helpers import models_tokens
 from ..models import (
     OneApi,
     DeepSeek
 )
+from ..utils.logging import set_verbosity_warning, set_verbosity_info
 
-from langchain.chat_models import init_chat_model
-
-from ..utils.logging import set_verbosity_debug, set_verbosity_warning, set_verbosity_info
-
-from ..helpers import models_tokens
 
 
 class AbstractGraph(ABC):
@@ -43,8 +29,6 @@ class AbstractGraph(ABC):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client,
-                        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
 
@@ -65,16 +49,14 @@ class AbstractGraph(ABC):
         >>> result = my_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict, 
+    def __init__(self, prompt: str, config: dict,
                  source: Optional[str] = None, schema: Optional[BaseModel] = None):
 
         self.prompt = prompt
         self.source = source
         self.config = config
         self.schema = schema
-        self.llm_model = self._create_llm(config["llm"], chat=True)
-        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]) if "embeddings" not in config else self._create_embedder(
-            config["embeddings"])
+        self.llm_model = self._create_llm(config["llm"])
         self.verbose = False if config is None else config.get(
             "verbose", False)
         self.headless = True if config is None else config.get(
@@ -101,7 +83,6 @@ class AbstractGraph(ABC):
             "verbose": self.verbose,
             "loader_kwargs": self.loader_kwargs,
             "llm_model": self.llm_model,
-            "embedder_model": self.embedder_model,
             "cache_path": self.cache_path,
             }
 
@@ -128,7 +109,7 @@ class AbstractGraph(ABC):
         for node in self.graph.nodes:
             node.update_config(params, overwrite)
 
-    def _create_llm(self, llm_config: dict, chat=False) -> object:
+    def _create_llm(self, llm_config: dict) -> object:
         """
         Create a large language model instance based on the configuration provided.
 
@@ -148,20 +129,83 @@ class AbstractGraph(ABC):
         # If model instance is passed directly instead of the model details
         if "model_instance" in llm_params:
             try:
-               self.model_token = llm_params["model_tokens"]
+                self.model_token = llm_params["model_tokens"]
             except KeyError as exc:
-               raise KeyError("model_tokens not specified") from exc
+                raise KeyError("model_tokens not specified") from exc
             return llm_params["model_instance"]
 
-        # Instantiate the language model based on the model name
-        if "gpt-" in llm_params["model"]:
+        # Instantiate the language model based on the model name (models that use the common interface)
+        def handle_model(model_name, provider, token_key, default_token=8192):
             try:
-                self.model_token = models_tokens["openai"][llm_params["model"]]
-                llm_params["model_provider"] = "openai"
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
+                self.model_token = models_tokens[provider][token_key]
+            except KeyError:
+                print(f"Model not found, using default token size ({default_token})")
+                self.model_token = default_token
+            llm_params["model_provider"] = provider
+            llm_params["model"] = model_name
             return init_chat_model(**llm_params)
-        elif "oneapi" in llm_params["model"]:
+
+        if "gpt-" in llm_params["model"]:
+            return handle_model(llm_params["model"], "openai", llm_params["model"])
+
+        if "fireworks" in llm_params["model"]:
+            model_name = "/".join(llm_params["model"].split("/")[1:])
+            token_key = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "fireworks", token_key)
+
+        if "azure" in llm_params["model"]:
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "azure_openai", model_name)
+
+        if "gemini" in llm_params["model"]:
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "google_genai", model_name)
+
+        if llm_params["model"].startswith("claude"):
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "anthropic", model_name)
+
+        if llm_params["model"].startswith("vertexai"):
+            return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
+
+        if "ollama" in llm_params["model"]:
+            model_name = llm_params["model"].split("ollama/")[-1]
+            token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
+            return handle_model(model_name, "ollama", token_key)
+
+        if "hugging_face" in llm_params["model"]:
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "hugging_face", model_name)
+
+        if "groq" in llm_params["model"]:
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "groq", model_name)
+
+        if "bedrock" in llm_params["model"]:
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "bedrock", model_name)
+
+        if "claude-3-" in llm_params["model"]:
+            return handle_model(llm_params["model"], "anthropic", "claude3")
+
+        # Instantiate the language model based on the model name (models that do not use the common interface)
+        if "deepseek" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["deepseek"][llm_params["model"]]
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
+            return DeepSeek(llm_params)
+
+        if "ernie" in llm_params["model"]:
+            try:
+                self.model_token = models_tokens["ernie"][llm_params["model"]]
+            except KeyError:
+                print("model not found, using default token size (8192)")
+                self.model_token = 8192
+            return ErnieBotChat(llm_params)
+        
+        if "oneapi" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
@@ -169,240 +213,18 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return OneApi(llm_params)
-        elif "fireworks" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["fireworks"][llm_params["model"].split("/")[-1]]
-                llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            llm_params["model_provider"] = "fireworks"
-            return init_chat_model(**llm_params)
-        elif "azure" in llm_params["model"]:
-            # take the model after the last dash
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-            try:
-                self.model_token = models_tokens["azure"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            llm_params["model_provider"] = "azure_openai"
-            return init_chat_model(**llm_params)
-        elif "nvidia" in llm_params["model"]:
+        
+        if "nvidia" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
                 llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return ChatNVIDIA(llm_params)
-        elif "gemini" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-            try:
-                self.model_token = models_tokens["gemini"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            llm_params["model_provider"] = "google_genai "
-            return init_chat_model(**llm_params)
-        elif llm_params["model"].startswith("claude"):
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-            try:
-                self.model_token = models_tokens["claude"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            llm_params["model_provider"] = "anthropic"
-            return init_chat_model(**llm_params)
-        elif llm_params["model"].startswith("vertexai"):
-            try:
-                self.model_token = models_tokens["vertexai"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            llm_params["model_provider"] = "google_vertexai"
-            return init_chat_model(**llm_params)
 
-        elif "ollama" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("ollama/")[-1]
-            llm_params["model_provider"] = "ollama"
+        # Raise an error if the model did not match any of the previous cases
+        raise ValueError("Model provided by the configuration not supported")
 
-            # allow user to set model_tokens in config
-            try:
-                if "model_tokens" in llm_params:
-                    self.model_token = llm_params["model_tokens"]
-                elif llm_params["model"] in models_tokens["ollama"]:
-                    try:
-                        self.model_token = models_tokens["ollama"][llm_params["model"]]
-                    except KeyError as exc:
-                        print("model not found, using default token size (8192)")
-                        self.model_token = 8192
-                else:
-                    self.model_token = 8192
-            except AttributeError:
-                self.model_token = 8192
-
-            return init_chat_model(**llm_params)
-
-        elif "hugging_face" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-            try:
-                self.model_token = models_tokens["hugging_face"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            llm_params["model_provider"] = "hugging_face"
-            return init_chat_model(**llm_params)
-        elif "groq" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-
-            try:
-                self.model_token = models_tokens["groq"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            llm_params["model_provider"] = "groq"
-            return init_chat_model(**llm_params)
-        elif "bedrock" in llm_params["model"]:
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-            model_id = llm_params["model"]
-            client = llm_params.get("client", None)
-            try:
-                self.model_token = models_tokens["bedrock"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            llm_params["model_provider"] = "bedrock"
-            return init_chat_model(**llm_params)
-        elif "claude-3-" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["claude"]["claude3"]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            llm_params["model_provider"] = "anthropic"
-            return init_chat_model(**llm_params)
-        elif "deepseek" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["deepseek"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            return DeepSeek(llm_params)
-        elif "ernie" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["ernie"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            return ErnieBotChat(llm_params)
-        else:
-            raise ValueError("Model provided by the configuration not supported")
-
-    def _create_default_embedder(self, llm_config=None) -> object:
-        """
-        Create an embedding model instance based on the chosen llm model.
-
-        Returns:
-            object: An instance of the embedding model client.
-
-        Raises:
-            ValueError: If the model is not supported.
-        """
-        if isinstance(self.llm_model, ChatGoogleGenerativeAI):
-            return GoogleGenerativeAIEmbeddings(
-                google_api_key=llm_config["api_key"], model="models/embedding-001"
-            )
-        if isinstance(self.llm_model, ChatOpenAI):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key, 
-                                    base_url=self.llm_model.openai_api_base)
-        elif isinstance(self.llm_model, DeepSeek):
-            return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
-        elif isinstance(self.llm_model, ChatVertexAI):
-            return VertexAIEmbeddings()
-        elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
-            return self.llm_model
-        elif isinstance(self.llm_model, AzureChatOpenAI):
-            return AzureOpenAIEmbeddings()
-        elif isinstance(self.llm_model, ChatFireworks):
-            return FireworksEmbeddings(model=self.llm_model.model_name)
-        elif isinstance(self.llm_model, ChatNVIDIA):
-            return NVIDIAEmbeddings(model=self.llm_model.model_name)
-        elif isinstance(self.llm_model, ChatOllama):
-            # unwrap the kwargs from the model whihc is a dict
-            params = self.llm_model._lc_kwargs
-            # remove streaming and temperature
-            params.pop("streaming", None)
-            params.pop("temperature", None)
-
-            return OllamaEmbeddings(**params)
-        elif isinstance(self.llm_model, ChatHuggingFace):
-            return HuggingFaceEmbeddings(model=self.llm_model.model)
-        elif isinstance(self.llm_model, ChatBedrock):
-            return BedrockEmbeddings(client=None, model_id=self.llm_model.model_id)
-        else:
-            raise ValueError("Embedding Model missing or not supported")
-
-    def _create_embedder(self, embedder_config: dict) -> object:
-        """
-        Create an embedding model instance based on the configuration provided.
-
-        Args:
-            embedder_config (dict): Configuration parameters for the embedding model.
-
-        Returns:
-            object: An instance of the embedding model client.
-
-        Raises:
-            KeyError: If the model is not supported.
-        """
-        embedder_params = {**embedder_config}
-        if "model_instance" in embedder_config:
-            return embedder_params["model_instance"]
-        # Instantiate the embedding model based on the model name
-        if "openai" in embedder_params["model"]:
-            return OpenAIEmbeddings(api_key=embedder_params["api_key"])
-        elif "azure" in embedder_params["model"]:
-            return AzureOpenAIEmbeddings()
-        if "nvidia" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["nvidia"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return NVIDIAEmbeddings(model=embedder_params["model"], 
-                                    nvidia_api_key=embedder_params["api_key"])
-        elif "ollama" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["ollama"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return OllamaEmbeddings(**embedder_params)
-        elif "hugging_face" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["hugging_face"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return HuggingFaceEmbeddings(model=embedder_params["model"])
-        elif "fireworks" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["fireworks"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return FireworksEmbeddings(model=embedder_params["model"])
-        elif "gemini" in embedder_params["model"]:
-            try:
-                models_tokens["gemini"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return GoogleGenerativeAIEmbeddings(model=embedder_params["model"])
-        elif "bedrock" in embedder_params["model"]:
-            embedder_params["model"] = embedder_params["model"].split("/")[-1]
-            client = embedder_params.get("client", None)
-            try:
-                models_tokens["bedrock"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return BedrockEmbeddings(client=client, model_id=embedder_params["model"])
-        else:
-            raise ValueError("Model provided by the configuration not supported")
 
     def get_state(self, key=None) -> dict:
         """ ""
@@ -444,11 +266,9 @@ class AbstractGraph(ABC):
         """
         Abstract method to create a graph representation.
         """
-        pass
 
     @abstractmethod
     def run(self) -> str:
         """
         Abstract method to execute the graph and return the result.
         """
-        pass
