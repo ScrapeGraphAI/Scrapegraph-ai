@@ -1,3 +1,6 @@
+"""
+Chromium module
+"""
 import asyncio
 from typing import Any, AsyncIterator, Iterator, List, Optional
 

@@ -37,6 +37,8 @@ boto3==1.34.146
 botocore==1.34.146
     # via boto3
     # via s3transfer
+browserbase==0.3.0
+    # via scrapegraphai
 cachetools==5.4.0
     # via google-auth
 certifi==2024.7.4
@@ -153,6 +155,7 @@ httplib2==0.22.0
     # via google-auth-httplib2
 httpx==0.27.0
     # via anthropic
+    # via browserbase
     # via fireworks-ai
     # via groq
     # via openai
@@ -275,6 +278,7 @@ pillow==10.4.0
     # via langchain-nvidia-ai-endpoints
     # via sentence-transformers
 playwright==1.45.0
+    # via browserbase
     # via scrapegraphai
     # via undetected-playwright
 proto-plus==1.24.0
@@ -299,6 +303,7 @@ pyasn1-modules==0.4.0
     # via google-auth
 pydantic==2.8.2
     # via anthropic
+    # via browserbase
     # via fireworks-ai
     # via google-cloud-aiplatform
     # via google-generativeai
