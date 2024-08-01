@@ -202,11 +202,10 @@ class FetchNode(BaseNode):
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
             if self.browser_base is not None:
-                document = [
-                Document(page_content= browser_base_fetch(self.browser_base.get("api_key"),
-                                                          self.browser_base.get("project_id"), source),
-                         metadata={})
-            ]
+                data =  browser_base_fetch(self.browser_base.get("api_key"),
+                                                          self.browser_base.get("project_id"), source)
+
+                document = [Document(page_content= data, metadata={"source": "html file"})]
             else:
                 loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
                 document = loader.load()

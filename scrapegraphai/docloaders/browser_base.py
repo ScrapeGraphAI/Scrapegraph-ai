@@ -2,8 +2,9 @@
 browserbase integration module 
 """
 from browserbase import Browserbase
+from typing import List
 
-def browser_base_fetch(api_key: str, project_id: str, link: str) -> object:
+def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[str]:
     """
     BrowserBase Fetch
 
@@ -15,7 +16,8 @@ def browser_base_fetch(api_key: str, project_id: str, link: str) -> object:
     - `link`: The URL or link that you want to fetch data from.
 
     It initializes a Browserbase object with the given API key and project ID, 
-    then uses this object to load the specified link. It returns the result of the loading operation.
+    then uses this object to load the specified link. 
+    It returns the result of the loading operation.
 
     Example usage:
 
@@ -41,6 +43,6 @@ def browser_base_fetch(api_key: str, project_id: str, link: str) -> object:
 
     browserbase = Browserbase(api_key=api_key, project_id=project_id)
 
-    result = browserbase.load(link)
+    result = browserbase.load([link])
 
     return result
