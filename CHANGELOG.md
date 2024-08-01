@@ -1,3 +1,16 @@
+## [1.11.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.6...v1.11.0-beta.7) (2024-08-01)
+
+
+### Bug Fixes
+
+* abstract_graph and removed unused embeddings ([0b4cfd6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0b4cfd6522dcad0eb418f0badd0f7824a1efd534))
+
+
+### Refactor
+
+* move embeddings code from AbstractGraph to RAGNode ([a94ebcd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a94ebcde0078d66d33e67f7e0a87850efb92d408))
+* reuse code for common interface models ([bb73d91](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bb73d916a1a7b378438038ec928eeda6d8f6ac9d))
+
 ## [1.11.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.5...v1.11.0-beta.6) (2024-07-31)
 
 
