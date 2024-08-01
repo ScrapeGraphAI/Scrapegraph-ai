@@ -11,6 +11,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from ..utils.cleanup_html import cleanup_html
 from ..docloaders import ChromiumLoader
+from ..docloaders.browser_base import browser_base_fetch
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
@@ -73,6 +74,8 @@ class FetchNode(BaseNode):
         self.cut = (
             False if node_config is None else node_config.get("cut", True)
         )
+
+        self.browser_base = node_config.get("browser_base")
 
     def execute(self, state):
         """
@@ -164,7 +167,7 @@ class FetchNode(BaseNode):
 
             parsed_content = source
 
-            if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator:
+            if isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator:
                 parsed_content = convert_to_md(source)
 
             compressed_document = [
@@ -177,7 +180,7 @@ class FetchNode(BaseNode):
             if response.status_code == 200:
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
-                
+
                 parsed_content = response
    
                 if not self.cut:
@@ -198,8 +201,15 @@ class FetchNode(BaseNode):
             if self.node_config is not None:
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
-            loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
-            document = loader.load()
+            if self.browser_base is not None:
+                document = [
+                Document(page_content= browser_base_fetch(self.browser_base.get("api_key"),
+                                                          self.browser_base.get("project_id"), source),
+                         metadata={})
+            ]
+            else:
+                loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
+                document = loader.load()
 
             if not document or not document[0].page_content.strip():
                 raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")

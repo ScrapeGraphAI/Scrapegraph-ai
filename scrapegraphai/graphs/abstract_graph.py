@@ -72,15 +72,16 @@ class AbstractGraph(ABC):
         self.source = source
         self.config = config
         self.schema = schema
-        self.llm_model = self._create_llm(config["llm"], chat=True)
-        self.embedder_model = self._create_default_embedder(llm_config=config["llm"]) if "embeddings" not in config else self._create_embedder(
-            config["embeddings"])
-        self.verbose = False if config is None else config.get(
+        self.llm_model = self._create_llm(self.config["llm"], chat=True)
+        self.embedder_model = self._create_default_embedder(llm_config=self.config["llm"]) if "embeddings" not in self.config else self._create_embedder(
+            self.config["embeddings"])
+        self.verbose = False if self.config is None else self.config.get(
             "verbose", False)
-        self.headless = True if config is None else config.get(
+        self.headless = True if self.config is None else config.get(
             "headless", True)
-        self.loader_kwargs = config.get("loader_kwargs", {})
-        self.cache_path = config.get("cache_path", False)
+        self.loader_kwargs = self.config.get("loader_kwargs", {})
+        self.cache_path = self.config.get("cache_path", False)
+        self.browser_base = self.config.get("browser_base")
 
         # Create the graph
         self.graph = self._create_graph()
