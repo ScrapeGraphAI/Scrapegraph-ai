@@ -1,3 +1,10 @@
+## [1.11.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.8...v1.11.0-beta.9) (2024-08-02)
+
+
+### Features
+
+* refactoring of the code ([9355507](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9355507a2dc73342f325b6649e871df48ae13567))
+
 ## [1.11.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.7...v1.11.0-beta.8) (2024-08-01)
 
 
