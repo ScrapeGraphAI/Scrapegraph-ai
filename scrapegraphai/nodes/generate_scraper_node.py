@@ -83,7 +83,6 @@ class GenerateScraperNode(BaseNode):
         user_prompt = input_data[0]
         doc = input_data[1]
 
-        # schema to be used for output parsing
         if self.node_config.get("schema", None) is not None:
             output_schema = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
@@ -130,7 +129,6 @@ class GenerateScraperNode(BaseNode):
         )
         map_chain = prompt | self.llm_model | StrOutputParser()
 
-        # Chain
         answer = map_chain.invoke({"question": user_prompt})
 
         state.update({self.output[0]: answer})

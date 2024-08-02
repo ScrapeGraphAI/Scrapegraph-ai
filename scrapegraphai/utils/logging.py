@@ -12,7 +12,7 @@ from typing import Optional
 
 _library_name = __name__.split(".", maxsplit=1)[0]
 
-_default_handler = None
+DEFAULT_HANDLER = None
 _default_logging_level = logging.WARNING
 
 _semaphore = threading.Lock()
@@ -23,22 +23,22 @@ def _get_library_root_logger() -> logging.Logger:
 
 
 def _set_library_root_logger() -> None:
-    global _default_handler
+    global DEFAULT_HANDLER
 
     with _semaphore:
-        if _default_handler:
+        if DEFAULT_HANDLER:
             return
 
-        _default_handler = logging.StreamHandler()  # sys.stderr as stream
+        DEFAULT_HANDLER = logging.StreamHandler()  # sys.stderr as stream
 
         # https://github.com/pyinstaller/pyinstaller/issues/7334#issuecomment-1357447176
         if sys.stderr is None:
-            sys.stderr = open(os.devnull, "w")
+            sys.stderr = open(os.devnull, "w", encoding="utf-8")
 
-        _default_handler.flush = sys.stderr.flush
+        DEFAULT_HANDLER.flush = sys.stderr.flush
 
         library_root_logger = _get_library_root_logger()
-        library_root_logger.addHandler(_default_handler)
+        library_root_logger.addHandler(DEFAULT_HANDLER)
         library_root_logger.setLevel(_default_logging_level)
         library_root_logger.propagate = False
 
@@ -86,8 +86,8 @@ def set_handler(handler: logging.Handler) -> None:
     _get_library_root_logger().addHandler(handler)
 
 
-def set_default_handler() -> None:
-    set_handler(_default_handler)
+def setDEFAULT_HANDLER() -> None:
+    set_handler(DEFAULT_HANDLER)
 
 
 def unset_handler(handler: logging.Handler) -> None:
@@ -98,8 +98,8 @@ def unset_handler(handler: logging.Handler) -> None:
     _get_library_root_logger().removeHandler(handler)
 
 
-def unset_default_handler() -> None:
-    unset_handler(_default_handler)
+def unsetDEFAULT_HANDLER() -> None:
+    unset_handler(DEFAULT_HANDLER)
 
 
 def set_propagation() -> None:

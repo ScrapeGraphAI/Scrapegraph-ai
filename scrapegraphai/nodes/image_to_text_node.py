@@ -3,14 +3,14 @@ ImageToTextNode Module
 """
 
 from typing import List, Optional
-
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 
 class ImageToTextNode(BaseNode):
     """
-    Retrieve images from a list of URLs and return a description of the images using an image-to-text model.
+    Retrieve images from a list of URLs and return a description of 
+    the images using an image-to-text model.
 
     Attributes:
         llm_model: An instance of the language model client used for image-to-text conversion.

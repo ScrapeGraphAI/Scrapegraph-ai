@@ -86,7 +86,8 @@ class BaseNode(ABC):
 
         Args:
             param (dict): The dictionary to update node_config with.
-            overwrite (bool): Flag indicating if the values of node_config should be overwritten if their value is not None.
+            overwrite (bool): Flag indicating if the values of node_config 
+            should be overwritten if their value is not None.
         """
         for key, val in params.items():
             if hasattr(self, key) and not overwrite:
@@ -133,7 +134,8 @@ class BaseNode(ABC):
 
     def _parse_input_keys(self, state: dict, expression: str) -> List[str]:
         """
-        Parses the input keys expression to extract relevant keys from the state based on logical conditions.
+        Parses the input keys expression to extract 
+        relevant keys from the state based on logical conditions.
         The expression can contain AND (&), OR (|), and parentheses to group conditions.
 
         Args:

@@ -13,19 +13,22 @@ def parse_expression(expression, state: dict) -> list:
         state (dict): Dictionary of state keys used to evaluate the expression.
 
     Raises:
-        ValueError: If the expression is empty, has adjacent state keys without operators, invalid operator usage,
-                    unbalanced parentheses, or if no state keys match the expression.
+        ValueError: If the expression is empty, has adjacent state keys without operators, 
+        invalid operator usage, unbalanced parentheses, or if no state keys match the expression.
 
     Returns:
-        list: A list of state keys that match the boolean expression, ensuring each key appears only once.
+        list: A list of state keys that match the boolean expression, 
+        ensuring each key appears only once.
 
     Example:
         >>> parse_expression("user_input & (relevant_chunks | parsed_document | document)", 
                             {"user_input": None, "document": None, "parsed_document": None, "relevant_chunks": None})
         ['user_input', 'relevant_chunks', 'parsed_document', 'document']
 
-    This function evaluates the expression to determine the logical inclusion of state keys based on provided boolean logic.
-    It checks for syntax errors such as unbalanced parentheses, incorrect adjacency of operators, and empty expressions.
+    This function evaluates the expression to determine the 
+    logical inclusion of state keys based on provided boolean logic.
+    It checks for syntax errors such as unbalanced parentheses, 
+    incorrect adjacency of operators, and empty expressions.
     """
 
     # Check for empty expression

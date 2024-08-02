@@ -1,8 +1,8 @@
 """
 convert_to_md modul
 """
-import html2text
 from urllib.parse import urlparse
+import html2text
 
 def convert_to_md(html: str, url: str = None) -> str:
     """ Convert HTML to Markdown.

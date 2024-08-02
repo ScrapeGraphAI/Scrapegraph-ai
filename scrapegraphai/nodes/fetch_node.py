@@ -133,7 +133,7 @@ class FetchNode(BaseNode):
             state.update({self.output[0]: compressed_document})
             return state
         elif input_keys[0] == "json":
-            f = open(source)
+            f = open(source, encoding="utf-8")
             compressed_document = [
                 Document(page_content=str(json.load(f)), metadata={"source": "json"})
             ]
@@ -181,12 +181,11 @@ class FetchNode(BaseNode):
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
 
-                parsed_content = response
-   
                 if not self.cut:
                     parsed_content = cleanup_html(response, source)
 
-                if  (isinstance(self.llm_model, ChatOpenAI) and not self.script_creator) or (self.force and not self.script_creator):
+                if  (isinstance(self.llm_model, ChatOpenAI)
+                     and not self.script_creator) or (self.force and not self.script_creator):
                     parsed_content = convert_to_md(source, input_data[0])
                 compressed_document = [Document(page_content=parsed_content)]
             else:
@@ -205,7 +204,8 @@ class FetchNode(BaseNode):
                 data =  browser_base_fetch(self.browser_base.get("api_key"),
                                             self.browser_base.get("project_id"), [source])
 
-                document = [Document(page_content=content, metadata={"source": source}) for content in data]
+                document = [Document(page_content=content,
+                                    metadata={"source": source}) for content in data]
             else:
                 loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
                 document = loader.load()
@@ -215,9 +215,7 @@ class FetchNode(BaseNode):
             parsed_content = document[0].page_content
 
             if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
-
                 parsed_content = convert_to_md(document[0].page_content, input_data[0])
-
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})

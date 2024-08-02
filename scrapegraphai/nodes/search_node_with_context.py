@@ -67,7 +67,6 @@ class SearchLinksWithContext(BaseNode):
         # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
-        user_prompt = input_data[0]
         doc = input_data[1]
 
         output_parser = CommaSeparatedListOutputParser()

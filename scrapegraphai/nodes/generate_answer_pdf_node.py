@@ -2,18 +2,13 @@
 Module for generating the answer node
 """
 
-# Imports from standard library
 from typing import List, Optional
-
-# Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
-
-# Imports from the library
 from .base_node import BaseNode
 from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
 

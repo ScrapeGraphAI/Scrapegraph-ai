@@ -1,7 +1,6 @@
 """
 GenerateAnswerNode Module
 """
-import asyncio
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -9,7 +8,6 @@ from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
-from langchain_openai import ChatOpenAI
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..helpers import template_chunks, template_no_chunks, template_merge, template_chunks_md, template_no_chunks_md, template_merge_md
@@ -130,7 +128,6 @@ class GenerateAnswerNode(BaseNode):
                 partial_variables={"context": chunk,
                                 "chunk_id": i + 1,
                                 "format_instructions": format_instructions})
-            # Add chain to dictionary with dynamic name
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
