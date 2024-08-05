@@ -53,7 +53,6 @@ class SearchGraph(AbstractGraph):
             self.copy_config = copy(config)
         else:
             self.copy_config = deepcopy(config)
-        
         self.copy_schema = deepcopy(schema)
         self.considered_urls = []  # New attribute to store URLs
 
