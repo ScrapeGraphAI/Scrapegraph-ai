@@ -36,7 +36,7 @@ class CSVScraperGraph(AbstractGraph):
             input="csv | csv_dir",
             output=["doc"],
         )
-     
+
         generate_answer_node = GenerateAnswerCSVNode(
             input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],
