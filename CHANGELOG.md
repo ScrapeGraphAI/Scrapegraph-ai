@@ -1,3 +1,10 @@
+## [1.11.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.9...v1.11.0-beta.10) (2024-08-02)
+
+
+### Bug Fixes
+
+* **AbstractGraph:** instantiation of Azure GPT models ([ade28fc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ade28fca2c3fdf40f28a80854e3b8435a52a6930)), closes [#498](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/498)
+
 ## [1.11.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.8...v1.11.0-beta.9) (2024-08-02)
 
 

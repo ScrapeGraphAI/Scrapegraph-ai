@@ -146,6 +146,10 @@ class AbstractGraph(ABC):
             llm_params["model"] = model_name
             return init_chat_model(**llm_params)
 
+        if "azure" in llm_params["model"]:
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "azure_openai", model_name)
+
         if "gpt-" in llm_params["model"]:
             return handle_model(llm_params["model"], "openai", llm_params["model"])
 
@@ -153,10 +157,6 @@ class AbstractGraph(ABC):
             model_name = "/".join(llm_params["model"].split("/")[1:])
             token_key = llm_params["model"].split("/")[-1]
             return handle_model(model_name, "fireworks", token_key)
-
-        if "azure" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "azure_openai", model_name)
 
         if "gemini" in llm_params["model"]:
             model_name = llm_params["model"].split("/")[-1]
