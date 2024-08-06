@@ -218,11 +218,9 @@ httpx==0.27.0
     # via openai
 httpx-sse==0.4.0
     # via fireworks-ai
-huggingface-hub==0.24.0
+huggingface-hub==0.24.1
     # via langchain-huggingface
     # via sentence-transformers
-huggingface-hub==0.24.1
-
     # via tokenizers
     # via transformers
 idna==3.7
@@ -297,8 +295,6 @@ langchain-groq==0.1.6
     # via scrapegraphai
 langchain-huggingface==0.0.3
     # via scrapegraphai
-langchain-nvidia-ai-endpoints==0.1.6
-
 langchain-nvidia-ai-endpoints==0.1.7
     # via scrapegraphai
 langchain-openai==0.1.17
@@ -390,8 +386,8 @@ pillow==10.4.0
     # via streamlit
 platformdirs==4.2.2
     # via pylint
-
 playwright==1.45.1
+    # via browserbase
     # via scrapegraphai
     # via undetected-playwright
 pluggy==1.5.0
