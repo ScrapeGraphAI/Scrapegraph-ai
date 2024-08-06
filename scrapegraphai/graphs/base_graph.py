@@ -157,9 +157,9 @@ class BaseGraph:
                     embedder_model = embedder_model.model
 
             if hasattr(current_node, "node_config"):
-                if type(current_node.node_config) is dict:
+                if isinstance(current_node.node_config,dict):
                     if current_node.node_config.get("schema", None) and schema is None:
-                        if type(current_node.node_config["schema"]) is not dict:
+                        if not  isinstance(current_node.node_config["schema"], dict):
                             # convert to dict
                             try:
                                 schema = current_node.node_config["schema"].schema()
