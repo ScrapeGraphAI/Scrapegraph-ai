@@ -188,6 +188,10 @@ class AbstractGraph(ABC):
 
         if "claude-3-" in llm_params["model"]:
             return handle_model(llm_params["model"], "anthropic", "claude3")
+        
+        if llm_params["model"].startswith("mistral"):
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "mistral", model_name)
 
         # Instantiate the language model based on the model name (models that do not use the common interface)
         if "deepseek" in llm_params["model"]:
