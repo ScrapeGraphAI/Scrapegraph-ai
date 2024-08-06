@@ -191,7 +191,7 @@ class AbstractGraph(ABC):
         
         if llm_params["model"].startswith("mistral"):
             model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "mistral", model_name)
+            return handle_model(model_name, "mistralai", model_name)
 
         # Instantiate the language model based on the model name (models that do not use the common interface)
         if "deepseek" in llm_params["model"]:
