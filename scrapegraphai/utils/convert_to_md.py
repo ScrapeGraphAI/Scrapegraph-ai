@@ -20,11 +20,12 @@ def convert_to_md(html: str, url: str = None) -> str:
 
     Note: All the styles and links are ignored during the conversion. """
 
-    if url:
-        parsed_url = urlparse(url)
-        domain = f"{parsed_url.scheme}://{parsed_url.netloc}"
     h = html2text.HTML2Text()
     h.ignore_links = False
-    h.baseurl = domain
     h.body_width = 0
+    if url is not None:
+        parsed_url = urlparse(url)
+        domain = f"{parsed_url.scheme}://{parsed_url.netloc}"
+        h.baseurl = domain
+    
     return h.handle(html)
