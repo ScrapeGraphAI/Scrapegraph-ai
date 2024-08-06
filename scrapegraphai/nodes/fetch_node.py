@@ -168,7 +168,10 @@ class FetchNode(BaseNode):
             parsed_content = source
 
             if isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator:
+
                 parsed_content = convert_to_md(source)
+            else:
+                parsed_content = source
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "local_dir"})
@@ -187,6 +190,7 @@ class FetchNode(BaseNode):
                 if  (isinstance(self.llm_model, ChatOpenAI)
                      and not self.script_creator) or (self.force and not self.script_creator):
                     parsed_content = convert_to_md(source, input_data[0])
+
                 compressed_document = [Document(page_content=parsed_content)]
             else:
                 self.logger.warning(
@@ -216,6 +220,7 @@ class FetchNode(BaseNode):
 
             if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
                 parsed_content = convert_to_md(document[0].page_content, input_data[0])
+
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})

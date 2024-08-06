@@ -11,7 +11,7 @@ ScrapeGraphAI 是一个*网络爬虫* Python 库，使用大型语言模型和�
 只需告诉库您想提取哪些信息，它将为您完成！
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
 </p>
 
 ## 🚀 快速安装

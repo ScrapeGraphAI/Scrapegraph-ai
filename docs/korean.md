@@ -6,7 +6,7 @@ ScrapeGraphAI는 웹 사이트와 로컬 문서(XML, HTML, JSON 등)에 대한 �
 추출하려는 정보를 말하기만 하면 라이브러리가 알아서 처리해 줍니다!
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png" alt="Scrapegraph-ai Logo" style="width: 50%;">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
 </p>
 
 ## 🚀 빠른 설치

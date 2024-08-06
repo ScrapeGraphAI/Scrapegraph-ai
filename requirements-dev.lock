@@ -221,6 +221,8 @@ httpx-sse==0.4.0
 huggingface-hub==0.24.0
     # via langchain-huggingface
     # via sentence-transformers
+huggingface-hub==0.24.1
+
     # via tokenizers
     # via transformers
 idna==3.7
@@ -231,7 +233,7 @@ idna==3.7
     # via yarl
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==8.0.0
+importlib-metadata==8.1.0
     # via sphinx
 importlib-resources==6.4.0
     # via matplotlib
@@ -263,16 +265,16 @@ jsonschema-specifications==2023.12.1
     # via jsonschema
 kiwisolver==1.4.5
     # via matplotlib
-langchain==0.2.10
+langchain==0.2.11
     # via langchain-community
     # via scrapegraphai
 langchain-anthropic==0.1.20
     # via scrapegraphai
 langchain-aws==0.1.12
     # via scrapegraphai
-langchain-community==0.2.9
+langchain-community==0.2.10
     # via scrapegraphai
-langchain-core==0.2.22
+langchain-core==0.2.23
     # via langchain
     # via langchain-anthropic
     # via langchain-aws
@@ -296,6 +298,8 @@ langchain-groq==0.1.6
 langchain-huggingface==0.0.3
     # via scrapegraphai
 langchain-nvidia-ai-endpoints==0.1.6
+
+langchain-nvidia-ai-endpoints==0.1.7
     # via scrapegraphai
 langchain-openai==0.1.17
     # via scrapegraphai
@@ -386,8 +390,8 @@ pillow==10.4.0
     # via streamlit
 platformdirs==4.2.2
     # via pylint
-playwright==1.45.0
-    # via browserbase
+
+playwright==1.45.1
     # via scrapegraphai
     # via undetected-playwright
 pluggy==1.5.0

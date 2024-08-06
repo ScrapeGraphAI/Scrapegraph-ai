@@ -25,9 +25,14 @@
 * fixed bug on fetch_node ([968c69e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/968c69e217d9c180b9b8c2aa52ca59b9a1733525))
 
 ## [1.11.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.6...v1.11.0-beta.7) (2024-08-01)
+## [1.10.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.6...v1.10.0-beta.7) (2024-07-23)
+
+## [1.11.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.2...v1.11.3) (2024-07-25)
+
 
 
 ### Bug Fixes
+
 
 * abstract_graph and removed unused embeddings ([0b4cfd6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0b4cfd6522dcad0eb418f0badd0f7824a1efd534))
 
@@ -79,6 +84,16 @@
 * rebuild requirements ([2edad66](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2edad66788cbd92f197e3b37db13c44bfa39e36a))
 
 ## [1.11.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.2...v1.11.0-beta.3) (2024-07-25)
+=======
+* add llama 3.1 ([f872bdd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f872bdd24f9874660eea04f9ade570c96b6e7e93))
+
+
+### Docs
+
+* prev version ([5c08eea](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c08eea189d7ede6f29399a67d897aa3b3f6a7b0))
+
+
+## [1.11.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.1...v1.11.2) (2024-07-23)
 
 
 ### Bug Fixes
@@ -93,6 +108,16 @@
 * pdate models_tokens.py ([377d679](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/377d679eecd62611c0c9a3cba8202c6f0719ed31))
 
 ## [1.11.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.4...v1.11.0-beta.1) (2024-07-23)
+* md conversion ([1d41f6e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1d41f6eafe8ed0e191bb6a258d54c6388ff283c6))
+
+## [1.11.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0...v1.11.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* md conversion ([5a45e9f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5a45e9f2d86a1c58b8ea321e3df9718bc00f9c28))
+
+## [1.11.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.4...v1.11.0) (2024-07-23)
 
 
 ### Features
@@ -181,7 +206,10 @@
 
 
 
+
 ### Features
+
+* add nvidia connection ([fc0dadb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fc0dadb8f812dfd636dec856921a971b58695ce3))
 
 
 * add new toml ([fcb3220](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fcb3220868e7ef1127a7a47f40d0379be282e6eb))
@@ -201,6 +229,24 @@
 
 ### chore
 
+* **dependecies:** add script to auto-update requirements ([3289c7b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3289c7bf5ec58ac3d04e9e5e8e654af9abcee228))
+* **ci:** set up workflow for requirements auto-update ([295fc28](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/295fc28ceb02c78198f7fbe678352503b3259b6b))
+* update requirements.txt ([c7bac98](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c7bac98d2e79e5ab98fa65d7efa858a2cdda1622))
+
+## [1.10.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.10.0-beta.5...v1.10.0-beta.6) (2024-07-22)
+
+
+### Features
+
+* add new toml ([fcb3220](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fcb3220868e7ef1127a7a47f40d0379be282e6eb))
+* add gpt4o omni ([431edb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/431edb7bb2504f4c1335c3ae3ce2f91867fa7222))
+* add searchngx integration ([5c92186](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c9218608140bf694fbfd96aa90276bc438bb475))
+* refactoring_to_md function ([602dd00](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/602dd00209ee1d72a1223fc4793759450921fcf9))
+
+
+
+
+### chore
 
 * **pyproject:** upgrade dependencies ([0425124](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0425124c570f765b98fcf67ba6649f4f9fe76b15))
 * correct search engine name ([7ba2f6a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7ba2f6ae0b9d2e9336e973e1f57ab8355c739e27))
@@ -209,9 +255,11 @@
 * upgrade tiktoken ([7314bc3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7314bc383068db590662bf7e512f799529308991))
 
 
+
 ### Docs
 
 * **gpt-4o-mini:** added new gpt, fixed chromium lazy loading, ([99dc849](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/99dc8497d85289759286a973e4aecc3f924d3ada))
+
 
 
 ### CI
@@ -554,7 +602,7 @@
 * **release:** 1.6.1 [skip ci] ([44fbd71](https://github.com/VinciGit00/Scrapegraph-ai/commit/44fbd71742a57a4b10f22ed33781bb67aa77e58d))
 
 ## [1.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.6.1) (2024-06-15)
-=======
+
 
 
 ### Bug Fixes

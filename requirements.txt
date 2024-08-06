@@ -1,6 +1,12 @@
 langchain>=0.2.10
 langchain-google-genai>=1.0.7
 langchain-google-vertexai
+
+langchain-fireworks>=0.1.3
+langchain_community>=0.2.9
+langchain-google-genai>=1.0.7
+langchain-google-vertexai>=1.0.7
+
 langchain-openai>=0.1.17
 langchain-groq>=0.1.3
 langchain-aws>=0.1.3
@@ -24,3 +30,4 @@ langchain-fireworks>=0.1.3
 langchain-community>=0.2.9
 langchain-huggingface>=0.0.3
 browserbase==0.3.0
+
