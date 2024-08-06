@@ -1,3 +1,10 @@
+## [1.11.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.10...v1.11.0-beta.11) (2024-08-06)
+
+
+### Features
+
+* update base_graph ([0571b6d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0571b6da55920bfe691feef2e1ecb5f3760dabf7))
+
 ## [1.11.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.0-beta.9...v1.11.0-beta.10) (2024-08-02)
 
 
