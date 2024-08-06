@@ -146,7 +146,14 @@ models_tokens = {
         "cohere.embed-multilingual-v3": 512
     },
     "mistral": {
-        "mistralai/Mistral-7B-Instruct-v0.2": 32000
+        "mistral-large-latest": 128000,
+        "open-mistral-nemo": 128000,
+        "codestral-latest": 32000,
+        "mistral-embed": 8000,
+        "open-mistral-7b": 32000,
+        "open-mixtral-8x7b": 32000,
+        "open-mixtral-8x22b": 64000,
+        "open-codestral-mamba": 256000
     },
     "hugging_face": {
         "xai-org/grok-1": 8192,
