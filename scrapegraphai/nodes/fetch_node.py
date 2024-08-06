@@ -117,8 +117,6 @@ class FetchNode(BaseNode):
             return state
         # handling pdf
         elif input_keys[0] == "pdf":
-
-
             loader = PyPDFLoader(source)
             compressed_document = loader.load()
             state.update({self.output[0]: compressed_document})
