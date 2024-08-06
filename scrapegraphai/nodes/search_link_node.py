@@ -2,19 +2,13 @@
 SearchLinkNode Module
 """
 
-# Imports from standard library
 from typing import List, Optional
 import re
 from tqdm import tqdm
-
-# Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
-
 from ..utils.logging import get_logger
-
-# Imports from the library
 from .base_node import BaseNode
 
 

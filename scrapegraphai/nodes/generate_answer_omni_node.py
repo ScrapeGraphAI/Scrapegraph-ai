@@ -10,7 +10,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
-from ..models import Ollama
+from langchain_community.chat_models import ChatOllama
 # Imports from the library
 from .base_node import BaseNode
 from ..helpers.generate_answer_node_omni_prompts import template_no_chunk_omni, template_chunks_omni, template_merge_omni
@@ -44,7 +44,7 @@ class GenerateAnswerOmniNode(BaseNode):
         super().__init__(node_name, "node", input, output, 3, node_config)
 
         self.llm_model = node_config["llm_model"]
-        if isinstance(node_config["llm_model"], Ollama):
+        if isinstance(node_config["llm_model"], ChatOllama):
             self.llm_model.format="json"
 
         self.verbose = (
@@ -113,7 +113,7 @@ class GenerateAnswerOmniNode(BaseNode):
 
             chain =  prompt | self.llm_model | output_parser
             answer = chain.invoke({"question": user_prompt})
-            
+
             state.update({self.output[0]: answer})
             return state
 

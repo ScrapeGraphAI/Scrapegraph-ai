@@ -16,11 +16,6 @@ graph_config = {
         "api_key": fireworks_api_key,
         "model": "fireworks/accounts/fireworks/models/mixtral-8x7b-instruct"
     },
-     "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
     "verbose": True,
 }
 

@@ -196,6 +196,11 @@ models_tokens = {
     "fireworks": {
         "llama-v2-7b": 4096,
         "mixtral-8x7b-instruct": 4096,
-        "nomic-ai/nomic-embed-text-v1.5": 8192        
+        "nomic-ai/nomic-embed-text-v1.5": 8192,       
+        "llama-3.1-405B-instruct": 131072,
+        "llama-3.1-70B-instruct": 131072,
+        "llama-3.1-8B-instruct": 131072,
+        "mixtral-moe-8x22B-instruct": 65536,
+        "mixtral-moe-8x7B-instruct": 65536
     },
 }

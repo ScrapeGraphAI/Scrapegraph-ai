@@ -4,9 +4,7 @@ Example of custom graph using existing nodes
 
 import os
 from dotenv import load_dotenv
-
-from langchain_openai import OpenAIEmbeddings
-from scrapegraphai.models import OpenAI
+from langchain_openai import ChatOpenAI
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
 load_dotenv()
@@ -22,11 +20,6 @@ graph_config = {
         "api_key": fireworks_api_key,
         "model": "fireworks/accounts/fireworks/models/mixtral-8x7b-instruct"
     },
-     "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
     "verbose": True,
     "headless": False,
 }
@@ -35,8 +28,7 @@ graph_config = {
 # Define the graph nodes
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
-embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
+llm_model = ChatOpenAI(graph_config["llm"])
 
 # define the nodes for the graph
 robot_node = RobotsNode(
@@ -65,15 +57,7 @@ parse_node = ParseNode(
         "verbose": True,
     }
 )
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
-    node_config={
-        "llm_model": llm_model,
-        "embedder_model": embedder,
-        "verbose": True,
-    }
-)
+
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
@@ -92,14 +76,11 @@ graph = BaseGraph(
         robot_node,
         fetch_node,
         parse_node,
-        rag_node,
-        generate_answer_node,
     ],
     edges=[
         (robot_node, fetch_node),
         (fetch_node, parse_node),
-        (parse_node, rag_node),
-        (rag_node, generate_answer_node)
+        (parse_node, generate_answer_node)
     ],
     entry_point=robot_node
 )

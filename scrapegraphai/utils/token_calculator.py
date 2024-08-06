@@ -22,7 +22,8 @@ def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]
         >>> truncate_text_tokens("This is a sample text for truncation.", "GPT-3", "EMBEDDING_ENCODING")
         ["This is a sample text", "for truncation."]
 
-    This function ensures that each chunk of text can be tokenized by the specified model without exceeding the model's token limit.
+    This function ensures that each chunk of text can be tokenized 
+    by the specified model without exceeding the model's token limit.
     """
 
     encoding = tiktoken.get_encoding(encoding_name)

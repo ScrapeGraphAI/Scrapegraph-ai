@@ -1,6 +1,8 @@
 [project]
 name = "scrapegraphai"
-version = "1.12.1b1"
+
+version = "1.11.0b10"
+
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 
 authors = [
@@ -9,10 +11,11 @@ authors = [
     { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
 ]
 
-dependencies = [
     "langchain>=0.2.10",
+
     "langchain-fireworks>=0.1.3",
     "langchain_community>=0.2.9",
+
     "langchain-google-genai>=1.0.7",
     "langchain-google-vertexai>=1.0.7",
     "langchain-openai>=0.1.17",
@@ -34,6 +37,10 @@ dependencies = [
     "google>=3.0.0",
     "undetected-playwright>=0.3.0",
     "semchunk>=1.0.1",
+    "langchain-fireworks>=0.1.3",
+    "langchain-community>=0.2.9",
+    "langchain-huggingface>=0.0.3",
+    "browserbase==0.3.0"
 ]
 
 license = "MIT"

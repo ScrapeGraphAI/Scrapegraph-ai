@@ -6,7 +6,6 @@ import ipaddress
 import random
 import re
 from typing import List, Optional, Set, TypedDict
-
 import requests
 from fp.errors import FreeProxyException
 from fp.fp import FreeProxy

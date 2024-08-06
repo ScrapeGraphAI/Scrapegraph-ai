@@ -1,39 +1,31 @@
 """ 
-Basic example of scraping pipeline using SmartScraper from text
+Basic example of scraping pipeline using SmartScraper
 """
 
 import os
 import json
-
 from dotenv import load_dotenv
-
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
 # ************************************************
-# Read the text file
-# ************************************************
-
-FILE_NAME = "inputs/plain_html_example.txt"
-curr_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(curr_dir, FILE_NAME)
-
-# It could be also a http request using the request model
-with open(file_path, 'r', encoding="utf-8") as file:
-    text = file.read()
-
-# ************************************************
 # Define the configuration for the graph
 # ************************************************
 
+
 graph_config = {
     "llm": {
-        "client": "client_name",
-        "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
-        "temperature": 0.0
-    }
+        "api_key": os.getenv("OPENAI_API_KEY"),
+        "model": "gpt-3.5-turbo",
+    },
+    "browser_base": {
+        "api_key": os.getenv("BROWSER_BASE_API_KEY"),
+        "project_id": os.getenv("BROWSER_BASE_API_KEY"),
+    },
+    "verbose": True,
+    "headless": False,
 }
 
 # ************************************************
@@ -41,8 +33,8 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description.",
-    source=text,
+    prompt="List me what does the company do, the name and a contact email.",
+    source="https://scrapegraphai.com/",
     config=graph_config
 )
 

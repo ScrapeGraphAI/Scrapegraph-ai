@@ -1,16 +1,13 @@
 """
 SearchInternetNode Module
 """
-
 from typing import List, Optional
-
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
-
+from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
-
 
 class SearchInternetNode(BaseNode):
     """
@@ -94,7 +91,14 @@ class SearchInternetNode(BaseNode):
 
         # Execute the chain to get the search query
         search_answer = search_prompt | self.llm_model | output_parser
-        search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
+        
+        # Ollama: Use no json format when creating the search query
+        if isinstance(self.llm_model, ChatOllama) and self.llm_model.format == 'json':
+            self.llm_model.format = None
+            search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
+            self.llm_model.format = 'json'
+        else:
+            search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
 
         self.logger.info(f"Search Query: {search_query}")
 

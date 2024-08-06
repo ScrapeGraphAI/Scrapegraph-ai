@@ -5,13 +5,11 @@ GraphIterator Module
 import asyncio
 import copy
 from typing import List, Optional
-
 from tqdm.asyncio import tqdm
-
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
-_default_batchsize = 16
+DEFAULT_BATCHSIZE = 16
 
 
 class GraphIteratorNode(BaseNode):
@@ -51,13 +49,15 @@ class GraphIteratorNode(BaseNode):
                             the correct data from the state.
 
         Returns:
-            dict: The updated state with the output key containing the results of the graph instances.
+            dict: The updated state with the output key c
+            ontaining the results of the graph instances.
 
         Raises:
-            KeyError: If the input keys are not found in the state, indicating that the
-                        necessary information for running the graph instances is missing.
+            KeyError: If the input keys are not found in the state, 
+            indicating that thenecessary information for running 
+            the graph instances is missing.
         """
-        batchsize = self.node_config.get("batchsize", _default_batchsize)
+        batchsize = self.node_config.get("batchsize", DEFAULT_BATCHSIZE)
 
         self.logger.info(
             f"--- Executing {self.node_name} Node with batchsize {batchsize} ---"

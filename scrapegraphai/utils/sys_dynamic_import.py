@@ -5,7 +5,7 @@ source code inspired by https://gist.github.com/DiTo97/46f4b733396b8d7a8f1d4d22d
 
 import sys
 import typing
-
+import importlib.util  # noqa: F401
 
 if typing.TYPE_CHECKING:
     import types
@@ -24,9 +24,6 @@ def srcfile_import(modpath: str, modname: str) -> "types.ModuleType":
     Raises:
         ImportError: If the module cannot be imported from the srcfile
     """
-    import importlib.util  # noqa: F401
-
-    #
     spec = importlib.util.spec_from_file_location(modname, modpath)
 
     if spec is None:

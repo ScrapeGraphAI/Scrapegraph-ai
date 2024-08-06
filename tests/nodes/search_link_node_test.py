@@ -1,5 +1,5 @@
 import pytest
-from scrapegraphai.models import Ollama
+from langchain_community.chat_models import ChatOllama
 from scrapegraphai.nodes import SearchLinkNode
 from unittest.mock import patch, MagicMock
 
@@ -18,7 +18,7 @@ def setup():
     }
 
     # Instantiate the LLM model with the configuration
-    llm_model = Ollama(graph_config["llm"])
+    llm_model = ChatOllama(graph_config["llm"])
 
     # Define the SearchLinkNode with necessary configurations
     search_link_node = SearchLinkNode(

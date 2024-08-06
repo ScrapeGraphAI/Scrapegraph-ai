@@ -3,11 +3,10 @@ Module for showing how PDFScraper multi works
 """
 import os
 import json
-from dotenv import load_dotenv
-from scrapegraphai.graphs import PdfScraperMultiGraph
-
-from pydantic import BaseModel, Field
 from typing import List
+from dotenv import load_dotenv
+from pydantic import BaseModel, Field
+from scrapegraphai.graphs import PdfScraperMultiGraph
 
 load_dotenv()
 
@@ -20,7 +19,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o",
     },
     "verbose": True,
 }
