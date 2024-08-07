@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.1...v1.12.2) (2024-08-07)
+
+
+### Bug Fixes
+
+* generate answer node omni ([b52e4a3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b52e4a390bb23ca55922e47046db558e1969a047))
+
 ## [1.12.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.0...v1.12.1) (2024-08-07)
 
 
