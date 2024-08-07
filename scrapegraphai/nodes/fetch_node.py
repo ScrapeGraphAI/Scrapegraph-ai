@@ -120,12 +120,11 @@ class FetchNode(BaseNode):
         if input_type in handlers:
             return handlers[input_type](state, input_type, source)
         elif self.input == "pdf_dir":
-            pass
+            return state
         elif not source.startswith("http"):
             return self.handle_local_source(state, source)
         else:
             return self.handle_web_source(state, source)
-    
     
     def handle_directory(self, state, input_type, source):
         """
