@@ -17,6 +17,9 @@ from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 
+""""
+FetchNode Module
+"""
 class FetchNode(BaseNode):
     """
     A node responsible for fetching the HTML content of a specified URL and updating
@@ -68,14 +71,16 @@ class FetchNode(BaseNode):
             False if node_config is None else node_config.get("script_creator", False)
         )
         self.openai_md_enabled = (
-            False if node_config is None else node_config.get("script_creator", False)
+            False if node_config is None else node_config.get("openai_md_enabled", False)
         )
 
         self.cut = (
             False if node_config is None else node_config.get("cut", True)
         )
 
-        self.browser_base = node_config.get("browser_base")
+        self.browser_base = (
+            None if node_config is None else node_config.get("browser_base")
+        )
 
     def execute(self, state):
         """
