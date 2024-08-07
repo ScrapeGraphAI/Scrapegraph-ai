@@ -17,6 +17,9 @@ from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 
+""""
+FetchNode Module
+"""
 class FetchNode(BaseNode):
     """
     A node responsible for fetching the HTML content of a specified URL and updating
@@ -68,14 +71,16 @@ class FetchNode(BaseNode):
             False if node_config is None else node_config.get("script_creator", False)
         )
         self.openai_md_enabled = (
-            False if node_config is None else node_config.get("script_creator", False)
+            False if node_config is None else node_config.get("openai_md_enabled", False)
         )
 
         self.cut = (
             False if node_config is None else node_config.get("cut", True)
         )
 
-        self.browser_base = node_config.get("browser_base")
+        self.browser_base = (
+            None if node_config is None else node_config.get("browser_base")
+        )
 
     def execute(self, state):
         """
@@ -102,81 +107,149 @@ class FetchNode(BaseNode):
         input_data = [state[key] for key in input_keys]
 
         source = input_data[0]
-        if (
-            input_keys[0] == "json_dir"
-            or input_keys[0] == "xml_dir"
-            or input_keys[0] == "csv_dir"
-            or input_keys[0] == "pdf_dir"
-            or input_keys[0] == "md_dir"
-        ):
-            compressed_document = [
-                source
-            ]
-
-            state.update({self.output[0]: compressed_document})
-            return state
-        # handling pdf
-        elif input_keys[0] == "pdf":
-            loader = PyPDFLoader(source)
-            compressed_document = loader.load()
-            state.update({self.output[0]: compressed_document})
-            return state
-
-        elif input_keys[0] == "csv":
-            compressed_document = [
-                Document(
-                    page_content=str(pd.read_csv(source)), metadata={"source": "csv"}
-                )
-            ]
-            state.update({self.output[0]: compressed_document})
-            return state
-        elif input_keys[0] == "json":
-            f = open(source, encoding="utf-8")
-            compressed_document = [
-                Document(page_content=str(json.load(f)), metadata={"source": "json"})
-            ]
-            state.update({self.output[0]: compressed_document})
-            return state
-
-        elif input_keys[0] == "xml":
-            with open(source, "r", encoding="utf-8") as f:
-                data = f.read()
-            compressed_document = [
-                Document(page_content=data, metadata={"source": "xml"})
-            ]
-            state.update({self.output[0]: compressed_document})
-            return state
-        elif input_keys[0] == "md":
-            with open(source, "r", encoding="utf-8") as f:
-                data = f.read()
-            compressed_document = [
-                Document(page_content=data, metadata={"source": "md"})
-            ]
-            state.update({self.output[0]: compressed_document})
-            return state
-
+        input_type = input_keys[0]
+        
+        handlers = {
+            "json_dir": self.handle_directory,
+            "xml_dir": self.handle_directory,
+            "csv_dir": self.handle_directory,
+            "pdf_dir": self.handle_directory,
+            "md_dir": self.handle_directory,
+            "pdf": self.handle_file,
+            "csv": self.handle_file,
+            "json": self.handle_file,
+            "xml": self.handle_file,
+            "md": self.handle_file,
+        }
+        
+        if input_type in handlers:
+            return handlers[input_type](state, input_type, source)
         elif self.input == "pdf_dir":
-            pass
-
+            return state
         elif not source.startswith("http"):
-            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
-            if not source.strip():
-                raise ValueError("No HTML body content found in the local source.")
+            return self.handle_local_source(state, source)
+        else:
+            return self.handle_web_source(state, source)
+    
+    def handle_directory(self, state, input_type, source):
+        """
+        Handles the directory by compressing the source document and updating the state.
 
+        Parameters:
+        state (dict): The current state of the graph.
+        input_type (str): The type of input being processed.
+        source (str): The source document to be compressed.
+
+        Returns:
+        dict: The updated state with the compressed document.
+        """
+        
+        compressed_document = [
+            source
+        ]
+        state.update({self.output[0]: compressed_document})
+        return state
+
+    def handle_file(self, state, input_type, source):
+        """
+        Loads the content of a file based on its input type.
+
+        Parameters:
+        state (dict): The current state of the graph.
+        input_type (str): The type of the input file (e.g., "pdf", "csv", "json", "xml", "md").
+        source (str): The path to the source file.
+
+        Returns:
+        dict: The updated state with the compressed document.
+
+        The function supports the following input types:
+        - "pdf": Uses PyPDFLoader to load the content of a PDF file.
+        - "csv": Reads the content of a CSV file using pandas and converts it to a string.
+        - "json": Loads the content of a JSON file.
+        - "xml": Reads the content of an XML file as a string.
+        - "md": Reads the content of a Markdown file as a string.
+        """
+        
+        compressed_document = self.load_file_content(source, input_type)
+        
+        return self.update_state(state, compressed_document)
+        
+    def load_file_content(self, source, input_type):
+        """
+        Loads the content of a file based on its input type.
+
+        Parameters:
+        source (str): The path to the source file.
+        input_type (str): The type of the input file (e.g., "pdf", "csv", "json", "xml", "md").
+
+        Returns:
+        list: A list containing a Document object with the loaded content and metadata.
+        """
+        
+        if input_type == "pdf":
+            loader = PyPDFLoader(source)
+            return loader.load()
+        elif input_type == "csv":
+            return [Document(page_content=str(pd.read_csv(source)), metadata={"source": "csv"})]
+        elif input_type == "json":
+            with open(source, encoding="utf-8") as f:
+                return [Document(page_content=str(json.load(f)), metadata={"source": "json"})]
+        elif input_type == "xml" or input_type == "md":
+            with open(source, "r", encoding="utf-8") as f:
+                data = f.read()
+            return [Document(page_content=data, metadata={"source": input_type})]
+    
+    def handle_local_source(self, state, source):
+        """
+        Handles the local source by fetching HTML content, optionally converting it to Markdown,
+        and updating the state.
+
+        Parameters:
+        state (dict): The current state of the graph.
+        source (str): The HTML content from the local source.
+
+        Returns:
+        dict: The updated state with the processed content.
+
+        Raises:
+        ValueError: If the source is empty or contains only whitespace.
+        """
+    
+        self.logger.info(f"--- (Fetching HTML from: {source}) ---")
+        if not source.strip():
+            raise ValueError("No HTML body content found in the local source.")
+        
+        parsed_content = source
+
+        if isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator:
+            parsed_content = convert_to_md(source)
+        else:
             parsed_content = source
 
-            if isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator:
+        compressed_document = [
+            Document(page_content=parsed_content, metadata={"source": "local_dir"})
+        ]
+        
+        return self.update_state(state, compressed_document)
+    
+    def handle_web_source(self, state, source):
+        """
+        Handles the web source by fetching HTML content from a URL, optionally converting it to Markdown,
+        and updating the state.
 
-                parsed_content = convert_to_md(source)
-            else:
-                parsed_content = source
+        Parameters:
+        state (dict): The current state of the graph.
+        source (str): The URL of the web source to fetch HTML content from.
 
-            compressed_document = [
-                Document(page_content=parsed_content, metadata={"source": "local_dir"})
-            ]
+        Returns:
+        dict: The updated state with the processed content.
 
-        elif self.use_soup:
-            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
+        Raises:
+        ValueError: If the fetched HTML content is empty or contains only whitespace.
+        """
+        
+        self.logger.info(f"--- (Fetching HTML from: {source}) ---")
+        if self.use_soup:
             response = requests.get(source)
             if response.status_code == 200:
                 if not response.text.strip():
@@ -194,9 +267,7 @@ class FetchNode(BaseNode):
                 self.logger.warning(
                     f"Failed to retrieve contents from the webpage at url: {source}"
                 )
-
         else:
-            self.logger.info(f"--- (Fetching HTML from: {source}) ---")
             loader_kwargs = {}
 
             if self.node_config is not None:
@@ -219,15 +290,24 @@ class FetchNode(BaseNode):
             if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
                 parsed_content = convert_to_md(document[0].page_content, input_data[0])
 
-
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
+        
+        return self.update_state(state, compressed_document)
+        
+    def update_state(self, state, compressed_document):
+        """
+        Updates the state with the output data from the node.
 
-        state.update(
-            {
-                self.output[0]: compressed_document,
-            }
-        )
+        Args:
+            state (dict): The current state of the graph.
+            compressed_document (List[Document]): The compressed document content fetched
+                                                    by the node.
 
+        Returns:
+            dict: The updated state with the output data.
+        """
+        
+        state.update({self.output[0]: compressed_document,})
         return state
