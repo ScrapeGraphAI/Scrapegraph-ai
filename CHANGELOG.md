@@ -1,3 +1,12 @@
+## [1.13.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.1...v1.13.0-beta.2) (2024-08-07)
+
+
+### Bug Fixes
+
+* refactoring of fetch_node ([29ad140](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/29ad140fa399e9cdd98289a70506269db25fb599))
+* refactoring of fetch_node adding comment ([bfc6852](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bfc6852b77b643e34543f7e436349f73d4ba1b5a))
+* refactoring of fetch_node qixed error ([1ea2ad8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1ea2ad8e79e9777c60f86565ed4930ee46e1ca53))
+
 ## [1.13.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.0...v1.13.0-beta.1) (2024-08-06)
 
 
