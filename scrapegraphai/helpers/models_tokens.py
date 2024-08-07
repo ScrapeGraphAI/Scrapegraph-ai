@@ -145,7 +145,7 @@ models_tokens = {
         "cohere.embed-english-v3": 512,
         "cohere.embed-multilingual-v3": 512
     },
-    "mistral": {
+    "mistralai": {
         "mistral-large-latest": 128000,
         "open-mistral-nemo": 128000,
         "codestral-latest": 32000,
