@@ -5,6 +5,7 @@ AbstractGraph Module
 from abc import ABC, abstractmethod
 from typing import Optional
 import uuid
+import warnings
 from pydantic import BaseModel
 
 from langchain_community.chat_models import ErnieBotChat
@@ -144,7 +145,9 @@ class AbstractGraph(ABC):
                 self.model_token = default_token
             llm_params["model_provider"] = provider
             llm_params["model"] = model_name
-            return init_chat_model(**llm_params)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                return init_chat_model(**llm_params)
 
         if "azure" in llm_params["model"]:
             model_name = llm_params["model"].split("/")[-1]
@@ -188,6 +191,10 @@ class AbstractGraph(ABC):
 
         if "claude-3-" in llm_params["model"]:
             return handle_model(llm_params["model"], "anthropic", "claude3")
+        
+        if llm_params["model"].startswith("mistral"):
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "mistralai", model_name)
 
         # Instantiate the language model based on the model name (models that do not use the common interface)
         if "deepseek" in llm_params["model"]:
