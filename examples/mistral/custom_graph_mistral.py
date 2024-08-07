@@ -5,8 +5,7 @@ Example of custom graph using existing nodes
 import os
 from dotenv import load_dotenv
 
-from langchain_openai import OpenAIEmbeddings
-from scrapegraphai.models import OpenAI
+from langchain_mistralai import ChatMistralAI, MistralAIEmbeddings
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
 load_dotenv()
@@ -27,8 +26,8 @@ graph_config = {
 # Define the graph nodes
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
-embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
+llm_model = ChatMistralAI(**graph_config["llm"])
+embedder = MistralAIEmbeddings(api_key=llm_model.mistral_api_key)
 
 # define the nodes for the graph
 robot_node = RobotsNode(
