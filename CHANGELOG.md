@@ -1,3 +1,10 @@
+## [1.13.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.3...v1.13.0-beta.4) (2024-08-07)
+
+
+### Bug Fixes
+
+* refactoring of merge_answer_node ([898e5a7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/898e5a7af504fbf4c1cabb14103e66184037de49))
+
 ## [1.13.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.2...v1.13.0-beta.3) (2024-08-07)
 
 
