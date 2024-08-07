@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.0...v1.12.1) (2024-08-07)
+
+
+### Bug Fixes
+
+* generate answer node pdf has a bug ([625ca9f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/625ca9f22a91a292a844ddb45e0edc767bf24711))
+
 ## [1.12.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.3...v1.12.0) (2024-08-06)
 
 
