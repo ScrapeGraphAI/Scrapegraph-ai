@@ -79,8 +79,7 @@ class FetchNode(BaseNode):
         )
 
         self.browser_base = (
-            None if node_config is None else node_config.get("browser_base")
-        )
+            None if node_config is None else node_config.get("browser_base", None)
 
     def execute(self, state):
         """

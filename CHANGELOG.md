@@ -1,3 +1,38 @@
+## [1.13.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.4...v1.13.0-beta.5) (2024-08-08)
+
+
+### Bug Fixes
+
+* **chunking:** count tokens from words instead of characters ([5ec2de9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5ec2de9e1a14def5596738b6cdf769f5039a246d)), closes [#513](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/513)
+
+## [1.13.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.3...v1.13.0-beta.4) (2024-08-07)
+
+
+### Bug Fixes
+
+* refactoring of merge_answer_node ([898e5a7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/898e5a7af504fbf4c1cabb14103e66184037de49))
+
+## [1.13.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.2...v1.13.0-beta.3) (2024-08-07)
+
+
+### Features
+
+* add mistral support ([17f2707](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/17f2707313f65a1e96443b3c8a1f5137892f2c5a))
+
+
+### Bug Fixes
+
+* **FetchNode:** handling of missing browser_base key ([07720b6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/07720b6e0ca10ba6ce3c1359706a09baffcc4ad0))
+* **AbstractGraph:** LangChain warnings handling, Mistral tokens ([786af99](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/786af992f8fbdadfdc3d2d6a06c0cfd81289f8f2))
+
+
+### chore
+
+* **models_tokens:** add mistral models ([5e82432](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5e824327c3acb69d53f3519344d0f8c2e3defa8b))
+* **mistral:** create examples ([f8ad616](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f8ad616e10c271443e2dcb4123c8ddb91de2ff69))
+* **examples:** fix Mistral examples ([b0ffc51](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b0ffc51e5415caec562a565710f5195afe1fbcb2))
+* update requirements for mistral ([9868555](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/986855512319541d1d02356df9ad61ab7fc5d807))
+
 ## [1.13.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.1...v1.13.0-beta.2) (2024-08-07)
 
 
