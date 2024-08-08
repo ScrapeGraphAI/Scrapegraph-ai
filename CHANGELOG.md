@@ -1,3 +1,10 @@
+## [1.13.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.4...v1.13.0-beta.5) (2024-08-08)
+
+
+### Bug Fixes
+
+* **chunking:** count tokens from words instead of characters ([5ec2de9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5ec2de9e1a14def5596738b6cdf769f5039a246d)), closes [#513](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/513)
+
 ## [1.13.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.3...v1.13.0-beta.4) (2024-08-07)
 
 
