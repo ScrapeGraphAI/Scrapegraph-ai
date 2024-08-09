@@ -1,7 +1,9 @@
 [project]
 name = "scrapegraphai"
 
-version = "1.12.2"
+
+version = "1.13.0b7"
+
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 
@@ -39,7 +41,8 @@ dependencies = [
     "langchain-fireworks>=0.1.3",
     "langchain-community>=0.2.9",
     "langchain-huggingface>=0.0.3",
-    "browserbase>=0.3.0"
+    "browserbase>=0.3.0",
+    "langchain-mistralai>=0.1.12",
 ]
 
 license = "MIT"
