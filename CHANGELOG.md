@@ -1,3 +1,10 @@
+## [1.13.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.5...v1.13.0-beta.6) (2024-08-09)
+
+
+### Bug Fixes
+
+* **FetchNode:** missing bracket syntax error ([50edbcc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/50edbcc7f80e419f72f3f69249fec4a37597ef9a))
+
 ## [1.13.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.4...v1.13.0-beta.5) (2024-08-08)
 
 
