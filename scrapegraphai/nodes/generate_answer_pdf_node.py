@@ -56,7 +56,7 @@ class GenerateAnswerPDFNode(BaseNode):
         self.llm_model = node_config["llm_model"]
         if isinstance(node_config["llm_model"], ChatOllama):
             self.llm_model.format="json"
-   
+
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
@@ -114,7 +114,7 @@ class GenerateAnswerPDFNode(BaseNode):
                 template=template_no_chunks_pdf_prompt,
                 input_variables=["question"],
                 partial_variables={
-                    "context":chunk,
+                    "context": doc,
                     "format_instructions": format_instructions,
                 },
             )

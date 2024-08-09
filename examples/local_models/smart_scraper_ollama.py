@@ -22,10 +22,9 @@ graph_config = {
 # ************************************************
 # Create the SmartScraperGraph instance and run it
 # ************************************************
-
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the titles of the website",
-    source="https://sport.sky.it/nba?gr=www",
+    prompt="Find some information about what does the company do, the name and a contact email.",
+    source="https://scrapegraphai.com/",
     config=graph_config
 )
 

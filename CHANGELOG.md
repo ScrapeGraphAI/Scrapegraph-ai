@@ -1,7 +1,12 @@
-## [1.13.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.5...v1.13.0-beta.6) (2024-08-09)
+## [1.12.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.1...v1.12.2) (2024-08-07)
+
 
 
 ### Bug Fixes
+
+* generate answer node omni ([b52e4a3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b52e4a390bb23ca55922e47046db558e1969a047))
+
+## [1.12.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.0...v1.12.1) (2024-08-07)
 
 * **FetchNode:** missing bracket syntax error ([50edbcc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/50edbcc7f80e419f72f3f69249fec4a37597ef9a))
 
@@ -9,6 +14,8 @@
 
 
 ### Bug Fixes
+
+* generate answer node pdf has a bug ([625ca9f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/625ca9f22a91a292a844ddb45e0edc767bf24711))
 
 * **chunking:** count tokens from words instead of characters ([5ec2de9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5ec2de9e1a14def5596738b6cdf769f5039a246d)), closes [#513](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/513)
 
@@ -62,6 +69,7 @@
 
 * **release:** 1.11.0-beta.11 [skip ci] ([579d3f3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/579d3f394b54636673baf8e9f619f1c57a2ecce4))
 * **release:** 1.11.0-beta.12 [skip ci] ([cf2a17e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf2a17ed5d79c62271fd9ea8ec89793884b04b56))
+
 
 ## [1.12.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.11.3...v1.12.0) (2024-08-06)
 
