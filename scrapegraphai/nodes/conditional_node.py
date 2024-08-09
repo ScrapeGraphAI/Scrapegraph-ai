@@ -41,7 +41,7 @@ class ConditionalNode(BaseNode):
             key_name (str): The name of the key to check in the state.
         """
 
-       super().__init__(node_name, "node", input, output, 2, node_config)
+       #super().__init__(node_name, "node", input, output, 2, node_config)  
 
 
     def execute(self, state: dict) -> dict:
