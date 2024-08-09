@@ -1,3 +1,10 @@
+## [1.13.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.7...v1.13.0-beta.8) (2024-08-09)
+
+
+### Bug Fixes
+
+* broken node ([1272273](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/127227349915deeb0dede34aa575ad269ed7cbe3))
+
 ## [1.13.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.6...v1.13.0-beta.7) (2024-08-09)
 
 
