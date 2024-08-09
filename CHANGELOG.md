@@ -1,3 +1,17 @@
+## [1.13.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.6...v1.13.0-beta.7) (2024-08-09)
+
+
+### Bug Fixes
+
+* generate answer node omni ([b52e4a3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b52e4a390bb23ca55922e47046db558e1969a047))
+* generate answer node pdf has a bug ([625ca9f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/625ca9f22a91a292a844ddb45e0edc767bf24711))
+
+
+### CI
+
+* **release:** 1.12.1 [skip ci] ([928f704](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/928f7040ab1ef3a87f1cbad599b888940fa835c4))
+* **release:** 1.12.2 [skip ci] ([ece605e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ece605e3ee0aa110501f6642eb687831a4d0660b))
+
 ## [1.12.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.1...v1.12.2) (2024-08-07)
 
 
