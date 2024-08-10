@@ -1,3 +1,10 @@
+## [1.13.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.2...v1.13.3) (2024-08-10)
+
+
+### Bug Fixes
+
+* conditional node ([778efd4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/778efd4c87c69754bfbbf7a80d652f4cfd31a361))
+
 ## [1.13.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.1...v1.13.2) (2024-08-10)
 
 
