@@ -5,7 +5,6 @@ import json
 import os
 import sys
 
-
 def convert_to_json(data: dict, filename: str, position: str = None) -> None:
     """
     Converts a dictionary to a JSON file and saves it at a specified location.

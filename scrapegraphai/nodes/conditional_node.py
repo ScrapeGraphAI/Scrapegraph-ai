@@ -42,7 +42,7 @@ class ConditionalNode(BaseNode):
         """
 
        #super().__init__(node_name, "node", input, output, 2, node_config)
-       
+       pass
 
 
     def execute(self, state: dict) -> dict:
@@ -56,8 +56,4 @@ class ConditionalNode(BaseNode):
             str: The name of the next node to execute based on the presence of the key.
         """
 
-        if self.key_name in state and len(state[self.key_name]) > 0:
-            state["next_node"] = 0
-        else:
-            state["next_node"] = 1
-        return state
+        pass

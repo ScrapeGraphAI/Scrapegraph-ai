@@ -10,7 +10,6 @@ import requests
 from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
 
-
 class ProxyBrokerCriteria(TypedDict, total=False):
     """proxy broker criteria"""
 
