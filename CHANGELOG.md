@@ -1,3 +1,15 @@
+## [1.13.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.1...v1.13.2) (2024-08-10)
+
+
+### Bug Fixes
+
+* fetch node ([f01b55e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f01b55e89b1365760f0dce4fa15ac0e74d280c57))
+
+
+### chore
+
+* update gemini model to "gemini-pro" ([a7264ce](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a7264cebd28857b4a13e7db2f27e80e5b57e4407))
+
 ## [1.13.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0...v1.13.1) (2024-08-09)
 
 
