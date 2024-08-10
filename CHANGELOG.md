@@ -1,3 +1,10 @@
+## [1.13.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.8...v1.13.0-beta.9) (2024-08-10)
+
+
+### Features
+
+* add refactoring of default temperature ([6c3b37a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6c3b37ab001b80c09ea9ffb56d4c3df338e33a7a))
+
 ## [1.13.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.7...v1.13.0-beta.8) (2024-08-09)
 
 
