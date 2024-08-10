@@ -228,7 +228,7 @@ class AbstractGraph(ABC):
                 llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return ChatNVIDIA(llm_params)
+            return ChatNVIDIA(**llm_config)
 
         # Raise an error if the model did not match any of the previous cases
         raise ValueError("Model provided by the configuration not supported")
