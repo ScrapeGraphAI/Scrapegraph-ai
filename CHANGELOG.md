@@ -1,8 +1,72 @@
+## [1.13.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.2...v1.13.3) (2024-08-10)
+
+
+### Bug Fixes
+
+* conditional node ([778efd4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/778efd4c87c69754bfbbf7a80d652f4cfd31a361))
+
+## [1.13.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.1...v1.13.2) (2024-08-10)
+
+
+### Bug Fixes
+
+* fetch node ([f01b55e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f01b55e89b1365760f0dce4fa15ac0e74d280c57))
+
+
+### chore
+
+* update gemini model to "gemini-pro" ([a7264ce](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a7264cebd28857b4a13e7db2f27e80e5b57e4407))
+
+## [1.13.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0...v1.13.1) (2024-08-09)
+
+
+### Bug Fixes
+
+* conditional node ([ce00345](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ce003454953e5785d4746223c252de38cd5d07ea))
+
+## [1.13.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.2...v1.13.0) (2024-08-09)
 ## [1.13.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.8...v1.13.0-beta.9) (2024-08-10)
+
 
 
 ### Features
 
+* add grok integration ([fa651d4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fa651d4cd9ab8ae9cf58280f1256ceb4171ef088))
+* add mistral support ([17f2707](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/17f2707313f65a1e96443b3c8a1f5137892f2c5a))
+* update base_graph ([0571b6d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0571b6da55920bfe691feef2e1ecb5f3760dabf7))
+
+
+### Bug Fixes
+
+* **chunking:** count tokens from words instead of characters ([5ec2de9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5ec2de9e1a14def5596738b6cdf769f5039a246d)), closes [#513](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/513)
+* **FetchNode:** handling of missing browser_base key ([07720b6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/07720b6e0ca10ba6ce3c1359706a09baffcc4ad0))
+* **AbstractGraph:** LangChain warnings handling, Mistral tokens ([786af99](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/786af992f8fbdadfdc3d2d6a06c0cfd81289f8f2))
+* **FetchNode:** missing bracket syntax error ([50edbcc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/50edbcc7f80e419f72f3f69249fec4a37597ef9a))
+* refactoring of fetch_node ([29ad140](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/29ad140fa399e9cdd98289a70506269db25fb599))
+* refactoring of fetch_node adding comment ([bfc6852](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bfc6852b77b643e34543f7e436349f73d4ba1b5a))
+* refactoring of fetch_node qixed error ([1ea2ad8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1ea2ad8e79e9777c60f86565ed4930ee46e1ca53))
+* refactoring of merge_answer_node ([898e5a7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/898e5a7af504fbf4c1cabb14103e66184037de49))
+
+
+### chore
+
+* **models_tokens:** add mistral models ([5e82432](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5e824327c3acb69d53f3519344d0f8c2e3defa8b))
+* **mistral:** create examples ([f8ad616](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f8ad616e10c271443e2dcb4123c8ddb91de2ff69))
+* **examples:** fix Mistral examples ([b0ffc51](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b0ffc51e5415caec562a565710f5195afe1fbcb2))
+* update requirements for mistral ([9868555](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/986855512319541d1d02356df9ad61ab7fc5d807))
+
+
+### CI
+
+* **release:** 1.11.0-beta.11 [skip ci] ([579d3f3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/579d3f394b54636673baf8e9f619f1c57a2ecce4))
+* **release:** 1.11.0-beta.12 [skip ci] ([cf2a17e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf2a17ed5d79c62271fd9ea8ec89793884b04b56))
+* **release:** 1.13.0-beta.1 [skip ci] ([8eb66f6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8eb66f6e22d6b53f0fb73d0da18302e7b00b99e3))
+* **release:** 1.13.0-beta.2 [skip ci] ([684d01a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/684d01a2cb979c076a0f9d64855debd79b32ad58))
+* **release:** 1.13.0-beta.3 [skip ci] ([6b053cf](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6b053cfc95655f122baef999325888c13f4af883))
+* **release:** 1.13.0-beta.4 [skip ci] ([7f1f750](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7f1f7503f7c83c2e4d41a906fb3aa6012a2e0f52))
+* **release:** 1.13.0-beta.5 [skip ci] ([2eba73b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2eba73b784ee443260117e98ab7c943934b3018d)), closes [#513](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/513)
+* **release:** 1.13.0-beta.6 [skip ci] ([e75b574](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e75b574b67040e127599da9ee1b0eee13d234cb9))
+* **release:** 1.13.0-beta.7 [skip ci] ([6e56925](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6e56925355c424edae290c70fd98646ab5f420ee))
 * add refactoring of default temperature ([6c3b37a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6c3b37ab001b80c09ea9ffb56d4c3df338e33a7a))
 
 ## [1.13.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.7...v1.13.0-beta.8) (2024-08-09)
@@ -11,6 +75,7 @@
 ### Bug Fixes
 
 * broken node ([1272273](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/127227349915deeb0dede34aa575ad269ed7cbe3))
+
 
 ## [1.13.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.6...v1.13.0-beta.7) (2024-08-09)
 
