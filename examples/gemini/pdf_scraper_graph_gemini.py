@@ -6,6 +6,7 @@ import os, json
 from dotenv import load_dotenv
 from scrapegraphai.utils import prettify_exec_info
 from scrapegraphai.graphs import PDFScraperGraph
+
 load_dotenv()
 
 
@@ -18,7 +19,7 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gemini-pr",
+        "model": "gemini-pro",
     },
 }
 
