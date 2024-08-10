@@ -1,7 +1,6 @@
 """
 Prettify the execution information of the graph.
 """
-
 import pandas as pd
 
 

@@ -11,7 +11,6 @@ from .base_node import BaseNode
 
 DEFAULT_BATCHSIZE = 16
 
-
 class GraphIteratorNode(BaseNode):
     """
     A node responsible for instantiating and running multiple graph instances in parallel.

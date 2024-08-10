@@ -4,15 +4,12 @@ Module for creating the smart scraper
 
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     GenerateAnswerCSVNode
 )
-
 
 class CSVScraperGraph(AbstractGraph):
     """

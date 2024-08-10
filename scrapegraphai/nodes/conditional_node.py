@@ -32,7 +32,10 @@ class ConditionalNode(BaseNode):
         """
         Initializes an empty ConditionalNode.
         """
-        pass
+
+       #super().__init__(node_name, "node", input, output, 2, node_config)
+       pass
+
 
     def execute(self, state: dict) -> dict:
         """

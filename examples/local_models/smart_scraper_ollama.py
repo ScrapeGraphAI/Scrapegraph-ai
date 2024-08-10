@@ -14,7 +14,6 @@ graph_config = {
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
     },
-  
     "verbose": True,
     "headless": False
 }
@@ -23,8 +22,13 @@ graph_config = {
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 smart_scraper_graph = SmartScraperGraph(
+<<<<<<< Updated upstream
     prompt="Find some information about what does the company do, the name and a contact email.",
     source="https://scrapegraphai.com/",
+=======
+    prompt="List all the projects with their descriptions",
+    source="https://perinim.github.io/projects/",
+>>>>>>> Stashed changes
     config=graph_config
 )
 

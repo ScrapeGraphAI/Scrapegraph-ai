@@ -18,10 +18,10 @@ from ..nodes import (
 from ..utils.save_audio_from_bytes import save_audio_from_bytes
 from ..models import OpenAITextToSpeech
 
-
 class SpeechGraph(AbstractGraph):
     """
-    SpeechyGraph is a scraping pipeline that scrapes the web, provide an answer to a given prompt, and generate an audio file.
+    SpeechyGraph is a scraping pipeline that scrapes the web, provide an answer 
+    to a given prompt, and generate an audio file.
 
     Attributes:
         prompt (str): The prompt for the graph.

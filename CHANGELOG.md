@@ -25,6 +25,8 @@
 * conditional node ([ce00345](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ce003454953e5785d4746223c252de38cd5d07ea))
 
 ## [1.13.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.12.2...v1.13.0) (2024-08-09)
+## [1.13.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.8...v1.13.0-beta.9) (2024-08-10)
+
 
 
 ### Features
@@ -65,6 +67,15 @@
 * **release:** 1.13.0-beta.5 [skip ci] ([2eba73b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2eba73b784ee443260117e98ab7c943934b3018d)), closes [#513](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/513)
 * **release:** 1.13.0-beta.6 [skip ci] ([e75b574](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e75b574b67040e127599da9ee1b0eee13d234cb9))
 * **release:** 1.13.0-beta.7 [skip ci] ([6e56925](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6e56925355c424edae290c70fd98646ab5f420ee))
+* add refactoring of default temperature ([6c3b37a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6c3b37ab001b80c09ea9ffb56d4c3df338e33a7a))
+
+## [1.13.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.7...v1.13.0-beta.8) (2024-08-09)
+
+
+### Bug Fixes
+
+* broken node ([1272273](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/127227349915deeb0dede34aa575ad269ed7cbe3))
+
 
 ## [1.13.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.0-beta.6...v1.13.0-beta.7) (2024-08-09)
 
