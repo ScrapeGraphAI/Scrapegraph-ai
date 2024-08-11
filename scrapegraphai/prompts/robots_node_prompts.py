@@ -1,6 +1,7 @@
 """
 Robot node prompts helper
 """
+
 template_robot = """
     You are a website scraper and you need to scrape a website.
     You need to check if the website allows scraping of the provided path. \n
