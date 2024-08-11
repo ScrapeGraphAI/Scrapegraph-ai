@@ -1,3 +1,22 @@
+## [1.14.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.3...v1.14.0-beta.1) (2024-08-11)
+
+
+### Features
+
+* add refactoring of default temperature ([6c3b37a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6c3b37ab001b80c09ea9ffb56d4c3df338e33a7a))
+
+
+### Bug Fixes
+
+* broken node ([1272273](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/127227349915deeb0dede34aa575ad269ed7cbe3))
+* merge_anwser prompt import ([f17cef9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f17cef94bb39349d40cc520d93b51ac4e629db32))
+
+
+### CI
+
+* **release:** 1.13.0-beta.8 [skip ci] ([b470d97](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b470d974cf3fdb3a75ead46fceb8c21525e2e616))
+* **release:** 1.13.0-beta.9 [skip ci] ([d4c1a1c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d4c1a1c58a54740ff50aa87b1d1d3500b61ea088))
+
 ## [1.13.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.2...v1.13.3) (2024-08-10)
 
 
