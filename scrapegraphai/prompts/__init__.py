@@ -9,3 +9,4 @@ from .generate_answer_node_omni_prompts import template_chunks_omni, template_no
 from .merge_answer_node_prompts import template_combined
 from .robots_node_prompts import template_robot
 from .search_internet_node_prompts import search_internet_template
+from .search_link_node_prompts import prompt_relevant_links
