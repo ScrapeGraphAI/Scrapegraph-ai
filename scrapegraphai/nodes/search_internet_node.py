@@ -8,7 +8,7 @@ from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
-from ..prompts import search_internet_template
+from ..prompts import template_search_internet
 
 class SearchInternetNode(BaseNode):
     """
@@ -75,7 +75,7 @@ class SearchInternetNode(BaseNode):
         output_parser = CommaSeparatedListOutputParser()
 
         search_prompt = PromptTemplate(
-            template=search_internet_template,
+            template=template_search_internet,
             input_variables=["user_prompt"],
         )
 

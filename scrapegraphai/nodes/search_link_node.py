@@ -10,7 +10,7 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..prompts import relevant_links_template
+from ..prompts import template_relevant_links
 
 
 class SearchLinkNode(BaseNode):
@@ -86,7 +86,7 @@ class SearchLinkNode(BaseNode):
                 self.logger.error(f"Error extracting links: {e}. Falling back to LLM.")
                 
                 merge_prompt = PromptTemplate(
-                    template=relevant_links_template,
+                    template=template_relevant_links,
                     input_variables=["content", "user_prompt"],
                 )
                 merge_chain = merge_prompt | self.llm_model | output_parser
