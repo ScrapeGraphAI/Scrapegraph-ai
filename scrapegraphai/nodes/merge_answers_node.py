@@ -7,7 +7,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..helpers import template_combined
+from ..prompts import template_combined
 
 
 class MergeAnswersNode(BaseNode):
