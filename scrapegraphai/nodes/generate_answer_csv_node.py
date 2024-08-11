@@ -10,7 +10,7 @@ from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_csv_prompts import template_chunks_csv, template_no_chunks_csv, template_merge_csv
+from ..prompts.generate_answer_node_csv_prompts import template_chunks_csv, template_no_chunks_csv, template_merge_csv
 
 
 class GenerateAnswerCSVNode(BaseNode):
