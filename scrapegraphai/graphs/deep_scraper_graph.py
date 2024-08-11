@@ -4,10 +4,8 @@ DeepScraperGraph Module
 
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     SearchLinkNode,
@@ -17,7 +15,6 @@ from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
-
 
 class DeepScraperGraph(AbstractGraph):
     """
@@ -87,7 +84,6 @@ class DeepScraperGraph(AbstractGraph):
             output=["relevant_chunks"],
             node_config={
                 "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model
             }
         )
         generate_answer_node = GenerateAnswerNode(
@@ -104,7 +100,6 @@ class DeepScraperGraph(AbstractGraph):
             output=["relevant_links"],
             node_config={
                 "llm_model": self.llm_model,
-                "embedder_model": self.embedder_model
             }
         )
         graph_iterator_node = GraphIteratorNode(

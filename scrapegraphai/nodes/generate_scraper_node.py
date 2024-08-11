@@ -4,15 +4,10 @@ GenerateScraperNode Module
 
 # Imports from standard library
 from typing import List, Optional
-
-# Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from ..utils.logging import get_logger
-
-# Imports from the library
 from .base_node import BaseNode
-
 
 class GenerateScraperNode(BaseNode):
     """

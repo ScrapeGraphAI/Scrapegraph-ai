@@ -6,8 +6,6 @@
 #   features: []
 #   all-features: false
 #   with-sources: false
-#   generate-hashes: false
-#   universal: false
 
 -e file:.
 aiohttp==3.9.5
@@ -69,7 +67,6 @@ filelock==3.15.4
     # via huggingface-hub
     # via torch
     # via transformers
-    # via triton
 fireworks-ai==0.14.0
     # via langchain-fireworks
 free-proxy==1.1.1
@@ -136,7 +133,6 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 groq==0.9.0
     # via langchain-groq
 grpc-google-iam-v1==0.13.1
@@ -162,9 +158,11 @@ httpx==0.27.0
     # via browserbase
     # via fireworks-ai
     # via groq
+    # via langchain-mistralai
     # via openai
 httpx-sse==0.4.0
     # via fireworks-ai
+    # via langchain-mistralai
 huggingface-hub==0.24.1
     # via langchain-huggingface
     # via sentence-transformers
@@ -197,7 +195,7 @@ langchain-aws==0.1.12
     # via scrapegraphai
 langchain-community==0.2.10
     # via scrapegraphai
-langchain-core==0.2.23
+langchain-core==0.2.28
     # via langchain
     # via langchain-anthropic
     # via langchain-aws
@@ -207,6 +205,7 @@ langchain-core==0.2.23
     # via langchain-google-vertexai
     # via langchain-groq
     # via langchain-huggingface
+    # via langchain-mistralai
     # via langchain-nvidia-ai-endpoints
     # via langchain-openai
     # via langchain-text-splitters
@@ -219,6 +218,8 @@ langchain-google-vertexai==1.0.7
 langchain-groq==0.1.6
     # via scrapegraphai
 langchain-huggingface==0.0.3
+    # via scrapegraphai
+langchain-mistralai==0.1.12
     # via scrapegraphai
 langchain-nvidia-ai-endpoints==0.1.7
     # via scrapegraphai
@@ -262,34 +263,6 @@ numpy==1.26.4
     # via sentence-transformers
     # via shapely
     # via transformers
-nvidia-cublas-cu12==12.1.3.1
-    # via nvidia-cudnn-cu12
-    # via nvidia-cusolver-cu12
-    # via torch
-nvidia-cuda-cupti-cu12==12.1.105
-    # via torch
-nvidia-cuda-nvrtc-cu12==12.1.105
-    # via torch
-nvidia-cuda-runtime-cu12==12.1.105
-    # via torch
-nvidia-cudnn-cu12==8.9.2.26
-    # via torch
-nvidia-cufft-cu12==11.0.2.54
-    # via torch
-nvidia-curand-cu12==10.3.2.106
-    # via torch
-nvidia-cusolver-cu12==11.4.5.107
-    # via torch
-nvidia-cusparse-cu12==12.1.0.106
-    # via nvidia-cusolver-cu12
-    # via torch
-nvidia-nccl-cu12==2.19.3
-    # via torch
-nvidia-nvjitlink-cu12==12.6.20
-    # via nvidia-cusolver-cu12
-    # via nvidia-cusparse-cu12
-nvidia-nvtx-cu12==12.1.105
-    # via torch
 openai==1.37.0
     # via langchain-fireworks
     # via langchain-openai
@@ -425,6 +398,7 @@ tiktoken==0.7.0
 tokenizers==0.19.1
     # via anthropic
     # via langchain-huggingface
+    # via langchain-mistralai
     # via transformers
 torch==2.2.2
     # via sentence-transformers
@@ -440,14 +414,13 @@ tqdm==4.66.4
 transformers==4.43.3
     # via langchain-huggingface
     # via sentence-transformers
-triton==2.2.0
-    # via torch
 typing-extensions==4.12.2
     # via anthropic
     # via anyio
     # via google-generativeai
     # via groq
     # via huggingface-hub
+    # via langchain-core
     # via openai
     # via pydantic
     # via pydantic-core

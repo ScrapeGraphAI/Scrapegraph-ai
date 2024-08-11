@@ -58,7 +58,7 @@ class GenerateAnswerCSVNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
-        
+
         self.additional_info = node_config.get("additional_info")
 
     def execute(self, state):

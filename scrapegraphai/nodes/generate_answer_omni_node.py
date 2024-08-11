@@ -1,17 +1,12 @@
 """
 GenerateAnswerNode Module
 """
-
-# Imports from standard library
 from typing import List, Optional
-
-# Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
-# Imports from the library
 from .base_node import BaseNode
 from ..prompts.generate_answer_node_omni_prompts import template_no_chunk_omni, template_chunks_omni, template_merge_omni
 
@@ -105,7 +100,7 @@ class GenerateAnswerOmniNode(BaseNode):
                 template=template_no_chunk_omni_prompt,
                 input_variables=["question"],
                 partial_variables={
-                    "context": chunk,
+                    "context": doc,
                     "format_instructions": format_instructions,
                     "img_desc": imag_desc,
                 },

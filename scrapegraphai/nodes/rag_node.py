@@ -13,7 +13,6 @@ from langchain.retrievers.document_compressors import (
 )
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
-
 from langchain_community.chat_models import ChatOllama
 from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEmbeddings
@@ -23,7 +22,6 @@ from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
 from langchain_fireworks import FireworksEmbeddings, ChatFireworks
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings, ChatOpenAI, AzureChatOpenAI
 from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings, ChatNVIDIA
-
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..helpers import models_tokens

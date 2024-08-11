@@ -14,7 +14,6 @@ from ..nodes import (
     GenerateAnswerNode
 )
 
-
 class SmartScraperGraph(AbstractGraph):
     """
     SmartScraper is a scraping pipeline that automates the process of 

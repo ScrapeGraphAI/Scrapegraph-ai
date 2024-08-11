@@ -5,20 +5,17 @@ AbstractGraph Module
 from abc import ABC, abstractmethod
 from typing import Optional
 import uuid
+import warnings
 from pydantic import BaseModel
-
 from langchain_community.chat_models import ErnieBotChat
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain.chat_models import init_chat_model
-
 from ..helpers import models_tokens
 from ..models import (
     OneApi,
     DeepSeek
 )
 from ..utils.logging import set_verbosity_warning, set_verbosity_info
-
-
 
 class AbstractGraph(ABC):
     """
@@ -51,6 +48,9 @@ class AbstractGraph(ABC):
 
     def __init__(self, prompt: str, config: dict,
                  source: Optional[str] = None, schema: Optional[BaseModel] = None):
+
+        if config.get("llm").get("temperature") is None:
+            config["llm"]["temperature"] = 0
 
         self.prompt = prompt
         self.source = source
@@ -144,7 +144,9 @@ class AbstractGraph(ABC):
                 self.model_token = default_token
             llm_params["model_provider"] = provider
             llm_params["model"] = model_name
-            return init_chat_model(**llm_params)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                return init_chat_model(**llm_params)
 
         if "azure" in llm_params["model"]:
             model_name = llm_params["model"].split("/")[-1]
@@ -188,6 +190,10 @@ class AbstractGraph(ABC):
 
         if "claude-3-" in llm_params["model"]:
             return handle_model(llm_params["model"], "anthropic", "claude3")
+        
+        if llm_params["model"].startswith("mistral"):
+            model_name = llm_params["model"].split("/")[-1]
+            return handle_model(model_name, "mistralai", model_name)
 
         # Instantiate the language model based on the model name (models that do not use the common interface)
         if "deepseek" in llm_params["model"]:
@@ -205,7 +211,7 @@ class AbstractGraph(ABC):
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
             return ErnieBotChat(llm_params)
-        
+
         if "oneapi" in llm_params["model"]:
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
@@ -214,7 +220,7 @@ class AbstractGraph(ABC):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return OneApi(llm_params)
-        
+
         if "nvidia" in llm_params["model"]:
             try:
                 self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]

@@ -17,7 +17,6 @@ _default_logging_level = logging.WARNING
 
 _semaphore = threading.Lock()
 
-
 def _get_library_root_logger() -> logging.Logger:
     return logging.getLogger(_library_name)
 

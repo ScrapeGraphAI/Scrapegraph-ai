@@ -6,9 +6,7 @@ import warnings
 from typing import Tuple
 from langchain_community.callbacks import get_openai_callback
 from ..integrations import BurrBridge
-
-# Import telemetry functions
-from ..telemetry import log_graph_execution, log_event
+from ..telemetry import log_graph_execution
 
 class BaseGraph:
     """

@@ -9,7 +9,6 @@ from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import template_combined
 
-
 class MergeAnswersNode(BaseNode):
     """
     A node responsible for merging the answers from multiple graph instances into a single answer.

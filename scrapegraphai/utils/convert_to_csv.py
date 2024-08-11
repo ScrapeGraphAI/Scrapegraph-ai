@@ -5,7 +5,6 @@ import os
 import sys
 import pandas as pd
 
-
 def convert_to_csv(data: dict, filename: str, position: str = None) -> None:
     """
     Converts a dictionary to a CSV file and saves it at a specified location.
