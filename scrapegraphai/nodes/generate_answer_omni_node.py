@@ -8,7 +8,7 @@ from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_omni_prompts import template_no_chunk_omni, template_chunks_omni, template_merge_omni
+from ..prompts.generate_answer_node_omni_prompts import template_no_chunk_omni, template_chunks_omni, template_merge_omni
 
 
 class GenerateAnswerOmniNode(BaseNode):

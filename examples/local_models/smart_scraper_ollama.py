@@ -22,13 +22,8 @@ graph_config = {
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 smart_scraper_graph = SmartScraperGraph(
-<<<<<<< Updated upstream
     prompt="Find some information about what does the company do, the name and a contact email.",
     source="https://scrapegraphai.com/",
-=======
-    prompt="List all the projects with their descriptions",
-    source="https://perinim.github.io/projects/",
->>>>>>> Stashed changes
     config=graph_config
 )
 
