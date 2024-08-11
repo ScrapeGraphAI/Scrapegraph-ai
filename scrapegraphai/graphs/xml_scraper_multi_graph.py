@@ -15,7 +15,6 @@ from ..nodes import (
     MergeAnswersNode
 )
 
-
 class XMLScraperMultiGraph(AbstractGraph):
     """ 
     XMLScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and 

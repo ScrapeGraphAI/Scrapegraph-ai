@@ -5,16 +5,13 @@ PdfScraperMultiGraph Module
 from copy import copy, deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .pdf_scraper_graph import PDFScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
-
 
 class PdfScraperMultiGraph(AbstractGraph):
     """ 

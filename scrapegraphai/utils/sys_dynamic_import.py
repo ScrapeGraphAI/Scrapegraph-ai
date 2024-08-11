@@ -10,7 +10,6 @@ import importlib.util  # noqa: F401
 if typing.TYPE_CHECKING:
     import types
 
-
 def srcfile_import(modpath: str, modname: str) -> "types.ModuleType":
     """imports a python module from its srcfile
 

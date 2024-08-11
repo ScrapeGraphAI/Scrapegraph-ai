@@ -10,7 +10,7 @@ from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
+from ..prompts.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
 
 
 class GenerateAnswerPDFNode(BaseNode):

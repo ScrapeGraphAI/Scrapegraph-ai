@@ -7,19 +7,15 @@ from typing import Optional
 import uuid
 import warnings
 from pydantic import BaseModel
-
 from langchain_community.chat_models import ErnieBotChat
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain.chat_models import init_chat_model
-
 from ..helpers import models_tokens
 from ..models import (
     OneApi,
     DeepSeek
 )
 from ..utils.logging import set_verbosity_warning, set_verbosity_info
-
-
 
 class AbstractGraph(ABC):
     """
@@ -52,6 +48,9 @@ class AbstractGraph(ABC):
 
     def __init__(self, prompt: str, config: dict,
                  source: Optional[str] = None, schema: Optional[BaseModel] = None):
+
+        if config.get("llm").get("temperature") is None:
+            config["llm"]["temperature"] = 0
 
         self.prompt = prompt
         self.source = source
@@ -163,7 +162,6 @@ class AbstractGraph(ABC):
 
         elif llm_params["model"].startswith("vertexai"):
             return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
-
         elif "gpt-" in llm_params["model"]:
             return handle_model(llm_params["model"], "openai", llm_params["model"])
 
@@ -197,6 +195,7 @@ class AbstractGraph(ABC):
             return ErnieBotChat(llm_params)
 
         elif "oneapi" in llm_params["model"]:
+
             # take the model after the last dash
             llm_params["model"] = llm_params["model"].split("/")[-1]
             try:
@@ -206,6 +205,7 @@ class AbstractGraph(ABC):
             return OneApi(llm_params)
 
         elif "nvidia" in llm_params["model"]:
+
             try:
                 self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
                 llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])

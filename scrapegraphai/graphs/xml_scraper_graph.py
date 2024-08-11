@@ -13,7 +13,6 @@ from ..nodes import (
     GenerateAnswerNode
 )
 
-
 class XMLScraperGraph(AbstractGraph):
     """
     XMLScraperGraph is a scraping pipeline that extracts information from XML files using a natural
