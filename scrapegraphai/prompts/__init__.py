@@ -10,4 +10,4 @@ from .merge_answer_node_prompts import template_combined
 from .robots_node_prompts import template_robot
 from .search_internet_node_prompts import template_search_internet
 from .search_link_node_prompts import template_relevant_links
-from .search_link_node_with_context_prompts import template_search_with_context_chunks, template_search_with_context_no_chunks
+from .search_node_with_context_prompts import template_search_with_context_chunks, template_search_with_context_no_chunks
