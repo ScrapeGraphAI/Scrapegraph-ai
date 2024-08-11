@@ -90,7 +90,7 @@ class ParseNode(BaseNode):
                                 chunk_size=self.node_config.get("chunk_size", 4096)-250,
                                 token_counter=lambda text: len(text.split()),
                                 memoize=False)
- 
+
         state.update({self.output[0]: chunks})
 
         return state

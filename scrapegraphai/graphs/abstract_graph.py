@@ -170,12 +170,12 @@ class AbstractGraph(ABC):
 
         if llm_params["model"].startswith("vertexai"):
             return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
-
+        
         if "ollama" in llm_params["model"]:
             model_name = llm_params["model"].split("ollama/")[-1]
             token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
             return handle_model(model_name, "ollama", token_key)
-
+    
         if "hugging_face" in llm_params["model"]:
             model_name = llm_params["model"].split("/")[-1]
             return handle_model(model_name, "hugging_face", model_name)
