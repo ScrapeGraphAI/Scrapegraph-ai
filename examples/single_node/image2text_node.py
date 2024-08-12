@@ -5,7 +5,7 @@ Example of ImageToTextNode
 import os
 from dotenv import load_dotenv
 from scrapegraphai.nodes import ImageToTextNode
-from langchain_openai import ChatOpenAIImageToText
+from scrapegraphai.models import OpenAIImageToText
 
 load_dotenv()
 
