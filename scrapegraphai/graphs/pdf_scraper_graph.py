@@ -5,16 +5,13 @@ PDFScraperGraph Module
 
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     ParseNode,
     GenerateAnswerPDFNode
 )
-
 
 class PDFScraperGraph(AbstractGraph):
     """

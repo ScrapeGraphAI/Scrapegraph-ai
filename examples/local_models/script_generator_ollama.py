@@ -9,14 +9,9 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/mistral",
-        "temperature": 0,
+        "model": "ollama/llama3.1",
+        "temperature": 0.5,
         # "model_tokens": 2000, # set context length arbitrarily,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
         "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
     "library": "beautifoulsoup",

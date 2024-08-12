@@ -7,20 +7,23 @@ from urllib.parse import urljoin
 
 def cleanup_html(html_content: str, base_url: str) -> str:
     """
-    Processes HTML content by removing unnecessary tags, minifying the HTML, and extracting the title and body content.
+    Processes HTML content by removing unnecessary tags, 
+    minifying the HTML, and extracting the title and body content.
 
     Args:
         html_content (str): The HTML content to be processed.
 
     Returns:
-        str: A string combining the parsed title and the minified body content. If no body content is found, it indicates so.
+        str: A string combining the parsed title and the minified body content. 
+        If no body content is found, it indicates so.
 
     Example:
         >>> html_content = "<html><head><title>Example</title></head><body><p>Hello World!</p></body></html>"
         >>> remover(html_content)
         'Title: Example, Body: <body><p>Hello World!</p></body>'
 
-    This function is particularly useful for preparing HTML content for environments where bandwidth usage needs to be minimized.
+    This function is particularly useful for preparing HTML content for 
+    environments where bandwidth usage needs to be minimized.
     """
 
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -55,4 +58,5 @@ def cleanup_html(html_content: str, base_url: str) -> str:
         return title, minimized_body, link_urls, image_urls
 
     else:
-        raise ValueError(f"No HTML body content found, please try setting the 'headless' flag to False in the graph configuration. HTML content: {html_content}")
+        raise ValueError(f"""No HTML body content found, please try setting the 'headless' 
+                         flag to False in the graph configuration. HTML content: {html_content}""")

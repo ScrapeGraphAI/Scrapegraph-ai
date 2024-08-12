@@ -10,7 +10,7 @@ from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..helpers import template_chunks, template_no_chunks, template_merge, template_chunks_md, template_no_chunks_md, template_merge_md
+from ..prompts import template_chunks, template_no_chunks, template_merge, template_chunks_md, template_no_chunks_md, template_merge_md
 
 class GenerateAnswerNode(BaseNode):
     """

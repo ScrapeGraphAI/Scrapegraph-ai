@@ -16,10 +16,10 @@ from ..nodes import (
     MergeGeneratedScriptsNode
 )
 
-
 class ScriptCreatorMultiGraph(AbstractGraph):
     """ 
-    ScriptCreatorMultiGraph is a scraping pipeline that scrapes a list of URLs generating web scraping scripts.
+    ScriptCreatorMultiGraph is a scraping pipeline that scrapes a list 
+    of URLs generating web scraping scripts.
     It only requires a user prompt and a list of URLs.
     Attributes:
         prompt (str): The user prompt to search the internet.

@@ -16,8 +16,6 @@ from ..nodes import (
     MergeAnswersNode
 )
 
-
-
 class SearchGraph(AbstractGraph):
     """ 
     SearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.

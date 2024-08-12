@@ -16,11 +16,6 @@ def graph_config():
             "ernie_client_id": "<ernie_client_id>",
             "ernie_client_secret": "<ernie_client_secret>",
             "temperature": 0.1
-        },
-        "embeddings": {
-            "model": "ollama/nomic-embed-text",
-            "temperature": 0,
-            "base_url": "http://localhost:11434",
         }
     }
 

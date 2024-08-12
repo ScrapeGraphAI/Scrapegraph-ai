@@ -10,7 +10,6 @@ from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
-
 class MergeGeneratedScriptsNode(BaseNode):
     """
     A node responsible for merging scripts generated.

@@ -5,20 +5,18 @@ JSONScraperMultiGraph Module
 from copy import copy, deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .json_scraper_graph import JSONScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
 
-
 class JSONScraperMultiGraph(AbstractGraph):
     """ 
-    JSONScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and generates answers to a given prompt.
+    JSONScraperMultiGraph is a scraping pipeline that scrapes a 
+    list of URLs and generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
 
     Attributes:
