@@ -225,6 +225,7 @@ class AbstractGraph(ABC):
         except KeyError as e:
             print(f"Model not supported: {e}")
 
+
     def get_state(self, key=None) -> dict:
         """ ""
         Get the final state of the graph.

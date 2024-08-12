@@ -1,3 +1,16 @@
+## [1.14.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.1...v1.14.0-beta.2) (2024-08-12)
+
+
+### Bug Fixes
+
+* **AbstractGraph:** pass kwargs to Ernie and Nvidia models ([e6bedb6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e6bedb6701601e87a6dff99eabec9c3494280411))
+
+
+### chore
+
+* **examples:** fix import bug in image2text demo ([71438a1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71438a1e8696aee51d054f9df7243665497fc35c))
+* **requirements:** update requirements.txt ([7fe181f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7fe181f69b3178d2d9d41a00fd660a98e04b777e))
+
 ## [1.14.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.3...v1.14.0-beta.1) (2024-08-11)
 
 
