@@ -210,7 +210,7 @@ class AbstractGraph(ABC):
             except KeyError:
                 print("model not found, using default token size (8192)")
                 self.model_token = 8192
-            return ErnieBotChat(llm_params)
+            return ErnieBotChat(**llm_params)
 
         if "oneapi" in llm_params["model"]:
             # take the model after the last dash
@@ -227,7 +227,7 @@ class AbstractGraph(ABC):
                 llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
-            return ChatNVIDIA(llm_params)
+            return ChatNVIDIA(**llm_params)
 
         # Raise an error if the model did not match any of the previous cases
         raise ValueError("Model provided by the configuration not supported")
