@@ -19,7 +19,7 @@ models_tokens = {
         "gpt-4o-mini":128000,
 
     },
-    "azure": {
+    "azure_openai": {
         "gpt-3.5-turbo-0125": 16385,
         "gpt-3.5": 4096,
         "gpt-3.5-turbo": 16385,
@@ -38,7 +38,7 @@ models_tokens = {
         "gpt-4o": 128000,
         "gpt-4o-mini":128000,
     },
-    "gemini": {
+    "google_genai": {
         "gemini-pro": 128000,
         "gemini-1.5-flash-latest": 128000,
         "gemini-1.5-pro-latest": 128000,
@@ -121,7 +121,7 @@ models_tokens = {
         "claude-3-haiku-20240307": 200000,
         "claude-3-5-sonnet-20240620": 200000
     },
-    "vertexai": {
+    "google_vertexai": {
         "gemini-1.5-flash": 128000,
         "gemini-1.5-pro": 128000,
         "gemini-1.0-pro": 128000
