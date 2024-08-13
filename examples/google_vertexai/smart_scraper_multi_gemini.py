@@ -11,13 +11,14 @@ load_dotenv()
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
+
+gemini_key = os.getenv("GOOGLE_APIKEY")
+
 graph_config = {
     "llm": {
-        "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure_openai/gpt-3.5-turbo",
+        "api_key": gemini_key,
+        "model": "google_vertexai/gemini-1.5-pro",
     },
-    "verbose": True,
-    "headless": False
 }
 
 # *******************************************************

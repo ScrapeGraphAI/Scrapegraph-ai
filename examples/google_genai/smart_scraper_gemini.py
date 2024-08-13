@@ -1,44 +1,44 @@
 """ 
-Basic example of scraping pipeline using ScriptCreatorGraph
+Basic example of scraping pipeline using SmartScraper
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
-
+from scrapegraphai.graphs import SmartScraperGraph
 load_dotenv()
+
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
+
+gemini_key = os.getenv("GOOGLE_APIKEY")
+
 graph_config = {
     "llm": {
-        "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure_openai/gpt-3.5-turbo",
+        "api_key": gemini_key,
+        "model": "google_genai/gemini-pro",
     },
-    "verbose": True,
-    "headless": False
 }
 
 # ************************************************
-# Create the ScriptCreatorGraph instance and run it
+# Create the SmartScraperGraph instance and run it
 # ************************************************
 
-script_creator_graph = ScriptCreatorGraph(
-    prompt="List me all the projects with their description.",
+smart_scraper_graph = SmartScraperGraph(
+    prompt="List me all the news with their description.",
     # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects",
+    source="https://www.wired.com",
     config=graph_config
 )
 
-result = script_creator_graph.run()
+result = smart_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = script_creator_graph.get_execution_info()
+graph_exec_info = smart_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
-

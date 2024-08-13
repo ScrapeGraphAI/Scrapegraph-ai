@@ -1,40 +1,44 @@
 """
-Basic example of scraping pipeline using CSVScraperGraph from CSV documents
+Basic example of scraping pipeline using CSVScraperMultiGraph from CSV documents
 """
 
 import os
 from dotenv import load_dotenv
 import pandas as pd
-from scrapegraphai.graphs import CSVScraperGraph
+from scrapegraphai.graphs import CSVScraperMultiGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 load_dotenv()
-
 # ************************************************
-# Read the csv file
+# Read the CSV file
 # ************************************************
 
-text = pd.read_csv("inputs/username.csv")
+FILE_NAME = "inputs/username.csv"
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, FILE_NAME)
+
+text = pd.read_csv(file_path)
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
+
 gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gemini-pro",
+        "model": "google_genai/gemini-pro",
     },
 }
 
 # ************************************************
-# Create the CSVScraperGraph instance and run it
+# Create the CSVScraperMultiGraph instance and run it
 # ************************************************
 
-csv_scraper_graph = CSVScraperGraph(
+csv_scraper_graph = CSVScraperMultiGraph(
     prompt="List me all the last names",
-    source=str(text),  # Pass the content of the file, not the file object
+    source=[str(text), str(text)],
     config=graph_config
 )
 

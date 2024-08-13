@@ -1,55 +1,51 @@
 """
-Basic example of scraping pipeline using XMLScraperMultiGraph from XML documents
+Basic example of scraping pipeline using CSVScraperGraph from CSV documents
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import XMLScraperMultiGraph
+import pandas as pd
+from scrapegraphai.graphs import CSVScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
 load_dotenv()
 
 # ************************************************
-# Read the XML file
+# Read the csv file
 # ************************************************
 
-FILE_NAME = "inputs/books.xml"
-curr_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(curr_dir, FILE_NAME)
-
-with open(file_path, 'r', encoding="utf-8") as file:
-    text = file.read()
+text = pd.read_csv("inputs/username.csv")
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
 gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gemini-pro",
+        "model": "google_genai/gemini-pro",
     },
 }
 
 # ************************************************
-# Create the XMLScraperMultiGraph instance and run it
+# Create the CSVScraperGraph instance and run it
 # ************************************************
 
-xml_scraper_graph = XMLScraperMultiGraph(
-    prompt="List me all the authors, title and genres of the books",
-    source=[text, text],  # Pass the content of the file, not the file object
+csv_scraper_graph = CSVScraperGraph(
+    prompt="List me all the last names",
+    source=str(text),  # Pass the content of the file, not the file object
     config=graph_config
 )
 
-result = xml_scraper_graph.run()
+result = csv_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = xml_scraper_graph.get_execution_info()
+graph_exec_info = csv_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
 # Save to json or csv

@@ -1,18 +1,18 @@
 """
-Basic example of scraping pipeline using JSONScraperGraph from JSON documents
+Basic example of scraping pipeline using XMLScraperMultiGraph from XML documents
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import JSONScraperGraph
+from scrapegraphai.graphs import XMLScraperMultiGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
 # ************************************************
-# Read the JSON file
+# Read the XML file
 # ************************************************
 
-FILE_NAME = "inputs/example.json"
+FILE_NAME = "inputs/books.xml"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
@@ -28,28 +28,28 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gemini-pro",
+        "model": "google_vertexai/gemini-1.5-pro",
     },
 }
 
 # ************************************************
-# Create the JSONScraperGraph instance and run it
+# Create the XMLScraperMultiGraph instance and run it
 # ************************************************
 
-json_scraper_graph = JSONScraperGraph(
+xml_scraper_graph = XMLScraperMultiGraph(
     prompt="List me all the authors, title and genres of the books",
-    source=text,  # Pass the content of the file, not the file object
+    source=[text, text],  # Pass the content of the file, not the file object
     config=graph_config
 )
 
-result = json_scraper_graph.run()
+result = xml_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = json_scraper_graph.get_execution_info()
+graph_exec_info = xml_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
 # Save to json or csv

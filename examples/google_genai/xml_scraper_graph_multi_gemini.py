@@ -1,27 +1,23 @@
 """
-Example of Search Graph
+Basic example of scraping pipeline using XMLScraperMultiGraph from XML documents
 """
 
 import os
 from dotenv import load_dotenv
+from scrapegraphai.graphs import XMLScraperMultiGraph
+from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
-from scrapegraphai.graphs import SearchGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
-
-from pydantic import BaseModel, Field
-from typing import List
-
 # ************************************************
-# Define the output schema for the graph
+# Read the XML file
 # ************************************************
 
-class Dish(BaseModel):
-    name: str = Field(description="The name of the dish")
-    description: str = Field(description="The description of the dish")
+FILE_NAME = "inputs/books.xml"
+curr_dir = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(curr_dir, FILE_NAME)
 
-class Dishes(BaseModel):
-    dishes: List[Dish]
+with open(file_path, 'r', encoding="utf-8") as file:
+    text = file.read()
 
 # ************************************************
 # Define the configuration for the graph
@@ -32,30 +28,30 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gemini-pro",
+        "model": "google_genai/gemini-pro",
     },
 }
 
 # ************************************************
-# Create the SearchGraph instance and run it
+# Create the XMLScraperMultiGraph instance and run it
 # ************************************************
 
-search_graph = SearchGraph(
-    prompt="List me Chioggia's famous dishes",
-    config=graph_config,
-    schema=Dishes
+xml_scraper_graph = XMLScraperMultiGraph(
+    prompt="List me all the authors, title and genres of the books",
+    source=[text, text],  # Pass the content of the file, not the file object
+    config=graph_config
 )
 
-result = search_graph.run()
+result = xml_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = search_graph.get_execution_info()
+graph_exec_info = xml_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
-# Save to json and csv
+# Save to json or csv
 convert_to_csv(result, "result")
 convert_to_json(result, "result")

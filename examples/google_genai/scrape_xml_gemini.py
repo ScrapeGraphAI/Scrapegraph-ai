@@ -1,22 +1,22 @@
-""" 
-Basic example of scraping pipeline using SmartScraper from text
+"""
+Basic example of scraping pipeline using SmartScraper from XML documents
 """
 
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
+
 load_dotenv()
 
 # ************************************************
-# Read the text file
+# Read the XML file
 # ************************************************
 
-FILE_NAME = "inputs/plain_html_example.txt"
+FILE_NAME = "inputs/books.xml"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
-# It could be also a http request using the request model
 with open(file_path, 'r', encoding="utf-8") as file:
     text = file.read()
 
@@ -29,7 +29,7 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gemini-pro",
+        "model": "google_genai/gemini-pro",
         "temperature": 0,
         "streaming": True
     },
@@ -40,13 +40,14 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the news with their description.",
-    source=text,
+    prompt="List me all the authors, title and genres of the books",
+    source=text,  # Pass the content of the file, not the file object
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
 print(result)
+
 
 # ************************************************
 # Get graph execution info

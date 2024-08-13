@@ -2,18 +2,17 @@
 Basic example of scraping pipeline using SmartScraper with schema
 """
 
-import os, json
+import os
 from typing import List
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+from scrapegraphai.utils import prettify_exec_info
 from scrapegraphai.graphs import SmartScraperGraph
-
 load_dotenv()
 
 # ************************************************
 # Define the output schema for the graph
 # ************************************************
-
 class Project(BaseModel):
     title: str = Field(description="The title of the project")
     description: str = Field(description="The description of the project")
@@ -22,16 +21,16 @@ class Projects(BaseModel):
     projects: List[Project]
 
 # ************************************************
-# Initialize the model instances
+# Define the configuration for the graph
 # ************************************************
+
+gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure_openai/gpt-3.5-turbo",
+        "api_key": gemini_key,
+        "model": "google_genai/gemini-pro",
     },
-    "verbose": True,
-    "headless": False
 }
 
 # ************************************************
@@ -39,11 +38,19 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me all the projects with their description",
-    source="https://perinim.github.io/projects/",
+    prompt="List me all the news with their description.",
+    # also accepts a string with the already downloaded HTML code
+    source="https://www.wired.com",
     schema=Projects,
     config=graph_config
 )
 
 result = smart_scraper_graph.run()
-print(json.dumps(result, indent=4))
+print(result)
+
+# ************************************************
+# Get graph execution info
+# ************************************************
+
+graph_exec_info = smart_scraper_graph.get_execution_info()
+print(prettify_exec_info(graph_exec_info))

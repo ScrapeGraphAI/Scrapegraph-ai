@@ -1,43 +1,40 @@
 """
-Basic example of scraping pipeline using CSVScraperMultiGraph from CSV documents
+Basic example of scraping pipeline using CSVScraperGraph from CSV documents
 """
 
 import os
 from dotenv import load_dotenv
 import pandas as pd
-from scrapegraphai.graphs import CSVScraperMultiGraph
+from scrapegraphai.graphs import CSVScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 load_dotenv()
+
 # ************************************************
-# Read the CSV file
+# Read the csv file
 # ************************************************
 
-FILE_NAME = "inputs/username.csv"
-curr_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(curr_dir, FILE_NAME)
-
-text = pd.read_csv(file_path)
+text = pd.read_csv("inputs/username.csv")
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
+gemini_key = os.getenv("GOOGLE_APIKEY")
+
 graph_config = {
     "llm": {
-        "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure_openai/gpt-3.5-turbo",
+        "api_key": gemini_key,
+        "model": "google_vertexai/gemini-1.5-pro",
     },
-    "verbose": True,
-    "headless": False
 }
 
 # ************************************************
-# Create the CSVScraperMultiGraph instance and run it
+# Create the CSVScraperGraph instance and run it
 # ************************************************
 
-csv_scraper_graph = CSVScraperMultiGraph(
+csv_scraper_graph = CSVScraperGraph(
     prompt="List me all the last names",
-    source=[str(text), str(text)],
+    source=str(text),  # Pass the content of the file, not the file object
     config=graph_config
 )
 

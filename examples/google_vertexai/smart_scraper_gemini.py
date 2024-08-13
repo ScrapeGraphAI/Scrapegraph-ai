@@ -1,12 +1,11 @@
 """ 
-Basic example of scraping pipeline using ScriptCreatorGraph
+Basic example of scraping pipeline using SmartScraper
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
-
+from scrapegraphai.graphs import SmartScraperGraph
 load_dotenv()
 
 
@@ -19,19 +18,18 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 graph_config = {
     "llm": {
         "api_key": gemini_key,
-        "model": "gemini-pro",
+        "model": "google_vertexai/gemini-1.5-pro",
     },
-    "library": "beautifoulsoup"
 }
 
 # ************************************************
-# Create the ScriptCreatorGraph instance and run it
+# Create the SmartScraperGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = ScriptCreatorGraph(
+smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the news with their description.",
     # also accepts a string with the already downloaded HTML code
-    source="https://perinim.github.io/projects",
+    source="https://www.wired.com",
     config=graph_config
 )
 

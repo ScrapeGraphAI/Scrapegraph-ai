@@ -4,28 +4,36 @@ Example of Search Graph
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SearchGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 load_dotenv()
 
-FILE_NAME = "inputs/example.json"
-curr_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(curr_dir, FILE_NAME)
+from scrapegraphai.graphs import SearchGraph
+from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
-with open(file_path, 'r', encoding="utf-8") as file:
-    text = file.read()
+from pydantic import BaseModel, Field
+from typing import List
 
 # ************************************************
-# Initialize the model instances
+# Define the output schema for the graph
 # ************************************************
+
+class Dish(BaseModel):
+    name: str = Field(description="The name of the dish")
+    description: str = Field(description="The description of the dish")
+
+class Dishes(BaseModel):
+    dishes: List[Dish]
+
+# ************************************************
+# Define the configuration for the graph
+# ************************************************
+
+gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure_openai/gpt-3.5-turbo",
+        "api_key": gemini_key,
+        "model": "google_vertexai/gemini-1.5-pro",
     },
-    "verbose": True,
-    "headless": False
 }
 
 # ************************************************
@@ -33,8 +41,9 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me the best escursions near Trento",
-    config=graph_config
+    prompt="List me Chioggia's famous dishes",
+    config=graph_config,
+    schema=Dishes
 )
 
 result = search_graph.run()
