@@ -147,7 +147,7 @@ class AbstractGraph(ABC):
                 warnings.simplefilter("ignore")
                 return init_chat_model(**llm_params)
         
-        known_models = ["azure", "fireworks", "gemini", "claude", "vertexai", "hugging_face", "groq", "gpt-", "ollama", "claude-3-", "bedrock", "mistral", "ernie", "oneapi", "nvidia"]
+        known_models = ["openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
 
         if llm_params["model"] not in known_models:
             raise ValueError(f"Model '{llm_params['model']}' is not supported")
