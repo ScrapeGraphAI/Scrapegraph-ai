@@ -1,3 +1,16 @@
+## [1.14.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.2...v1.14.0-beta.3) (2024-08-13)
+
+
+### Bug Fixes
+
+* **models_tokens:** incorrect provider names ([cb6b353](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cb6b35397e56c6785553480200aa948053d9904b))
+
+
+### chore
+
+* **examples:** add vertex examples, rename genai examples ([1aa9c6e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1aa9c6e73bfa26b83010cf8d980cdf5f572cde5a))
+* **examples:** update provider names to match tokens dictionary ([ee078cb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ee078cb102ad922a900228ebe5ea45724712a960))
+
 ## [1.14.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.1...v1.14.0-beta.2) (2024-08-12)
 
 
