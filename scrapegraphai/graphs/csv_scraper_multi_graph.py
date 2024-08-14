@@ -62,7 +62,7 @@ class CSVScraperMultiGraph(AbstractGraph):
         """
 
         # ************************************************
-        # Create a SmartScraperGraph instance
+        # Create a CSVScraperGraph instance
         # ************************************************
 
         smart_scraper_instance = CSVScraperGraph(

@@ -85,7 +85,7 @@ class OmniScraperGraph(AbstractGraph):
                 "max_images": self.max_images
             }
         )
-      
+
         generate_answer_omni_node = GenerateAnswerOmniNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc) & img_desc",
             output=["answer"],

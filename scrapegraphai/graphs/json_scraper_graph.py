@@ -58,7 +58,7 @@ class JSONScraperGraph(AbstractGraph):
             input="json | json_dir",
             output=["doc", "link_urls", "img_urls"],
         )
-     
+
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],

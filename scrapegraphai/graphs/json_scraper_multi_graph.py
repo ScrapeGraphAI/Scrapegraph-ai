@@ -63,7 +63,7 @@ class JSONScraperMultiGraph(AbstractGraph):
         """
 
         # ************************************************
-        # Create a SmartScraperGraph instance
+        # Create a JSONScraperGraph instance
         # ************************************************
 
         smart_scraper_instance = JSONScraperGraph(

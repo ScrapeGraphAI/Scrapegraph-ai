@@ -62,7 +62,7 @@ class XMLScraperGraph(AbstractGraph):
             input="xml | xml_dir",
             output=["doc", "link_urls", "img_urls"]
         )
-     
+
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],

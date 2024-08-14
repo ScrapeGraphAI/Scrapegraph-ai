@@ -10,7 +10,6 @@ from ..nodes import (
     FetchNode,
     SearchLinkNode,
     ParseNode,
-    RAGNode,
     GenerateAnswerNode,
     GraphIteratorNode,
     MergeAnswersNode
@@ -79,13 +78,7 @@ class DeepScraperGraph(AbstractGraph):
                 "chunk_size": self.model_token
             }
         )
-        rag_node = RAGNode(
-            input="user_prompt & (parsed_doc | doc)",
-            output=["relevant_chunks"],
-            node_config={
-                "llm_model": self.llm_model,
-            }
-        )
+       
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
@@ -123,7 +116,6 @@ class DeepScraperGraph(AbstractGraph):
             nodes=[
                 fetch_node,
                 parse_node,
-                rag_node,
                 generate_answer_node,
                 search_node,
                 graph_iterator_node,
@@ -131,9 +123,6 @@ class DeepScraperGraph(AbstractGraph):
             ],
             edges=[
                 (fetch_node, parse_node),
-                (parse_node, rag_node),
-                (rag_node, generate_answer_node),
-                (rag_node, search_node),
                 (search_node, graph_iterator_node),
                 (graph_iterator_node, merge_answers_node)
             ],

@@ -63,7 +63,7 @@ class XMLScraperMultiGraph(AbstractGraph):
         """
 
         # ************************************************
-        # Create a SmartScraperGraph instance
+        # Create a XMLScraperGraph instance
         # ************************************************
 
         smart_scraper_instance = XMLScraperGraph(
