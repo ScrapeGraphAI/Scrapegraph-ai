@@ -19,7 +19,7 @@ models_tokens = {
         "gpt-4o-mini":128000,
 
     },
-    "azure": {
+    "azure_openai": {
         "gpt-3.5-turbo-0125": 16385,
         "gpt-3.5": 4096,
         "gpt-3.5-turbo": 16385,
