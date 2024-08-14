@@ -132,10 +132,12 @@ We can also pass a model instance for the chat model and the embedding model. Fo
         azure_deployment="AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME",
         openai_api_version="AZURE_OPENAI_API_VERSION",
     )
-
+    # Supposing model_tokens are 100K
+    model_tokens_count = 100000 
     graph_config = {
         "llm": {
-            "model_instance": llm_model_instance
+            "model_instance": llm_model_instance,
+            "model_tokens": model_tokens_count, 
         },
         "embeddings": {
             "model_instance": embedder_model_instance
