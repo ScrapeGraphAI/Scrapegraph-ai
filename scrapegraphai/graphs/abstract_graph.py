@@ -135,7 +135,6 @@ class AbstractGraph(ABC):
                 raise KeyError("model_tokens not specified") from exc
             return llm_params["model_instance"]
 
-        # Instantiate the language model based on the model name (models that use the common interface)
         def handle_model(model_name, provider, token_key, default_token=8192):
             try:
                 self.model_token = models_tokens[provider][token_key]
