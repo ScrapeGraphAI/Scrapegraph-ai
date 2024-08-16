@@ -1,7 +1,7 @@
 """
 ParseNode Module
 """
-
+import tiktoken
 from typing import List, Optional
 from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
@@ -80,16 +80,18 @@ class ParseNode(BaseNode):
                         "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
 
             if isinstance(self.llm_model, ChatOpenAI):
-                print("openai")
+                encoding = tiktoken.get_encoding("cl100k_base")
+                encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
+                encoding.encode(docs_transformed.page_content)
             elif isinstance(self.llm_model, ChatMistralAI):
                 print("openai")
             elif isinstance(self.llm_model, ChatOllama):
                 print("Ollama")
-
-            chunks = chunk(text=docs_transformed.page_content,
-                            chunk_size=self.node_config.get("chunk_size", 4096)-250,
-                            token_counter=lambda text: len(text.split()),
-                            memoize=False)
+            else:
+                    chunks = chunk(text=docs_transformed.page_content,
+                                    chunk_size=self.node_config.get("chunk_size", 4096)-250,
+                                    token_counter=lambda text: len(text.split()),
+                                    memoize=False)
         else:
             docs_transformed = docs_transformed[0]
 

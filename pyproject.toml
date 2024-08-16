@@ -41,6 +41,7 @@ dependencies = [
     "undetected-playwright>=0.3.0",
     "semchunk>=1.0.1",
     "browserbase>=0.3.0",
+    "tiktoken==0.7.0"
 ]
 
 license = "MIT"
