@@ -1,3 +1,10 @@
+## [1.14.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.4...v1.14.0-beta.5) (2024-08-16)
+
+
+### Features
+
+* Add new feature to support gpt-4o variant models with different pricing ([8551448](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/855144876d796ceebb0930fec45ead6cc3834f14))
+
 ## [1.14.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.3...v1.14.0-beta.4) (2024-08-15)
 
 
