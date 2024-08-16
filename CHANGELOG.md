@@ -1,3 +1,10 @@
+## [1.14.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.6...v1.14.0-beta.7) (2024-08-16)
+
+
+### Bug Fixes
+
+* model count ([faef318](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/faef3186f795e950ade14bc8b6d8d1cea3afd327))
+
 ## [1.14.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.5...v1.14.0-beta.6) (2024-08-16)
 
 
