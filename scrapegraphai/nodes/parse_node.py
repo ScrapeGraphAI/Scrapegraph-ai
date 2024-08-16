@@ -80,6 +80,7 @@ class ParseNode(BaseNode):
             docs_transformed = docs_transformed[0]
 
             if isinstance(docs_transformed, Document):
+                
                 chunks = chunk(text=docs_transformed.page_content,
                             chunk_size=self.node_config.get("chunk_size", 4096)-250,
                             token_counter=lambda text: len(text.split()),

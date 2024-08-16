@@ -62,6 +62,7 @@ models_tokens = {
         "scrapegraph": 8192, 
         "llava": 4096, 
         "mixtral:8x22b-instruct": 65536, 
+        "mistral":8192,
         "mistral-openorca": 32000, 
         "nomic-embed-text": 8192, 
         "nous-hermes2:34b": 4096, 

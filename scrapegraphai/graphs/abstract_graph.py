@@ -149,7 +149,7 @@ class AbstractGraph(ABC):
         
         known_models = ["openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
 
-        if llm_params["model"] not in known_models:
+        if llm_params["model"].split("/")[0] not in known_models:
             raise ValueError(f"Model '{llm_params['model']}' is not supported")
 
         try:
