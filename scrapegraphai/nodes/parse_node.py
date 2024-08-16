@@ -1,8 +1,8 @@
 """
 ParseNode Module
 """
+from typing import List, Optional, Any
 import tiktoken
-from typing import List, Optional
 from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
@@ -10,6 +10,8 @@ from langchain_ollama import ChatOllama
 from langchain_mistralai import ChatMistralAI
 from langchain_openai import ChatOpenAI
 from ..utils.logging import get_logger
+from ..helpers import models_tokens
+from ..utils.tokenizer_openai import num_tokens_openai
 from .base_node import BaseNode
 
 class ParseNode(BaseNode):
@@ -31,12 +33,13 @@ class ParseNode(BaseNode):
     """
 
     def __init__(
-        self,
-        input: str,
-        output: List[str],
-        node_config: Optional[dict] = None,
-        node_name: str = "Parse",
-    ):
+            self,
+            input: str,
+            output: List[str],
+            llm_model: Optional[Any] = None,
+            node_config: Optional[dict] = None,
+            node_name: str = "Parse",
+        ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.verbose = (
@@ -45,6 +48,8 @@ class ParseNode(BaseNode):
         self.parse_html = (
             True if node_config is None else node_config.get("parse_html", True)
         )
+
+        self.llm_model = llm_model
 
     def execute(self, state: dict) -> dict:
         """
@@ -75,28 +80,38 @@ class ParseNode(BaseNode):
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
             docs_transformed = docs_transformed[0]
 
-            known_models = ["openai", "azure_openai", "google_genai", "ollama",
-                        "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", 
-                        "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
+            if self.llm_model is None:
+                raise ValueError("llm_model cannot be None")
 
             if isinstance(self.llm_model, ChatOpenAI):
-                encoding = tiktoken.get_encoding("cl100k_base")
-                encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
-                encoding.encode(docs_transformed.page_content)
+                num_tokens = num_tokens_openai(docs_transformed.page_content)
+                context_window = models_tokens[self.llm_model.name.split("/")[0]][self.llm_model.name.split("/")[1]]
+
+                chunks = []
+                num_chunks = num_tokens // context_window
+
+                if num_tokens % context_window != 0:
+                    num_chunks += 1
+
+                for i in range(num_chunks):
+                    start = i * context_window
+                    end = (i + 1) * context_window
+                    chunks.append(docs_transformed.page_content[start:end])
+
             elif isinstance(self.llm_model, ChatMistralAI):
-                print("openai")
+                print("mistral")
             elif isinstance(self.llm_model, ChatOllama):
                 print("Ollama")
             else:
-                    chunks = chunk(text=docs_transformed.page_content,
-                                    chunk_size=self.node_config.get("chunk_size", 4096)-250,
-                                    token_counter=lambda text: len(text.split()),
-                                    memoize=False)
+                chunks = chunk(text=docs_transformed.page_content,
+                            chunk_size=self.node_config.get("chunk_size", 4096)-250,
+                            token_counter=lambda text: len(text.split()),
+                            memoize=False)
+
         else:
             docs_transformed = docs_transformed[0]
 
-            if isinstance(docs_transformed, Document):
-                
+            if isinstance(docs_transformed, Document):  
                 chunks = chunk(text=docs_transformed.page_content,
                             chunk_size=self.node_config.get("chunk_size", 4096)-250,
                             token_counter=lambda text: len(text.split()),
