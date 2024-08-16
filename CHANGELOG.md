@@ -1,3 +1,10 @@
+## [1.14.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.3...v1.14.0-beta.4) (2024-08-15)
+
+
+### Features
+
+* update abstract graph ([c77231c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c77231c983bd6e154eefd26422cd156da4c8b7bb))
+
 ## [1.14.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.2...v1.14.0-beta.3) (2024-08-13)
 
 

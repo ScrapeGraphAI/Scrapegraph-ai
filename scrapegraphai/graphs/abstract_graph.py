@@ -146,90 +146,84 @@ class AbstractGraph(ABC):
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
                 return init_chat_model(**llm_params)
-
-        if "azure" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "azure_openai", model_name)
-
-        if "gpt-" in llm_params["model"]:
-            return handle_model(llm_params["model"], "openai", llm_params["model"])
-
-        if "fireworks" in llm_params["model"]:
-            model_name = "/".join(llm_params["model"].split("/")[1:])
-            token_key = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "fireworks", token_key)
-
-        if "gemini" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "google_genai", model_name)
-
-        if llm_params["model"].startswith("claude"):
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "anthropic", model_name)
-
-        if llm_params["model"].startswith("vertexai"):
-            return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
         
-        if "ollama" in llm_params["model"]:
-            model_name = llm_params["model"].split("ollama/")[-1]
-            token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
-            return handle_model(model_name, "ollama", token_key)
-    
-        if "hugging_face" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "hugging_face", model_name)
+        known_models = ["openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
 
-        if "groq" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "groq", model_name)
+        if llm_params["model"] not in known_models:
+            raise ValueError(f"Model '{llm_params['model']}' is not supported")
 
-        if "bedrock" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "bedrock", model_name)
+        try:
+            if "fireworks" in llm_params["model"]:
+                model_name = "/".join(llm_params["model"].split("/")[1:])
+                token_key = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "fireworks", token_key)
 
-        if "claude-3-" in llm_params["model"]:
-            return handle_model(llm_params["model"], "anthropic", "claude3")
-        
-        if llm_params["model"].startswith("mistral"):
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "mistralai", model_name)
+            elif "gemini" in llm_params["model"]:
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "google_genai", model_name)
 
-        # Instantiate the language model based on the model name (models that do not use the common interface)
-        if "deepseek" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["deepseek"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            return DeepSeek(llm_params)
+            elif llm_params["model"].startswith("claude"):
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "anthropic", model_name)
 
-        if "ernie" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["ernie"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            return ErnieBotChat(**llm_params)
+            elif llm_params["model"].startswith("vertexai"):
+                return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
 
-        if "oneapi" in llm_params["model"]:
-            # take the model after the last dash
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-            try:
-                self.model_token = models_tokens["oneapi"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return OneApi(llm_params)
+            elif "gpt-" in llm_params["model"]:
+                return handle_model(llm_params["model"], "openai", llm_params["model"])
 
-        if "nvidia" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
-                llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return ChatNVIDIA(**llm_params)
+            elif "ollama" in llm_params["model"]:
+                model_name = llm_params["model"].split("ollama/")[-1]
+                token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
+                return handle_model(model_name, "ollama", token_key)
 
-        # Raise an error if the model did not match any of the previous cases
-        raise ValueError("Model provided by the configuration not supported")
+            elif "claude-3-" in llm_params["model"]:
+                return handle_model(llm_params["model"], "anthropic", "claude3")
+
+            elif llm_params["model"].startswith("mistral"):
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "mistralai", model_name)
+
+            # Instantiate the language model based on the model name (models that do not use the common interface)
+            elif "deepseek" in llm_params["model"]:
+                try:
+                    self.model_token = models_tokens["deepseek"][llm_params["model"]]
+                except KeyError:
+                    print("model not found, using default token size (8192)")
+                    self.model_token = 8192
+                return DeepSeek(llm_params)
+
+            elif "ernie" in llm_params["model"]:
+                try:
+                    self.model_token = models_tokens["ernie"][llm_params["model"]]
+                except KeyError:
+                    print("model not found, using default token size (8192)")
+                    self.model_token = 8192
+                return ErnieBotChat(llm_params)
+
+            elif "oneapi" in llm_params["model"]:
+                # take the model after the last dash
+                llm_params["model"] = llm_params["model"].split("/")[-1]
+                try:
+                    self.model_token = models_tokens["oneapi"][llm_params["model"]]
+                except KeyError:
+                    raise KeyError("Model not supported")
+                return OneApi(llm_params)
+
+            elif "nvidia" in llm_params["model"]:
+                try:
+                    self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
+                    llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
+                except KeyError:
+                    raise KeyError("Model not supported")
+                return ChatNVIDIA(llm_params)
+
+            else:
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, llm_params["model"], model_name)
+
+        except KeyError as e:
+            print(f"Model not supported: {e}")
 
 
     def get_state(self, key=None) -> dict:
