@@ -1,9 +1,9 @@
 """ 
 Module for minimizing the code
 """
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from minify_html import minify
-from urllib.parse import urljoin
 
 def cleanup_html(html_content: str, base_url: str) -> str:
     """

@@ -1,5 +1,5 @@
 """
-convert_to_md modul
+convert_to_md module
 """
 from urllib.parse import urlparse
 import html2text
