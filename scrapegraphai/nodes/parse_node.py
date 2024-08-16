@@ -6,6 +6,9 @@ from typing import List, Optional
 from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
+from langchain_ollama import ChatOllama
+from langchain_mistralai import ChatMistralAI
+from langchain_openai import ChatOpenAI
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
@@ -71,6 +74,17 @@ class ParseNode(BaseNode):
         if self.parse_html:
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
             docs_transformed = docs_transformed[0]
+
+            known_models = ["openai", "azure_openai", "google_genai", "ollama",
+                        "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", 
+                        "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
+
+            if isinstance(self.llm_model, ChatOpenAI):
+                print("openai")
+            elif isinstance(self.llm_model, ChatMistralAI):
+                print("openai")
+            elif isinstance(self.llm_model, ChatOllama):
+                print("Ollama")
 
             chunks = chunk(text=docs_transformed.page_content,
                             chunk_size=self.node_config.get("chunk_size", 4096)-250,
