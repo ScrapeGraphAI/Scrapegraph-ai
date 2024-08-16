@@ -1,3 +1,10 @@
+## [1.14.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.5...v1.14.0-beta.6) (2024-08-16)
+
+
+### Features
+
+* add integration for new module of gpt4o ([982150e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/982150e81fbaa4241c725aaa9dfcd553f8b86978))
+
 ## [1.14.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.4...v1.14.0-beta.5) (2024-08-16)
 
 
