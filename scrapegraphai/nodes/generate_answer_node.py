@@ -89,7 +89,7 @@ class GenerateAnswerNode(BaseNode):
         if self.node_config.get("schema", None) is not None:
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
             if isinstance(self.llm_model, ChatOpenAI):
-                self.llm_model = self.llm_model.with_structured_output(self.node_config["schema"])
+                self.llm_model = self.llm_model.with_structured_output(self.node_config["schema"], method="json_mode")
 
         else:
             output_parser = JsonOutputParser()
