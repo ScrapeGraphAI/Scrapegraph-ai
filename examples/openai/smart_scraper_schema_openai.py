@@ -5,7 +5,7 @@ Basic example of scraping pipeline using SmartScraper with schema
 import os, json
 from typing import List
 from dotenv import load_dotenv
-from pydantic import BaseModel, Field
+from langchain_core.pydantic_v1 import BaseModel, Field
 from scrapegraphai.graphs import SmartScraperGraph
 
 load_dotenv()
@@ -30,7 +30,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key":openai_key,
-        "model": "chatgpt-4o-latest",
+        "model": "gpt-4o-mini",
     },
     "verbose": True,
     "headless": False,

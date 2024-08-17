@@ -133,7 +133,6 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 groq==0.9.0
     # via langchain-groq
 grpc-google-iam-v1==0.13.1
@@ -178,6 +177,7 @@ jinja2==3.1.4
     # via torch
 jiter==0.5.0
     # via anthropic
+    # via openai
 jmespath==1.0.1
     # via boto3
     # via botocore
@@ -187,7 +187,7 @@ jsonpatch==1.33
     # via langchain-core
 jsonpointer==3.0.0
     # via jsonpatch
-langchain==0.2.11
+langchain==0.2.14
     # via langchain-community
     # via scrapegraphai
 langchain-anthropic==0.1.20
@@ -196,7 +196,7 @@ langchain-aws==0.1.12
     # via scrapegraphai
 langchain-community==0.2.10
     # via scrapegraphai
-langchain-core==0.2.28
+langchain-core==0.2.33
     # via langchain
     # via langchain-anthropic
     # via langchain-aws
@@ -224,7 +224,7 @@ langchain-mistralai==0.1.12
     # via scrapegraphai
 langchain-nvidia-ai-endpoints==0.1.7
     # via scrapegraphai
-langchain-openai==0.1.17
+langchain-openai==0.1.22
     # via scrapegraphai
 langchain-text-splitters==0.2.2
     # via langchain
@@ -264,7 +264,7 @@ numpy==1.26.4
     # via sentence-transformers
     # via shapely
     # via transformers
-openai==1.37.0
+openai==1.41.0
     # via langchain-fireworks
     # via langchain-openai
 orjson==3.10.6

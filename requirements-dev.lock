@@ -179,7 +179,6 @@ graphviz==0.20.3
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 groq==0.9.0
     # via langchain-groq
 grpc-google-iam-v1==0.13.1
@@ -255,7 +254,7 @@ jsonschema-specifications==2023.12.1
     # via jsonschema
 kiwisolver==1.4.5
     # via matplotlib
-langchain==0.2.12
+langchain==0.2.14
     # via langchain-community
     # via scrapegraphai
 langchain-anthropic==0.1.22
@@ -264,7 +263,7 @@ langchain-aws==0.1.16
     # via scrapegraphai
 langchain-community==0.2.11
     # via scrapegraphai
-langchain-core==0.2.29
+langchain-core==0.2.33
     # via langchain
     # via langchain-anthropic
     # via langchain-aws
@@ -292,7 +291,7 @@ langchain-mistralai==0.1.12
     # via scrapegraphai
 langchain-nvidia-ai-endpoints==0.2.1
     # via scrapegraphai
-langchain-openai==0.1.21
+langchain-openai==0.1.22
     # via scrapegraphai
 langchain-text-splitters==0.2.2
     # via langchain
