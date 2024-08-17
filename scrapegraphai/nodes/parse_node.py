@@ -7,6 +7,7 @@ from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
 from langchain_ollama import ChatOllama
+from transformers import AutoTokenizer
 from langchain_mistralai import ChatMistralAI
 from google.generativeai import genai
 from langchain_openai import ChatOpenAI
@@ -101,7 +102,9 @@ class ParseNode(BaseNode):
             elif isinstance(self.llm_model, ChatMistralAI):
                 print("mistral")
             elif isinstance(self.llm_model, ChatOllama):
-                print("Ollama")
+                tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B")
+                tokens = tokenizer.tokenize(docs_transformed.page_conten)
+                num_tokens = len(tokens)
             #google genai
             elif isinstance(self.llm_model, str):
                 model = genai.GenerativeModel(self.llm_model)
