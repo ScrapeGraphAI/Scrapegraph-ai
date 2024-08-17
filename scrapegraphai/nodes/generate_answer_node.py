@@ -88,19 +88,22 @@ class GenerateAnswerNode(BaseNode):
         # Initialize the output parser
         if self.node_config.get("schema", None) is not None:
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+            if isinstance(self.llm_model, ChatOpenAI):
+                self.llm_model = self.llm_model.with_structured_output(self.node_config["schema"])
+
         else:
             output_parser = JsonOutputParser()
 
         format_instructions = output_parser.get_format_instructions()
 
+        template_no_chunks_prompt = template_no_chunks
+        template_chunks_prompt = template_chunks
+        template_merge_prompt = template_merge
+
         if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
             template_no_chunks_prompt = template_no_chunks_md
             template_chunks_prompt = template_chunks_md
             template_merge_prompt = template_merge_md
-        else:
-            template_no_chunks_prompt = template_no_chunks
-            template_chunks_prompt = template_chunks
-            template_merge_prompt = template_merge
 
         if self.additional_info is not None:
             template_no_chunks_prompt = self.additional_info + template_no_chunks_prompt
