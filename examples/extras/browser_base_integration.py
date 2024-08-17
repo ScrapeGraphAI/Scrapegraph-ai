@@ -22,7 +22,7 @@ graph_config = {
     },
     "browser_base": {
         "api_key": os.getenv("BROWSER_BASE_API_KEY"),
-        "project_id": os.getenv("BROWSER_BASE_API_KEY"),
+        "project_id": os.getenv("BROWSER_BASE_PROJECT_ID"),
     },
     "verbose": True,
     "headless": False,
