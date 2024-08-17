@@ -43,6 +43,8 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[s
 
     browserbase = Browserbase(api_key=api_key, project_id=project_id)
 
-    result = browserbase.load([link])
+    result = []
+    for l in link:
+        result.append(browserbase.load(l, text_content=True))
 
     return result
