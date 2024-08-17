@@ -1,3 +1,10 @@
+## [1.14.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.8...v1.14.0-beta.9) (2024-08-17)
+
+
+### Features
+
+* update model tokens dict ([0aca287](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0aca28732b249ffaedf5b665cbfb5b1255c0cc74))
+
 ## [1.14.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.7...v1.14.0-beta.8) (2024-08-17)
 
 
