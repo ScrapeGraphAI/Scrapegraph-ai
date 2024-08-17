@@ -8,6 +8,7 @@ from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
 from langchain_ollama import ChatOllama
 from langchain_mistralai import ChatMistralAI
+from google.generativeai import genai
 from langchain_openai import ChatOpenAI
 from ..utils.logging import get_logger
 from ..helpers import models_tokens
@@ -36,7 +37,6 @@ class ParseNode(BaseNode):
             self,
             input: str,
             output: List[str],
-            llm_model: Optional[Any] = None,
             node_config: Optional[dict] = None,
             node_name: str = "Parse",
         ):
@@ -49,7 +49,7 @@ class ParseNode(BaseNode):
             True if node_config is None else node_config.get("parse_html", True)
         )
 
-        self.llm_model = llm_model
+        self.llm_model = node_config.get("llm_model")
 
     def execute(self, state: dict) -> dict:
         """
@@ -102,6 +102,24 @@ class ParseNode(BaseNode):
                 print("mistral")
             elif isinstance(self.llm_model, ChatOllama):
                 print("Ollama")
+            #google genai
+            elif isinstance(self.llm_model, str):
+                model = genai.GenerativeModel(self.llm_model)
+                num_tokens = model.count_tokens(docs_transformed.page_content)
+
+                # Get the context window size for the model
+                context_window = model.context_window
+
+                chunks = []
+                num_chunks = num_tokens // context_window
+
+                if num_tokens % context_window != 0:
+                    num_chunks += 1
+
+                for i in range(num_chunks):
+                    start = i * context_window
+                    end = (i + 1) * context_window
+                    chunks.append(docs_transformed.page_content[start:end])
             else:
                 chunks = chunk(text=docs_transformed.page_content,
                             chunk_size=self.node_config.get("chunk_size", 4096)-250,
@@ -111,7 +129,7 @@ class ParseNode(BaseNode):
         else:
             docs_transformed = docs_transformed[0]
 
-            if isinstance(docs_transformed, Document):  
+            if isinstance(docs_transformed, Document):
                 chunks = chunk(text=docs_transformed.page_content,
                             chunk_size=self.node_config.get("chunk_size", 4096)-250,
                             token_counter=lambda text: len(text.split()),
