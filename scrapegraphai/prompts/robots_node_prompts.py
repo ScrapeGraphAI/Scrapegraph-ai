@@ -2,7 +2,7 @@
 Robot node prompts helper
 """
 
-template_robot = """
+TEMPLATE_ROBOT= """
 You are a website scraper and you need to scrape a website.
 You need to check if the website allows scraping of the provided path. \n
 You are provided with the robots.txt file of the website and you must reply if it is legit to scrape or not the website. \n

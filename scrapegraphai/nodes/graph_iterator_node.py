@@ -1,7 +1,6 @@
 """
 GraphIterator Module
 """
-
 import asyncio
 import copy
 from typing import List, Optional

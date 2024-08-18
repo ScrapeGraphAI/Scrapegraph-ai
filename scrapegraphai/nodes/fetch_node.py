@@ -1,7 +1,6 @@
 """"
 FetchNode Module
 """
-
 import json
 from typing import List, Optional
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
@@ -16,10 +15,6 @@ from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
-
-""""
-FetchNode Module
-"""
 class FetchNode(BaseNode):
     """
     A node responsible for fetching the HTML content of a specified URL and updating
@@ -218,7 +213,7 @@ class FetchNode(BaseNode):
         self.logger.info(f"--- (Fetching HTML from: {source}) ---")
         if not source.strip():
             raise ValueError("No HTML body content found in the local source.")
-  
+
         parsed_content = source
 
         if (isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI)) and not self.script_creator or self.force and not self.script_creator:

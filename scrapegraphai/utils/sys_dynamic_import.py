@@ -1,4 +1,5 @@
-"""high-level module for dynamic importing of python modules at runtime
+"""
+high-level module for dynamic importing of python modules at runtime
 
 source code inspired by https://gist.github.com/DiTo97/46f4b733396b8d7a8f1d4d22db902cfc
 """

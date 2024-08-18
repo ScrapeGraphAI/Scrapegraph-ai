@@ -2,12 +2,12 @@
 __init__.py for the prompts folder
 """
 
-from .generate_answer_node_prompts import template_chunks, template_no_chunks, template_merge, template_chunks_md, template_no_chunks_md, template_merge_md
-from .generate_answer_node_csv_prompts import template_chunks_csv, template_no_chunks_csv, template_merge_csv  
-from .generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
-from .generate_answer_node_omni_prompts import template_chunks_omni, template_no_chunk_omni, template_merge_omni
-from .merge_answer_node_prompts import template_combined
-from .robots_node_prompts import template_robot
-from .search_internet_node_prompts import template_search_internet
-from .search_link_node_prompts import template_relevant_links
-from .search_node_with_context_prompts import template_search_with_context_chunks, template_search_with_context_no_chunks
+from .generate_answer_node_prompts import TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
+from .generate_answer_node_csv_prompts import TEMPLATE_CHUKS_CSV, TEMPLATE_NO_CHUKS_CSV, TEMPLATE_MERGE_CSV  
+from .generate_answer_node_pdf_prompts import TEMPLATE_CHUNKS_PDF, TEMPLATE_NO_CHUNKS_PDF, TEMPLATE_MERGE_PDF
+from .generate_answer_node_omni_prompts import TEMPLATE_CHUNKS_OMNI, TEMPLATE_NO_CHUNKS_OMNI, TEMPLATE_MERGE_OMNI
+from .merge_answer_node_prompts import TEMPLATE_COMBINED
+from .robots_node_prompts import TEMPLATE_ROBOT
+from .search_internet_node_prompts import TEMPLATE_SEARCH_INTERNET
+from .search_link_node_prompts import TEMPLATE_RELEVANT_LINKS
+from .search_node_with_context_prompts import TEMPLATE_SEARCH_WITH_CONTEXT_CHUNKS, TEMPLATE_SEARCH_WITH_CONTEXT_NO_CHUNKS

@@ -2,7 +2,7 @@
 Search link node prompts helper
 """
 
-template_relevant_links = """
+TEMPLATE_RELEVANT_LINKS = """
 You are a website scraper and you have just scraped the following content from a website.
 Content: {content}
 

@@ -1,7 +1,6 @@
 """
 ParseNode Module
 """
-
 from typing import List, Optional
 from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer

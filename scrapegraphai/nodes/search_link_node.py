@@ -1,7 +1,6 @@
 """
 SearchLinkNode Module
 """
-
 from typing import List, Optional
 import re
 from tqdm import tqdm
@@ -10,7 +9,7 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..prompts import template_relevant_links
+from ..prompts import TEMPLATE_RELEVANT_LINKS
 
 
 class SearchLinkNode(BaseNode):
@@ -86,7 +85,7 @@ class SearchLinkNode(BaseNode):
                 self.logger.error(f"Error extracting links: {e}. Falling back to LLM.")
                 
                 merge_prompt = PromptTemplate(
-                    template=template_relevant_links,
+                    template=TEMPLATE_RELEVANT_LINKS,
                     input_variables=["content", "user_prompt"],
                 )
                 merge_chain = merge_prompt | self.llm_model | output_parser

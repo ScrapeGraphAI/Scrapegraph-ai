@@ -1,3 +1,7 @@
+"""
+List of model tokens
+"""
+
 models_tokens = {
     "openai": {
         "gpt-3.5-turbo-0125": 16385,

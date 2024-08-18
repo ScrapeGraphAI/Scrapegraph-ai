@@ -1,8 +1,6 @@
 """
 MergeAnswersNode Module
 """
-
-# Imports from standard library
 from typing import List, Optional
 from tqdm import tqdm
 from langchain.prompts import PromptTemplate
@@ -80,7 +78,7 @@ class MergeGeneratedScriptsNode(BaseNode):
 
         # format_instructions = output_schema.get_format_instructions()
 
-        template_merge = """
+        TEMPLATE_MERGE = """
         You are a python expert in web scraping and you have just generated multiple scripts to scrape different URLs.\n
         The scripts are generated based on a user question and the content of the websites.\n
         You need to create one single script that merges the scripts generated for each URL.\n
@@ -93,7 +91,7 @@ class MergeGeneratedScriptsNode(BaseNode):
         """
 
         prompt_template = PromptTemplate(
-            template=template_merge,
+            template=TEMPLATE_MERGE,
             input_variables=["user_prompt"],
             partial_variables={
                 "scripts": scripts_str,

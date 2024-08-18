@@ -10,7 +10,7 @@ from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..prompts import template_chunks, template_no_chunks, template_merge, template_chunks_md, template_no_chunks_md, template_merge_md
+from ..prompts import TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -94,22 +94,22 @@ class GenerateAnswerNode(BaseNode):
         format_instructions = output_parser.get_format_instructions()
 
         if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
-            template_no_chunks_prompt = template_no_chunks_md
-            template_chunks_prompt = template_chunks_md
-            template_merge_prompt = template_merge_md
+            TEMPLATE_NO_CHUNKS_prompt = TEMPLATE_NO_CHUNKS_MD
+            TEMPLATE_CHUNKS_prompt = TEMPLATE_CHUNKS_MD
+            TEMPLATE_MERGE_prompt = TEMPLATE_MERGE_MD
         else:
-            template_no_chunks_prompt = template_no_chunks
-            template_chunks_prompt = template_chunks
-            template_merge_prompt = template_merge
+            TEMPLATE_NO_CHUNKS_prompt = TEMPLATE_NO_CHUNKS
+            TEMPLATE_CHUNKS_prompt = TEMPLATE_CHUNKS
+            TEMPLATE_MERGE_prompt = TEMPLATE_MERGE
 
         if self.additional_info is not None:
-            template_no_chunks_prompt = self.additional_info + template_no_chunks_prompt
-            template_chunks_prompt = self.additional_info + template_chunks_prompt
-            template_merge_prompt = self.additional_info + template_merge_prompt
+            TEMPLATE_NO_CHUNKS_prompt = self.additional_info + TEMPLATE_NO_CHUNKS_prompt
+            TEMPLATE_CHUNKS_prompt = self.additional_info + TEMPLATE_CHUNKS_prompt
+            TEMPLATE_MERGE_prompt = self.additional_info + TEMPLATE_MERGE_prompt
 
         if len(doc) == 1:
             prompt = PromptTemplate(
-                template=template_no_chunks_prompt,
+                template=TEMPLATE_NO_CHUNKS_prompt,
                 input_variables=["question"],
                 partial_variables={"context": doc,
                                     "format_instructions": format_instructions})
@@ -123,7 +123,7 @@ class GenerateAnswerNode(BaseNode):
         for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
 
             prompt = PromptTemplate(
-                template=template_chunks,
+                template=TEMPLATE_CHUNKS,
                 input_variables=["question"],
                 partial_variables={"context": chunk,
                                 "chunk_id": i + 1,
@@ -136,7 +136,7 @@ class GenerateAnswerNode(BaseNode):
         batch_results =  async_runner.invoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
-                template = template_merge_prompt,
+                template = TEMPLATE_MERGE_prompt,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )
