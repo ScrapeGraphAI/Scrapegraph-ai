@@ -19,4 +19,6 @@ from .generate_answer_pdf_node import GenerateAnswerPDFNode
 from .graph_iterator_node import GraphIteratorNode
 from .merge_answers_node import MergeAnswersNode
 from .generate_answer_omni_node import GenerateAnswerOmniNode
-from .merge_generated_scripts import MergeGeneratedScriptsNode 
+from .merge_generated_scripts import MergeGeneratedScriptsNode
+from .fetch_screen_node import FetchScreenNode
+from .generate_answer_from_image_node import GenerateAnswerFromImageNode
