@@ -94,22 +94,22 @@ class GenerateAnswerNode(BaseNode):
         format_instructions = output_parser.get_format_instructions()
 
         if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
-            TEMPLATE_NO_CHUNKS_prompt = TEMPLATE_NO_CHUNKS_MD
-            TEMPLATE_CHUNKS_prompt = TEMPLATE_CHUNKS_MD
-            TEMPLATE_MERGE_prompt = TEMPLATE_MERGE_MD
+            template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS_MD
+            template_chunks_prompt  = TEMPLATE_CHUNKS_MD
+            template_merge_prompt  = TEMPLATE_MERGE_MD
         else:
-            TEMPLATE_NO_CHUNKS_prompt = TEMPLATE_NO_CHUNKS
-            TEMPLATE_CHUNKS_prompt = TEMPLATE_CHUNKS
-            TEMPLATE_MERGE_prompt = TEMPLATE_MERGE
+            template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS
+            template_chunks_prompt  = TEMPLATE_CHUNKS
+            template_merge_prompt  = TEMPLATE_MERGE
 
         if self.additional_info is not None:
-            TEMPLATE_NO_CHUNKS_prompt = self.additional_info + TEMPLATE_NO_CHUNKS_prompt
-            TEMPLATE_CHUNKS_prompt = self.additional_info + TEMPLATE_CHUNKS_prompt
-            TEMPLATE_MERGE_prompt = self.additional_info + TEMPLATE_MERGE_prompt
+            template_no_chunks_prompt  = self.additional_info + template_no_chunks_prompt
+            template_chunks_prompt  = self.additional_info + template_chunks_prompt
+            template_merge_prompt  = self.additional_info + template_merge_prompt 
 
         if len(doc) == 1:
             prompt = PromptTemplate(
-                template=TEMPLATE_NO_CHUNKS_prompt,
+                template=template_no_chunks_prompt ,
                 input_variables=["question"],
                 partial_variables={"context": doc,
                                     "format_instructions": format_instructions})
@@ -136,7 +136,7 @@ class GenerateAnswerNode(BaseNode):
         batch_results =  async_runner.invoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
-                template = TEMPLATE_MERGE_prompt,
+                template = template_merge_prompt ,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )
