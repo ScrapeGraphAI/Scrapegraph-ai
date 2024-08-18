@@ -29,8 +29,8 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = ScreenshotScraperGraph(
-    prompt="List me the email of the company",
-    source="https://scrapegraphai.com/",
+    prompt="List me all the projects",
+    source="https://perinim.github.io/projects/",
     config=graph_config
 )
 
