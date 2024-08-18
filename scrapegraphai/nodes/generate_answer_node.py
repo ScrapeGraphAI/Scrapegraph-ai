@@ -1,6 +1,5 @@
-"""
-GenerateAnswerNode Module
-"""
+import requests
+import json
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -10,7 +9,10 @@ from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..prompts import TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
+from ..prompts import (
+    TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE,
+    TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
+)
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -39,110 +41,130 @@ class GenerateAnswerNode(BaseNode):
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
-        self.llm_model = node_config["llm_model"]
+        self.llm_model = node_config.get("llm_model")
+        if isinstance(self.llm_model, ChatOllama):
+            self.llm_model.format = "json"
 
-        if isinstance(node_config["llm_model"], ChatOllama):
-            self.llm_model.format="json"
-
-        self.verbose = (
-            True if node_config is None else node_config.get("verbose", False)
-        )
-        self.force = (
-            False if node_config is None else node_config.get("force", False)
-        )
-        self.script_creator = (
-            False if node_config is None else node_config.get("script_creator", False)
-        )
-        self.is_md_scraper = (
-            False if node_config is None else node_config.get("is_md_scraper", False)
-        )
-
-        self.additional_info = node_config.get("additional_info")
+        self.verbose = node_config.get("verbose", False)
+        self.force = node_config.get("force", False)
+        self.script_creator = node_config.get("script_creator", False)
+        self.is_md_scraper = node_config.get("is_md_scraper", False)
+        self.additional_info = node_config.get("additional_info", "")
+        self.api_key = node_config.get("config", {}).get("llm", {}).get("api_key", "")
 
     def execute(self, state: dict) -> dict:
-        """
-        Generates an answer by constructing a prompt from the user's input and the scraped
-        content, querying the language model, and parsing its response.
-
-        Args:
-            state (dict): The current state of the graph. The input keys will be used
-                            to fetch the correct data from the state.
-
-        Returns:
-            dict: The updated state with the output key containing the generated answer.
-
-        Raises:
-            KeyError: If the input keys are not found in the state, indicating
-                      that the necessary information for generating an answer is missing.
-        """
-
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        # Fetching data from the state based on the input keys
-        input_data = [state[key] for key in input_keys]
-        user_prompt = input_data[0]
-        doc = input_data[1]
+        user_prompt, doc = [state[key] for key in input_keys]
 
-        # Initialize the output parser
-        if self.node_config.get("schema", None) is not None:
-            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
-        else:
-            output_parser = JsonOutputParser()
-
+        schema = self.node_config.get("schema")
+        output_parser = JsonOutputParser(pydantic_object=schema) if schema else JsonOutputParser()
         format_instructions = output_parser.get_format_instructions()
 
-        if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
-            template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS_MD
-            template_chunks_prompt  = TEMPLATE_CHUNKS_MD
-            template_merge_prompt  = TEMPLATE_MERGE_MD
+        if isinstance(self.llm_model, ChatOpenAI) and (not self.script_creator or self.force) or self.is_md_scraper:
+            templates = {
+                'no_chunks': TEMPLATE_NO_CHUNKS_MD,
+                'chunks': TEMPLATE_CHUNKS_MD,
+                'merge': TEMPLATE_MERGE_MD
+            }
+
+            url = "https://api.openai.com/v1/chat/completions"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.api_key}"
+            }
+
+            if len(doc) == 1:
+                prompt = templates['no_chunks'].format(
+                    question=user_prompt,
+                    context=doc[0],
+                    format_instructions=format_instructions
+                )
+                response = requests.post(url, headers=headers, json={
+                    "model": self.llm_model.model_name,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0
+                }, timeout=10)
+                response_text = response.json()['choices'][0]['message']['content']
+                cleaned_response = json.loads(response_text.replace('\\n', '').replace('\\', ''))
+                state.update({self.output[0]: cleaned_response})
+                return state
+
+            chunks_responses = []
+            for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+                prompt = templates['chunks'].format(
+                    question=user_prompt,
+                    context=chunk,
+                    chunk_id=i + 1,
+                    format_instructions=format_instructions
+                )
+                response = requests.post(url, headers=headers, json={
+                    "model": self.llm_model.model_name,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0
+                }, timeout=10)
+                chunk_response = response.json()['choices'][0]['message']['content']
+                cleaned_chunk_response = json.loads(chunk_response.replace('\\n', '').replace('\\', ''))
+                chunks_responses.append(cleaned_chunk_response)
+
+            merge_context = " ".join([json.dumps(chunk) for chunk in chunks_responses])
+            merge_prompt = templates['merge'].format(
+                question=user_prompt,
+                context=merge_context,
+                format_instructions=format_instructions
+            )
+            response = requests.post(url, headers=headers, json={
+                "model": self.llm_model.model_name,
+                "messages": [{"role": "user", "content": merge_prompt}],
+                "temperature": 0
+            }, timeout=10)
+            response_text = response.json()['choices'][0]['message']['content']
+            cleaned_response = json.loads(response_text.replace('\\n', '').replace('\\', ''))
+            state.update({self.output[0]: cleaned_response})
+            return state
+
         else:
-            template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS
-            template_chunks_prompt  = TEMPLATE_CHUNKS
-            template_merge_prompt  = TEMPLATE_MERGE
+            templates = {
+                'no_chunks': TEMPLATE_NO_CHUNKS,
+                'chunks': TEMPLATE_CHUNKS,
+                'merge': TEMPLATE_MERGE
+            }
 
-        if self.additional_info is not None:
-            template_no_chunks_prompt  = self.additional_info + template_no_chunks_prompt
-            template_chunks_prompt  = self.additional_info + template_chunks_prompt
-            template_merge_prompt  = self.additional_info + template_merge_prompt 
+            if self.additional_info:
+                templates = {key: self.additional_info + template for key, template in templates.items()}
 
-        if len(doc) == 1:
-            prompt = PromptTemplate(
-                template=template_no_chunks_prompt ,
-                input_variables=["question"],
-                partial_variables={"context": doc,
-                                    "format_instructions": format_instructions})
-            chain =  prompt | self.llm_model | output_parser
-            answer = chain.invoke({"question": user_prompt})
+            if len(doc) == 1:
+                prompt = PromptTemplate(
+                    template=templates['no_chunks'],
+                    input_variables=["question"],
+                    partial_variables={"context": doc, "format_instructions": format_instructions}
+                )
+                chain = prompt | self.llm_model | output_parser
+                answer = chain.invoke({"question": user_prompt})
+                state.update({self.output[0]: answer})
+                return state
+
+            chains_dict = {}
+            for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+                prompt = PromptTemplate(
+                    template=templates['chunks'],
+                    input_variables=["question"],
+                    partial_variables={"context": chunk, "chunk_id": i + 1, "format_instructions": format_instructions}
+                )
+                chain_name = f"chunk{i+1}"
+                chains_dict[chain_name] = prompt | self.llm_model | output_parser
+
+            async_runner = RunnableParallel(**chains_dict)
+            batch_results = async_runner.invoke({"question": user_prompt})
+
+            merge_prompt = PromptTemplate(
+                template=templates['merge'],
+                input_variables=["context", "question"],
+                partial_variables={"format_instructions": format_instructions}
+            )
+            merge_chain = merge_prompt | self.llm_model | output_parser
+            answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
 
             state.update({self.output[0]: answer})
             return state
-
-        chains_dict = {}
-        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
-
-            prompt = PromptTemplate(
-                template=TEMPLATE_CHUNKS,
-                input_variables=["question"],
-                partial_variables={"context": chunk,
-                                "chunk_id": i + 1,
-                                "format_instructions": format_instructions})
-            chain_name = f"chunk{i+1}"
-            chains_dict[chain_name] = prompt | self.llm_model | output_parser
-
-        async_runner = RunnableParallel(**chains_dict)
-
-        batch_results =  async_runner.invoke({"question": user_prompt})
-
-        merge_prompt = PromptTemplate(
-                template = template_merge_prompt ,
-                input_variables=["context", "question"],
-                partial_variables={"format_instructions": format_instructions},
-            )
-
-        merge_chain = merge_prompt | self.llm_model | output_parser
-        answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
-
-        state.update({self.output[0]: answer})
-        return state

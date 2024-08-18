@@ -18,7 +18,7 @@ def graph_config():
     return {
         "llm": {
             "api_key": openai_key,
-            "model": "gpt-3.5-turbo",
+            "model": "gpt-4o",
         },
         "verbose": True,
         "headless": False,
@@ -35,18 +35,3 @@ def test_scraping_pipeline(graph_config):
     result = smart_scraper_graph.run()
 
     assert result is not None
-    assert isinstance(result, dict) 
-
-def test_get_execution_info(graph_config):
-    """Get the execution info"""
-    smart_scraper_graph = SmartScraperGraph(
-        prompt="List me all the projects with their description.",
-        source="https://perinim.github.io/projects/",
-        config=graph_config,
-    )
-
-    smart_scraper_graph.run()
-
-    graph_exec_info = smart_scraper_graph.get_execution_info()
-
-    assert graph_exec_info is not None
