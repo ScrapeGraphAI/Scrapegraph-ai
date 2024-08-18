@@ -25,8 +25,6 @@ class FetchScreenNode(BaseNode):
         Captures screenshots from the input URL and stores them in the state dictionary as bytes.
         """
 
-        screenshots = []
-
         with sync_playwright() as p:
             browser = p.chromium.launch()
             page = browser.new_page()
@@ -49,10 +47,7 @@ class FetchScreenNode(BaseNode):
 
             browser.close()
 
-        for screenshot_data in screenshot_data_list:
-            screenshots.append(screenshot_data)
-
         state["link"] = self.url
-        state['screenshots'] = screenshots
+        state['screenshots'] = screenshot_data_list
 
         return state

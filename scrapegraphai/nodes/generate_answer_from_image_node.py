@@ -31,10 +31,10 @@ class GenerateAnswerFromImageNode(BaseNode):
 
         api_key = self.node_config.get("config", {}).get("llm", {}).get("api_key", "")
 
-        supported_models = ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo"]
+        supported_models = ("gpt-4o", "gpt-4o-mini", "gpt-4-turbo")
 
         if self.node_config["config"]["llm"]["model"] not in supported_models:
-            raise ValueError(f"""Model '{self.node_config['config']['llm']['model']}' 
+            raise ValueError(f"""Model '{self.node_config['config']['llm']['model']}'
                              is not supported. Supported models are: 
                              {', '.join(supported_models)}.""")
 
@@ -47,7 +47,7 @@ class GenerateAnswerFromImageNode(BaseNode):
             }
 
             payload = {
-                "model": "gpt-4o-mini",
+                "model": self.node_config["config"]["llm"]["model"],
                 "messages": [
                     {
                         "role": "user",
@@ -72,7 +72,7 @@ class GenerateAnswerFromImageNode(BaseNode):
             response = requests.post("https://api.openai.com/v1/chat/completions",
                                      headers=headers,
                                      json=payload,
-                                     timeout=10 )
+                                     timeout=10)
             result = response.json()
 
             response_text = result.get('choices',
