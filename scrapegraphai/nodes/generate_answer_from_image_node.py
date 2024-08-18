@@ -1,7 +1,10 @@
-from typing import List, Optional
-from .base_node import BaseNode
+"""
+generate answer from image module
+"""
 import base64
+from typing import List, Optional
 import requests
+from .base_node import BaseNode
 
 class GenerateAnswerFromImageNode(BaseNode):
     """
