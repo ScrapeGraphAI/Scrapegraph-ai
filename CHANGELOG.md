@@ -1,3 +1,16 @@
+## [1.14.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.10...v1.14.0-beta.11) (2024-08-19)
+
+
+### Features
+
+* add structured output format ([7d2fc67](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7d2fc672c8c3c05b0f0beac46316ce16c16bcd02))
+* **GenerateAnswerNode:** built-in structured output through LangChain ([d29338b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d29338b7c2ef0b13535a2e4edae4a4aab08f1825))
+
+
+### Bug Fixes
+
+* **ParseNode:** leave room for LLM reply in context window ([683bf57](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/683bf57d895d8f6847fdd64e8936ffa1aa91926a))
+
 ## [1.14.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.9...v1.14.0-beta.10) (2024-08-19)
 
 
