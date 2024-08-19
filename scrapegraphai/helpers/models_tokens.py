@@ -43,7 +43,7 @@ models_tokens = {
         "gpt-4-32k-0613": 32768,
         "gpt-4o": 128000,
         "gpt-4o-mini":128000,
-        "chatgpt-4o-latest":128000
+        "chatgpt-4o-latest": 128000
     },
     "google_genai": {
         "gemini-pro": 128000,
