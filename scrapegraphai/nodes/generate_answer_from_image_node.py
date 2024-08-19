@@ -5,6 +5,7 @@ import base64
 from typing import List, Optional
 import requests
 from .base_node import BaseNode
+from ..utils.logging import get_logger
 
 class GenerateAnswerFromImageNode(BaseNode):
     """
@@ -26,6 +27,8 @@ class GenerateAnswerFromImageNode(BaseNode):
         Processes images from the state, generates answers, 
         consolidates the results, and updates the state.
         """
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
+
         images = state.get('screenshots', [])
         analyses = []
 
@@ -38,51 +41,52 @@ class GenerateAnswerFromImageNode(BaseNode):
                              is not supported. Supported models are: 
                              {', '.join(supported_models)}.""")
 
-        for image_data in images:
-            base64_image = base64.b64encode(image_data).decode('utf-8')
+        if self.node_config["config"]["llm"]["model"].startswith("gpt"):
+            for image_data in images:
+                base64_image = base64.b64encode(image_data).decode('utf-8')
 
-            headers = {
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}"
-            }
+                headers = {
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {api_key}"
+                }
 
-            payload = {
-                "model": self.node_config["config"]["llm"]["model"],
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": state.get("user_prompt", 
-                                                  "Extract information from the image")
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:image/jpeg;base64,{base64_image}"
+                payload = {
+                    "model": self.node_config["config"]["llm"]["model"],
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": state.get("user_prompt", 
+                                                    "Extract information from the image")
+                                },
+                                {
+                                    "type": "image_url",
+                                    "image_url": {
+                                        "url": f"data:image/jpeg;base64,{base64_image}"
+                                    }
                                 }
-                            }
-                        ]
-                    }
-                ],
-                "max_tokens": 300
+                            ]
+                        }
+                    ],
+                    "max_tokens": 300
+                }
+
+                response = requests.post("https://api.openai.com/v1/chat/completions",
+                                        headers=headers,
+                                        json=payload,
+                                        timeout=10)
+                result = response.json()
+
+                response_text = result.get('choices',
+                                        [{}])[0].get('message', {}).get('content', 'No response')
+                analyses.append(response_text)
+
+            consolidated_analysis = " ".join(analyses)
+
+            state['answer'] = {
+                "consolidated_analysis": consolidated_analysis
             }
 
-            response = requests.post("https://api.openai.com/v1/chat/completions",
-                                     headers=headers,
-                                     json=payload,
-                                     timeout=10)
-            result = response.json()
-
-            response_text = result.get('choices',
-                                       [{}])[0].get('message', {}).get('content', 'No response')
-            analyses.append(response_text)
-
-        consolidated_analysis = " ".join(analyses)
-
-        state['answer'] = {
-            "consolidated_analysis": consolidated_analysis
-        }
-
-        return state
+            return state

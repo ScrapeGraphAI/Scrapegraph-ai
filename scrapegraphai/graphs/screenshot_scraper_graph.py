@@ -79,3 +79,4 @@ class ScreenshotScraperGraph(AbstractGraph):
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
         return self.final_state.get("answer", "No answer found.")
+        

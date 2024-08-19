@@ -4,6 +4,7 @@ fetch_screen_node module
 from typing import List, Optional
 from playwright.sync_api import sync_playwright
 from .base_node import BaseNode
+from ..utils.logging import get_logger
 
 class FetchScreenNode(BaseNode):
     """
@@ -24,6 +25,7 @@ class FetchScreenNode(BaseNode):
         """
         Captures screenshots from the input URL and stores them in the state dictionary as bytes.
         """
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         with sync_playwright() as p:
             browser = p.chromium.launch()
