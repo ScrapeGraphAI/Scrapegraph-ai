@@ -1,3 +1,10 @@
+## [1.14.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.9...v1.14.0-beta.10) (2024-08-19)
+
+
+### Features
+
+* Implemented a filter logic in search_link_node.py ([08e9d9d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/08e9d9d6a09f450a9f512ac2789287819ced9641))
+
 ## [1.14.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.8...v1.14.0-beta.9) (2024-08-17)
 
 
