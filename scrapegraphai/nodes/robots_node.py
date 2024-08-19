@@ -1,7 +1,6 @@
 """
 RobotsNode Module
 """
-
 from typing import List, Optional
 from urllib.parse import urlparse
 from langchain_community.document_loaders import AsyncChromiumLoader
@@ -10,7 +9,7 @@ from langchain.output_parsers import CommaSeparatedListOutputParser
 from ..helpers import robots_dictionary
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..prompts import template_robot
+from ..prompts import TEMPLATE_ROBOT
 
 class RobotsNode(BaseNode):
     """
@@ -105,7 +104,7 @@ class RobotsNode(BaseNode):
                 agent = model
 
             prompt = PromptTemplate(
-                template=template_robot,
+                template=TEMPLATE_ROBOT,
                 input_variables=["path"],
                 partial_variables={"context": document, "agent": agent},
             )

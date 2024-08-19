@@ -1,7 +1,7 @@
 """
 Generate answer csv schema
 """
-template_chunks_csv = """
+TEMPLATE_CHUKS_CSV = """
 You are a  scraper and you have just scraped the
 following content from a csv.
 You are now asked to answer a user question about the content you have scraped.\n 
@@ -13,7 +13,7 @@ Output instructions: {format_instructions}\n
 Content of {chunk_id}: {context}. \n
 """
 
-template_no_chunks_csv = """
+TEMPLATE_NO_CHUKS_CSV = """
 You are a csv scraper and you have just scraped the
 following content from a csv.
 You are now asked to answer a user question about the content you have scraped.\n
@@ -25,7 +25,7 @@ User question: {question}\n
 csv content:  {context}\n 
 """
 
-template_merge_csv = """
+TEMPLATE_MERGE_CSV = """
 You are a csv scraper and you have just scraped the
 following content from a csv.
 You are now asked to answer a user question about the content you have scraped.\n 

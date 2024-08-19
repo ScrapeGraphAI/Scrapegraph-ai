@@ -1,10 +1,8 @@
 """
 RAGNode Module
 """
-
-from typing import List, Optional
 import os
-
+from typing import List, Optional
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import (

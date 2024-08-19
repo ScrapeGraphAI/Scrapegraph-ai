@@ -2,7 +2,7 @@
 Search internet node prompts helper
 """
 
-template_search_internet = """
+TEMPLATE_SEARCH_INTERNET = """
 PROMPT:
 You are a search engine and you need to generate a search query based on the user's prompt. \n
 Given the following user prompt, return a query that can be 

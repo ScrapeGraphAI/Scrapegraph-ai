@@ -1,16 +1,12 @@
 """
 SearchInternetNode Module
 """
-
 from typing import List, Optional
-
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from tqdm import tqdm
-from ..prompts import template_search_with_context_chunks, template_search_with_context_no_chunks
-
+from ..prompts import TEMPLATE_SEARCH_WITH_CONTEXT_CHUNKS, TEMPLATE_SEARCH_WITH_CONTEXT_NO_CHUNKS
 from .base_node import BaseNode
-
 
 class SearchLinksWithContext(BaseNode):
     """
@@ -81,7 +77,7 @@ class SearchLinksWithContext(BaseNode):
         ):
             if len(doc) == 1:
                 prompt = PromptTemplate(
-                    template=template_search_with_context_chunks,
+                    template=TEMPLATE_SEARCH_WITH_CONTEXT_CHUNKS,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk.page_content,
@@ -90,7 +86,7 @@ class SearchLinksWithContext(BaseNode):
                 )
             else:
                 prompt = PromptTemplate(
-                    template=template_search_with_context_no_chunks,
+                    template=TEMPLATE_SEARCH_WITH_CONTEXT_NO_CHUNKS,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk.page_content,

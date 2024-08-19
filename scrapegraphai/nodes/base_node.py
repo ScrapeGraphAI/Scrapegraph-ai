@@ -5,13 +5,13 @@ BaseNode Module
 import re
 from abc import ABC, abstractmethod
 from typing import List, Optional
-
 from ..utils import get_logger
 
 
 class BaseNode(ABC):
     """
-    An abstract base class for nodes in a graph-based workflow, designed to perform specific actions when executed.
+    An abstract base class for nodes in a graph-based workflow, 
+    designed to perform specific actions when executed.
 
     Attributes:
         node_name (str): The unique identifier name for the node.

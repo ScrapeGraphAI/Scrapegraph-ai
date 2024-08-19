@@ -2,7 +2,7 @@
 Search node with context prompts helper
 """
 
-template_search_with_context_chunks = """
+TEMPLATE_SEARCH_WITH_CONTEXT_CHUNKS = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to extract all the links that they have to do with the asked user question.\n
@@ -13,7 +13,7 @@ User question: {question}\n
 Content of {chunk_id}: {context}. \n
 """
 
-template_search_with_context_no_chunks = """
+TEMPLATE_SEARCH_WITH_CONTEXT_NO_CHUNKS = """
 You are a website scraper and you have just scraped the
 following content from a website.
 You are now asked to extract all the links that they have to do with the asked user question.\n
