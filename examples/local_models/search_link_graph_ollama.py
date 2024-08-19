@@ -9,14 +9,26 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3",
+        "model": "ollama/llama3.1:8b",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
     },
   
     "verbose": True,
-    "headless": False
+    "headless": False,
+    "filter_config": {
+        "diff_domain_filter": True,
+        # "img_exts": ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp', '.ico'],
+        # "lang_indicators": ['lang=', '/fr', '/pt', '/es', '/de', '/jp', '/it'],
+        # "irrelevant_keywords": [
+        #         '/login', '/signup', '/register', '/contact', 'facebook.com', 'twitter.com', 
+        #         'linkedin.com', 'instagram.com', '.js', '.css', '/wp-content/', '/wp-admin/', 
+        #         '/wp-includes/', '/wp-json/', '/wp-comments-post.php', ';amp', '/about', 
+        #         '/careers', '/jobs', '/privacy', '/terms', '/legal', '/faq', '/help',
+        #         '.pdf', '.zip', '/news', '/files', '/downloads'
+        #     ]
+    },
 }
 
 # ************************************************
