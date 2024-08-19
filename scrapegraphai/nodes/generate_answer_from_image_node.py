@@ -1,3 +1,6 @@
+"""
+GenerateAnswerFromImageNode Module
+"""
 import base64
 import asyncio
 from typing import List, Optional
@@ -21,7 +24,9 @@ class GenerateAnswerFromImageNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
     async def process_image(self, session, api_key, image_data, user_prompt):
-        # Convert image data to base64
+        """
+        async process image
+        """
         base64_image = base64.b64encode(image_data).decode('utf-8')
 
         headers = {
@@ -96,4 +101,15 @@ class GenerateAnswerFromImageNode(BaseNode):
         """
         Wrapper to run the asynchronous execute_async function in a synchronous context.
         """
-        return asyncio.run(self.execute_async(state))
+        try:
+            eventloop = asyncio.get_event_loop()
+        except RuntimeError:
+            eventloop = None
+
+        if eventloop and eventloop.is_running():
+            task = eventloop.create_task(self.execute_async(state))
+            state = eventloop.run_until_complete(asyncio.gather(task))[0]
+        else:
+            state = asyncio.run(self.execute_async(state))
+
+        return state

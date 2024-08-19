@@ -42,14 +42,14 @@ class ScreenshotScraperGraph(AbstractGraph):
         """
         fetch_screen_node = FetchScreenNode(
             input="url",
-            output=["imgs"],
+            output=["screenshots"],
             node_config={
                 "link": self.source
             }
         )
         generate_answer_from_image_node = GenerateAnswerFromImageNode(
             input="imgs",
-            output=["answer"],
+            output=["screenshots"],
             node_config={
                 "config": self.config
             }
