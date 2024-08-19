@@ -32,8 +32,6 @@ class GenerateAnswerFromImageNode(BaseNode):
         images = state.get('screenshots', [])
         analyses = []
 
-        api_key = self.node_config.get("config", {}).get("llm", {}).get("api_key", "")
-
         supported_models = ("gpt-4o", "gpt-4o-mini", "gpt-4-turbo")
 
         if self.node_config["config"]["llm"]["model"] not in supported_models:
@@ -42,6 +40,8 @@ class GenerateAnswerFromImageNode(BaseNode):
                              {', '.join(supported_models)}.""")
 
         if self.node_config["config"]["llm"]["model"].startswith("gpt"):
+            api_key = self.node_config.get("config", {}).get("llm", {}).get("api_key", "")
+
             for image_data in images:
                 base64_image = base64.b64encode(image_data).decode('utf-8')
 
