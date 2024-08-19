@@ -48,8 +48,8 @@ class ScreenshotScraperGraph(AbstractGraph):
             }
         )
         generate_answer_from_image_node = GenerateAnswerFromImageNode(
-            input="imgs",
-            output=["screenshots"],
+            input="screenshots",
+            output=["answer"],
             node_config={
                 "config": self.config
             }
