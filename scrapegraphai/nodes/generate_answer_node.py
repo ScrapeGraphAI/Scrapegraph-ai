@@ -86,13 +86,13 @@ class GenerateAnswerNode(BaseNode):
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0
                 }, timeout=10)
-                response_text = response.json()['choices'][0]['message']['content']
-                cleaned_response = json.loads(response_text.replace('\\n', '').replace('\\', ''))
-                state.update({self.output[0]: cleaned_response})
+                state.update({self.output[0]: response.json()})
                 return state
 
             chunks_responses = []
-            for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+            for i, chunk in enumerate(
+                tqdm(doc, desc="Processing chunks",
+                     disable=not self.verbose)):
                 prompt = templates['chunks'].format(
                     question=user_prompt,
                     context=chunk,
