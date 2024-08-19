@@ -6,7 +6,6 @@ from typing import List, Optional
 from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
-from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 class ParseNode(BaseNode):
@@ -79,16 +78,18 @@ class ParseNode(BaseNode):
         else:
             docs_transformed = docs_transformed[0]
 
+            # Adapt the chunk size, leaving room for the reply, the prompt and the schema
+            chunk_size = self.node_config.get("chunk_size", 4096)
+            chunk_size = min(chunk_size - 500, int(chunk_size * 0.9))
+
             if isinstance(docs_transformed, Document):
-                
                 chunks = chunk(text=docs_transformed.page_content,
-                            chunk_size=self.node_config.get("chunk_size", 4096)-250,
+                            chunk_size=chunk_size,
                             token_counter=lambda text: len(text.split()),
                             memoize=False)
             else:
-
                 chunks = chunk(text=docs_transformed,
-                                chunk_size=self.node_config.get("chunk_size", 4096)-250,
+                                chunk_size=chunk_size,
                                 token_counter=lambda text: len(text.split()),
                                 memoize=False)
 
