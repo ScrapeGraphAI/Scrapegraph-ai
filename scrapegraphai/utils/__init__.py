@@ -1,7 +1,7 @@
 """
     __init__.py file for utils folder
 """
-
+from .response_to_dict import parse_response_to_dict
 from .convert_to_csv import convert_to_csv
 from .convert_to_json import convert_to_json
 from .prettify_exec_info import prettify_exec_info

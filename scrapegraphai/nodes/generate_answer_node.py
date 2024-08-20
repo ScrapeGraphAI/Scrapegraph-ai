@@ -1,13 +1,18 @@
-import requests
+"""
+Generate answer_node
+"""
+import re
 import json
 from typing import List, Optional
+import requests
+from tqdm import tqdm
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI
 from langchain_community.chat_models import ChatOllama
-from tqdm import tqdm
 from ..utils.logging import get_logger
+from ..utils import parse_response_to_dict
 from .base_node import BaseNode
 from ..prompts import (
     TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE,
@@ -52,6 +57,8 @@ class GenerateAnswerNode(BaseNode):
         self.additional_info = node_config.get("additional_info", "")
         self.api_key = node_config.get("config", {}).get("llm", {}).get("api_key", "")
 
+
+
     def execute(self, state: dict) -> dict:
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
@@ -86,7 +93,10 @@ class GenerateAnswerNode(BaseNode):
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0
                 }, timeout=10)
-                state.update({self.output[0]: response.json()})
+
+                response_text = response.json()['choices'][0]['message']['content']
+                cleaned_response = parse_response_to_dict(response_text)
+                state.update({self.output[0]: cleaned_response})
                 return state
 
             chunks_responses = []
@@ -105,7 +115,7 @@ class GenerateAnswerNode(BaseNode):
                     "temperature": 0
                 }, timeout=10)
                 chunk_response = response.json()['choices'][0]['message']['content']
-                cleaned_chunk_response = json.loads(chunk_response.replace('\\n', '').replace('\\', ''))
+                cleaned_chunk_response = parse_response_to_dict(chunk_response)
                 chunks_responses.append(cleaned_chunk_response)
 
             merge_context = " ".join([json.dumps(chunk) for chunk in chunks_responses])
@@ -120,7 +130,7 @@ class GenerateAnswerNode(BaseNode):
                 "temperature": 0
             }, timeout=10)
             response_text = response.json()['choices'][0]['message']['content']
-            cleaned_response = json.loads(response_text.replace('\\n', '').replace('\\', ''))
+            cleaned_response = parse_response_to_dict(response_text)
             state.update({self.output[0]: cleaned_response})
             return state
 
@@ -146,11 +156,14 @@ class GenerateAnswerNode(BaseNode):
                 return state
 
             chains_dict = {}
-            for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+            for i, chunk in enumerate(tqdm(doc, 
+                                           desc="Processing chunks", 
+                                           disable=not self.verbose)):
                 prompt = PromptTemplate(
                     template=templates['chunks'],
                     input_variables=["question"],
-                    partial_variables={"context": chunk, "chunk_id": i + 1, "format_instructions": format_instructions}
+                    partial_variables={"context": chunk, "chunk_id": i + 1,
+                                       "format_instructions": format_instructions}
                 )
                 chain_name = f"chunk{i+1}"
                 chains_dict[chain_name] = prompt | self.llm_model | output_parser
