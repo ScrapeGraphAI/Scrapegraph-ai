@@ -1,7 +1,6 @@
 """
 Module for generating the answer node
 """
-
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -10,8 +9,7 @@ from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_pdf_prompts import template_chunks_pdf, template_no_chunks_pdf, template_merge_pdf
-
+from ..prompts.generate_answer_node_pdf_prompts import TEMPLATE_CHUNKS_PDF, TEMPLATE_NO_CHUNKS_PDF, TEMPLATE_MERGE_PDF
 
 class GenerateAnswerPDFNode(BaseNode):
     """
@@ -98,20 +96,20 @@ class GenerateAnswerPDFNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
-        template_no_chunks_pdf_prompt = template_no_chunks_pdf
-        template_chunks_pdf_prompt = template_chunks_pdf
-        template_merge_pdf_prompt = template_merge_pdf
+        TEMPLATE_NO_CHUNKS_PDF_prompt = TEMPLATE_NO_CHUNKS_PDF
+        TEMPLATE_CHUNKS_PDF_prompt = TEMPLATE_CHUNKS_PDF
+        TEMPLATE_MERGE_PDF_prompt = TEMPLATE_MERGE_PDF
 
         if self.additional_info is not None:
-            template_no_chunks_pdf_prompt = self.additional_info + template_no_chunks_pdf_prompt
-            template_chunks_pdf_prompt = self.additional_info + template_chunks_pdf_prompt
-            template_merge_pdf_prompt = self.additional_info + template_merge_pdf_prompt
+            TEMPLATE_NO_CHUNKS_PDF_prompt = self.additional_info + TEMPLATE_NO_CHUNKS_PDF_prompt
+            TEMPLATE_CHUNKS_PDF_prompt = self.additional_info + TEMPLATE_CHUNKS_PDF_prompt
+            TEMPLATE_MERGE_PDF_prompt = self.additional_info + TEMPLATE_MERGE_PDF_prompt
 
         format_instructions = output_parser.get_format_instructions()
 
         if len(doc) == 1:
             prompt = PromptTemplate(
-                template=template_no_chunks_pdf_prompt,
+                template=TEMPLATE_NO_CHUNKS_PDF_prompt,
                 input_variables=["question"],
                 partial_variables={
                     "context": doc,
@@ -130,7 +128,7 @@ class GenerateAnswerPDFNode(BaseNode):
         for i, chunk in enumerate(
             tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
             prompt = PromptTemplate(
-                    template=template_chunks_pdf_prompt,
+                    template=TEMPLATE_CHUNKS_PDF_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context":chunk,
@@ -147,7 +145,7 @@ class GenerateAnswerPDFNode(BaseNode):
         batch_results =  async_runner.invoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
-                template = template_merge_pdf_prompt,
+                template = TEMPLATE_MERGE_PDF_prompt,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )

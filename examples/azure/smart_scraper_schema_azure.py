@@ -2,7 +2,8 @@
 Basic example of scraping pipeline using SmartScraper with schema
 """
 
-import os, json
+import os
+import json
 from typing import List
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
@@ -28,7 +29,7 @@ class Projects(BaseModel):
 graph_config = {
     "llm": {
         "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure/gpt-3.5-turbo",
+        "model": "azure_openai/gpt-3.5-turbo",
     },
     "verbose": True,
     "headless": False

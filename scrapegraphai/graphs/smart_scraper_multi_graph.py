@@ -15,10 +15,10 @@ from ..nodes import (
     MergeAnswersNode
 )
 
-
 class SmartScraperMultiGraph(AbstractGraph):
     """ 
-    SmartScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and generates answers to a given prompt.
+    SmartScraperMultiGraph is a scraping pipeline that scrapes a 
+    list of URLs and generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
 
     Attributes:
@@ -43,7 +43,8 @@ class SmartScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -51,7 +52,7 @@ class SmartScraperMultiGraph(AbstractGraph):
             self.copy_config = copy(config)
         else:
             self.copy_config = deepcopy(config)
-        
+
         self.copy_schema = deepcopy(schema)
 
         super().__init__(prompt, config, source, schema)

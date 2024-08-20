@@ -4,7 +4,6 @@ __init__.py file for node folder
 
 from .base_node import BaseNode
 from .fetch_node import FetchNode
-from .conditional_node import ConditionalNode
 from .get_probable_tags_node import GetProbableTagsNode
 from .generate_answer_node import GenerateAnswerNode
 from .parse_node import ParseNode
@@ -20,4 +19,6 @@ from .generate_answer_pdf_node import GenerateAnswerPDFNode
 from .graph_iterator_node import GraphIteratorNode
 from .merge_answers_node import MergeAnswersNode
 from .generate_answer_omni_node import GenerateAnswerOmniNode
-from .merge_generated_scripts import MergeGeneratedScriptsNode 
+from .merge_generated_scripts import MergeGeneratedScriptsNode
+from .fetch_screen_node import FetchScreenNode
+from .generate_answer_from_image_node import GenerateAnswerFromImageNode

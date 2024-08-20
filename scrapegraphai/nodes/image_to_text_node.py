@@ -1,11 +1,9 @@
 """
 ImageToTextNode Module
 """
-
 from typing import List, Optional
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-
 
 class ImageToTextNode(BaseNode):
     """

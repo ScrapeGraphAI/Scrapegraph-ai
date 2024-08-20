@@ -4,10 +4,9 @@ GraphBuilder Module
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
-from ..models import OpenAI, Gemini
+from ..models import Gemini
 from ..helpers import nodes_metadata, graph_schema
-from ..models.ernie import Ernie
-
+from langchain_openai import ChatOpenAI
 
 class GraphBuilder:
     """
@@ -71,7 +70,7 @@ class GraphBuilder:
 
         # select the model based on the model name
         if "gpt-" in llm_params["model"]:
-            return OpenAI(llm_params)
+            return ChatOpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
             return Gemini(llm_params)
         elif "ernie" in llm_params["model"]:

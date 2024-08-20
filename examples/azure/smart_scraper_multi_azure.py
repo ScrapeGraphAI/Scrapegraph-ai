@@ -14,7 +14,7 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure/gpt-3.5-turbo",
+        "model": "azure_openai/gpt-3.5-turbo",
     },
     "verbose": True,
     "headless": False

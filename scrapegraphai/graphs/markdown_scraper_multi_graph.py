@@ -5,16 +5,13 @@ MDScraperMultiGraph Module
 from copy import copy, deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .markdown_scraper_graph import MDScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
-
 
 class MDScraperMultiGraph(AbstractGraph):
     """
@@ -61,7 +58,6 @@ class MDScraperMultiGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
-        # Create a SmartScraperGraph instance
         smart_scraper_instance = MDScraperGraph(
             prompt="",
             source="",

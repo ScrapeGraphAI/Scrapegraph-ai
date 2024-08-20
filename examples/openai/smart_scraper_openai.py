@@ -2,10 +2,12 @@
 Basic example of scraping pipeline using SmartScraper
 """
 
-import os, json
+import os
+import json
+from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-from dotenv import load_dotenv
+
 load_dotenv()
 
 # ************************************************
@@ -16,7 +18,7 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o",
     },
     "verbose": True,
     "headless": False,

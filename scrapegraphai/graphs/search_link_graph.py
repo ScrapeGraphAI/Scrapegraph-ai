@@ -4,13 +4,13 @@ import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
-
 from ..nodes import ( FetchNode, ParseNode, SearchLinkNode )
 
 class SearchLinkGraph(AbstractGraph): 
     """ 
-    SearchLinkGraph is a scraping pipeline that automates the process of extracting information from web pages using a natural language model to interpret and answer prompts.
+    SearchLinkGraph is a scraping pipeline that automates the process of 
+    extracting information from web pages using a natural language model
+    to interpret and answer prompts.
 
     Attributes:
         prompt (str): The prompt for the graph.
@@ -72,7 +72,9 @@ class SearchLinkGraph(AbstractGraph):
             output=["parsed_doc"],
             node_config={
                 "llm_model": self.llm_model,
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "filter_links": self.config.get("filter_links", None),
+                "filter_config": self.config.get("filter_config", None)
             }
         )
 

@@ -18,11 +18,11 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o",
     },
     "browser_base": {
         "api_key": os.getenv("BROWSER_BASE_API_KEY"),
-        "project_id": os.getenv("BROWSER_BASE_API_KEY"),
+        "project_id": os.getenv("BROWSER_BASE_PROJECT_ID"),
     },
     "verbose": True,
     "headless": False,

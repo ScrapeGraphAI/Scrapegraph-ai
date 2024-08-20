@@ -3,7 +3,7 @@ Example of knowledge graph node
 """
 
 import os
-from scrapegraphai.models import OpenAI
+from langchain_openai import ChatOpenAI
 from scrapegraphai.nodes import KnowledgeGraphNode
 
 job_postings = {

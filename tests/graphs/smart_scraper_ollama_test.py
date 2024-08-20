@@ -16,11 +16,6 @@ def graph_config():
             "temperature": 0,
             "format": "json",
             "base_url": "http://localhost:11434",
-        },
-        "embeddings": {
-            "model": "ollama/nomic-embed-text",
-            "temperature": 0,
-            "base_url": "http://localhost:11434",
         }
     }
 

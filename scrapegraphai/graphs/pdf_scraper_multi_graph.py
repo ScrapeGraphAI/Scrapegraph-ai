@@ -5,16 +5,13 @@ PdfScraperMultiGraph Module
 from copy import copy, deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .pdf_scraper_graph import PDFScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
-
 
 class PdfScraperMultiGraph(AbstractGraph):
     """ 
@@ -44,7 +41,8 @@ class PdfScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
 
         if all(isinstance(value, str) for value in config.values()):
             self.copy_config = copy(config)

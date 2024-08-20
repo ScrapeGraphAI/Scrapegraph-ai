@@ -18,11 +18,6 @@ def graph_config():
            "base_url": "http://localhost:11434",
            "library": "beautifulsoup",
        },
-       "embeddings": {
-           "model": "ollama/nomic-embed-text",
-           "temperature": 0,
-           "base_url": "http://localhost:11434",
-       },
        "library": "beautifulsoup"
    }
 

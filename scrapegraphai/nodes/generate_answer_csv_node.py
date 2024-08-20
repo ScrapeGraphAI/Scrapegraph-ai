@@ -1,5 +1,4 @@
 """
-gg
 Module for generating the answer node
 """
 
@@ -10,8 +9,7 @@ from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_csv_prompts import template_chunks_csv, template_no_chunks_csv, template_merge_csv
-
+from ..prompts.generate_answer_node_csv_prompts import TEMPLATE_CHUKS_CSV, TEMPLATE_NO_CHUKS_CSV, TEMPLATE_MERGE_CSV
 
 class GenerateAnswerCSVNode(BaseNode):
     """
@@ -97,14 +95,14 @@ class GenerateAnswerCSVNode(BaseNode):
         else:
             output_parser = JsonOutputParser()
 
-        template_no_chunks_csv_prompt = template_no_chunks_csv
-        template_chunks_csv_prompt = template_chunks_csv
-        template_merge_csv_prompt  = template_merge_csv
+        TEMPLATE_NO_CHUKS_CSV_prompt = TEMPLATE_NO_CHUKS_CSV
+        TEMPLATE_CHUKS_CSV_prompt = TEMPLATE_CHUKS_CSV
+        TEMPLATE_MERGE_CSV_prompt  = TEMPLATE_MERGE_CSV
 
         if self.additional_info is not None:
-            template_no_chunks_csv_prompt = self.additional_info + template_no_chunks_csv
-            template_chunks_csv_prompt = self.additional_info + template_chunks_csv
-            template_merge_csv_prompt = self.additional_info + template_merge_csv
+            TEMPLATE_NO_CHUKS_CSV_prompt = self.additional_info + TEMPLATE_NO_CHUKS_CSV
+            TEMPLATE_CHUKS_CSV_prompt = self.additional_info + TEMPLATE_CHUKS_CSV
+            TEMPLATE_MERGE_CSV_prompt = self.additional_info + TEMPLATE_MERGE_CSV
 
         format_instructions = output_parser.get_format_instructions()
 
@@ -112,7 +110,7 @@ class GenerateAnswerCSVNode(BaseNode):
 
         if len(doc) == 1:
             prompt = PromptTemplate(
-                template=template_no_chunks_csv_prompt,
+                template=TEMPLATE_NO_CHUKS_CSV_prompt,
                 input_variables=["question"],
                 partial_variables={
                     "context": doc,
@@ -129,7 +127,7 @@ class GenerateAnswerCSVNode(BaseNode):
             tqdm(doc, desc="Processing chunks", disable=not self.verbose)
         ):
             prompt = PromptTemplate(
-                    template=template_chunks_csv_prompt,
+                    template=TEMPLATE_CHUKS_CSV_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk,
@@ -146,7 +144,7 @@ class GenerateAnswerCSVNode(BaseNode):
         batch_results =  async_runner.invoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
-                template = template_merge_csv_prompt,
+                template = TEMPLATE_MERGE_CSV_prompt,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )
