@@ -11,4 +11,6 @@ You should return only the query string without any additional sentences. \n
 For example, if the user prompt is "What is the capital of France?",
 you should return "capital of France". \n
 If you return something else, you will get a really bad grade. \n
+What you return should be sufficient to get the answer from the internet. \n
+Don't just return a small part of the prompt, unless that is sufficient. \n
 USER PROMPT: {user_prompt}"""
