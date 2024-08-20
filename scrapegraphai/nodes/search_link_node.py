@@ -4,12 +4,14 @@ SearchLinkNode Module
 from typing import List, Optional
 import re
 from tqdm import tqdm
+from urllib.parse import urlparse, parse_qs
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import TEMPLATE_RELEVANT_LINKS
+from ..helpers import default_filters
 
 
 class SearchLinkNode(BaseNode):
@@ -39,10 +41,54 @@ class SearchLinkNode(BaseNode):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.verbose = (
-            False if node_config is None else node_config.get("verbose", False)
-        )
 
+        # Apply filters if filter_links is True or if filter_config is provided
+        if node_config.get("filter_links", False) or "filter_config" in node_config:
+            # Merge provided filter config with default filter config for partial configuration
+            provided_filter_config = node_config.get("filter_config", {})
+            self.filter_config = {**default_filters.filter_dict, **provided_filter_config}
+            self.filter_links = True
+        else:
+            # Skip filtering if not enabled
+            self.filter_config = None
+            self.filter_links = False
+
+        self.verbose = node_config.get("verbose", False)
+        self.seen_links = set()
+
+    def _is_same_domain(self, url, domain):
+        if not self.filter_links or not self.filter_config.get("diff_domain_filter", True):
+            return True  # Skip the domain filter if not enabled
+        parsed_url = urlparse(url)
+        parsed_domain = urlparse(domain)
+        return parsed_url.netloc == parsed_domain.netloc
+
+    def _is_image_url(self, url):
+        if not self.filter_links:
+            return False  # Skip image filtering if filtering is not enabled
+        
+        image_extensions = self.filter_config.get("img_exts", [])
+        return any(url.lower().endswith(ext) for ext in image_extensions)
+
+    def _is_language_url(self, url):
+        if not self.filter_links:
+            return False  # Skip language filtering if filtering is not enabled
+
+        lang_indicators = self.filter_config.get("lang_indicators", [])
+        parsed_url = urlparse(url)
+        query_params = parse_qs(parsed_url.query)
+
+        # Check if the URL path or query string indicates a language-specific version
+        return any(indicator in parsed_url.path.lower() or indicator in query_params for indicator in lang_indicators)
+
+    def _is_potentially_irrelevant(self, url):
+        if not self.filter_links:
+            return False  # Skip irrelevant URL filtering if filtering is not enabled
+
+        irrelevant_keywords = self.filter_config.get("irrelevant_keywords", [])
+        return any(keyword in url.lower() for keyword in irrelevant_keywords)
+
+    
     def execute(self, state: dict) -> dict:
         """
         Filter out relevant links from the webpage that are relavant to prompt. Out of the filtered links, also
@@ -64,6 +110,7 @@ class SearchLinkNode(BaseNode):
 
 
         parsed_content_chunks = state.get("doc")
+        source_url = state.get("url") or state.get("local_dir")
         output_parser = JsonOutputParser()
 
         relevant_links = []
@@ -76,10 +123,28 @@ class SearchLinkNode(BaseNode):
             )
         ):
             try:
+
                 # Primary approach: Regular expression to extract links
                 links = re.findall(r'https?://[^\s"<>\]]+', str(chunk.page_content))
 
-                relevant_links += links
+                if not self.filter_links:
+                    links = list(set(links))
+
+                    relevant_links += links
+                    self.seen_links.update(relevant_links)
+                else:
+                    filtered_links = [
+                    link for link in links
+                    if self._is_same_domain(link, source_url)
+                    and not self._is_image_url(link)
+                    and not self._is_language_url(link)
+                    and not self._is_potentially_irrelevant(link)
+                    and link not in self.seen_links
+                    ]
+                    filtered_links = list(set(filtered_links))
+                    relevant_links += filtered_links
+                    self.seen_links.update(relevant_links)
+
             except Exception as e:
                 # Fallback approach: Using the LLM to extract links
                 self.logger.error(f"Error extracting links: {e}. Falling back to LLM.")
