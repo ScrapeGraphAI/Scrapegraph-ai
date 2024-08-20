@@ -1,3 +1,10 @@
+## [1.14.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.11...v1.14.0-beta.12) (2024-08-20)
+
+
+### Bug Fixes
+
+* **SearchNode:** prompt ([052f7d5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/052f7d5e66436c97e17491c00b86c382642490b6))
+
 ## [1.14.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.10...v1.14.0-beta.11) (2024-08-19)
 
 
