@@ -1,3 +1,11 @@
+## [1.14.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.12...v1.14.0-beta.13) (2024-08-20)
+
+
+### Features
+
+* add async call ([f60aa3a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f60aa3acde3c9bead2250e81eb8fc77d2e1e450c))
+* refactoring of the code ([5eb3cff](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5eb3cff64f5becf7e107325117364b67b5fe7348))
+
 ## [1.14.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0-beta.11...v1.14.0-beta.12) (2024-08-20)
 
 
