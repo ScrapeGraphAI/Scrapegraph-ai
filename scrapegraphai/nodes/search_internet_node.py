@@ -83,7 +83,7 @@ class SearchInternetNode(BaseNode):
         you should return "capital of France". \n
         If you return something else, you will get a really bad grade. \n
         What you return should be sufficient to get the answer from the internet. \n
-        I.E. don't just return a small part of the prompt. \n
+        Don't just return a small part of the prompt, unless that is sufficient. \n
         USER PROMPT: {user_prompt}"""
 
         search_prompt = PromptTemplate(
