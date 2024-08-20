@@ -1,5 +1,5 @@
 """ 
-Module for truncatinh in chunks the messages
+Module for truncating in chunks the messages
 """
 from typing import List
 import tiktoken
@@ -27,7 +27,7 @@ def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]
     """
 
     encoding = tiktoken.get_encoding(encoding_name)
-    max_tokens = models_tokens[model] - 500
+    max_tokens = min(models_tokens[model] - 500, int(models_tokens[model] * 0.9))
     encoded_text = encoding.encode(text)
 
     chunks = [encoded_text[i:i + max_tokens]

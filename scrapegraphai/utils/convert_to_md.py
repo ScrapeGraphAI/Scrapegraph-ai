@@ -1,5 +1,5 @@
 """
-convert_to_md modul
+convert_to_md module
 """
 from urllib.parse import urlparse
 import html2text
@@ -27,5 +27,5 @@ def convert_to_md(html: str, url: str = None) -> str:
         parsed_url = urlparse(url)
         domain = f"{parsed_url.scheme}://{parsed_url.netloc}"
         h.baseurl = domain
-    
+
     return h.handle(html)

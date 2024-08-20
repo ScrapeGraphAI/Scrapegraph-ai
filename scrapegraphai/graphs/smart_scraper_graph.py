@@ -14,7 +14,6 @@ from ..nodes import (
     GenerateAnswerNode
 )
 
-
 class SmartScraperGraph(AbstractGraph):
     """
     SmartScraper is a scraping pipeline that automates the process of 
@@ -68,6 +67,7 @@ class SmartScraperGraph(AbstractGraph):
                 "force": self.config.get("force", False),
                 "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
+                "browser_base": self.config.get("browser_base")
             }
         )
         parse_node = ParseNode(

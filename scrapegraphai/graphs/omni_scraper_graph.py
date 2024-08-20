@@ -4,17 +4,14 @@ OmniScraperGraph Module
 
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     ParseNode,
     ImageToTextNode,
     GenerateAnswerOmniNode
 )
-
 from ..models import OpenAIImageToText
 
 class OmniScraperGraph(AbstractGraph):
@@ -88,7 +85,7 @@ class OmniScraperGraph(AbstractGraph):
                 "max_images": self.max_images
             }
         )
-      
+
         generate_answer_omni_node = GenerateAnswerOmniNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc) & img_desc",
             output=["answer"],

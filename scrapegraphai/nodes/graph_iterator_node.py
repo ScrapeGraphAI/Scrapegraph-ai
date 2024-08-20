@@ -1,7 +1,6 @@
 """
 GraphIterator Module
 """
-
 import asyncio
 import copy
 from typing import List, Optional
@@ -10,7 +9,6 @@ from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 DEFAULT_BATCHSIZE = 16
-
 
 class GraphIteratorNode(BaseNode):
     """

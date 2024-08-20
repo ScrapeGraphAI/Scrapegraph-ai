@@ -4,22 +4,19 @@ CSVScraperMultiGraph Module
 
 from copy import copy, deepcopy
 from typing import List, Optional
-
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .csv_scraper_graph import CSVScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
 
-
 class CSVScraperMultiGraph(AbstractGraph):
     """ 
-    CSVScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and generates answers to a given prompt.
+    CSVScraperMultiGraph is a scraping pipeline that 
+    scrapes a list of URLs and generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
 
     Attributes:
@@ -44,7 +41,8 @@ class CSVScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -64,7 +62,7 @@ class CSVScraperMultiGraph(AbstractGraph):
         """
 
         # ************************************************
-        # Create a SmartScraperGraph instance
+        # Create a CSVScraperGraph instance
         # ************************************************
 
         smart_scraper_instance = CSVScraperGraph(

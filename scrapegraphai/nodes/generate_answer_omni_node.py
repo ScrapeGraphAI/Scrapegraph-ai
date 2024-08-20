@@ -1,20 +1,14 @@
 """
 GenerateAnswerNode Module
 """
-
-# Imports from standard library
 from typing import List, Optional
-
-# Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
-# Imports from the library
 from .base_node import BaseNode
-from ..helpers.generate_answer_node_omni_prompts import template_no_chunk_omni, template_chunks_omni, template_merge_omni
-
+from ..prompts.generate_answer_node_omni_prompts import TEMPLATE_NO_CHUNKS_OMNI, TEMPLATE_CHUNKS_OMNI, TEMPLATE_MERGE_OMNI
 
 class GenerateAnswerOmniNode(BaseNode):
     """
@@ -87,14 +81,14 @@ class GenerateAnswerOmniNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
             output_parser = JsonOutputParser()
-        template_no_chunk_omni_prompt = template_no_chunk_omni
-        template_chunks_omni_prompt = template_chunks_omni
-        template_merge_omni_prompt= template_merge_omni
+        TEMPLATE_NO_CHUNKS_OMNI_prompt = TEMPLATE_NO_CHUNKS_OMNI
+        TEMPLATE_CHUNKS_OMNI_prompt = TEMPLATE_CHUNKS_OMNI
+        TEMPLATE_MERGE_OMNI_prompt= TEMPLATE_MERGE_OMNI
 
         if self.additional_info is not None:
-            template_no_chunk_omni_prompt = self.additional_info + template_no_chunk_omni_prompt
-            template_chunks_omni_prompt = self.additional_info + template_chunks_omni_prompt
-            template_merge_omni_prompt = self.additional_info + template_merge_omni_prompt
+            TEMPLATE_NO_CHUNKS_OMNI_prompt = self.additional_info + TEMPLATE_NO_CHUNKS_OMNI_prompt
+            TEMPLATE_CHUNKS_OMNI_prompt = self.additional_info + TEMPLATE_CHUNKS_OMNI_prompt
+            TEMPLATE_MERGE_OMNI_prompt = self.additional_info + TEMPLATE_MERGE_OMNI_prompt
 
         format_instructions = output_parser.get_format_instructions()
 
@@ -102,7 +96,7 @@ class GenerateAnswerOmniNode(BaseNode):
         chains_dict = {}
         if len(doc) == 1:
             prompt = PromptTemplate(
-                template=template_no_chunk_omni_prompt,
+                template=TEMPLATE_NO_CHUNKS_OMNI_prompt,
                 input_variables=["question"],
                 partial_variables={
                     "context": doc,
@@ -121,7 +115,7 @@ class GenerateAnswerOmniNode(BaseNode):
             tqdm(doc, desc="Processing chunks", disable=not self.verbose)
         ):
             prompt = PromptTemplate(
-                    template=template_chunks_omni_prompt,
+                    template=TEMPLATE_CHUNKS_OMNI_prompt,
                     input_variables=["question"],
                     partial_variables={
                         "context": chunk,
@@ -139,7 +133,7 @@ class GenerateAnswerOmniNode(BaseNode):
         batch_results =  async_runner.invoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
-                template = template_merge_omni_prompt,
+                template = TEMPLATE_MERGE_OMNI_prompt,
                 input_variables=["context", "question"],
                 partial_variables={"format_instructions": format_instructions},
             )

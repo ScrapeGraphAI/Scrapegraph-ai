@@ -1,18 +1,11 @@
 """
 GenerateScraperNode Module
 """
-
-# Imports from standard library
 from typing import List, Optional
-
-# Imports from Langchain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from ..utils.logging import get_logger
-
-# Imports from the library
 from .base_node import BaseNode
-
 
 class GenerateScraperNode(BaseNode):
     """
@@ -90,7 +83,7 @@ class GenerateScraperNode(BaseNode):
 
         format_instructions = output_schema.get_format_instructions()
 
-        template_no_chunks = """
+        TEMPLATE_NO_CHUNKS = """
         PROMPT:
         You are a website scraper script creator and you have just scraped the
         following content from a website.
@@ -108,14 +101,14 @@ class GenerateScraperNode(BaseNode):
         SCHEMA INSTRUCTIONS: {schema_instructions}
         """
         if self.additional_info is not None:
-            template_no_chunks += self.additional_info
+            TEMPLATE_NO_CHUNKS += self.additional_info
 
         if len(doc) > 1:
             raise NotImplementedError(
                 "Currently GenerateScraperNode cannot handle more than 1 context chunks"
             )
         else:
-            template = template_no_chunks
+            template = TEMPLATE_NO_CHUNKS
 
         prompt = PromptTemplate(
             template=template,

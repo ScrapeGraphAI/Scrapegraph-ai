@@ -15,7 +15,6 @@ from ..nodes import (
     MergeAnswersNode
 )
 
-
 class XMLScraperMultiGraph(AbstractGraph):
     """ 
     XMLScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and 
@@ -44,7 +43,8 @@ class XMLScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
 
         if all(isinstance(value, str) for value in config.values()):
             self.copy_config = copy(config)
@@ -64,7 +64,7 @@ class XMLScraperMultiGraph(AbstractGraph):
         """
 
         # ************************************************
-        # Create a SmartScraperGraph instance
+        # Create a XMLScraperGraph instance
         # ************************************************
 
         smart_scraper_instance = XMLScraperGraph(

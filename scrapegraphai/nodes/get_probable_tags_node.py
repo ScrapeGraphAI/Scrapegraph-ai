@@ -7,7 +7,6 @@ from langchain.prompts import PromptTemplate
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
-
 class GetProbableTagsNode(BaseNode):
     """
     A node that utilizes a language model to identify probable HTML tags within a document that

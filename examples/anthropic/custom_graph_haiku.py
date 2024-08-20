@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 
 from langchain_openai import OpenAIEmbeddings
-from scrapegraphai.models import OpenAI
+from langchain_openai import ChatOpenAI
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
 load_dotenv()

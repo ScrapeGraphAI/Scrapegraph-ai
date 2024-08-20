@@ -13,7 +13,6 @@ from ..nodes import (
     GenerateAnswerNode
 )
 
-
 class XMLScraperGraph(AbstractGraph):
     """
     XMLScraperGraph is a scraping pipeline that extracts information from XML files using a natural
@@ -63,7 +62,7 @@ class XMLScraperGraph(AbstractGraph):
             input="xml | xml_dir",
             output=["doc", "link_urls", "img_urls"]
         )
-     
+
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | doc)",
             output=["answer"],

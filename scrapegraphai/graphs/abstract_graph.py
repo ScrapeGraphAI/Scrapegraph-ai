@@ -7,19 +7,15 @@ from typing import Optional
 import uuid
 import warnings
 from pydantic import BaseModel
-
 from langchain_community.chat_models import ErnieBotChat
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain.chat_models import init_chat_model
-
 from ..helpers import models_tokens
 from ..models import (
     OneApi,
     DeepSeek
 )
 from ..utils.logging import set_verbosity_warning, set_verbosity_info
-
-
 
 class AbstractGraph(ABC):
     """
@@ -52,6 +48,9 @@ class AbstractGraph(ABC):
 
     def __init__(self, prompt: str, config: dict,
                  source: Optional[str] = None, schema: Optional[BaseModel] = None):
+
+        if config.get("llm").get("temperature") is None:
+            config["llm"]["temperature"] = 0
 
         self.prompt = prompt
         self.source = source
@@ -136,7 +135,6 @@ class AbstractGraph(ABC):
                 raise KeyError("model_tokens not specified") from exc
             return llm_params["model_instance"]
 
-        # Instantiate the language model based on the model name (models that use the common interface)
         def handle_model(model_name, provider, token_key, default_token=8192):
             try:
                 self.model_token = models_tokens[provider][token_key]
@@ -149,89 +147,83 @@ class AbstractGraph(ABC):
                 warnings.simplefilter("ignore")
                 return init_chat_model(**llm_params)
 
-        if "azure" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "azure_openai", model_name)
+        known_models = ["chatgpt","gpt","openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
 
-        if "gpt-" in llm_params["model"]:
-            return handle_model(llm_params["model"], "openai", llm_params["model"])
+        if llm_params["model"].split("/")[0] not in known_models and llm_params["model"].split("-")[0] not in known_models:
+            raise ValueError(f"Model '{llm_params['model']}' is not supported")
 
-        if "fireworks" in llm_params["model"]:
-            model_name = "/".join(llm_params["model"].split("/")[1:])
-            token_key = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "fireworks", token_key)
+        try:
+            if "fireworks" in llm_params["model"]:
+                model_name = "/".join(llm_params["model"].split("/")[1:])
+                token_key = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "fireworks", token_key)
 
-        if "gemini" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "google_genai", model_name)
+            elif "gemini" in llm_params["model"]:
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "google_genai", model_name)
 
-        if llm_params["model"].startswith("claude"):
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "anthropic", model_name)
+            elif llm_params["model"].startswith("claude"):
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "anthropic", model_name)
 
-        if llm_params["model"].startswith("vertexai"):
-            return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
+            elif llm_params["model"].startswith("vertexai"):
+                return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
 
-        if "ollama" in llm_params["model"]:
-            model_name = llm_params["model"].split("ollama/")[-1]
-            token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
-            return handle_model(model_name, "ollama", token_key)
+            elif "gpt-" in llm_params["model"]:
+                return handle_model(llm_params["model"], "openai", llm_params["model"])
 
-        if "hugging_face" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "hugging_face", model_name)
+            elif "ollama" in llm_params["model"]:
+                model_name = llm_params["model"].split("ollama/")[-1]
+                token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
+                return handle_model(model_name, "ollama", token_key)
 
-        if "groq" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "groq", model_name)
+            elif "claude-3-" in llm_params["model"]:
+                return handle_model(llm_params["model"], "anthropic", "claude3")
 
-        if "bedrock" in llm_params["model"]:
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "bedrock", model_name)
+            elif llm_params["model"].startswith("mistral"):
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "mistralai", model_name)
 
-        if "claude-3-" in llm_params["model"]:
-            return handle_model(llm_params["model"], "anthropic", "claude3")
-        
-        if llm_params["model"].startswith("mistral"):
-            model_name = llm_params["model"].split("/")[-1]
-            return handle_model(model_name, "mistralai", model_name)
+            # Instantiate the language model based on the model name (models that do not use the common interface)
+            elif "deepseek" in llm_params["model"]:
+                try:
+                    self.model_token = models_tokens["deepseek"][llm_params["model"]]
+                except KeyError:
+                    print("model not found, using default token size (8192)")
+                    self.model_token = 8192
+                return DeepSeek(llm_params)
 
-        # Instantiate the language model based on the model name (models that do not use the common interface)
-        if "deepseek" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["deepseek"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            return DeepSeek(llm_params)
+            elif "ernie" in llm_params["model"]:
+                try:
+                    self.model_token = models_tokens["ernie"][llm_params["model"]]
+                except KeyError:
+                    print("model not found, using default token size (8192)")
+                    self.model_token = 8192
+                return ErnieBotChat(llm_params)
 
-        if "ernie" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["ernie"][llm_params["model"]]
-            except KeyError:
-                print("model not found, using default token size (8192)")
-                self.model_token = 8192
-            return ErnieBotChat(llm_params)
-        
-        if "oneapi" in llm_params["model"]:
-            # take the model after the last dash
-            llm_params["model"] = llm_params["model"].split("/")[-1]
-            try:
-                self.model_token = models_tokens["oneapi"][llm_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return OneApi(llm_params)
-        
-        if "nvidia" in llm_params["model"]:
-            try:
-                self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
-                llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return ChatNVIDIA(llm_params)
+            elif "oneapi" in llm_params["model"]:
+                # take the model after the last dash
+                llm_params["model"] = llm_params["model"].split("/")[-1]
+                try:
+                    self.model_token = models_tokens["oneapi"][llm_params["model"]]
+                except KeyError:
+                    raise KeyError("Model not supported")
+                return OneApi(llm_params)
 
-        # Raise an error if the model did not match any of the previous cases
-        raise ValueError("Model provided by the configuration not supported")
+            elif "nvidia" in llm_params["model"]:
+                try:
+                    self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
+                    llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
+                except KeyError:
+                    raise KeyError("Model not supported")
+                return ChatNVIDIA(llm_params)
+
+            else:
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, llm_params["model"], model_name)
+
+        except KeyError as e:
+            print(f"Model not supported: {e}")
 
 
     def get_state(self, key=None) -> dict:

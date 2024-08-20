@@ -1,14 +1,12 @@
 """
 MergeAnswersNode Module
 """
-
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..helpers import template_combined
-
+from ..prompts import TEMPLATE_COMBINED
 
 class MergeAnswersNode(BaseNode):
     """
@@ -81,7 +79,7 @@ class MergeAnswersNode(BaseNode):
         format_instructions = output_parser.get_format_instructions()
 
         prompt_template = PromptTemplate(
-            template=template_combined,
+            template=TEMPLATE_COMBINED,
             input_variables=["user_prompt"],
             partial_variables={
                 "format_instructions": format_instructions,

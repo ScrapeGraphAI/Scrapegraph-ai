@@ -1,10 +1,9 @@
 """"
 FetchNode Module
 """
-
 import json
 from typing import List, Optional
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, AzureChatOpenAI
 import pandas as pd
 import requests
 from langchain_community.document_loaders import PyPDFLoader
@@ -16,10 +15,6 @@ from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
-
-""""
-FetchNode Module
-"""
 class FetchNode(BaseNode):
     """
     A node responsible for fetching the HTML content of a specified URL and updating
@@ -121,7 +116,7 @@ class FetchNode(BaseNode):
             "xml": self.handle_file,
             "md": self.handle_file,
         }
-        
+
         if input_type in handlers:
             return handlers[input_type](state, input_type, source)
         elif self.input == "pdf_dir":
@@ -130,7 +125,7 @@ class FetchNode(BaseNode):
             return self.handle_local_source(state, source)
         else:
             return self.handle_web_source(state, source)
-    
+
     def handle_directory(self, state, input_type, source):
         """
         Handles the directory by compressing the source document and updating the state.
@@ -143,7 +138,7 @@ class FetchNode(BaseNode):
         Returns:
         dict: The updated state with the compressed document.
         """
-        
+
         compressed_document = [
             source
         ]
@@ -169,11 +164,11 @@ class FetchNode(BaseNode):
         - "xml": Reads the content of an XML file as a string.
         - "md": Reads the content of a Markdown file as a string.
         """
-        
+
         compressed_document = self.load_file_content(source, input_type)
-        
+
         return self.update_state(state, compressed_document)
-        
+
     def load_file_content(self, source, input_type):
         """
         Loads the content of a file based on its input type.
@@ -185,7 +180,7 @@ class FetchNode(BaseNode):
         Returns:
         list: A list containing a Document object with the loaded content and metadata.
         """
-        
+
         if input_type == "pdf":
             loader = PyPDFLoader(source)
             return loader.load()
@@ -198,7 +193,7 @@ class FetchNode(BaseNode):
             with open(source, "r", encoding="utf-8") as f:
                 data = f.read()
             return [Document(page_content=data, metadata={"source": input_type})]
-    
+
     def handle_local_source(self, state, source):
         """
         Handles the local source by fetching HTML content, optionally converting it to Markdown,
@@ -214,14 +209,14 @@ class FetchNode(BaseNode):
         Raises:
         ValueError: If the source is empty or contains only whitespace.
         """
-    
+
         self.logger.info(f"--- (Fetching HTML from: {source}) ---")
         if not source.strip():
             raise ValueError("No HTML body content found in the local source.")
-        
+
         parsed_content = source
 
-        if isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator:
+        if (isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI)) and not self.script_creator or self.force and not self.script_creator:
             parsed_content = convert_to_md(source)
         else:
             parsed_content = source
@@ -229,13 +224,13 @@ class FetchNode(BaseNode):
         compressed_document = [
             Document(page_content=parsed_content, metadata={"source": "local_dir"})
         ]
-        
+
         return self.update_state(state, compressed_document)
-    
+
     def handle_web_source(self, state, source):
         """
-        Handles the web source by fetching HTML content from a URL, optionally converting it to Markdown,
-        and updating the state.
+        Handles the web source by fetching HTML content from a URL, 
+        optionally converting it to Markdown, and updating the state.
 
         Parameters:
         state (dict): The current state of the graph.
@@ -247,7 +242,7 @@ class FetchNode(BaseNode):
         Raises:
         ValueError: If the fetched HTML content is empty or contains only whitespace.
         """
-        
+
         self.logger.info(f"--- (Fetching HTML from: {source}) ---")
         if self.use_soup:
             response = requests.get(source)
@@ -258,7 +253,7 @@ class FetchNode(BaseNode):
                 if not self.cut:
                     parsed_content = cleanup_html(response, source)
 
-                if  (isinstance(self.llm_model, ChatOpenAI)
+                if  ((isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI))
                      and not self.script_creator) or (self.force and not self.script_creator):
                     parsed_content = convert_to_md(source, parsed_content)
 
@@ -287,7 +282,7 @@ class FetchNode(BaseNode):
                 raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
             parsed_content = document[0].page_content
 
-            if  isinstance(self.llm_model, ChatOpenAI) and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
+            if (isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI))  and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
                 parsed_content = convert_to_md(document[0].page_content, parsed_content)
 
             compressed_document = [

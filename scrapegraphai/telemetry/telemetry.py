@@ -82,7 +82,7 @@ def _check_config_and_environ_for_telemetry_flag(
 config = _load_config(DEFAULT_CONFIG_LOCATION)
 g_telemetry_enabled = _check_config_and_environ_for_telemetry_flag(True, config)
 g_anonymous_id = config["DEFAULT"]["anonymous_id"]
-call_counter = 0
+CALL_COUNTER = 0
 MAX_COUNT_SESSION = 1000
 
 BASE_PROPERTIES = {
@@ -96,21 +96,27 @@ BASE_PROPERTIES = {
 
 
 def disable_telemetry():
+    """
+    function for disabling the telemetries 
+    """
     global g_telemetry_enabled
     g_telemetry_enabled = False
 
 
 def is_telemetry_enabled() -> bool:
+    """
+    function for checking if a telemetry is enables
+    """
     if g_telemetry_enabled:
-        global call_counter
-        if call_counter == 0:
+        global CALL_COUNTER
+        if CALL_COUNTER == 0:
             logger.debug(
                 "Note: ScrapeGraphAI collects anonymous usage data to improve the library. "
                 "You can disable telemetry by setting SCRAPEGRAPHAI_TELEMETRY_ENABLED=false or "
                 "by editing ~/.scrapegraphai.conf."
             )
-        call_counter += 1
-        if call_counter > MAX_COUNT_SESSION:
+        CALL_COUNTER += 1
+        if CALL_COUNTER > MAX_COUNT_SESSION:
             return False
         return True
     else:
@@ -137,6 +143,9 @@ def _send_event_json(event_json: dict):
 
 
 def send_event_json(event_json: dict):
+    """
+    fucntion for sending event json
+    """
     if not g_telemetry_enabled:
         raise RuntimeError("Telemetry tracking is disabled!")
     try:
@@ -147,6 +156,9 @@ def send_event_json(event_json: dict):
 
 
 def log_event(event: str, properties: Dict[str, any]):
+    """
+    function for logging the events
+    """
     if is_telemetry_enabled():
         event_json = {
             "api_key": API_KEY,
@@ -156,7 +168,13 @@ def log_event(event: str, properties: Dict[str, any]):
         send_event_json(event_json)
 
 
-def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict, llm_model: str, embedder_model: str, source_type: str, execution_time: float, content: str = None, response: dict = None, error_node: str = None, exception: str = None, total_tokens: int = None):
+def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict,
+                        llm_model: str, embedder_model: str, source_type: str,
+                        execution_time: float, content: str = None, response: dict = None,
+                        error_node: str = None, exception: str = None, total_tokens: int = None):
+    """
+    function for logging the graph execution
+    """
     properties = {
         "graph_name": graph_name,
         "source": source,
