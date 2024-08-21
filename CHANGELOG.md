@@ -1,3 +1,10 @@
+## [1.14.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0...v1.14.1-beta.1) (2024-08-21)
+
+
+### Bug Fixes
+
+* **models_tokens:** add llama2 and llama3 sizes explicitly ([b05ec16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b05ec16b252d00c9c9ee7c6d4605b420851c7754))
+
 ## [1.14.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.3...v1.14.0) (2024-08-20)
 
 
