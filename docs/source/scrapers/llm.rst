@@ -200,8 +200,10 @@ Other LLM models
 
 We can also pass a model instance for the chat model and the embedding model through the **model_instance** parameter. 
 This feature enables you to utilize a Langchain model instance.
-If you are familiar with Langchain, you can easily find the `chat model list <https://python.langchain.com/v0.2/docs/integrations/chat/#all-chat-models>`_
-and `embedding model list <https://python.langchain.com/v0.2/docs/integrations/text_embedding/#all-embedding-models>`_.
+You will discover the model you require within the provided list:
+
+- `chat model list <https://python.langchain.com/v0.2/docs/integrations/chat/#all-chat-models>`_
+- `embedding model list <https://python.langchain.com/v0.2/docs/integrations/text_embedding/#all-embedding-models>`_.
 
 For instance, consider **chat model** Moonshot. We can integrate it in the following manner:
 
