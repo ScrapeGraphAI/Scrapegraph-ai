@@ -153,6 +153,10 @@ class AbstractGraph(ABC):
             raise ValueError(f"Model '{llm_params['model']}' is not supported")
 
         try:
+            if "azure" in llm_params["model"]:
+                 model_name = llm_params["model"].split("/")[-1]
+                 return handle_model(model_name, "azure_openai", model_name)
+	        
             if "fireworks" in llm_params["model"]:
                 model_name = "/".join(llm_params["model"].split("/")[1:])
                 token_key = llm_params["model"].split("/")[-1]
