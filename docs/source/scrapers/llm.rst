@@ -194,3 +194,33 @@ We can also pass a model instance for the chat model and the embedding model. Fo
             "model_instance": embedder_model_instance
         }
     }
+
+Other LLM models
+^^^^^^^^^^^^^^^^
+
+We can also pass a model instance for the chat model and the embedding model through the **model_instance** parameter. 
+This feature enables you to utilize a Langchain model instance.
+If you are familiar with Langchain, you can easily find the `chat model list <https://python.langchain.com/v0.2/docs/integrations/chat/#all-chat-models>`_
+and `embedding model list <https://python.langchain.com/v0.2/docs/integrations/text_embedding/#all-embedding-models>`_.
+
+For instance, consider **chat model** Moonshot. We can integrate it in the following manner:
+
+.. code-block:: python
+    
+    from langchain_community.chat_models.moonshot import MoonshotChat
+
+    # The configuration parameters are contingent upon the specific model you select
+    llm_instance_config = {
+        "model": "moonshot-v1-8k",
+        "base_url": "https://api.moonshot.cn/v1",
+        "moonshot_api_key": "MOONSHOT_API_KEY",
+    }
+
+    llm_model_instance = MoonshotChat(**llm_instance_config)
+    graph_config = {
+        "llm": {
+            "model_instance": llm_model_instance, 
+            "model_tokens": 5000
+        },
+    }
+    
