@@ -10,7 +10,6 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from ..utils.cleanup_html import cleanup_html
 from ..docloaders import ChromiumLoader
-from ..docloaders.browser_base import browser_base_fetch
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
@@ -269,6 +268,8 @@ class FetchNode(BaseNode):
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
             if self.browser_base is not None:
+                from ..docloaders.browser_base import browser_base_fetch
+
                 data =  browser_base_fetch(self.browser_base.get("api_key"),
                                             self.browser_base.get("project_id"), [source])
 
