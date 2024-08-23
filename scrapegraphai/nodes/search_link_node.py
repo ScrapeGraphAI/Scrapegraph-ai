@@ -49,7 +49,6 @@ class SearchLinkNode(BaseNode):
             self.filter_config = {**default_filters.filter_dict, **provided_filter_config}
             self.filter_links = True
         else:
-            # Skip filtering if not enabled
             self.filter_config = None
             self.filter_links = False
 
@@ -58,29 +57,26 @@ class SearchLinkNode(BaseNode):
 
     def _is_same_domain(self, url, domain):
         if not self.filter_links or not self.filter_config.get("diff_domain_filter", True):
-            return True  # Skip the domain filter if not enabled
+            return True
         parsed_url = urlparse(url)
         parsed_domain = urlparse(domain)
         return parsed_url.netloc == parsed_domain.netloc
 
     def _is_image_url(self, url):
         if not self.filter_links:
-            return False  # Skip image filtering if filtering is not enabled
-        
+            return False
         image_extensions = self.filter_config.get("img_exts", [])
         return any(url.lower().endswith(ext) for ext in image_extensions)
 
     def _is_language_url(self, url):
         if not self.filter_links:
-            return False  # Skip language filtering if filtering is not enabled
+            return False
 
         lang_indicators = self.filter_config.get("lang_indicators", [])
         parsed_url = urlparse(url)
         query_params = parse_qs(parsed_url.query)
 
-        # Check if the URL path or query string indicates a language-specific version
         return any(indicator in parsed_url.path.lower() or indicator in query_params for indicator in lang_indicators)
-
     def _is_potentially_irrelevant(self, url):
         if not self.filter_links:
             return False  # Skip irrelevant URL filtering if filtering is not enabled
@@ -88,12 +84,11 @@ class SearchLinkNode(BaseNode):
         irrelevant_keywords = self.filter_config.get("irrelevant_keywords", [])
         return any(keyword in url.lower() for keyword in irrelevant_keywords)
 
-    
+
     def execute(self, state: dict) -> dict:
         """
-        Filter out relevant links from the webpage that are relavant to prompt. Out of the filtered links, also
-        ensure that all links are navigable.
-
+        Filter out relevant links from the webpage that are relavant to prompt. 
+        Out of the filtered links, also ensure that all links are navigable.
         Args:
             state (dict): The current state of the graph. The input keys will be used to fetch the
                             correct data types from the state.
@@ -107,7 +102,6 @@ class SearchLinkNode(BaseNode):
         """
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
-
 
         parsed_content_chunks = state.get("doc")
         source_url = state.get("url") or state.get("local_dir")
@@ -148,7 +142,7 @@ class SearchLinkNode(BaseNode):
             except Exception as e:
                 # Fallback approach: Using the LLM to extract links
                 self.logger.error(f"Error extracting links: {e}. Falling back to LLM.")
-                
+
                 merge_prompt = PromptTemplate(
                     template=TEMPLATE_RELEVANT_LINKS,
                     input_variables=["content", "user_prompt"],

@@ -48,7 +48,6 @@ def _set_library_root_logger() -> None:
 
         DEFAULT_HANDLER = logging.StreamHandler()  # sys.stderr as stream
 
-        # https://github.com/pyinstaller/pyinstaller/issues/7334#issuecomment-1357447176
         if sys.stderr is None:
             sys.stderr = open(os.devnull, "w", encoding="utf-8")
 
@@ -66,7 +65,8 @@ def get_logger(name: Optional[str] = None) -> logging.Logger:
     If no name is provided, the root logger for the library is returned.
 
     Args:
-        name (Optional[str]): The name of the logger. If None, the root logger for the library is returned.
+        name (Optional[str]): The name of the logger. 
+        If None, the root logger for the library is returned.
 
     Returns:
         logging.Logger: The logger with the specified name.
@@ -199,7 +199,8 @@ def warning_once(self, *args, **kwargs):
     """
     Emit a warning log with the same message only once.
 
-    This function is added as a method to the logging.Logger class. It emits a warning log with the same message only once,
+    This function is added as a method to the logging.Logger class. 
+    It emits a warning log with the same message only once,
     even if it is called multiple times with the same message.
 
     Args:

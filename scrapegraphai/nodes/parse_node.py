@@ -59,13 +59,11 @@ class ParseNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
-        # Parse the document
         docs_transformed = input_data[0]
+
         if self.parse_html:
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
             docs_transformed = docs_transformed[0]
@@ -77,7 +75,6 @@ class ParseNode(BaseNode):
         else:
             docs_transformed = docs_transformed[0]
 
-            # Adapt the chunk size, leaving room for the reply, the prompt and the schema
             chunk_size = self.node_config.get("chunk_size", 4096)
             chunk_size = min(chunk_size - 500, int(chunk_size * 0.9))
 
