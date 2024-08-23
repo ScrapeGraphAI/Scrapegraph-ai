@@ -32,6 +32,28 @@ playwright install
 
 **Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
 
+By the way if you to use not mandatory modules it is necessary to install by yourself with the following command:
+
+### Installing "Other Language Models"
+
+This group allows you to use additional language models like Fireworks, Groq, Anthropic, Hugging Face, and Nvidia AI Endpoints.
+```bash
+pip install scrapegraphai[other-language-models]
+
+```
+### Installing "More Semantic Options"
+
+This group includes tools for advanced semantic processing, such as Graphviz.
+```bash
+pip install scrapegraphai[more-semantic-options]
+```
+### Installing "More Browser Options"
+
+This group includes additional browser management options, such as BrowserBase.
+```bash
+pip install scrapegraphai[more-browser-options]
+```
+
 ## 💻 Usage
 There are multiple standard scraping pipelines that can be used to extract information from a website (or local file).
 
