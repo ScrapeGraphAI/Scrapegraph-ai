@@ -28,35 +28,28 @@ def cleanup_html(html_content: str, base_url: str) -> str:
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    # Title Extraction
     title_tag = soup.find('title')
     title = title_tag.get_text() if title_tag else ""
 
-    # Script and Style Tag Removal
     for tag in soup.find_all(['script', 'style']):
         tag.extract()
 
-    # Links extraction
     link_urls = [urljoin(base_url, link['href']) for link in soup.find_all('a', href=True)]
 
-    # Images extraction
     images = soup.find_all('img')
     image_urls = []
     for image in images:
         if 'src' in image.attrs:
-            # if http or https is not present in the image url, join it with the base url
             if 'http' not in image['src']:
                 image_urls.append(urljoin(base_url, image['src']))
             else:
                 image_urls.append(image['src'])
 
-    # Body Extraction (if it exists)
     body_content = soup.find('body')
     if body_content:
-        # Minify the HTML within the body tag
         minimized_body = minify(str(body_content))
         return title, minimized_body, link_urls, image_urls
 
     else:
-        raise ValueError(f"""No HTML body content found, please try setting the 'headless' 
+        raise ValueError(f"""No HTML body content found, please try setting the 'headless'
                          flag to False in the graph configuration. HTML content: {html_content}""")

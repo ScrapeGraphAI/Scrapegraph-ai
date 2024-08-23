@@ -1,3 +1,22 @@
+## [1.15.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.1-beta.1...v1.15.0-beta.1) (2024-08-23)
+
+
+### Features
+
+* ligthweigthing the library ([62f32e9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/62f32e994bcb748dfef4f7e1b2e5213a989c33cc))
+
+
+### Bug Fixes
+
+* Azure OpenAI issue ([a92b9c6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a92b9c6970049a4ba9dbdf8eff3eeb7f98c6c639))
+
+## [1.14.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0...v1.14.1-beta.1) (2024-08-21)
+
+
+### Bug Fixes
+
+* **models_tokens:** add llama2 and llama3 sizes explicitly ([b05ec16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b05ec16b252d00c9c9ee7c6d4605b420851c7754))
+
 ## [1.14.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.3...v1.14.0) (2024-08-20)
 
 

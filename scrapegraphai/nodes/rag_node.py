@@ -80,10 +80,8 @@ class RAGNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
@@ -102,7 +100,6 @@ class RAGNode(BaseNode):
 
         self.logger.info("--- (updated chunks metadata) ---")
 
-        # check if embedder_model is provided, if not use llm_model
         if self.embedder_model is not None:
             embeddings = self.embedder_model
         elif 'embeddings' in self.node_config:
@@ -144,15 +141,9 @@ class RAGNode(BaseNode):
         pipeline_compressor = DocumentCompressorPipeline(
             transformers=[redundant_filter, relevant_filter]
         )
-        # redundant + relevant filter compressor
         compression_retriever = ContextualCompressionRetriever(
             base_compressor=pipeline_compressor, base_retriever=retriever
         )
-
-        # relevant filter compressor only
-        # compression_retriever = ContextualCompressionRetriever(
-        #     base_compressor=relevant_filter, base_retriever=retriever
-        # )
 
         compressed_docs = compression_retriever.invoke(user_prompt)
 
@@ -160,7 +151,7 @@ class RAGNode(BaseNode):
 
         state.update({self.output[0]: compressed_docs})
         return state
-    
+
 
     def _create_default_embedder(self, llm_config=None) -> object:
         """
@@ -223,7 +214,6 @@ class RAGNode(BaseNode):
         embedder_params = {**embedder_config}
         if "model_instance" in embedder_config:
             return embedder_params["model_instance"]
-        # Instantiate the embedding model based on the model name
         if "openai" in embedder_params["model"]:
             return OpenAIEmbeddings(api_key=embedder_params["api_key"])
         if "azure" in embedder_params["model"]:

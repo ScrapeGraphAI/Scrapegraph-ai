@@ -103,7 +103,6 @@ class GraphIteratorNode(BaseNode):
         if graph_instance is None:
             raise ValueError("graph instance is required for concurrent execution")
 
-        # Assign depth level to the graph
         if "graph_depth" in graph_instance.config:
             graph_instance.config["graph_depth"] += 1
         else:
@@ -113,14 +112,12 @@ class GraphIteratorNode(BaseNode):
 
         participants = []
 
-        # semaphore to limit the number of concurrent tasks
         semaphore = asyncio.Semaphore(batchsize)
 
         async def _async_run(graph):
             async with semaphore:
                 return await asyncio.to_thread(graph.run)
 
-        # creates a deepcopy of the graph instance for each endpoint
         for url in urls:
             instance = copy.copy(graph_instance)
             instance.source = url

@@ -9,12 +9,6 @@ markmap:
 
 ## **Short-Term Goals**
 
-- Integration with more llm APIs
-
-- Test proxy rotation implementation
-
-- Add more search engines inside the SearchInternetNode
-
 - Improve the documentation (ReadTheDocs)
     - [Issue #102](https://github.com/VinciGit00/Scrapegraph-ai/issues/102)
 
@@ -23,9 +17,6 @@ markmap:
 ## **Medium-Term Goals**
 
 - Node for handling API requests
-
-- Improve SearchGraph to look into the first 5 results of the search engine
-
 - Make scraping more deterministic
     - Create DOM tree of the website
     - HTML tag text embeddings with tags metadata
@@ -70,5 +61,3 @@ markmap:
 - Automatic generation of scraping pipelines from a given prompt
 
 - Create API for the library
-
-- Finetune a LLM for html content
