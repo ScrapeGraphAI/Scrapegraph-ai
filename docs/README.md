@@ -42,7 +42,6 @@ markmap:
     - Make graphs run in parallel
     - Scrape only relevant URLs from user prompt
     - Use the multi dimensional DOM tree of the website for retrieval
-  - [Issue #112](https://github.com/VinciGit00/Scrapegraph-ai/issues/112)
 
 - Crawler graph
     - Scrape all the URLs with the same domain in all the pages
