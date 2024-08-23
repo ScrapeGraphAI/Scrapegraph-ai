@@ -126,6 +126,15 @@ The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.r
 
 Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
 
+## 🏆 Sponsors
+<div style="text-align: center;">
+  <a href="https://2ly.link/1zNiz">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
+  </a>
+  <a href="https://2ly.link/1zNj1">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 15%;">
+  </a>
+</div>
 
 ## 🤝 Contributing
 
