@@ -145,15 +145,18 @@ class AbstractGraph(ABC):
                 warnings.simplefilter("ignore")
                 return init_chat_model(**llm_params)
 
-        known_models = {"chatgpt","gpt","openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"}
+        known_models = ["chatgpt","gpt","openai", "azure_openai", "google_genai",
+                         "ollama", "oneapi", "nvidia", "groq", "google_vertexai", 
+                         "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
+
+
         if llm_params["model"].split("/")[0] not in known_models and llm_params["model"].split("-")[0] not in known_models:
             raise ValueError(f"Model '{llm_params['model']}' is not supported")
 
         try:
             if "azure" in llm_params["model"]:
                  model_name = llm_params["model"].split("/")[-1]
-                 return handle_model(model_name, "azure_openai", model_name)
-	        
+                 return handle_model(model_name, "azure_openai", model_name)	        
             if "fireworks" in llm_params["model"]:
                 model_name = "/".join(llm_params["model"].split("/")[1:])
                 token_key = llm_params["model"].split("/")[-1]
@@ -185,7 +188,6 @@ class AbstractGraph(ABC):
                 model_name = llm_params["model"].split("/")[-1]
                 return handle_model(model_name, "mistralai", model_name)
 
-            # Instantiate the language model based on the model name (models that do not use the common interface)
             elif "deepseek" in llm_params["model"]:
                 try:
                     self.model_token = models_tokens["deepseek"][llm_params["model"]]
