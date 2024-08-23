@@ -7,8 +7,6 @@ from typing import Optional
 import uuid
 import warnings
 from pydantic import BaseModel
-from langchain_community.chat_models import ErnieBotChat
-from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain.chat_models import init_chat_model
 from ..helpers import models_tokens
 from ..models import (
@@ -147,8 +145,7 @@ class AbstractGraph(ABC):
                 warnings.simplefilter("ignore")
                 return init_chat_model(**llm_params)
 
-        known_models = ["chatgpt","gpt","openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
-
+        known_models = {"chatgpt","gpt","openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"}
         if llm_params["model"].split("/")[0] not in known_models and llm_params["model"].split("-")[0] not in known_models:
             raise ValueError(f"Model '{llm_params['model']}' is not supported")
 
@@ -198,6 +195,8 @@ class AbstractGraph(ABC):
                 return DeepSeek(llm_params)
 
             elif "ernie" in llm_params["model"]:
+                from langchain_community.chat_models import ErnieBotChat
+
                 try:
                     self.model_token = models_tokens["ernie"][llm_params["model"]]
                 except KeyError:
@@ -215,6 +214,8 @@ class AbstractGraph(ABC):
                 return OneApi(llm_params)
 
             elif "nvidia" in llm_params["model"]:
+                from langchain_nvidia_ai_endpoints import ChatNVIDIA
+
                 try:
                     self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
                     llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])
