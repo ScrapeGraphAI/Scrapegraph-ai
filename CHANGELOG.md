@@ -1,3 +1,10 @@
+## [1.15.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.2...v1.15.0-beta.3) (2024-08-24)
+
+
+### Bug Fixes
+
+* update abstract graph ([86fe5fc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/86fe5fcaf1a6ba28786678874378f07fba1db40f))
+
 ## [1.15.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.1...v1.15.0-beta.2) (2024-08-23)
 
 
