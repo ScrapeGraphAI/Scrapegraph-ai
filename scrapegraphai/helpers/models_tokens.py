@@ -133,6 +133,7 @@ models_tokens = {
         "gemini-1.0-pro": 128000
     },
     "bedrock": {
+        "anthropic.claude-3-5-sonnet-20240620": 200000,
         "anthropic.claude-3-haiku-20240307-v1:0": 200000,
         "anthropic.claude-3-sonnet-20240229-v1:0": 200000,
         "anthropic.claude-3-opus-20240229-v1:0": 200000,
