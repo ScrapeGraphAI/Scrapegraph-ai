@@ -56,6 +56,7 @@ parse_node = ParseNode(
     node_config={
         "chunk_size": 4096,
         "verbose": True,
+        "llm_model": llm_model,
     }
 )
 

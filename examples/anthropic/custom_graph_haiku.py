@@ -27,7 +27,7 @@ graph_config = {
 # Define the graph nodes
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
+llm_model = ChatOpenAI(graph_config["llm"])
 embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
 
 # define the nodes for the graph
@@ -55,15 +55,7 @@ parse_node = ParseNode(
     node_config={
         "chunk_size": 4096,
         "verbose": True,
-    }
-)
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
-    node_config={
         "llm_model": llm_model,
-        "embedder_model": embedder,
-        "verbose": True,
     }
 )
 generate_answer_node = GenerateAnswerNode(

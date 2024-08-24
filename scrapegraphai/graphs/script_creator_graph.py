@@ -72,9 +72,11 @@ class ScriptCreatorGraph(AbstractGraph):
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            node_config={"chunk_size": self.model_token,
-                         "parse_html": False
-                         }
+            node_config = {
+                "llm_model": self.llm_model,
+                "chunk_size": self.model_token,
+                "parse_html": False
+            }
         )
         generate_scraper_node = GenerateScraperNode(
             input="user_prompt & (doc)",

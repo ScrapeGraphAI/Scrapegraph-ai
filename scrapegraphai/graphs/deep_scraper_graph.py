@@ -75,6 +75,7 @@ class DeepScraperGraph(AbstractGraph):
             input="doc",
             output=["parsed_doc"],
             node_config={
+                "llm_model": self.llm_model,
                 "chunk_size": self.model_token
             }
         )

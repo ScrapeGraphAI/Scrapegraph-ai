@@ -3,9 +3,14 @@ ParseNode Module
 """
 from typing import List, Optional
 from semchunk import chunk
+from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
+from langchain_mistralai import ChatMistralAI
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
 from .base_node import BaseNode
+from ..utils.tokenizers.tokenizer_openai import num_tokens_openai
+from ..utils.tokenizers.tokenizer_mistral import num_tokens_mistral
 
 class ParseNode(BaseNode):
     """
@@ -41,6 +46,8 @@ class ParseNode(BaseNode):
             True if node_config is None else node_config.get("parse_html", True)
         )
 
+        self.llm_model = node_config.get("llm_model")
+
     def execute(self, state: dict) -> dict:
         """
         Executes the node's logic to parse the HTML document content and split it into chunks.
@@ -65,29 +72,58 @@ class ParseNode(BaseNode):
         docs_transformed = input_data[0]
 
         if self.parse_html:
-            docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
-            docs_transformed = docs_transformed[0]
-
-            chunks = chunk(text=docs_transformed.page_content,
-                            chunk_size=self.node_config.get("chunk_size", 4096)-250,
-                            token_counter=lambda text: len(text.split()),
-                            memoize=False)
+            docs_transformed = Html2TextTransformer().transform_documents(input_data[0])[0]
         else:
             docs_transformed = docs_transformed[0]
+ 
+        context_window = self.llm_model.name.split("/")[-1] * 0.9
 
+        if isinstance(self.llm_model, ChatOpenAI):
+            num_tokens = num_tokens_openai(docs_transformed.page_content)
+
+            chunks = []
+            num_chunks = num_tokens // context_window
+
+            if num_tokens % context_window != 0:
+                num_chunks += 1
+
+            for i in range(num_chunks):
+                start = i * context_window
+                end = (i + 1) * context_window
+                chunks.append(docs_transformed.page_content[start:end])
+
+        elif isinstance(self.llm_model, ChatMistralAI):
+            model_name = self.llm_model.name.split("/")[-1]  # Extract model name
+            num_tokens = num_tokens_mistral(docs_transformed.page_content, model_name)
+
+            chunks = []
+            num_chunks = num_tokens // context_window
+
+            if num_tokens % context_window != 0:
+                num_chunks += 1
+
+            for i in range(num_chunks):
+                start = i * context_window
+                end = (i + 1) * context_window
+                chunks.append(docs_transformed.page_content[start:end])
+
+        elif isinstance(self.llm_model, ChatOllama):
+            # TODO: Implement ChatOllama tokenization logic
+            print("Ollama model processing not yet implemented.")
+        else:
             chunk_size = self.node_config.get("chunk_size", 4096)
             chunk_size = min(chunk_size - 500, int(chunk_size * 0.9))
 
             if isinstance(docs_transformed, Document):
                 chunks = chunk(text=docs_transformed.page_content,
-                            chunk_size=chunk_size,
-                            token_counter=lambda text: len(text.split()),
-                            memoize=False)
+                               chunk_size=chunk_size,
+                               token_counter=lambda text: len(text.split()),
+                               memoize=False)
             else:
                 chunks = chunk(text=docs_transformed,
-                                chunk_size=chunk_size,
-                                token_counter=lambda text: len(text.split()),
-                                memoize=False)
+                               chunk_size=chunk_size,
+                               token_counter=lambda text: len(text.split()),
+                               memoize=False)
 
         state.update({self.output[0]: chunks})
 

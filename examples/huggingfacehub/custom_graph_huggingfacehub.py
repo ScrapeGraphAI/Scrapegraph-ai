@@ -67,17 +67,10 @@ parse_node = ParseNode(
     node_config={
         "chunk_size": 4096,
         "verbose": True,
-    }
-)
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
-    node_config={
         "llm_model": llm_model,
-        "embedder_model": embedder,
-        "verbose": True,
     }
 )
+
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],

@@ -11,3 +11,5 @@ from .sys_dynamic_import import dynamic_import, srcfile_import
 from .cleanup_html import cleanup_html
 from .logging import *
 from .convert_to_md import convert_to_md
+from .tokenizers.tokenizer_openai import num_tokens_openai
+from .tokenizers.tokenizer_mistral import num_tokens_mistral

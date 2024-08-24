@@ -59,6 +59,7 @@ class MDScraperGraph(AbstractGraph):
             input="doc",
             output=["parsed_doc"],
             node_config={
+                "llm_model": self.llm_model,
                 "parse_html": False,
                 "chunk_size": self.model_token
             }

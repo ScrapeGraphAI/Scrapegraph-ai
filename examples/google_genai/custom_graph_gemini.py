@@ -38,13 +38,12 @@ fetch_node = FetchNode(
 parse_node = ParseNode(
     input="doc",
     output=["parsed_doc"],
-    node_config={"chunk_size": 4096}
+    node_config={
+        "chunk_size": 4096,
+        "llm_model": llm_model,
+    }
 )
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
-    node_config={"llm": llm_model},
-)
+
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
@@ -59,13 +58,11 @@ graph = BaseGraph(
     nodes={
         fetch_node,
         parse_node,
-        rag_node,
         generate_answer_node,
     },
     edges={
         (fetch_node, parse_node),
-        (parse_node, rag_node),
-        (rag_node, generate_answer_node)
+        (parse_node, generate_answer_node)
     },
     entry_point=fetch_node
 )

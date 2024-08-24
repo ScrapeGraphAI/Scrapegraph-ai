@@ -4,11 +4,10 @@ Example of custom graph using existing nodes
 
 import os
 from dotenv import load_dotenv
-
 from langchain_openai import OpenAIEmbeddings
 from langchain_openai import ChatOpenAI
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+from scrapegraphai.nodes import FetchNode, ParseNode, GenerateAnswerNode, RobotsNode
 
 # ************************************************
 # Define the configuration for the graph
@@ -31,8 +30,7 @@ graph_config = {
 # Define the graph nodes
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
-embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
+llm_model = ChatOpenAI(graph_config["llm"])
 
 # define the nodes for the graph
 robot_node = RobotsNode(
@@ -59,17 +57,10 @@ parse_node = ParseNode(
     node_config={
         "chunk_size": 4096,
         "verbose": True,
-    }
-)
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
-    node_config={
         "llm_model": llm_model,
-        "embedder_model": embedder,
-        "verbose": True,
     }
 )
+
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
@@ -88,14 +79,12 @@ graph = BaseGraph(
         robot_node,
         fetch_node,
         parse_node,
-        rag_node,
         generate_answer_node,
     ],
     edges=[
         (robot_node, fetch_node),
         (fetch_node, parse_node),
-        (parse_node, rag_node),
-        (rag_node, generate_answer_node)
+        (parse_node,  generate_answer_node)
     ],
     entry_point=robot_node
 )
