@@ -139,7 +139,7 @@ class AbstractGraph(ABC):
                 warnings.simplefilter("ignore")
                 return init_chat_model(**llm_params)
 
-        known_models = {"chatgpt","gpt","openai", "azure_openai", "google_genai",
+        known_models = {"anthropic", "chatgpt","gpt","openai", "azure_openai", "google_genai",
                         "ollama", "oneapi", "nvidia", "groq", "google_vertexai",
                         "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"}
 
@@ -173,6 +173,12 @@ class AbstractGraph(ABC):
 
             elif "claude-3-" in llm_params["model"]:
                 return handle_model(llm_params["model"], "anthropic", "claude3")
+            
+            elif "anthropic" in llm_params["model"]:
+                from langchain_anthropic import ChatAnthropic
+                
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "anthropic", model_name)
 
             elif llm_params["model"].startswith("mistral"):
                 model_name = llm_params["model"].split("/")[-1]
