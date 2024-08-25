@@ -29,11 +29,8 @@ embedder_model_instance = AzureOpenAIEmbeddings(
 # ************************************************
 
 graph_config = {
-    "llm": {
-        "api_key": os.getenv("ANTHROPIC_API_KEY"),
-        "model": "anthropic/claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+    "llm": {"model_instance": llm_model_instance},
+    "embeddings": {"model_instance": embedder_model_instance}
 }
 
 # ************************************************
