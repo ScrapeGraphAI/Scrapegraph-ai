@@ -142,7 +142,7 @@ class AbstractGraph(ABC):
         known_models = {"chatgpt","gpt","openai", "azure_openai", "google_genai",
                         "ollama", "oneapi", "nvidia", "groq", "google_vertexai",
                         "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", 
-                        "fireworks", "claude-3-"}
+                        "fireworks", "anthropic"}
 
         if llm_params["model"].split("/")[0] not in known_models and llm_params["model"].split("-")[0] not in known_models:
             raise ValueError(f"Model '{llm_params['model']}' is not supported")
@@ -172,8 +172,9 @@ class AbstractGraph(ABC):
                 token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
                 return handle_model(model_name, "ollama", token_key)
 
-            elif "claude-3-" in llm_params["model"]:
-                return handle_model(llm_params["model"], "anthropic", "claude3")
+            elif "anthropic" in llm_params["model"]:
+                model_name = llm_params["model"].split("anthropic/")[-1]
+                return handle_model(model_name, "anthropic", model_name)
 
             elif llm_params["model"].startswith("mistral"):
                 model_name = llm_params["model"].split("/")[-1]
