@@ -1,6 +1,7 @@
 ## [1.15.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.2...v1.15.0-beta.3) (2024-08-24)
 
 
+
 ### Bug Fixes
 
 * update abstract graph ([86fe5fc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/86fe5fcaf1a6ba28786678874378f07fba1db40f))
@@ -11,6 +12,7 @@
 ### Bug Fixes
 
 * abstract graph ([cf1fada](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf1fada36a6716cb0e24bbc5da7509446a964145))
+
 
 
 ### Docs
@@ -35,6 +37,7 @@
 ### Bug Fixes
 
 * **models_tokens:** add llama2 and llama3 sizes explicitly ([b05ec16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b05ec16b252d00c9c9ee7c6d4605b420851c7754))
+
 
 ## [1.14.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.3...v1.14.0) (2024-08-20)
 
