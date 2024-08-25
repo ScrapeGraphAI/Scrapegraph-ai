@@ -1,23 +1,23 @@
 """
-Basic example of scraping pipeline using XMLScraperGraph from XML documents
+Basic example of scraping pipeline using CSVScraperMultiGraph from CSV documents
 """
 
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import XMLScraperGraph
+import pandas as pd
+from scrapegraphai.graphs import CSVScraperMultiGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
 load_dotenv()
-
 # ************************************************
-# Read the XML file
+# Read the CSV file
 # ************************************************
 
-FILE_NAME = "inputs/books.xml"
+FILE_NAME = "inputs/username.csv"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
-with open(file_path, 'r', encoding="utf-8") as file:
-    text = file.read()
+text = pd.read_csv(file_path)
 
 # ************************************************
 # Define the configuration for the graph
@@ -26,29 +26,28 @@ with open(file_path, 'r', encoding="utf-8") as file:
 graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
-        "model": "claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+        "model": "anthropic/claude-3-haiku-20240307",
+        "max_tokens": 4000},
 }
 
 # ************************************************
-# Create the XMLScraperGraph instance and run it
+# Create the CSVScraperMultiGraph instance and run it
 # ************************************************
 
-xml_scraper_graph = XMLScraperGraph(
-    prompt="List me all the authors, title and genres of the books",
-    source=text,  # Pass the content of the file, not the file object
+csv_scraper_graph = CSVScraperMultiGraph(
+    prompt="List me all the last names",
+    source=[str(text), str(text)],
     config=graph_config
 )
 
-result = xml_scraper_graph.run()
+result = csv_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = xml_scraper_graph.get_execution_info()
+graph_exec_info = csv_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
 # Save to json or csv
