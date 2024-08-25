@@ -54,7 +54,6 @@ class SearchLinkNode(BaseNode):
             self.filter_links = False
 
         self.verbose = node_config.get("verbose", False)
-        self.seen_links = set()
 
     def _is_same_domain(self, url, domain):
         if not self.filter_links or not self.filter_config.get("diff_domain_filter", True):
@@ -108,7 +107,7 @@ class SearchLinkNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-
+        shared_seen_links = state["shared_state"].get("seen_links", set())
         parsed_content_chunks = state.get("doc")
         source_url = state.get("url") or state.get("local_dir")
         output_parser = JsonOutputParser()
@@ -131,7 +130,7 @@ class SearchLinkNode(BaseNode):
                     links = list(set(links))
 
                     relevant_links += links
-                    self.seen_links.update(relevant_links)
+                    shared_seen_links.update(relevant_links)
                 else:
                     filtered_links = [
                     link for link in links
@@ -139,11 +138,11 @@ class SearchLinkNode(BaseNode):
                     and not self._is_image_url(link)
                     and not self._is_language_url(link)
                     and not self._is_potentially_irrelevant(link)
-                    and link not in self.seen_links
+                    and link not in shared_seen_links
                     ]
                     filtered_links = list(set(filtered_links))
                     relevant_links += filtered_links
-                    self.seen_links.update(relevant_links)
+                    shared_seen_links.update(relevant_links)
 
             except Exception as e:
                 # Fallback approach: Using the LLM to extract links
@@ -159,5 +158,6 @@ class SearchLinkNode(BaseNode):
                 )
                 relevant_links += answer
 
+        state["shared_state"]["seen_links"] = shared_seen_links
         state.update({self.output[0]: relevant_links})
         return state

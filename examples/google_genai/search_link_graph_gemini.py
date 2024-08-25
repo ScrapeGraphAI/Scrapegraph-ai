@@ -3,8 +3,8 @@ Example of Search Graph
 """
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SearchGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+from scrapegraphai.graphs import SearchLinkGraph
+from scrapegraphai.utils import prettify_exec_info
 
 # ************************************************
 # Define the configuration for the graph
@@ -16,29 +16,41 @@ gemini_key = os.getenv("GOOGLE_APIKEY")
 
 graph_config = {
     "llm": {
+        "model": "ollama/llama3.1:8b",
+        "temperature": 0,
         "api_key": gemini_key,
-        "model": "google_genai/gemini-pro",
+    },
+  
+    "verbose": True,
+    "filter_config": {
+        "diff_domain_filter": True,
+        # "img_exts": ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp', '.ico'],
+        # "lang_indicators": ['lang=', '/fr', '/pt', '/es', '/de', '/jp', '/it'],
+        # "irrelevant_keywords": [
+        #         '/login', '/signup', '/register', '/contact', 'facebook.com', 'twitter.com', 
+        #         'linkedin.com', 'instagram.com', '.js', '.css', '/wp-content/', '/wp-admin/', 
+        #         '/wp-includes/', '/wp-json/', '/wp-comments-post.php', ';amp', '/about', 
+        #         '/careers', '/jobs', '/privacy', '/terms', '/legal', '/faq', '/help',
+        #         '.pdf', '.zip', '/news', '/files', '/downloads'
+        #     ]
     },
 }
+
 # ************************************************
-# Create the SearchGraph instance and run it
+# Create the SearchLinkGraph instance and run it
 # ************************************************
 
-search_graph = SearchGraph(
-    prompt="List me the best escursions near Trento",
+smart_scraper_graph = SearchLinkGraph(
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
-result = search_graph.run()
+result = smart_scraper_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = search_graph.get_execution_info()
+graph_exec_info = smart_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
-
-# Save to json and csv
-convert_to_csv(result, "result")
-convert_to_json(result, "result")
