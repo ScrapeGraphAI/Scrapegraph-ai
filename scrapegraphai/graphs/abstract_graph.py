@@ -7,8 +7,6 @@ from typing import Optional
 import uuid
 import warnings
 from pydantic import BaseModel
-from langchain_community.chat_models import ErnieBotChat
-from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain.chat_models import init_chat_model
 from ..helpers import models_tokens
 from ..models import (
@@ -65,12 +63,9 @@ class AbstractGraph(ABC):
         self.cache_path = self.config.get("cache_path", False)
         self.browser_base = self.config.get("browser_base")
 
-        # Create the graph
         self.graph = self._create_graph()
         self.final_state = None
         self.execution_info = None
-
-        # Set common configuration parameters
 
         verbose = bool(config and config.get("verbose"))
 
@@ -89,12 +84,10 @@ class AbstractGraph(ABC):
 
         self.set_common_params(common_params, overwrite=True)
 
-        # set burr config
         self.burr_kwargs = config.get("burr_kwargs", None)
         if self.burr_kwargs is not None:
             self.graph.use_burr = True
             if "app_instance_id" not in self.burr_kwargs:
-                # set a random uuid for the app_instance_id to avoid conflicts
                 self.burr_kwargs["app_instance_id"] = str(uuid.uuid4())
 
             self.graph.burr_config = self.burr_kwargs
@@ -127,7 +120,6 @@ class AbstractGraph(ABC):
         llm_defaults = {"temperature": 0, "streaming": False}
         llm_params = {**llm_defaults, **llm_config}
 
-        # If model instance is passed directly instead of the model details
         if "model_instance" in llm_params:
             try:
                 self.model_token = llm_params["model_tokens"]
@@ -147,7 +139,10 @@ class AbstractGraph(ABC):
                 warnings.simplefilter("ignore")
                 return init_chat_model(**llm_params)
 
-        known_models = ["chatgpt","gpt","openai", "azure_openai", "google_genai", "ollama", "oneapi", "nvidia", "groq", "google_vertexai", "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", "fireworks"]
+        known_models = {"chatgpt","gpt","openai", "azure_openai", "google_genai",
+                        "ollama", "oneapi", "nvidia", "groq", "google_vertexai",
+                        "bedrock", "mistralai", "hugging_face", "deepseek", "ernie", 
+                        "fireworks", "anthropic"}
 
         if llm_params["model"].split("/")[0] not in known_models and llm_params["model"].split("-")[0] not in known_models:
             raise ValueError(f"Model '{llm_params['model']}' is not supported")
@@ -177,14 +172,14 @@ class AbstractGraph(ABC):
                 token_key = model_name if "model_tokens" not in llm_params else llm_params["model_tokens"]
                 return handle_model(model_name, "ollama", token_key)
 
-            elif "claude-3-" in llm_params["model"]:
-                return handle_model(llm_params["model"], "anthropic", "claude3")
+            elif "anthropic" in llm_params["model"]:
+                model_name = llm_params["model"].split("anthropic/")[-1]
+                return handle_model(model_name, "anthropic", model_name)
 
             elif llm_params["model"].startswith("mistral"):
                 model_name = llm_params["model"].split("/")[-1]
                 return handle_model(model_name, "mistralai", model_name)
 
-            # Instantiate the language model based on the model name (models that do not use the common interface)
             elif "deepseek" in llm_params["model"]:
                 try:
                     self.model_token = models_tokens["deepseek"][llm_params["model"]]
@@ -194,6 +189,8 @@ class AbstractGraph(ABC):
                 return DeepSeek(llm_params)
 
             elif "ernie" in llm_params["model"]:
+                from langchain_community.chat_models import ErnieBotChat
+
                 try:
                     self.model_token = models_tokens["ernie"][llm_params["model"]]
                 except KeyError:
@@ -202,7 +199,6 @@ class AbstractGraph(ABC):
                 return ErnieBotChat(llm_params)
 
             elif "oneapi" in llm_params["model"]:
-                # take the model after the last dash
                 llm_params["model"] = llm_params["model"].split("/")[-1]
                 try:
                     self.model_token = models_tokens["oneapi"][llm_params["model"]]
@@ -211,6 +207,8 @@ class AbstractGraph(ABC):
                 return OneApi(llm_params)
 
             elif "nvidia" in llm_params["model"]:
+                from langchain_nvidia_ai_endpoints import ChatNVIDIA
+
                 try:
                     self.model_token = models_tokens["nvidia"][llm_params["model"].split("/")[-1]]
                     llm_params["model"] = "/".join(llm_params["model"].split("/")[1:])

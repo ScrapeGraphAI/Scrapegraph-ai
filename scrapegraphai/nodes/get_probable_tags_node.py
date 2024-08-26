@@ -58,10 +58,8 @@ class GetProbableTagsNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
@@ -88,10 +86,8 @@ class GetProbableTagsNode(BaseNode):
             },
         )
 
-        # Execute the chain to get probable tags
         tag_answer = tag_prompt | self.llm_model | output_parser
         probable_tags = tag_answer.invoke({"question": user_prompt})
 
-        # Update the dictionary with probable tags
         state.update({self.output[0]: probable_tags})
         return state

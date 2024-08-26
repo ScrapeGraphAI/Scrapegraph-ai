@@ -28,15 +28,15 @@ def convert_to_json(data: dict, filename: str, position: str = None) -> None:
         Saves a JSON file named 'output.json' at '/path/to/save'.
 
     Notes:
-        This function automatically ensures the directory exists before attempting to write the file. If the directory does not exist, it will attempt to create it.
+        This function automatically ensures the directory exists before 
+        attempting to write the file. 
+        If the directory does not exist, it will attempt to create it.
     """
 
     if ".json" in filename:
         filename = filename.replace(".json", "")  # Remove .json extension
 
-  # Get the directory of the caller script
     if position is None:
-        # Get directory of the main script
         caller_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
         position = caller_dir
 

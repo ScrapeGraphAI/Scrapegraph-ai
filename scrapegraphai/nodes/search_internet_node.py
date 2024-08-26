@@ -67,7 +67,6 @@ class SearchInternetNode(BaseNode):
 
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
@@ -79,10 +78,8 @@ class SearchInternetNode(BaseNode):
             input_variables=["user_prompt"],
         )
 
-        # Execute the chain to get the search query
         search_answer = search_prompt | self.llm_model | output_parser
-        
-        # Ollama: Use no json format when creating the search query
+
         if isinstance(self.llm_model, ChatOllama) and self.llm_model.format == 'json':
             self.llm_model.format = None
             search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
@@ -96,9 +93,7 @@ class SearchInternetNode(BaseNode):
                                search_engine=self.search_engine)
 
         if len(answer) == 0:
-            # raise an exception if no answer is found
             raise ValueError("Zero results found for the search query.")
 
-        # Update the state with the generated answer
         state.update({self.output[0]: answer})
         return state

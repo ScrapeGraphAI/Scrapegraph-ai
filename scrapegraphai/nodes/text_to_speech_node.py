@@ -43,7 +43,8 @@ class TextToSpeechNode(BaseNode):
                             correct data types from the state.
 
         Returns:
-            dict: The updated state with the output key containing the audio generated from the text.
+            dict: The updated state with the output 
+            key containing the audio generated from the text.
 
         Raises:
             KeyError: If the input keys are not found in the state, indicating that the
@@ -52,15 +53,11 @@ class TextToSpeechNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
-        # get the text to translate
         text2translate = str(next(iter(input_data[0].values())))
-        # text2translate = str(input_data[0])
 
         audio = self.tts_model.run(text2translate)
 
