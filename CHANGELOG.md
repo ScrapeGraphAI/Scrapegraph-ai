@@ -1,3 +1,15 @@
+## [1.15.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.3...v1.15.0-beta.4) (2024-08-26)
+
+
+### Bug Fixes
+
+* add claude3.5 sonnet ([ee8f8b3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ee8f8b31ecfe4ffd311528d2f48cb055e4609d99))
+
+
+### CI
+
+* **release:** 1.14.1 [skip ci] ([88e76ce](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/88e76ceedb39dc1b41222e9a5cb8a6f0d81cadf4))
+
 ## [1.14.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.14.0...v1.14.1) (2024-08-24)
 
 
