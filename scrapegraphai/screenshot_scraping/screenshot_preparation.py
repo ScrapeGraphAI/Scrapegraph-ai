@@ -172,6 +172,8 @@ def select_area_with_ipywidget(image):
 
     interact(update_plot, top_bottom=top_bottom_slider,
              left_right=left_right_slider, image_size=image_size_bt)
+    
+    return left_right_slider, top_bottom_slider
 
 
 def crop_image(image, LEFT=None, TOP=None, RIGHT=None, BOTTOM=None,  save_path: str = None):
@@ -210,4 +212,4 @@ def crop_image(image, LEFT=None, TOP=None, RIGHT=None, BOTTOM=None,  save_path: 
 
 
 # image=asyncio.run(take_screenshot("https://unix.stackexchange.com/questions/690233/piping-yes-when-running-scripts-from-curl", save_path="saved_screenshots/image.jpeg"))
-# print(select_area_with_opencv(image))
+# print(select_area_with_ipywidget(image))
