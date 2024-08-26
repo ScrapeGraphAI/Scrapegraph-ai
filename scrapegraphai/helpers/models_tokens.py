@@ -74,6 +74,7 @@ models_tokens = {
             "llama3.1:70b": 128000,
             "lama3.1:405b": 128000,
             "scrapegraph": 8192,
+            "mistral": 8192,
             "llava": 4096,
             "mixtral:8x22b-instruct": 65536,
             "mistral-openorca": 32000,

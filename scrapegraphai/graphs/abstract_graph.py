@@ -170,8 +170,8 @@ class AbstractGraph(ABC):
             elif "ollama" in llm_params["model"]:
                 model_name = llm_params["model"].split("ollama/")[-1]
                 token_key = model_name if "model_tokens" not in llm_params else None
-                explicit_model_tokens = 8192 if "model_tokens" not in llm_params else llm_params["model_tokens"]
-                return handle_model(model_name, "ollama", token_key, explicit_model_tokens)
+                model_tokens = 8192 if "model_tokens" not in llm_params else llm_params["model_tokens"]
+                return handle_model(model_name, "ollama", token_key, model_tokens)
 
             elif "claude-3-" in llm_params["model"]:
                 return handle_model(llm_params["model"], "anthropic", "claude3")
