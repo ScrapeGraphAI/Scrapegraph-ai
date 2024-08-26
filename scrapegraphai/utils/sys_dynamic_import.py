@@ -6,7 +6,7 @@ source code inspired by https://gist.github.com/DiTo97/46f4b733396b8d7a8f1d4d22d
 
 import sys
 import typing
-import importlib.util  # noqa: F401
+import importlib.util
 
 if typing.TYPE_CHECKING:
     import types
@@ -36,7 +36,6 @@ def srcfile_import(modpath: str, modname: str) -> "types.ModuleType":
 
     module = importlib.util.module_from_spec(spec)
 
-    # adds the module to the global scope
     sys.modules[modname] = module
 
     spec.loader.exec_module(module)
@@ -56,7 +55,7 @@ def dynamic_import(modname: str, message: str = "") -> None:
     """
     if modname not in sys.modules:
         try:
-            import importlib  # noqa: F401
+            import importlib
 
             module = importlib.import_module(modname)
             sys.modules[modname] = module

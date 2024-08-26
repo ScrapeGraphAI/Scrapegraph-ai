@@ -29,9 +29,8 @@ def convert_to_csv(data: dict, filename: str, position: str = None) -> None:
     """
 
     if ".csv" in filename:
-        filename = filename.replace(".csv", "")  # Remove .csv extension
+        filename = filename.replace(".csv", "")
 
-    # Get the directory of the caller script if position is not provided
     if position is None:
         caller_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
         position = caller_dir
@@ -40,7 +39,7 @@ def convert_to_csv(data: dict, filename: str, position: str = None) -> None:
         if not isinstance(data, dict):
             raise TypeError("Input data must be a dictionary")
 
-        os.makedirs(position, exist_ok=True)  # Create directory if needed
+        os.makedirs(position, exist_ok=True)
 
         df = pd.DataFrame.from_dict(data, orient='index')
         df.to_csv(os.path.join(position, f"{filename}.csv"), index=False)
@@ -52,4 +51,4 @@ def convert_to_csv(data: dict, filename: str, position: str = None) -> None:
         raise PermissionError(
             f"You don't have permission to write to '{position}'.") from pe
     except Exception as e:
-        raise e  # Re-raise other potential errors
+        raise e

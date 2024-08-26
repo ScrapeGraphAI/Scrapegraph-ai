@@ -56,21 +56,17 @@ class MergeAnswersNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
         answers = input_data[1]
 
-        # merge the answers in one string
         answers_str = ""
         for i, answer in enumerate(answers):
             answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
 
-        # Initialize the output parser
         if self.node_config.get("schema", None) is not None:
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
         else:
@@ -90,6 +86,5 @@ class MergeAnswersNode(BaseNode):
         merge_chain = prompt_template | self.llm_model | output_parser
         answer = merge_chain.invoke({"user_prompt": user_prompt})
 
-        # Update the state with the generated answer
         state.update({self.output[0]: answer})
         return state

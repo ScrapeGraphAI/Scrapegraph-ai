@@ -18,7 +18,8 @@ def convert_to_md(html: str, url: str = None) -> str:
     <h1>This is a heading.</h1></body></html>") 
     'This is a paragraph.\n\n# This is a heading.'
 
-    Note: All the styles and links are ignored during the conversion. """
+    Note: All the styles and links are ignored during the conversion.
+    """
 
     h = html2text.HTML2Text()
     h.ignore_links = False
