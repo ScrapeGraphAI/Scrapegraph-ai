@@ -5,7 +5,7 @@ from surya.model.recognition.model import load_model as load_rec_model
 from surya.model.recognition.processor import load_processor as load_rec_processor
 
 
-def detect_text(image, lahguages: list = ["en"]):
+def detect_text(image, languages: list = ["en"]):
     """
         Detects and extracts text from a given image.
         Parameters:
@@ -17,11 +17,12 @@ def detect_text(image, lahguages: list = ["en"]):
                 Model weights will automatically download the first time you run this function.
         """
 
-    langs = lahguages
+    langs = languages
     det_processor, det_model = load_det_processor(), load_det_model()
     rec_model, rec_processor = load_rec_model(), load_rec_processor()
     predictions = run_ocr([image], [langs], det_model,
                           det_processor, rec_model, rec_processor)
+    
     text = "\n".join([line.text for line in predictions[0].text_lines])
     return text
 
