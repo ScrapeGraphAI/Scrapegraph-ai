@@ -164,6 +164,10 @@ class AbstractGraph(ABC):
             elif llm_params["model"].startswith("vertexai"):
                 return handle_model(llm_params["model"], "google_vertexai", llm_params["model"])
 
+            elif llm_params["model"].startswith("groq"):
+                model_name = llm_params["model"].split("/")[-1]
+                return handle_model(model_name, "groq", model_name)
+
             elif "gpt-" in llm_params["model"]:
                 return handle_model(llm_params["model"], "openai", llm_params["model"])
 
