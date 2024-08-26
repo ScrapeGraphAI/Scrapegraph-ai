@@ -3,116 +3,140 @@ from playwright.async_api import async_playwright
 
 from io import BytesIO
 from PIL import Image, ImageGrab
-import os
 
 
-async def take_screenshot(url:str, image_name:str=None, quality:int=100):
+async def take_screenshot(url: str, save_path: str = None, quality: int = 100):
+    """
+    Takes a screenshot of a webpage at the specified URL and saves it if the save_path is specified.
+    Parameters:
+        url (str): The URL of the webpage to take a screenshot of.
+        save_path (str): The path to save the screenshot to. Defaults to None.
+        quality (int): The quality of the jpeg image, between 1 and 100. Defaults to 100.
+    Returns:
+        PIL.Image: The screenshot of the webpage as a PIL Image object.
+    """
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
         await page.goto(url)
-        save_path=None
-        if image_name is not None:
-            dir_path = os.path.abspath('')
-            save_path = dir_path + "/scrapegraphai/sreenshot_scraping/saved_screenshots/" + image_name
-        image_bytes = await page.screenshot(path=save_path,type="jpeg",full_page=True,quality=quality)
+        image_bytes = await page.screenshot(path=save_path, type="jpeg", full_page=True, quality=quality)
         await browser.close()
         return Image.open(BytesIO(image_bytes))
 
 
 def select_area_with_opencv(image):
+    """
+    Allows you to manually select an image area using OpenCV. It is recommended to use this function if your project is on your computer, otherwise use select_area_with_ipywidget().
+    Parameters:
+        image (PIL.Image): The image from which to select an area.
+    Returns:
+        A tuple containing the LEFT, TOP, RIGHT, and BOTTOM coordinates of the selected area.
+    """
+
     import cv2 as cv
     import numpy as np
 
     fullscreen_screenshot = ImageGrab.grab()
-    dw, dh=fullscreen_screenshot.size
+    dw, dh = fullscreen_screenshot.size
 
     def draw_selection_rectanlge(event, x, y, flags, param):
-        global ix,iy,drawing,overlay ,img
+        global ix, iy, drawing, overlay, img
         if event == cv.EVENT_LBUTTONDOWN:
             drawing = True
-            ix,iy = x,y
+            ix, iy = x, y
         elif event == cv.EVENT_MOUSEMOVE:
             if drawing == True:
                 cv.rectangle(img, (ix, iy), (x, y), (41, 215, 162), -1)
-                cv.putText(img, 'PRESS ANY KEY TO SELECT THIS AREA', (ix, iy-10), cv.FONT_HERSHEY_SIMPLEX, 1.5, (55,46,252), 5)
-                img=cv.addWeighted(overlay, alpha, img, 1 - alpha, 0)
+                cv.putText(img, 'PRESS ANY KEY TO SELECT THIS AREA', (ix,
+                           iy-10), cv.FONT_HERSHEY_SIMPLEX, 1.5, (55, 46, 252), 5)
+                img = cv.addWeighted(overlay, alpha, img, 1 - alpha, 0)
         elif event == cv.EVENT_LBUTTONUP:
-            global LEFT,TOP,RIGHT,BOTTOM
-            
+            global LEFT, TOP, RIGHT, BOTTOM
+
             drawing = False
-            if ix<x:
-                LEFT=int(ix)
-                RIGHT=int(x)
+            if ix < x:
+                LEFT = int(ix)
+                RIGHT = int(x)
             else:
-                LEFT=int(x)
-                RIGHT=int(ix)
-            if iy<y:
-                TOP=int(iy)
-                BOTTOM=int(y)
+                LEFT = int(x)
+                RIGHT = int(ix)
+            if iy < y:
+                TOP = int(iy)
+                BOTTOM = int(y)
             else:
-                TOP=int(y)
-                BOTTOM=int(iy)
+                TOP = int(y)
+                BOTTOM = int(iy)
 
-    global drawing,ix,iy,overlay,img
+    global drawing, ix, iy, overlay, img
     drawing = False
-    ix,iy = -1,-1
+    ix, iy = -1, -1
 
-    img =np.array(image)
+    img = np.array(image)
     img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
 
-    img=cv.rectangle(img, (0, 0), (image.size[0], image.size[1]), (0,0,255), 10)
-    img=cv.putText(img, 'SELECT AN AREA', (int(image.size[0]*0.3), 100), cv.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 5)
-    
+    img = cv.rectangle(
+        img, (0, 0), (image.size[0], image.size[1]), (0, 0, 255), 10)
+    img = cv.putText(img, 'SELECT AN AREA', (int(
+        image.size[0]*0.3), 100), cv.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 5)
+
     overlay = img.copy()
     alpha = 0.3
 
     while True:
-        cv.namedWindow('SELECT AREA', cv.WINDOW_KEEPRATIO) 
+        cv.namedWindow('SELECT AREA', cv.WINDOW_KEEPRATIO)
         cv.setMouseCallback('SELECT AREA', draw_selection_rectanlge)
-        cv.resizeWindow('SELECT AREA', int(image.size[0]/(image.size[1]/dh)), dh) 
-        
-        cv.imshow('SELECT AREA',img)
+        cv.resizeWindow('SELECT AREA', int(
+            image.size[0]/(image.size[1]/dh)), dh)
+
+        cv.imshow('SELECT AREA', img)
 
         if cv.waitKey(20) > -1:
             break
-        
+
     cv.destroyAllWindows()
     return LEFT, TOP, RIGHT, BOTTOM
 
+
 def select_area_with_ipywidget(image):
+    """
+    Allows you to manually select an image area using ipywidgets. It is recommended to use this function if your project is in Google Colab, Kaggle or other similar platform, otherwise use  select_area_with_opencv().
+    Parameters:
+        image (PIL Image): The input image.
+    Returns:
+        None
+    """
+
     import matplotlib.pyplot as plt
     import numpy as np
     from ipywidgets import interact, IntSlider
     import ipywidgets as widgets
     from PIL import Image
 
-
-    # Load an image
-    # image_path = 'piping-yes-when-running-scripts-from-curl.jpeg'  # Replace with your image path
-    # image = Image.open(image_path)
     img_array = np.array(image)
 
     print(img_array.shape)
 
-    def update_plot(top_bottom,left_right,image_size):
-        plt.figure(figsize = (image_size,image_size))
+    def update_plot(top_bottom, left_right, image_size):
+        plt.figure(figsize=(image_size, image_size))
         plt.imshow(img_array)
         plt.axvline(x=left_right[0], color='blue', linewidth=1)
-        plt.text(left_right[0]+1,-25,'LEFT',rotation=90,color='blue')
+        plt.text(left_right[0]+1, -25, 'LEFT', rotation=90, color='blue')
         plt.axvline(x=left_right[1], color='red', linewidth=1)
-        plt.text(left_right[1]+1,-25,'RIGHT',rotation=90, color='red')
+        plt.text(left_right[1]+1, -25, 'RIGHT', rotation=90, color='red')
 
-
-        plt.axhline(y=img_array.shape[0]-top_bottom[0], color='green', linewidth=1)
-        plt.text(-100,img_array.shape[0]-top_bottom[0]+1,'BOTTOM', color='green')
-        plt.axhline(y=img_array.shape[0]-top_bottom[1], color='darkorange', linewidth=1)
-        plt.text(-100,img_array.shape[0]-top_bottom[1]+1,'TOP', color='darkorange')
-        plt.axis('off')  # Hide axes
+        plt.axhline(y=img_array.shape[0] -
+                    top_bottom[0], color='green', linewidth=1)
+        plt.text(-100, img_array.shape[0] -
+                 top_bottom[0]+1, 'BOTTOM', color='green')
+        plt.axhline(y=img_array.shape[0]-top_bottom[1],
+                    color='darkorange', linewidth=1)
+        plt.text(-100, img_array.shape[0] -
+                 top_bottom[1]+1, 'TOP', color='darkorange')
+        plt.axis('off')
         plt.show()
 
-
-    top_bottom_slider=widgets.IntRangeSlider(
+    top_bottom_slider = widgets.IntRangeSlider(
         value=[int(img_array.shape[0]*0.25), int(img_array.shape[0]*0.75)],
         min=0,
         max=img_array.shape[0],
@@ -125,7 +149,7 @@ def select_area_with_ipywidget(image):
         readout_format='d',
     )
 
-    left_right_slider=widgets.IntRangeSlider(
+    left_right_slider = widgets.IntRangeSlider(
         value=[int(img_array.shape[1]*0.25), int(img_array.shape[1]*0.75)],
         min=0,
         max=img_array.shape[1],
@@ -137,7 +161,7 @@ def select_area_with_ipywidget(image):
         readout=True,
         readout_format='d',
     )
-    image_size_bt=widgets.BoundedIntText(
+    image_size_bt = widgets.BoundedIntText(
         value=10,
         min=2,
         max=20,
@@ -146,11 +170,44 @@ def select_area_with_ipywidget(image):
         disabled=False
     )
 
-    interact(update_plot,top_bottom= top_bottom_slider ,left_right=left_right_slider ,image_size=image_size_bt)
+    interact(update_plot, top_bottom=top_bottom_slider,
+             left_right=left_right_slider, image_size=image_size_bt)
 
-def crop_image(image,TOP=None, BOTTOM=None, LEFT=None, RIGHT=None, save:bool=True):
+
+def crop_image(image, LEFT=None, TOP=None, RIGHT=None, BOTTOM=None,  save_path: str = None):
+    """
+    Crop an image using the specified coordinates.
+    Parameters:
+        image (PIL.Image): The image to be cropped.
+        LEFT (int, optional): The x-coordinate of the left edge of the crop area. Defaults to None.
+        TOP (int, optional): The y-coordinate of the top edge of the crop area. Defaults to None.
+        RIGHT (int, optional): The x-coordinate of the right edge of the crop area. Defaults to None.
+        BOTTOM (int, optional): The y-coordinate of the bottom edge of the crop area. Defaults to None.
+        save_path (str, optional): The path to save the cropped image. Defaults to None.
+    Returns:
+        PIL.Image: The cropped image.
+    Notes:
+        If any of the coordinates (LEFT, TOP, RIGHT, BOTTOM) is None, it will be set to the corresponding edge of the image.
+        If save_path is specified, the cropped image will be saved as a JPEG file at the specified path.
+    """
+
+    if LEFT is None:
+        LEFT = 0
+    if TOP is None:
+        TOP = 0
+    if RIGHT is None:
+        RIGHT = image.size[0]
+    if BOTTOM is None:
+        BOTTOM = image.size[1]
+
+    croped_image = image.crop((LEFT, TOP, RIGHT, BOTTOM))
+    if save_path is not None:
+        from pathlib import Path
+        croped_image.save(save_path, "JPEG")
+
     return image.crop((LEFT, TOP, RIGHT, BOTTOM))
 
 
-# image=asyncio.run(take_screenshot("https://unix.stackexchange.com/questions/690233/piping-yes-when-running-scripts-from-curl"))
+
+# image=asyncio.run(take_screenshot("https://unix.stackexchange.com/questions/690233/piping-yes-when-running-scripts-from-curl", save_path="saved_screenshots/image.jpeg"))
 # print(select_area_with_opencv(image))
