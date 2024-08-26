@@ -1,3 +1,10 @@
+## [1.15.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.4...v1.15.0-beta.5) (2024-08-26)
+
+
+### Bug Fixes
+
+* abstract graph local model ([04128e7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/04128e7e9f585aaf774fabf646c4d9d3b96b8333))
+
 ## [1.15.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.3...v1.15.0-beta.4) (2024-08-26)
 
 
