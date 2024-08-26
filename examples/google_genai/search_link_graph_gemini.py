@@ -1,5 +1,5 @@
 """
-Example of Search Graph
+Example of Search Link Graph
 """
 import os
 from dotenv import load_dotenv
@@ -40,17 +40,17 @@ graph_config = {
 # Create the SearchLinkGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SearchLinkGraph(
+search_link_graph = SearchLinkGraph(
     source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
+result = search_link_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = smart_scraper_graph.get_execution_info()
+graph_exec_info = search_link_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))

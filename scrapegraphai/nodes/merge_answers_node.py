@@ -54,8 +54,6 @@ class MergeAnswersNode(BaseNode):
                       that the necessary information for generating an answer is missing.
         """
 
-        self.logger.info(f"--- Executing {self.node_name} Node ---")
-
         # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
@@ -65,31 +63,43 @@ class MergeAnswersNode(BaseNode):
         user_prompt = input_data[0]
         answers = input_data[1]
 
-        # merge the answers in one string
-        answers_str = ""
-        for i, answer in enumerate(answers):
-            answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
+        #skip merge answers if there are no multiple answers to merge
+        if len(answers > 1):
+            self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Initialize the output parser
-        if self.node_config.get("schema", None) is not None:
-            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+            # merge the answers in one string
+            answers_str = ""
+            for i, answer in enumerate(answers):
+                answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
+
+            # Initialize the output parser
+            if self.node_config.get("schema", None) is not None:
+                output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+            else:
+                output_parser = JsonOutputParser()
+
+            format_instructions = output_parser.get_format_instructions()
+
+            prompt_template = PromptTemplate(
+                template=TEMPLATE_COMBINED,
+                input_variables=["user_prompt"],
+                partial_variables={
+                    "format_instructions": format_instructions,
+                    "website_content": answers_str,
+                },
+            )
+
+            merge_chain = prompt_template | self.llm_model | output_parser
+            answer = merge_chain.invoke({"user_prompt": user_prompt})
+
+            # Update the state with the generated answer
+            state.update({self.output[0]: answer})
+        
+        elif(len(answers) == 1):
+            self.logger.info(f"--- Skipping {self.node_name} Node ---")
+            state.update({self.output[0]: answers[0]})
+        
         else:
-            output_parser = JsonOutputParser()
-
-        format_instructions = output_parser.get_format_instructions()
-
-        prompt_template = PromptTemplate(
-            template=TEMPLATE_COMBINED,
-            input_variables=["user_prompt"],
-            partial_variables={
-                "format_instructions": format_instructions,
-                "website_content": answers_str,
-            },
-        )
-
-        merge_chain = prompt_template | self.llm_model | output_parser
-        answer = merge_chain.invoke({"user_prompt": user_prompt})
-
-        # Update the state with the generated answer
-        state.update({self.output[0]: answer})
+            self.logger.info(f"--- Skipping {self.node_name} Node ---")
+            self.update({self.output[0]: []})
         return state

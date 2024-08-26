@@ -65,6 +65,9 @@ class AbstractGraph(ABC):
         self.cache_path = self.config.get("cache_path", False)
         self.browser_base = self.config.get("browser_base")
 
+        self.max_depth = config.get("max_depth", 3)  # Set max_depth from config, default to 3
+        self.curr_depth = 0  # Initialize curr_depth to 0
+        
         # Create the graph
         self.graph = self._create_graph()
         self.final_state = None

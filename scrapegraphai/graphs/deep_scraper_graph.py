@@ -93,6 +93,8 @@ class DeepScraperGraph(AbstractGraph):
             output=["relevant_links"],
             node_config={
                 "llm_model": self.llm_model,
+                "filter_links": self.config.get("filter_links", False),
+                "filter_config": self.config.get("filter_config"),
             }
         )
         graph_iterator_node = GraphIteratorNode(
@@ -100,7 +102,9 @@ class DeepScraperGraph(AbstractGraph):
             output=["results"],
             node_config={
                 "graph_instance": None,
-                "batchsize": 1
+                "batchsize": 1,
+                "max_depth": self.config.get("max_depth", 3),
+                "curr_depth": self.curr_depth
             }
         )
         merge_answers_node = MergeAnswersNode(
@@ -123,6 +127,8 @@ class DeepScraperGraph(AbstractGraph):
             ],
             edges=[
                 (fetch_node, parse_node),
+                (parse_node, generate_answer_node),
+                (generate_answer_node, search_node),
                 (search_node, graph_iterator_node),
                 (graph_iterator_node, merge_answers_node)
             ],

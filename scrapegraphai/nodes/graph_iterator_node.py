@@ -37,6 +37,8 @@ class GraphIteratorNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.max_depth = node_config.get("max_depth", 3) 
+        self.curr_depth = node_config.get("curr_depth", 0)
 
     def execute(self, state: dict) -> dict:
         """
@@ -89,6 +91,11 @@ class GraphIteratorNode(BaseNode):
             KeyError: If the input keys are not found in the state.
         """
 
+        # Stop iteration if max_depth is reached
+        if self.curr_depth >= self.max_depth:
+            self.logger.info(f"Max depth {self.max_depth} reached. Stopping further iterations.")
+            return state
+        
         # interprets input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
@@ -103,11 +110,7 @@ class GraphIteratorNode(BaseNode):
         if graph_instance is None:
             raise ValueError("graph instance is required for concurrent execution")
 
-        # Assign depth level to the graph
-        if "graph_depth" in graph_instance.config:
-            graph_instance.config["graph_depth"] += 1
-        else:
-            graph_instance.config["graph_depth"] = 1
+        next_depth = self.curr_depth + 1
 
         graph_instance.prompt = user_prompt
 
@@ -124,6 +127,7 @@ class GraphIteratorNode(BaseNode):
         for url in urls:
             instance = copy.copy(graph_instance)
             instance.source = url
+            instance.curr_depth = next_depth
             if url.startswith("http"):
                 instance.input_key = "url"
             participants.append(instance)

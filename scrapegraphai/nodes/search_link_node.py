@@ -56,11 +56,12 @@ class SearchLinkNode(BaseNode):
         self.verbose = node_config.get("verbose", False)
 
     def _is_same_domain(self, url, domain):
-        if not self.filter_links or not self.filter_config.get("diff_domain_filter", True):
-            return True  # Skip the domain filter if not enabled
-        parsed_url = urlparse(url)
-        parsed_domain = urlparse(domain)
-        return parsed_url.netloc == parsed_domain.netloc
+        # if not self.filter_links or not self.filter_config.get("diff_domain_filter", True):
+        #     return True  # Skip the domain filter if not enabled
+        # parsed_url = urlparse(url)
+        # parsed_domain = urlparse(domain)
+        # return parsed_url.netloc == parsed_domain.netloc
+        return domain in url
 
     def _is_image_url(self, url):
         if not self.filter_links:

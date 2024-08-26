@@ -1,9 +1,9 @@
 """
-Example of Search Graph
+Example of Search Link Graph
 """
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SearchGraph
+from scrapegraphai.graphs import SearchLinkGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 # ************************************************
@@ -19,22 +19,22 @@ graph_config = {
 }
 
 # ************************************************
-# Create the SearchGraph instance and run it
+# Create the SearchLinkGraph instance and run it
 # ************************************************
 
-search_graph = SearchGraph(
+search_link_graph = SearchLinkGraph(
     prompt="List me the best escursions near Trento",
     config=graph_config
 )
 
-result = search_graph.run()
+result = search_link_graph.run()
 print(result)
 
 # ************************************************
 # Get graph execution info
 # ************************************************
 
-graph_exec_info = search_graph.get_execution_info()
+graph_exec_info = search_link_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
 # Save to json and csv
