@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using Deep Scraper Graph
 """
 
 import os
@@ -25,7 +25,7 @@ graph_config = {
 }
 
 # ************************************************
-# Create the SmartScraperGraph instance and run it
+# Create the DeepScraperGraph instance and run it
 # ************************************************
 
 deep_scraper_graph = DeepScraperGraph(

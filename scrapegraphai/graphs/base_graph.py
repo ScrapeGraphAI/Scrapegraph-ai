@@ -93,6 +93,9 @@ class BaseGraph:
         """
         current_node_name = self.entry_point
         state = initial_state
+        self.shared_state["source_url"] = state["url"]
+        # self.shared_state["seen_links"].update(state["url"])
+        state["shared_state"] = self.shared_state
 
         # variables for tracking execution info
         total_exec_time = 0.0
@@ -259,6 +262,11 @@ class BaseGraph:
         """
 
         self.initial_state = initial_state
+        
+        source_url = initial_state.get("source_url", None)
+        if source_url:
+            self.shared_state["source_url"] = source_url
+
         if self.use_burr:
 
             bridge = BurrBridge(self, self.burr_config)

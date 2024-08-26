@@ -55,13 +55,15 @@ class SearchLinkNode(BaseNode):
 
         self.verbose = node_config.get("verbose", False)
 
-    def _is_same_domain(self, url, domain):
+    def _is_same_domain(self, url, source_url):
         # if not self.filter_links or not self.filter_config.get("diff_domain_filter", True):
         #     return True  # Skip the domain filter if not enabled
         # parsed_url = urlparse(url)
-        # parsed_domain = urlparse(domain)
-        # return parsed_url.netloc == parsed_domain.netloc
-        return domain in url
+        # parsed_source_url = urlparse(source_url)
+        # return parsed_url.netloc == parsed_source_url.netloc
+         # Retrieve source_url from shared_state
+
+        return source_url in url
 
     def _is_image_url(self, url):
         if not self.filter_links:
@@ -109,8 +111,9 @@ class SearchLinkNode(BaseNode):
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         shared_seen_links = state["shared_state"].get("seen_links", set())
+        first_source_url = state["shared_state"].get("source_url")
         parsed_content_chunks = state.get("doc")
-        source_url = state.get("url") or state.get("local_dir")
+        # source_url = state.get("url") or state.get("local_dir")
         output_parser = JsonOutputParser()
 
         relevant_links = []
@@ -135,7 +138,7 @@ class SearchLinkNode(BaseNode):
                 else:
                     filtered_links = [
                     link for link in links
-                    if self._is_same_domain(link, source_url)
+                    if self._is_same_domain(link, first_source_url)
                     and not self._is_image_url(link)
                     and not self._is_language_url(link)
                     and not self._is_potentially_irrelevant(link)

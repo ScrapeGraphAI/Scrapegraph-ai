@@ -105,6 +105,12 @@ class GraphIteratorNode(BaseNode):
         user_prompt = input_data[0]
         urls = input_data[1]
 
+        if not urls:
+            self.logger.info("No relevant links found, passing the current answer up the chain.")
+            # Directly pass the answer from the state to results
+            state.update({self.output[0]: [state.get("answer", "No answer found")]})
+            return state
+
         graph_instance = self.node_config.get("graph_instance", None)
 
         if graph_instance is None:

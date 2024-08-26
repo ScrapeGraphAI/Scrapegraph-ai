@@ -64,7 +64,7 @@ class MergeAnswersNode(BaseNode):
         answers = input_data[1]
 
         #skip merge answers if there are no multiple answers to merge
-        if len(answers > 1):
+        if len(answers) > 1:
             self.logger.info(f"--- Executing {self.node_name} Node ---")
 
             # merge the answers in one string
@@ -96,10 +96,10 @@ class MergeAnswersNode(BaseNode):
             state.update({self.output[0]: answer})
         
         elif(len(answers) == 1):
-            self.logger.info(f"--- Skipping {self.node_name} Node ---")
+            self.logger.info(f"--- Skipping {self.node_name} Node: Only one item ---")
             state.update({self.output[0]: answers[0]})
         
         else:
-            self.logger.info(f"--- Skipping {self.node_name} Node ---")
-            self.update({self.output[0]: []})
+            self.logger.info(f"--- Skipping {self.node_name} Node: No output ---")
+            state.update({self.output[0]: answers[0]})
         return state
