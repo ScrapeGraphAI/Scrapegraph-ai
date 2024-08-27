@@ -26,8 +26,8 @@ with open(file_path, 'r', encoding="utf-8") as file:
 graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
-        "model": "claude-3-haiku-20240307",
-        "max_tokens": 4000},
+        "model": "anthropic/claude-3-haiku-20240307",
+    },
 }
 
 # ************************************************

@@ -51,7 +51,7 @@ models_tokens = {
         "gemini-1.5-pro-latest": 128000,
         "models/embedding-001": 2048
     },
-     "google_vertexai": {
+    "google_vertexai": {
         "gemini-1.5-flash": 128000,
         "gemini-1.5-pro": 128000,
         "gemini-1.0-pro": 128000,
@@ -137,6 +137,7 @@ models_tokens = {
         "claude-3-sonnet-20240229": 200000,
         "claude-3-haiku-20240307": 200000,
         "claude-3-5-sonnet-20240620": 200000,
+        "claude-3-haiku-20240307": 4000,
     },
     "bedrock": {
         "anthropic.claude-3-5-sonnet-20240620": 200000,

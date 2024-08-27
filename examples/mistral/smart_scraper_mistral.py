@@ -16,7 +16,7 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("MISTRAL_API_KEY"),
-        "model": "mistral/open-mistral-nemo",
+        "model": "mistralai/open-mistral-nemo",
     },
     "verbose": True,
     "headless": False,

@@ -8,17 +8,13 @@ from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_i
 # Define the configuration for the graph
 # ************************************************
 
-graph_config = {
+graph_config = {  
     "llm": {
-            "model": "ernie-bot-turbo",
-            "ernie_client_id": "<ernie_client_id>",
-            "ernie_client_secret": "<ernie_client_secret>",
-            "temperature": 0.1
-        },
-        "embeddings": {
-            "model": "ollama/nomic-embed-text",
-            "temperature": 0,
-            "base_url": "http://localhost:11434"},
+        "model": "ernie/ernie-bot-turbo",
+        "ernie_client_id": "<ernie_client_id>",
+        "ernie_client_secret": "<ernie_client_secret>",
+        "temperature": 0.1
+    },
     "library": "beautifulsoup"
 }
 

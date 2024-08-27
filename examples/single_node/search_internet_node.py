@@ -2,7 +2,7 @@
 Example of custom graph using existing nodes
 """
 
-from scrapegraphai.models import Ollama
+from langchain_community.chat_models import ChatOllama
 from scrapegraphai.nodes import SearchInternetNode
 
 # ************************************************
@@ -24,7 +24,7 @@ graph_config = {
 # Define the node
 # ************************************************
 
-llm_model = Ollama(graph_config["llm"])
+llm_model = ChatOllama(graph_config["llm"])
 
 search_node = SearchInternetNode(
     input="user_input",

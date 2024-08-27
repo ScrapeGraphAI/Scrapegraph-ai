@@ -13,12 +13,12 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
-
-graph_config = {
+graph_config = {  
     "llm": {
-        "api_key": openai_key,
-        "model": "gpt-3.5-turbo",
+        "model": "ernie/ernie-bot-turbo",
+        "ernie_client_id": "<ernie_client_id>",
+        "ernie_client_secret": "<ernie_client_secret>",
+        "temperature": 0.1
     },
     "library": "beautifulsoup"
 }

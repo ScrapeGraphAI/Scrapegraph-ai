@@ -18,7 +18,7 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "gpt-4o",
+        "model": "openai/gpt-4o",
     },
     "verbose": True,
     "headless": False,
