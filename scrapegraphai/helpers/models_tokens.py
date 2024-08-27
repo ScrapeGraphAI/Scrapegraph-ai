@@ -102,7 +102,7 @@ models_tokens = {
     "oneapi": {
         "qwen-turbo": 6000,
     },
-    "nvdia": {
+    "nvidia": {
         "meta/llama3-70b-instruct": 419,
         "meta/llama3-8b-instruct": 419,
         "nemotron-4-340b-instruct": 1024,
@@ -127,7 +127,7 @@ models_tokens = {
         "gemma-7b-it": 8192,
         "claude-3-haiku-20240307'": 8192,
     },
-    "claude": {
+    "anthropic": {
         "claude_instant": 100000,
         "claude2": 9000,
         "claude2.1": 200000,
