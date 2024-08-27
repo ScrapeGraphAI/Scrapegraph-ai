@@ -1,3 +1,10 @@
+## [1.15.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.6...v1.15.0-beta.7) (2024-08-27)
+
+
+### Bug Fixes
+
+* bug for abstract graph ([cf73883](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf73883451729b19034005ee7ebe618c1e256a11))
+
 ## [1.15.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.5...v1.15.0-beta.6) (2024-08-27)
 
 
