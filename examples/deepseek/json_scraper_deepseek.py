@@ -26,7 +26,7 @@ with open(file_path, 'r', encoding="utf-8") as file:
 
 graph_config = {
     "llm": {
-        "model": "deepseek-chat",
+        "model": "deepseek/deepseek-chat",
         "openai_api_key": deepseek_key,
         "openai_api_base": 'https://api.deepseek.com/v1',
     },

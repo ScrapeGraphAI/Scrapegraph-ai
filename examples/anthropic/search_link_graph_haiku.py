@@ -14,23 +14,11 @@ from langchain_openai import AzureOpenAIEmbeddings
 
 load_dotenv()
 
-llm_model_instance = AzureChatOpenAI(
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
-)
-
-embedder_model_instance = AzureOpenAIEmbeddings(
-    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-)
-
-# ************************************************
-# Create the SmartScraperGraph instance and run it
-# ************************************************
-
 graph_config = {
-    "llm": {"model_instance": llm_model_instance},
-    "embeddings": {"model_instance": embedder_model_instance}
+    "llm": {
+        "api_key": os.getenv("ANTHROPIC_API_KEY"),
+        "model": "anthropic/claude-3-haiku-20240307",
+    },
 }
 
 # ************************************************

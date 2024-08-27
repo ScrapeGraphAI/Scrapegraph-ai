@@ -18,7 +18,7 @@ mistral_key = os.getenv("MISTRAL_API_KEY")
 graph_config = {
     "llm": {
         "api_key": mistral_key,
-        "model": "mistral/open-mistral-nemo",
+        "model": "mistralai/open-mistral-nemo",
     },
     "library": "beautifulsoup"
 }
