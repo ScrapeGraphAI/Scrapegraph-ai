@@ -1,3 +1,23 @@
+## [1.15.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.5...v1.15.0-beta.6) (2024-08-27)
+
+
+### Bug Fixes
+
+* **docloaders:** BrowserBase dynamic import ([5c16ee9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c16ee985b11948c6a8c1dbfd051d458fa193973))
+* **AbstractGraph:** correct and simplify instancing logic ([f73343f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f73343f19386b31878706963597c2565a023068d))
+* **BurrBrige:** dynamic imports ([7789663](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7789663338a89d27fde322ae282ce07ccca16845))
+* set up dynamic imports correctly ([83e71df](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/83e71df2e2cb3b6bfba11f8879d5c4917a3e1837))
+
+
+### chore
+
+* **examples:** update model names ([f6df9b7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f6df9b75125b4cacbef4af29faf3e17a13ff108c))
+
+
+### Test
+
+* **AbstractGraph:** add AbstractGraph tests ([229d74d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/229d74d4bd39befa3723fa2841e23d40007a9772))
+
 ## [1.15.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.4...v1.15.0-beta.5) (2024-08-26)
 
 
