@@ -268,7 +268,10 @@ class FetchNode(BaseNode):
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
             if self.browser_base is not None:
-                from ..docloaders.browser_base import browser_base_fetch
+                try:
+                    from ..docloaders.browser_base import browser_base_fetch
+                except ImportError:
+                    raise ImportError("The browserbase module is not installed. Please install it using `pip install browserbase`.")
 
                 data =  browser_base_fetch(self.browser_base.get("api_key"),
                                             self.browser_base.get("project_id"), [source])

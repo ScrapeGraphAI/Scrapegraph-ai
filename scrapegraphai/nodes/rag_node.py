@@ -2,6 +2,7 @@
 RAGNode Module
 """
 import os
+import sys
 from typing import List, Optional
 from langchain.docstore.document import Document
 from langchain.retrievers import ContextualCompressionRetriever
@@ -13,18 +14,15 @@ from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
 from langchain_community.chat_models import ChatOllama
 from langchain_aws import BedrockEmbeddings, ChatBedrock
-from langchain_huggingface import ChatHuggingFace, HuggingFaceEmbeddings
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-from langchain_google_vertexai import ChatVertexAI, VertexAIEmbeddings
-from langchain_fireworks import FireworksEmbeddings, ChatFireworks
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings, ChatOpenAI, AzureChatOpenAI
-from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings, ChatNVIDIA
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..helpers import models_tokens
 from ..models import DeepSeek
 
+optional_modules = {"langchain_anthropic", "langchain_fireworks", "langchain_groq", "langchain_google_vertexai"}
 
 class RAGNode(BaseNode):
     """
@@ -163,6 +161,7 @@ class RAGNode(BaseNode):
         Raises:
             ValueError: If the model is not supported.
         """
+
         if isinstance(self.llm_model, ChatGoogleGenerativeAI):
             return GoogleGenerativeAIEmbeddings(
                 google_api_key=llm_config["api_key"], model="models/embedding-001"
@@ -172,28 +171,28 @@ class RAGNode(BaseNode):
                                     base_url=self.llm_model.openai_api_base)
         elif isinstance(self.llm_model, DeepSeek):
             return OpenAIEmbeddings(api_key=self.llm_model.openai_api_key)
-        elif isinstance(self.llm_model, ChatVertexAI):
-            return VertexAIEmbeddings()
         elif isinstance(self.llm_model, AzureOpenAIEmbeddings):
             return self.llm_model
         elif isinstance(self.llm_model, AzureChatOpenAI):
             return AzureOpenAIEmbeddings()
-        elif isinstance(self.llm_model, ChatFireworks):
-            return FireworksEmbeddings(model=self.llm_model.model_name)
-        elif isinstance(self.llm_model, ChatNVIDIA):
-            return NVIDIAEmbeddings(model=self.llm_model.model_name)
         elif isinstance(self.llm_model, ChatOllama):
             # unwrap the kwargs from the model whihc is a dict
             params = self.llm_model._lc_kwargs
             # remove streaming and temperature
             params.pop("streaming", None)
             params.pop("temperature", None)
-
             return OllamaEmbeddings(**params)
-        elif isinstance(self.llm_model, ChatHuggingFace):
-            return HuggingFaceEmbeddings(model=self.llm_model.model)
         elif isinstance(self.llm_model, ChatBedrock):
             return BedrockEmbeddings(client=None, model_id=self.llm_model.model_id)
+        elif all(key in sys.modules for key in optional_modules):
+            if isinstance(self.llm_model, ChatFireworks):
+                return FireworksEmbeddings(model=self.llm_model.model_name)
+            if isinstance(self.llm_model, ChatNVIDIA):
+                return NVIDIAEmbeddings(model=self.llm_model.model_name)
+            if isinstance(self.llm_model, ChatHuggingFace):
+                return HuggingFaceEmbeddings(model=self.llm_model.model)
+            if isinstance(self.llm_model, ChatVertexAI):
+                return VertexAIEmbeddings()
         else:
             raise ValueError("Embedding Model missing or not supported")
 
@@ -218,14 +217,6 @@ class RAGNode(BaseNode):
             return OpenAIEmbeddings(api_key=embedder_params["api_key"])
         if "azure" in embedder_params["model"]:
             return AzureOpenAIEmbeddings()
-        if "nvidia" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["nvidia"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return NVIDIAEmbeddings(model=embedder_params["model"],
-                                    nvidia_api_key=embedder_params["api_key"])
         if "ollama" in embedder_params["model"]:
             embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
             try:
@@ -233,20 +224,6 @@ class RAGNode(BaseNode):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return OllamaEmbeddings(**embedder_params)
-        if "hugging_face" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["hugging_face"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return HuggingFaceEmbeddings(model=embedder_params["model"])
-        if "fireworks" in embedder_params["model"]:
-            embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
-            try:
-                models_tokens["fireworks"][embedder_params["model"]]
-            except KeyError as exc:
-                raise KeyError("Model not supported") from exc
-            return FireworksEmbeddings(model=embedder_params["model"])
         if "gemini" in embedder_params["model"]:
             try:
                 models_tokens["gemini"][embedder_params["model"]]
@@ -261,5 +238,28 @@ class RAGNode(BaseNode):
             except KeyError as exc:
                 raise KeyError("Model not supported") from exc
             return BedrockEmbeddings(client=client, model_id=embedder_params["model"])
+        if all(key in sys.modules for key in optional_modules):
+            if "hugging_face" in embedder_params["model"]:
+                embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
+                try:
+                    models_tokens["hugging_face"][embedder_params["model"]]
+                except KeyError as exc:
+                    raise KeyError("Model not supported") from exc
+                return HuggingFaceEmbeddings(model=embedder_params["model"])
+            if "fireworks" in embedder_params["model"]:
+                embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
+                try:
+                    models_tokens["fireworks"][embedder_params["model"]]
+                except KeyError as exc:
+                    raise KeyError("Model not supported") from exc
+                return FireworksEmbeddings(model=embedder_params["model"])
+            if "nvidia" in embedder_params["model"]:
+                embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
+                try:
+                    models_tokens["nvidia"][embedder_params["model"]]
+                except KeyError as exc:
+                    raise KeyError("Model not supported") from exc
+                return NVIDIAEmbeddings(model=embedder_params["model"],
+                                        nvidia_api_key=embedder_params["api_key"])
 
         raise ValueError("Model provided by the configuration not supported")
