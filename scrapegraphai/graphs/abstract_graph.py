@@ -139,7 +139,7 @@ class AbstractGraph(ABC):
             raise ValueError(f"Provider {llm_params['model_provider']} is not supported. If possible, try to use a model instance instead.")
         
         try:
-            self.model_token = models_tokens[llm_params["model"]][llm_params["model"]]
+            self.model_token = models_tokens[llm_params["model_provider"]].get(llm_params["model"][0])
         except KeyError:
             print("Model not found, using default token size (8192)")
             self.model_token = 8192
