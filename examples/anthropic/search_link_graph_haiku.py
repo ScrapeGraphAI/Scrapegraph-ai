@@ -38,7 +38,7 @@ graph_config = {
 # ************************************************
 
 search_link_graph = SearchLinkGraph(
-    prompt="List me the best escursions near Trento",
+    source="https://sport.sky.it/nba?gr=www",
     config=graph_config
 )
 
