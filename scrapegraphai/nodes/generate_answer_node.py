@@ -1,16 +1,13 @@
 """
 GenerateAnswerNode Module
 """
+from sys import modules
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_mistralai import ChatMistralAI
-from langchain_anthropic import ChatAnthropic
-from langchain_groq import ChatGroq
-from langchain_fireworks import ChatFireworks
-from langchain_google_vertexai import ChatVertexAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from ..utils.logging import get_logger
@@ -95,10 +92,18 @@ class GenerateAnswerNode(BaseNode):
             output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
 
             # Use built-in structured output for providers that allow it
-            if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI, ChatAnthropic, ChatFireworks, ChatGroq, ChatVertexAI)):
-                self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"],
-                    method="json_schema")
+            optional_modules = {"langchain_anthropic", "langchain_fireworks", "langchain_groq", "langchain_google_vertexai"}
+            if all(key in modules for key in optional_modules):
+                if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI, ChatAnthropic, ChatFireworks, ChatGroq, ChatVertexAI)):
+                    self.llm_model = self.llm_model.with_structured_output(
+                        schema = self.node_config["schema"],
+                        method="json_schema")
+            else:
+                if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
+                    self.llm_model = self.llm_model.with_structured_output(
+                        schema = self.node_config["schema"],
+                        method="json_schema")
+
 
         else:
             output_parser = JsonOutputParser()
