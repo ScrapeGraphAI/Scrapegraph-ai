@@ -77,7 +77,7 @@ other-language-models = [
     "langchain-anthropic>=0.1.11",
     "langchain-huggingface>=0.0.3",
     "langchain-nvidia-ai-endpoints>=0.1.6",
-    "together==1.2.9"
+    "langchain_together>=1.2.9"
 ]
 
 # Group 2: More Semantic Options
