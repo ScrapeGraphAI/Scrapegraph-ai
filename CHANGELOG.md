@@ -1,6 +1,31 @@
 ## [1.15.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.7...v1.15.0-beta.8) (2024-08-28)
 
 
+
+### Features
+
+* ligthweigthing the library ([62f32e9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/62f32e994bcb748dfef4f7e1b2e5213a989c33cc))
+
+
+### Bug Fixes
+
+* abstract graph ([cf1fada](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf1fada36a6716cb0e24bbc5da7509446a964145))
+* **models_tokens:** add llama2 and llama3 sizes explicitly ([b05ec16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b05ec16b252d00c9c9ee7c6d4605b420851c7754))
+* Azure OpenAI issue ([a92b9c6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a92b9c6970049a4ba9dbdf8eff3eeb7f98c6c639))
+* update abstract graph ([86fe5fc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/86fe5fcaf1a6ba28786678874378f07fba1db40f))
+
+
+### CI
+
+* **release:** 1.14.1-beta.1 [skip ci] ([1b48871](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1b488715e698888423eb65f43fdf768bb0729602))
+* **release:** 1.15.0-beta.1 [skip ci] ([06dc640](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/06dc640d44449d1b394829e546a64e38a3d3629e))
+* **release:** 1.15.0-beta.2 [skip ci] ([ab21576](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ab215764353773c5303b88743c6cca4fa7e1b52e))
+* **release:** 1.15.0-beta.3 [skip ci] ([132ee5b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/132ee5b7daf36ef376bfbc63bc6dc7f2332fdd6b))
+
+## [1.15.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.2...v1.15.0-beta.3) (2024-08-24)
+
+
+
 ### Bug Fixes
 
 * **models:** better DeepSeek and OneApi integration ([f7a85c2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f7a85c266ae758cc16297ebc5d98f8919a80c523))
@@ -14,7 +39,6 @@
 * bug for abstract graph ([cf73883](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf73883451729b19034005ee7ebe618c1e256a11))
 
 ## [1.15.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.5...v1.15.0-beta.6) (2024-08-27)
-
 
 ### Bug Fixes
 
@@ -73,8 +97,6 @@
 
 * added sponsors ([b3a2d0d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b3a2d0d65a41f6e645fac3fc84f702fdf64b951c))
 
-
-#
 ## [1.14.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.13.3...v1.14.0) (2024-08-20)
 
 
