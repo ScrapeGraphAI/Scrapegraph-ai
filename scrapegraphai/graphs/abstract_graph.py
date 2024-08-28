@@ -131,15 +131,15 @@ class AbstractGraph(ABC):
                         "ollama", "oneapi", "nvidia", "groq", "anthropic" "bedrock", "mistralai",
                         "hugging_face", "deepseek", "ernie", "fireworks"}
 
-        split_model_provider = llm_params["model"].split("/")
+        split_model_provider = llm_params["model"].split("/", 1)
         llm_params["model_provider"] = split_model_provider[0]
-        llm_params["model"] = split_model_provider[1:]
+        llm_params["model"] = split_model_provider[1]
 
         if llm_params["model_provider"] not in known_providers:
             raise ValueError(f"Provider {llm_params['model_provider']} is not supported. If possible, try to use a model instance instead.")
 
         try:
-            self.model_token = models_tokens[llm_params["model_provider"]].get(llm_params["model"][0])
+            self.model_token = models_tokens[llm_params["model_provider"]][llm_params["model"]]
         except KeyError:
             print("Model not found, using default token size (8192)")
             self.model_token = 8192
@@ -150,18 +150,21 @@ class AbstractGraph(ABC):
                     warnings.simplefilter("ignore")
                     return init_chat_model(**llm_params)
             else:
-                if "deepseek" in llm_params["model"]:
+                if llm_params["model_provider"] == "deepseek":
                     return DeepSeek(**llm_params)
 
-                if "ernie" in llm_params["model"]:
+                if llm_params["model_provider"] == "ernie":
                     from langchain_community.chat_models import ErnieBotChat
                     return ErnieBotChat(**llm_params)
 
-                if "oneapi" in llm_params["model"]:
+                if llm_params["model_provider"] == "oneapi":
                     return OneApi(**llm_params)
 
-                if "nvidia" in llm_params["model"]:
-                    from langchain_nvidia_ai_endpoints import ChatNVIDIA
+                if llm_params["model_provider"] == "nvidia":
+                    try:
+                        from langchain_nvidia_ai_endpoints import ChatNVIDIA
+                    except ImportError:
+                        raise ImportError("The langchain_nvidia_ai_endpoints module is not installed. Please install it using `pip install langchain_nvidia_ai_endpoints`.")
                     return ChatNVIDIA(**llm_params)
 
         except Exception as e:
