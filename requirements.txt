@@ -27,3 +27,4 @@ semchunk>=1.0.1
 browserbase>=0.3.0
 surya-ocr>=0.4.5
 matplotlib>=3.7.2
+
