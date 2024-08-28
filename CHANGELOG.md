@@ -1,4 +1,36 @@
+## [1.15.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0...v1.15.1-beta.1) (2024-08-28)
 
+
+### Bug Fixes
+
+* abstract graph local model ([04128e7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/04128e7e9f585aaf774fabf646c4d9d3b96b8333))
+* **models:** better DeepSeek and OneApi integration ([f7a85c2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f7a85c266ae758cc16297ebc5d98f8919a80c523))
+* **docloaders:** BrowserBase dynamic import ([5c16ee9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c16ee985b11948c6a8c1dbfd051d458fa193973))
+* bug for abstract graph ([cf73883](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cf73883451729b19034005ee7ebe618c1e256a11))
+* **AbstractGraph:** correct and simplify instancing logic ([f73343f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f73343f19386b31878706963597c2565a023068d))
+* **BurrBrige:** dynamic imports ([7789663](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7789663338a89d27fde322ae282ce07ccca16845))
+* **AbstractGraph:** model selection bug ([4f120e2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4f120e29c546373a2cc06c102cc9886cc5270c06))
+* set up dynamic imports correctly ([83e71df](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/83e71df2e2cb3b6bfba11f8879d5c4917a3e1837))
+
+
+### chore
+
+* **examples:** update model names ([f6df9b7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f6df9b75125b4cacbef4af29faf3e17a13ff108c))
+* update README.md ([5f562b8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5f562b89bd63eba1300afe98572f152a0621b370))
+
+
+### Test
+
+* **AbstractGraph:** add AbstractGraph tests ([229d74d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/229d74d4bd39befa3723fa2841e23d40007a9772))
+
+
+### CI
+
+* **release:** 1.15.0-beta.4 [skip ci] ([c1ce9c6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c1ce9c69d4ba746d488891d18fa64460e76124bf))
+* **release:** 1.15.0-beta.5 [skip ci] ([22ab45f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/22ab45f6bda3a12ab01c743fd124448a2e26cd46))
+* **release:** 1.15.0-beta.6 [skip ci] ([050fa3f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/050fa3faa02cb2a86ce7c0f61c99e4fa8cf3f9a5))
+* **release:** 1.15.0-beta.7 [skip ci] ([be3f1ec](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/be3f1ec58d6354d583401f51f310f6aac987a393))
+* **release:** 1.15.0-beta.8 [skip ci] ([dbec550](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/dbec55064feac8dfe01290bf82b5b47b013b589d))
 
 ## [1.15.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.7...v1.15.0-beta.8) (2024-08-28)
 
