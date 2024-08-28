@@ -18,7 +18,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-            "model": "ernie-bot-turbo",
+            "model": "ernie/ernie-bot-turbo",
             "ernie_client_id": "<ernie_client_id>",
             "ernie_client_secret": "<ernie_client_secret>",
             "temperature": 0.1

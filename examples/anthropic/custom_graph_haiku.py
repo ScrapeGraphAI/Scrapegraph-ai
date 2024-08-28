@@ -5,10 +5,9 @@ Example of custom graph using existing nodes
 import os
 from dotenv import load_dotenv
 
-from langchain_openai import OpenAIEmbeddings
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+from scrapegraphai.nodes import FetchNode, ParseNode, GenerateAnswerNode, RobotsNode
 load_dotenv()
 
 # ************************************************
@@ -18,17 +17,15 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
-        "model": "anthropic/claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+        "model": "claude-3-haiku-20240307",
+    },
 }
 
 # ************************************************
 # Define the graph nodes
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
-embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
+llm_model = ChatAnthropic(graph_config["llm"])
 
 # define the nodes for the graph
 robot_node = RobotsNode(
@@ -57,15 +54,6 @@ parse_node = ParseNode(
         "verbose": True,
     }
 )
-rag_node = RAGNode(
-    input="user_prompt & (parsed_doc | doc)",
-    output=["relevant_chunks"],
-    node_config={
-        "llm_model": llm_model,
-        "embedder_model": embedder,
-        "verbose": True,
-    }
-)
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
     output=["answer"],
@@ -84,14 +72,12 @@ graph = BaseGraph(
         robot_node,
         fetch_node,
         parse_node,
-        rag_node,
         generate_answer_node,
     ],
     edges=[
         (robot_node, fetch_node),
         (fetch_node, parse_node),
-        (parse_node, rag_node),
-        (rag_node, generate_answer_node)
+        (parse_node, generate_answer_node)
     ],
     entry_point=robot_node
 )

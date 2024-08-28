@@ -12,8 +12,7 @@ graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
         "model": "anthropic/claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+    },
 }
 
 # ***************

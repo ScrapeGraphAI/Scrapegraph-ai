@@ -3,14 +3,28 @@ Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
 """
 
 import os
+from typing import List
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 
 # required environment variables in .env
+# HUGGINGFACEHUB_API_TOKEN
 # ANTHROPIC_API_KEY
 load_dotenv()
+
+# ************************************************
+# Define the output schema for the graph
+# ************************************************
+
+class Project(BaseModel):
+    title: str = Field(description="The title of the project")
+    description: str = Field(description="The description of the project")
+
+class Projects(BaseModel):
+    projects: List[Project]
 
 # ************************************************
 # Create the SmartScraperGraph instance and run it
@@ -20,18 +34,14 @@ graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
         "model": "anthropic/claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+    },
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="""Don't say anything else. Output JSON only. List me all the events, with the following fields: company_name, event_name, event_start_date, event_start_time, 
-    event_end_date, event_end_time, location, event_mode, event_category, 
-    third_party_redirect, no_of_days, 
-    time_in_hours, hosted_or_attending, refreshments_type, 
-    registration_available, registration_link""",
+    prompt="List me all the projects with their description",
     # also accepts a string with the already downloaded HTML code
-    source="https://www.hmhco.com/event",
+    schema=Projects,
+    source="https://perinim.github.io/projects/",
     config=graph_config
 )
 

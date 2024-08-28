@@ -18,9 +18,8 @@ deepseek_key = os.getenv("DEEPSEEK_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "deepseek-chat",
-        "openai_api_key": deepseek_key,
-        "openai_api_base": 'https://api.deepseek.com/v1',
+        "model": "deepseek/deepseek-chat",
+        "api_key": deepseek_key,
     },
     "verbose": True,
 }

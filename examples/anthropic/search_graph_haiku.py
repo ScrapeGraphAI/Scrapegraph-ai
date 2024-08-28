@@ -1,39 +1,22 @@
 """
 Example of Search Graph
 """
+
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
-from langchain_openai import AzureChatOpenAI
-from langchain_openai import AzureOpenAIEmbeddings
+load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
-# ************************************************
-
-load_dotenv()
-
-llm_model_instance = AzureChatOpenAI(
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-    azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"]
-)
-
-embedder_model_instance = AzureOpenAIEmbeddings(
-    azure_deployment=os.environ["AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME"],
-    openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
-)
-
-# ************************************************
-# Create the SmartScraperGraph instance and run it
 # ************************************************
 
 graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
         "model": "anthropic/claude-3-haiku-20240307",
-        "max_tokens": 4000
-        },
+    },
 }
 
 # ************************************************
@@ -41,7 +24,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me the best escursions near Trento",
+    prompt="List me Chioggia's famous dishes",
     config=graph_config
 )
 

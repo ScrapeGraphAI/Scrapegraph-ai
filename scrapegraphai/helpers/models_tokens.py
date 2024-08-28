@@ -51,7 +51,7 @@ models_tokens = {
         "gemini-1.5-pro-latest": 128000,
         "models/embedding-001": 2048
     },
-     "google_vertexai": {
+    "google_vertexai": {
         "gemini-1.5-flash": 128000,
         "gemini-1.5-pro": 128000,
         "gemini-1.0-pro": 128000,
@@ -74,6 +74,7 @@ models_tokens = {
             "llama3.1:70b": 128000,
             "lama3.1:405b": 128000,
             "scrapegraph": 8192,
+            "mistral": 8192,
             "llava": 4096,
             "mixtral:8x22b-instruct": 65536,
             "mistral-openorca": 32000,
@@ -101,7 +102,7 @@ models_tokens = {
     "oneapi": {
         "qwen-turbo": 6000,
     },
-    "nvdia": {
+    "nvidia": {
         "meta/llama3-70b-instruct": 419,
         "meta/llama3-8b-instruct": 419,
         "nemotron-4-340b-instruct": 1024,
@@ -126,7 +127,7 @@ models_tokens = {
         "gemma-7b-it": 8192,
         "claude-3-haiku-20240307'": 8192,
     },
-    "claude": {
+    "anthropic": {
         "claude_instant": 100000,
         "claude2": 9000,
         "claude2.1": 200000,
@@ -136,6 +137,7 @@ models_tokens = {
         "claude-3-sonnet-20240229": 200000,
         "claude-3-haiku-20240307": 200000,
         "claude-3-5-sonnet-20240620": 200000,
+        "claude-3-haiku-20240307": 4000,
     },
     "bedrock": {
         "anthropic.claude-3-5-sonnet-20240620": 200000,
