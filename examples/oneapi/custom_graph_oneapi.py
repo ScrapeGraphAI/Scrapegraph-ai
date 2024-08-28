@@ -22,7 +22,7 @@ graph_config = {
 # Define the graph nodes
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
+llm_model = ChatOpenAI(graph_config["llm"])
 embedder = OpenAIEmbeddings(api_key=llm_model.openai_api_key)
 
 # define the nodes for the graph

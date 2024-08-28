@@ -68,8 +68,8 @@ class TestAbstractGraph:
             AzureChatOpenAI),
         ({"model": "google_genai/gemini-pro", "google_api_key": "google-key-test"}, ChatGoogleGenerativeAI),
         ({"model": "ollama/llama2"}, ChatOllama),
-        ({"model": "oneapi/qwen-turbo"}, OneApi),
-        ({"model": "deepseek/deepseek-coder"}, DeepSeek),
+        ({"model": "oneapi/qwen-turbo", "api_key": "oneapi-api-key"}, OneApi),
+        ({"model": "deepseek/deepseek-coder", "api_key": "deepseek-api-key"}, DeepSeek),
     ])
 
     def test_create_llm(self, llm_config, expected_model):
