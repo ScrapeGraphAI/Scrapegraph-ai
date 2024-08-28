@@ -68,7 +68,7 @@ from scrapegraphai.graphs import SmartScraperGraph
 graph_config = {
     "llm": {
         "api_key": "YOUR_OPENAI_APIKEY",
-        "model": "gpt-4o-mini",
+        "model": "openai/gpt-4o-mini",
     },
     "verbose": True,
     "headless": False,
