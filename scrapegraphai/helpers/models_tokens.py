@@ -127,6 +127,9 @@ models_tokens = {
         "gemma-7b-it": 8192,
         "claude-3-haiku-20240307'": 8192,
     },
+    "togheterai": {
+        "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo": 128000
+    },
     "anthropic": {
         "claude_instant": 100000,
         "claude2": 9000,

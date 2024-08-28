@@ -157,10 +157,14 @@ class AbstractGraph(ABC):
                     from langchain_community.chat_models import ErnieBotChat
                     return ErnieBotChat(**llm_params)
 
-                if llm_params["model_provider"] == "oneapi":
+                elif llm_params["model_provider"] == "oneapi":
                     return OneApi(**llm_params)
 
-                if llm_params["model_provider"] == "nvidia":
+                elif llm_params["model_provider"] == "togehterai":
+                    from langhcain_together import ChatTogether
+                    return ChatTogether(**llm_params)
+
+                elif llm_params["model_provider"] == "nvidia":
                     try:
                         from langchain_nvidia_ai_endpoints import ChatNVIDIA
                     except ImportError:

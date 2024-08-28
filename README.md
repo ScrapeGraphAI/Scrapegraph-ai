@@ -36,7 +36,7 @@ By the way if you to use not mandatory modules it is necessary to install by you
 
 ### Installing "Other Language Models"
 
-This group allows you to use additional language models like Fireworks, Groq, Anthropic, Hugging Face, and Nvidia AI Endpoints.
+This group allows you to use additional language models like Fireworks, Groq, Anthropic, togheterai, Hugging Face, and Nvidia AI Endpoints.
 ```bash
 pip install scrapegraphai[other-language-models]
 
