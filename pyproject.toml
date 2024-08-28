@@ -1,7 +1,5 @@
 [project]
 name = "scrapegraphai"
-
-
 version = "1.15.0b8"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
