@@ -1,3 +1,11 @@
+## [1.15.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.7...v1.15.0-beta.8) (2024-08-28)
+
+
+### Bug Fixes
+
+* **models:** better DeepSeek and OneApi integration ([f7a85c2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f7a85c266ae758cc16297ebc5d98f8919a80c523))
+* **AbstractGraph:** model selection bug ([4f120e2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4f120e29c546373a2cc06c102cc9886cc5270c06))
+
 ## [1.15.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0-beta.6...v1.15.0-beta.7) (2024-08-27)
 
 
