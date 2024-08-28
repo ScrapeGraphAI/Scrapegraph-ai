@@ -1,3 +1,15 @@
+## [1.16.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.1...v1.16.0-beta.1) (2024-08-28)
+
+
+### Features
+
+* add togheterai ([8f615ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8f615adef320dacdd214a184981384dd05df8171))
+
+
+### chore
+
+* **examples:** create Together AI examples ([34942de](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/34942deca514df53e8aa1c7f96f812ee78b994bf))
+
 ## [1.15.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0...v1.15.1) (2024-08-28)
 
 
