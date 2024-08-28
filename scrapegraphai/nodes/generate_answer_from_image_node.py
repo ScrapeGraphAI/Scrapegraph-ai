@@ -69,7 +69,8 @@ class GenerateAnswerFromImageNode(BaseNode):
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         images = state.get('screenshots', [])
-        analyses = []
+        # remove the provider key from the state
+        self.node_config["config"]["llm"]["model"] = self.node_config["config"]["llm"]["model"].replace('openai/', '')
 
         supported_models = ("gpt-4o", "gpt-4o-mini", "gpt-4-turbo")
 
