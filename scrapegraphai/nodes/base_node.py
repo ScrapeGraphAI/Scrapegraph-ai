@@ -113,7 +113,7 @@ class BaseNode(ABC):
             self._validate_input_keys(input_keys)
             return input_keys
         except ValueError as e:
-            raise ValueError(f"Error parsing input keys for {self.node_name}: {str(e)}")
+            raise ValueError(f"Error parsing input keys for {self.node_name}") from e
 
     def _validate_input_keys(self, input_keys):
         """
@@ -233,7 +233,7 @@ class BaseNode(ABC):
         result = evaluate_expression(expression)
 
         if not result:
-            raise ValueError("No state keys matched the expression.")
+            raise ValueError(f"No state keys matched the expression. Expression was {expression}. State contains keys: {', '.join(state.keys())}")
 
         # Remove redundant state keys from the result, without changing their order
         final_result = []
