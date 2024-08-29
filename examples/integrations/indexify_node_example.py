@@ -8,7 +8,7 @@ from typing import List
 from dotenv import load_dotenv
 load_dotenv()
 
-from pydantic import BaseModel, Field
+from langchain_core.pydantic_v1 import BaseModel, Field
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.integrations import IndexifyNode
 

@@ -5,7 +5,7 @@ Basic example of scraping pipeline using SmartScraper with schema
 import os, json
 from typing import List
 from dotenv import load_dotenv
-from pydantic import BaseModel, Field
+from langchain_core.pydantic_v1 import BaseModel, Field
 from scrapegraphai.graphs import SmartScraperGraph
 
 load_dotenv()
