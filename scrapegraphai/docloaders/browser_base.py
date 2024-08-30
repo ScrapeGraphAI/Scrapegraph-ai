@@ -2,7 +2,6 @@
 browserbase integration module 
 """
 from typing import List
-from browserbase import Browserbase
 
 def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[str]:
     """
@@ -40,6 +39,12 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[s
     Returns:
         object: The result of the loading operation.
     """
+
+    try:
+        from browserbase import Browserbase
+    except ImportError:
+        raise ImportError("The browserbase module is not installed. Please install it using `pip install browserbase`.")
+
 
     browserbase = Browserbase(api_key=api_key, project_id=project_id)
 

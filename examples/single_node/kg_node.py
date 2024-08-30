@@ -57,7 +57,7 @@ graph_config = {
 # Define the node
 # ************************************************
 
-llm_model = OpenAI(graph_config["llm"])
+llm_model = ChatOpenAI(graph_config["llm"])
 
 robots_node = KnowledgeGraphNode(
     input="user_prompt & answer_dict",

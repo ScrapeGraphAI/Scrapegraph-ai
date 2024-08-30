@@ -4,9 +4,11 @@ GraphBuilder Module
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
-from ..models import Gemini
-from ..helpers import nodes_metadata, graph_schema
+from langchain_community.chat_models import ErnieBotChat
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
+
+from ..helpers import nodes_metadata, graph_schema
 
 class GraphBuilder:
     """
@@ -72,9 +74,9 @@ class GraphBuilder:
         if "gpt-" in llm_params["model"]:
             return ChatOpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
-            return Gemini(llm_params)
+            return ChatGoogleGenerativeAI(llm_params)
         elif "ernie" in llm_params["model"]:
-            return Ernie(llm_params)
+            return ErnieBotChat(llm_params)
         raise ValueError("Model not supported")
 
     def _generate_nodes_description(self):
