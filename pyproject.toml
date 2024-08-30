@@ -88,6 +88,13 @@ more-browser-options = [
     "browserbase>=0.3.0",
 ]
 
+# Group 4: Surya Library
+screenshot_scraper = [
+    "surya-ocr>=0.4.5",
+    "matplotlib>=3.7.2",
+    "ipywidgets>=8.1.0"
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
