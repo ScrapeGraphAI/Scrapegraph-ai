@@ -90,7 +90,7 @@ more-browser-options = [
 
 # Group 4: Surya Library
 screenshot_scraper = [
-    "surya-ocr>=0.4.5",
+    "surya-ocr>=0.5.0",
     "matplotlib>=3.7.2",
     "ipywidgets>=8.1.0"
 ]

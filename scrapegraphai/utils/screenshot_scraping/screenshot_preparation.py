@@ -1,9 +1,13 @@
+"""
+screenshot_preparation module
+"""
 import asyncio
-from playwright.async_api import async_playwright
-
 from io import BytesIO
 from PIL import Image, ImageGrab
-
+from playwright.async_api import async_playwright
+import cv2 as cv
+import numpy as np
+from io import BytesIO
 
 async def take_screenshot(url: str, save_path: str = None, quality: int = 100):
     """
@@ -20,22 +24,23 @@ async def take_screenshot(url: str, save_path: str = None, quality: int = 100):
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
         await page.goto(url)
-        image_bytes = await page.screenshot(path=save_path, type="jpeg", full_page=True, quality=quality)
+        image_bytes = await page.screenshot(path=save_path, 
+                                            type="jpeg", 
+                                            full_page=True, 
+                                            quality=quality)
         await browser.close()
         return Image.open(BytesIO(image_bytes))
 
-
 def select_area_with_opencv(image):
     """
-    Allows you to manually select an image area using OpenCV. It is recommended to use this function if your project is on your computer, otherwise use select_area_with_ipywidget().
+    Allows you to manually select an image area using OpenCV.
+    It is recommended to use this function if your project is on your computer,
+    otherwise use select_area_with_ipywidget().
     Parameters:
         image (PIL.Image): The image from which to select an area.
     Returns:
         A tuple containing the LEFT, TOP, RIGHT, and BOTTOM coordinates of the selected area.
     """
-
-    import cv2 as cv
-    import numpy as np
 
     fullscreen_screenshot = ImageGrab.grab()
     dw, dh = fullscreen_screenshot.size
@@ -100,7 +105,9 @@ def select_area_with_opencv(image):
 
 def select_area_with_ipywidget(image):
     """
-    Allows you to manually select an image area using ipywidgets. It is recommended to use this function if your project is in Google Colab, Kaggle or other similar platform, otherwise use  select_area_with_opencv().
+    Allows you to manually select an image area using ipywidgets. 
+    It is recommended to use this function if your project is in Google Colab, 
+    Kaggle or other similar platform, otherwise use  select_area_with_opencv().
     Parameters:
         image (PIL Image): The input image.
     Returns:
@@ -183,13 +190,15 @@ def crop_image(image, LEFT=None, TOP=None, RIGHT=None, BOTTOM=None,  save_path: 
         image (PIL.Image): The image to be cropped.
         LEFT (int, optional): The x-coordinate of the left edge of the crop area. Defaults to None.
         TOP (int, optional): The y-coordinate of the top edge of the crop area. Defaults to None.
-        RIGHT (int, optional): The x-coordinate of the right edge of the crop area. Defaults to None.
+        RIGHT (int, optional): The x-coordinate of 
+        the right edge of the crop area. Defaults to None.
         BOTTOM (int, optional): The y-coordinate of the bottom edge of the crop area. Defaults to None.
         save_path (str, optional): The path to save the cropped image. Defaults to None.
     Returns:
         PIL.Image: The cropped image.
     Notes:
-        If any of the coordinates (LEFT, TOP, RIGHT, BOTTOM) is None, it will be set to the corresponding edge of the image.
+        If any of the coordinates (LEFT, TOP, RIGHT, BOTTOM) is None, 
+        it will be set to the corresponding edge of the image.
         If save_path is specified, the cropped image will be saved as a JPEG file at the specified path.
     """
 
@@ -208,5 +217,3 @@ def crop_image(image, LEFT=None, TOP=None, RIGHT=None, BOTTOM=None,  save_path: 
         croped_image.save(save_path, "JPEG")
 
     return image.crop((LEFT, TOP, RIGHT, BOTTOM))
-
-

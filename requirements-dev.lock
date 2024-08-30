@@ -176,10 +176,6 @@ idna==3.7
     # via yarl
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==8.2.0
-    # via sphinx
-importlib-resources==6.4.0
-    # via matplotlib
 iniconfig==2.0.0
     # via pytest
 ipython==8.18.1
@@ -525,16 +521,13 @@ typing-extensions==4.12.2
     # via fastapi-pagination
     # via google-generativeai
     # via huggingface-hub
-    # via ipython
     # via langchain-core
     # via openai
     # via pydantic
     # via pydantic-core
     # via pyee
-    # via pylint
     # via sf-hamilton
     # via sqlalchemy
-    # via starlette
     # via streamlit
     # via torch
     # via typing-inspect
@@ -560,6 +553,3 @@ widgetsnbextension==4.0.13
     # via ipywidgets
 yarl==1.9.4
     # via aiohttp
-zipp==3.20.0
-    # via importlib-metadata
-    # via importlib-resources
