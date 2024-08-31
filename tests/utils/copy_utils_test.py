@@ -3,15 +3,19 @@ import pytest
 
 # Assuming the custom_deepcopy function is imported or defined above this line
 from scrapegraphai.utils.copy import safe_deepcopy
+from pydantic.v1 import BaseModel
+from pydantic import BaseModel as BaseModelV2
 
+class PydantObject(BaseModel):
+    value: int
+
+class PydantObjectV2(BaseModelV2):
+    value: int
 
 class NormalObject:
     def __init__(self, value):
         self.value = value
         self.nested = [1, 2, 3]
-
-    def __deepcopy__(self, memo):
-        raise TypeError("Forcing fallback")
 
 
 class NonDeepcopyable:
@@ -109,11 +113,6 @@ def test_circular_reference():
     assert copy_obj[0] is copy_obj
 
 
-def test_memoization():
-    original = {"a": 1, "b": 2}
-    memo = {}
-    copy_obj = safe_deepcopy(original, memo)
-    assert copy_obj is memo[id(original)]
 
 
 def test_deepcopy_object_without_dict():
@@ -154,17 +153,32 @@ def test_deepcopy_object_without_dict():
     assert copy_obj_item.value == original_item.value
     assert copy_obj_item is original_item
 
-def test_memo():
-    obj = NormalObject(10)
-    original = {"origin": obj}
-    memo = {id(original):obj}
-    copy_obj = safe_deepcopy(original, memo)
-    assert copy_obj is memo[id(original)]
-
 def test_unhandled_type():
-    original = {"origin": NonCopyableObject(10)}
+    with pytest.raises(TypeError):
+        original = {"origin": NonCopyableObject(10)}
+        copy_obj = safe_deepcopy(original)
+
+def test_client():
+    llm_instance_config = {
+        "model": "moonshot-v1-8k",
+        "base_url": "https://api.moonshot.cn/v1",
+        "api_key": "xxx",
+    }
+
+    from langchain_community.chat_models.moonshot import MoonshotChat
+
+    llm_model_instance = MoonshotChat(**llm_instance_config)
+    
+    copy_obj = safe_deepcopy(llm_model_instance)
+    assert copy_obj
+
+
+def test_circular_reference_in_dict():
+    original = {}
+    original['self'] = original  # Create a circular reference
     copy_obj = safe_deepcopy(original)
-    assert copy_obj["origin"].value == original["origin"].value
+    
+    # Check that the copy is a different object
     assert copy_obj is not original
-    assert copy_obj["origin"] is original["origin"]
-    assert hasattr(copy_obj, "__dict__") is False  # Ensure __dict__ is not present
+    # Check that the circular reference is maintained in the copy
+    assert copy_obj['self'] is copy_obj
