@@ -2,9 +2,10 @@
 JSONScraperMultiGraph Module
 """
 
-from copy import copy, deepcopy
+from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
+
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .json_scraper_graph import JSONScraperGraph
@@ -12,6 +13,7 @@ from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
+from ..utils.copy import safe_deepcopy
 
 class JSONScraperMultiGraph(AbstractGraph):
     """ 
@@ -45,10 +47,7 @@ class JSONScraperMultiGraph(AbstractGraph):
 
         self.max_results = config.get("max_results", 3)
 
-        if all(isinstance(value, str) for value in config.values()):
-            self.copy_config = copy(config)
-        else:
-            self.copy_config = deepcopy(config)
+        self.copy_config = safe_deepcopy(config)
 
         self.copy_schema = deepcopy(schema)
 

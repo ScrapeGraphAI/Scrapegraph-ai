@@ -2,7 +2,7 @@
 SearchGraph Module
 """
 
-from copy import copy, deepcopy
+from copy import deepcopy
 from typing import Optional, List
 from pydantic import BaseModel
 
@@ -15,6 +15,7 @@ from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
+from ..utils.copy import safe_deepcopy
 
 class SearchGraph(AbstractGraph):
     """ 
@@ -47,10 +48,7 @@ class SearchGraph(AbstractGraph):
     def __init__(self, prompt: str, config: dict, schema: Optional[BaseModel] = None):
         self.max_results = config.get("max_results", 3)
 
-        if all(isinstance(value, str) for value in config.values()):
-            self.copy_config = copy(config)
-        else:
-            self.copy_config = deepcopy(config)
+        self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
         self.considered_urls = []  # New attribute to store URLs
 
