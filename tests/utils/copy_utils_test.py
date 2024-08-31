@@ -2,7 +2,7 @@ import copy
 import pytest
 
 # Assuming the custom_deepcopy function is imported or defined above this line
-from scrapegraphai.utils.copy import safe_deepcopy
+from scrapegraphai.utils.copy import DeepCopyError, safe_deepcopy
 from pydantic.v1 import BaseModel
 from pydantic import BaseModel as BaseModelV2
 
@@ -154,7 +154,7 @@ def test_deepcopy_object_without_dict():
     assert copy_obj_item is original_item
 
 def test_unhandled_type():
-    with pytest.raises(TypeError):
+    with pytest.raises(DeepCopyError):
         original = {"origin": NonCopyableObject(10)}
         copy_obj = safe_deepcopy(original)
 
@@ -162,7 +162,7 @@ def test_client():
     llm_instance_config = {
         "model": "moonshot-v1-8k",
         "base_url": "https://api.moonshot.cn/v1",
-        "api_key": "xxx",
+        "moonshot_api_key": "sk-OWo8hbSubp1QzOPyskOEwXQtZ867Ph0PZWCQdWrc3PH4o0lI",
     }
 
     from langchain_community.chat_models.moonshot import MoonshotChat

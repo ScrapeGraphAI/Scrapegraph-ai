@@ -2,6 +2,9 @@ import copy
 from typing import Any, Dict, Optional
 from pydantic.v1 import BaseModel
 
+class DeepCopyError(Exception):
+    """Custom exception raised when an object cannot be deep-copied."""
+    pass
 
 def safe_deepcopy(obj: Any) -> Any:
     """
@@ -16,6 +19,8 @@ def safe_deepcopy(obj: Any) -> Any:
         Any: A deep copy of the object if possible; otherwise, a shallow
         copy if deep copying fails; if neither is possible, the original
         object is returned.
+    Raises:
+        DeepCopyError: If the object cannot be deep-copied or shallow-copied.
     """
 
     try:
@@ -70,4 +75,4 @@ def safe_deepcopy(obj: Any) -> Any:
         try:
             return copy.copy(obj)
         except (TypeError, AttributeError):
-            raise TypeError(f"Failed to create a deep copy obj") from e
+            raise DeepCopyError(f"Cannot deep copy the object of type {type(obj)}") from e
