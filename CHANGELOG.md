@@ -1,3 +1,15 @@
+## [1.16.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0-beta.2...v1.16.0-beta.3) (2024-09-01)
+
+
+### Bug Fixes
+
+* pyproject.toml ([360ce1c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/360ce1c0e468c959e63555120ac7cecf55563846))
+
+
+### CI
+
+* **release:** 1.15.2 [skip ci] ([d88730c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d88730ccc7190d09a54e6c24db1644512b576430))
+
 ## [1.15.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.1...v1.15.2) (2024-09-01)
 
 
