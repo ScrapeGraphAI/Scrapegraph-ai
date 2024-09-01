@@ -1,21 +1,11 @@
-## [1.16.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0-beta.1...v1.16.0-beta.2) (2024-08-31)
+## [1.15.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.1...v1.15.2) (2024-09-01)
+
 
 
 ### Bug Fixes
 
-* update generate answernode ([c348f67](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c348f674ad0caae4f4dc04e194fae9634e01b621))
+* pyproject.toml ([360ce1c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/360ce1c0e468c959e63555120ac7cecf55563846))
 
-## [1.16.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.1...v1.16.0-beta.1) (2024-08-28)
-
-
-### Features
-
-* add togheterai ([8f615ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8f615adef320dacdd214a184981384dd05df8171))
-
-
-### chore
-
-* **examples:** create Together AI examples ([34942de](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/34942deca514df53e8aa1c7f96f812ee78b994bf))
 
 ## [1.15.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0...v1.15.1) (2024-08-28)
 
