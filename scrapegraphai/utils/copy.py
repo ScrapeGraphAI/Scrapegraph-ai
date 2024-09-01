@@ -10,8 +10,8 @@ def safe_deepcopy(obj: Any) -> Any:
     """
     Attempts to create a deep copy of the object using `copy.deepcopy`
     whenever possible. If that fails, it falls back to custom deep copy
-    logic or returns the original object.
-
+    logic. If that also fails, it raises a `DeepCopyError`.
+    
     Args:
         obj (Any): The object to be copied, which can be of any type.
 
@@ -26,13 +26,7 @@ def safe_deepcopy(obj: Any) -> Any:
     try:
         
         # Try to use copy.deepcopy first
-        if isinstance(obj,BaseModel):
-            # handle BaseModel because __fields_set__ need  compatibility 
-            copied_obj = obj.copy(deep=True)
-        else:
-            copied_obj = copy.deepcopy(obj)
-
-        return copied_obj
+        return copy.deepcopy(obj)
     except (TypeError, AttributeError) as e:
         # If deepcopy fails, handle specific types manually
 
@@ -65,14 +59,17 @@ def safe_deepcopy(obj: Any) -> Any:
 
         # Handle objects with attributes
         elif hasattr(obj, "__dict__"):
-            new_obj = obj.__new__(obj.__class__)
-            for attr in obj.__dict__:
-                setattr(new_obj, attr, safe_deepcopy(getattr(obj, attr)))
-            
-            return new_obj
-        
+            # If an object cannot be deep copied, then the sub-properties of \
+            # the object will not be analyzed and shallow copy will be used directly.
+            try:
+                return copy.copy(obj)
+            except (TypeError, AttributeError):
+                raise DeepCopyError(f"Cannot deep copy the object of type {type(obj)}") from e
+
+
         # Attempt shallow copy as a fallback
         try:
             return copy.copy(obj)
         except (TypeError, AttributeError):
             raise DeepCopyError(f"Cannot deep copy the object of type {type(obj)}") from e
+            

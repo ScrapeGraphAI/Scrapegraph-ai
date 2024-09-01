@@ -4,12 +4,8 @@ import pytest
 # Assuming the custom_deepcopy function is imported or defined above this line
 from scrapegraphai.utils.copy import DeepCopyError, safe_deepcopy
 from pydantic.v1 import BaseModel
-from pydantic import BaseModel as BaseModelV2
 
 class PydantObject(BaseModel):
-    value: int
-
-class PydantObjectV2(BaseModelV2):
     value: int
 
 class NormalObject:
@@ -162,16 +158,16 @@ def test_client():
     llm_instance_config = {
         "model": "moonshot-v1-8k",
         "base_url": "https://api.moonshot.cn/v1",
-        "moonshot_api_key": "sk-OWo8hbSubp1QzOPyskOEwXQtZ867Ph0PZWCQdWrc3PH4o0lI",
+        "moonshot_api_key": "xxx",
     }
 
     from langchain_community.chat_models.moonshot import MoonshotChat
 
     llm_model_instance = MoonshotChat(**llm_instance_config)
-    
     copy_obj = safe_deepcopy(llm_model_instance)
+    
     assert copy_obj
-
+    assert hasattr(copy_obj, 'callbacks')
 
 def test_circular_reference_in_dict():
     original = {}
@@ -182,3 +178,9 @@ def test_circular_reference_in_dict():
     assert copy_obj is not original
     # Check that the circular reference is maintained in the copy
     assert copy_obj['self'] is copy_obj
+
+def test_with_pydantic():
+    original = PydantObject(value=1)
+    copy_obj = safe_deepcopy(original)
+    assert copy_obj.value == original.value
+    assert copy_obj is not original 
