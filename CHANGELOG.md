@@ -1,3 +1,11 @@
+## [1.17.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.2...v1.17.0-beta.3) (2024-09-02)
+
+
+### Bug Fixes
+
+* **ScreenshotScraper:** impose dynamic imports ([b8ef937](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b8ef93738ec4ae48c361fe5650df5194e845a2b1))
+* **SmartScraper:** pass llm_model to ParseNode ([5242166](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52421665759032bcfad80ce540efebe5f47310f6))
+
 ## [1.17.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.1...v1.17.0-beta.2) (2024-09-02)
 
 
