@@ -40,6 +40,7 @@ class ParseNode(BaseNode):
         self.parse_html = (
             True if node_config is None else node_config.get("parse_html", True)
         )
+        self.llm_model = node_config['llm_model']
 
     def execute(self, state: dict) -> dict:
         """
@@ -64,31 +65,33 @@ class ParseNode(BaseNode):
         input_data = [state[key] for key in input_keys]
         docs_transformed = input_data[0]
 
+        def count_tokens(text):
+            from ..utils import token_count
+            return token_count(text, self.llm_model.model_name)
+
         if self.parse_html:
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
             docs_transformed = docs_transformed[0]
 
             chunks = chunk(text=docs_transformed.page_content,
                             chunk_size=self.node_config.get("chunk_size", 4096)-250,
-                            token_counter=lambda text: len(text.split()),
+                            token_counter=count_tokens,
                             memoize=False)
         else:
             docs_transformed = docs_transformed[0]
-
             chunk_size = self.node_config.get("chunk_size", 4096)
             chunk_size = min(chunk_size - 500, int(chunk_size * 0.9))
 
             if isinstance(docs_transformed, Document):
                 chunks = chunk(text=docs_transformed.page_content,
                             chunk_size=chunk_size,
-                            token_counter=lambda text: len(text.split()),
+                            token_counter=count_tokens,
                             memoize=False)
             else:
                 chunks = chunk(text=docs_transformed,
                                 chunk_size=chunk_size,
-                                token_counter=lambda text: len(text.split()),
+                                token_counter=count_tokens,
                                 memoize=False)
 
         state.update({self.output[0]: chunks})
-
         return state
