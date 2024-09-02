@@ -1,3 +1,12 @@
+## [1.17.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.1...v1.17.0-beta.2) (2024-09-02)
+
+
+### Bug Fixes
+
+* **Ollama:** instance model from correct package ([398b2c5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/398b2c556faf518ca28ccc284bc8761a16281cf7))
+* **DeepSeek:** proper model initialization ([74dfc69](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/74dfc693f6e487d20da58704284fe9f492d2b2aa))
+* screenshot scraper ([388630c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/388630c0ffa2850c3d5ea47e62b71b41795203d8))
+
 ## [1.17.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0...v1.17.0-beta.1) (2024-09-02)
 
 
