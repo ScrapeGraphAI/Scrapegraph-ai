@@ -54,6 +54,13 @@ This group includes additional browser management options, such as BrowserBase.
 pip install scrapegraphai[more-browser-options]
 ```
 
+### Installing "More Browser Options"
+
+This group includes an ocr scraper for websites
+```bash
+pip install scrapegraphai[screenshot_scraper]
+```
+
 ## 💻 Usage
 There are multiple standard scraping pipelines that can be used to extract information from a website (or local file).
 
