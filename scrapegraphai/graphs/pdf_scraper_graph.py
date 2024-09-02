@@ -68,7 +68,8 @@ class PDFScraperGraph(AbstractGraph):
             output=["parsed_doc"],
             node_config={
                 "parse_html": False,
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "llm_model": self.llm_model
             }
         )
 

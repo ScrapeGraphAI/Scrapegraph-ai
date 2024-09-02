@@ -141,7 +141,7 @@ class AbstractGraph(ABC):
         try:
             self.model_token = models_tokens[llm_params["model_provider"]][llm_params["model"]]
         except KeyError:
-            print("Model not found, using default token size (8192)")
+            print(f"Model {llm_params['model_provider']}/{llm_params['model']} not found, using default token size (8192)")
             self.model_token = 8192
 
         try:
