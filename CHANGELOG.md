@@ -1,3 +1,10 @@
+## [1.17.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.4...v1.17.0-beta.5) (2024-09-02)
+
+
+### Bug Fixes
+
+* correctly parsing output when using structured_output ([8e74ac5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8e74ac55a16ca012b52affbc754e4b04130e65db))
+
 ## [1.17.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.3...v1.17.0-beta.4) (2024-09-02)
 
 
