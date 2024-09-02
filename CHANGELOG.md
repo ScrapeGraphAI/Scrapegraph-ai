@@ -1,3 +1,16 @@
+## [1.16.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0-beta.3...v1.16.0-beta.4) (2024-09-02)
+
+
+### Features
+
+* add deepcopy error ([71b22d4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71b22d48804c462798109bb47ec792a5a3c70b6e))
+
+
+### Bug Fixes
+
+* deepcopy fail for coping model_instance config ([cd07418](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cd07418474112cecd53ab47866262f2f31294223))
+* fix pydantic object copy ([553527a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/553527a269cdd70c0c174ad5c78cbf35c00b22c1))
+
 ## [1.16.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0-beta.2...v1.16.0-beta.3) (2024-09-01)
 
 
