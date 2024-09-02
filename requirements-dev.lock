@@ -161,6 +161,10 @@ idna==3.7
     # via yarl
 imagesize==1.4.1
     # via sphinx
+importlib-metadata==8.4.0
+    # via sphinx
+importlib-resources==6.4.4
+    # via matplotlib
 iniconfig==2.0.0
     # via pytest
 isort==5.13.2
@@ -450,8 +454,10 @@ typing-extensions==4.12.2
     # via pydantic
     # via pydantic-core
     # via pyee
+    # via pylint
     # via sf-hamilton
     # via sqlalchemy
+    # via starlette
     # via streamlit
     # via typing-inspect
     # via uvicorn
@@ -471,3 +477,6 @@ uvicorn==0.30.5
     # via burr
 yarl==1.9.4
     # via aiohttp
+zipp==3.20.1
+    # via importlib-metadata
+    # via importlib-resources

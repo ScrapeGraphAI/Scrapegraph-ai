@@ -7,7 +7,6 @@ from tqdm import tqdm
 from urllib.parse import urlparse, parse_qs
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables import RunnableParallel
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import TEMPLATE_RELEVANT_LINKS

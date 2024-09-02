@@ -10,6 +10,7 @@ from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts.generate_answer_node_pdf_prompts import TEMPLATE_CHUNKS_PDF, TEMPLATE_NO_CHUNKS_PDF, TEMPLATE_MERGE_PDF
+from ..utils.exponential_backoff import retry_with_exponential_backoff
 
 class GenerateAnswerPDFNode(BaseNode):
     """
@@ -140,7 +141,9 @@ class GenerateAnswerPDFNode(BaseNode):
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
-        async_runner = RunnableParallel(**chains_dict)
+        @retry_with_exponential_backoff
+        def async_runner(**kwargs):
+            return RunnableParallel(**chains_dict)
 
         batch_results =  async_runner.invoke({"question": user_prompt})
 

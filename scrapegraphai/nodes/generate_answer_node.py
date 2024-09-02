@@ -13,6 +13,7 @@ from tqdm import tqdm
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
+from ..utils.exponential_backoff import retry_with_exponential_backoff
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -138,7 +139,9 @@ class GenerateAnswerNode(BaseNode):
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
-        async_runner = RunnableParallel(**chains_dict)
+        @retry_with_exponential_backoff
+        def async_runner(**kwargs):
+            return RunnableParallel(**chains_dict)
 
         batch_results =  async_runner.invoke({"question": user_prompt})
 
