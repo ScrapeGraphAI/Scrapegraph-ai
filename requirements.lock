@@ -83,6 +83,7 @@ googleapis-common-protos==1.63.2
     # via grpcio-status
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 grpcio==1.65.1
     # via google-api-core
     # via grpcio-status
@@ -99,6 +100,7 @@ httplib2==0.22.0
     # via google-auth-httplib2
 httpx==0.27.0
     # via langchain-mistralai
+    # via ollama
     # via openai
 httpx-sse==0.4.0
     # via langchain-mistralai
@@ -125,17 +127,20 @@ langchain-aws==0.1.12
     # via scrapegraphai
 langchain-community==0.2.10
     # via scrapegraphai
-langchain-core==0.2.33
+langchain-core==0.2.37
     # via langchain
     # via langchain-aws
     # via langchain-community
     # via langchain-google-genai
     # via langchain-mistralai
+    # via langchain-ollama
     # via langchain-openai
     # via langchain-text-splitters
 langchain-google-genai==1.0.8
     # via scrapegraphai
 langchain-mistralai==0.1.12
+    # via scrapegraphai
+langchain-ollama==0.1.3
     # via scrapegraphai
 langchain-openai==0.1.22
     # via scrapegraphai
@@ -166,6 +171,8 @@ numpy==1.26.4
     # via langchain-aws
     # via langchain-community
     # via pandas
+ollama==0.3.2
+    # via langchain-ollama
 openai==1.41.0
     # via langchain-openai
 orjson==3.10.6

@@ -150,24 +150,26 @@ class AbstractGraph(ABC):
                     warnings.simplefilter("ignore")
                     return init_chat_model(**llm_params)
             else:
-                if llm_params["model_provider"] == "deepseek":
+                model_provider = llm_params.pop("model_provider")
+
+                if model_provider == "deepseek":
                     return DeepSeek(**llm_params)
 
-                if llm_params["model_provider"] == "ernie":
+                if model_provider == "ernie":
                     from langchain_community.chat_models import ErnieBotChat
                     return ErnieBotChat(**llm_params)
 
-                elif llm_params["model_provider"] == "oneapi":
+                elif model_provider == "oneapi":
                     return OneApi(**llm_params)
 
-                elif llm_params["model_provider"] == "togehterai":
+                elif model_provider == "togehterai":
                     try:
                         from langchain_together import ChatTogether
                     except ImportError:
                         raise ImportError("The langchain_together module is not installed. Please install it using `pip install scrapegraphai[other-language-models]`.")
                     return ChatTogether(**llm_params)
 
-                elif llm_params["model_provider"] == "nvidia":
+                elif model_provider == "nvidia":
                     try:
                         from langchain_nvidia_ai_endpoints import ChatNVIDIA
                     except ImportError:

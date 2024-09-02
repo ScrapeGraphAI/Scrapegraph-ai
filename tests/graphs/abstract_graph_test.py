@@ -10,7 +10,7 @@ from scrapegraphai.nodes import (
 )
 from scrapegraphai.models import OneApi, DeepSeek
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 
@@ -35,6 +35,7 @@ class TestGraph(AbstractGraph):
             input="doc",
             output=["parsed_doc"],
             node_config={
+                "llm_model": self.llm_model,
                 "chunk_size": self.model_token
             }
         )
