@@ -1,16 +1,15 @@
 """
 GenerateAnswerNode Module
 """
-from sys import modules
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
+from langchain_core.utils.pydantic import is_basemodel_subclass
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
-from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
 
@@ -91,14 +90,20 @@ class GenerateAnswerNode(BaseNode):
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
                     schema = self.node_config["schema"],
-                    method="json_schema")
+                    method="function_calling") # json schema works only on specific models
+                
+                # default parser to empty lambda function
+                output_parser = lambda x: x
+                if is_basemodel_subclass(self.node_config["schema"]):
+                    output_parser = dict
+                format_instructions = "NA"
             else:
                 output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+                format_instructions = output_parser.get_format_instructions()
 
         else:
             output_parser = JsonOutputParser()
-
-        format_instructions = output_parser.get_format_instructions()
+            format_instructions = output_parser.get_format_instructions()
 
         if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
             template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS_MD

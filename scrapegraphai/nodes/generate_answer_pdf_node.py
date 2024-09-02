@@ -5,6 +5,9 @@ from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
+from langchain_core.utils.pydantic import is_basemodel_subclass
+from langchain_openai import ChatOpenAI
+from langchain_mistralai import ChatMistralAI
 from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
 from ..utils.logging import get_logger
@@ -93,9 +96,25 @@ class GenerateAnswerPDFNode(BaseNode):
 
         # Initialize the output parser
         if self.node_config.get("schema", None) is not None:
-            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+
+            if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
+                self.llm_model = self.llm_model.with_structured_output(
+                    schema = self.node_config["schema"],
+                    method="function_calling") # json schema works only on specific models
+                
+                # default parser to empty lambda function
+                output_parser = lambda x: x
+                if is_basemodel_subclass(self.node_config["schema"]):
+                    output_parser = dict
+                format_instructions = "NA"
+            else:
+                output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+                format_instructions = output_parser.get_format_instructions()
+
         else:
             output_parser = JsonOutputParser()
+            format_instructions = output_parser.get_format_instructions()
+
         TEMPLATE_NO_CHUNKS_PDF_prompt = TEMPLATE_NO_CHUNKS_PDF
         TEMPLATE_CHUNKS_PDF_prompt = TEMPLATE_CHUNKS_PDF
         TEMPLATE_MERGE_PDF_prompt = TEMPLATE_MERGE_PDF
@@ -104,8 +123,6 @@ class GenerateAnswerPDFNode(BaseNode):
             TEMPLATE_NO_CHUNKS_PDF_prompt = self.additional_info + TEMPLATE_NO_CHUNKS_PDF_prompt
             TEMPLATE_CHUNKS_PDF_prompt = self.additional_info + TEMPLATE_CHUNKS_PDF_prompt
             TEMPLATE_MERGE_PDF_prompt = self.additional_info + TEMPLATE_MERGE_PDF_prompt
-
-        format_instructions = output_parser.get_format_instructions()
 
         if len(doc) == 1:
             prompt = PromptTemplate(
