@@ -5,7 +5,6 @@ import asyncio
 from io import BytesIO
 from PIL import Image, ImageGrab
 from playwright.async_api import async_playwright
-import cv2 as cv
 import numpy as np
 from io import BytesIO
 
@@ -41,6 +40,12 @@ def select_area_with_opencv(image):
     Returns:
         A tuple containing the LEFT, TOP, RIGHT, and BOTTOM coordinates of the selected area.
     """
+
+    try:
+        import cv2 as cv
+    except ImportError:
+        raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
+
 
     fullscreen_screenshot = ImageGrab.grab()
     dw, dh = fullscreen_screenshot.size
@@ -116,8 +121,12 @@ def select_area_with_ipywidget(image):
 
     import matplotlib.pyplot as plt
     import numpy as np
-    from ipywidgets import interact, IntSlider
-    import ipywidgets as widgets
+    try:
+        from ipywidgets import interact, IntSlider
+        import ipywidgets as widgets
+    except:
+        raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
+
     from PIL import Image
 
     img_array = np.array(image)
