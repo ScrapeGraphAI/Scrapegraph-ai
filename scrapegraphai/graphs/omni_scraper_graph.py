@@ -65,16 +65,17 @@ class OmniScraperGraph(AbstractGraph):
         """
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
             node_config={
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
             }
         )
         parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
+            input="doc & (url | local_dir)",
+            output=["parsed_doc", "link_urls", "img_urls"],
             node_config={
                 "chunk_size": self.model_token,
+                "parse_urls": True,
                 "llm_model": self.llm_model
             }
         )
