@@ -13,3 +13,4 @@ from .logging import *
 from .convert_to_md import convert_to_md
 from .screenshot_scraping.screenshot_preparation import take_screenshot, select_area_with_opencv, select_area_with_ipywidget, crop_image
 from .screenshot_scraping.text_detection import detect_text
+from .token_calculator import *

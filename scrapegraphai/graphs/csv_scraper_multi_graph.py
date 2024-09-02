@@ -2,9 +2,10 @@
 CSVScraperMultiGraph Module
 """
 
-from copy import copy, deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
+
+
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .csv_scraper_graph import CSVScraperGraph
@@ -12,6 +13,7 @@ from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
+from ..utils.copy import safe_deepcopy
 
 class CSVScraperMultiGraph(AbstractGraph):
     """ 
@@ -46,10 +48,7 @@ class CSVScraperMultiGraph(AbstractGraph):
 
         self.max_results = config.get("max_results", 3)
 
-        if all(isinstance(value, str) for value in config.values()):
-            self.copy_config = copy(config)
-        else:
-            self.copy_config = deepcopy(config)
+        self.copy_config = safe_deepcopy(config)
 
         super().__init__(prompt, config, source, schema)
 

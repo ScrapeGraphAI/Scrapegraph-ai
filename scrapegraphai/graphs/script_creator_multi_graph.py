@@ -2,7 +2,6 @@
 ScriptCreatorMultiGraph Module
 """
 
-from copy import copy, deepcopy
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -15,6 +14,7 @@ from ..nodes import (
     GraphIteratorNode,
     MergeGeneratedScriptsNode
 )
+from ..utils.copy import safe_deepcopy
 
 class ScriptCreatorMultiGraph(AbstractGraph):
     """ 
@@ -47,10 +47,7 @@ class ScriptCreatorMultiGraph(AbstractGraph):
 
         self.max_results = config.get("max_results", 3)
 
-        if all(isinstance(value, str) for value in config.values()):
-            self.copy_config = copy(config)
-        else:
-            self.copy_config = deepcopy(config)
+        self.copy_config = safe_deepcopy(config)
 
         super().__init__(prompt, config, source, schema)
 

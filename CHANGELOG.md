@@ -1,4 +1,4 @@
-## [1.16.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.1...v1.16.0-beta.1) (2024-08-28)
+## [1.17.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0...v1.17.0-beta.1) (2024-09-02)
 
 
 ### Features
@@ -6,9 +6,61 @@
 * add togheterai ([8f615ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8f615adef320dacdd214a184981384dd05df8171))
 
 
+### Bug Fixes
+
+* update generate answernode ([c348f67](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c348f674ad0caae4f4dc04e194fae9634e01b621))
+
+
 ### chore
 
 * **examples:** create Together AI examples ([34942de](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/34942deca514df53e8aa1c7f96f812ee78b994bf))
+
+
+### CI
+
+* **release:** 1.16.0-beta.1 [skip ci] ([d7f6036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d7f6036f907eda8d1faa0944da4d1d168ca4c40e))
+* **release:** 1.16.0-beta.2 [skip ci] ([1c37d5d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c37d5db1c637f791133df254838a0deade6d6be))
+* **release:** 1.16.0-beta.3 [skip ci] ([886c987](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/886c987172bb57fb59863e4d7b494797bba16980))
+* **release:** 1.16.0-beta.4 [skip ci] ([ba5c7ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba5c7adcea138d993005377f4cfe438795e1b124))
+
+## [1.16.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.2...v1.16.0) (2024-09-01)
+
+
+
+### Features
+
+* add deepcopy error ([71b22d4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71b22d48804c462798109bb47ec792a5a3c70b6e))
+
+
+### Bug Fixes
+
+* deepcopy fail for coping model_instance config ([cd07418](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cd07418474112cecd53ab47866262f2f31294223))
+* fix pydantic object copy ([553527a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/553527a269cdd70c0c174ad5c78cbf35c00b22c1))
+
+## [1.15.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.1...v1.15.2) (2024-09-01)
+
+
+## [1.16.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0-beta.2...v1.16.0-beta.3) (2024-09-01)
+
+
+### Bug Fixes
+
+* pyproject.toml ([360ce1c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/360ce1c0e468c959e63555120ac7cecf55563846))
+
+
+### CI
+
+* **release:** 1.15.2 [skip ci] ([d88730c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d88730ccc7190d09a54e6c24db1644512b576430))
+
+## [1.15.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.1...v1.15.2) (2024-09-01)
+
+
+
+
+### Bug Fixes
+
+* pyproject.toml ([360ce1c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/360ce1c0e468c959e63555120ac7cecf55563846))
+
 
 ## [1.15.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.0...v1.15.1) (2024-08-28)
 

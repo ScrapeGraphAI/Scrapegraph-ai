@@ -12,6 +12,7 @@ from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
+from ..utils.copy import safe_deepcopy
 
 class MDScraperMultiGraph(AbstractGraph):
     """
@@ -42,11 +43,7 @@ class MDScraperMultiGraph(AbstractGraph):
     """
 
     def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
-        if all(isinstance(value, str) for value in config.values()):
-            self.copy_config = copy(config)
-        else:
-            self.copy_config = deepcopy(config)
-
+        self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
 
         super().__init__(prompt, config, source, schema)

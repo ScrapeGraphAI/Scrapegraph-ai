@@ -5,7 +5,6 @@ import time
 import warnings
 from typing import Tuple
 from langchain_community.callbacks import get_openai_callback
-from ..integrations import BurrBridge
 from ..telemetry import log_graph_execution
 
 class BaseGraph:
@@ -255,6 +254,7 @@ class BaseGraph:
 
         self.initial_state = initial_state
         if self.use_burr:
+            from ..integrations import BurrBridge
 
             bridge = BurrBridge(self, self.burr_config)
             result = bridge.execute(initial_state)
