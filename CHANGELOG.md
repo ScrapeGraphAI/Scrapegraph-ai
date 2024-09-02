@@ -1,3 +1,28 @@
+## [1.17.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0...v1.17.0-beta.1) (2024-09-02)
+
+
+### Features
+
+* add togheterai ([8f615ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8f615adef320dacdd214a184981384dd05df8171))
+
+
+### Bug Fixes
+
+* update generate answernode ([c348f67](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c348f674ad0caae4f4dc04e194fae9634e01b621))
+
+
+### chore
+
+* **examples:** create Together AI examples ([34942de](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/34942deca514df53e8aa1c7f96f812ee78b994bf))
+
+
+### CI
+
+* **release:** 1.16.0-beta.1 [skip ci] ([d7f6036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d7f6036f907eda8d1faa0944da4d1d168ca4c40e))
+* **release:** 1.16.0-beta.2 [skip ci] ([1c37d5d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c37d5db1c637f791133df254838a0deade6d6be))
+* **release:** 1.16.0-beta.3 [skip ci] ([886c987](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/886c987172bb57fb59863e4d7b494797bba16980))
+* **release:** 1.16.0-beta.4 [skip ci] ([ba5c7ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba5c7adcea138d993005377f4cfe438795e1b124))
+
 ## [1.16.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.2...v1.16.0) (2024-09-01)
 
 
