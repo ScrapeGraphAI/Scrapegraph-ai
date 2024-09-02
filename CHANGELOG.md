@@ -1,3 +1,11 @@
+## [1.17.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.3...v1.17.0-beta.4) (2024-09-02)
+
+
+### Bug Fixes
+
+* Parse Node scraping link and img urls allowing OmniScraper to work ([66a3b6d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/66a3b6d6a3efdf1ee72b802fc9bf8175482c45bd))
+* Removed link_urls and img_ulrs from FetchNode output ([57337a0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/57337a0a8c86fb28c9ccbd70d41acfc9abea11f0))
+
 ## [1.17.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.2...v1.17.0-beta.3) (2024-09-02)
 
 
