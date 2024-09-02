@@ -76,7 +76,8 @@ class SearchGraph(AbstractGraph):
             output=["urls"],
             node_config={
                 "llm_model": self.llm_model,
-                "max_results": self.max_results
+                "max_results": self.max_results,
+                "search_engine": self.copy_config.get("search_engine")
             }
         )
         graph_iterator_node = GraphIteratorNode(

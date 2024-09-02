@@ -41,7 +41,11 @@ class SearchInternetNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
-        self.search_engine = node_config.get("search_engine", "google")
+        self.search_engine = (
+            node_config["search_engine"]
+            if node_config.get("search_engine")
+            else "google"
+        )
         self.max_results = node_config.get("max_results", 3)
 
     def execute(self, state: dict) -> dict:
