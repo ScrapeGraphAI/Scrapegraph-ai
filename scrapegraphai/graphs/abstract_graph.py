@@ -129,7 +129,7 @@ class AbstractGraph(ABC):
 
         known_providers = {"openai", "azure_openai", "google_genai", "google_vertexai",
                         "ollama", "oneapi", "nvidia", "groq", "anthropic" "bedrock", "mistralai",
-                        "hugging_face", "deepseek", "ernie", "fireworks"}
+                        "hugging_face", "deepseek", "ernie", "fireworks", "togetherai"}
 
         split_model_provider = llm_params["model"].split("/", 1)
         llm_params["model_provider"] = split_model_provider[0]
@@ -145,7 +145,7 @@ class AbstractGraph(ABC):
             self.model_token = 8192
 
         try:
-            if llm_params["model_provider"] not in {"oneapi", "nvidia", "ernie", "deepseek"}:
+            if llm_params["model_provider"] not in {"oneapi", "nvidia", "ernie", "deepseek", "togetherai"}:
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
                     return init_chat_model(**llm_params)
@@ -157,14 +157,21 @@ class AbstractGraph(ABC):
                     from langchain_community.chat_models import ErnieBotChat
                     return ErnieBotChat(**llm_params)
 
-                if llm_params["model_provider"] == "oneapi":
+                elif llm_params["model_provider"] == "oneapi":
                     return OneApi(**llm_params)
 
-                if llm_params["model_provider"] == "nvidia":
+                elif llm_params["model_provider"] == "togehterai":
+                    try:
+                        from langchain_together import ChatTogether
+                    except ImportError:
+                        raise ImportError("The langchain_together module is not installed. Please install it using `pip install scrapegraphai[other-language-models]`.")
+                    return ChatTogether(**llm_params)
+
+                elif llm_params["model_provider"] == "nvidia":
                     try:
                         from langchain_nvidia_ai_endpoints import ChatNVIDIA
                     except ImportError:
-                        raise ImportError("The langchain_nvidia_ai_endpoints module is not installed. Please install it using `pip install langchain_nvidia_ai_endpoints`.")
+                        raise ImportError("The langchain_nvidia_ai_endpoints module is not installed. Please install it using `pip install scrapegraphai[other-language-models]`.")
                     return ChatNVIDIA(**llm_params)
 
         except Exception as e:
