@@ -67,7 +67,7 @@ class ParseNode(BaseNode):
 
         def count_tokens(text):
             from ..utils import token_count
-            return token_count(text, self.llm_model.model_name)
+            return token_count(text, self.llm_model)
 
         if self.parse_html:
             docs_transformed = Html2TextTransformer().transform_documents(input_data[0])

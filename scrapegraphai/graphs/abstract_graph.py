@@ -132,6 +132,8 @@ class AbstractGraph(ABC):
                         "hugging_face", "deepseek", "ernie", "fireworks"}
 
         split_model_provider = llm_params["model"].split("/", 1)
+        if len(split_model_provider) < 2:
+            raise ValueError(f"Model must be specified in 'provider/modelname' format, but '{llm_params['model']}' was given")
         llm_params["model_provider"] = split_model_provider[0]
         llm_params["model"] = split_model_provider[1]
 
