@@ -3,7 +3,6 @@ screenshot_preparation module
 """
 import asyncio
 from io import BytesIO
-from PIL import Image, ImageGrab
 from playwright.async_api import async_playwright
 import numpy as np
 from io import BytesIO
@@ -18,6 +17,10 @@ async def take_screenshot(url: str, save_path: str = None, quality: int = 100):
     Returns:
         PIL.Image: The screenshot of the webpage as a PIL Image object.
     """
+    try:
+        from PIL import Image
+    except:
+        raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -43,6 +46,7 @@ def select_area_with_opencv(image):
 
     try:
         import cv2 as cv
+        from PIL import ImageGrab
     except ImportError:
         raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
 
