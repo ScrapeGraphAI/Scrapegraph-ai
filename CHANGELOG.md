@@ -1,3 +1,10 @@
+## [1.17.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.5...v1.17.0-beta.6) (2024-09-04)
+
+
+### Bug Fixes
+
+* **ScreenShotScraper:** static import of optional dependencies ([52fe441](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52fe441c5af9c728983a2c3cd880fe9afcb5d428))
+
 ## [1.17.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.4...v1.17.0-beta.5) (2024-09-02)
 
 
