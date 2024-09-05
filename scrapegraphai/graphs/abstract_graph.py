@@ -128,7 +128,7 @@ class AbstractGraph(ABC):
             return llm_params["model_instance"]    
 
         known_providers = {"openai", "azure_openai", "google_genai", "google_vertexai",
-                        "ollama", "oneapi", "nvidia", "groq", "anthropic" "bedrock", "mistralai",
+                        "ollama", "oneapi", "nvidia", "groq", "anthropic", "bedrock", "mistralai",
                         "hugging_face", "deepseek", "ernie", "fireworks", "togetherai"}
 
         split_model_provider = llm_params["model"].split("/", 1)
@@ -146,6 +146,8 @@ class AbstractGraph(ABC):
 
         try:
             if llm_params["model_provider"] not in {"oneapi", "nvidia", "ernie", "deepseek", "togetherai"}:
+                if llm_params["model_provider"] == "bedrock":
+                    llm_params["model_kwargs"] = { "temperature" : llm_params.pop("temperature") }
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
                     return init_chat_model(**llm_params)
