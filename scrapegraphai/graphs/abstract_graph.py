@@ -8,6 +8,7 @@ import uuid
 import warnings
 from pydantic import BaseModel
 from langchain.chat_models import init_chat_model
+from langchain_core.rate_limiters import InMemoryRateLimiter
 from ..helpers import models_tokens
 from ..models import (
     OneApi,
@@ -119,6 +120,17 @@ class AbstractGraph(ABC):
 
         llm_defaults = {"temperature": 0, "streaming": False}
         llm_params = {**llm_defaults, **llm_config}
+        rate_limit_params = llm_params.pop("rate_limit", {})
+        
+        if rate_limit_params:
+            requests_per_second = rate_limit_params.get("requests_per_second")
+            max_retries = rate_limit_params.get("max_retries")
+            if requests_per_second is not None:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    llm_params["rate_limiter"] =  InMemoryRateLimiter(requests_per_second=requests_per_second)
+            if max_retries is not None:
+                llm_params["max_retries"] = max_retries
 
         if "model_instance" in llm_params:
             try:
