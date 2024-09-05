@@ -1,3 +1,10 @@
+## [1.17.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.6...v1.17.0-beta.7) (2024-09-05)
+
+
+### Bug Fixes
+
+* **AbstractGraph:** Bedrock init issues ([63a5d18](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/63a5d18486789ce1b4a8f5ea661fc83779fceca2)), closes [#633](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/633)
+
 ## [1.17.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.5...v1.17.0-beta.6) (2024-09-04)
 
 
