@@ -12,6 +12,7 @@ from scrapegraphai.models import OneApi, DeepSeek
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_ollama import ChatOllama
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_aws import ChatBedrock
 
 
 
@@ -71,6 +72,7 @@ class TestAbstractGraph:
         ({"model": "ollama/llama2"}, ChatOllama),
         ({"model": "oneapi/qwen-turbo", "api_key": "oneapi-api-key"}, OneApi),
         ({"model": "deepseek/deepseek-coder", "api_key": "deepseek-api-key"}, DeepSeek),
+        ({"model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0", "region_name": "IDK"}, ChatBedrock),
     ])
 
     def test_create_llm(self, llm_config, expected_model):
