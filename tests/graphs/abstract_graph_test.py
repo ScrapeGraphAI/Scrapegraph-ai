@@ -83,3 +83,17 @@ class TestAbstractGraph:
         with pytest.raises(ValueError):
             TestGraph("Test prompt", {"llm": {"model": "unknown_provider/model"}})
 
+    @pytest.mark.parametrize("llm_config, expected_model", [
+        ({"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-randomtest001", "rate_limit": {"requests_per_second": 1}}, ChatOpenAI),
+        ({"model": "azure_openai/gpt-3.5-turbo", "api_key": "random-api-key", "api_version": "no version", "azure_endpoint": "https://www.example.com/", "rate_limit": {"requests_per_second": 1}}, AzureChatOpenAI),
+        ({"model": "google_genai/gemini-pro", "google_api_key": "google-key-test", "rate_limit": {"requests_per_second": 1}}, ChatGoogleGenerativeAI),
+        ({"model": "ollama/llama2", "rate_limit": {"requests_per_second": 1}}, ChatOllama),
+        ({"model": "oneapi/qwen-turbo", "api_key": "oneapi-api-key", "rate_limit": {"requests_per_second": 1}}, OneApi),
+        ({"model": "deepseek/deepseek-coder", "api_key": "deepseek-api-key", "rate_limit": {"requests_per_second": 1}}, DeepSeek),
+        ({"model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0", "region_name": "IDK", "rate_limit": {"requests_per_second": 1}}, ChatBedrock),
+    ])
+
+
+    def test_create_llm_with_rate_limit(self, llm_config, expected_model):
+        graph = TestGraph("Test prompt", {"llm": llm_config})
+        assert isinstance(graph.llm_model, expected_model)
