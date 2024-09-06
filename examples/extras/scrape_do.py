@@ -6,7 +6,6 @@ import os
 import json
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
@@ -20,9 +19,8 @@ graph_config = {
         "api_key": os.getenv("OPENAI_API_KEY"),
         "model": "openai/gpt-4o",
     },
-    "browser_base": {
-        "api_key": os.getenv("BROWSER_BASE_API_KEY"),
-        "project_id": os.getenv("BROWSER_BASE_PROJECT_ID"),
+    "scrape_do": {
+        "api_key": os.getenv("SCRAPE_DO_API_KEY"),
     },
     "verbose": True,
     "headless": False,
@@ -40,10 +38,3 @@ smart_scraper_graph = SmartScraperGraph(
 
 result = smart_scraper_graph.run()
 print(json.dumps(result, indent=4))
-
-# ************************************************
-# Get graph execution info
-# ************************************************
-
-graph_exec_info = smart_scraper_graph.get_execution_info()
-print(prettify_exec_info(graph_exec_info))
