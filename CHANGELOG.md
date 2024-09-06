@@ -1,3 +1,10 @@
+## [1.17.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.8...v1.17.0-beta.9) (2024-09-06)
+
+
+### Features
+
+* ConcatNode.py added for heavy merge operations ([bd4b26d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bd4b26d7d7c1a7953d1bc9d78b436007880028c9))
+
 ## [1.17.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.7...v1.17.0-beta.8) (2024-09-06)
 
 
