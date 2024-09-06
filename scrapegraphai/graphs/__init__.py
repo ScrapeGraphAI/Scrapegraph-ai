@@ -25,3 +25,4 @@ from .markdown_scraper_graph import MDScraperGraph
 from .markdown_scraper_multi_graph import MDScraperMultiGraph
 from .search_link_graph import SearchLinkGraph
 from .screenshot_scraper_graph import ScreenshotScraperGraph
+from .smart_scraper_multi_concat_graph import SmartScraperMultiConcatGraph
