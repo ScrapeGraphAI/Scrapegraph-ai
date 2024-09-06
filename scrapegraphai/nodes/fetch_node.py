@@ -288,8 +288,8 @@ class FetchNode(BaseNode):
                 data =  scrape_do_fetch(self.scrape_do.get("api_key"),
                                             source)
 
-                document = [Document(page_content=content,
-                                    metadata={"source": source}) for content in data]
+                document = [Document(page_content=data,
+                                    metadata={"source": source})]
             else:
                 loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
                 document = loader.load()

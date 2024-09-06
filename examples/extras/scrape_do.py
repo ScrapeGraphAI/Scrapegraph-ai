@@ -31,8 +31,8 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="List me what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+    prompt="List me all the projects",
+    source="https://perinim.github.io/projects/",
     config=graph_config
 )
 
