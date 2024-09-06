@@ -1,3 +1,10 @@
+## [1.17.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.7...v1.17.0-beta.8) (2024-09-06)
+
+
+### Features
+
+* **AbstractGraph:** add adjustable rate limit ([2859fb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2859fb72d699f26b617ed2f949cdcfca1671c5c8))
+
 ## [1.17.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.6...v1.17.0-beta.7) (2024-09-05)
 
 
