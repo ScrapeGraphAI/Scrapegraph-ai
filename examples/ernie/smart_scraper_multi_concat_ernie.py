@@ -2,26 +2,26 @@
 Basic example of scraping pipeline using SmartScraper
 """
 import json
-from scrapegraphai.graphs import SmartScraperMultiGraph
-
+from scrapegraphai.graphs import SmartScraperMultiConcatGraph
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
 graph_config = {
     "llm": {
-        "client": "client_name",
-        "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
-        "temperature": 0.0
-    }
+        "model": "ernie/ernie-bot-turbo",
+        "ernie_client_id": "<ernie_client_id>",
+        "ernie_client_secret": "<ernie_client_secret>",
+        "temperature": 0.1
+    },
+    "library": "beautifulsoup"
 }
 
 # *******************************************************
 # Create the SmartScraperMultiGraph instance and run it
 # *******************************************************
 
-multiple_search_graph = SmartScraperMultiGraph(
+multiple_search_graph = SmartScraperMultiConcatGraph(
     prompt="Who is Marco Perini?",
     source= [
         "https://perinim.github.io/",

@@ -1,18 +1,17 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
+
 import os
 import json
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import SmartScraperMultiConcatGraph
 
 load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
-
 graph_config = {
     "llm": {
         "api_key": os.getenv("MISTRAL_API_KEY"),
@@ -22,15 +21,19 @@ graph_config = {
     "headless": False,
 }
 
-# ************************************************
-# Create the SmartScraperGraph instance and run it
-# ************************************************
+# *******************************************************
+# Create the SmartScraperMultiGraph instance and run it
+# *******************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+multiple_search_graph = SmartScraperMultiConcatGraph(
+    prompt="Who is Marco Perini?",
+    source= [
+        "https://perinim.github.io/",
+        "https://perinim.github.io/cv/"
+        ],
+    schema=None,
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
+result = multiple_search_graph.run()
 print(json.dumps(result, indent=4))

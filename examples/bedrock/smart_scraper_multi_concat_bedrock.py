@@ -2,8 +2,7 @@
 Basic example of scraping pipeline using SmartScraper
 """
 import json
-from scrapegraphai.graphs import SmartScraperMultiGraph
-
+from scrapegraphai.graphs import SmartScraperMultiConcatGraph
 
 # ************************************************
 # Define the configuration for the graph
@@ -17,11 +16,12 @@ graph_config = {
     }
 }
 
+
 # *******************************************************
 # Create the SmartScraperMultiGraph instance and run it
 # *******************************************************
 
-multiple_search_graph = SmartScraperMultiGraph(
+multiple_search_graph = SmartScraperMultiConcatGraph(
     prompt="Who is Marco Perini?",
     source= [
         "https://perinim.github.io/",

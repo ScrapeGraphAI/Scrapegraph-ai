@@ -1,11 +1,11 @@
 """ 
-Basic example of scraping pipeline using SmartScraper and model_instace
+Basic example of scraping pipeline using SmartScraper
 """
 import os
 import json
 from langchain_community.chat_models.moonshot import MoonshotChat
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import SmartScraperMultiConcatGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
@@ -33,22 +33,20 @@ graph_config = {
     "headless": True,
 }
 
-# ************************************************
-# Create the SmartScraperGraph instance and run it
-# ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+# *******************************************************
+# Create the SmartScraperMultiGraph instance and run it
+# *******************************************************
+
+multiple_search_graph = SmartScraperMultiConcatGraph(
+    prompt="Who is Marco Perini?",
+    source= [
+        "https://perinim.github.io/",
+        "https://perinim.github.io/cv/"
+        ],
+    schema=None,
     config=graph_config
 )
 
-result = smart_scraper_graph.run()
+result = multiple_search_graph.run()
 print(json.dumps(result, indent=4))
-
-# ************************************************
-# Get graph execution info
-# ************************************************
-
-graph_exec_info = smart_scraper_graph.get_execution_info()
-print(prettify_exec_info(graph_exec_info))
