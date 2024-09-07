@@ -128,7 +128,7 @@ class AbstractGraph(ABC):
             return llm_params["model_instance"]    
 
         known_providers = {"openai", "azure_openai", "google_genai", "google_vertexai",
-                        "ollama", "oneapi", "nvidia", "groq", "anthropic" "bedrock", "mistralai",
+                        "ollama", "oneapi", "nvidia", "groq", "anthropic", "bedrock", "mistralai",
                         "hugging_face", "deepseek", "ernie", "fireworks"}
 
         split_model_provider = llm_params["model"].split("/", 1)
