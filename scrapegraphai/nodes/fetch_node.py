@@ -285,8 +285,14 @@ class FetchNode(BaseNode):
                                     metadata={"source": source}) for content in data]
             elif self.scrape_do is not None:
                 from ..docloaders.scrape_do import scrape_do_fetch
-                data =  scrape_do_fetch(self.scrape_do.get("api_key"),
-                                            source)
+                if self.scrape_do.get("use_proxy") is None or self.scrape_do.get("geoCode") is None or self.scrape_do.get("super_proxy") is None:
+                    data =  scrape_do_fetch(self.scrape_do.get("api_key"),
+                                                source)
+                else:
+                    data =  scrape_do_fetch(self.scrape_do.get("api_key"),
+                                                source, self.scrape_do.get("use_proxy"),
+                                                self.scrape_do.get("geoCode"),
+                                                self.scrape_do.get("super_proxy"))
 
                 document = [Document(page_content=data,
                                     metadata={"source": source})]
@@ -295,7 +301,7 @@ class FetchNode(BaseNode):
                 document = loader.load()
 
             if not document or not document[0].page_content.strip():
-                raise ValueError("""No HTML body content found in 
+                raise ValueError("""No HTML body content found in
                                  the document fetched by ChromiumLoader.""")
             parsed_content = document[0].page_content
 
