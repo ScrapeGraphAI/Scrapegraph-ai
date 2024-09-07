@@ -76,7 +76,6 @@ class MergeAnswersNode(BaseNode):
                 self.llm_model = self.llm_model.with_structured_output(
                     schema = self.node_config["schema"],
                     method="function_calling") # json schema works only on specific models
-                
                 # default parser to empty lambda function
                 output_parser = lambda x: x
                 if is_basemodel_subclass(self.node_config["schema"]):
