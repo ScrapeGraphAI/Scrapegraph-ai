@@ -3,7 +3,7 @@ browserbase integration module
 """
 from typing import List
 
-def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[str]:
+def browser_base_fetch(api_key: str, project_id: str, link: List[str], text_content: bool = True) -> List[str]:
     """
     BrowserBase Fetch
 
@@ -50,6 +50,6 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[s
 
     result = []
     for l in link:
-        result.append(browserbase.load(l, text_content=True))
+        result.append(browserbase.load(l, text_content=text_content))
 
     return result
