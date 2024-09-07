@@ -1,3 +1,10 @@
+## [1.17.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.9...v1.17.0-beta.10) (2024-09-07)
+
+
+### Bug Fixes
+
+* screenshot_scraper ([ef7a589](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ef7a5891dcb1b4ed8a97947f5563fa78af917ecb))
+
 ## [1.17.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.8...v1.17.0-beta.9) (2024-09-06)
 
 
