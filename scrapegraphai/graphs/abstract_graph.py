@@ -63,6 +63,7 @@ class AbstractGraph(ABC):
         self.loader_kwargs = self.config.get("loader_kwargs", {})
         self.cache_path = self.config.get("cache_path", False)
         self.browser_base = self.config.get("browser_base")
+        self.scrape_do = self.config.get("scrape_do")
 
         self.graph = self._create_graph()
         self.final_state = None

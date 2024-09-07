@@ -67,7 +67,8 @@ class SmartScraperGraph(AbstractGraph):
                 "force": self.config.get("force", False),
                 "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
-                "browser_base": self.config.get("browser_base")
+                "browser_base": self.config.get("browser_base"),
+                "scrape_do": self.config.get("scrape_do")
             }
         )
         parse_node = ParseNode(
