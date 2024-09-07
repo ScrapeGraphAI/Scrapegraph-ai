@@ -1,3 +1,11 @@
+## [1.17.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.10...v1.17.0-beta.11) (2024-09-07)
+
+
+### Features
+
+* add scrape_do_integration ([94e69a0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/94e69a051591aeec1e7268bf0d5e0338f90e9539))
+* fetch_node improved ([167f970](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/167f97040f081867cecff542c3af8aa122499ce8))
+
 ## [1.17.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.9...v1.17.0-beta.10) (2024-09-07)
 
 
