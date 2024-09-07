@@ -32,27 +32,31 @@ playwright install
 
 **Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
 
-By the way if you to use not mandatory modules it is necessary to install by yourself with the following command:
+<details>
+<summary><b>Optional Dependencies</b></summary>
+Additional dependecies can be added while installing the library:
 
-### Installing "Other Language Models"
+- <b>More Language Models</b>: additional language models are installed, such as Fireworks, Groq, Anthropic, Hugging Face, and Nvidia AI Endpoints.
 
-This group allows you to use additional language models like Fireworks, Groq, Anthropic, Hugging Face, and Nvidia AI Endpoints.
-```bash
-pip install scrapegraphai[other-language-models]
+  ```bash
+  pip install scrapegraphai[other-language-models]
+  ```
 
-```
-### Installing "More Semantic Options"
+- <b>Semantic Options</b>: this group includes tools for advanced semantic processing, such as Graphviz.
 
-This group includes tools for advanced semantic processing, such as Graphviz.
-```bash
-pip install scrapegraphai[more-semantic-options]
-```
-### Installing "More Browser Options"
+  ```bash
+  pip install scrapegraphai[more-semantic-options]
+  ```
 
-This group includes additional browser management options, such as BrowserBase.
-```bash
-pip install scrapegraphai[more-browser-options]
-```
+- <b>Browsers Options</b>: this group includes additional browser management tools/services, such as Browserbase.
+
+  ```bash
+  pip install scrapegraphai[more-browser-options]
+  ```
+
+</details>
+
+
 
 ## 💻 Usage
 There are multiple standard scraping pipelines that can be used to extract information from a website (or local file).
@@ -128,6 +132,9 @@ Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
 
 ## 🏆 Sponsors
 <div style="text-align: center;">
+  <a href="https://2ly.link/1zaXG">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/browserbase_logo.png" alt="Browserbase" style="width: 10%;">
+  </a>
   <a href="https://2ly.link/1zNiz">
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
   </a>
