@@ -1,3 +1,54 @@
+## [1.19.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.1...v1.19.0-beta.1) (2024-09-08)
+
+
+### Features
+
+* **AbstractGraph:** add adjustable rate limit ([2859fb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2859fb72d699f26b617ed2f949cdcfca1671c5c8))
+* add scrape_do_integration ([94e69a0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/94e69a051591aeec1e7268bf0d5e0338f90e9539))
+* add togheterai ([8f615ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8f615adef320dacdd214a184981384dd05df8171))
+* ConcatNode.py added for heavy merge operations ([bd4b26d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bd4b26d7d7c1a7953d1bc9d78b436007880028c9))
+* fetch_node improved ([167f970](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/167f97040f081867cecff542c3af8aa122499ce8))
+
+
+### Bug Fixes
+
+* **AbstractGraph:** Bedrock init issues ([63a5d18](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/63a5d18486789ce1b4a8f5ea661fc83779fceca2)), closes [#633](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/633)
+* correctly parsing output when using structured_output ([8e74ac5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8e74ac55a16ca012b52affbc754e4b04130e65db))
+* **ScreenshotScraper:** impose dynamic imports ([b8ef937](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b8ef93738ec4ae48c361fe5650df5194e845a2b1))
+* **Ollama:** instance model from correct package ([398b2c5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/398b2c556faf518ca28ccc284bc8761a16281cf7))
+* Parse Node scraping link and img urls allowing OmniScraper to work ([66a3b6d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/66a3b6d6a3efdf1ee72b802fc9bf8175482c45bd))
+* **SmartScraper:** pass llm_model to ParseNode ([5242166](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52421665759032bcfad80ce540efebe5f47310f6))
+* **DeepSeek:** proper model initialization ([74dfc69](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/74dfc693f6e487d20da58704284fe9f492d2b2aa))
+* Removed link_urls and img_ulrs from FetchNode output ([57337a0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/57337a0a8c86fb28c9ccbd70d41acfc9abea11f0))
+* screenshot scraper ([388630c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/388630c0ffa2850c3d5ea47e62b71b41795203d8))
+* screenshot_scraper ([ef7a589](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ef7a5891dcb1b4ed8a97947f5563fa78af917ecb))
+* **ScreenShotScraper:** static import of optional dependencies ([52fe441](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52fe441c5af9c728983a2c3cd880fe9afcb5d428))
+* update generate answernode ([c348f67](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c348f674ad0caae4f4dc04e194fae9634e01b621))
+
+
+### chore
+
+* **examples:** create Together AI examples ([34942de](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/34942deca514df53e8aa1c7f96f812ee78b994bf))
+
+
+### CI
+
+* **release:** 1.16.0-beta.1 [skip ci] ([d7f6036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d7f6036f907eda8d1faa0944da4d1d168ca4c40e))
+* **release:** 1.16.0-beta.2 [skip ci] ([1c37d5d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c37d5db1c637f791133df254838a0deade6d6be))
+* **release:** 1.16.0-beta.3 [skip ci] ([886c987](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/886c987172bb57fb59863e4d7b494797bba16980))
+* **release:** 1.16.0-beta.4 [skip ci] ([ba5c7ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba5c7adcea138d993005377f4cfe438795e1b124))
+* **release:** 1.17.0-beta.1 [skip ci] ([13efd4e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/13efd4e3a4175e85e7c41f5d575a249c27ecbf1d))
+* **release:** 1.17.0-beta.10 [skip ci] ([af28885](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/af2888539e4ce83ab5f52b5c605ecc3472b14aff))
+* **release:** 1.17.0-beta.11 [skip ci] ([a73fec5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a73fec5a98f5e646dd8f7d08dfe2dd0dbe067a94))
+* **release:** 1.17.0-beta.2 [skip ci] ([08afc92](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/08afc9292ea8ae227b75f640db3d4dd097265482))
+* **release:** 1.17.0-beta.3 [skip ci] ([fc55418](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fc55418a4511389d053e8c6b9a28878a3bc91fe6))
+* **release:** 1.17.0-beta.4 [skip ci] ([5e99071](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5e990719cfc9e063fc2253fc70b3da14fae49360))
+* **release:** 1.17.0-beta.5 [skip ci] ([16ab1bf](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/16ab1bf3d920ae8e3dbac372f075e4853200a0e9))
+* **release:** 1.17.0-beta.6 [skip ci] ([50c9c6b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/50c9c6bd8ca67d3d4d83ca3717085042e8a51bc5))
+* **release:** 1.17.0-beta.7 [skip ci] ([4347afb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4347afb8d4d93f600221d8f77c2701361f0f96a2)), closes [#633](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/633)
+* **release:** 1.17.0-beta.8 [skip ci] ([85c374e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/85c374e4b38f825af20e9e3d095c3a467025fdca))
+* **release:** 1.17.0-beta.9 [skip ci] ([77d0fd3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/77d0fd3dba8d52aff8321ab5ff1a1cc8b92b0837))
+
 ## [1.18.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.0...v1.18.1) (2024-09-08)
 
 
