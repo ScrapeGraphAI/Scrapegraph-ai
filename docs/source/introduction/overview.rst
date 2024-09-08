@@ -82,6 +82,11 @@ FAQ
 Sponsors
 ========
 
+.. image:: ../../assets/browserbase_logo.png
+   :width: 10%
+   :alt: Browserbase
+   :target: https://www.browserbase.com/
+
 .. image:: ../../assets/serp_api_logo.png
    :width: 10%
    :alt: Serp API

@@ -1,29 +1,30 @@
-## [1.17.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.10...v1.17.0-beta.11) (2024-09-07)
-
-
-### Features
-
-* add scrape_do_integration ([94e69a0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/94e69a051591aeec1e7268bf0d5e0338f90e9539))
-* fetch_node improved ([167f970](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/167f97040f081867cecff542c3af8aa122499ce8))
-
-## [1.17.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.9...v1.17.0-beta.10) (2024-09-07)
+## [1.18.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.0...v1.18.1) (2024-09-08)
 
 
 ### Bug Fixes
 
-* screenshot_scraper ([ef7a589](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ef7a5891dcb1b4ed8a97947f5563fa78af917ecb))
+* **browser_base_fetch:** correct function signature and async_mode handling ([007ff08](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/007ff084c68d419fac040d9b5cca3980458cfabc))
 
-## [1.17.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.8...v1.17.0-beta.9) (2024-09-06)
+## [1.18.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0...v1.18.0) (2024-09-08)
+
+
+
+### Features
+
+* **browser_base_fetch:** add async_mode to support both synchronous and asynchronous execution ([d56253d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d56253d183969584cacc0cb164daa0152462f21c))
+
+## [1.17.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0...v1.17.0) (2024-09-08)
+
 
 
 ### Features
 
-* ConcatNode.py added for heavy merge operations ([bd4b26d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bd4b26d7d7c1a7953d1bc9d78b436007880028c9))
-
-## [1.17.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0-beta.7...v1.17.0-beta.8) (2024-09-06)
+* **docloaders:** Enhance browser_base_fetch function flexibility ([57fd01f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/57fd01f9a76ea8ea69ec04b7238ab58ca72ac8f4))
 
 
-### Features
+### Docs
+
+* **sponsor:** 🅱️ Browserbase sponsor 🅱️ ([a540139](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a5401394cc939d9a5fc58b8a9145141c2f047bab))
 
 * **AbstractGraph:** add adjustable rate limit ([2859fb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2859fb72d699f26b617ed2f949cdcfca1671c5c8))
 
@@ -97,6 +98,7 @@
 * **release:** 1.16.0-beta.2 [skip ci] ([1c37d5d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c37d5db1c637f791133df254838a0deade6d6be))
 * **release:** 1.16.0-beta.3 [skip ci] ([886c987](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/886c987172bb57fb59863e4d7b494797bba16980))
 * **release:** 1.16.0-beta.4 [skip ci] ([ba5c7ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba5c7adcea138d993005377f4cfe438795e1b124))
+
 
 ## [1.16.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.2...v1.16.0) (2024-09-01)
 
