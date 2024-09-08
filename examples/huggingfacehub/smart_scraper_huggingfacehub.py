@@ -10,8 +10,6 @@ from langchain_community.llms import HuggingFaceEndpoint
 from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 
 
-
-
 ## required environment variable in .env
 #HUGGINGFACEHUB_API_TOKEN
 load_dotenv()

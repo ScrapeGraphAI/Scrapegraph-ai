@@ -62,13 +62,14 @@ class SpeechGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc", "link_urls", "img_urls"]
+            output=["doc"]
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "llm_model": self.llm_model
             }
         )
         generate_answer_node = GenerateAnswerNode(

@@ -52,7 +52,7 @@ class SearchLinkGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input="url| local_dir",
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
             node_config={
                 "llm_model": self.llm_model,
                 "force": self.config.get("force", False),
@@ -64,7 +64,8 @@ class SearchLinkGraph(AbstractGraph):
             input="doc",
             output=["parsed_doc"],
             node_config={
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "llm_model": self.llm_model
             }
         )
         search_link_node = SearchLinkNode(

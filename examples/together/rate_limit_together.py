@@ -1,51 +1,31 @@
 """ 
-Basic example of scraping pipeline using SmartScraper with schema
+Basic example of scraping pipeline using SmartScraper with a custom rate limit
 """
 
-import json
 import os
-from typing import Dict, List
-
 from dotenv import load_dotenv
-from pydantic import BaseModel
-
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
-# ************************************************
-# Define the output schema for the graph
-# ************************************************
-
-class Project(BaseModel):
-    title: str
-    description: str
-
-class Projects(BaseModel):
-    Projects: Dict[str, Project]
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-groq_key = os.getenv("GROQ_APIKEY")
-openai_key = os.getenv("OPENAI_APIKEY")
+together_key = os.getenv("TOGETHER_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "model": "togetherai/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+        "api_key": together_key,
+        "rate_limit": {
+            "requests_per_second": 1
+        }
     },
-    "embeddings": {
-        "api_key": openai_key,
-        "model": "openai",
-    },
-    "headless": False
+    "verbose": True,
 }
-
-
 
 # ************************************************
 # Create the SmartScraperGraph instance and run it
@@ -55,7 +35,6 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
-    schema=Projects,
     config=graph_config
 )
 

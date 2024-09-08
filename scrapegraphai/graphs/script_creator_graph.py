@@ -62,7 +62,7 @@ class ScriptCreatorGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
             node_config={
                 "llm_model": self.llm_model,
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
@@ -73,11 +73,12 @@ class ScriptCreatorGraph(AbstractGraph):
             input="doc",
             output=["parsed_doc"],
             node_config={"chunk_size": self.model_token,
-                         "parse_html": False
+                         "parse_html": False,
+                         "llm_model": self.llm_model
                          }
         )
         generate_scraper_node = GenerateScraperNode(
-            input="user_prompt & (doc)",
+            input="user_prompt & (parsed_doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,

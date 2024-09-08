@@ -6,8 +6,8 @@ import os
 from dotenv import load_dotenv
 from scrapegraphai.utils import prettify_exec_info
 from scrapegraphai.graphs import SmartScraperGraph
-load_dotenv()
 
+load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
