@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.0...v1.18.1) (2024-09-08)
+
+
+### Bug Fixes
+
+* **browser_base_fetch:** correct function signature and async_mode handling ([007ff08](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/007ff084c68d419fac040d9b5cca3980458cfabc))
+
 ## [1.18.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0...v1.18.0) (2024-09-08)
 
 
