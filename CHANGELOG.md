@@ -1,3 +1,10 @@
+## [1.18.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.17.0...v1.18.0) (2024-09-08)
+
+
+### Features
+
+* **browser_base_fetch:** add async_mode to support both synchronous and asynchronous execution ([d56253d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d56253d183969584cacc0cb164daa0152462f21c))
+
 ## [1.17.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0...v1.17.0) (2024-09-08)
 
 
