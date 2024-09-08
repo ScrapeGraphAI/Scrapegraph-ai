@@ -102,9 +102,19 @@ class GenerateScraperNode(BaseNode):
             TEMPLATE_NO_CHUNKS += self.additional_info
 
         if len(doc) > 1:
-            raise NotImplementedError(
-                "Currently GenerateScraperNode cannot handle more than 1 context chunks"
-            )
+            # Short term partial fix for issue #543 (Context length exceeded)
+            # If there are more than one chunks returned by ParseNode we just use the first one
+            # on the basis that the structure of the remainder of the HTML page is probably
+            # very similar to the first chunk therefore the generated script should still work.
+            # The better fix is to generate multiple scripts then use the LLM to merge them.
+
+            #raise NotImplementedError(
+            #    "Currently GenerateScraperNode cannot handle more than 1 context chunks"
+            #)
+            self.logger.warn(f"Warning: {self.node_name} Node provided with {len(doc)} chunks but can only "
+                "support 1, ignoring remaining chunks")
+            doc = [doc[0]]
+            template = TEMPLATE_NO_CHUNKS
         else:
             template = TEMPLATE_NO_CHUNKS
 
