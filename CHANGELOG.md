@@ -1,3 +1,15 @@
+## [1.17.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.16.0...v1.17.0) (2024-09-08)
+
+
+### Features
+
+* **docloaders:** Enhance browser_base_fetch function flexibility ([57fd01f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/57fd01f9a76ea8ea69ec04b7238ab58ca72ac8f4))
+
+
+### Docs
+
+* **sponsor:** 🅱️ Browserbase sponsor 🅱️ ([a540139](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a5401394cc939d9a5fc58b8a9145141c2f047bab))
+
 ## [1.16.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.15.2...v1.16.0) (2024-09-01)
 
 

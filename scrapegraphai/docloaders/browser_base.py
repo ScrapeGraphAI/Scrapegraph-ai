@@ -3,7 +3,7 @@ browserbase integration module
 """
 from typing import List
 
-def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[str]:
+def browser_base_fetch(api_key: str, project_id: str, link: List[str], text_content: bool = True) -> List[str]:
     """
     BrowserBase Fetch
 
@@ -53,22 +53,19 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str]) -> List[s
     browserbase = Browserbase(api_key=api_key, project_id=project_id)
 
     result = []
-    # Define the async fetch logic for individual links
     async def _async_fetch_link(l):
         return await asyncio.to_thread(browserbase.load, l, text_content=text_content)
 
     if async_mode:
-        # Asynchronously process each link
         async def _async_browser_base_fetch():
             for l in link:
                 result.append(await _async_fetch_link(l))
             return result
 
-        # Run the async fetch function
         result = asyncio.run(_async_browser_base_fetch())
     else:
-        # Synchronous logic
         for l in link:
             result.append(browserbase.load(l, text_content=text_content))
+
 
     return result
