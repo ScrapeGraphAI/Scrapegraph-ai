@@ -25,3 +25,4 @@ google>=3.0.0
 undetected-playwright>=0.3.0
 semchunk>=1.0.1
 browserbase>=0.3.0
+mistral-common==1.3.4

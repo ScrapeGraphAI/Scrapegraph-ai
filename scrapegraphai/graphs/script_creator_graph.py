@@ -79,7 +79,7 @@ class ScriptCreatorGraph(AbstractGraph):
             }
         )
         generate_scraper_node = GenerateScraperNode(
-            input="user_prompt & (doc)",
+            input="user_prompt & (parsed_doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
