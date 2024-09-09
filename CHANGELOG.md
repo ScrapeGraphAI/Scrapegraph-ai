@@ -1,3 +1,15 @@
+## [1.19.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.1...v1.19.0-beta.2) (2024-09-09)
+
+
+### Features
+
+* return urls in searchgraph ([afb6eb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/afb6eb7e4796ab208a050ad04ad96a83406f7fa1))
+
+
+### Bug Fixes
+
+* temporary fix for parse_node ([f2bb22d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f2bb22d8e9b3ac5c1560793a6ec09f9ae4f257d3))
+
 ## [1.19.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.1...v1.19.0-beta.1) (2024-09-08)
 
 
