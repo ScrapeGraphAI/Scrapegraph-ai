@@ -100,6 +100,7 @@ class MergeAnswersNode(BaseNode):
 
         merge_chain = prompt_template | self.llm_model | output_parser
         answer = merge_chain.invoke({"user_prompt": user_prompt})
+        answer["sources"] = state.get("urls")
 
         state.update({self.output[0]: answer})
         return state
