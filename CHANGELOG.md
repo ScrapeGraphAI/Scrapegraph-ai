@@ -1,3 +1,10 @@
+## [1.19.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.2...v1.19.0-beta.3) (2024-09-10)
+
+
+### Bug Fixes
+
+* parse node ([947ebd2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/947ebd2895408c5ebd00b9a3da1b220937553c4a))
+
 ## [1.19.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.1...v1.19.0-beta.2) (2024-09-09)
 
 
