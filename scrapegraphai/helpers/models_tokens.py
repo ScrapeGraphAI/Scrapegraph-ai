@@ -143,10 +143,10 @@ models_tokens = {
         "claude-3-haiku-20240307": 4000,
     },
     "bedrock": {
-        "anthropic.claude-3-5-sonnet-20240620": 200000,
         "anthropic.claude-3-haiku-20240307-v1:0": 200000,
         "anthropic.claude-3-sonnet-20240229-v1:0": 200000,
         "anthropic.claude-3-opus-20240229-v1:0": 200000,
+        "anthropic.claude-3-5-sonnet-20240620-v1:0": 200000,
         "anthropic.claude-v2:1": 200000,
         "anthropic.claude-v2": 100000,
         "anthropic.claude-instant-v1": 100000,
