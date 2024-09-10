@@ -71,7 +71,6 @@ cycler==0.12.1
 dataclasses-json==0.6.7
     # via langchain-community
 dill==0.3.8
-    # via multiprocess
     # via pylint
 distro==1.9.0
     # via openai
@@ -236,13 +235,9 @@ mdurl==0.1.2
     # via markdown-it-py
 minify-html==0.15.0
     # via scrapegraphai
-mpire==2.10.2
-    # via semchunk
 multidict==6.0.5
     # via aiohttp
     # via yarl
-multiprocess==0.70.16
-    # via mpire
 mypy-extensions==1.0.0
     # via typing-inspect
 narwhals==1.3.0
@@ -325,7 +320,6 @@ pyee==11.1.0
     # via playwright
 pygments==2.18.0
     # via furo
-    # via mpire
     # via rich
     # via sphinx
 pylint==3.2.6
@@ -373,8 +367,6 @@ rsa==4.9
     # via google-auth
 s3transfer==0.10.2
     # via boto3
-semchunk==2.2.0
-    # via scrapegraphai
 sf-hamilton==1.73.1
     # via burr
 six==1.16.0
@@ -436,10 +428,8 @@ tornado==6.4.1
 tqdm==4.66.5
     # via google-generativeai
     # via huggingface-hub
-    # via mpire
     # via openai
     # via scrapegraphai
-    # via semchunk
 typing-extensions==4.12.2
     # via altair
     # via anyio
