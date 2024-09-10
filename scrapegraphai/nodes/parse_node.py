@@ -6,6 +6,7 @@ from semchunk import chunk
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
 from .base_node import BaseNode
+from tokenizer import num_tokens_calculus
 
 class ParseNode(BaseNode):
     """
