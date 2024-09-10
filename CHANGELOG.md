@@ -1,3 +1,10 @@
+## [1.19.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.3...v1.19.0-beta.4) (2024-09-10)
+
+
+### Features
+
+* removed semchunk and used tikton ([1a7f21f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1a7f21fbf34dc9ef17bca683e2139a88eed70b16))
+
 ## [1.19.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.2...v1.19.0-beta.3) (2024-09-10)
 
 
