@@ -65,7 +65,7 @@ class ParseNode(BaseNode):
         docs_transformed = input_data[0]
 
         if self.parse_html:
-            docs_transformed = Html2TextTransformer().transform_documents(input_data[0])
+            docs_transformed = Html2TextTransformer(ignore_links=False).transform_documents(input_data[0])
             docs_transformed = docs_transformed[0]
 
             chunks = chunk(text=docs_transformed.page_content,
