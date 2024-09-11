@@ -154,6 +154,7 @@ models_tokens = {
         "mistral.mistral-7b-instruct-v0:2": 32768,
         "mistral.mixtral-8x7b-instruct-v0:1": 32768,
         "mistral.mistral-large-2402-v1:0": 32768,
+        "mistral.mistral-small-2402-v1:0": 32768,
         "amazon.titan-embed-text-v1": 8000,
         "amazon.titan-embed-text-v2:0": 8000,
         "cohere.embed-english-v3": 512,
