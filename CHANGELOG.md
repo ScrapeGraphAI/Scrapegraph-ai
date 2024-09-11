@@ -1,3 +1,10 @@
+## [1.18.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.2...v1.18.3) (2024-09-11)
+
+
+### Bug Fixes
+
+* models tokens ([039fe3c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/039fe3c6d91978f70baedfef407bda912a285aed))
+
 ## [1.18.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.1...v1.18.2) (2024-09-10)
 
 
