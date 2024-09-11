@@ -27,7 +27,8 @@ class BaseNode(ABC):
         input (str): Expression defining the input keys needed from the state.
         output (List[str]): List of output keys to be updated in the state.
         min_input_len (int, optional): Minimum required number of input keys; defaults to 1.
-        node_config (Optional[dict], optional): Additional configuration for the node; defaults to None.
+        node_config (Optional[dict], optional): Additional configuration 
+                                                for the node; defaults to None.
 
     Raises:
         ValueError: If `node_type` is not one of the allowed types.
@@ -233,7 +234,9 @@ class BaseNode(ABC):
         result = evaluate_expression(expression)
 
         if not result:
-            raise ValueError(f"No state keys matched the expression. Expression was {expression}. State contains keys: {', '.join(state.keys())}")
+            raise ValueError(f"""No state keys matched the expression.
+                             Expression was {expression}. 
+                             State contains keys: {', '.join(state.keys())}""")
 
         # Remove redundant state keys from the result, without changing their order
         final_result = []

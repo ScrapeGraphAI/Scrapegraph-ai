@@ -1,7 +1,6 @@
 """
 AbstractGraph Module
 """
-
 from abc import ABC, abstractmethod
 from typing import Optional
 import uuid
@@ -122,7 +121,7 @@ class AbstractGraph(ABC):
         llm_defaults = {"temperature": 0, "streaming": False}
         llm_params = {**llm_defaults, **llm_config}
         rate_limit_params = llm_params.pop("rate_limit", {})
-        
+
         if rate_limit_params:
             requests_per_second = rate_limit_params.get("requests_per_second")
             max_retries = rate_limit_params.get("max_retries")
@@ -138,7 +137,7 @@ class AbstractGraph(ABC):
                 self.model_token = llm_params["model_tokens"]
             except KeyError as exc:
                 raise KeyError("model_tokens not specified") from exc
-            return llm_params["model_instance"]    
+            return llm_params["model_instance"]
 
         known_providers = {"openai", "azure_openai", "google_genai", "google_vertexai",
                         "ollama", "oneapi", "nvidia", "groq", "anthropic", "bedrock", "mistralai",
@@ -149,16 +148,18 @@ class AbstractGraph(ABC):
         llm_params["model"] = split_model_provider[1]
 
         if llm_params["model_provider"] not in known_providers:
-            raise ValueError(f"Provider {llm_params['model_provider']} is not supported. If possible, try to use a model instance instead.")
+            raise ValueError(f"""Provider {llm_params['model_provider']} is not supported. 
+                             If possible, try to use a model instance instead.""")
 
         try:
             self.model_token = models_tokens[llm_params["model_provider"]][llm_params["model"]]
         except KeyError:
-            print(f"Model {llm_params['model_provider']}/{llm_params['model']} not found, using default token size (8192)")
+            print(f"""Model {llm_params['model_provider']}/{llm_params['model']} not found, 
+                  using default token size (8192)""")
             self.model_token = 8192
 
         try:
-            if llm_params["model_provider"] not in {"oneapi", "nvidia", "ernie", "deepseek", "togetherai"}:
+            if llm_params["model_provider"] not in {"oneapi","nvidia","ernie","deepseek","togetherai"}:
                 if llm_params["model_provider"] == "bedrock":
                     llm_params["model_kwargs"] = { "temperature" : llm_params.pop("temperature") }
                 with warnings.catch_warnings():
@@ -181,14 +182,16 @@ class AbstractGraph(ABC):
                     try:
                         from langchain_together import ChatTogether
                     except ImportError:
-                        raise ImportError("The langchain_together module is not installed. Please install it using `pip install scrapegraphai[other-language-models]`.")
+                        raise ImportError("""The langchain_together module is not installed. 
+                                          Please install it using `pip install scrapegraphai[other-language-models]`.""")
                     return ChatTogether(**llm_params)
 
                 elif model_provider == "nvidia":
                     try:
                         from langchain_nvidia_ai_endpoints import ChatNVIDIA
                     except ImportError:
-                        raise ImportError("The langchain_nvidia_ai_endpoints module is not installed. Please install it using `pip install scrapegraphai[other-language-models]`.")
+                        raise ImportError("""The langchain_nvidia_ai_endpoints module is not installed. 
+                                          Please install it using `pip install scrapegraphai[other-language-models]`.""")
                     return ChatNVIDIA(**llm_params)
 
         except Exception as e:

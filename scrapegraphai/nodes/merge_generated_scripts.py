@@ -60,23 +60,12 @@ class MergeGeneratedScriptsNode(BaseNode):
         user_prompt = input_data[0]
         scripts = input_data[1]
 
-        # merge the scripts in one string
         scripts_str = ""
         for i, script in enumerate(scripts):
             scripts_str += "-----------------------------------\n"
             scripts_str += f"SCRIPT URL {i+1}\n"
             scripts_str += "-----------------------------------\n"
             scripts_str += script
-
-        # TODO: should we pass the schema to the output parser even if the scripts already have it implemented?
-
-        # schema to be used for output parsing
-        # if self.node_config.get("schema", None) is not None:
-        #     output_schema = JsonOutputParser(pydantic_object=self.node_config["schema"])
-        # else:
-        #     output_schema = JsonOutputParser()
-
-        # format_instructions = output_schema.get_format_instructions()
 
         TEMPLATE_MERGE = """
         You are a python expert in web scraping and you have just generated multiple scripts to scrape different URLs.\n

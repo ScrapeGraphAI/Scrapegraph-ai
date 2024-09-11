@@ -62,7 +62,6 @@ class SearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # Create a SmartScraperGraph instance
         smart_scraper_instance = SmartScraperGraph(
             prompt="",
             source="",
@@ -70,7 +69,6 @@ class SearchGraph(AbstractGraph):
             schema=self.copy_schema
         )
 
-        # Define the graph nodes
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["urls"],

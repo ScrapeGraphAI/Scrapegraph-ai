@@ -18,7 +18,8 @@ from ..nodes import (
 
 class SmartScraperMultiConcatGraph(AbstractGraph):
     """ 
-    SmartScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and generates answers to a given prompt.
+    SmartScraperMultiGraph is a scraping pipeline that scrapes a 
+    list of URLs and generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
 
     Attributes:
@@ -43,13 +44,14 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
 
         if all(isinstance(value, str) for value in config.values()):
             self.copy_config = copy(config)
         else:
             self.copy_config = deepcopy(config)
-        
+
         self.copy_schema = deepcopy(schema)
 
         super().__init__(prompt, config, source, schema)
@@ -62,20 +64,12 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a SmartScraperGraph instance
-        # ************************************************
-
         smart_scraper_instance = SmartScraperGraph(
             prompt="",
             source="",
             config=self.copy_config,
             schema=self.copy_schema
         )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",

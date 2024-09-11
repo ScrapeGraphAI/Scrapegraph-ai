@@ -18,8 +18,6 @@ except ImportError:
     raise ImportError("burr package is not installed. Please install it with 'pip install scrapegraphai[burr]'")
 
 
-
-
 class PrintLnHook(PostRunStepHook, PreRunStepHook):
     """
     Hook to print the action name before and after it is executed.

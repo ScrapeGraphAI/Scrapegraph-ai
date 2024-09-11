@@ -285,7 +285,9 @@ class FetchNode(BaseNode):
                                     metadata={"source": source}) for content in data]
             elif self.scrape_do is not None:
                 from ..docloaders.scrape_do import scrape_do_fetch
-                if self.scrape_do.get("use_proxy") is None or self.scrape_do.get("geoCode") is None or self.scrape_do.get("super_proxy") is None:
+                if (self.scrape_do.get("use_proxy") is None) or \
+                self.scrape_do.get("geoCode") is None or \
+                self.scrape_do.get("super_proxy") is None:
                     data =  scrape_do_fetch(self.scrape_do.get("api_key"),
                                                 source)
                 else:
@@ -305,7 +307,10 @@ class FetchNode(BaseNode):
                                  the document fetched by ChromiumLoader.""")
             parsed_content = document[0].page_content
 
-            if (isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI))  and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
+            if (isinstance(self.llm_model, ChatOpenAI) \
+                or isinstance(self.llm_model, AzureChatOpenAI)) \
+                and not self.script_creator or self.force \
+                and not self.script_creator and not self.openai_md_enabled:
                 parsed_content = convert_to_md(document[0].page_content, parsed_content)
 
             compressed_document = [

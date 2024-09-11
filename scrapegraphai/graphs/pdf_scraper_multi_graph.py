@@ -59,20 +59,12 @@ class PdfScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a PDFScraperGraph instance
-        # ************************************************
-
         pdf_scraper_instance = PDFScraperGraph(
             prompt="",
             source="",
             config=self.copy_config,
             schema=self.copy_schema
         )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & pdfs",

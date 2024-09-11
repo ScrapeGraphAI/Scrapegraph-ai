@@ -34,7 +34,7 @@ class ConcatAnswersNode(BaseNode):
         )
 
     def _merge_dict(self, items):
-        
+
         return {"products": {f"item_{i+1}": item for i, item in enumerate(items)}}
 
     def execute(self, state: dict) -> dict:

@@ -5,11 +5,9 @@ SmartScraperMultiGraph Module
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .smart_scraper_graph import SmartScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
@@ -63,20 +61,12 @@ class SmartScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a SmartScraperGraph instance
-        # ************************************************
-
         smart_scraper_instance = SmartScraperGraph(
             prompt="",
             source="",
             config=self.copy_config,
             schema=self.copy_schema
         )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",

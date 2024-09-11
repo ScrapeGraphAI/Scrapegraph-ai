@@ -105,7 +105,11 @@ class GenerateAnswerNode(BaseNode):
             output_parser = JsonOutputParser()
             format_instructions = output_parser.get_format_instructions()
 
-        if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
+        if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
+            and not self.script_creator \
+            or self.force \
+            and not self.script_creator or self.is_md_scraper:
+
             template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS_MD
             template_chunks_prompt  = TEMPLATE_CHUNKS_MD
             template_merge_prompt  = TEMPLATE_MERGE_MD

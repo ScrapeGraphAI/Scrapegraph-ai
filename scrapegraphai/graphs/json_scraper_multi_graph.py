@@ -5,7 +5,6 @@ JSONScraperMultiGraph Module
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .json_scraper_graph import JSONScraperGraph
@@ -43,7 +42,8 @@ class JSONScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -61,20 +61,12 @@ class JSONScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a JSONScraperGraph instance
-        # ************************************************
-
         smart_scraper_instance = JSONScraperGraph(
             prompt="",
             source="",
             config=self.copy_config,
             schema=self.copy_schema
         )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",

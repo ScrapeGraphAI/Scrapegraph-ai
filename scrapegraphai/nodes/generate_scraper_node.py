@@ -111,8 +111,9 @@ class GenerateScraperNode(BaseNode):
             #raise NotImplementedError(
             #    "Currently GenerateScraperNode cannot handle more than 1 context chunks"
             #)
-            self.logger.warn(f"Warning: {self.node_name} Node provided with {len(doc)} chunks but can only "
-                "support 1, ignoring remaining chunks")
+            self.logger.warn(f"""Warning: {self.node_name} 
+                             Node provided with {len(doc)} chunks but can only "
+                            "support 1, ignoring remaining chunks""")
             doc = [doc[0]]
             template = TEMPLATE_NO_CHUNKS
         else:

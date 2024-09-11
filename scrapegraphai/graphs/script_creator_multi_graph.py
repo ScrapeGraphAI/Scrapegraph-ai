@@ -3,13 +3,10 @@ ScriptCreatorMultiGraph Module
 """
 
 from typing import List, Optional
-
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .script_creator_graph import ScriptCreatorGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeGeneratedScriptsNode
@@ -43,7 +40,8 @@ class ScriptCreatorMultiGraph(AbstractGraph):
         >>> result = script_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str],
+                 config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -58,20 +56,12 @@ class ScriptCreatorMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a ScriptCreatorGraph instance
-        # ************************************************
-
         script_generator_instance = ScriptCreatorGraph(
             prompt="",
             source="",
             config=self.copy_config,
             schema=self.schema
         )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",

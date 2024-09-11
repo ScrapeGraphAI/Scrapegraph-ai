@@ -1,4 +1,6 @@
-""" SearchLinkGraph Module """
+""" 
+SearchLinkGraph Module 
+"""
 from typing import Optional
 import logging
 from pydantic import BaseModel

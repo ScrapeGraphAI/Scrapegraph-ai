@@ -42,9 +42,7 @@ class SearchLinkNode(BaseNode):
 
         self.llm_model = node_config["llm_model"]
 
-        # Apply filters if filter_links is True or if filter_config is provided
         if node_config.get("filter_links", False) or "filter_config" in node_config:
-            # Merge provided filter config with default filter config for partial configuration
             provided_filter_config = node_config.get("filter_config", {})
             self.filter_config = {**default_filters.filter_dict, **provided_filter_config}
             self.filter_links = True
@@ -79,7 +77,7 @@ class SearchLinkNode(BaseNode):
         return any(indicator in parsed_url.path.lower() or indicator in query_params for indicator in lang_indicators)
     def _is_potentially_irrelevant(self, url):
         if not self.filter_links:
-            return False  # Skip irrelevant URL filtering if filtering is not enabled
+            return False  
 
         irrelevant_keywords = self.filter_config.get("irrelevant_keywords", [])
         return any(keyword in url.lower() for keyword in irrelevant_keywords)
@@ -118,7 +116,6 @@ class SearchLinkNode(BaseNode):
         ):
             try:
 
-                # Primary approach: Regular expression to extract links
                 links = re.findall(r'https?://[^\s"<>\]]+', str(chunk.page_content))
 
                 if not self.filter_links:
@@ -140,7 +137,6 @@ class SearchLinkNode(BaseNode):
                     self.seen_links.update(relevant_links)
 
             except Exception as e:
-                # Fallback approach: Using the LLM to extract links
                 self.logger.error(f"Error extracting links: {e}. Falling back to LLM.")
 
                 merge_prompt = PromptTemplate(

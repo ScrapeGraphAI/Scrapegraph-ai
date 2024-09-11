@@ -89,10 +89,8 @@ class GraphIteratorNode(BaseNode):
             KeyError: If the input keys are not found in the state.
         """
 
-        # interprets input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # fetches data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]

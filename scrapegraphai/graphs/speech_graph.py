@@ -1,20 +1,16 @@
 """ 
 SpeechGraph Module
 """
-
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     ParseNode,
     GenerateAnswerNode,
     TextToSpeechNode,
 )
-
 from ..utils.save_audio_from_bytes import save_audio_from_bytes
 from ..models import OpenAITextToSpeech
 
@@ -29,7 +25,8 @@ class SpeechGraph(AbstractGraph):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, configured for generating embeddings.
+        embedder_model: An instance of an embedding model clienta
+                        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
         model_token (int): The token limit for the language model.
