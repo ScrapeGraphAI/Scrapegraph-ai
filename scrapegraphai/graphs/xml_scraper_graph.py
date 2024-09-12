@@ -40,7 +40,7 @@ class XMLScraperGraph(AbstractGraph):
         >>> xml_scraper = XMLScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "data/chioggia.xml",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = xml_scraper.run()
     """

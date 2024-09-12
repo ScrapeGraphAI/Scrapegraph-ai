@@ -40,7 +40,7 @@ class PDFScraperGraph(AbstractGraph):
         >>> pdf_scraper = PDFScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "data/chioggia.pdf",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = pdf_scraper.run()
     """

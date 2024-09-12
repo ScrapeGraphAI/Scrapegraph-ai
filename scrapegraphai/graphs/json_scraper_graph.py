@@ -36,7 +36,7 @@ class JSONScraperGraph(AbstractGraph):
         >>> json_scraper = JSONScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "data/chioggia.json",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = json_scraper.run()
     """

@@ -40,7 +40,7 @@ class OmniSearchGraph(AbstractGraph):
     Example:
         >>> omni_search_graph = OmniSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-4o"}}
+        ...     {"llm": {"model": "openai/gpt-4o"}}
         ... )
         >>> result = search_graph.run()
     """

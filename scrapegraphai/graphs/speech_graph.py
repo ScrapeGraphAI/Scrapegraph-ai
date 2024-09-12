@@ -44,7 +44,7 @@ class SpeechGraph(AbstractGraph):
         >>> speech_graph = SpeechGraph(
         ...     "List me all the attractions in Chioggia and generate an audio summary.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
     """
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):

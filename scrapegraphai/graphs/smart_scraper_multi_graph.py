@@ -39,7 +39,7 @@ class SmartScraperMultiGraph(AbstractGraph):
     Example:
         >>> search_graph = MultipleSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
     """

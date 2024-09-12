@@ -15,7 +15,7 @@ from scrapegraphai.utils import prettify_exec_info
 graph_config = {
     "llm": {
         "api_key": "s",
-        "model": "gpt-3.5-turbo",
+        "model": "openai/gpt-3.5-turbo",
     },
     "cut": False,
     "verbose": True,

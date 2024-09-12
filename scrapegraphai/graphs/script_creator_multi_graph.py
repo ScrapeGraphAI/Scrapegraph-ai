@@ -37,7 +37,7 @@ class ScriptCreatorMultiGraph(AbstractGraph):
         >>> script_graph = ScriptCreatorMultiGraph(
         ...     "What is Chioggia famous for?",
         ...     source=[],
-        ...     config={"llm": {"model": "gpt-3.5-turbo"}}
+        ...     config={"llm": {"model": "openai/gpt-3.5-turbo"}}
         ...     schema={}
         ... )
         >>> result = script_graph.run()
