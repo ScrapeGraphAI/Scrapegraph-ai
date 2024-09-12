@@ -5,7 +5,7 @@ from typing import List
 from .tokenizer import num_tokens_calculus  # Import the new tokenizing function
 from langchain_core.language_models.chat_models import BaseChatModel
 
-def split_text_into_chunks(text: str, chunk_size: int, model: BaseChatModel, use_semchunk=False) -> List[str]:
+def split_text_into_chunks(text: str, chunk_size: int, model: BaseChatModel, use_semchunk=True) -> List[str]:
     """
     Splits the text into chunks based on the number of tokens.
 
@@ -20,7 +20,7 @@ def split_text_into_chunks(text: str, chunk_size: int, model: BaseChatModel, use
     if use_semchunk:
         from semchunk import chunk
         def count_tokens(text):
-            return num_tokens_calculus(text, llm_model)
+            return num_tokens_calculus(text, model)
 
         chunk_size = min(chunk_size - 500, int(chunk_size * 0.9))
 
