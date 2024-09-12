@@ -11,7 +11,9 @@ from langchain_mistralai import ChatMistralAI
 from tqdm import tqdm
 from langchain_community.chat_models import ChatOllama
 from .base_node import BaseNode
-from ..prompts.generate_answer_node_omni_prompts import TEMPLATE_NO_CHUNKS_OMNI, TEMPLATE_CHUNKS_OMNI, TEMPLATE_MERGE_OMNI
+from ..prompts.generate_answer_node_omni_prompts import (TEMPLATE_NO_CHUNKS_OMNI, 
+                                                        TEMPLATE_CHUNKS_OMNI,
+                                                        TEMPLATE_MERGE_OMNI)
 
 class GenerateAnswerOmniNode(BaseNode):
     """

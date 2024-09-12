@@ -8,7 +8,8 @@ from .base_node import BaseNode
 
 class ConcatAnswersNode(BaseNode):
     """
-    A node responsible for concatenating the answers from multiple graph instances into a single answer.
+    A node responsible for concatenating the answers from multiple 
+    graph instances into a single answer.
 
     Attributes:
         verbose (bool): A flag indicating whether to show print statements during execution.

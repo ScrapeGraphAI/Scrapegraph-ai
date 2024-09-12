@@ -11,7 +11,10 @@ from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from .base_node import BaseNode
-from ..prompts import TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
+from ..prompts import (TEMPLATE_CHUNKS,
+                       TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE,
+                       TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD,
+                       TEMPLATE_MERGE_MD)
 
 class GenerateAnswerNode(BaseNode):
     """
