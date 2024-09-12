@@ -35,7 +35,7 @@ class PromptRefinerNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "JsonDescriptor",
+        node_name: str = "PromptRefiner",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
@@ -82,47 +82,31 @@ class PromptRefinerNode(BaseNode):
         
         input_data = [state[key] for key in input_keys]
         user_prompt = input_data[0]
-        doc = input_data[1]
 
         if self.node_config.get("schema", None) is not None:
 
-            if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
-                self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"],
-                    method="function_calling") # json schema works only on specific models
+            self.schema = self.node_config["schema"]
+            
+            if self.additional_info is not None: # add context to the prompt
+                pass
+
+            template_prompt_builder = """
+            You are tasked with generating a prompt that will guide an LLM in reasoning about how to identify specific elements within an HTML page for data extraction.
+            **Input:**
+            
+            * **User Prompt:** The user's natural language description of the data they want to extract from the HTML page.
+            * **JSON Schema:** A JSON schema representing the desired output structure of the extracted data.
+            * **Additional Information (Optional):** Any supplementary details provided by the user, such as specific HTML patterns they've observed, known challenges in identifying certain elements, or preferences for particular scraping strategies.
+
+            **Output:**
+            """
+            
+            example_prompts = [
+                """
                 
-                # default parser to empty lambda function
-                output_parser = lambda x: x
-                if is_basemodel_subclass(self.node_config["schema"]):
-                    output_parser = dict
-                format_instructions = "NA"
-            else:
-                output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
-                format_instructions = output_parser.get_format_instructions()
-
-        else:
-            output_parser = JsonOutputParser()
-            format_instructions = output_parser.get_format_instructions()
-
-        if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
-            and not self.script_creator \
-            or self.force \
-            and not self.script_creator or self.is_md_scraper:
-
-            template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS_MD
-            template_chunks_prompt  = TEMPLATE_CHUNKS_MD
-            template_merge_prompt  = TEMPLATE_MERGE_MD
-        else:
-            template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS
-            template_chunks_prompt  = TEMPLATE_CHUNKS
-            template_merge_prompt  = TEMPLATE_MERGE
-
-        if self.additional_info is not None:
-            template_no_chunks_prompt  = self.additional_info + template_no_chunks_prompt
-            template_chunks_prompt  = self.additional_info + template_chunks_prompt
-            template_merge_prompt  = self.additional_info + template_merge_prompt 
-
-        if len(doc) == 1:
+                """
+            ]
+            
             prompt = PromptTemplate(
                 template=template_no_chunks_prompt ,
                 input_variables=["question"],

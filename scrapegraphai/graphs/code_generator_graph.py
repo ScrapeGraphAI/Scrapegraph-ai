@@ -94,7 +94,7 @@ class CodeGeneratorGraph(AbstractGraph):
         
         prompt_refier_node = PromptRefinerNode(
             input="user_prompt",
-            output=["json_descriptor"],
+            output=["refined_prompt"],
             node_config={
                 "llm_model": self.llm_model,
                 "chunk_size": self.model_token,
@@ -103,7 +103,7 @@ class CodeGeneratorGraph(AbstractGraph):
         )
         
         generate_code_node = GenerateCodeNode(
-            input="user_prompt & json_descriptor & doc & answer",
+            input="refined_prompt & doc & answer",
             output=["code"],
             node_config={
                 "llm_model": self.llm_model,
