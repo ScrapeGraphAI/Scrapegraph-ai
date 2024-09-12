@@ -9,7 +9,8 @@ from .abstract_graph import AbstractGraph
 from ..nodes import (
     FetchNode,
     ParseNode,
-    GenerateAnswerNode
+    GenerateAnswerNode,
+    PromptRefinerNode,
 )
 
 class CodeGeneratorGraph(AbstractGraph):
@@ -91,7 +92,7 @@ class CodeGeneratorGraph(AbstractGraph):
             }
         )
         
-        json_descriptor_node = JsonDescriptorNode(
+        prompt_refier_node = PromptRefinerNode(
             input="user_prompt",
             output=["json_descriptor"],
             node_config={
@@ -118,14 +119,14 @@ class CodeGeneratorGraph(AbstractGraph):
                 fetch_node,
                 parse_node,
                 generate_validation_answer_node,
-                json_descriptor_node,
+                prompt_refier_node,
                 generate_code_node,
             ],
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, generate_validation_answer_node),
-                (generate_validation_answer_node, json_descriptor_node),
-                (json_descriptor_node, generate_code_node)
+                (generate_validation_answer_node, prompt_refier_node),
+                (prompt_refier_node, generate_code_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__

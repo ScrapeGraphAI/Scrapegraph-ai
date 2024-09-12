@@ -1,5 +1,5 @@
 """
-JsonDescriptorNode Module
+PromptRefinerNode Module
 """
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
@@ -13,9 +13,11 @@ from tqdm import tqdm
 from .base_node import BaseNode
 
 
-class JsonDescriptorNode(BaseNode):
+class PromptRefinerNode(BaseNode):
     """
-    A node that generate a json descriptor using a large language model (LLM) based on the user's input and schema.
+    A node that refine the user prompt with the use of the schema and additional context and
+    create a precise prompt in subsequent steps that explicitly link elements in the user's 
+    original input to their corresponding representations in the JSON schema.
 
     Attributes:
         llm_model: An instance of a language model client, configured for generating answers.
@@ -33,7 +35,7 @@ class JsonDescriptorNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateAnswer",
+        node_name: str = "JsonDescriptor",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
