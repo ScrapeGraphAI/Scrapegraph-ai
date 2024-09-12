@@ -1,34 +1,30 @@
-""" 
-Basic example of scraping pipeline using SmartScraper
 """
-
+Example of Search Graph
+"""
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SearchGraph
-from scrapegraphai.utils import prettify_exec_info
-
-load_dotenv()
-
+from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
-groq_key = os.getenv("GROQ_APIKEY")
-openai_key = os.getenv("OPENAI_APIKEY")
+load_dotenv()
+
+together_key = os.getenv("TOGETHER_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "model": "togetherai/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+        "api_key": together_key,
     },
-    "embeddings": {
-        "api_key": openai_key,
-        "model": "openai",
-    },
-    "headless": False
+    "verbose": True,
 }
+
+# ************************************************
+# Create the SearchGraph instance and run it
+# ************************************************
 
 search_graph = SearchGraph(
     prompt="List me the best escursions near Trento",
@@ -44,3 +40,7 @@ print(result)
 
 graph_exec_info = search_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
+
+# Save to json and csv
+convert_to_csv(result, "result")
+convert_to_json(result, "result")

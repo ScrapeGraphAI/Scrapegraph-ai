@@ -43,7 +43,8 @@ class CSVScraperGraph(AbstractGraph):
             the answer to the prompt as a string.
         run runs the CSVScraperGraph class to extract information from a CSV file based 
             on the user's prompt. It requires no additional arguments since all necessary data 
-            is stored within the class instance. The method fetches the relevant chunks of text or speech,
+            is stored within the class instance. 
+            The method fetches the relevant chunks of text or speech,
             generates an answer based on these chunks, and returns this answer as a string.
     """
 

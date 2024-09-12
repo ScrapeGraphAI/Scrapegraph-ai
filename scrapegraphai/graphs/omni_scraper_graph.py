@@ -42,7 +42,7 @@ class OmniScraperGraph(AbstractGraph):
         >>> omni_scraper = OmniScraperGraph(
         ...     "List me all the attractions in Chioggia and describe their pictures.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "gpt-4o"}}
+        ...     {"llm": {"model": "openai/gpt-4o"}}
         ... )
         >>> result = omni_scraper.run()
         )
@@ -65,16 +65,18 @@ class OmniScraperGraph(AbstractGraph):
         """
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
             node_config={
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
             }
         )
         parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
+            input="doc & (url | local_dir)",
+            output=["parsed_doc", "link_urls", "img_urls"],
             node_config={
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "parse_urls": True,
+                "llm_model": self.llm_model
             }
         )
         image_to_text_node = ImageToTextNode(

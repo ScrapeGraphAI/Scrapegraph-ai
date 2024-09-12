@@ -4,8 +4,6 @@ CSVScraperMultiGraph Module
 
 from typing import List, Optional
 from pydantic import BaseModel
-
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .csv_scraper_graph import CSVScraperGraph
@@ -38,7 +36,7 @@ class CSVScraperMultiGraph(AbstractGraph):
     Example:
         >>> search_graph = MultipleSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
     """
@@ -60,19 +58,11 @@ class CSVScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a CSVScraperGraph instance
-        # ************************************************
-
         smart_scraper_instance = CSVScraperGraph(
             prompt="",
             source="",
             config=self.copy_config,
         )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",

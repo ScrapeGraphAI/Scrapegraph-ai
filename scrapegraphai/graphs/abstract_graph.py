@@ -1,13 +1,13 @@
 """
 AbstractGraph Module
 """
-
 from abc import ABC, abstractmethod
 from typing import Optional
 import uuid
 import warnings
 from pydantic import BaseModel
 from langchain.chat_models import init_chat_model
+from langchain_core.rate_limiters import InMemoryRateLimiter
 from ..helpers import models_tokens
 from ..models import (
     OneApi,
@@ -40,7 +40,7 @@ class AbstractGraph(ABC):
         ...         return graph
         ...
         >>> my_graph = MyGraph("Example Graph", 
-        {"llm": {"model": "gpt-3.5-turbo"}}, "example_source")
+        {"llm": {"model": "openai/gpt-3.5-turbo"}}, "example_source")
         >>> result = my_graph.run()
     """
 
@@ -62,6 +62,7 @@ class AbstractGraph(ABC):
         self.loader_kwargs = self.config.get("loader_kwargs", {})
         self.cache_path = self.config.get("cache_path", False)
         self.browser_base = self.config.get("browser_base")
+        self.scrape_do = self.config.get("scrape_do")
 
         self.graph = self._create_graph()
         self.final_state = None
@@ -119,52 +120,78 @@ class AbstractGraph(ABC):
 
         llm_defaults = {"temperature": 0, "streaming": False}
         llm_params = {**llm_defaults, **llm_config}
+        rate_limit_params = llm_params.pop("rate_limit", {})
+
+        if rate_limit_params:
+            requests_per_second = rate_limit_params.get("requests_per_second")
+            max_retries = rate_limit_params.get("max_retries")
+            if requests_per_second is not None:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    llm_params["rate_limiter"] =  InMemoryRateLimiter(requests_per_second=requests_per_second)
+            if max_retries is not None:
+                llm_params["max_retries"] = max_retries
 
         if "model_instance" in llm_params:
             try:
                 self.model_token = llm_params["model_tokens"]
             except KeyError as exc:
                 raise KeyError("model_tokens not specified") from exc
-            return llm_params["model_instance"]    
+            return llm_params["model_instance"]
 
         known_providers = {"openai", "azure_openai", "google_genai", "google_vertexai",
                         "ollama", "oneapi", "nvidia", "groq", "anthropic", "bedrock", "mistralai",
-                        "hugging_face", "deepseek", "ernie", "fireworks"}
+                        "hugging_face", "deepseek", "ernie", "fireworks", "togetherai"}
 
         split_model_provider = llm_params["model"].split("/", 1)
         llm_params["model_provider"] = split_model_provider[0]
         llm_params["model"] = split_model_provider[1]
 
         if llm_params["model_provider"] not in known_providers:
-            raise ValueError(f"Provider {llm_params['model_provider']} is not supported. If possible, try to use a model instance instead.")
+            raise ValueError(f"""Provider {llm_params['model_provider']} is not supported. 
+                             If possible, try to use a model instance instead.""")
 
         try:
             self.model_token = models_tokens[llm_params["model_provider"]][llm_params["model"]]
         except KeyError:
-            print("Model not found, using default token size (8192)")
+            print(f"""Model {llm_params['model_provider']}/{llm_params['model']} not found, 
+                  using default token size (8192)""")
             self.model_token = 8192
 
         try:
-            if llm_params["model_provider"] not in {"oneapi", "nvidia", "ernie", "deepseek"}:
+            if llm_params["model_provider"] not in {"oneapi","nvidia","ernie","deepseek","togetherai"}:
+                if llm_params["model_provider"] == "bedrock":
+                    llm_params["model_kwargs"] = { "temperature" : llm_params.pop("temperature") }
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
                     return init_chat_model(**llm_params)
             else:
-                if llm_params["model_provider"] == "deepseek":
+                model_provider = llm_params.pop("model_provider")
+
+                if model_provider == "deepseek":
                     return DeepSeek(**llm_params)
 
-                if llm_params["model_provider"] == "ernie":
+                if model_provider == "ernie":
                     from langchain_community.chat_models import ErnieBotChat
                     return ErnieBotChat(**llm_params)
 
-                if llm_params["model_provider"] == "oneapi":
+                elif model_provider == "oneapi":
                     return OneApi(**llm_params)
 
-                if llm_params["model_provider"] == "nvidia":
+                elif model_provider == "togehterai":
+                    try:
+                        from langchain_together import ChatTogether
+                    except ImportError:
+                        raise ImportError("""The langchain_together module is not installed. 
+                                          Please install it using `pip install scrapegraphai[other-language-models]`.""")
+                    return ChatTogether(**llm_params)
+
+                elif model_provider == "nvidia":
                     try:
                         from langchain_nvidia_ai_endpoints import ChatNVIDIA
                     except ImportError:
-                        raise ImportError("The langchain_nvidia_ai_endpoints module is not installed. Please install it using `pip install langchain_nvidia_ai_endpoints`.")
+                        raise ImportError("""The langchain_nvidia_ai_endpoints module is not installed. 
+                                          Please install it using `pip install scrapegraphai[other-language-models]`.""")
                     return ChatNVIDIA(**llm_params)
 
         except Exception as e:

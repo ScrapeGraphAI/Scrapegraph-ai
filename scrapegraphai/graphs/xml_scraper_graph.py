@@ -4,10 +4,8 @@ XMLScraperGraph Module
 
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     GenerateAnswerNode
@@ -40,7 +38,7 @@ class XMLScraperGraph(AbstractGraph):
         >>> xml_scraper = XMLScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "data/chioggia.xml",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = xml_scraper.run()
     """
@@ -60,7 +58,7 @@ class XMLScraperGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input="xml | xml_dir",
-            output=["doc", "link_urls", "img_urls"]
+            output=["doc"]
         )
 
         generate_answer_node = GenerateAnswerNode(

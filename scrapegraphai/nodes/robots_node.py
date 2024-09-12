@@ -119,7 +119,8 @@ class RobotsNode(BaseNode):
                     raise ValueError("The website you selected is not scrapable")
                 else:
                     self.logger.warning(
-                        "\033[33m(WARNING: Scraping this website is not allowed but you decided to force it)\033[0m"
+                        """\033[33m(WARNING: Scraping this website is 
+                        not allowed but you decided to force it)\033[0m"""
                     )
             else:
                 self.logger.warning("\033[32m(Scraping this website is allowed)\033[0m")

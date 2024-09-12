@@ -5,11 +5,9 @@ OmniSearchGraph Module
 from copy import deepcopy
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .omni_scraper_graph import OmniScraperGraph
-
 from ..nodes import (
     SearchInternetNode,
     GraphIteratorNode,
@@ -40,7 +38,7 @@ class OmniSearchGraph(AbstractGraph):
     Example:
         >>> omni_search_graph = OmniSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-4o"}}
+        ...     {"llm": {"model": "openai/gpt-4o"}}
         ... )
         >>> result = search_graph.run()
     """
@@ -63,10 +61,6 @@ class OmniSearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a OmniScraperGraph instance
-        # ************************************************
-
         omni_scraper_instance = OmniScraperGraph(
             prompt="",
             source="",
@@ -74,16 +68,13 @@ class OmniSearchGraph(AbstractGraph):
             schema=self.copy_schema
         )
 
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
-
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["urls"],
             node_config={
                 "llm_model": self.llm_model,
-                "max_results": self.max_results
+                "max_results": self.max_results,
+                "search_engine": self.copy_config.get("search_engine")
             }
         )
         graph_iterator_node = GraphIteratorNode(

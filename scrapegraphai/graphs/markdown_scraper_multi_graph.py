@@ -1,7 +1,6 @@
 """
 MDScraperMultiGraph Module
 """
-
 from copy import copy, deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
@@ -37,12 +36,13 @@ class MDScraperMultiGraph(AbstractGraph):
         >>> search_graph = MDScraperMultiGraph(
         ...     "What is Chioggia famous for?",
         ...     ["http://example.com/page1", "http://example.com/page2"],
-        ...     {"llm_model": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm_model": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
 
