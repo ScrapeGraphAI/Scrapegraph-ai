@@ -1,3 +1,10 @@
+## [1.19.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.7...v1.19.0-beta.8) (2024-09-12)
+
+
+### Features
+
+* refactoring of the tokenization function ([ec6b164](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ec6b164653250fdf01fd4db1454ea7534822f9cf))
+
 ## [1.19.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.6...v1.19.0-beta.7) (2024-09-12)
 
 
