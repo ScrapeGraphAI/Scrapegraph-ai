@@ -1,3 +1,21 @@
+## [1.19.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.5...v1.19.0-beta.6) (2024-09-12)
+
+
+### Bug Fixes
+
+* models tokens ([039fe3c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/039fe3c6d91978f70baedfef407bda912a285aed))
+
+
+### Docs
+
+* Updated the graph_config in the documentation. ([57a58e1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/57a58e162e254828d890e1a110cb5d3d4beb03df))
+
+
+### CI
+
+* **release:** 1.18.2 [skip ci] ([e1a9caa](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e1a9caa905f2a62d5b245a0abbcf4d304bd24de3))
+* **release:** 1.18.3 [skip ci] ([4bd4659](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4bd4659dc15ae5c7f71702ad6acab200c2a64921))
+
 ### Bug Fixes
 
 
