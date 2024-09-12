@@ -40,7 +40,7 @@ class AbstractGraph(ABC):
         ...         return graph
         ...
         >>> my_graph = MyGraph("Example Graph", 
-        {"llm": {"model": "gpt-3.5-turbo"}}, "example_source")
+        {"llm": {"model": "openai/gpt-3.5-turbo"}}, "example_source")
         >>> result = my_graph.run()
     """
 
