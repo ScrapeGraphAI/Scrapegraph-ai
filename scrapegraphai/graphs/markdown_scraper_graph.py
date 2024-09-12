@@ -35,7 +35,7 @@ class MDScraperGraph(AbstractGraph):
         >>> smart_scraper = MDScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = smart_scraper.run()
     """

@@ -39,7 +39,7 @@ class SearchGraph(AbstractGraph):
     Example:
         >>> search_graph = SearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
         >>> print(search_graph.get_considered_urls())

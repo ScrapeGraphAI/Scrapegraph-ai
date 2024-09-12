@@ -46,7 +46,7 @@ class DeepScraperGraph(AbstractGraph):
         >>> deep_scraper = DeepScraperGraph(
         ...     "List me all the job titles and detailed job description.",
         ...     "https://www.google.com/about/careers/applications/jobs/results/?location=Bangalore%20India",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = deep_scraper.run()
         )

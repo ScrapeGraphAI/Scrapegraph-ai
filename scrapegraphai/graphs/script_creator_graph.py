@@ -38,7 +38,7 @@ class ScriptCreatorGraph(AbstractGraph):
         >>> script_creator = ScriptCreatorGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = script_creator.run()
     """
