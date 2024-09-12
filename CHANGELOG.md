@@ -1,3 +1,10 @@
+## [1.19.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.6...v1.19.0-beta.7) (2024-09-12)
+
+
+### Bug Fixes
+
+* pyproject.toml dependencies ([b805aea](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b805aea1deb227e213bb9a027924d49058fefcc1))
+
 ## [1.19.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.5...v1.19.0-beta.6) (2024-09-12)
 
 
