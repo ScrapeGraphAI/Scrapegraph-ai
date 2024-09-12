@@ -41,6 +41,9 @@ class ParseNode(BaseNode):
             True if node_config is None else node_config.get("parse_html", True)
         )
 
+        self.llm_model = node_config.get("llm_model")
+        self.chunk_size = node_config.get("chunk_size")
+
     def execute(self, state: dict) -> dict:
         """
         Executes the node's logic to parse the HTML document content and split it into chunks.
@@ -69,19 +72,21 @@ class ParseNode(BaseNode):
             docs_transformed = docs_transformed[0]
 
             chunks = split_text_into_chunks(text=docs_transformed.page_content,
-                                            chunk_size=self.node_config.get("chunk_size", 4096)-250)
+                                            chunk_size=self.chunk_size-250, model=self.llm_model)
         else:
             docs_transformed = docs_transformed[0]
 
-            chunk_size = self.node_config.get("chunk_size", 4096)
+            chunk_size = self.chunk_size
             chunk_size = min(chunk_size - 500, int(chunk_size * 0.9))
 
             if isinstance(docs_transformed, Document):
                 chunks = split_text_into_chunks(text=docs_transformed.page_content,
-                                                chunk_size=chunk_size)
+                                                chunk_size=chunk_size,
+                                                model=self.llm_model)
             else:
                 chunks = split_text_into_chunks(text=docs_transformed,
-                                                chunk_size=chunk_size)
+                                                chunk_size=chunk_size,
+                                                model=self.llm_model)
 
         state.update({self.output[0]: chunks})
 
