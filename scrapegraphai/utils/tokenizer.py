@@ -23,7 +23,8 @@ def num_tokens_calculus(string: str, llm_model: BaseChatModel) -> int:
         num_tokens_fn = num_tokens_ollama
 
     else:
-        raise NotImplementedError(f"There is no tokenization implementation for model '{llm_model}'")
-            
+        from .tokenizers.tokenizer_openai import num_tokens_openai
+        num_tokens_fn = num_tokens_openai
+
     num_tokens = num_tokens_fn(string, llm_model)
     return num_tokens
