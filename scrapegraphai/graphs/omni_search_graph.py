@@ -61,12 +61,12 @@ class OmniSearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        omni_scraper_instance = OmniScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
+        # omni_scraper_instance = OmniScraperGraph(
+        #     prompt="",
+        #     source="",
+        #     config=self.copy_config,
+        #     schema=self.copy_schema
+        # )
 
         search_internet_node = SearchInternetNode(
             input="user_prompt",
@@ -81,8 +81,10 @@ class OmniSearchGraph(AbstractGraph):
             input="user_prompt & urls",
             output=["results"],
             node_config={
-                "graph_instance": omni_scraper_instance,
-            }
+                "graph_instance": OmniScraperGraph,
+                "scraper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(

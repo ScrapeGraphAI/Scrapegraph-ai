@@ -89,14 +89,14 @@ class GenerateAnswerNode(BaseNode):
         doc = input_data[1]
 
         if self.node_config.get("schema", None) is not None:
-
+            
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"],
-                    method="function_calling") # json schema works only on specific models
+                    schema = self.node_config["schema"]) # json schema works only on specific models
                 
                 # default parser to empty lambda function
-                output_parser = lambda x: x
+                def output_parser(x):
+                    return x
                 if is_basemodel_subclass(self.node_config["schema"]):
                     output_parser = dict
                 format_instructions = "NA"
