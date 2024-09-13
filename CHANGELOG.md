@@ -1,3 +1,10 @@
+## [1.19.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.10...v1.19.0-beta.11) (2024-09-13)
+
+
+### Features
+
+* add copy for smart_scraper_multi_concat ([9e3171b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9e3171b9fa263aa4a5a6fba2d9c8079d4e918490))
+
 ## [1.19.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.9...v1.19.0-beta.10) (2024-09-13)
 
 
