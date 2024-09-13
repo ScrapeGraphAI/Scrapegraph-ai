@@ -1,3 +1,15 @@
+## [1.19.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.3...v1.19.0) (2024-09-13)
+
+
+### Features
+
+* integration of o1 ([5c25da2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c25da2fe64b4b64a00f1879f3d5dcfbf1512848))
+
+
+### Docs
+
+* added telemetry info ([62912c2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/62912c263ec7144e2d509925593027a60d258672))
+
 ## [1.18.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.2...v1.18.3) (2024-09-11)
 
 
