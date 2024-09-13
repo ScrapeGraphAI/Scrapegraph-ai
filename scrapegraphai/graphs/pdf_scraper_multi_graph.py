@@ -59,19 +59,21 @@ class PdfScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        pdf_scraper_instance = PDFScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
+        # pdf_scraper_instance = PDFScraperGraph(
+        #     prompt="",
+        #     source="",
+        #     config=self.copy_config,
+        #     schema=self.copy_schema
+        # )
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & pdfs",
             output=["results"],
             node_config={
-                "graph_instance": pdf_scraper_instance,
-            }
+                "graph_instance": PDFScraperGraph,
+                "scraper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
@@ -79,7 +81,7 @@ class PdfScraperMultiGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 
