@@ -1,3 +1,10 @@
+## [1.19.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.8...v1.19.0-beta.9) (2024-09-13)
+
+
+### Bug Fixes
+
+* OmniScraerGraph working. ([c3d1b7c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c3d1b7c200e6fd065bd5aea79b90ca3db4d42b16))
+
 ## [1.19.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.7...v1.19.0-beta.8) (2024-09-12)
 
 
