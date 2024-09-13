@@ -1,3 +1,12 @@
+## [1.19.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.9...v1.19.0-beta.10) (2024-09-13)
+
+
+### Bug Fixes
+
+* Added support for nested structure ([66ea166](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/66ea166438166a00a8b093c749f201694ab3a7be))
+* Fixed pydantic error on SearchGraphs ([039ba2e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/039ba2e95a0067f37d421b348bad9775b2e76098))
+* update all nodes that were using MergeNode or IteratorNode ([a92dddb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a92dddb3e02549ee62ef6828fb55f5902470a3b4))
+
 ## [1.19.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.8...v1.19.0-beta.9) (2024-09-13)
 
 
