@@ -2,6 +2,7 @@
 MergeAnswersNode Module
 """
 from typing import List, Optional
+from pydantic.v1 import BaseModel as BaseModelV1
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.utils.pydantic import is_basemodel_subclass
@@ -10,6 +11,7 @@ from langchain_mistralai import ChatMistralAI
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import TEMPLATE_COMBINED
+from ..utils.llm_output_parser import base_model_v1_output_parser, base_model_v2_output_parser, typed_dict_output_parser
 
 class MergeAnswersNode(BaseNode):
     """
@@ -74,12 +76,13 @@ class MergeAnswersNode(BaseNode):
 
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"],
-                    method="function_calling") # json schema works only on specific models
-                # default parser to empty lambda function
-                output_parser = lambda x: x
+                    schema = self.node_config["schema"]) # json schema works only on specific models
+
+                output_parser = typed_dict_output_parser
                 if is_basemodel_subclass(self.node_config["schema"]):
-                    output_parser = dict
+                    output_parser = base_model_v2_output_parser
+                    if issubclass(self.node_config["schema"], BaseModelV1):
+                        output_parser = base_model_v1_output_parser
                 format_instructions = "NA"
             else:
                 output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
@@ -100,7 +103,7 @@ class MergeAnswersNode(BaseNode):
 
         merge_chain = prompt_template | self.llm_model | output_parser
         answer = merge_chain.invoke({"user_prompt": user_prompt})
-        answer["sources"] = state.get("urls")
+        answer["sources"] = state.get("urls", [])
 
         state.update({self.output[0]: answer})
         return state

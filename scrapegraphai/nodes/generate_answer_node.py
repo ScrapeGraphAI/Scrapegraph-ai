@@ -2,6 +2,7 @@
 GenerateAnswerNode Module
 """
 from typing import List, Optional
+from pydantic.v1 import BaseModel as BaseModelV1
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
@@ -11,6 +12,7 @@ from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from .base_node import BaseNode
+from ..utils.llm_output_parser import base_model_v1_output_parser, base_model_v2_output_parser, typed_dict_output_parser
 from ..prompts import (TEMPLATE_CHUNKS,
                        TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE,
                        TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD,
@@ -93,12 +95,12 @@ class GenerateAnswerNode(BaseNode):
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
                     schema = self.node_config["schema"]) # json schema works only on specific models
-                
-                # default parser to empty lambda function
-                def output_parser(x):
-                    return x
+
+                output_parser = typed_dict_output_parser
                 if is_basemodel_subclass(self.node_config["schema"]):
-                    output_parser = dict
+                    output_parser = base_model_v2_output_parser
+                    if issubclass(self.node_config["schema"], BaseModelV1):
+                        output_parser = base_model_v1_output_parser
                 format_instructions = "NA"
             else:
                 output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
