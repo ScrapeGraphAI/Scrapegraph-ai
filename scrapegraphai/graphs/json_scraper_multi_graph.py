@@ -61,13 +61,6 @@ class JSONScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # smart_scraper_instance = JSONScraperGraph(
-        #     prompt="",
-        #     source="",
-        #     config=self.copy_config,
-        #     schema=self.copy_schema
-        # )
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],

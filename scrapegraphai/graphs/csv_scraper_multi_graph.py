@@ -61,12 +61,6 @@ class CSVScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # smart_scraper_instance = CSVScraperGraph(
-        #     prompt="",
-        #     source="",
-        #     config=self.copy_config,
-        # )
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],

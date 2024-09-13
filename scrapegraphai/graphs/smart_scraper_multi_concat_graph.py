@@ -2,18 +2,17 @@
 SmartScraperMultiGraph Module
 """
 
-from copy import copy, deepcopy
+from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .smart_scraper_graph import SmartScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     ConcatAnswersNode
 )
+from ..utils.copy import safe_deepcopy
 
 
 class SmartScraperMultiConcatGraph(AbstractGraph):
@@ -46,11 +45,8 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
 
     def __init__(self, prompt: str, source: List[str], 
                  config: dict, schema: Optional[BaseModel] = None):
-
-        if all(isinstance(value, str) for value in config.values()):
-            self.copy_config = copy(config)
-        else:
-            self.copy_config = deepcopy(config)
+        
+        self.copy_config = safe_deepcopy(config)
 
         self.copy_schema = deepcopy(schema)
 

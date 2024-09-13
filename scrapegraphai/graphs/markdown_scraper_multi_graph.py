@@ -55,14 +55,7 @@ class MDScraperMultiGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
-        # smart_scraper_instance = MDScraperGraph(
-        #     prompt="",
-        #     source="",
-        #     config=self.copy_config,
-        #     schema=self.copy_schema
-        # )
 
-        # Define the graph nodes
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],
