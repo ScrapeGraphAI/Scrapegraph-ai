@@ -23,7 +23,8 @@ models_tokens = {
         "gpt-4o-2024-08-06": 128000,
         "gpt-4o-2024-05-13": 128000,
         "gpt-4o-mini":128000,
-
+        "o1-preview":128000,
+        "o1-mini":128000
     },
     "azure_openai": {
         "gpt-3.5-turbo-0125": 16385,
@@ -43,7 +44,9 @@ models_tokens = {
         "gpt-4-32k-0613": 32768,
         "gpt-4o": 128000,
         "gpt-4o-mini":128000,
-        "chatgpt-4o-latest": 128000
+        "chatgpt-4o-latest": 128000,
+        "o1-preview":128000,
+        "o1-mini":128000
     },
     "google_genai": {
         "gemini-pro": 128000,
