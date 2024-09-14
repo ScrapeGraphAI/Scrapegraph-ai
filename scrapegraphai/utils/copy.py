@@ -3,27 +3,27 @@ from typing import Any
 
 
 class DeepCopyError(Exception):
-    """Custom exception raised when an object cannot be deep-copied."""
+    """
+    Custom exception raised when an object cannot be deep-copied.
+    """
 
     pass
 
 
 def is_boto3_client(obj):
+    """ 
+    Function for understanding if the script is using boto3 or not
+    """
     import sys
 
-    # check boto3 module imprort
     boto3_module = sys.modules.get("boto3")
 
     if boto3_module:
-        # boto3 use botocore client so here we import botocore
-        # if boto3 was imported the botocore will be import automatically normally
         try:
             from botocore.client import BaseClient
 
             return isinstance(obj, BaseClient)
         except (AttributeError, ImportError):
-            # if the module is not imported, or the BaseClient class does not exist, return False
-            # if custome module name is boto3, the BaseClient class does not exist,
             return False
     return False
 
@@ -47,12 +47,9 @@ def safe_deepcopy(obj: Any) -> Any:
 
     try:
 
-        # Try to use copy.deepcopy first
         return copy.deepcopy(obj)
     except (TypeError, AttributeError) as e:
-        # If deepcopy fails, handle specific types manually
 
-        # Handle dictionaries
         if isinstance(obj, dict):
             new_obj = {}
 
@@ -60,7 +57,6 @@ def safe_deepcopy(obj: Any) -> Any:
                 new_obj[k] = safe_deepcopy(v)
             return new_obj
 
-        # Handle lists
         elif isinstance(obj, list):
             new_obj = []
 
@@ -68,13 +64,11 @@ def safe_deepcopy(obj: Any) -> Any:
                 new_obj.append(safe_deepcopy(v))
             return new_obj
 
-        # Handle tuples (immutable, but might contain mutable objects)
         elif isinstance(obj, tuple):
             new_obj = tuple(safe_deepcopy(v) for v in obj)
 
             return new_obj
 
-        # Handle frozensets (immutable, but might contain mutable objects)
         elif isinstance(obj, frozenset):
             new_obj = frozenset(safe_deepcopy(v) for v in obj)
             return new_obj
@@ -82,10 +76,7 @@ def safe_deepcopy(obj: Any) -> Any:
         elif is_boto3_client(obj):
             return obj
 
-        # Handle objects with attributes
         else:
-            # If an object cannot be deep copied, then the sub-properties of \
-            # the object will not be analyzed and shallow copy will be used directly.
             try:
                 return copy.copy(obj)
             except (TypeError, AttributeError):
