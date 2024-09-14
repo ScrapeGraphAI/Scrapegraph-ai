@@ -1,3 +1,15 @@
+## [1.19.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.11...v1.19.0-beta.12) (2024-09-14)
+
+
+### Bug Fixes
+
+* Refactor code to use CustomOpenAiCallbackManager for exclusive access to get_openai_callback ([e657113](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e657113ebc91336bb842f21e1ec74a952a0da6ba))
+
+
+### Docs
+
+* added telemetry info ([62912c2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/62912c263ec7144e2d509925593027a60d258672))
+
 ## [1.19.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0-beta.10...v1.19.0-beta.11) (2024-09-13)
 
 
