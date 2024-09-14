@@ -1,20 +1,16 @@
 """ 
 SpeechGraph Module
 """
-
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     ParseNode,
     GenerateAnswerNode,
     TextToSpeechNode,
 )
-
 from ..utils.save_audio_from_bytes import save_audio_from_bytes
 from ..models import OpenAITextToSpeech
 
@@ -29,7 +25,8 @@ class SpeechGraph(AbstractGraph):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, configured for generating embeddings.
+        embedder_model: An instance of an embedding model clienta
+                        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
         model_token (int): The token limit for the language model.
@@ -44,7 +41,7 @@ class SpeechGraph(AbstractGraph):
         >>> speech_graph = SpeechGraph(
         ...     "List me all the attractions in Chioggia and generate an audio summary.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
     """
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
@@ -62,13 +59,14 @@ class SpeechGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc", "link_urls", "img_urls"]
+            output=["doc"]
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "llm_model": self.llm_model
             }
         )
         generate_answer_node = GenerateAnswerNode(

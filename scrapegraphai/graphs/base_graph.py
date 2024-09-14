@@ -4,8 +4,8 @@ base_graph module
 import time
 import warnings
 from typing import Tuple
-from langchain_community.callbacks import get_openai_callback
 from ..telemetry import log_graph_execution
+from ..utils import CustomOpenAiCallbackManager
 
 class BaseGraph:
     """
@@ -52,6 +52,7 @@ class BaseGraph:
         self.entry_point = entry_point.node_name
         self.graph_name = graph_name
         self.initial_state = {}
+        self.callback_manager = CustomOpenAiCallbackManager()
 
         if nodes[0].node_name != entry_point.node_name:
             # raise a warning if the entry point is not the first node in the list
@@ -116,28 +117,21 @@ class BaseGraph:
             curr_time = time.time()
             current_node = next(node for node in self.nodes if node.node_name == current_node_name)
 
-            # check if there is a "source" key in the node config
             if current_node.__class__.__name__ == "FetchNode":
-                # get the second key name of the state dictionary
                 source_type = list(state.keys())[1]
                 if state.get("user_prompt", None):
-                    # Set 'prompt' if 'user_prompt' is a string, otherwise None
                     prompt = state["user_prompt"] if isinstance(state["user_prompt"], str) else None
 
-                # Convert 'local_dir' source type to 'html_dir'
                 if source_type == "local_dir":
                     source_type = "html_dir"
                 elif source_type == "url":
-                    # If the source is a list, add string URLs to 'source'
                     if isinstance(state[source_type], list):
                         for url in state[source_type]:
                             if isinstance(url, str):
                                 source.append(url)
-                    # If the source is a single string, add it to 'source'
                     elif isinstance(state[source_type], str):
                         source.append(state[source_type])
 
-            # check if there is an "llm_model" variable in the class
             if hasattr(current_node, "llm_model") and llm_model is None:
                 llm_model = current_node.llm_model
                 if hasattr(llm_model, "model_name"):
@@ -145,7 +139,6 @@ class BaseGraph:
                 elif hasattr(llm_model, "model"):
                     llm_model = llm_model.model
 
-            # check if there is an "embedder_model" variable in the class
             if hasattr(current_node, "embedder_model") and embedder_model is None:
                 embedder_model = current_node.embedder_model
                 if hasattr(embedder_model, "model_name"):
@@ -157,13 +150,12 @@ class BaseGraph:
                 if isinstance(current_node.node_config,dict):
                     if current_node.node_config.get("schema", None) and schema is None:
                         if not  isinstance(current_node.node_config["schema"], dict):
-                            # convert to dict
                             try:
                                 schema = current_node.node_config["schema"].schema()
                             except Exception as e:
                                 schema = None
 
-            with get_openai_callback() as cb:
+            with self.callback_manager.exclusive_get_openai_callback() as cb:
                 try:
                     result = current_node.execute(state)
                 except Exception as e:
@@ -185,23 +177,24 @@ class BaseGraph:
                 node_exec_time = time.time() - curr_time
                 total_exec_time += node_exec_time
 
-                cb_data = {
-                    "node_name": current_node.node_name,
-                    "total_tokens": cb.total_tokens,
-                    "prompt_tokens": cb.prompt_tokens,
-                    "completion_tokens": cb.completion_tokens,
-                    "successful_requests": cb.successful_requests,
-                    "total_cost_USD": cb.total_cost,
-                    "exec_time": node_exec_time,
-                }
+                if cb is not None:
+                    cb_data = {
+                        "node_name": current_node.node_name,
+                        "total_tokens": cb.total_tokens,
+                        "prompt_tokens": cb.prompt_tokens,
+                        "completion_tokens": cb.completion_tokens,
+                        "successful_requests": cb.successful_requests,
+                        "total_cost_USD": cb.total_cost,
+                        "exec_time": node_exec_time,
+                    }
 
-                exec_info.append(cb_data)
+                    exec_info.append(cb_data)
 
-                cb_total["total_tokens"] += cb_data["total_tokens"]
-                cb_total["prompt_tokens"] += cb_data["prompt_tokens"]
-                cb_total["completion_tokens"] += cb_data["completion_tokens"]
-                cb_total["successful_requests"] += cb_data["successful_requests"]
-                cb_total["total_cost_USD"] += cb_data["total_cost_USD"]
+                    cb_total["total_tokens"] += cb_data["total_tokens"]
+                    cb_total["prompt_tokens"] += cb_data["prompt_tokens"]
+                    cb_total["completion_tokens"] += cb_data["completion_tokens"]
+                    cb_total["successful_requests"] += cb_data["successful_requests"]
+                    cb_total["total_cost_USD"] += cb_data["total_cost_USD"]
 
             if current_node.node_type == "conditional_node":
                 current_node_name = result
@@ -220,7 +213,6 @@ class BaseGraph:
             "exec_time": total_exec_time,
         })
 
-        # Log the graph execution telemetry
         graph_execution_time = time.time() - start_time
         response = state.get("answer", None) if source_type == "url" else None
         content = state.get("parsed_doc", None) if response is not None else None
@@ -272,13 +264,10 @@ class BaseGraph:
 
         # if node name already exists in the graph, raise an exception
         if node.node_name in {n.node_name for n in self.nodes}:
-            raise ValueError(f"Node with name '{node.node_name}' already exists in the graph. You can change it by setting the 'node_name' attribute.")
+            raise ValueError(f"""Node with name '{node.node_name}' already exists in the graph.
+                             You can change it by setting the 'node_name' attribute.""")
 
-        # get the last node in the list
         last_node = self.nodes[-1]
-        # add the edge connecting the last node to the new node
         self.raw_edges.append((last_node, node))
-        # add the node to the list of nodes
         self.nodes.append(node)
-        # update the edges connecting the last node to the new node
         self.edges = self._create_edges({e for e in self.raw_edges})

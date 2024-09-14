@@ -2,11 +2,10 @@
 GraphIterator Module
 """
 import asyncio
-import copy
 from typing import List, Optional
 from tqdm.asyncio import tqdm
-from ..utils.logging import get_logger
 from .base_node import BaseNode
+from langchain_core.pydantic_v1 import BaseModel
 
 DEFAULT_BATCHSIZE = 16
 
@@ -31,12 +30,14 @@ class GraphIteratorNode(BaseNode):
         output: List[str],
         node_config: Optional[dict] = None,
         node_name: str = "GraphIterator",
+        schema: Optional[BaseModel] = None,
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.schema = schema
 
     def execute(self, state: dict) -> dict:
         """
@@ -89,26 +90,32 @@ class GraphIteratorNode(BaseNode):
             KeyError: If the input keys are not found in the state.
         """
 
-        # interprets input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # fetches data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
         urls = input_data[1]
 
         graph_instance = self.node_config.get("graph_instance", None)
+        scraper_config = self.node_config.get("scraper_config", None)
 
         if graph_instance is None:
             raise ValueError("graph instance is required for concurrent execution")
 
-        if "graph_depth" in graph_instance.config:
-            graph_instance.config["graph_depth"] += 1
-        else:
-            graph_instance.config["graph_depth"] = 1
+        graph_instance = [graph_instance(
+            prompt="",
+            source="",
+            config=scraper_config,
+            schema=self.schema) for _ in range(len(urls))]
 
-        graph_instance.prompt = user_prompt
+        for graph in graph_instance:
+            if "graph_depth" in graph.config:
+                graph.config["graph_depth"] += 1
+            else:
+                graph.config["graph_depth"] = 1
+
+            graph.prompt = user_prompt
 
         participants = []
 
@@ -118,13 +125,12 @@ class GraphIteratorNode(BaseNode):
             async with semaphore:
                 return await asyncio.to_thread(graph.run)
 
-        for url in urls:
-            instance = copy.copy(graph_instance)
-            instance.source = url
+        for url, graph in zip(urls, graph_instance):
+            graph.source = url
             if url.startswith("http"):
-                instance.input_key = "url"
-            participants.append(instance)
-
+                graph.input_key = "url"
+            participants.append(graph)
+        
         futures = [_async_run(graph) for graph in participants]
 
         answers = await tqdm.gather(

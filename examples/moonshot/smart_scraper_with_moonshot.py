@@ -1,12 +1,13 @@
 """ 
 Basic example of scraping pipeline using SmartScraper and model_instace
 """
-
-import os, json
-from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import prettify_exec_info
+import os
+import json
 from langchain_community.chat_models.moonshot import MoonshotChat
 from dotenv import load_dotenv
+from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.utils import prettify_exec_info
+
 load_dotenv()
 
 # ************************************************

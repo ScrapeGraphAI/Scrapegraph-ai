@@ -13,7 +13,7 @@ from scrapegraphai.utils import prettify_exec_info
 graph_config = {
     "llm": {
         "api_key": "API_KEY",
-        "model": "gpt-3.5-turbo",
+        "model": "openai/gpt-3.5-turbo",
     },
     "loader_kwargs": {
         "proxy" : {

@@ -1,9 +1,11 @@
 """
 ImageToTextNode Module
 """
+import traceback
 from typing import List, Optional
 from ..utils.logging import get_logger
 from .base_node import BaseNode
+from langchain_core.messages import HumanMessage
 
 class ImageToTextNode(BaseNode):
     """
@@ -58,16 +60,25 @@ class ImageToTextNode(BaseNode):
         if isinstance(urls, str):
             urls = [urls]
         elif len(urls) == 0:
-            return state
+            return state.update({self.output[0]: []})
 
         # Skip the image-to-text conversion
         if self.max_images < 1:
-            return state
-
+            return state.update({self.output[0]: []})
+        
         img_desc = []
         for url in urls[: self.max_images]:
             try:
-                text_answer = self.llm_model.run(url)
+                message = HumanMessage(
+                    content=[
+                        {"type": "text", "text": "Describe the provided image."},
+                        {
+                            "type": "image_url",
+                            "image_url": {"url": url},
+                        },
+                    ]
+                )
+                text_answer = self.llm_model.invoke([message]).content
             except Exception as e:
                 text_answer = f"Error: incompatible image format or model failure."
             img_desc.append(text_answer)

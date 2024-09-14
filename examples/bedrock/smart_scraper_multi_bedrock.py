@@ -1,12 +1,9 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
-import os, json
-from dotenv import load_dotenv
+import json
 from scrapegraphai.graphs import SmartScraperMultiGraph
 
-load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph

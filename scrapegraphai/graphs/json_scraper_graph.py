@@ -1,7 +1,6 @@
 """
 JSONScraperGraph Module
 """
-
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
@@ -36,7 +35,7 @@ class JSONScraperGraph(AbstractGraph):
         >>> json_scraper = JSONScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "data/chioggia.json",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = json_scraper.run()
     """
@@ -56,7 +55,7 @@ class JSONScraperGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input="json | json_dir",
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
         )
 
         generate_answer_node = GenerateAnswerNode(

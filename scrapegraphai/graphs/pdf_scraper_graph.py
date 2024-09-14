@@ -2,7 +2,6 @@
 """
 PDFScraperGraph Module
 """
-
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
@@ -40,7 +39,7 @@ class PDFScraperGraph(AbstractGraph):
         >>> pdf_scraper = PDFScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "data/chioggia.pdf",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = pdf_scraper.run()
     """
@@ -68,7 +67,8 @@ class PDFScraperGraph(AbstractGraph):
             output=["parsed_doc"],
             node_config={
                 "parse_html": False,
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "llm_model": self.llm_model
             }
         )
 

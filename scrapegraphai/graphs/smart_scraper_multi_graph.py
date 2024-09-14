@@ -5,11 +5,9 @@ SmartScraperMultiGraph Module
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .smart_scraper_graph import SmartScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
@@ -39,7 +37,7 @@ class SmartScraperMultiGraph(AbstractGraph):
     Example:
         >>> search_graph = MultipleSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
     """
@@ -63,27 +61,21 @@ class SmartScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a SmartScraperGraph instance
-        # ************************************************
-
-        smart_scraper_instance = SmartScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
+        # smart_scraper_instance = SmartScraperGraph(
+        #     prompt="",
+        #     source="",
+        #     config=self.copy_config,
+        #     schema=self.copy_schema
+        # )
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
             output=["results"],
             node_config={
-                "graph_instance": smart_scraper_instance,
-            }
+                "graph_instance": SmartScraperGraph,
+                "scraper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
@@ -91,7 +83,7 @@ class SmartScraperMultiGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 

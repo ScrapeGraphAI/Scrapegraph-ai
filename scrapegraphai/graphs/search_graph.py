@@ -39,7 +39,7 @@ class SearchGraph(AbstractGraph):
     Example:
         >>> search_graph = SearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
         >>> print(search_graph.get_considered_urls())
@@ -62,29 +62,30 @@ class SearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # Create a SmartScraperGraph instance
-        smart_scraper_instance = SmartScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
+        # smart_scraper_instance = SmartScraperGraph(
+        #     prompt="",
+        #     source="",
+        #     config=self.copy_config,
+        #     schema=self.copy_schema
+        # )
 
-        # Define the graph nodes
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["urls"],
             node_config={
                 "llm_model": self.llm_model,
-                "max_results": self.max_results
+                "max_results": self.max_results,
+                "search_engine": self.copy_config.get("search_engine")
             }
         )
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
             output=["results"],
             node_config={
-                "graph_instance": smart_scraper_instance,
-            }
+                "graph_instance": SmartScraperGraph,
+                "scraper_config": self.copy_config
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
@@ -92,7 +93,7 @@ class SearchGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 

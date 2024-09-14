@@ -5,11 +5,9 @@ XMLScraperMultiGraph Module
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .xml_scraper_graph import XMLScraperGraph
-
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
@@ -39,7 +37,7 @@ class XMLScraperMultiGraph(AbstractGraph):
     Example:
         >>> search_graph = MultipleSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
     """
@@ -61,27 +59,21 @@ class XMLScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a XMLScraperGraph instance
-        # ************************************************
-
-        smart_scraper_instance = XMLScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
+        # smart_scraper_instance = XMLScraperGraph(
+        #     prompt="",
+        #     source="",
+        #     config=self.copy_config,
+        #     schema=self.copy_schema
+        # )
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],
             node_config={
-                "graph_instance": smart_scraper_instance,
-            }
+                "graph_instance": XMLScraperGraph,
+                "scaper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
@@ -89,7 +81,7 @@ class XMLScraperMultiGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 

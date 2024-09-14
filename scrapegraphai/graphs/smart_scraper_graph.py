@@ -1,13 +1,11 @@
 """
 SmartScraperGraph Module
 """
-
 from typing import Optional
 import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-
 from ..nodes import (
     FetchNode,
     ParseNode,
@@ -41,7 +39,7 @@ class SmartScraperGraph(AbstractGraph):
         >>> smart_scraper = SmartScraperGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = smart_scraper.run()
         )
@@ -61,19 +59,21 @@ class SmartScraperGraph(AbstractGraph):
         """
         fetch_node = FetchNode(
             input="url| local_dir",
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
             node_config={
                 "llm_model": self.llm_model,
                 "force": self.config.get("force", False),
                 "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
-                "browser_base": self.config.get("browser_base")
+                "browser_base": self.config.get("browser_base"),
+                "scrape_do": self.config.get("scrape_do")
             }
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
+                "llm_model": self.llm_model,
                 "chunk_size": self.model_token
             }
         )
