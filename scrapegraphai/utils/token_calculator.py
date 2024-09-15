@@ -5,7 +5,6 @@ from typing import List
 import tiktoken
 from ..helpers.models_tokens import models_tokens
 
-
 def truncate_text_tokens(text: str, model: str, encoding_name: str) -> List[str]:
     """
     Truncates text into chunks that are small enough to be processed by specified llm models.

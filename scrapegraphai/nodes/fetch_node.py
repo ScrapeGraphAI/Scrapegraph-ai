@@ -252,8 +252,8 @@ class FetchNode(BaseNode):
                 if not self.cut:
                     parsed_content = cleanup_html(response, source)
 
-                if  ((isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI))
-                     and not self.script_creator) or (self.force and not self.script_creator):
+                if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
+                    and not self.script_creator) or (self.force and not self.script_creator):
                     parsed_content = convert_to_md(source, parsed_content)
 
                 compressed_document = [Document(page_content=parsed_content)]
@@ -271,7 +271,8 @@ class FetchNode(BaseNode):
                 try:
                     from ..docloaders.browser_base import browser_base_fetch
                 except ImportError:
-                    raise ImportError("The browserbase module is not installed. Please install it using `pip install browserbase`.")
+                    raise ImportError("""The browserbase module is not installed. 
+                                      Please install it using `pip install browserbase`.""")
 
                 data =  browser_base_fetch(self.browser_base.get("api_key"),
                                             self.browser_base.get("project_id"), [source])
@@ -283,7 +284,8 @@ class FetchNode(BaseNode):
                 document = loader.load()
 
             if not document or not document[0].page_content.strip():
-                raise ValueError("No HTML body content found in the document fetched by ChromiumLoader.")
+                raise ValueError("""No HTML body content found in
+                                 the document fetched by ChromiumLoader.""")
             parsed_content = document[0].page_content
 
             if (isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI))  and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:

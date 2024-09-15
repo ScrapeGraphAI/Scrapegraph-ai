@@ -3,7 +3,6 @@ Parse_state_key module
 """
 import re
 
-
 def parse_expression(expression, state: dict) -> list:
     """
     Parses a complex boolean expression involving state keys.
@@ -22,7 +21,8 @@ def parse_expression(expression, state: dict) -> list:
 
     Example:
         >>> parse_expression("user_input & (relevant_chunks | parsed_document | document)", 
-                            {"user_input": None, "document": None, "parsed_document": None, "relevant_chunks": None})
+                            {"user_input": None, "document": None, 
+                            "parsed_document": None, "relevant_chunks": None})
         ['user_input', 'relevant_chunks', 'parsed_document', 'document']
 
     This function evaluates the expression to determine the 
@@ -69,7 +69,6 @@ def parse_expression(expression, state: dict) -> list:
                 return [elem.strip() for elem in and_segment if elem.strip() in state]
         return []
 
-    # Helper function to evaluate expressions with parentheses
     def evaluate_expression(expression):
         while '(' in expression:
             start = expression.rfind('(')
