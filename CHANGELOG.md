@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0...v1.20.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* fetch_node ([9e46b46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9e46b468c1447759986b87c34c5f89d945874572))
+
 ## [1.20.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0...v1.20.0) (2024-09-16)
 
 
