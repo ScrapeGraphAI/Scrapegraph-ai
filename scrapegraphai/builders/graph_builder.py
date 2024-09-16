@@ -65,12 +65,10 @@ class GraphBuilder:
             "temperature": 0,
             "streaming": True
         }
-        # Update defaults with any LLM parameters that were provided
         llm_params = {**llm_defaults, **llm_config}
         if "api_key" not in llm_params:
             raise ValueError("LLM configuration must include an 'api_key'.")
 
-        # select the model based on the model name
         if "gpt-" in llm_params["model"]:
             return ChatOpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
@@ -152,17 +150,13 @@ class GraphBuilder:
         edges = graph_config.get('edges', [])
         entry_point = graph_config.get('entry_point')
 
-        # Add nodes to the graph
         for node in nodes:
-            # If this node is the entry point, use a double circle to denote it
             if node['node_name'] == entry_point:
                 graph.node(node['node_name'], shape='doublecircle')
             else:
                 graph.node(node['node_name'])
 
-        # Add edges to the graph
         for edge in edges:
-            # An edge could potentially have multiple 'to' nodes if it's from a conditional node
             if isinstance(edge['to'], list):
                 for to_node in edge['to']:
                     graph.edge(edge['from'], to_node)

@@ -256,8 +256,8 @@ class FetchNode(BaseNode):
                 if not self.cut:
                     parsed_content = cleanup_html(response, source)
 
-                if  ((isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI))
-                     and not self.script_creator) or (self.force and not self.script_creator):
+                if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
+                    and not self.script_creator) or (self.force and not self.script_creator):
                     parsed_content = convert_to_md(source, parsed_content)
 
                 compressed_document = [Document(page_content=parsed_content)]
