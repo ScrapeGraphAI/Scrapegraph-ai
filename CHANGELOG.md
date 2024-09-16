@@ -1,3 +1,10 @@
+## [1.20.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0...v1.20.0) (2024-09-16)
+
+
+### Features
+
+* add grok integration for ollama ([59aa251](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/59aa2510e18a81e72ae28ed2a0c6870db359bfee))
+
 ## [1.19.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.3...v1.19.0) (2024-09-13)
 
 
