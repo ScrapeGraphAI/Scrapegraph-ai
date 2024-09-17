@@ -2,16 +2,13 @@
 MergeAnswersNode Module
 """
 from typing import List, Optional
-from pydantic.v1 import BaseModel as BaseModelV1
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.utils.pydantic import is_basemodel_subclass
 from langchain_openai import ChatOpenAI
 from langchain_mistralai import ChatMistralAI
-from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import TEMPLATE_COMBINED
-from ..utils.llm_output_parser import base_model_v1_output_parser, base_model_v2_output_parser, typed_dict_output_parser
+from ..utils.output_parser import get_structured_output_parser, get_pydantic_output_parser
 
 class MergeAnswersNode(BaseNode):
     """
@@ -78,14 +75,10 @@ class MergeAnswersNode(BaseNode):
                 self.llm_model = self.llm_model.with_structured_output(
                     schema = self.node_config["schema"]) # json schema works only on specific models
 
-                output_parser = typed_dict_output_parser
-                if is_basemodel_subclass(self.node_config["schema"]):
-                    output_parser = base_model_v2_output_parser
-                    if issubclass(self.node_config["schema"], BaseModelV1):
-                        output_parser = base_model_v1_output_parser
+                output_parser = get_structured_output_parser(self.node_config["schema"])
                 format_instructions = "NA"
             else:
-                output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
+                output_parser = get_pydantic_output_parser(self.node_config["schema"])
                 format_instructions = output_parser.get_format_instructions()
 
         else:
