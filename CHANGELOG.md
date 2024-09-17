@@ -1,3 +1,12 @@
+## [1.20.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0-beta.1...v1.20.0-beta.2) (2024-09-17)
+
+
+### Bug Fixes
+
+* Add mistral-common dependency ([7681a45](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7681a4586a68b164ca5c8a8aa0c11db0e54b503d))
+* Error in pyproject dependencies ([5b5cb5b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5b5cb5b8617605f93ecb6af425e426d1d90aa7bb))
+* fetch_node condition ([3f45c17](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3f45c170229090e1658f1623148218a43aaa9c4f))
+
 ## [1.20.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0...v1.20.0-beta.1) (2024-09-14)
 
 
