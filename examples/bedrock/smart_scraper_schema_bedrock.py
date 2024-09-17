@@ -2,7 +2,7 @@
 Basic example of scraping pipeline using SmartScraper
 """
 from typing import List
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
