@@ -5,7 +5,7 @@ import time
 import warnings
 from typing import Tuple
 from ..telemetry import log_graph_execution
-from ..utils import CustomOpenAiCallbackManager
+from ..utils import CustomLLMCallbackManager
 
 class BaseGraph:
     """
@@ -52,7 +52,7 @@ class BaseGraph:
         self.entry_point = entry_point.node_name
         self.graph_name = graph_name
         self.initial_state = {}
-        self.callback_manager = CustomOpenAiCallbackManager()
+        self.callback_manager = CustomLLMCallbackManager()
 
         if nodes[0].node_name != entry_point.node_name:
             # raise a warning if the entry point is not the first node in the list
@@ -108,6 +108,7 @@ class BaseGraph:
         error_node = None
         source_type = None
         llm_model = None
+        llm_model_name = None
         embedder_model = None
         source = []
         prompt = None
@@ -135,9 +136,11 @@ class BaseGraph:
             if hasattr(current_node, "llm_model") and llm_model is None:
                 llm_model = current_node.llm_model
                 if hasattr(llm_model, "model_name"):
-                    llm_model = llm_model.model_name
+                    llm_model_name = llm_model.model_name
                 elif hasattr(llm_model, "model"):
-                    llm_model = llm_model.model
+                    llm_model_name = llm_model.model
+                elif hasattr(llm_model, "model_id"):
+                    llm_model_name = llm_model.model_id
 
             if hasattr(current_node, "embedder_model") and embedder_model is None:
                 embedder_model = current_node.embedder_model
@@ -155,7 +158,7 @@ class BaseGraph:
                             except Exception as e:
                                 schema = None
 
-            with self.callback_manager.exclusive_get_openai_callback() as cb:
+            with self.callback_manager.exclusive_get_callback(llm_model, llm_model_name) as cb:
                 try:
                     result = current_node.execute(state)
                 except Exception as e:
@@ -166,7 +169,7 @@ class BaseGraph:
                         source=source,
                         prompt=prompt,
                         schema=schema,
-                        llm_model=llm_model,
+                        llm_model=llm_model_name,
                         embedder_model=embedder_model,
                         source_type=source_type,
                         execution_time=graph_execution_time,
@@ -222,7 +225,7 @@ class BaseGraph:
             source=source,
             prompt=prompt,
             schema=schema,
-            llm_model=llm_model,
+            llm_model=llm_model_name,
             embedder_model=embedder_model,
             source_type=source_type,
             content=content,
