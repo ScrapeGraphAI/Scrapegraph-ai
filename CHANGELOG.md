@@ -1,3 +1,10 @@
+## [1.20.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0-beta.4...v1.20.0-beta.5) (2024-09-18)
+
+
+### Features
+
+* added Bedrock and Mistral to exec info ([8a37c6b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8a37c6b793c95fe957d41cdd7c3d64e808668d77))
+
 ## [1.20.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0-beta.3...v1.20.0-beta.4) (2024-09-18)
 
 
