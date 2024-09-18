@@ -5,7 +5,7 @@ import asyncio
 from typing import List, Optional
 from tqdm.asyncio import tqdm
 from .base_node import BaseNode
-from langchain_core.pydantic_v1 import BaseModel
+from pydantic import BaseModel
 
 DEFAULT_BATCHSIZE = 16
 
