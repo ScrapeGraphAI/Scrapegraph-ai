@@ -1,3 +1,15 @@
+## [1.20.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0-beta.2...v1.20.0-beta.3) (2024-09-18)
+
+
+### Features
+
+* updated pydantic to v2 ([eb89549](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/eb895492481192ac6b19a1b6714490e7b2ae3ef3))
+
+
+### Refactor
+
+* Output parser code ([28b85a3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/28b85a3b16e0f07fce41b0ed27f8e337a5537c3c))
+
 ## [1.20.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0-beta.1...v1.20.0-beta.2) (2024-09-17)
 
 
