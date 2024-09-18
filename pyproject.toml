@@ -12,7 +12,7 @@ authors = [
 ]
 
 dependencies = [
-    "langchain>=0.2.14",
+    "langchain>=0.3.0",
     "langchain-google-genai>=1.0.7",
     "langchain-openai>=0.1.22",
     "langchain-mistralai>=0.1.12",
@@ -66,7 +66,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 
 [project.optional-dependencies]
 burr = ["burr[start]==0.22.1"]
@@ -95,9 +95,9 @@ more-browser-options = [
 
 # Group 4: Surya Library
 screenshot_scraper = [
-    "surya-ocr>=0.5.0; python_version >= '3.10'",
-    "matplotlib>=3.7.2; python_version >= '3.10'",
-    "ipywidgets>=8.1.0; python_version >= '3.10'",
+    "surya-ocr>=0.5.0",
+    "matplotlib>=3.7.2",
+    "ipywidgets>=8.1.0",
     "pillow>=10.4.0",
 ]
 

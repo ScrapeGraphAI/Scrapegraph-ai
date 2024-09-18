@@ -148,6 +148,7 @@ httplib2==0.22.0
     # via google-auth-httplib2
 httpx==0.27.0
     # via langchain-mistralai
+    # via langsmith
     # via ollama
     # via openai
 httpx-sse==0.4.0
@@ -162,10 +163,6 @@ idna==3.7
     # via yarl
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==8.4.0
-    # via sphinx
-importlib-resources==6.4.4
-    # via matplotlib
 iniconfig==2.0.0
     # via pytest
 isort==5.13.2
@@ -186,18 +183,19 @@ jsonpointer==3.0.0
     # via jsonpatch
 jsonschema==4.23.0
     # via altair
+    # via mistral-common
 jsonschema-specifications==2023.12.1
     # via jsonschema
 kiwisolver==1.4.5
     # via matplotlib
-langchain==0.2.14
+langchain==0.3.0
     # via langchain-community
     # via scrapegraphai
-langchain-aws==0.1.16
+langchain-aws==0.2.0
     # via scrapegraphai
-langchain-community==0.2.11
+langchain-community==0.3.0
     # via scrapegraphai
-langchain-core==0.2.37
+langchain-core==0.3.1
     # via langchain
     # via langchain-aws
     # via langchain-community
@@ -206,17 +204,17 @@ langchain-core==0.2.37
     # via langchain-ollama
     # via langchain-openai
     # via langchain-text-splitters
-langchain-google-genai==1.0.8
+langchain-google-genai==2.0.0
     # via scrapegraphai
-langchain-mistralai==0.1.12
+langchain-mistralai==0.2.0
     # via scrapegraphai
-langchain-ollama==0.1.3
+langchain-ollama==0.2.0
     # via scrapegraphai
-langchain-openai==0.1.22
+langchain-openai==0.2.0
     # via scrapegraphai
-langchain-text-splitters==0.2.2
+langchain-text-splitters==0.3.0
     # via langchain
-langsmith==0.1.99
+langsmith==0.1.121
     # via langchain
     # via langchain-community
     # via langchain-core
@@ -238,6 +236,8 @@ mdurl==0.1.2
     # via markdown-it-py
 minify-html==0.15.0
     # via scrapegraphai
+mistral-common==1.4.1
+    # via scrapegraphai
 mpire==2.10.2
     # via semchunk
 multidict==6.0.5
@@ -256,6 +256,7 @@ numpy==1.26.4
     # via langchain-aws
     # via langchain-community
     # via matplotlib
+    # via opencv-python-headless
     # via pandas
     # via pyarrow
     # via pydeck
@@ -267,6 +268,8 @@ ollama==0.3.2
 openai==1.40.3
     # via burr
     # via langchain-openai
+opencv-python-headless==4.10.0.84
+    # via mistral-common
 orjson==3.10.7
     # via langsmith
 packaging==24.1
@@ -286,6 +289,7 @@ pandas==2.2.2
     # via streamlit
 pillow==10.4.0
     # via matplotlib
+    # via mistral-common
     # via streamlit
 platformdirs==4.2.2
     # via pylint
@@ -318,11 +322,18 @@ pydantic==2.8.2
     # via fastapi-pagination
     # via google-generativeai
     # via langchain
+    # via langchain-aws
     # via langchain-core
+    # via langchain-google-genai
+    # via langchain-mistralai
     # via langsmith
+    # via mistral-common
     # via openai
+    # via pydantic-settings
 pydantic-core==2.20.1
     # via pydantic
+pydantic-settings==2.5.2
+    # via langchain-community
 pydeck==0.9.1
     # via streamlit
 pyee==11.1.0
@@ -344,6 +355,7 @@ python-dateutil==2.9.0.post0
     # via matplotlib
     # via pandas
 python-dotenv==1.0.1
+    # via pydantic-settings
     # via scrapegraphai
 pytz==2024.1
     # via pandas
@@ -367,6 +379,7 @@ requests==2.32.3
     # via langchain
     # via langchain-community
     # via langsmith
+    # via mistral-common
     # via sphinx
     # via streamlit
     # via tiktoken
@@ -384,6 +397,8 @@ safetensors==0.4.5
     # via transformers
 semchunk==2.2.0
     # via scrapegraphai
+sentencepiece==0.2.0
+    # via mistral-common
 sf-hamilton==1.73.1
     # via burr
 six==1.16.0
@@ -430,6 +445,7 @@ tenacity==8.5.0
     # via streamlit
 tiktoken==0.7.0
     # via langchain-openai
+    # via mistral-common
     # via scrapegraphai
 tokenizers==0.19.1
     # via langchain-mistralai
@@ -462,14 +478,13 @@ typing-extensions==4.12.2
     # via google-generativeai
     # via huggingface-hub
     # via langchain-core
+    # via mistral-common
     # via openai
     # via pydantic
     # via pydantic-core
     # via pyee
-    # via pylint
     # via sf-hamilton
     # via sqlalchemy
-    # via starlette
     # via streamlit
     # via typing-inspect
     # via uvicorn
@@ -489,6 +504,3 @@ uvicorn==0.30.5
     # via burr
 yarl==1.9.4
     # via aiohttp
-zipp==3.20.1
-    # via importlib-metadata
-    # via importlib-resources
