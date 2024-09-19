@@ -127,13 +127,13 @@ class PromptRefinerNode(BaseNode):
 
         if self.node_config.get("schema", None) is not None:
 
-            self.schema = self.node_config["schema"] #          get JSON schema
+            self.data_schema = self.node_config["schema"] #          get JSON schema
             
             if self.additional_info is not None: #              use additional context if present
                 prompt = PromptTemplate(
                     template=template_prompt_builder_with_context,
                     partial_variables={"user_input": user_prompt,
-                                        "json_schema": self.schema.schema(),
+                                        "json_schema": self.data_schema.schema(),
                                         "additional_context": self.additional_info})
             else:
                 prompt = PromptTemplate(
