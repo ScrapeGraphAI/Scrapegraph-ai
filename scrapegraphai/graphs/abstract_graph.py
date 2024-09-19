@@ -178,7 +178,7 @@ class AbstractGraph(ABC):
                 elif model_provider == "oneapi":
                     return OneApi(**llm_params)
 
-                elif model_provider == "togehterai":
+                elif model_provider == "togetherai":
                     try:
                         from langchain_together import ChatTogether
                     except ImportError:
