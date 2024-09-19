@@ -82,18 +82,16 @@ class GenerateAnswerNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        input_keys = self.get_input_keys(state)
-        
+        input_keys = self.get_input_keys(state)        
         input_data = [state[key] for key in input_keys]
         user_prompt = input_data[0]
         doc = input_data[1]
 
         if self.node_config.get("schema", None) is not None:
-            
+
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"]) # json schema works only on specific models
-                
+                    schema = self.node_config["schema"])                
                 output_parser = get_structured_output_parser(self.node_config["schema"])
                 format_instructions = "NA"
             else:
@@ -120,7 +118,7 @@ class GenerateAnswerNode(BaseNode):
         if self.additional_info is not None:
             template_no_chunks_prompt  = self.additional_info + template_no_chunks_prompt
             template_chunks_prompt  = self.additional_info + template_chunks_prompt
-            template_merge_prompt  = self.additional_info + template_merge_prompt 
+            template_merge_prompt  = self.additional_info + template_merge_prompt
 
         if len(doc) == 1:
             prompt = PromptTemplate(
