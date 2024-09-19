@@ -29,7 +29,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key":openai_key,
+        "api_key": openai_key,
         "model": "openai/gpt-4o-mini",
     },
     "verbose": True,
