@@ -5,14 +5,13 @@
 
 * added Bedrock and Mistral to exec info ([8a37c6b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8a37c6b793c95fe957d41cdd7c3d64e808668d77))
 
-## [1.20.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0-beta.3...v1.20.0-beta.4) (2024-09-18)
 
 
 ### Bug Fixes
 
-* update pyproject.toml ([932412e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/932412e325d552fb64104babd28ed56ba8fed00b))
+* fetch_node ([9e46b46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9e46b468c1447759986b87c34c5f89d945874572))
 
-## [1.20.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.0-beta.2...v1.20.0-beta.3) (2024-09-18)
+## [1.20.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.19.0...v1.20.0) (2024-09-16)
 
 
 ### Features
@@ -112,6 +111,8 @@
 * **release:** 1.19.0-beta.7 [skip ci] ([4ab26a2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4ab26a24a3b7738505ea43d11e247c8859a6c666))
 * **release:** 1.19.0-beta.8 [skip ci] ([88b2c46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/88b2c469ae42d543ac8ab7adc3a10957fa3bacf3))
 * **release:** 1.19.0-beta.9 [skip ci] ([7ad6f21](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7ad6f21ee28635f75c05038f1344d182c6ae7e3a))
+* add grok integration for ollama ([59aa251](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/59aa2510e18a81e72ae28ed2a0c6870db359bfee))
+
 
 ## [1.19.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.18.3...v1.19.0) (2024-09-13)
 
