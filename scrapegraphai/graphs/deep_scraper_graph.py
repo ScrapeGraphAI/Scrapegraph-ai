@@ -1,7 +1,6 @@
 """
 DeepScraperGraph Module
 """
-
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
@@ -47,14 +46,14 @@ class DeepScraperGraph(AbstractGraph):
         >>> deep_scraper = DeepScraperGraph(
         ...     "List me all the job titles and detailed job description.",
         ...     "https://www.google.com/about/careers/applications/jobs/results/?location=Bangalore%20India",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = deep_scraper.run()
         )
     """
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
-    
+
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -69,16 +68,17 @@ class DeepScraperGraph(AbstractGraph):
         """
         fetch_node = FetchNode(
             input="url | local_dir",
-            output=["doc", "link_urls", "img_urls"]
+            output=["doc"]
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
             node_config={
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "llm_model": self.llm_model
             }
         )
-       
+
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
@@ -88,6 +88,7 @@ class DeepScraperGraph(AbstractGraph):
                 "schema": self.schema
             }
         )
+
         search_node = SearchLinkNode(
             input="user_prompt & relevant_chunks",
             output=["relevant_links"],
@@ -95,6 +96,7 @@ class DeepScraperGraph(AbstractGraph):
                 "llm_model": self.llm_model,
             }
         )
+
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & relevant_links",
             output=["results"],
@@ -103,6 +105,7 @@ class DeepScraperGraph(AbstractGraph):
                 "batchsize": 1
             }
         )
+
         merge_answers_node = MergeAnswersNode(
             input="user_prompt & results",
             output=["answer"],
@@ -142,8 +145,8 @@ class DeepScraperGraph(AbstractGraph):
         """
 
         base_graph = self._create_repeated_graph()
-        graph_iterator_node = list(filter(lambda x: x.node_name == "GraphIterator", base_graph.nodes))[0]
-        # Graph iterator will repeat the same graph for multiple hyperlinks found within input webpage
+        graph_iterator_node = list(filter(lambda x: x.node_name == "GraphIterator", 
+                                          base_graph.nodes))[0]
         graph_iterator_node.node_config["graph_instance"] = self
         return base_graph
 

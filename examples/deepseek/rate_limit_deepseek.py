@@ -1,5 +1,5 @@
 """ 
-Basic example of scraping pipeline using SmartScraper
+Basic example of scraping pipeline using SmartScraper with a custom rate limit
 """
 
 import os
@@ -14,20 +14,17 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-groq_key = os.getenv("GROQ_APIKEY")
+deepseek_key = os.getenv("DEEPSEEK_APIKEY")
 
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "model": "deepseek/deepseek-chat",
+        "api_key": deepseek_key,
+        "rate_limit": {
+            "requests_per_second": 1
+        }
     },
-    "embeddings": {
-        "model": "ollama/nomic-embed-text",
-        "temperature": 0,
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
-    },
-    "headless": False
+    "verbose": True,
 }
 
 # ************************************************

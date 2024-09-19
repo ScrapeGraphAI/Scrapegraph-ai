@@ -62,13 +62,12 @@ def search_on_web(query: str, search_engine: str = "Google",
         url = f"http://localhost:{port}"
         params = {"q": query, "format": "json"}
 
-        # Send the GET request to the server
         response = requests.get(url, params=params)
 
-        # Parse the response and limit to the specified max_results
         data = response.json()
         limited_results = data["results"][:max_results]
         return limited_results
 
     else:
-        raise ValueError("The only search engines available are DuckDuckGo, Google, Bing, or SearXNG")
+        raise ValueError("""The only search engines available are 
+                         DuckDuckGo, Google, Bing, or SearXNG""")

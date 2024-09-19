@@ -1,4 +1,6 @@
-""" SearchLinkGraph Module """
+""" 
+SearchLinkGraph Module 
+"""
 from typing import Optional
 import logging
 from pydantic import BaseModel
@@ -32,7 +34,7 @@ class SearchLinkGraph(AbstractGraph):
         >>> smart_scraper = SearchLinkGraph(
         ...     "List me all the attractions in Chioggia.",
         ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = smart_scraper.run()
     """
@@ -52,7 +54,7 @@ class SearchLinkGraph(AbstractGraph):
 
         fetch_node = FetchNode(
             input="url| local_dir",
-            output=["doc", "link_urls", "img_urls"],
+            output=["doc"],
             node_config={
                 "llm_model": self.llm_model,
                 "force": self.config.get("force", False),
@@ -64,7 +66,8 @@ class SearchLinkGraph(AbstractGraph):
             input="doc",
             output=["parsed_doc"],
             node_config={
-                "chunk_size": self.model_token
+                "chunk_size": self.model_token,
+                "llm_model": self.llm_model
             }
         )
         search_link_node = SearchLinkNode(

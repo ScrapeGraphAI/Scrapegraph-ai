@@ -5,7 +5,6 @@ JSONScraperMultiGraph Module
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .json_scraper_graph import JSONScraperGraph
@@ -38,12 +37,13 @@ class JSONScraperMultiGraph(AbstractGraph):
     Example:
         >>> search_graph = MultipleSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-3.5-turbo"}}
+        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], config: dict, schema: Optional[BaseModel] = None):
+    def __init__(self, prompt: str, source: List[str], 
+                 config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
 
@@ -61,27 +61,14 @@ class JSONScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a JSONScraperGraph instance
-        # ************************************************
-
-        smart_scraper_instance = JSONScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],
             node_config={
-                "graph_instance": smart_scraper_instance,
-            }
+                "graph_instance": JSONScraperGraph,
+                "scraper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
@@ -89,7 +76,7 @@ class JSONScraperMultiGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 

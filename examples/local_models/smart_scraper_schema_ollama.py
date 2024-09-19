@@ -3,7 +3,7 @@ Basic example of scraping pipeline using SmartScraper with schema
 """
 import json
 from typing import List
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -24,7 +24,7 @@ graph_config = {
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
     },
-   
+
     "verbose": True,
     "headless": False
 }

@@ -1,7 +1,6 @@
 """
 GenerateAnswerNode Module
 """
-from sys import modules
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -10,9 +9,12 @@ from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
-from ..utils.logging import get_logger
 from .base_node import BaseNode
-from ..prompts import TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
+from ..utils.output_parser import get_structured_output_parser, get_pydantic_output_parser
+from ..prompts import (TEMPLATE_CHUNKS,
+                       TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE,
+                       TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD,
+                       TEMPLATE_MERGE_MD)
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -80,37 +82,33 @@ class GenerateAnswerNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
-        # Fetching data from the state based on the input keys
+        
         input_data = [state[key] for key in input_keys]
         user_prompt = input_data[0]
         doc = input_data[1]
 
-        # Initialize the output parser
         if self.node_config.get("schema", None) is not None:
-            output_parser = JsonOutputParser(pydantic_object=self.node_config["schema"])
-
-            # Use built-in structured output for providers that allow it
-            optional_modules = {"langchain_anthropic", "langchain_fireworks", "langchain_groq", "langchain_google_vertexai"}
-            if all(key in modules for key in optional_modules):
-                if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI, ChatAnthropic, ChatFireworks, ChatGroq, ChatVertexAI)):
-                    self.llm_model = self.llm_model.with_structured_output(
-                        schema = self.node_config["schema"],
-                        method="json_schema")
+            
+            if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
+                self.llm_model = self.llm_model.with_structured_output(
+                    schema = self.node_config["schema"]) # json schema works only on specific models
+                
+                output_parser = get_structured_output_parser(self.node_config["schema"])
+                format_instructions = "NA"
             else:
-                if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
-                    self.llm_model = self.llm_model.with_structured_output(
-                        schema = self.node_config["schema"],
-                        method="json_schema")
-
+                output_parser = get_pydantic_output_parser(self.node_config["schema"])
+                format_instructions = output_parser.get_format_instructions()
 
         else:
             output_parser = JsonOutputParser()
+            format_instructions = output_parser.get_format_instructions()
 
-        format_instructions = output_parser.get_format_instructions()
+        if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
+            and not self.script_creator \
+            or self.force \
+            and not self.script_creator or self.is_md_scraper:
 
-        if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) and not self.script_creator or self.force and not self.script_creator or self.is_md_scraper:
             template_no_chunks_prompt  = TEMPLATE_NO_CHUNKS_MD
             template_chunks_prompt  = TEMPLATE_CHUNKS_MD
             template_merge_prompt  = TEMPLATE_MERGE_MD

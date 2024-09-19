@@ -5,7 +5,7 @@ Basic example of scraping pipeline using SmartScraper
 import os
 import json
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperGraph
+from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
@@ -18,7 +18,7 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "gpt-4o",
+        "model": "openai/gpt-4o",
     },
     "verbose": True,
     "headless": False,
@@ -28,9 +28,10 @@ graph_config = {
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 
-smart_scraper_graph = SmartScraperGraph(
-    prompt="List me what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+smart_scraper_graph = ScriptCreatorGraph(
+    prompt="List me all the news with their description.",
+    # also accepts a string with the already downloaded HTML code
+    source="https://perinim.github.io/projects",
     config=graph_config
 )
 

@@ -5,11 +5,9 @@ OmniSearchGraph Module
 from copy import deepcopy
 from typing import Optional
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .omni_scraper_graph import OmniScraperGraph
-
 from ..nodes import (
     SearchInternetNode,
     GraphIteratorNode,
@@ -40,7 +38,7 @@ class OmniSearchGraph(AbstractGraph):
     Example:
         >>> omni_search_graph = OmniSearchGraph(
         ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "gpt-4o"}}
+        ...     {"llm": {"model": "openai/gpt-4o"}}
         ... )
         >>> result = search_graph.run()
     """
@@ -63,35 +61,30 @@ class OmniSearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # ************************************************
-        # Create a OmniScraperGraph instance
-        # ************************************************
-
-        omni_scraper_instance = OmniScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
-
-        # ************************************************
-        # Define the graph nodes
-        # ************************************************
+        # omni_scraper_instance = OmniScraperGraph(
+        #     prompt="",
+        #     source="",
+        #     config=self.copy_config,
+        #     schema=self.copy_schema
+        # )
 
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["urls"],
             node_config={
                 "llm_model": self.llm_model,
-                "max_results": self.max_results
+                "max_results": self.max_results,
+                "search_engine": self.copy_config.get("search_engine")
             }
         )
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
             output=["results"],
             node_config={
-                "graph_instance": omni_scraper_instance,
-            }
+                "graph_instance": OmniScraperGraph,
+                "scraper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
@@ -99,7 +92,7 @@ class OmniSearchGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 

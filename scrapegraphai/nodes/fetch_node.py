@@ -76,6 +76,10 @@ class FetchNode(BaseNode):
             None if node_config is None else node_config.get("browser_base", None)
         )
 
+        self.scrape_do = (
+            None if node_config is None else node_config.get("scrape_do", None)
+        )
+
     def execute(self, state):
         """
         Executes the node's logic to fetch HTML content from a specified URL and
@@ -102,7 +106,7 @@ class FetchNode(BaseNode):
 
         source = input_data[0]
         input_type = input_keys[0]
-        
+
         handlers = {
             "json_dir": self.handle_directory,
             "xml_dir": self.handle_directory,
@@ -279,6 +283,21 @@ class FetchNode(BaseNode):
 
                 document = [Document(page_content=content,
                                     metadata={"source": source}) for content in data]
+            elif self.scrape_do is not None:
+                from ..docloaders.scrape_do import scrape_do_fetch
+                if (self.scrape_do.get("use_proxy") is None) or \
+                self.scrape_do.get("geoCode") is None or \
+                self.scrape_do.get("super_proxy") is None:
+                    data =  scrape_do_fetch(self.scrape_do.get("api_key"),
+                                                source)
+                else:
+                    data =  scrape_do_fetch(self.scrape_do.get("api_key"),
+                                                source, self.scrape_do.get("use_proxy"),
+                                                self.scrape_do.get("geoCode"),
+                                                self.scrape_do.get("super_proxy"))
+
+                document = [Document(page_content=data,
+                                    metadata={"source": source})]
             else:
                 loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
                 document = loader.load()
@@ -288,13 +307,16 @@ class FetchNode(BaseNode):
                                  the document fetched by ChromiumLoader.""")
             parsed_content = document[0].page_content
 
-            if (isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI))  and not self.script_creator or self.force and not self.script_creator and not self.openai_md_enabled:
+            if (isinstance(self.llm_model, ChatOpenAI) \
+                or isinstance(self.llm_model, AzureChatOpenAI)) \
+                and not self.script_creator or self.force \
+                and not self.script_creator and not self.openai_md_enabled:
                 parsed_content = convert_to_md(document[0].page_content, parsed_content)
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
-        
+
         return self.update_state(state, compressed_document)
 
     def update_state(self, state, compressed_document):

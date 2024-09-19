@@ -74,4 +74,10 @@ If you encounter any issues or have suggestions for improvements, please open an
 ScrapeGraphAI is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
 By contributing to this project, you agree to license your contributions under the same license.
 
+ScrapeGraphAI uses code from the Langchain
+frameworks. You find their original licenses below.
+
+LANGCHAIN LICENSE
+https://github.com/langchain-ai/langchain/blob/master/LICENSE
+
 Can't wait to see your contributions! :smile:
