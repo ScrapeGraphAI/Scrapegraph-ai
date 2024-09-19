@@ -11,6 +11,7 @@ from ..nodes import (
     ParseNode,
     GenerateAnswerNode,
     PromptRefinerNode,
+    HtmlAnalyzerNode,
 )
 
 class CodeGeneratorGraph(AbstractGraph):
@@ -102,8 +103,18 @@ class CodeGeneratorGraph(AbstractGraph):
             }
         )
         
+        html_analyzer_node = HtmlAnalyzerNode(
+            input="refined_prompt & doc",
+            output=["html_info"],
+            node_config={
+                "llm_model": self.llm_model,
+                "additional_info": self.config.get("additional_info"),
+                "schema": self.schema
+            }
+        )
+        
         generate_code_node = GenerateCodeNode(
-            input="refined_prompt & doc & answer",
+            input="user_prompt & refined_prompt & html_info & doc & answer",
             output=["code"],
             node_config={
                 "llm_model": self.llm_model,
@@ -120,13 +131,15 @@ class CodeGeneratorGraph(AbstractGraph):
                 parse_node,
                 generate_validation_answer_node,
                 prompt_refier_node,
+                html_analyzer_node,
                 generate_code_node,
             ],
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, generate_validation_answer_node),
                 (generate_validation_answer_node, prompt_refier_node),
-                (prompt_refier_node, generate_code_node)
+                (prompt_refier_node, html_analyzer_node)
+                (html_analyzer_node, generate_code_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__

@@ -133,13 +133,13 @@ class PromptRefinerNode(BaseNode):
                 prompt = PromptTemplate(
                     template=template_prompt_builder_with_context,
                     partial_variables={"user_input": user_prompt,
-                                        "json_schema": self.schema,
+                                        "json_schema": self.schema.schema(),
                                         "additional_context": self.additional_info})
             else:
                 prompt = PromptTemplate(
                     template=template_prompt_builder,
                     partial_variables={"user_input": user_prompt,
-                                        "json_schema": self.schema})
+                                        "json_schema": self.schema.schema()})
 
             output_parser = StrOutputParser()
 
