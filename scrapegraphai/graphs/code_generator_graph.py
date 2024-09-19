@@ -12,6 +12,7 @@ from ..nodes import (
     GenerateAnswerNode,
     PromptRefinerNode,
     HtmlAnalyzerNode,
+    GenerateCodeNode,
 )
 
 class CodeGeneratorGraph(AbstractGraph):
@@ -115,7 +116,7 @@ class CodeGeneratorGraph(AbstractGraph):
         
         generate_code_node = GenerateCodeNode(
             input="user_prompt & refined_prompt & html_info & doc & answer",
-            output=["code"],
+            output=["generated_code"],
             node_config={
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),

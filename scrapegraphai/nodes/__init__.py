@@ -25,3 +25,4 @@ from .generate_answer_from_image_node import GenerateAnswerFromImageNode
 from .concat_answers_node import ConcatAnswersNode
 from .prompt_refiner_node import PromptRefinerNode
 from .html_analyzer_node import HtmlAnalyzerNode
+from .generate_code_node import GenerateCodeNode
