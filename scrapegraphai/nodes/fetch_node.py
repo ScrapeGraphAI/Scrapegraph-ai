@@ -316,21 +316,7 @@ class FetchNode(BaseNode):
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
-
-        return self.update_state(state, compressed_document)
-
-    def update_state(self, state, compressed_document):
-        """
-        Updates the state with the output data from the node.
-
-        Args:
-            state (dict): The current state of the graph.
-            compressed_document (List[Document]): The compressed document content fetched
-                                                    by the node.
-
-        Returns:
-            dict: The updated state with the output data.
-        """
-
+        state["original_html"] = document
         state.update({self.output[0]: compressed_document,})
         return state
+    
