@@ -64,6 +64,15 @@ class GenerateCodeNode(BaseNode):
         )
 
         self.additional_info = node_config.get("additional_info")
+        
+        self.max_iterations = node_config.get("max_iterations", {
+            "overall": 10,
+            "syntax": 3,
+            "execution": 3,
+            "validation": 3
+        })
+        
+        self.output_schema = node_config.get("schema").schema() #          get JSON output schema
 
     def execute(self, state: dict) -> dict:
         """
@@ -80,7 +89,107 @@ class GenerateCodeNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating
                       that the necessary information for generating an answer is missing.
         """
+        
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
 
+        input_keys = self.get_input_keys(state)
+        
+        input_data = [state[key] for key in input_keys]
+        
+        user_prompt = input_data[0] #       get user prompt
+        refined_prompt = input_data[1] #    get refined prompt
+        html_info = input_data[2] #         get html analysis
+        reduced_html = input_data[3] #      get html code
+        answer = input_data[4] #            get answer generated from the generate answer node for verification
+        
+        self.raw_html = state['original_html'][0].page_content
+        
+        simplefied_schema = str(transform_schema(self.output_schema)) #          get JSON output schema
+        
+        reasoning_state = {
+            "user_input": user_prompt,
+            "json_schema": simplefied_schema,
+            "initial_analysis": refined_prompt,
+            "html_code": reduced_html,
+            "html_analysis": html_info,
+            "generated_code": "",
+            "execution_result": None,
+            "errors": {
+                "syntax": [],
+                "execution": [],
+                "validation": []
+            },
+            "iteration": 0
+        }
+    
+    
+        final_state = self.overall_reasoning_loop(reasoning_state)
+        
+        state.update({self.output[0]: final_state["generated_code"]})
+        return state
+    
+    def overall_reasoning_loop(self, state: dict) -> dict:
+        
+        state["generated_code"] = self.generate_initial_code(state)
+        
+        while state["iteration"] < self.max_iterations["overall"]:
+            state["iteration"] += 1
+            
+            state = self.syntax_reasoning_loop(state)
+            if state["errors"]["syntax"]:
+                continue
+            
+            state = self.execution_reasoning_loop(state)
+            if state["errors"]["execution"]:
+                continue
+            
+            state = self.validation_reasoning_loop(state)
+            if state["errors"]["validation"]:
+                continue
+            
+            # If we've made it here, the code is valid and produces the correct output
+            break
+        
+        return state
+    
+    def syntax_reasoning_loop(self, state: dict) -> dict:
+        for _ in range(self.max_iterations["syntax"]):
+            syntax_valid, syntax_message = self.syntax_check(state["generated_code"])
+            if syntax_valid:
+                state["errors"]["syntax"] = []
+                return state
+            
+            state["errors"]["syntax"] = [syntax_message]
+            analysis = self.syntax_focused_analysis(state)
+            state["generated_code"] = self.syntax_focused_code_generation(state, analysis)
+        return state
+    
+    def execution_reasoning_loop(self, state: dict, raw_html: str) -> dict:
+        for _ in range(self.max_iterations["execution"]):
+            execution_success, execution_result = self.create_sandbox_and_execute(state["generated_code"], raw_html)
+            if execution_success:
+                state["execution_result"] = execution_result
+                state["errors"]["execution"] = []
+                return state
+            
+            state["errors"]["execution"] = [execution_result]
+            analysis = self.execution_focused_analysis(state)
+            state["generated_code"] = self.execution_focused_code_generation(state, analysis)
+        return state
+    
+    def validation_reasoning_loop(self, state: dict) -> dict:
+        for _ in range(self.max_iterations["validation"]):
+            validation, errors = self.validate_dict(state["execution_result"], self.output_schema.schema())
+            if validation:
+                state["errors"]["validation"] = []
+                return state
+            
+            state["errors"]["validation"] = errors
+            analysis = self.validation_focused_analysis(state)
+            state["generated_code"] = self.validation_focused_code_generation(state, analysis)
+        return state
+    
+    def generate_initial_code(self, state: dict) -> str:
         template_code_generator = """
         **Task**: Create a Python function named `extract_data(html: str) -> dict()` using BeautifulSoup that extracts relevant information from the given HTML code string and returns it in a dictionary matching the Desired JSON Output Schema.
 
@@ -119,64 +228,187 @@ class GenerateCodeNode(BaseNode):
         **Response**:
         """
         
-        self.logger.info(f"--- Executing {self.node_name} Node ---")
+        prompt = PromptTemplate(
+            template=template_code_generator,
+            partial_variables={
+                "user_input": state["user_input"],
+                "json_schema": state["json_schema"],
+                "initial_analysis": state["initial_analysis"],
+                "html_code": state["html_code"],
+                "html_analysis": state["html_analysis"]
+            })
 
-        input_keys = self.get_input_keys(state)
-        
-        input_data = [state[key] for key in input_keys]
-        
-        user_prompt = input_data[0] #       get user prompt
-        refined_prompt = input_data[1] #    get refined prompt
-        html_info = input_data[2] #         get html analysis
-        reduced_html = input_data[3] #               get html code
-        answer = input_data[4] #            get answer generated from the generate answer node for verification
-        
-        if self.node_config.get("schema", None) is not None:
-            
-            self.output_schema = self.node_config["schema"].schema() #          get JSON output schema
-            self.simplefied_schema = transform_schema(self.output_schema) #          get JSON output schema
-        
-            prompt = PromptTemplate(
-                template=template_code_generator,
-                partial_variables={
-                    "user_input": user_prompt,
-                    "json_schema": str(self.simplefied_schema),
-                    "initial_analysis": refined_prompt,
-                    "html_code": reduced_html,
-                    "html_analysis": html_info
-                })
+        output_parser = StrOutputParser()
 
-            output_parser = StrOutputParser()
-
-            chain =  prompt | self.llm_model | output_parser
-            generated_code = chain.invoke({})
-            
-            # syntax check
-            print("\Checking code syntax...")
-            generated_code = self.extract_code(generated_code)
-            syntax_valid, syntax_message = self.syntax_check(generated_code)
-            
-            if not syntax_valid:
-                print(f"Syntax not valid: {syntax_message}")
-            
-            # code execution
-            print("\nExecuting code in sandbox...")
-            execution_success, execution_result = self.create_sandbox_and_execute(generated_code, reduced_html)
-            
-            if not execution_success:
-                print(f"Executio failed: {execution_result}")
-                
-            print("Code executed successfully.")
-            print(f"Execution result:\n{execution_result}")
-            
-            validation, errors = self.validate_dict(execution_result, self.output_schema)
-            if not validation:
-                print(f"Output does not match the schema: {errors}")
-            
+        chain =  prompt | self.llm_model | output_parser
+        generated_code = chain.invoke({})
+        return generated_code
+    
+    def syntax_focused_analysis(self, state: dict) -> str:
+        template = """
+        The current code has encountered a syntax error. Here are the details:
         
-        state.update({self.output[0]: generated_code})
-        return state
+        Current Code:
+        ```python
+        {generated_code}
+        ```
+        
+        Syntax Error:
+        {errors}
+        
+        Please analyze in detail the syntax error and suggest a fix. Focus only on correcting the syntax issue while ensuring the code still meets the original requirements.
+        
+        Provide your analysis and suggestions for fixing the error. DO NOT generate any code in your response.
+        """
+        
+        prompt = PromptTemplate(template=template, input_variables=["generated_code", "errors"])
+        chain = prompt | self.llm_model | StrOutputParser()
+        return chain.invoke({
+            "generated_code": state["generated_code"],
+            "errors": state["errors"]["syntax"]
+        })
+    
+    def syntax_focused_code_generation(self, state: dict, analysis: str) -> str:
+        template = """
+        Based on the following analysis of a syntax error, please generate the corrected code, following the suggested fix.:
 
+        Error Analysis:
+        {analysis}
+
+        Original Code:
+        ```python
+        {generated_code}
+        ```
+
+        Generate the corrected code, applying the suggestions from the analysis. Output ONLY the corrected Python code, WITHOUT ANY ADDITIONAL TEXT.
+        """
+
+        prompt = PromptTemplate(template=template, input_variables=["analysis", "generated_code"])
+        chain = prompt | self.llm_model | StrOutputParser()
+        return chain.invoke({
+            "analysis": analysis,
+            "generated_code": state["generated_code"]
+        })
+    
+    def execution_focused_analysis(self, state: dict) -> str:
+        template = """
+        The current code has encountered an execution error. Here are the details:
+        
+        **Current Code**:
+        ```python
+        {generated_code}
+        ```
+        
+        **Execution Error**:
+        {errors}
+        
+        **HTML Code**:
+        ```html
+        {html_code}
+        ```
+
+        **HTML Structure Analysis**:
+        {html_analysis}
+        
+        Please analyze the execution error and suggest a fix. Focus only on correcting the execution issue while ensuring the code still meets the original requirements and maintains correct syntax.
+        The suggested fix should address the execution error and ensure the function can successfully extract the required data from the provided HTML structure. Be sure to be precise and specific in your analysis.
+        
+        Provide your analysis and suggestions for fixing the error. DO NOT generate any code in your response.
+        """
+        
+        prompt = PromptTemplate(template=template, input_variables=["generated_code", "errors", "html_code", "html_analysis"])
+        chain = prompt | self.llm_model | StrOutputParser()
+        return chain.invoke({
+            "generated_code": state["generated_code"],
+            "errors": state["errors"]["execution"],
+            "html_code": state["html_code"],
+            "html_analysis": state["html_analysis"]
+        })
+    
+    def execution_focused_code_generation(self, state: dict, analysis: str) -> str:
+        template = """
+        Based on the following analysis of an execution error, please generate the corrected code:
+
+        Error Analysis:
+        {analysis}
+
+        Original Code:
+        ```python
+        {generated_code}
+        ```
+
+        Generate the corrected code, applying the suggestions from the analysis. Output ONLY the corrected Python code, WITHOUT ANY ADDITIONAL TEXT.
+        """
+
+        prompt = PromptTemplate(template=template, input_variables=["analysis", "generated_code"])
+        chain = prompt | self.llm_model | StrOutputParser()
+        return chain.invoke({
+            "analysis": analysis,
+            "generated_code": state["generated_code"]
+        })
+    
+    def validation_focused_analysis(self, state: dict) -> str:
+        template = """
+        The current code's output does not match the required schema. Here are the details:
+        
+        Current Code:
+        ```python
+        {generated_code}
+        ```
+        
+        Validation Errors:
+        {errors}
+        
+        Required Schema:
+        ```json
+        {json_schema}
+        ```
+        
+        Current Output:
+        {execution_result}
+        
+        Please analyze the validation errors and suggest fixes. Focus only on correcting the output to match the required schema while ensuring the code maintains correct syntax and execution.
+        
+        Provide your analysis and suggestions for fixing the error. DO NOT generate any code in your response.
+        """
+        
+        prompt = PromptTemplate(template=template, input_variables=["generated_code", "errors", "json_schema", "execution_result"])
+        chain = prompt | self.llm_model | StrOutputParser()
+        return chain.invoke({
+            "generated_code": state["generated_code"],
+            "errors": state["errors"]["validation"],
+            "json_schema": state["json_schema"],
+            "execution_result": state["execution_result"]
+        })
+    
+    def validation_focused_code_generation(self, state: dict, analysis: str) -> str:
+        template = """
+        Based on the following analysis of a validation error, please generate the corrected code:
+
+        Error Analysis:
+        {analysis}
+
+        Original Code:
+        ```python
+        {generated_code}
+        ```
+
+        Required Schema:
+        ```json
+        {json_schema}
+        ```
+
+        Generate the corrected code, applying the suggestions from the analysis and ensuring the output matches the required schema. Output ONLY the corrected Python code, WITHOUT ANY ADDITIONAL TEXT.
+        """
+
+        prompt = PromptTemplate(template=template, input_variables=["analysis", "generated_code", "json_schema"])
+        chain = prompt | self.llm_model | StrOutputParser()
+        return chain.invoke({
+            "analysis": analysis,
+            "generated_code": state["generated_code"],
+            "json_schema": state["json_schema"]
+        })
+    
     def syntax_check(self, code):
         try:
             ast.parse(code)
