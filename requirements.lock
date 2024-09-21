@@ -49,8 +49,6 @@ distro==1.9.0
     # via openai
 exceptiongroup==1.2.2
     # via anyio
-faiss-cpu==1.8.0.post1
-    # via scrapegraphai
 filelock==3.15.4
     # via huggingface-hub
     # via transformers
@@ -176,7 +174,6 @@ multiprocess==0.70.16
 mypy-extensions==1.0.0
     # via typing-inspect
 numpy==1.26.4
-    # via faiss-cpu
     # via langchain
     # via langchain-aws
     # via langchain-community
@@ -192,7 +189,6 @@ opencv-python-headless==4.10.0.84
 orjson==3.10.6
     # via langsmith
 packaging==24.1
-    # via faiss-cpu
     # via huggingface-hub
     # via langchain-core
     # via marshmallow
