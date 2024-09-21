@@ -105,25 +105,25 @@ class CodeGeneratorGraph(AbstractGraph):
         )
         
         html_analyzer_node = HtmlAnalyzerNode(
-            input="refined_prompt & doc",
-            output=["html_info"],
+            input="refined_prompt & original_html",
+            output=["html_info", "reduced_html"],
             node_config={
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
-                "schema": self.schema
+                "schema": self.schema,
+                "reduction": self.config.get("reduction", 0)
             }
         )
         
         generate_code_node = GenerateCodeNode(
-            input="user_prompt & refined_prompt & html_info & doc & answer",
+            input="user_prompt & refined_prompt & html_info & reduced_html & answer",
             output=["generated_code"],
             node_config={
+                "library": self.library,
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
                 "schema": self.schema
-            },
-            library=self.library,
-            website=self.source
+            }
         )
 
         return BaseGraph(
@@ -139,7 +139,7 @@ class CodeGeneratorGraph(AbstractGraph):
                 (fetch_node, parse_node),
                 (parse_node, generate_validation_answer_node),
                 (generate_validation_answer_node, prompt_refier_node),
-                (prompt_refier_node, html_analyzer_node)
+                (prompt_refier_node, html_analyzer_node),
                 (html_analyzer_node, generate_code_node)
             ],
             entry_point=fetch_node,
@@ -157,4 +157,4 @@ class CodeGeneratorGraph(AbstractGraph):
         inputs = {"user_prompt": self.prompt, self.input_key: self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
-        return self.final_state.get("code", "No code created.")
+        return self.final_state.get("generated_code", "No code created.")

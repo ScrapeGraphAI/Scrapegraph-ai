@@ -11,6 +11,7 @@ from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from .base_node import BaseNode
+from ..utils import transform_schema
 
 
 class PromptRefinerNode(BaseNode):
@@ -76,7 +77,7 @@ class PromptRefinerNode(BaseNode):
         """
 
         template_prompt_builder = """
-        **Task**: Analyze the user's request and the desired output schema to create a structured description for web scraping. Carefully examine both the user's request and the JSON schema to understand the desired data elements and their relationships.
+        **Task**: Analyze the user's request and the provided JSON schema to clearly map the desired data extraction. Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.
 
         **User's Request**:
         {user_input}
@@ -87,7 +88,14 @@ class PromptRefinerNode(BaseNode):
         ```
 
         **Analysis Instructions**:
-        Genarate the breakdown of the user request and link the  elements of the user's request with the json schema
+        1. **Break Down User Request:** 
+        * Clearly identify the core entities or data types the user is asking for.
+        * Highlight any specific attributes or relationships mentioned in the request.
+
+        2. **Map to JSON Schema**:
+        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.
+        * Explain how the schema structure accommodates the user's needs.
+        * If applicable, mention any schema elements that are not directly addressed in the user's request.
 
         This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.
         Please generate only the analysis and no other text.
@@ -96,8 +104,8 @@ class PromptRefinerNode(BaseNode):
         """
         
         template_prompt_builder_with_context = """
-        **Task**: Analyze the user's request, the desired output schema, and the additional context the user provided to create a structured description for web scraping. Carefully examine both the user's request and the JSON schema to understand the desired data elements and their relationships.
-
+        **Task**: Analyze the user's request, the provided JSON schema, and the additional context the user provided to clearly map the desired data extraction. Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.
+        
         **User's Request**:
         {user_input}
 
@@ -110,7 +118,14 @@ class PromptRefinerNode(BaseNode):
         {additional_context}
 
         **Analysis Instructions**:
-        Genarate the breakdown of the user request and link the  elements of the user's request with the json schema
+        1. **Break Down User Request:** 
+        * Clearly identify the core entities or data types the user is asking for.
+        * Highlight any specific attributes or relationships mentioned in the request.
+
+        2. **Map to JSON Schema**:
+        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.
+        * Explain how the schema structure accommodates the user's needs.
+        * If applicable, mention any schema elements that are not directly addressed in the user's request.
 
         This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.
         Please generate only the analysis and no other text.
@@ -120,26 +135,23 @@ class PromptRefinerNode(BaseNode):
         
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        input_keys = self.get_input_keys(state)
-        
-        input_data = [state[key] for key in input_keys]
-        user_prompt = input_data[0] #                           get user prompt
+        user_prompt = state['user_prompt'] #                            get user prompt
 
         if self.node_config.get("schema", None) is not None:
 
-            self.data_schema = self.node_config["schema"] #          get JSON schema
+            self.simplefied_schema = transform_schema(self.node_config["schema"].schema()) #             get JSON schema
             
-            if self.additional_info is not None: #              use additional context if present
+            if self.additional_info is not None: #                      use additional context if present
                 prompt = PromptTemplate(
                     template=template_prompt_builder_with_context,
                     partial_variables={"user_input": user_prompt,
-                                        "json_schema": self.data_schema.schema(),
+                                        "json_schema": str(self.simplefied_schema),
                                         "additional_context": self.additional_info})
             else:
                 prompt = PromptTemplate(
                     template=template_prompt_builder,
                     partial_variables={"user_input": user_prompt,
-                                        "json_schema": self.schema.schema()})
+                                        "json_schema": str(self.simplefied_schema)})
 
             output_parser = StrOutputParser()
 

@@ -11,6 +11,7 @@ from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from .base_node import BaseNode
+from ..utils import reduce_html
 
 
 class HtmlAnalyzerNode(BaseNode):
@@ -100,7 +101,9 @@ class HtmlAnalyzerNode(BaseNode):
         This HTML analysis will be used to guide the final code generation process for a function that extracts data from the given HTML string.
         Please provide only the analysis with relevant, specific information based on this HTML code. Avoid vague statements and focus on exact details needed for accurate data extraction.
         
-        **Response**:
+        Focus on providing a concise, step-by-step analysis of the HTML structure and the key elements needed for data extraction. Do not include any code examples or implementation logic. Keep the response focused and avoid general statements.**
+        
+        **HTML Analysis for Data Extraction**:
         """
         
         template_html_analysis_with_context = """
@@ -133,7 +136,9 @@ class HtmlAnalyzerNode(BaseNode):
         This HTML analysis will be used to guide the final code generation process for a function that extracts data from the given HTML string.
         Please provide only the analysis with relevant, specific information based on this HTML code. Avoid vague statements and focus on exact details needed for accurate data extraction.
         
-        **Response**:
+        Focus on providing a concise, step-by-step analysis of the HTML structure and the key elements needed for data extraction. Do not include any code examples or implementation logic. Keep the response focused and avoid general statements.**
+        
+        **HTML Analysis for Data Extraction**:
         """
         
         self.logger.info(f"--- Executing {self.node_name} Node ---")
@@ -142,25 +147,27 @@ class HtmlAnalyzerNode(BaseNode):
         
         input_data = [state[key] for key in input_keys]
         refined_prompt = input_data[0] #                        get refined user prompt
-        doc = input_data[1] #                                   get HTML code
-            
+        html = input_data[1] #                                  get HTML code
+        
+        reduced_html = reduce_html(html[0].page_content, self.node_config.get("reduction", 0)) #                reduce HTML code
+        
         if self.additional_info is not None: #              use additional context if present
             prompt = PromptTemplate(
                 template=template_html_analysis_with_context,
                 partial_variables={"initial_analysis": refined_prompt,
-                                    "html_code": doc,
+                                    "html_code": reduced_html,
                                     "additional_context": self.additional_info})
         else:
             prompt = PromptTemplate(
                 template=template_html_analysis,
                 partial_variables={"initial_analysis": refined_prompt,
-                                    "html_code": doc})
+                                    "html_code": reduced_html})
 
         output_parser = StrOutputParser()
 
         chain =  prompt | self.llm_model | output_parser
         html_analysis = chain.invoke({})
 
-        state.update({self.output[0]: html_analysis})
+        state.update({self.output[0]: html_analysis, self.output[1]: reduced_html})
         return state
 

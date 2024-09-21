@@ -17,6 +17,8 @@ import re
 from tqdm import tqdm
 from .base_node import BaseNode
 from pydantic import ValidationError
+from ..utils import transform_schema
+from jsonschema import validate, ValidationError
 
 
 class GenerateCodeNode(BaseNode):
@@ -126,20 +128,21 @@ class GenerateCodeNode(BaseNode):
         user_prompt = input_data[0] #       get user prompt
         refined_prompt = input_data[1] #    get refined prompt
         html_info = input_data[2] #         get html analysis
-        doc = input_data[3] #               get html code
+        reduced_html = input_data[3] #               get html code
         answer = input_data[4] #            get answer generated from the generate answer node for verification
         
         if self.node_config.get("schema", None) is not None:
             
-            self.output_schema = self.node_config["schema"] #          get JSON output schema
+            self.output_schema = self.node_config["schema"].schema() #          get JSON output schema
+            self.simplefied_schema = transform_schema(self.output_schema) #          get JSON output schema
         
             prompt = PromptTemplate(
                 template=template_code_generator,
                 partial_variables={
                     "user_input": user_prompt,
-                    "json_schema": self.output_schema.schema,
+                    "json_schema": str(self.simplefied_schema),
                     "initial_analysis": refined_prompt,
-                    "html_code": doc,
+                    "html_code": reduced_html,
                     "html_analysis": html_info
                 })
 
@@ -150,6 +153,7 @@ class GenerateCodeNode(BaseNode):
             
             # syntax check
             print("\Checking code syntax...")
+            generated_code = self.extract_code(generated_code)
             syntax_valid, syntax_message = self.syntax_check(generated_code)
             
             if not syntax_valid:
@@ -157,7 +161,7 @@ class GenerateCodeNode(BaseNode):
             
             # code execution
             print("\nExecuting code in sandbox...")
-            execution_success, execution_result = self.create_sandbox_and_execute(generated_code, doc)
+            execution_success, execution_result = self.create_sandbox_and_execute(generated_code, reduced_html)
             
             if not execution_success:
                 print(f"Executio failed: {execution_result}")
@@ -180,7 +184,7 @@ class GenerateCodeNode(BaseNode):
         except SyntaxError as e:
             return False, f"Syntax error: {str(e)}"
 
-    def create_sandbox_and_execute(function_code, html_doc):
+    def create_sandbox_and_execute(self, function_code, html_doc):
         # Create a sandbox environment
         sandbox_globals = {
             'BeautifulSoup': BeautifulSoup,
@@ -214,8 +218,18 @@ class GenerateCodeNode(BaseNode):
             
     def validate_dict(self, data: dict, schema):
         try:
-            schema(**data)  # Use the provided schema directly
+            validate(instance=data, schema=schema)
             return True, None
         except ValidationError as e:
             errors = e.errors()
             return False, errors
+    
+    def extract_code(self, code: str) -> str:
+        # Pattern to match the code inside a code block
+        pattern = r'```(?:python)?\n(.*?)```'
+        
+        # Search for the code block, if present
+        match = re.search(pattern, code, re.DOTALL)
+        
+        # If a code block is found, return the code, otherwise return the entire string
+        return match.group(1) if match else code
