@@ -59,6 +59,8 @@ class PromptRefinerNode(BaseNode):
         )
 
         self.additional_info = node_config.get("additional_info")
+        
+        self.output_schema = node_config.get("schema") #          get JSON output schema
 
     def execute(self, state: dict) -> dict:
         """
@@ -137,33 +139,24 @@ class PromptRefinerNode(BaseNode):
 
         user_prompt = state['user_prompt'] #                            get user prompt
 
-        if self.node_config.get("schema", None) is not None:
+        self.simplefied_schema = transform_schema(self.output_schema.schema()) #             get JSON schema
+        
+        if self.additional_info is not None: #                      use additional context if present
+            prompt = PromptTemplate(
+                template=template_prompt_builder_with_context,
+                partial_variables={"user_input": user_prompt,
+                                    "json_schema": str(self.simplefied_schema),
+                                    "additional_context": self.additional_info})
+        else:
+            prompt = PromptTemplate(
+                template=template_prompt_builder,
+                partial_variables={"user_input": user_prompt,
+                                    "json_schema": str(self.simplefied_schema)})
 
-            self.simplefied_schema = transform_schema(self.node_config["schema"].schema()) #             get JSON schema
-            
-            if self.additional_info is not None: #                      use additional context if present
-                prompt = PromptTemplate(
-                    template=template_prompt_builder_with_context,
-                    partial_variables={"user_input": user_prompt,
-                                        "json_schema": str(self.simplefied_schema),
-                                        "additional_context": self.additional_info})
-            else:
-                prompt = PromptTemplate(
-                    template=template_prompt_builder,
-                    partial_variables={"user_input": user_prompt,
-                                        "json_schema": str(self.simplefied_schema)})
+        output_parser = StrOutputParser()
 
-            output_parser = StrOutputParser()
+        chain =  prompt | self.llm_model | output_parser
+        refined_prompt = chain.invoke({})
 
-            chain =  prompt | self.llm_model | output_parser
-            refined_prompt = chain.invoke({})
-
-            state.update({self.output[0]: refined_prompt})
-            return state
-
-        else: #                                                no schema provided
-            self.logger.error("No schema provided for prompt refinement.")
-            
-            # TODO: Handle the case where no schema is provided => error handling
-            
-            return state
+        state.update({self.output[0]: refined_prompt})
+        return state

@@ -26,7 +26,7 @@ import string
 
 class GenerateCodeNode(BaseNode):
     """
-    ...
+    A node that generates Python code for a function that extracts data from HTML based on a output schema.
 
     Attributes:
         llm_model: An instance of a language model client, configured for generating answers.
@@ -80,7 +80,7 @@ class GenerateCodeNode(BaseNode):
 
     def execute(self, state: dict) -> dict:
         """
-        ...
+        Generates Python code for a function that extracts data from HTML based on a output schema.
 
         Args:
             state (dict): The current state of the graph. The input keys will be used
@@ -92,6 +92,7 @@ class GenerateCodeNode(BaseNode):
         Raises:
             KeyError: If the input keys are not found in the state, indicating
                       that the necessary information for generating an answer is missing.
+            RuntimeError: If the maximum number of iterations is reached without obtaining the desired code.
         """
         
         self.logger.info(f"--- Executing {self.node_name} Node ---")
@@ -135,31 +136,42 @@ class GenerateCodeNode(BaseNode):
         return state
     
     def overall_reasoning_loop(self, state: dict) -> dict:
-        
+        self.logger.info(f"--- (Generating Code) ---")
         state["generated_code"] = self.generate_initial_code(state)
         state["generated_code"] = self.extract_code(state["generated_code"])
         
         while state["iteration"] < self.max_iterations["overall"]:
             state["iteration"] += 1
+            if self.verbose:
+                self.logger.info(f"--- Iteration {state['iteration']} ---")
             
+            self.logger.info(f"--- (Checking Code Syntax) ---")
             state = self.syntax_reasoning_loop(state)
             if state["errors"]["syntax"]:
                 continue
             
+            self.logger.info(f"--- (Executing the Generated Code) ---")
             state = self.execution_reasoning_loop(state)
             if state["errors"]["execution"]:
                 continue
             
+            self.logger.info(f"--- (Validate the Code Output Schema) ---")
             state = self.validation_reasoning_loop(state)
             if state["errors"]["validation"]:
                 continue
             
+            self.logger.info(f"--- (Checking if the informations exctrcated are the ones Requested) ---")
             state = self.semantic_comparison_loop(state)
             if state["errors"]["semantic"]:
                 continue
             
             # If we've made it here, the code is valid and produces the correct output
             break
+        
+        if state["iteration"] == self.max_iterations["overall"] and (state["errors"]["syntax"] or state["errors"]["execution"] or state["errors"]["validation"] or state["errors"]["semantic"]):
+            raise RuntimeError("Max iterations reached without obtaining the desired code.")
+        
+        self.logger.info(f"--- (Code Generated Correctly) ---")
         
         return state
     
@@ -171,7 +183,9 @@ class GenerateCodeNode(BaseNode):
                 return state
             
             state["errors"]["syntax"] = [syntax_message]
+            self.logger.info(f"--- (Synax Error Found: {syntax_message}) ---")
             analysis = self.syntax_focused_analysis(state)
+            self.logger.info(f"--- (Regenerating Code to fix the Error) ---")
             state["generated_code"] = self.syntax_focused_code_generation(state, analysis)
             state["generated_code"] = self.extract_code(state["generated_code"])
         return state
@@ -185,7 +199,9 @@ class GenerateCodeNode(BaseNode):
                 return state
             
             state["errors"]["execution"] = [execution_result]
+            self.logger.info(f"--- (Code Execution Error: {execution_result}) ---")
             analysis = self.execution_focused_analysis(state)
+            self.logger.info(f"--- (Regenerating Code to fix the Error) ---")
             state["generated_code"] = self.execution_focused_code_generation(state, analysis)
             state["generated_code"] = self.extract_code(state["generated_code"])
         return state
@@ -198,7 +214,9 @@ class GenerateCodeNode(BaseNode):
                 return state
             
             state["errors"]["validation"] = errors
+            self.logger.info(f"--- (Code Output not compliant to the deisred Output Schema) ---")
             analysis = self.validation_focused_analysis(state)
+            self.logger.info(f"--- (Regenerating Code to make the Output compliant to the deisred Output Schema) ---")
             state["generated_code"] = self.validation_focused_code_generation(state, analysis)
             state["generated_code"] = self.extract_code(state["generated_code"])
         return state
@@ -211,7 +229,9 @@ class GenerateCodeNode(BaseNode):
                 return state
             
             state["errors"]["semantic"] = comparison_result["differences"]
+            self.logger.info(f"--- (The informations exctrcated are not the all ones requested) ---")
             analysis = self.semantic_focused_analysis(state, comparison_result)
+            self.logger.info(f"--- (Regenerating Code to obtain all the infromation requested) ---")
             state["generated_code"] = self.semantic_focused_code_generation(state, analysis)
             state["generated_code"] = self.extract_code(state["generated_code"])
         return state
