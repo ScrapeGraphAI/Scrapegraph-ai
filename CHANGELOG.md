@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.0...v1.21.1) (2024-09-21)
+
+
+### Bug Fixes
+
+* removed faiss ([86f6877](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/86f68770e920d800fb14d14ee34bf0d1a9cefd51))
+
 ## [1.21.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.20.1...v1.21.0) (2024-09-19)
 
 
