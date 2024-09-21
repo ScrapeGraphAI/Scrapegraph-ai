@@ -31,7 +31,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "openai/gpt-3.5-turbo",
+        "model": "openai/gpt-4o"
     },
     "max_results": 2,
     "verbose": True,

@@ -91,7 +91,7 @@ class GenerateAnswerNode(BaseNode):
 
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"])                
+                    schema = self.node_config["schema"])          
                 output_parser = get_structured_output_parser(self.node_config["schema"])
                 format_instructions = "NA"
             else:

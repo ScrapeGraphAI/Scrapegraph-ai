@@ -1,7 +1,7 @@
 [project]
 name = "scrapegraphai"
 
-version = "1.21.0"
+version = "1.21.1"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
@@ -19,7 +19,6 @@ dependencies = [
     "langchain-aws>=0.1.3",
     "mistral-common>=1.4.0",
     "html2text>=2024.2.26",
-    "faiss-cpu>=1.8.0",
     "beautifulsoup4>=4.12.3",
     "pandas>=2.2.2",
     "python-dotenv>=1.0.1",
@@ -98,6 +97,11 @@ screenshot_scraper = [
     "matplotlib>=3.7.2",
     "ipywidgets>=8.1.0",
     "pillow>=10.4.0",
+]
+
+# Group 5: Faiss CPU
+faiss-cpu = [
+    "faiss-cpu>=1.8.0",
 ]
 
 [build-system]

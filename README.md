@@ -42,7 +42,7 @@ Additional dependecies can be added while installing the library:
 This group allows you to use additional language models like Fireworks, Groq, Anthropic, Together AI, Hugging Face, and Nvidia AI Endpoints.
 ```bash
 pip install scrapegraphai[other-language-models]
-
+  ```
 - <b>Semantic Options</b>: this group includes tools for advanced semantic processing, such as Graphviz.
 
   ```bash
@@ -53,6 +53,12 @@ pip install scrapegraphai[other-language-models]
 
   ```bash
   pip install scrapegraphai[more-browser-options]
+  ```
+
+- <b>faiss Options</b>: this group includes faiss integration
+
+  ```bash
+  pip install scrapegraphai[faiss-cpu]
   ```
 
 </details>
