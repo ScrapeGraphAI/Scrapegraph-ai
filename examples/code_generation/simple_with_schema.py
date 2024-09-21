@@ -30,12 +30,18 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key":openai_key,
-        "model": "openai/gpt-4o",\
+        "model": "openai/gpt-4o-mini",\
     },
-    "library": "beautifulsoup",
     "verbose": True,
     "headless": False,
     "reduction": 2,
+    "max_iterations": {
+        "overall": 10,
+        "syntax": 3,
+        "execution": 3,
+        "validation": 3,
+        "semantic": 3
+    },
 }
 
 # ************************************************

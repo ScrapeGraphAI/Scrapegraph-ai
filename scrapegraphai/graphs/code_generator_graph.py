@@ -49,8 +49,6 @@ class CodeGeneratorGraph(AbstractGraph):
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
         
-        self.library = config['library']
-        
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -119,10 +117,16 @@ class CodeGeneratorGraph(AbstractGraph):
             input="user_prompt & refined_prompt & html_info & reduced_html & answer",
             output=["generated_code"],
             node_config={
-                "library": self.library,
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
-                "schema": self.schema
+                "schema": self.schema,
+                "max_iterations": self.config.get("max_iterations", {
+                    "overall": 10,
+                    "syntax": 3,
+                    "execution": 3,
+                    "validation": 3,
+                    "semantic": 3
+                }),
             }
         )
 
