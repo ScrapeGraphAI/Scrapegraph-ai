@@ -66,8 +66,8 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
             node_config={
                 "graph_instance": SmartScraperGraph,
                 "scraper_config": self.copy_config,
-                "scraper_schema": self.copy_schema,
-            }
+            },
+            schema=self.copy_schema,
         )
 
         concat_answers_node = ConcatAnswersNode(
