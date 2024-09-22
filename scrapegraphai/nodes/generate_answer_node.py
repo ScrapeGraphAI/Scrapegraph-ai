@@ -6,6 +6,7 @@ from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
+from langchain_aws import ChatBedrock
 from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
@@ -91,16 +92,18 @@ class GenerateAnswerNode(BaseNode):
 
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"])          
+                    schema = self.node_config["schema"])
                 output_parser = get_structured_output_parser(self.node_config["schema"])
                 format_instructions = "NA"
             else:
-                output_parser = get_pydantic_output_parser(self.node_config["schema"])
-                format_instructions = output_parser.get_format_instructions()
+                if not isinstance(self.llm_model, ChatBedrock):
+                    output_parser = get_pydantic_output_parser(self.node_config["schema"])
+                    format_instructions = output_parser.get_format_instructions()
 
         else:
-            output_parser = JsonOutputParser()
-            format_instructions = output_parser.get_format_instructions()
+            if not isinstance(self.llm_model, ChatBedrock):
+                output_parser = JsonOutputParser()
+                format_instructions = output_parser.get_format_instructions()
 
         if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
             and not self.script_creator \
