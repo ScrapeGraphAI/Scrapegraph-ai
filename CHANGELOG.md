@@ -1,3 +1,10 @@
+## [1.22.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.1...v1.22.0) (2024-09-22)
+
+
+### Features
+
+* update search_link graph ([e724ae4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e724ae449282608507f7c28a39e655dc86a13aef))
+
 ## [1.21.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.0...v1.21.1) (2024-09-21)
 
 
