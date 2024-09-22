@@ -1,3 +1,10 @@
+## [1.21.2-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.1...v1.21.2-beta.1) (2024-09-22)
+
+
+### Bug Fixes
+
+* chat for bedrock ([f9b121f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f9b121f7657e9eaf0b1b0e4a8574b8f1cbbd7c36))
+
 ## [1.21.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.0...v1.21.1) (2024-09-21)
 
 
