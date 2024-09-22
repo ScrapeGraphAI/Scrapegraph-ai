@@ -3,8 +3,8 @@ SearchLinkNode Module
 """
 from typing import List, Optional
 import re
-from tqdm import tqdm
 from urllib.parse import urlparse, parse_qs
+from tqdm import tqdm
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
@@ -74,10 +74,11 @@ class SearchLinkNode(BaseNode):
         parsed_url = urlparse(url)
         query_params = parse_qs(parsed_url.query)
 
-        return any(indicator in parsed_url.path.lower() or indicator in query_params for indicator in lang_indicators)
+        return any(indicator in parsed_url.path.lower() \
+                   or indicator in query_params for indicator in lang_indicators)
     def _is_potentially_irrelevant(self, url):
         if not self.filter_links:
-            return False  
+            return False
 
         irrelevant_keywords = self.filter_config.get("irrelevant_keywords", [])
         return any(keyword in url.lower() for keyword in irrelevant_keywords)
