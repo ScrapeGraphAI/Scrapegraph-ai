@@ -96,14 +96,12 @@ class GenerateAnswerNode(BaseNode):
                 output_parser = get_structured_output_parser(self.node_config["schema"])
                 format_instructions = "NA"
             else:
-                if not isinstance(self.llm_model, ChatBedrock):
-                    output_parser = get_pydantic_output_parser(self.node_config["schema"])
-                    format_instructions = output_parser.get_format_instructions()
+                output_parser = get_pydantic_output_parser(self.node_config["schema"])
+                format_instructions = output_parser.get_format_instructions()
 
         else:
-            if not isinstance(self.llm_model, ChatBedrock):
-                output_parser = JsonOutputParser()
-                format_instructions = output_parser.get_format_instructions()
+            output_parser = JsonOutputParser()
+            format_instructions = output_parser.get_format_instructions()
 
         if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
             and not self.script_creator \
