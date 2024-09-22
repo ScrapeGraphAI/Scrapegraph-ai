@@ -33,7 +33,7 @@ class ParseNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "Parse",
+        node_name: str = "ParseNode",
     ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 

@@ -36,7 +36,7 @@ class SearchLinkNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateLinks",
+        node_name: str = "SearchLinks",
     ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
