@@ -62,14 +62,7 @@ class SearchLinkGraph(AbstractGraph):
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
             }
         )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token,
-                "llm_model": self.llm_model
-            }
-        )
+
         search_link_node = SearchLinkNode(
             input="doc",
             output=["parsed_doc"],
@@ -84,12 +77,10 @@ class SearchLinkGraph(AbstractGraph):
         return BaseGraph(
             nodes=[
                 fetch_node,
-                parse_node,
                 search_link_node
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, search_link_node)
+                (fetch_node, search_link_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__
