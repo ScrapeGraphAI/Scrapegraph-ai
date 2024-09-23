@@ -1,3 +1,11 @@
+## [1.21.2-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.2-beta.1...v1.21.2-beta.2) (2024-09-23)
+
+
+### Bug Fixes
+
+* graph Iterator node ([8ce08ba](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8ce08baf01d7757c6fdcab0333405787c67d2dbc))
+* issue about parser ([7eda6bc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7eda6bc06bc4c32850029f54b9b4c22f3124296e))
+
 ## [1.21.2-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.1...v1.21.2-beta.1) (2024-09-22)
 
 
