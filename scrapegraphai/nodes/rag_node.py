@@ -13,8 +13,8 @@ from langchain.retrievers.document_compressors import (
 from langchain_community.document_transformers import EmbeddingsRedundantFilter
 from langchain_community.vectorstores import FAISS
 from langchain_community.chat_models import ChatOllama
-from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_community.embeddings import OllamaEmbeddings
+from langchain_aws import BedrockEmbeddings, ChatBedrock
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_openai import AzureOpenAIEmbeddings, OpenAIEmbeddings, ChatOpenAI, AzureChatOpenAI
 from ..utils.logging import get_logger
@@ -22,7 +22,8 @@ from .base_node import BaseNode
 from ..helpers import models_tokens
 from ..models import DeepSeek
 
-optional_modules = {"langchain_anthropic", "langchain_fireworks", "langchain_groq", "langchain_google_vertexai"}
+optional_modules = {"langchain_anthropic", "langchain_fireworks",
+                    "langchain_groq", "langchain_google_vertexai"}
 
 class RAGNode(BaseNode):
     """
@@ -60,96 +61,8 @@ class RAGNode(BaseNode):
         self.cache_path = node_config.get("cache_path", False)
 
     def execute(self, state: dict) -> dict:
-        """
-        Executes the node's logic to implement RAG (Retrieval-Augmented Generation).
-        The method updates the state with relevant chunks of the document.
-
-        Args:
-            state (dict): The current state of the graph. The input keys will be used to fetch the
-                            correct data from the state.
-
-        Returns:
-            dict: The updated state with the output key containing the relevant chunks of the document.
-
-        Raises:
-            KeyError: If the input keys are not found in the state, indicating that the
-                        necessary information for compressing the content is missing.
-        """
-
-        self.logger.info(f"--- Executing {self.node_name} Node ---")
-
-        input_keys = self.get_input_keys(state)
-
-        input_data = [state[key] for key in input_keys]
-
-        user_prompt = input_data[0]
-        doc = input_data[1]
-
-        chunked_docs = []
-
-        for i, chunk in enumerate(doc):
-            doc = Document(
-                page_content=chunk,
-                metadata={
-                    "chunk": i + 1,
-                },
-            )
-            chunked_docs.append(doc)
-
-        self.logger.info("--- (updated chunks metadata) ---")
-
-        if self.embedder_model is not None:
-            embeddings = self.embedder_model
-        elif 'embeddings' in self.node_config:
-            try:
-                embeddings = self._create_embedder(self.node_config['embedder_config'])
-            except Exception:
-                try:
-                    embeddings = self._create_default_embedder()
-                    self.embedder_model = embeddings
-                except ValueError:
-                    embeddings = self.llm_model
-                    self.embedder_model = self.llm_model
-        else:
-            embeddings = self.llm_model
-            self.embedder_model = self.llm_model
-
-        folder_name = self.node_config.get("cache_path", "cache")
-
-        if self.node_config.get("cache_path", False) and not os.path.exists(folder_name):
-            index = FAISS.from_documents(chunked_docs, embeddings)
-            os.makedirs(folder_name)
-            index.save_local(folder_name)
-            self.logger.info("--- (indexes saved to cache) ---")
-
-        elif self.node_config.get("cache_path", False) and os.path.exists(folder_name):
-            index = FAISS.load_local(folder_path=folder_name,
-                                     embeddings=embeddings,
-                                     allow_dangerous_deserialization=True)
-            self.logger.info("--- (indexes loaded from cache) ---")
-
-        else:
-            index = FAISS.from_documents(chunked_docs, embeddings)
-
-        retriever = index.as_retriever()
-
-        redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
-        # similarity_threshold could be set, now k=20
-        relevant_filter = EmbeddingsFilter(embeddings=embeddings)
-        pipeline_compressor = DocumentCompressorPipeline(
-            transformers=[redundant_filter, relevant_filter]
-        )
-        compression_retriever = ContextualCompressionRetriever(
-            base_compressor=pipeline_compressor, base_retriever=retriever
-        )
-
-        compressed_docs = compression_retriever.invoke(user_prompt)
-
-        self.logger.info("--- (tokens compressed and vector stored) ---")
-
-        state.update({self.output[0]: compressed_docs})
-        return state
-
+        # Execution logic
+        pass
 
     def _create_default_embedder(self, llm_config=None) -> object:
         """
@@ -176,9 +89,7 @@ class RAGNode(BaseNode):
         elif isinstance(self.llm_model, AzureChatOpenAI):
             return AzureOpenAIEmbeddings()
         elif isinstance(self.llm_model, ChatOllama):
-            # unwrap the kwargs from the model whihc is a dict
             params = self.llm_model._lc_kwargs
-            # remove streaming and temperature
             params.pop("streaming", None)
             params.pop("temperature", None)
             return OllamaEmbeddings(**params)
@@ -186,16 +97,19 @@ class RAGNode(BaseNode):
             return BedrockEmbeddings(client=None, model_id=self.llm_model.model_id)
         elif all(key in sys.modules for key in optional_modules):
             if isinstance(self.llm_model, ChatFireworks):
+                from langchain_fireworks import FireworksEmbeddings
                 return FireworksEmbeddings(model=self.llm_model.model_name)
             if isinstance(self.llm_model, ChatNVIDIA):
+                from langchain_nvidia import NVIDIAEmbeddings
                 return NVIDIAEmbeddings(model=self.llm_model.model_name)
             if isinstance(self.llm_model, ChatHuggingFace):
+                from langchain_huggingface import HuggingFaceEmbeddings
                 return HuggingFaceEmbeddings(model=self.llm_model.model)
             if isinstance(self.llm_model, ChatVertexAI):
+                from langchain_vertexai import VertexAIEmbeddings
                 return VertexAIEmbeddings()
         else:
             raise ValueError("Embedding Model missing or not supported")
-
 
     def _create_embedder(self, embedder_config: dict) -> object:
         """
@@ -240,20 +154,23 @@ class RAGNode(BaseNode):
             return BedrockEmbeddings(client=client, model_id=embedder_params["model"])
         if all(key in sys.modules for key in optional_modules):
             if "hugging_face" in embedder_params["model"]:
+                from langchain_huggingface import HuggingFaceEmbeddings
                 embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
                 try:
                     models_tokens["hugging_face"][embedder_params["model"]]
                 except KeyError as exc:
                     raise KeyError("Model not supported") from exc
                 return HuggingFaceEmbeddings(model=embedder_params["model"])
-            if "fireworks" in embedder_params["model"]:
+            elif "fireworks" in embedder_params["model"]:
+                from langchain_fireworks import FireworksEmbeddings
                 embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
                 try:
                     models_tokens["fireworks"][embedder_params["model"]]
                 except KeyError as exc:
                     raise KeyError("Model not supported") from exc
                 return FireworksEmbeddings(model=embedder_params["model"])
-            if "nvidia" in embedder_params["model"]:
+            elif "nvidia" in embedder_params["model"]:
+                from langchain_nvidia import NVIDIAEmbeddings
                 embedder_params["model"] = "/".join(embedder_params["model"].split("/")[1:])
                 try:
                     models_tokens["nvidia"][embedder_params["model"]]

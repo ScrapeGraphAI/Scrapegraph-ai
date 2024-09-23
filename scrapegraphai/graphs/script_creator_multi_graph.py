@@ -1,7 +1,6 @@
 """ 
 ScriptCreatorMultiGraph Module
 """
-
 from typing import List, Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph

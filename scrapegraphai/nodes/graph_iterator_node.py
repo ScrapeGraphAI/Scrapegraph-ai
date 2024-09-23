@@ -4,8 +4,8 @@ GraphIterator Module
 import asyncio
 from typing import List, Optional
 from tqdm.asyncio import tqdm
-from .base_node import BaseNode
 from pydantic import BaseModel
+from .base_node import BaseNode
 
 DEFAULT_BATCHSIZE = 16
 
@@ -130,7 +130,7 @@ class GraphIteratorNode(BaseNode):
             if url.startswith("http"):
                 graph.input_key = "url"
             participants.append(graph)
-        
+
         futures = [_async_run(graph) for graph in participants]
 
         answers = await tqdm.gather(

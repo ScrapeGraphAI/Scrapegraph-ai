@@ -1,12 +1,10 @@
 """ 
 BaseNode Module
 """
-
 import re
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from ..utils import get_logger
-
 
 class BaseNode(ABC):
     """

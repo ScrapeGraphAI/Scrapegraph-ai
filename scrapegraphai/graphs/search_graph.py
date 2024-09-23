@@ -1,7 +1,6 @@
 """ 
 SearchGraph Module
 """
-
 from copy import deepcopy
 from typing import Optional, List
 from pydantic import BaseModel
