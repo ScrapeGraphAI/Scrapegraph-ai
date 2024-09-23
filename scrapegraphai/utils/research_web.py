@@ -60,7 +60,9 @@ def search_on_web(query: str, search_engine: str = "Google",
 
     elif search_engine.lower() == "searxng":
         url = f"http://localhost:{port}"
-        params = {"q": query, "format": "json"}
+        params = {"q": query,
+                  "format": "json",
+                  "engines": "google,duckduckgo,brave,qwant,bing"}
 
         response = requests.get(url, params=params)
 

@@ -130,7 +130,7 @@ class GraphIteratorNode(BaseNode):
             if url.startswith("http"):
                 graph.input_key = "url"
             participants.append(graph)
-        
+
         futures = [_async_run(graph) for graph in participants]
 
         answers = await tqdm.gather(

@@ -60,19 +60,14 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        smart_scraper_instance = SmartScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
             output=["results"],
             node_config={
-                "graph_instance": smart_scraper_instance,
-            }
+                "graph_instance": SmartScraperGraph,
+                "scraper_config": self.copy_config,
+            },
+            schema=self.copy_schema,
         )
 
         concat_answers_node = ConcatAnswersNode(
