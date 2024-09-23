@@ -40,8 +40,6 @@ class SearchLinkNode(BaseNode):
     ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
-        self.llm_model = node_config["llm_model"]
-
         if node_config.get("filter_links", False) or "filter_config" in node_config:
             provided_filter_config = node_config.get("filter_config", {})
             self.filter_config = {**default_filters.filter_dict, **provided_filter_config}
