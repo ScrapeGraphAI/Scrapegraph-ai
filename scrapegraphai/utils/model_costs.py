@@ -2,6 +2,10 @@
 This file contains the cost of models per 1k tokens for input and output.
 The file is on a best effort basis and may not be up to date. Any contributions are welcome.
 """
+
+"""
+Cost for 1k tokens in input
+"""
 MODEL_COST_PER_1K_TOKENS_INPUT = {
     ### MistralAI
     # General Purpose
@@ -53,8 +57,10 @@ MODEL_COST_PER_1K_TOKENS_INPUT = {
     "amazon.titan-text-premier-v1:0": 0.0005,
 }
 
+"""
+Cost for 1k tokens in output
+"""
 MODEL_COST_PER_1K_TOKENS_OUTPUT = {
-    ### MistralAI
     # General Purpose
     "open-mistral-nemo": 0.00015,
     "open-mistral-nemo-2407": 0.00015,

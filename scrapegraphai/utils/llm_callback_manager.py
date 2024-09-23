@@ -3,14 +3,16 @@ This module provides a custom callback manager for the LLM models.
 """
 import threading
 from contextlib import contextmanager
-from .custom_callback import get_custom_callback
-
 from langchain_community.callbacks import get_openai_callback
 from langchain_community.callbacks.manager import get_bedrock_anthropic_callback
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_aws import ChatBedrock
+from .custom_callback import get_custom_callback
 
 class CustomLLMCallbackManager:
+    """
+    custom LLLM calback class
+    """
     _lock = threading.Lock()
 
     @contextmanager
@@ -22,7 +24,8 @@ class CustomLLMCallbackManager:
                         yield cb
                 finally:
                     CustomLLMCallbackManager._lock.release()
-            elif isinstance(llm_model, ChatBedrock) and llm_model_name is not None and "claude" in llm_model_name:
+            elif isinstance(llm_model, ChatBedrock) and \
+                  llm_model_name is not None and "claude" in llm_model_name:
                 try:
                     with get_bedrock_anthropic_callback() as cb:
                         yield cb
