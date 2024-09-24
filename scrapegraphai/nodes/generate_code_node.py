@@ -268,7 +268,8 @@ class GenerateCodeNode(BaseNode):
         - re
         
         **Output ONLY the Python code of the extract_data function, WITHOUT ANY IMPORTS OR ADDITIONAL TEXT.**
-        
+        In your code do not include backticks.
+
         **Response**:
         """
         
