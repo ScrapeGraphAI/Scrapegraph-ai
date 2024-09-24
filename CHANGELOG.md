@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.23.0...v1.23.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* parse_node ([ceede46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ceede4667312e7e295c7dfaf8a9e6570b45bd143))
+
 ## [1.23.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0...v1.23.0) (2024-09-23)
 
 
