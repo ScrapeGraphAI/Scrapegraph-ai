@@ -16,15 +16,17 @@ import re
 from tqdm import tqdm
 from .base_node import BaseNode
 from pydantic import ValidationError
-from ..utils import transform_schema
+from ..utils import (transform_schema,
+                    extract_code,
+                    syntax_focused_analysis, syntax_focused_code_generation,
+                    execution_focused_analysis, execution_focused_code_generation,
+                    validation_focused_analysis, validation_focused_code_generation,
+                    semantic_focused_analysis, semantic_focused_code_generation,
+                    are_content_equal)
 from jsonschema import validate, ValidationError
 import json
-import string
 from ..prompts import (
-    TEMPLATE_INIT_CODE_GENERATION, TEMPLATE_SYNTAX_ANALYSIS, TEMPLATE_SYNTAX_CODE_GENERATION,
-    TEMPLATE_EXECUTION_ANALYSIS, TEMPLATE_EXECUTION_CODE_GENERATION, TEMPLATE_VALIDATION_ANALYSIS,
-    TEMPLATE_VALIDATION_CODE_GENERATION, TEMPLATE_SEMANTIC_COMPARISON, TEMPLATE_SEMANTIC_ANALYSIS,
-    TEMPLATE_SEMANTIC_CODE_GENERATION
+    TEMPLATE_INIT_CODE_GENERATION, TEMPLATE_SEMANTIC_COMPARISON
 )
 
 class GenerateCodeNode(BaseNode):
@@ -141,7 +143,7 @@ class GenerateCodeNode(BaseNode):
     def overall_reasoning_loop(self, state: dict) -> dict:
         self.logger.info(f"--- (Generating Code) ---")
         state["generated_code"] = self.generate_initial_code(state)
-        state["generated_code"] = self.extract_code(state["generated_code"])
+        state["generated_code"] = extract_code(state["generated_code"])
         
         while state["iteration"] < self.max_iterations["overall"]:
             state["iteration"] += 1
@@ -185,10 +187,10 @@ class GenerateCodeNode(BaseNode):
             
             state["errors"]["syntax"] = [syntax_message]
             self.logger.info(f"--- (Synax Error Found: {syntax_message}) ---")
-            analysis = self.syntax_focused_analysis(state)
+            analysis = syntax_focused_analysis(state, self.llm_model)
             self.logger.info(f"--- (Regenerating Code to fix the Error) ---")
-            state["generated_code"] = self.syntax_focused_code_generation(state, analysis)
-            state["generated_code"] = self.extract_code(state["generated_code"])
+            state["generated_code"] = syntax_focused_code_generation(state, analysis, self.llm_model)
+            state["generated_code"] = extract_code(state["generated_code"])
         return state
     
     def execution_reasoning_loop(self, state: dict) -> dict:
@@ -201,10 +203,10 @@ class GenerateCodeNode(BaseNode):
             
             state["errors"]["execution"] = [execution_result]
             self.logger.info(f"--- (Code Execution Error: {execution_result}) ---")
-            analysis = self.execution_focused_analysis(state)
+            analysis = execution_focused_analysis(state, self.llm_model)
             self.logger.info(f"--- (Regenerating Code to fix the Error) ---")
-            state["generated_code"] = self.execution_focused_code_generation(state, analysis)
-            state["generated_code"] = self.extract_code(state["generated_code"])
+            state["generated_code"] = execution_focused_code_generation(state, analysis, self.llm_model)
+            state["generated_code"] = extract_code(state["generated_code"])
         return state
     
     def validation_reasoning_loop(self, state: dict) -> dict:
@@ -216,10 +218,10 @@ class GenerateCodeNode(BaseNode):
             
             state["errors"]["validation"] = errors
             self.logger.info(f"--- (Code Output not compliant to the deisred Output Schema) ---")
-            analysis = self.validation_focused_analysis(state)
+            analysis = validation_focused_analysis(state, self.llm_model)
             self.logger.info(f"--- (Regenerating Code to make the Output compliant to the deisred Output Schema) ---")
-            state["generated_code"] = self.validation_focused_code_generation(state, analysis)
-            state["generated_code"] = self.extract_code(state["generated_code"])
+            state["generated_code"] = validation_focused_code_generation(state, analysis, self.llm_model)
+            state["generated_code"] = extract_code(state["generated_code"])
         return state
     
     def semantic_comparison_loop(self, state: dict) -> dict:
@@ -231,10 +233,10 @@ class GenerateCodeNode(BaseNode):
             
             state["errors"]["semantic"] = comparison_result["differences"]
             self.logger.info(f"--- (The informations exctrcated are not the all ones requested) ---")
-            analysis = self.semantic_focused_analysis(state, comparison_result)
+            analysis = semantic_focused_analysis(state, comparison_result, self.llm_model)
             self.logger.info(f"--- (Regenerating Code to obtain all the infromation requested) ---")
-            state["generated_code"] = self.semantic_focused_code_generation(state, analysis)
-            state["generated_code"] = self.extract_code(state["generated_code"])
+            state["generated_code"] = semantic_focused_code_generation(state, analysis, self.llm_model)
+            state["generated_code"] = extract_code(state["generated_code"])
         return state
     
     def generate_initial_code(self, state: dict) -> str:
@@ -253,59 +255,6 @@ class GenerateCodeNode(BaseNode):
         chain =  prompt | self.llm_model | output_parser
         generated_code = chain.invoke({})
         return generated_code
-    
-    def syntax_focused_analysis(self, state: dict) -> str:
-        prompt = PromptTemplate(template=TEMPLATE_SYNTAX_ANALYSIS, input_variables=["generated_code", "errors"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "generated_code": state["generated_code"],
-            "errors": state["errors"]["syntax"]
-        })
-    
-    def syntax_focused_code_generation(self, state: dict, analysis: str) -> str:
-        prompt = PromptTemplate(template=TEMPLATE_SYNTAX_CODE_GENERATION, input_variables=["analysis", "generated_code"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "analysis": analysis,
-            "generated_code": state["generated_code"]
-        })
-    
-    def execution_focused_analysis(self, state: dict) -> str:
-        prompt = PromptTemplate(template=TEMPLATE_EXECUTION_ANALYSIS, input_variables=["generated_code", "errors", "html_code", "html_analysis"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "generated_code": state["generated_code"],
-            "errors": state["errors"]["execution"],
-            "html_code": state["html_code"],
-            "html_analysis": state["html_analysis"]
-        })
-    
-    def execution_focused_code_generation(self, state: dict, analysis: str) -> str:
-        prompt = PromptTemplate(template=TEMPLATE_EXECUTION_CODE_GENERATION, input_variables=["analysis", "generated_code"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "analysis": analysis,
-            "generated_code": state["generated_code"]
-        })
-    
-    def validation_focused_analysis(self, state: dict) -> str:
-        prompt = PromptTemplate(template=TEMPLATE_VALIDATION_ANALYSIS, input_variables=["generated_code", "errors", "json_schema", "execution_result"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "generated_code": state["generated_code"],
-            "errors": state["errors"]["validation"],
-            "json_schema": state["json_schema"],
-            "execution_result": state["execution_result"]
-        })
-    
-    def validation_focused_code_generation(self, state: dict, analysis: str) -> str:
-        prompt = PromptTemplate(template=TEMPLATE_VALIDATION_CODE_GENERATION, input_variables=["analysis", "generated_code", "json_schema"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "analysis": analysis,
-            "generated_code": state["generated_code"],
-            "json_schema": state["json_schema"]
-        })
     
     def semantic_comparison(self, generated_result: Any, reference_result: Any) -> Dict[str, Any]:
         reference_result_dict = self.output_schema(**reference_result).dict()
@@ -335,25 +284,6 @@ class GenerateCodeNode(BaseNode):
         return chain.invoke({
             "generated_result": json.dumps(generated_result, indent=2),
             "reference_result": json.dumps(reference_result_dict, indent=2)
-        })
-    
-    def semantic_focused_analysis(self, state: dict, comparison_result: Dict[str, Any]) -> str:        
-        prompt = PromptTemplate(template=TEMPLATE_SEMANTIC_ANALYSIS, input_variables=["generated_code", "differences", "explanation"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "generated_code": state["generated_code"],
-            "differences": json.dumps(comparison_result["differences"], indent=2),
-            "explanation": comparison_result["explanation"]
-        })
-    
-    def semantic_focused_code_generation(self, state: dict, analysis: str) -> str:
-        prompt = PromptTemplate(template=TEMPLATE_SEMANTIC_CODE_GENERATION, input_variables=["analysis", "generated_code", "generated_result", "reference_result"])
-        chain = prompt | self.llm_model | StrOutputParser()
-        return chain.invoke({
-            "analysis": analysis,
-            "generated_code": state["generated_code"],
-            "generated_result": json.dumps(state["execution_result"], indent=2),
-            "reference_result": json.dumps(state["reference_answer"], indent=2)
         })
     
     def syntax_check(self, code):
@@ -397,38 +327,3 @@ class GenerateCodeNode(BaseNode):
         except ValidationError as e:
             errors = e.errors()
             return False, errors
-    
-    def extract_code(self, code: str) -> str:
-        pattern = r'```(?:python)?\n(.*?)```'
-        
-        match = re.search(pattern, code, re.DOTALL)
-        
-        return match.group(1) if match else code
-
-
-
-def normalize_dict(d: Dict[str, Any]) -> Dict[str, Any]:
-    normalized = {}
-    for key, value in d.items():
-        if isinstance(value, str):
-            normalized[key] = value.lower().strip()
-        elif isinstance(value, dict):
-            normalized[key] = normalize_dict(value)
-        elif isinstance(value, list):
-            normalized[key] = normalize_list(value)
-        else:
-            normalized[key] = value
-    return normalized
-
-def normalize_list(lst: List[Any]) -> List[Any]:
-    return [
-        normalize_dict(item) if isinstance(item, dict)
-        else normalize_list(item) if isinstance(item, list)
-        else item.lower().strip() if isinstance(item, str)
-        else item
-        for item in lst
-    ]
-
-def are_content_equal(generated_result: Dict[str, Any], reference_result: Dict[str, Any]) -> bool:
-    """Compare two dictionaries for semantic equality."""
-    return normalize_dict(generated_result) == normalize_dict(reference_result)
