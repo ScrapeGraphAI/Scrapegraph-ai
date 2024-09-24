@@ -1,3 +1,11 @@
+## [1.22.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.2-beta.2...v1.22.0-beta.1) (2024-09-24)
+
+
+### Features
+
+* add info to the dictionary for toghtherai ([3b5ee76](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b5ee767cbb91cb0ca8e4691195d16c3b57140bb))
+* update exception ([3876cb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3876cb7be86e081065ca18c443647261a4b205d1))
+
 ## [1.21.2-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.2-beta.1...v1.21.2-beta.2) (2024-09-23)
 
 
