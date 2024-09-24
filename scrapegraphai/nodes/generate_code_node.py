@@ -608,42 +608,30 @@ class GenerateCodeNode(BaseNode):
         
         return match.group(1) if match else code
 
-def normalize_string(s: str) -> str:
-    return ''.join(c for c in s.lower().strip() if c not in string.punctuation)
 
-def normalize_string(s: str) -> str:
-    """Normalize a string by converting to lowercase and stripping spaces."""
-    return s.lower().strip()
 
-def normalize_dict(d: dict) -> dict:
-    """
-    Normalize the dictionary by:
-    - Converting all string values to lowercase and stripping spaces.
-    - Recursively normalizing nested dictionaries.
-    - Sorting lists of primitives and creating sorted list of normalized dicts for lists of dicts.
-    """
+def normalize_dict(d: Dict[str, Any]) -> Dict[str, Any]:
     normalized = {}
     for key, value in d.items():
         if isinstance(value, str):
-            normalized[key] = normalize_string(value)
+            normalized[key] = value.lower().strip()
         elif isinstance(value, dict):
             normalized[key] = normalize_dict(value)
         elif isinstance(value, list):
-            if all(isinstance(v, dict) for v in value):
-                normalized[key] = sorted(
-                    normalize_dict(v) for v in value
-                )
-            else:
-                normalized[key] = sorted(
-                    normalize_dict(v) if isinstance(v, dict)
-                    else normalize_string(v) if isinstance(v, str)
-                    else v
-                    for v in value
-                )
+            normalized[key] = normalize_list(value)
         else:
             normalized[key] = value
-    return dict(sorted(normalized.items()))
+    return normalized
 
-def are_content_equal(generated_result: dict, reference_result: dict) -> bool:
+def normalize_list(lst: List[Any]) -> List[Any]:
+    return [
+        normalize_dict(item) if isinstance(item, dict)
+        else normalize_list(item) if isinstance(item, list)
+        else item.lower().strip() if isinstance(item, str)
+        else item
+        for item in lst
+    ]
+
+def are_content_equal(generated_result: Dict[str, Any], reference_result: Dict[str, Any]) -> bool:
     """Compare two dictionaries for semantic equality."""
     return normalize_dict(generated_result) == normalize_dict(reference_result)

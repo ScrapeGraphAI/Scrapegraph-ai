@@ -238,7 +238,7 @@ mdurl==0.1.2
 minify-html==0.15.0
     # via scrapegraphai
 mistral-common==1.4.1
-
+    # via scrapegraphai
 mpire==2.10.2
     # via semchunk
 multidict==6.0.5
