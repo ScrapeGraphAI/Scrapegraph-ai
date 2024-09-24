@@ -5,7 +5,7 @@ import os
 import json
 from typing import List
 from dotenv import load_dotenv
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from scrapegraphai.graphs import PdfScraperMultiGraph
 
 load_dotenv()

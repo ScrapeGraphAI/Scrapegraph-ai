@@ -5,7 +5,7 @@ Example of Search Graph
 import os
 from typing import List
 from dotenv import load_dotenv
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
@@ -31,7 +31,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "openai/gpt-3.5-turbo",
+        "model": "openai/gpt-4o"
     },
     "max_results": 2,
     "verbose": True,

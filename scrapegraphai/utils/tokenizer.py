@@ -8,7 +8,9 @@ from langchain_mistralai import ChatMistralAI
 from langchain_core.language_models.chat_models import BaseChatModel
 
 def num_tokens_calculus(string: str, llm_model: BaseChatModel) -> int:
-    """Returns the number of tokens in a text string."""
+    """
+    Returns the number of tokens in a text string.
+    """
 
     if isinstance(llm_model, ChatOpenAI):
         from .tokenizers.tokenizer_openai import num_tokens_openai
@@ -23,7 +25,8 @@ def num_tokens_calculus(string: str, llm_model: BaseChatModel) -> int:
         num_tokens_fn = num_tokens_ollama
 
     else:
-        raise NotImplementedError(f"There is no tokenization implementation for model '{llm_model}'")
-            
+        from .tokenizers.tokenizer_openai import num_tokens_openai
+        num_tokens_fn = num_tokens_openai
+
     num_tokens = num_tokens_fn(string, llm_model)
     return num_tokens

@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
 
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from typing import List
 
 load_dotenv()
@@ -32,7 +32,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
     "llm": {
         "api_key": openai_key,
-        "model": "openai/gpt-3.5-turbo",
+        "model": "openai/gpt-4o"
     },
     "library": "beautifulsoup",
     "verbose": True,

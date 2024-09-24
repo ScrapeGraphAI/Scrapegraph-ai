@@ -622,29 +622,41 @@ def normalize_string(s: str) -> str:
     # Convert to lowercase, remove extra spaces, and strip punctuation
     return ''.join(c for c in s.lower().strip() if c not in string.punctuation)
 
+def normalize_string(s: str) -> str:
+    """Normalize a string by converting to lowercase and stripping spaces."""
+    return s.lower().strip()
+
 def normalize_dict(d: dict) -> dict:
     """
     Normalize the dictionary by:
     - Converting all string values to lowercase and stripping spaces.
     - Recursively normalizing nested dictionaries.
-    - Sorting the dictionary to ensure key order doesn't matter.
+    - Sorting lists of primitives and creating sorted list of normalized dicts for lists of dicts.
     """
     normalized = {}
     for key, value in d.items():
         if isinstance(value, str):
-            # Normalize string values
             normalized[key] = normalize_string(value)
         elif isinstance(value, dict):
-            # Recursively normalize nested dictionaries
             normalized[key] = normalize_dict(value)
         elif isinstance(value, list):
-            # Sort lists and normalize elements
-            normalized[key] = sorted(normalize_dict(v) if isinstance(v, dict) else normalize_string(v) if isinstance(v, str) else v for v in value)
+            if all(isinstance(v, dict) for v in value):
+                # For lists of dicts, normalize each dict and sort based on their string representation
+                normalized[key] = sorted(
+                    normalize_dict(v) for v in value
+                )
+            else:
+                # For lists of primitives, sort normally
+                normalized[key] = sorted(
+                    normalize_dict(v) if isinstance(v, dict)
+                    else normalize_string(v) if isinstance(v, str)
+                    else v
+                    for v in value
+                )
         else:
-            # Keep other types (e.g., numbers) as is
             normalized[key] = value
-    return dict(sorted(normalized.items()))  # Ensure dictionary is sorted by keys
+    return dict(sorted(normalized.items()))
 
 def are_content_equal(generated_result: dict, reference_result: dict) -> bool:
-    # Normalize both dictionaries and compare
+    """Compare two dictionaries for semantic equality."""
     return normalize_dict(generated_result) == normalize_dict(reference_result)

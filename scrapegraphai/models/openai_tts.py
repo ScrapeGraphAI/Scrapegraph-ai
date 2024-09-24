@@ -1,9 +1,7 @@
 """
 OpenAITextToSpeech Module
 """
-
 from openai import OpenAI
-
 
 class OpenAITextToSpeech:
     """
@@ -20,7 +18,6 @@ class OpenAITextToSpeech:
 
     def __init__(self, tts_config: dict):
 
-        # convert model_name to model
         self.client = OpenAI(api_key=tts_config.get("api_key"), 
                              base_url=tts_config.get("base_url", None))
         self.model = tts_config.get("model", "tts-1")

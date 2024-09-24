@@ -20,15 +20,16 @@ async def take_screenshot(url: str, save_path: str = None, quality: int = 100):
     try:
         from PIL import Image
     except:
-        raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
+        raise ImportError("""The dependencies for screenshot scraping are not installed. 
+                          Please install them using `pip install scrapegraphai[screenshot_scraper]`.""")
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
         await page.goto(url)
-        image_bytes = await page.screenshot(path=save_path, 
-                                            type="jpeg", 
-                                            full_page=True, 
+        image_bytes = await page.screenshot(path=save_path,
+                                            type="jpeg",
+                                            full_page=True,
                                             quality=quality)
         await browser.close()
         return Image.open(BytesIO(image_bytes))
@@ -48,7 +49,8 @@ def select_area_with_opencv(image):
         import cv2 as cv
         from PIL import ImageGrab
     except ImportError:
-        raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
+        raise ImportError("""The dependencies for screenshot scraping are not installed. 
+                          Please install them using `pip install scrapegraphai[screenshot_scraper]`.""")
 
 
     fullscreen_screenshot = ImageGrab.grab()
@@ -129,7 +131,8 @@ def select_area_with_ipywidget(image):
         from ipywidgets import interact, IntSlider
         import ipywidgets as widgets
     except:
-        raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
+        raise ImportError("""The dependencies for screenshot scraping are not installed. 
+                          Please install them using `pip install scrapegraphai[screenshot_scraper]`.""")
 
     from PIL import Image
 
@@ -192,7 +195,7 @@ def select_area_with_ipywidget(image):
 
     interact(update_plot, top_bottom=top_bottom_slider,
              left_right=left_right_slider, image_size=image_size_bt)
-    
+
     return left_right_slider, top_bottom_slider
 
 
@@ -205,14 +208,16 @@ def crop_image(image, LEFT=None, TOP=None, RIGHT=None, BOTTOM=None,  save_path: 
         TOP (int, optional): The y-coordinate of the top edge of the crop area. Defaults to None.
         RIGHT (int, optional): The x-coordinate of 
         the right edge of the crop area. Defaults to None.
-        BOTTOM (int, optional): The y-coordinate of the bottom edge of the crop area. Defaults to None.
+        BOTTOM (int, optional): The y-coordinate of the 
+        bottom edge of the crop area. Defaults to None.
         save_path (str, optional): The path to save the cropped image. Defaults to None.
     Returns:
         PIL.Image: The cropped image.
     Notes:
         If any of the coordinates (LEFT, TOP, RIGHT, BOTTOM) is None, 
         it will be set to the corresponding edge of the image.
-        If save_path is specified, the cropped image will be saved as a JPEG file at the specified path.
+        If save_path is specified, the cropped image will be saved 
+        as a JPEG file at the specified path.
     """
 
     if LEFT is None:

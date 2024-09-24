@@ -1,7 +1,6 @@
 """
 Module for rotating proxies
 """
-
 import ipaddress
 import random
 import re
@@ -162,7 +161,7 @@ def _search_proxy(proxy: Proxy) -> ProxySettings:
     """
 
 
-    # remove max_shape from criteria 
+    # remove max_shape from criteria
     criteria = proxy.get("criteria", {}).copy()
     criteria.pop("max_shape", None)
 

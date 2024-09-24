@@ -4,7 +4,6 @@ This utility function saves the byte response as an audio file.
 from pathlib import Path
 from typing import Union
 
-
 def save_audio_from_bytes(byte_response: bytes, output_path: Union[str, Path]) -> None:
     """
     Saves the byte response as an audio file to the specified path.
