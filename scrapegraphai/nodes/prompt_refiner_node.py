@@ -12,6 +12,9 @@ from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from .base_node import BaseNode
 from ..utils import transform_schema
+from ..prompts import (
+    TEMPLATE_REFINER, TEMPLATE_REFINER_WITH_CONTEXT
+)
 
 class PromptRefinerNode(BaseNode):
     """
@@ -76,66 +79,6 @@ class PromptRefinerNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating
                       that the necessary information for generating an answer is missing.
         """
-
-        template_prompt_builder = """
-        **Task**: Analyze the user's request and the provided JSON schema to clearly map the desired data extraction.\n
-        Break down the user's request into key components, and then explicitly connect these components to the 
-        corresponding elements within the JSON schema.
-
-        **User's Request**:
-        {user_input}
-
-        **Desired JSON Output Schema**:
-        ```json
-        {json_schema}
-        ```
-
-        **Analysis Instructions**:
-        1. **Break Down User Request:** 
-        * Clearly identify the core entities or data types the user is asking for.\n
-        * Highlight any specific attributes or relationships mentioned in the request.\n
-
-        2. **Map to JSON Schema**:
-        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.\n
-        * Explain how the schema structure accommodates the user's needs.
-        * If applicable, mention any schema elements that are not directly addressed in the user's request.\n
-
-        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.\n
-        Please generate only the analysis and no other text.
-
-        **Response**:
-        """
-        
-        template_prompt_builder_with_context = """
-        **Task**: Analyze the user's request, the provided JSON schema, and the additional context the user provided to clearly map the desired data extraction.\n
-        Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.\n
-        
-        **User's Request**:
-        {user_input}
-
-        **Desired JSON Output Schema**:
-        ```json
-        {json_schema}
-        ```
-        
-        **Additional Context**:
-        {additional_context}
-
-        **Analysis Instructions**:
-        1. **Break Down User Request:** 
-        * Clearly identify the core entities or data types the user is asking for.\n
-        * Highlight any specific attributes or relationships mentioned in the request.\n
-
-        2. **Map to JSON Schema**:
-        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.\n
-        * Explain how the schema structure accommodates the user's needs.\n
-        * If applicable, mention any schema elements that are not directly addressed in the user's request.\n
-
-        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.\n
-        Please generate only the analysis and no other text.
-
-        **Response**:
-        """
         
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
@@ -145,13 +88,13 @@ class PromptRefinerNode(BaseNode):
         
         if self.additional_info is not None:
             prompt = PromptTemplate(
-                template=template_prompt_builder_with_context,
+                template=TEMPLATE_REFINER_WITH_CONTEXT,
                 partial_variables={"user_input": user_prompt,
                                     "json_schema": str(self.simplefied_schema),
                                     "additional_context": self.additional_info})
         else:
             prompt = PromptTemplate(
-                template=template_prompt_builder,
+                template=TEMPLATE_REFINER,
                 partial_variables={"user_input": user_prompt,
                                     "json_schema": str(self.simplefied_schema)})
 
