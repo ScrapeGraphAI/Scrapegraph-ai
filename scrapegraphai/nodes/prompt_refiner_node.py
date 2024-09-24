@@ -13,7 +13,6 @@ from tqdm import tqdm
 from .base_node import BaseNode
 from ..utils import transform_schema
 
-
 class PromptRefinerNode(BaseNode):
     """
     A node that refine the user prompt with the use of the schema and additional context and
@@ -60,7 +59,7 @@ class PromptRefinerNode(BaseNode):
 
         self.additional_info = node_config.get("additional_info")
         
-        self.output_schema = node_config.get("schema") #          get JSON output schema
+        self.output_schema = node_config.get("schema")
 
     def execute(self, state: dict) -> dict:
         """
@@ -79,7 +78,9 @@ class PromptRefinerNode(BaseNode):
         """
 
         template_prompt_builder = """
-        **Task**: Analyze the user's request and the provided JSON schema to clearly map the desired data extraction. Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.
+        **Task**: Analyze the user's request and the provided JSON schema to clearly map the desired data extraction.\n
+        Break down the user's request into key components, and then explicitly connect these components to the 
+        corresponding elements within the JSON schema.
 
         **User's Request**:
         {user_input}
@@ -91,22 +92,23 @@ class PromptRefinerNode(BaseNode):
 
         **Analysis Instructions**:
         1. **Break Down User Request:** 
-        * Clearly identify the core entities or data types the user is asking for.
-        * Highlight any specific attributes or relationships mentioned in the request.
+        * Clearly identify the core entities or data types the user is asking for.\n
+        * Highlight any specific attributes or relationships mentioned in the request.\n
 
         2. **Map to JSON Schema**:
-        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.
+        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.\n
         * Explain how the schema structure accommodates the user's needs.
-        * If applicable, mention any schema elements that are not directly addressed in the user's request.
+        * If applicable, mention any schema elements that are not directly addressed in the user's request.\n
 
-        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.
+        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.\n
         Please generate only the analysis and no other text.
 
         **Response**:
         """
         
         template_prompt_builder_with_context = """
-        **Task**: Analyze the user's request, the provided JSON schema, and the additional context the user provided to clearly map the desired data extraction. Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.
+        **Task**: Analyze the user's request, the provided JSON schema, and the additional context the user provided to clearly map the desired data extraction.\n
+        Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.\n
         
         **User's Request**:
         {user_input}
@@ -121,15 +123,15 @@ class PromptRefinerNode(BaseNode):
 
         **Analysis Instructions**:
         1. **Break Down User Request:** 
-        * Clearly identify the core entities or data types the user is asking for.
-        * Highlight any specific attributes or relationships mentioned in the request.
+        * Clearly identify the core entities or data types the user is asking for.\n
+        * Highlight any specific attributes or relationships mentioned in the request.\n
 
         2. **Map to JSON Schema**:
-        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.
-        * Explain how the schema structure accommodates the user's needs.
-        * If applicable, mention any schema elements that are not directly addressed in the user's request.
+        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.\n
+        * Explain how the schema structure accommodates the user's needs.\n
+        * If applicable, mention any schema elements that are not directly addressed in the user's request.\n
 
-        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.
+        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.\n
         Please generate only the analysis and no other text.
 
         **Response**:
@@ -137,11 +139,11 @@ class PromptRefinerNode(BaseNode):
         
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        user_prompt = state['user_prompt'] #                            get user prompt
+        user_prompt = state['user_prompt']
 
-        self.simplefied_schema = transform_schema(self.output_schema.schema()) #             get JSON schema
+        self.simplefied_schema = transform_schema(self.output_schema.schema())
         
-        if self.additional_info is not None: #                      use additional context if present
+        if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=template_prompt_builder_with_context,
                 partial_variables={"user_input": user_prompt,

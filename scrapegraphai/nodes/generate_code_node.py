@@ -1,14 +1,12 @@
 """
 GenerateCodeNode Module
 """
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_core.utils.pydantic import is_basemodel_subclass
-from langchain_openai import ChatOpenAI, AzureChatOpenAI
-from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 import ast
 import sys
@@ -22,7 +20,6 @@ from ..utils import transform_schema
 from jsonschema import validate, ValidationError
 import json
 import string
-
 
 class GenerateCodeNode(BaseNode):
     """
