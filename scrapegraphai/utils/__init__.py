@@ -17,4 +17,5 @@ from .screenshot_scraping.screenshot_preparation import (take_screenshot,
 from .screenshot_scraping.text_detection import detect_text
 from .tokenizer import num_tokens_calculus
 from .split_text_into_chunks import split_text_into_chunks
+from .llm_callback_manager import CustomLLMCallbackManager
 from .schema_trasform import transform_schema

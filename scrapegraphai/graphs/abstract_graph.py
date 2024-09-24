@@ -154,12 +154,13 @@ class AbstractGraph(ABC):
         try:
             self.model_token = models_tokens[llm_params["model_provider"]][llm_params["model"]]
         except KeyError:
-            print(f"""Model {llm_params['model_provider']}/{llm_params['model']} not found, 
+            print(f"""Model {llm_params['model_provider']}/{llm_params['model']} not found,
                   using default token size (8192)""")
             self.model_token = 8192
 
         try:
-            if llm_params["model_provider"] not in {"oneapi","nvidia","ernie","deepseek","togetherai"}:
+            if llm_params["model_provider"] not in \
+                {"oneapi","nvidia","ernie","deepseek","togetherai"}:
                 if llm_params["model_provider"] == "bedrock":
                     llm_params["model_kwargs"] = { "temperature" : llm_params.pop("temperature") }
                 with warnings.catch_warnings():
@@ -178,7 +179,7 @@ class AbstractGraph(ABC):
                 elif model_provider == "oneapi":
                     return OneApi(**llm_params)
 
-                elif model_provider == "togehterai":
+                elif model_provider == "togetherai":
                     try:
                         from langchain_together import ChatTogether
                     except ImportError:
@@ -195,7 +196,7 @@ class AbstractGraph(ABC):
                     return ChatNVIDIA(**llm_params)
 
         except Exception as e:
-            print(f"Error instancing model: {e}")
+            raise Exception(f"Error instancing model: {e}")
 
 
     def get_state(self, key=None) -> dict:

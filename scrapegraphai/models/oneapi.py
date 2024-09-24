@@ -3,7 +3,6 @@ OneAPI Module
 """
 from langchain_openai import ChatOpenAI
 
-
 class OneApi(ChatOpenAI):
     """
     A wrapper for the OneApi class that provides default configuration

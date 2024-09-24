@@ -21,17 +21,8 @@ def num_tokens_openai(text: str, llm_model:BaseChatModel) -> int:
     logger = get_logger()
 
     logger.debug(f"Counting tokens for text of {len(text)} characters")
-    try:
-        model = llm_model.model_name
-    except AttributeError:
-        raise NotImplementedError(f"The model provider you are using ('{llm_model}') "
-            "does not give us a model name so we cannot identify which encoding to use")
 
-    try:
-        encoding = tiktoken.encoding_for_model(model)
-    except KeyError:
-        raise NotImplementedError(f"Tiktoken does not support identifying the encoding for "
-            "the model '{model}'")
-    
+    encoding = tiktoken.encoding_for_model("gpt-4")
+
     num_tokens = len(encoding.encode(text))
     return num_tokens

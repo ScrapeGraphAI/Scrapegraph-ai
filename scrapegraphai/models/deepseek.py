@@ -3,7 +3,6 @@ DeepSeek Module
 """
 from langchain_openai import ChatOpenAI
 
-
 class DeepSeek(ChatOpenAI):
     """
     A wrapper for the ChatOpenAI class (DeepSeek uses an OpenAI-like API) that

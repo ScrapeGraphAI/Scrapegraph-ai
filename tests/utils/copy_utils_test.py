@@ -184,3 +184,9 @@ def test_with_pydantic():
     copy_obj = safe_deepcopy(original)
     assert copy_obj.value == original.value
     assert copy_obj is not original 
+
+def test_with_boto3():
+    import boto3
+    boto_client = boto3.client("bedrock-runtime", region_name="us-west-2")
+    copy_obj = safe_deepcopy(boto_client)
+    assert copy_obj == boto_client

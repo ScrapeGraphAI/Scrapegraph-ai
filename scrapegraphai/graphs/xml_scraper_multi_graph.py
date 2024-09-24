@@ -59,19 +59,21 @@ class XMLScraperMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        smart_scraper_instance = XMLScraperGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.copy_schema
-        )
+        # smart_scraper_instance = XMLScraperGraph(
+        #     prompt="",
+        #     source="",
+        #     config=self.copy_config,
+        #     schema=self.copy_schema
+        # )
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],
             node_config={
-                "graph_instance": smart_scraper_instance,
-            }
+                "graph_instance": XMLScraperGraph,
+                "scaper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
@@ -79,7 +81,7 @@ class XMLScraperMultiGraph(AbstractGraph):
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 

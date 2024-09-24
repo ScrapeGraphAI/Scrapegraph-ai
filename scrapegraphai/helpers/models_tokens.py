@@ -23,7 +23,8 @@ models_tokens = {
         "gpt-4o-2024-08-06": 128000,
         "gpt-4o-2024-05-13": 128000,
         "gpt-4o-mini":128000,
-
+        "o1-preview":128000,
+        "o1-mini":128000
     },
     "azure_openai": {
         "gpt-3.5-turbo-0125": 16385,
@@ -43,7 +44,9 @@ models_tokens = {
         "gpt-4-32k-0613": 32768,
         "gpt-4o": 128000,
         "gpt-4o-mini":128000,
-        "chatgpt-4o-latest": 128000
+        "chatgpt-4o-latest": 128000,
+        "o1-preview":128000,
+        "o1-mini":128000
     },
     "google_genai": {
         "gemini-pro": 128000,
@@ -75,6 +78,7 @@ models_tokens = {
             "lama3.1:405b": 128000,
             "scrapegraph": 8192,
             "mistral": 8192,
+            "grok-1": 8192,
             "llava": 4096,
             "mixtral:8x22b-instruct": 65536,
             "mistral-openorca": 32000,
@@ -127,8 +131,21 @@ models_tokens = {
         "gemma-7b-it": 8192,
         "claude-3-haiku-20240307'": 8192,
     },
-    "togheterai": {
-        "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo": 128000
+    "toghetherai": {
+        "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo": 128000,
+        "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo": 128000,
+        "mistralai/Mixtral-8x22B-Instruct-v0.1": 128000,
+        "stabilityai/stable-diffusion-xl-base-1.0": 2048,
+        "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo": 128000,
+        "NousResearch/Hermes-3-Llama-3.1-405B-Turbo": 128000,
+        "Gryphe/MythoMax-L2-13b-Lite": 8192,
+        "Salesforce/Llama-Rank-V1": 8192,
+        "meta-llama/Meta-Llama-Guard-3-8B": 128000,
+        "meta-llama/Meta-Llama-3-70B-Instruct-Turbo": 128000,
+        "meta-llama/Llama-3-8b-chat-hf": 8192,
+        "meta-llama/Llama-3-70b-chat-hf": 8192,
+        "Qwen/Qwen2-72B-Instruct": 128000,
+        "google/gemma-2-27b-it": 8192
     },
     "anthropic": {
         "claude_instant": 100000,
