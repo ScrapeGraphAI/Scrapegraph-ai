@@ -12,7 +12,7 @@ def transform_schema(pydantic_schema):
     Returns:
         dict: The transformed JSON schema.
     """
-    
+
     def process_properties(properties):
         result = {}
         for key, value in properties.items():
@@ -20,7 +20,7 @@ def transform_schema(pydantic_schema):
                 if value['type'] == 'array':
                     if '$ref' in value['items']:
                         ref_key = value['items']['$ref'].split('/')[-1]
-                        result[key] = [process_properties(pydantic_schema['definitions'][ref_key]['properties'])]
+                        result[key] = [process_properties(pydantic_schema['$defs'][ref_key]['properties'])]
                     else:
                         result[key] = [value['items']['type']]
                 else:
@@ -30,7 +30,7 @@ def transform_schema(pydantic_schema):
                     }
             elif '$ref' in value:
                 ref_key = value['$ref'].split('/')[-1]
-                result[key] = process_properties(pydantic_schema['definitions'][ref_key]['properties'])
+                result[key] = process_properties(pydantic_schema['$defs'][ref_key]['properties'])
         return result
 
     return process_properties(pydantic_schema['properties'])

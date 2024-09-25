@@ -319,4 +319,3 @@ class FetchNode(BaseNode):
         state["original_html"] = document
         state.update({self.output[0]: compressed_document,})
         return state
-    
