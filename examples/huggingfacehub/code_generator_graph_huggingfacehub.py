@@ -7,6 +7,8 @@ from typing import List
 from dotenv import load_dotenv
 from langchain_core.pydantic_v1 import BaseModel, Field
 from scrapegraphai.graphs import CodeGeneratorGraph
+from langchain_community.llms import HuggingFaceEndpoint
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 
 load_dotenv()
 
@@ -25,12 +27,21 @@ class Projects(BaseModel):
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+HUGGINGFACEHUB_API_TOKEN = os.getenv('HUGGINGFACEHUB_API_TOKEN')
+
+repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
+
+llm_model_instance = HuggingFaceEndpoint(
+    repo_id=repo_id, max_length=128, temperature=0.5, token=HUGGINGFACEHUB_API_TOKEN
+)
+
+embedder_model_instance = HuggingFaceInferenceAPIEmbeddings(
+    api_key=HUGGINGFACEHUB_API_TOKEN, model_name="sentence-transformers/all-MiniLM-l6-v2"
+)
 
 graph_config = {
     "llm": {
-        "api_key":openai_key,
-        "model": "openai/gpt-4o-mini",\
+        "model_instance": llm_model_instance
     },
     "verbose": True,
     "headless": False,
