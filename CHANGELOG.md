@@ -1,3 +1,10 @@
+## [1.22.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.1...v1.22.0-beta.2) (2024-09-25)
+
+
+### Bug Fixes
+
+* node refiner + examples ([d55f6be](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d55f6bee4766f174abb2fdcd598542a9ca108a25))
+
 ## [1.22.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.2-beta.2...v1.22.0-beta.1) (2024-09-24)
 
 
