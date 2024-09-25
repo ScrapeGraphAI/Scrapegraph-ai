@@ -1,7 +1,6 @@
 """ 
 JSONScraperMultiGraph Module
 """
-
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel

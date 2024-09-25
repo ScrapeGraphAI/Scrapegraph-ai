@@ -1,6 +1,7 @@
 ## [1.22.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.2...v1.22.0-beta.3) (2024-09-25)
 
 
+
 ### Bug Fixes
 
 * update to pydantic documentation ([76ce257](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/76ce257efb9d9f46c0693472a1fe54b39e4eb1ef))
@@ -13,6 +14,7 @@
 * node refiner + examples ([d55f6be](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d55f6bee4766f174abb2fdcd598542a9ca108a25))
 
 ## [1.22.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.2-beta.2...v1.22.0-beta.1) (2024-09-24)
+
 
 
 ### Features

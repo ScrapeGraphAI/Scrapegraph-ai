@@ -4,8 +4,8 @@ GraphIterator Module
 import asyncio
 from typing import List, Optional
 from tqdm.asyncio import tqdm
-from .base_node import BaseNode
 from pydantic import BaseModel
+from .base_node import BaseNode
 
 DEFAULT_BATCHSIZE = 16
 

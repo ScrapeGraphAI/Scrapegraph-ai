@@ -33,7 +33,7 @@ class ParseNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "Parse",
+        node_name: str = "ParseNode",
     ):
         super().__init__(node_name, "node", input, output, 1, node_config)
 
@@ -88,7 +88,7 @@ class ParseNode(BaseNode):
             link_urls, img_urls = self._extract_urls(docs_transformed.page_content, source)
 
             chunk_size = self.chunk_size
-            chunk_size = min(chunk_size - 500, int(chunk_size * 0.9))
+            chunk_size = min(chunk_size - 500, int(chunk_size * 0.75))
 
             if isinstance(docs_transformed, Document):
                 chunks = split_text_into_chunks(text=docs_transformed.page_content,

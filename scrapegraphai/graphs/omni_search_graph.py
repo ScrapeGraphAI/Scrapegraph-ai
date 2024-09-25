@@ -1,7 +1,6 @@
 """ 
 OmniSearchGraph Module
 """
-
 from copy import deepcopy
 from typing import Optional
 from pydantic import BaseModel

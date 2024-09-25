@@ -6,9 +6,11 @@ import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from ..nodes import ( FetchNode, ParseNode, SearchLinkNode )
+from ..nodes import (FetchNode,
+                     SearchLinkNode,
+                     SearchLinksWithContext)
 
-class SearchLinkGraph(AbstractGraph): 
+class SearchLinkGraph(AbstractGraph):
     """ 
     SearchLinkGraph is a scraping pipeline that automates the process of 
     extracting information from web pages using a natural language model
@@ -30,13 +32,7 @@ class SearchLinkGraph(AbstractGraph):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel, optional): The schema for the graph output. Defaults to None.
 
-    Example:
-        >>> smart_scraper = SearchLinkGraph(
-        ...     "List me all the attractions in Chioggia.",
-        ...     "https://en.wikipedia.org/wiki/Chioggia",
-        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
-        ... )
-        >>> result = smart_scraper.run()
+
     """
 
     def __init__(self, source: str, config: dict, schema: Optional[BaseModel] = None):
@@ -51,45 +47,41 @@ class SearchLinkGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
-
         fetch_node = FetchNode(
-            input="url| local_dir",
-            output=["doc"],
-            node_config={
-                "llm_model": self.llm_model,
-                "force": self.config.get("force", False),
-                "cut": self.config.get("cut", True),
-                "loader_kwargs": self.config.get("loader_kwargs", {}),
-            }
-        )
-        parse_node = ParseNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "chunk_size": self.model_token,
-                "llm_model": self.llm_model
-            }
-        )
-        search_link_node = SearchLinkNode(
-            input="doc",
-            output=["parsed_doc"],
-            node_config={
-                "llm_model": self.llm_model,
-                "chunk_size": self.model_token,
-                "filter_links": self.config.get("filter_links", None),
-                "filter_config": self.config.get("filter_config", None)
-            }
-        )
+                input="url| local_dir",
+                output=["doc"],
+                node_config={
+                    "force": self.config.get("force", False),
+                    "cut": self.config.get("cut", True),
+                    "loader_kwargs": self.config.get("loader_kwargs", {}),
+                }
+            )
+
+        if self.config.get("llm_style") == (True, None):
+            search_link_node = SearchLinksWithContext(
+                input="doc",
+                output=["parsed_doc"],
+                node_config={
+                    "llm_model": self.llm_model,
+                    "chunk_size": self.model_token,
+                }
+            )
+        else:
+            search_link_node = SearchLinkNode(
+                input="doc",
+                output=["parsed_doc"],
+                node_config={
+                    "chunk_size": self.model_token,
+                }
+            )
 
         return BaseGraph(
             nodes=[
                 fetch_node,
-                parse_node,
                 search_link_node
             ],
             edges=[
-                (fetch_node, parse_node),
-                (parse_node, search_link_node)
+                (fetch_node, search_link_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__
