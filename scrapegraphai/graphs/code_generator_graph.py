@@ -17,17 +17,17 @@ from ..nodes import (
 
 class CodeGeneratorGraph(AbstractGraph):
     """
-    CodeGeneratorGraph is a script generator pipeline that generates the function extract_data(html: str) -> dict() for 
-    extarcting the wanted informations from a HTML page. The code generated is in Python and uses the library BeautifulSoup.
-    It requires a user prompt, a source URL, and a output schema.
-    
+    CodeGeneratorGraph is a script generator pipeline that generates the function extract_data(html: str) -> dict() for
+    extracting the wanted information from a HTML page. The code generated is in Python and uses the library BeautifulSoup.
+    It requires a user prompt, a source URL, and an output schema.
+
     Attributes:
         prompt (str): The prompt for the graph.
         source (str): The source of the graph.
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, 
+        embedder_model: An instance of an embedding model client,
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
@@ -96,7 +96,6 @@ class CodeGeneratorGraph(AbstractGraph):
                 "schema": self.schema,
             }
         )
-        
         prompt_refier_node = PromptRefinerNode(
             input="user_prompt",
             output=["refined_prompt"],
@@ -106,7 +105,6 @@ class CodeGeneratorGraph(AbstractGraph):
                 "schema": self.schema
             }
         )
-        
         html_analyzer_node = HtmlAnalyzerNode(
             input="refined_prompt & original_html",
             output=["html_info", "reduced_html"],
@@ -117,7 +115,6 @@ class CodeGeneratorGraph(AbstractGraph):
                 "reduction": self.config.get("reduction", 0)
             }
         )
-        
         generate_code_node = GenerateCodeNode(
             input="user_prompt & refined_prompt & html_info & reduced_html & answer",
             output=["generated_code"],
@@ -166,4 +163,26 @@ class CodeGeneratorGraph(AbstractGraph):
         inputs = {"user_prompt": self.prompt, self.input_key: self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
-        return self.final_state.get("generated_code", "No code created.")
+        generated_code = self.final_state.get("generated_code", "No code created.")
+
+        if self.config.get("filename") is None:
+            filename = "extracted_data.py"
+        elif ".py" not in self.config.get("filename"):
+            filename += ".py"
+        else:
+            filename = self.config.get("filename")
+
+        self.save_code_to_file(generated_code, filename)
+
+        return generated_code
+
+    def save_code_to_file(self, code: str, filename:str) -> None:
+        """
+        Saves the generated code to a Python file.
+
+        Args:
+            code (str): The generated code to be saved.
+            filename (str): name of the output file
+        """
+        with open(filename, "w") as file:
+            file.write(code)

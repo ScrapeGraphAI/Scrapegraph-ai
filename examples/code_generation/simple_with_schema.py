@@ -42,6 +42,7 @@ graph_config = {
         "validation": 3,
         "semantic": 3
     },
+    "output_file_name": "extracted_data.py"
 }
 
 # ************************************************
