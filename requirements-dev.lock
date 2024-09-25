@@ -6,6 +6,8 @@
 #   features: []
 #   all-features: false
 #   with-sources: false
+#   generate-hashes: false
+#   universal: false
 
 -e file:.
 aiofiles==24.1.0
@@ -129,6 +131,7 @@ graphviz==0.20.3
     # via burr
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 grpcio==1.65.4
     # via google-api-core
     # via grpcio-status
@@ -498,5 +501,7 @@ urllib3==1.26.19
     # via requests
 uvicorn==0.30.5
     # via burr
+watchdog==4.0.2
+    # via streamlit
 yarl==1.9.4
     # via aiohttp

@@ -6,6 +6,8 @@
 #   features: []
 #   all-features: false
 #   with-sources: false
+#   generate-hashes: false
+#   universal: false
 
 -e file:.
 aiohttp==3.9.5
@@ -84,6 +86,7 @@ googleapis-common-protos==1.63.2
     # via grpcio-status
 greenlet==3.0.3
     # via playwright
+    # via sqlalchemy
 grpcio==1.65.1
     # via google-api-core
     # via grpcio-status
