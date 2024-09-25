@@ -73,18 +73,15 @@ class HtmlAnalyzerNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating
                       that the necessary information for generating an answer is missing.
         """
-        
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         input_keys = self.get_input_keys(state)
-        
         input_data = [state[key] for key in input_keys]
-        refined_prompt = input_data[0] #                        get refined user prompt
-        html = input_data[1] #                                  get HTML code
-        
-        reduced_html = reduce_html(html[0].page_content, self.node_config.get("reduction", 0)) #                reduce HTML code
-        
-        if self.additional_info is not None: #              use additional context if present
+        refined_prompt = input_data[0]
+        html = input_data[1]
+        reduced_html = reduce_html(html[0].page_content, self.node_config.get("reduction", 0))
+
+        if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=TEMPLATE_HTML_ANALYSIS_WITH_CONTEXT,
                 partial_variables={"initial_analysis": refined_prompt,
@@ -103,4 +100,3 @@ class HtmlAnalyzerNode(BaseNode):
 
         state.update({self.output[0]: html_analysis, self.output[1]: reduced_html})
         return state
-

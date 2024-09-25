@@ -6,6 +6,7 @@ import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
+from ..utils.save_code_to_file import save_code_to_file
 from ..nodes import (
     FetchNode,
     ParseNode,
@@ -172,17 +173,6 @@ class CodeGeneratorGraph(AbstractGraph):
         else:
             filename = self.config.get("filename")
 
-        self.save_code_to_file(generated_code, filename)
+        save_code_to_file(generated_code, filename)
 
         return generated_code
-
-    def save_code_to_file(self, code: str, filename:str) -> None:
-        """
-        Saves the generated code to a Python file.
-
-        Args:
-            code (str): The generated code to be saved.
-            filename (str): name of the output file
-        """
-        with open(filename, "w") as file:
-            file.write(code)

@@ -79,7 +79,7 @@ class PromptRefinerNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating
                       that the necessary information for generating an answer is missing.
         """
-        
+
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         user_prompt = state['user_prompt']
