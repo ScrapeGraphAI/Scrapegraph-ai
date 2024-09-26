@@ -1,3 +1,29 @@
+## [1.24.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.23.1...v1.24.0) (2024-09-26)
+
+
+### Features
+
+* add info to the dictionary for toghtherai ([3b5ee76](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b5ee767cbb91cb0ca8e4691195d16c3b57140bb))
+* update exception ([3876cb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3876cb7be86e081065ca18c443647261a4b205d1))
+
+
+### Bug Fixes
+
+* chat for bedrock ([f9b121f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f9b121f7657e9eaf0b1b0e4a8574b8f1cbbd7c36))
+* graph Iterator node ([8ce08ba](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8ce08baf01d7757c6fdcab0333405787c67d2dbc))
+* issue about parser ([7eda6bc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7eda6bc06bc4c32850029f54b9b4c22f3124296e))
+* node refiner + examples ([d55f6be](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d55f6bee4766f174abb2fdcd598542a9ca108a25))
+* update to pydantic documentation ([76ce257](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/76ce257efb9d9f46c0693472a1fe54b39e4eb1ef))
+
+
+### CI
+
+* **release:** 1.21.2-beta.1 [skip ci] ([dd0f260](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/dd0f260e75aad97019fad49b09fed1b03d755d37))
+* **release:** 1.21.2-beta.2 [skip ci] ([ba4e863](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba4e863f1448564c3446ed4bb327f0eb5df50287))
+* **release:** 1.22.0-beta.1 [skip ci] ([f42a95f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f42a95faa05de39bd9cfc05e377d4b3da372e482))
+* **release:** 1.22.0-beta.2 [skip ci] ([431c09f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/431c09f551ac28581674c6061f055fde0350ed4c))
+* **release:** 1.22.0-beta.3 [skip ci] ([e5ac020](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e5ac0205d1e04a8b31e86166c3673915b70fd1e3))
+
 ## [1.22.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.2...v1.22.0-beta.3) (2024-09-25)
 
 
