@@ -1,7 +1,7 @@
 """
 MDScraperMultiGraph Module
 """
-from copy import copy, deepcopy
+from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
