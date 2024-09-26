@@ -72,42 +72,42 @@ class ReasoningNode(BaseNode):
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         TEMPLATE_REASONING = """
-        **Task**: Analyze the user's request and the provided JSON schema to clearly map the desired data extraction.\n
-        Break down the user's request into key components, and then explicitly connect these components to the 
-        corresponding elements within the JSON schema.
+        **Task**: Analyze the user's request and the provided JSON schema to guide an LLM in extracting information directly from HTML.
 
         **User's Request**:
         {user_input}
 
-        **Desired JSON Output Schema**:
+        **Target JSON Schema**:
         ```json
         {json_schema}
         ```
 
         **Analysis Instructions**:
-        1. **Break Down User Request:** 
-        * Clearly identify the core entities or data types the user is asking for.\n
-        * Highlight any specific attributes or relationships mentioned in the request.\n
+        1. **Interpret User Request:** 
+        * Identify the key information types or entities the user is seeking.
+        * Note any specific attributes, relationships, or constraints mentioned.
 
         2. **Map to JSON Schema**:
-        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.\n
-        * Explain how the schema structure accommodates the user's needs.
-        * If applicable, mention any schema elements that are not directly addressed in the user's request.\n
+        * For each identified element in the user request, locate its corresponding field in the JSON schema.
+        * Explain how the schema structure represents the requested information.
+        * Highlight any relevant schema elements not explicitly mentioned in the user's request.
 
-        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.\n
-        Please generate only the analysis and no other text.
+        3. **Data Transformation Guidance**:
+        * Provide guidance on any necessary transformations to align extracted data with the JSON schema requirements.
 
-        **Response**:
+        This analysis will be used to instruct an LLM that has the HTML content in its context. The LLM will use this guidance to extract the information and return it directly in the specified JSON format.
+
+        **Reasoning Output**:
+        [Your detailed analysis based on the above instructions]
         """
                 
         TEMPLATE_REASONING_WITH_CONTEXT = """
-        **Task**: Analyze the user's request, the provided JSON schema, and the additional context the user provided to clearly map the desired data extraction.\n
-        Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.\n
+        **Task**: Analyze the user's request, provided JSON schema, and additional context to guide an LLM in extracting information directly from HTML.
 
         **User's Request**:
         {user_input}
 
-        **Desired JSON Output Schema**:
+        **Target JSON Schema**:
         ```json
         {json_schema}
         ```
@@ -116,19 +116,28 @@ class ReasoningNode(BaseNode):
         {additional_context}
 
         **Analysis Instructions**:
-        1. **Break Down User Request:** 
-        * Clearly identify the core entities or data types the user is asking for.\n
-        * Highlight any specific attributes or relationships mentioned in the request.\n
+        1. **Interpret User Request and Context:** 
+        * Identify the key information types or entities the user is seeking.
+        * Note any specific attributes, relationships, or constraints mentioned.
+        * Incorporate insights from the additional context to refine understanding of the task.
 
         2. **Map to JSON Schema**:
-        * For each identified element in the user request, pinpoint its exact counterpart in the JSON schema.\n
-        * Explain how the schema structure accommodates the user's needs.\n
-        * If applicable, mention any schema elements that are not directly addressed in the user's request.\n
+        * For each identified element in the user request, locate its corresponding field in the JSON schema.
+        * Explain how the schema structure represents the requested information.
+        * Highlight any relevant schema elements not explicitly mentioned in the user's request.
 
-        This analysis will be used to guide the HTML structure examination and ultimately inform the code generation process.\n
-        Please generate only the analysis and no other text.
+        3. **Extraction Strategy**:
+        * Based on the additional context, suggest specific strategies for locating and extracting the required information from the HTML.
+        * Highlight any potential challenges or special considerations mentioned in the context.
 
-        **Response**:
+        4. **Data Transformation Guidance**:
+        * Provide guidance on any necessary transformations to align extracted data with the JSON schema requirements.
+        * Note any special formatting, validation, or business logic considerations from the additional context.
+
+        This analysis will be used to instruct an LLM that has the HTML content in its context. The LLM will use this guidance to extract the information and return it directly in the specified JSON format.
+
+        **Reasoning Output**:
+        [Your detailed analysis based on the above instructions, incorporating insights from the additional context]
         """
         
         user_prompt = state['user_prompt']
