@@ -131,8 +131,21 @@ models_tokens = {
         "gemma-7b-it": 8192,
         "claude-3-haiku-20240307'": 8192,
     },
-    "togheterai": {
-        "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo": 128000
+    "toghetherai": {
+        "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo": 128000,
+        "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo": 128000,
+        "mistralai/Mixtral-8x22B-Instruct-v0.1": 128000,
+        "stabilityai/stable-diffusion-xl-base-1.0": 2048,
+        "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo": 128000,
+        "NousResearch/Hermes-3-Llama-3.1-405B-Turbo": 128000,
+        "Gryphe/MythoMax-L2-13b-Lite": 8192,
+        "Salesforce/Llama-Rank-V1": 8192,
+        "meta-llama/Meta-Llama-Guard-3-8B": 128000,
+        "meta-llama/Meta-Llama-3-70B-Instruct-Turbo": 128000,
+        "meta-llama/Llama-3-8b-chat-hf": 8192,
+        "meta-llama/Llama-3-70b-chat-hf": 8192,
+        "Qwen/Qwen2-72B-Instruct": 128000,
+        "google/gemma-2-27b-it": 8192
     },
     "anthropic": {
         "claude_instant": 100000,

@@ -1,23 +1,41 @@
-## [1.23.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.23.0...v1.23.1) (2024-09-24)
+## [1.22.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.2...v1.22.0-beta.3) (2024-09-25)
+
 
 
 ### Bug Fixes
 
-* parse_node ([ceede46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ceede4667312e7e295c7dfaf8a9e6570b45bd143))
+* update to pydantic documentation ([76ce257](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/76ce257efb9d9f46c0693472a1fe54b39e4eb1ef))
 
-## [1.23.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0...v1.23.0) (2024-09-23)
+## [1.22.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.1...v1.22.0-beta.2) (2024-09-25)
+
+
+### Bug Fixes
+
+* node refiner + examples ([d55f6be](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d55f6bee4766f174abb2fdcd598542a9ca108a25))
+
+## [1.22.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.2-beta.2...v1.22.0-beta.1) (2024-09-24)
+
 
 
 ### Features
 
-* update search_link_graph ([de10b28](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/de10b281bab7385e250f4284ff3922dba38882f7))
+* add info to the dictionary for toghtherai ([3b5ee76](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b5ee767cbb91cb0ca8e4691195d16c3b57140bb))
+* update exception ([3876cb7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3876cb7be86e081065ca18c443647261a4b205d1))
 
-## [1.22.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.1...v1.22.0) (2024-09-22)
+## [1.21.2-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.2-beta.1...v1.21.2-beta.2) (2024-09-23)
 
 
-### Features
+### Bug Fixes
 
-* update search_link graph ([e724ae4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e724ae449282608507f7c28a39e655dc86a13aef))
+* graph Iterator node ([8ce08ba](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8ce08baf01d7757c6fdcab0333405787c67d2dbc))
+* issue about parser ([7eda6bc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7eda6bc06bc4c32850029f54b9b4c22f3124296e))
+
+## [1.21.2-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.1...v1.21.2-beta.1) (2024-09-22)
+
+
+### Bug Fixes
+
+* chat for bedrock ([f9b121f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f9b121f7657e9eaf0b1b0e4a8574b8f1cbbd7c36))
 
 ## [1.21.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.21.0...v1.21.1) (2024-09-21)
 

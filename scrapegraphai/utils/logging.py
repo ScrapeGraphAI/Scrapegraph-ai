@@ -1,11 +1,9 @@
 """
 A centralized logging system for any library.
-
 This module provides functions to manage logging for a library. It includes
 functions to get and set the verbosity level, add and remove handlers, and
 control propagation. It also includes a function to set formatting for all
 handlers bound to the root logger.
-
 Source code inspired by: https://gist.github.com/DiTo97/9a0377f24236b66134eb96da1ec1693f
 """
 

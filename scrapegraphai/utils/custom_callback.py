@@ -8,14 +8,11 @@ from contextlib import contextmanager
 import threading
 from typing import Any, Dict, List, Optional
 from contextvars import ContextVar
-
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.messages import AIMessage
 from langchain_core.outputs import ChatGeneration, LLMResult
 from langchain_core.tracers.context import register_configure_hook
-
 from .model_costs import MODEL_COST_PER_1K_TOKENS_INPUT, MODEL_COST_PER_1K_TOKENS_OUTPUT
-
 
 def get_token_cost_for_model(
     model_name: str, num_tokens: int, is_completion: bool = False
@@ -36,7 +33,6 @@ def get_token_cost_for_model(
         return 0.0
     if is_completion:
         return MODEL_COST_PER_1K_TOKENS_OUTPUT[model_name] * (num_tokens / 1000)
-        
     return MODEL_COST_PER_1K_TOKENS_INPUT[model_name] * (num_tokens / 1000)
 
 

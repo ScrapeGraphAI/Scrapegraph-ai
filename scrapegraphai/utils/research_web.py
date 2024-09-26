@@ -45,7 +45,8 @@ def search_on_web(query: str, search_engine: str = "Google",
 
     elif search_engine.lower() == "bing":
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            "User-Agent": """Mozilla/5.0 (Windows NT 10.0; Win64; x64) 
+            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"""
         }
         search_url = f"https://www.bing.com/search?q={query}"
         response = requests.get(search_url, headers=headers)
@@ -60,7 +61,9 @@ def search_on_web(query: str, search_engine: str = "Google",
 
     elif search_engine.lower() == "searxng":
         url = f"http://localhost:{port}"
-        params = {"q": query, "format": "json"}
+        params = {"q": query,
+                  "format": "json",
+                  "engines": "google,duckduckgo,brave,qwant,bing"}
 
         response = requests.get(url, params=params)
 

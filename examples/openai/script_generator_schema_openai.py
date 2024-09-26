@@ -3,12 +3,11 @@ Basic example of scraping pipeline using ScriptCreatorGraph
 """
 
 import os
+from typing import List
 from dotenv import load_dotenv
+from pydantic import BaseModel, Field
 from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
-
-from pydantic import BaseModel, Field
-from typing import List
 
 load_dotenv()
 

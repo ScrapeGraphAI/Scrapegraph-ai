@@ -12,7 +12,6 @@ class DeepCopyError(Exception):
 
     pass
 
-
 def is_boto3_client(obj):
     """ 
     Function for understanding if the script is using boto3 or not
@@ -29,7 +28,6 @@ def is_boto3_client(obj):
         except (AttributeError, ImportError):
             return False
     return False
-
 
 def safe_deepcopy(obj: Any) -> Any:
     """
