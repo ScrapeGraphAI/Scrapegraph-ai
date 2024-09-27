@@ -1,3 +1,10 @@
+## [1.22.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.3...v1.22.0-beta.4) (2024-09-27)
+
+
+### Features
+
+* add html_mode to smart_scraper ([bdcffd6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bdcffd6360237b27797546a198ceece55ce4bc81))
+
 ## [1.22.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.2...v1.22.0-beta.3) (2024-09-25)
 
 
