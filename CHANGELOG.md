@@ -1,3 +1,10 @@
+## [1.25.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.24.1...v1.25.0) (2024-09-27)
+
+
+### Features
+
+* add llama 3.2 ([90e6d07](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/90e6d077dc55b498b71928181065fc088acf943e))
+
 ## [1.24.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.24.0...v1.24.1) (2024-09-26)
 
 
