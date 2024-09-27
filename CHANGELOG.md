@@ -1,3 +1,10 @@
+## [1.22.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.4...v1.22.0-beta.5) (2024-09-27)
+
+
+### Features
+
+* add reasoning integration ([b2822f6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b2822f620a610e61d295cbf4b670aa08fde9de24))
+
 ## [1.22.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.3...v1.22.0-beta.4) (2024-09-27)
 
 
