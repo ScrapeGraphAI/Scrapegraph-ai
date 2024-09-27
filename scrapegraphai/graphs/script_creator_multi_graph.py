@@ -1,6 +1,7 @@
 """ 
 ScriptCreatorMultiGraph Module
 """
+from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
@@ -45,7 +46,7 @@ class ScriptCreatorMultiGraph(AbstractGraph):
         self.max_results = config.get("max_results", 3)
 
         self.copy_config = safe_deepcopy(config)
-
+        self.copy_schema = deepcopy(schema)
         super().__init__(prompt, config, source, schema)
 
     def _create_graph(self) -> BaseGraph:
@@ -55,19 +56,14 @@ class ScriptCreatorMultiGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        script_generator_instance = ScriptCreatorGraph(
-            prompt="",
-            source="",
-            config=self.copy_config,
-            schema=self.schema
-        )
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
             output=["scripts"],
             node_config={
-                "graph_instance": script_generator_instance,
-            }
+                "graph_instance": ScriptCreatorGraph,
+                "scraper_config": self.copy_config,
+            },
+            schema=self.copy_schema
         )
 
         merge_scripts_node = MergeGeneratedScriptsNode(

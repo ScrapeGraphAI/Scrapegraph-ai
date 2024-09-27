@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.24.0...v1.24.1) (2024-09-26)
+
+
+### Bug Fixes
+
+* script creator multi ([9905be8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9905be8a37dc1ff4b90fe9b8be987887253be8bd))
+
 ## [1.24.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.23.1...v1.24.0) (2024-09-26)
 
 
