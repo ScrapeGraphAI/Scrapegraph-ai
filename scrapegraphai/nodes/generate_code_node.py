@@ -5,17 +5,16 @@ from typing import Any, Dict, List, Optional
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableParallel
-from langchain_core.utils.pydantic import is_basemodel_subclass
 from langchain_community.chat_models import ChatOllama
 import ast
 import sys
 from io import StringIO
 from bs4 import BeautifulSoup
 import re
-from tqdm import tqdm
-from .base_node import BaseNode
+import json
+from jsonschema import validate, ValidationError
 from pydantic import ValidationError
+from .base_node import BaseNode
 from ..utils import (transform_schema,
                     extract_code,
                     syntax_focused_analysis, syntax_focused_code_generation,
@@ -23,8 +22,6 @@ from ..utils import (transform_schema,
                     validation_focused_analysis, validation_focused_code_generation,
                     semantic_focused_analysis, semantic_focused_code_generation,
                     are_content_equal)
-from jsonschema import validate, ValidationError
-import json
 from ..prompts import (
     TEMPLATE_INIT_CODE_GENERATION, TEMPLATE_SEMANTIC_COMPARISON
 )
