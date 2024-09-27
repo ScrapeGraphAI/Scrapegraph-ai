@@ -1,7 +1,8 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 By default smart scraper converts in md format the 
-code.
+code. If you want to just use the original code, you have
+to specify in the confi
 """
 
 import os
