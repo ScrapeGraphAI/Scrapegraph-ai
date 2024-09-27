@@ -1,20 +1,22 @@
 """
-HtmlAnalyzerNode Module
+PromptRefinerNode Module
 """
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_models import ChatOllama
 from .base_node import BaseNode
-from ..utils import reduce_html
+from ..utils import transform_schema
 from ..prompts import (
-    TEMPLATE_HTML_ANALYSIS, TEMPLATE_HTML_ANALYSIS_WITH_CONTEXT
+    TEMPLATE_REASONING, TEMPLATE_REASONING_WITH_CONTEXT
 )
 
-class HtmlAnalyzerNode(BaseNode):
+class ReasoningNode(BaseNode):
     """
-    A node that generates an analysis of the provided HTML code based on the wanted infromations to be extracted.
-    
+    A node that refine the user prompt with the use of the schema and additional context and
+    create a precise prompt in subsequent steps that explicitly link elements in the user's
+    original input to their corresponding representations in the JSON schema.
+
     Attributes:
         llm_model: An instance of a language model client, configured for generating answers.
         verbose (bool): A flag indicating whether to show print statements during execution.
@@ -31,7 +33,7 @@ class HtmlAnalyzerNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "HtmlAnalyzer",
+        node_name: str = "PromptRefiner",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
@@ -46,18 +48,14 @@ class HtmlAnalyzerNode(BaseNode):
         self.force = (
             False if node_config is None else node_config.get("force", False)
         )
-        self.script_creator = (
-            False if node_config is None else node_config.get("script_creator", False)
-        )
-        self.is_md_scraper = (
-            False if node_config is None else node_config.get("is_md_scraper", False)
-        )
 
-        self.additional_info = node_config.get("additional_info")
+        self.additional_info = node_config.get("additional_info", None)
+        
+        self.output_schema = node_config.get("schema")
 
     def execute(self, state: dict) -> dict:
         """
-        Generates an analysis of the provided HTML code based on the wanted infromations to be extracted.
+        Generate a refined prompt for the reasoning task based on the user's input and the JSON schema.
 
         Args:
             state (dict): The current state of the graph. The input keys will be used
@@ -70,30 +68,29 @@ class HtmlAnalyzerNode(BaseNode):
             KeyError: If the input keys are not found in the state, indicating
                       that the necessary information for generating an answer is missing.
         """
+
         self.logger.info(f"--- Executing {self.node_name} Node ---")
+        
+        user_prompt = state['user_prompt']
 
-        input_keys = self.get_input_keys(state)
-        input_data = [state[key] for key in input_keys]
-        refined_prompt = input_data[0]
-        html = input_data[1]
-        reduced_html = reduce_html(html[0].page_content, self.node_config.get("reduction", 0))
-
+        self.simplefied_schema = transform_schema(self.output_schema.schema())
+        
         if self.additional_info is not None:
             prompt = PromptTemplate(
-                template=TEMPLATE_HTML_ANALYSIS_WITH_CONTEXT,
-                partial_variables={"initial_analysis": refined_prompt,
-                                    "html_code": reduced_html,
+                template=TEMPLATE_REASONING_WITH_CONTEXT,
+                partial_variables={"user_input": user_prompt,
+                                    "json_schema": str(self.simplefied_schema),
                                     "additional_context": self.additional_info})
         else:
             prompt = PromptTemplate(
-                template=TEMPLATE_HTML_ANALYSIS,
-                partial_variables={"initial_analysis": refined_prompt,
-                                    "html_code": reduced_html})
+                template=TEMPLATE_REASONING,
+                partial_variables={"user_input": user_prompt,
+                                    "json_schema": str(self.simplefied_schema)})
 
         output_parser = StrOutputParser()
 
         chain =  prompt | self.llm_model | output_parser
-        html_analysis = chain.invoke({})
+        refined_prompt = chain.invoke({})
 
-        state.update({self.output[0]: html_analysis, self.output[1]: reduced_html})
+        state.update({self.output[0]: refined_prompt})
         return state

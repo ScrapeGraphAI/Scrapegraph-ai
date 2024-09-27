@@ -26,3 +26,4 @@ from .concat_answers_node import ConcatAnswersNode
 from .prompt_refiner_node import PromptRefinerNode
 from .html_analyzer_node import HtmlAnalyzerNode
 from .generate_code_node import GenerateCodeNode
+from .reasoning_node import ReasoningNode
