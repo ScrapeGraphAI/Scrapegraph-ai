@@ -70,7 +70,6 @@ class SmartScraperGraph(AbstractGraph):
                 "scrape_do": self.config.get("scrape_do")
             }
         )
-       
 
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
@@ -82,14 +81,15 @@ class SmartScraperGraph(AbstractGraph):
             }
         )
 
-        if self.config.get("html_mode") is not True:
-
+        if self.config.get("html_mode") is False:
             parse_node = ParseNode(
                 input="doc",
                 output=["parsed_doc"],
                 node_config={
                     "llm_model": self.llm_model,
                     "chunk_size": self.model_token
+                }
+            )
 
         if self.config.get("reasoning"):
             reasoning_node =  ReasoningNode(
@@ -102,19 +102,48 @@ class SmartScraperGraph(AbstractGraph):
                 }
             )
 
+        if self.config.get("html_mode") is False and self.config.get("reasoning") is True:
+
             return BaseGraph(
                 nodes=[
                     fetch_node,
                     parse_node,
-
                     reasoning_node,
                     generate_answer_node,
                 ],
                 edges=[
                     (fetch_node, parse_node),
-                    (parse_node, generate_answer_node)
                     (parse_node, reasoning_node),
                     (reasoning_node, generate_answer_node)
+                ],
+                entry_point=fetch_node,
+                graph_name=self.__class__.__name__
+            )
+
+        elif self.config.get("html_mode") is True and self.config.get("reasoning") is True:
+
+            return BaseGraph(
+                nodes=[
+                    fetch_node,
+                    reasoning_node,
+                    generate_answer_node,
+                ],
+                edges=[
+                    (fetch_node, reasoning_node),
+                    (reasoning_node, generate_answer_node)
+                ],
+                entry_point=fetch_node,
+                graph_name=self.__class__.__name__
+            )
+
+        elif self.config.get("html_mode") is True and self.config.get("reasoning") is False:
+            return BaseGraph(
+                nodes=[
+                    fetch_node,
+                    generate_answer_node,
+                ],
+                edges=[
+                    (fetch_node, generate_answer_node)
                 ],
                 entry_point=fetch_node,
                 graph_name=self.__class__.__name__
@@ -123,15 +152,16 @@ class SmartScraperGraph(AbstractGraph):
         return BaseGraph(
                 nodes=[
                     fetch_node,
+                    parse_node,
                     generate_answer_node,
                 ],
                 edges=[
-                    (fetch_node,  generate_answer_node)
+                    (fetch_node, parse_node),
+                    (parse_node, generate_answer_node)
                 ],
                 entry_point=fetch_node,
                 graph_name=self.__class__.__name__
             )
-
 
     def run(self) -> str:
         """
