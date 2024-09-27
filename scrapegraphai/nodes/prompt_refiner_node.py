@@ -4,12 +4,7 @@ PromptRefinerNode Module
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableParallel
-from langchain_core.utils.pydantic import is_basemodel_subclass
-from langchain_openai import ChatOpenAI, AzureChatOpenAI
-from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
-from tqdm import tqdm
 from .base_node import BaseNode
 from ..utils import transform_schema
 from ..prompts import (
@@ -61,7 +56,7 @@ class PromptRefinerNode(BaseNode):
         )
 
         self.additional_info = node_config.get("additional_info")
-        
+
         self.output_schema = node_config.get("schema")
 
     def execute(self, state: dict) -> dict:
@@ -85,7 +80,7 @@ class PromptRefinerNode(BaseNode):
         user_prompt = state['user_prompt']
 
         self.simplefied_schema = transform_schema(self.output_schema.schema())
-        
+
         if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=TEMPLATE_REFINER_WITH_CONTEXT,
