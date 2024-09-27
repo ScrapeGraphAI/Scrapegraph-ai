@@ -3,7 +3,7 @@ Reasoning prompts helper
 """
 
 TEMPLATE_REASONING = """
-**Task**: Analyze the user's request and the provided JSON schema to guide an LLM in extracting information directly from HTML.
+**Task**: Analyze the user's request and the provided JSON schema to guide an LLM in extracting information directly from a markdown file previously parsed froma a HTML file.
 
 **User's Request**:
 {user_input}
@@ -33,7 +33,7 @@ This analysis will be used to instruct an LLM that has the HTML content in its c
 """
         
 TEMPLATE_REASONING_WITH_CONTEXT = """
-**Task**: Analyze the user's request, provided JSON schema, and additional context to guide an LLM in extracting information directly from HTML.
+**Task**: Analyze the user's request and the provided JSON schema to guide an LLM in extracting information directly from a markdown file previously parsed froma a HTML file.
 
 **User's Request**:
 {user_input}
