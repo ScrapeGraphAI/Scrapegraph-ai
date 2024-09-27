@@ -9,6 +9,7 @@ from .abstract_graph import AbstractGraph
 from ..nodes import (
     FetchNode,
     ParseNode,
+    ReasoningNode,
     GenerateAnswerNode
 )
 
@@ -87,6 +88,33 @@ class SmartScraperGraph(AbstractGraph):
                 "schema": self.schema,
             }
         )
+
+        if self.config.get("reasoning"):
+            reasoning_node =  ReasoningNode(
+                input="user_prompt & (relevant_chunks | parsed_doc | doc)",
+                output=["answer"],
+                node_config={
+                    "llm_model": self.llm_model,
+                    "additional_info": self.config.get("additional_info"),
+                    "schema": self.schema,
+                }
+            )
+
+            return BaseGraph(
+                nodes=[
+                    fetch_node,
+                    parse_node,
+                    reasoning_node,
+                    generate_answer_node,
+                ],
+                edges=[
+                    (fetch_node, parse_node),
+                    (parse_node, reasoning_node),
+                    (reasoning_node, generate_answer_node)
+                ],
+                entry_point=fetch_node,
+                graph_name=self.__class__.__name__
+            )
 
         return BaseGraph(
             nodes=[

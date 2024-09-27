@@ -31,7 +31,7 @@ This analysis will be used to instruct an LLM that has the HTML content in its c
 **Reasoning Output**:
 [Your detailed analysis based on the above instructions]
 """
-        
+
 TEMPLATE_REASONING_WITH_CONTEXT = """
 **Task**: Analyze the user's request and the provided JSON schema to guide an LLM in extracting information directly from a markdown file previously parsed froma a HTML file.
 

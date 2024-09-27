@@ -50,12 +50,13 @@ class ReasoningNode(BaseNode):
         )
 
         self.additional_info = node_config.get("additional_info", None)
-        
+
         self.output_schema = node_config.get("schema")
 
     def execute(self, state: dict) -> dict:
         """
-        Generate a refined prompt for the reasoning task based on the user's input and the JSON schema.
+        Generate a refined prompt for the reasoning task based 
+        on the user's input and the JSON schema.
 
         Args:
             state (dict): The current state of the graph. The input keys will be used
@@ -70,11 +71,11 @@ class ReasoningNode(BaseNode):
         """
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
-        
+
         user_prompt = state['user_prompt']
 
         self.simplefied_schema = transform_schema(self.output_schema.schema())
-        
+
         if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=TEMPLATE_REASONING_WITH_CONTEXT,
