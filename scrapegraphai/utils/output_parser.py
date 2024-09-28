@@ -23,8 +23,7 @@ def get_structured_output_parser(schema: Union[Dict[str, Any],
     return _dict_output_parser
 
 def get_pydantic_output_parser(schema: Union[Dict[str, Any], 
-                                             Type[BaseModelV1 | BaseModelV2], Type]) 
--> JsonOutputParser:
+                                             Type[BaseModelV1 | BaseModelV2], Type]) -> JsonOutputParser:
     """
     Get the correct output parser for the LLM model.
 
