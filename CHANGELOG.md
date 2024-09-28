@@ -1,3 +1,10 @@
+## [1.22.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.5...v1.22.0-beta.6) (2024-09-28)
+
+
+### Bug Fixes
+
+* integration with html_mode ([f87ffa1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f87ffa1d8db32b38c47d9f5aa2ae88f1d7978a04))
+
 ## [1.22.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.22.0-beta.4...v1.22.0-beta.5) (2024-09-27)
 
 
