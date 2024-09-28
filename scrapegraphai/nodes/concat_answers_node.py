@@ -56,19 +56,15 @@ class ConcatAnswersNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         answers = input_data[0]
-        
+
         if len(answers) > 1:
-            # merge the answers in one string
             answer = self._merge_dict(answers)
 
-            # Update the state with the generated answer
             state.update({self.output[0]: answer})
 
         else:

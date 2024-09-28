@@ -1,6 +1,7 @@
 """
 This module provides a custom callback manager for the LLM models.
 """
+
 import threading
 from contextlib import contextmanager
 from langchain_community.callbacks import get_openai_callback

@@ -173,7 +173,9 @@ class GenerateCodeNode(BaseNode):
                 continue      
             break
 
-        if state["iteration"] == self.max_iterations["overall"] and (state["errors"]["syntax"] or state["errors"]["execution"] or state["errors"]["validation"] or state["errors"]["semantic"]):
+        if state["iteration"] == self.max_iterations["overall"] and \
+            (state["errors"]["syntax"] or state["errors"]["execution"] \
+             or state["errors"]["validation"] or state["errors"]["semantic"]):
             raise RuntimeError("Max iterations reached without obtaining the desired code.")
 
         self.logger.info(f"--- (Code Generated Correctly) ---")
@@ -238,7 +240,8 @@ class GenerateCodeNode(BaseNode):
 
     def semantic_comparison_loop(self, state: dict) -> dict:
         for _ in range(self.max_iterations["semantic"]):
-            comparison_result = self.semantic_comparison(state["execution_result"], state["reference_answer"])
+            comparison_result = self.semantic_comparison(state["execution_result"], 
+                                                         state["reference_answer"])
             if comparison_result["are_semantically_equivalent"]:
                 state["errors"]["semantic"] = []
                 return state

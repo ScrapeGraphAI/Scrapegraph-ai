@@ -3,7 +3,6 @@ Prettify the execution information of the graph.
 """
 import pandas as pd
 
-
 def prettify_exec_info(complete_result: list[dict]) -> pd.DataFrame:
     """
     Transforms the execution information of a graph into a DataFrame for enhanced visualization.

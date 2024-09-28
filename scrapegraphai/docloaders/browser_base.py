@@ -13,8 +13,10 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str], text_cont
     - `api_key`: The API key provided by BrowserBase.
     - `project_id`: The ID of the project on BrowserBase where you want to fetch data from.
     - `link`: The URL or link that you want to fetch data from.
-    - `text_content`: A boolean flag to specify whether to return only the text content (True) or the full HTML (False).
-    - `async_mode`: A boolean flag that determines whether the function runs asynchronously (True) or synchronously (False, default).
+    - `text_content`: A boolean flag to specify whether to return only the 
+        text content (True) or the full HTML (False).
+    - `async_mode`: A boolean flag that determines whether the function runs asynchronously 
+        (True) or synchronously (False, default).
 
     It initializes a Browserbase object with the given API key and project ID, 
     then uses this object to load the specified link. 
@@ -37,8 +39,10 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str], text_cont
         api_key (str): The API key provided by BrowserBase.
         project_id (str): The ID of the project on BrowserBase where you want to fetch data from.
         link (str): The URL or link that you want to fetch data from.
-        text_content (bool): Whether to return only the text content (True) or the full HTML (False). Defaults to True.
-        async_mode (bool): Whether to run the function asynchronously (True) or synchronously (False). Defaults to False.
+        text_content (bool): Whether to return only the text content 
+        (True) or the full HTML (False). Defaults to True.
+        async_mode (bool): Whether to run the function asynchronously 
+        (True) or synchronously (False). Defaults to False.
 
     Returns:
         object: The result of the loading operation.
@@ -47,7 +51,8 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str], text_cont
     try:
         from browserbase import Browserbase
     except ImportError:
-        raise ImportError("The browserbase module is not installed. Please install it using `pip install browserbase`.")
+        raise ImportError(f"""The browserbase module is not installed. 
+                          Please install it using `pip install browserbase`.""")
 
 
     browserbase = Browserbase(api_key=api_key, project_id=project_id)

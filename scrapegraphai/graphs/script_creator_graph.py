@@ -68,6 +68,7 @@ class ScriptCreatorGraph(AbstractGraph):
                 "script_creator": True
             }
         )
+
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
@@ -76,6 +77,7 @@ class ScriptCreatorGraph(AbstractGraph):
                          "llm_model": self.llm_model
                          }
         )
+
         generate_scraper_node = GenerateScraperNode(
             input="user_prompt & (parsed_doc)",
             output=["answer"],

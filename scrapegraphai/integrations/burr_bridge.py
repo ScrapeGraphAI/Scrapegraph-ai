@@ -15,7 +15,8 @@ try:
     from burr.core import Application, ApplicationBuilder, State, Action, default, ApplicationContext
     from burr.lifecycle import PostRunStepHook, PreRunStepHook
 except ImportError:
-    raise ImportError("burr package is not installed. Please install it with 'pip install scrapegraphai[burr]'")
+    raise ImportError("""burr package is not installed. 
+                      Please install it with 'pip install scrapegraphai[burr]'""")
 
 
 class PrintLnHook(PostRunStepHook, PreRunStepHook):
@@ -32,7 +33,8 @@ class PrintLnHook(PostRunStepHook, PreRunStepHook):
 
 class BurrNodeBridge(Action):
     """Bridge class to convert a base graph node to a Burr action.
-    This is nice because we can dynamically declare the inputs/outputs (and not rely on function-parsing).
+    This is nice because we can dynamically declare 
+    the inputs/outputs (and not rely on function-parsing).
     """
 
     def __init__(self, node):
@@ -63,7 +65,8 @@ class BurrNodeBridge(Action):
 
 def parse_boolean_expression(expression: str) -> List[str]:
     """
-    Parse a boolean expression to extract the keys used in the expression, without boolean operators.
+    Parse a boolean expression to extract the keys 
+    used in the expression, without boolean operators.
 
     Args:
         expression (str): The boolean expression to parse.
@@ -136,10 +139,9 @@ class BurrBridge:
         if application_context is not None:
             builder = (
                 builder
-                # if we're using a tracker, we want to copy it/pass in
                 .with_tracker(
                     application_context.tracker.copy() if application_context.tracker is not None else None
-                )  # remember to do `copy()` here!
+                )
                 .with_spawning_parent(
                     application_context.app_id,
                     application_context.sequence_id,
@@ -157,7 +159,8 @@ class BurrBridge:
         Create Burr actions from the base graph nodes.
 
         Returns:
-            dict: A dictionary of Burr actions with the node name as keys and the action functions as values.
+            dict: A dictionary of Burr actions with the node name 
+            as keys and the action functions as values.
         """
 
         actions = {}

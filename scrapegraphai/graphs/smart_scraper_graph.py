@@ -69,6 +69,7 @@ class SmartScraperGraph(AbstractGraph):
                 "scrape_do": self.config.get("scrape_do")
             }
         )
+
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],

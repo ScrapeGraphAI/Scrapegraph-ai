@@ -81,16 +81,13 @@ class GenerateAnswerCSVNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
         doc = input_data[1]
 
-        # Initialize the output parser
         if self.node_config.get("schema", None) is not None:
 
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):

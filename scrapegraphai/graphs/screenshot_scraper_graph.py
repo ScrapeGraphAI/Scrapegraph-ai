@@ -47,6 +47,7 @@ class ScreenshotScraperGraph(AbstractGraph):
                 "link": self.source
             }
         )
+
         generate_answer_from_image_node = GenerateAnswerFromImageNode(
             input="screenshots",
             output=["answer"],

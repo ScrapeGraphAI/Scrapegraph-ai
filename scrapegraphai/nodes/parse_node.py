@@ -118,7 +118,7 @@ class ParseNode(BaseNode):
         """
         if not self.parse_urls:
             return [], []
-        
+
         image_extensions = default_filters.filter_dict["img_exts"]
         image_extension_seq = '|'.join(image_extensions).replace('.','')
         url_pattern = re.compile(r'(https?://[^\s]+|\S+\.(?:' + image_extension_seq + '))')
@@ -130,12 +130,12 @@ class ParseNode(BaseNode):
             all_urls = [url for url in all_urls if url.startswith("http")]
         else:
             all_urls = [urljoin(source, url) for url in all_urls]
-        
+
         images = [url for url in all_urls if any(url.endswith(ext) for ext in image_extensions)]
         links = [url for url in all_urls if url not in images]
 
         return links, images
-    
+
     def _clean_urls(self, urls: List[str]) -> List[str]:
         """
         Cleans the URLs extracted from the text.
@@ -150,7 +150,7 @@ class ParseNode(BaseNode):
         for url in urls:
             url = re.sub(r'.*?\]\(', '', url)
             url = url.rstrip(').')
-            
+
             cleaned_urls.append(url)
-        
+
         return cleaned_urls

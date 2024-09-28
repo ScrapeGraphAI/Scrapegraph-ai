@@ -13,7 +13,6 @@ from .base_node import BaseNode
 from ..prompts import TEMPLATE_RELEVANT_LINKS
 from ..helpers import default_filters
 
-
 class SearchLinkNode(BaseNode):
     """
     A node that can filter out the relevant links in the webpage content for the user prompt.

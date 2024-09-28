@@ -4,11 +4,9 @@ SearchGraph Module
 from copy import deepcopy
 from typing import Optional, List
 from pydantic import BaseModel
-
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .smart_scraper_graph import SmartScraperGraph
-
 from ..nodes import (
     SearchInternetNode,
     GraphIteratorNode,
@@ -77,6 +75,7 @@ class SearchGraph(AbstractGraph):
                 "search_engine": self.copy_config.get("search_engine")
             }
         )
+
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
             output=["results"],

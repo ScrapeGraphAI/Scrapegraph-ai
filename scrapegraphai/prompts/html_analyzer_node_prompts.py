@@ -2,7 +2,6 @@
 HTML analysis prompts helper
 """
 
-
 TEMPLATE_HTML_ANALYSIS = """
 Task: Your job is to analyze the provided HTML code in relation to the initial scraping task analysis and provide all the necessary HTML information useful for implementing a function that extracts data from the given HTML string.
 

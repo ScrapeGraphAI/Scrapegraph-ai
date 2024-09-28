@@ -1,6 +1,7 @@
 """
 Generate answer csv schema
 """
+
 TEMPLATE_CHUKS_CSV = """
 You are a  scraper and you have just scraped the
 following content from a csv.

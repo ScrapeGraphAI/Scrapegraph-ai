@@ -134,7 +134,6 @@ class DeepScraperGraph(AbstractGraph):
         )
 
 
-
     def _create_graph(self) -> BaseGraph:
         """
         Creates the graph of nodes representing the workflow for web scraping

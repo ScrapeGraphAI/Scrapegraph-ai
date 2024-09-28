@@ -14,7 +14,6 @@ from ..nodes import (
 )
 from ..utils.copy import safe_deepcopy
 
-
 class OmniSearchGraph(AbstractGraph):
     """ 
     OmniSearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.

@@ -45,7 +45,8 @@ class BaseGraph:
         ... )
     """
 
-    def __init__(self, nodes: list, edges: list, entry_point: str, use_burr: bool = False, burr_config: dict = None, graph_name: str = "Custom"):
+    def __init__(self, nodes: list, edges: list, entry_point: str, 
+                 use_burr: bool = False, burr_config: dict = None, graph_name: str = "Custom"):
         self.nodes = nodes
         self.raw_edges = edges
         self.edges = self._create_edges({e for e in edges})

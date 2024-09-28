@@ -219,7 +219,9 @@ class FetchNode(BaseNode):
 
         parsed_content = source
 
-        if (isinstance(self.llm_model, ChatOpenAI) or isinstance(self.llm_model, AzureChatOpenAI)) and not self.script_creator or self.force and not self.script_creator:
+        if (isinstance(self.llm_model, ChatOpenAI) or \
+            isinstance(self.llm_model, AzureChatOpenAI)) \
+                and not self.script_creator or self.force and not self.script_creator:
             parsed_content = convert_to_md(source)
         else:
             parsed_content = source

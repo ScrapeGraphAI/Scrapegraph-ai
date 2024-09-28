@@ -61,6 +61,7 @@ class SpeechGraph(AbstractGraph):
             input="url | local_dir",
             output=["doc"]
         )
+
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
@@ -69,6 +70,7 @@ class SpeechGraph(AbstractGraph):
                 "llm_model": self.llm_model
             }
         )
+
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
@@ -78,6 +80,7 @@ class SpeechGraph(AbstractGraph):
                 "schema": self.schema
             }
         )
+
         text_to_speech_node = TextToSpeechNode(
             input="answer",
             output=["audio"],
