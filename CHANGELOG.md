@@ -1,3 +1,10 @@
+## [1.25.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.25.0...v1.25.1) (2024-09-29)
+
+
+### Bug Fixes
+
+* removed deep scraper ([9aa8c88](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9aa8c889fb32f2eb2005a2fb04f05dc188092279))
+
 ## [1.25.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.24.1...v1.25.0) (2024-09-27)
 
 
