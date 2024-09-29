@@ -1,7 +1,6 @@
 """ 
 SmartScraperMultiGraph Module
 """
-
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
@@ -46,9 +45,7 @@ class SmartScraperMultiGraph(AbstractGraph):
                  config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
-
         self.copy_config = safe_deepcopy(config)
-
         self.copy_schema = deepcopy(schema)
 
         super().__init__(prompt, config, source, schema)
@@ -60,13 +57,6 @@ class SmartScraperMultiGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
-
-        # smart_scraper_instance = SmartScraperGraph(
-        #     prompt="",
-        #     source="",
-        #     config=self.copy_config,
-        #     schema=self.copy_schema
-        # )
 
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",

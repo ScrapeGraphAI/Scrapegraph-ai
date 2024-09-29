@@ -1,12 +1,10 @@
 """ 
 BaseNode Module
 """
-
 import re
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from ..utils import get_logger
-
 
 class BaseNode(ABC):
     """
@@ -194,18 +192,14 @@ class BaseNode(ABC):
                     "Invalid operator placement: operators cannot be adjacent."
                 )
 
-        # Check for missing or balanced parentheses
         if open_parentheses != close_parentheses:
             raise ValueError("Missing or unbalanced parentheses in expression.")
 
-        # Helper function to evaluate an expression without parentheses
         def evaluate_simple_expression(exp: str) -> List[str]:
             """Evaluate an expression without parentheses."""
 
-            # Split the expression by the OR operator and process each segment
             for or_segment in exp.split("|"):
 
-                # Check if all elements in an AND segment are in state
                 and_segment = or_segment.split("&")
                 if all(elem.strip() in state for elem in and_segment):
                     return [
@@ -213,7 +207,6 @@ class BaseNode(ABC):
                     ]
             return []
 
-        # Helper function to evaluate expressions with parentheses
         def evaluate_expression(expression: str) -> List[str]:
             """Evaluate an expression with parentheses."""
 
@@ -222,10 +215,8 @@ class BaseNode(ABC):
                 end = expression.find(")", start)
                 sub_exp = expression[start + 1 : end]
 
-                # Replace the evaluated part with a placeholder and then evaluate it
                 sub_result = evaluate_simple_expression(sub_exp)
 
-                # For simplicity in handling, join sub-results with OR to reprocess them later
                 expression = (
                     expression[:start] + "|".join(sub_result) + expression[end + 1 :]
                 )
@@ -238,7 +229,6 @@ class BaseNode(ABC):
                              Expression was {expression}. 
                              State contains keys: {', '.join(state.keys())}""")
 
-        # Remove redundant state keys from the result, without changing their order
         final_result = []
         for key in result:
             if key not in final_result:

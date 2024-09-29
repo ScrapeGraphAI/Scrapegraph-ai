@@ -1,7 +1,6 @@
 """ 
 JSONScraperMultiGraph Module
 """
-
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
@@ -46,9 +45,7 @@ class JSONScraperMultiGraph(AbstractGraph):
                  config: dict, schema: Optional[BaseModel] = None):
 
         self.max_results = config.get("max_results", 3)
-
         self.copy_config = safe_deepcopy(config)
-
         self.copy_schema = deepcopy(schema)
 
         super().__init__(prompt, config, source, schema)

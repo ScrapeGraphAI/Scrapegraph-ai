@@ -81,7 +81,6 @@ class GenerateAnswerOmniNode(BaseNode):
         doc = input_data[1]
         imag_desc = input_data[2]
 
-        # Initialize the output parser
         if self.node_config.get("schema", None) is not None:
 
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):

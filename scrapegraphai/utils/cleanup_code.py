@@ -5,7 +5,7 @@ import re
 
 def extract_code(code: str) -> str:
     pattern = r'```(?:python)?\n(.*?)```'
-    
+
     match = re.search(pattern, code, re.DOTALL)
-    
+
     return match.group(1) if match else code

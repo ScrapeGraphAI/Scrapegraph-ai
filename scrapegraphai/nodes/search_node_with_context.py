@@ -23,7 +23,7 @@ class SearchLinksWithContext(BaseNode):
         input (str): Boolean expression defining the input keys needed from the state.
         output (List[str]): List of output keys to be updated in the state.
         node_config (dict): Additional configuration for the node.
-        node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
+        node_name (str): The unique identifier name for the node, defaulting to "SearchLinksWithContext".
     """
 
     def __init__(
@@ -31,7 +31,7 @@ class SearchLinksWithContext(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateAnswer",
+        node_name: str = "SearchLinksWithContext",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm_model"]

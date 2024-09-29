@@ -24,17 +24,14 @@ def scrape_do_fetch(token, target_url, use_proxy=False, geoCode=None, super_prox
     """
     encoded_url = urllib.parse.quote(target_url)
     if use_proxy:
-        # Create proxy mode URL
-        proxyModeUrl = f"http://{token}:@proxy.scrape.do:8080"
+        proxy_mode_url = f"http://{token}:@proxy.scrape.do:8080"
         proxies = {
-            "http": proxyModeUrl,
-            "https": proxyModeUrl,
+            "http": proxy_mode_url,
+            "https": proxy_mode_url,
         }
-        # Add optional geoCode and super proxy parameters if provided
         params = {"geoCode": geoCode, "super": str(super_proxy).lower()} if geoCode else {}
         response = requests.get(target_url, proxies=proxies, verify=False, params=params)
     else:
-        # API Mode URL
         url = f"http://api.scrape.do?token={token}&url={encoded_url}"
         response = requests.get(url)
 

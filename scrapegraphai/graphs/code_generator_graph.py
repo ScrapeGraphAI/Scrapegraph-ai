@@ -51,7 +51,7 @@ class CodeGeneratorGraph(AbstractGraph):
     """
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
-        
+
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -63,7 +63,7 @@ class CodeGeneratorGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
-        
+
         if self.schema is None: 
             raise KeyError("The schema is required for CodeGeneratorGraph")
 

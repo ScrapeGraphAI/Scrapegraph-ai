@@ -2,7 +2,6 @@
 Generate code prompts helper
 """
 
-
 TEMPLATE_INIT_CODE_GENERATION = """
 **Task**: Create a Python function named `extract_data(html: str) -> dict()` using BeautifulSoup that extracts relevant information from the given HTML code string and returns it in a dictionary matching the Desired JSON Output Schema.
 

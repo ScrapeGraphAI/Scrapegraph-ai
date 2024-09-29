@@ -56,7 +56,7 @@ class PromptRefinerNode(BaseNode):
         )
 
         self.additional_info = node_config.get("additional_info")
-        
+
         self.output_schema = node_config.get("schema")
 
     def execute(self, state: dict) -> dict:
@@ -80,7 +80,7 @@ class PromptRefinerNode(BaseNode):
         user_prompt = state['user_prompt']
 
         self.simplefied_schema = transform_schema(self.output_schema.schema())
-        
+
         if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=TEMPLATE_REFINER_WITH_CONTEXT,

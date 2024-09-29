@@ -1,6 +1,7 @@
 """
 Generate anwer node pdf prompt
 """
+
 TEMPLATE_CHUNKS_PDF = """
 You are a  scraper and you have just scraped the
 following content from a PDF.

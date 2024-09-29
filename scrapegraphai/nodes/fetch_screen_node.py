@@ -16,7 +16,7 @@ class FetchScreenNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "FetchScreenNode",
+        node_name: str = "FetchScreen",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.url = node_config.get("link")

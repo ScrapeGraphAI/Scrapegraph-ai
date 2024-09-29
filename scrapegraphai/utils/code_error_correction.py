@@ -1,9 +1,9 @@
 """
 This module contains the code generation functions for code correction for different types errors.
 """
+import json
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-import json
 from ..prompts import (
     TEMPLATE_SYNTAX_CODE_GENERATION, TEMPLATE_EXECUTION_CODE_GENERATION,
     TEMPLATE_VALIDATION_CODE_GENERATION, TEMPLATE_SEMANTIC_CODE_GENERATION

@@ -1,7 +1,6 @@
 """ 
 OmniSearchGraph Module
 """
-
 from copy import deepcopy
 from typing import Optional
 from pydantic import BaseModel
@@ -14,7 +13,6 @@ from ..nodes import (
     MergeAnswersNode
 )
 from ..utils.copy import safe_deepcopy
-
 
 class OmniSearchGraph(AbstractGraph):
     """ 

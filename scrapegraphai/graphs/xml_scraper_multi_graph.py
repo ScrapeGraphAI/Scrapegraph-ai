@@ -1,7 +1,6 @@
 """ 
 XMLScraperMultiGraph Module
 """
-
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
@@ -46,9 +45,7 @@ class XMLScraperMultiGraph(AbstractGraph):
                  config: dict, schema: Optional[BaseModel] = None):
 
         self.copy_config = safe_deepcopy(config)
-
         self.copy_schema = deepcopy(schema)
-
         super().__init__(prompt, config, source, schema)
 
     def _create_graph(self) -> BaseGraph:
@@ -58,14 +55,6 @@ class XMLScraperMultiGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
-
-        # smart_scraper_instance = XMLScraperGraph(
-        #     prompt="",
-        #     source="",
-        #     config=self.copy_config,
-        #     schema=self.copy_schema
-        # )
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & jsons",
             output=["results"],

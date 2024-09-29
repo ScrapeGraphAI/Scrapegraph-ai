@@ -70,6 +70,14 @@ class SmartScraperGraph(AbstractGraph):
                 "scrape_do": self.config.get("scrape_do")
             }
         )
+        parse_node = ParseNode(
+            input="doc",
+            output=["parsed_doc"],
+            node_config={
+                "llm_model": self.llm_model,
+                "chunk_size": self.model_token
+            }
+        )
 
         generate_answer_node = GenerateAnswerNode(
             input="user_prompt & (relevant_chunks | parsed_doc | doc)",

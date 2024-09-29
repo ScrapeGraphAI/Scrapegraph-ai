@@ -3,15 +3,8 @@ IndexifyNode Module
 """
 
 from typing import List, Optional
-
 from ..utils.logging import get_logger
 from ..nodes.base_node import BaseNode
-
-# try:
-#     import indexify
-# except ImportError:
-#     raise ImportError("indexify package is not installed. Please install it with 'pip install scrapegraphai[indexify]'")
-
 
 class IndexifyNode(BaseNode):
     """
@@ -61,7 +54,7 @@ class IndexifyNode(BaseNode):
         # Interpret input keys based on the provided input expression
         # input_keys length matches the min_input_len parameter in the __init__ method
         # e.g. "answer & parsed_doc" or "answer | img_urls"
-        
+
         input_keys = self.get_input_keys(state)
 
         # Fetching data from the state based on the input keys

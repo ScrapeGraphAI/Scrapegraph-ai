@@ -62,10 +62,9 @@ class ImageToTextNode(BaseNode):
         elif len(urls) == 0:
             return state.update({self.output[0]: []})
 
-        # Skip the image-to-text conversion
         if self.max_images < 1:
             return state.update({self.output[0]: []})
-        
+
         img_desc = []
         for url in urls[: self.max_images]:
             try:

@@ -1,7 +1,6 @@
 """
 Module for creating the smart scraper
 """
-
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph

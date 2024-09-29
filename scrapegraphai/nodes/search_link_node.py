@@ -3,8 +3,8 @@ SearchLinkNode Module
 """
 from typing import List, Optional
 import re
-from tqdm import tqdm
 from urllib.parse import urlparse, parse_qs
+from tqdm import tqdm
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
@@ -12,7 +12,6 @@ from ..utils.logging import get_logger
 from .base_node import BaseNode
 from ..prompts import TEMPLATE_RELEVANT_LINKS
 from ..helpers import default_filters
-
 
 class SearchLinkNode(BaseNode):
     """
@@ -36,11 +35,9 @@ class SearchLinkNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "GenerateLinks",
+        node_name: str = "SearchLinks",
     ):
         super().__init__(node_name, "node", input, output, 1, node_config)
-
-        self.llm_model = node_config["llm_model"]
 
         if node_config.get("filter_links", False) or "filter_config" in node_config:
             provided_filter_config = node_config.get("filter_config", {})
@@ -74,10 +71,11 @@ class SearchLinkNode(BaseNode):
         parsed_url = urlparse(url)
         query_params = parse_qs(parsed_url.query)
 
-        return any(indicator in parsed_url.path.lower() or indicator in query_params for indicator in lang_indicators)
+        return any(indicator in parsed_url.path.lower() \
+                   or indicator in query_params for indicator in lang_indicators)
     def _is_potentially_irrelevant(self, url):
         if not self.filter_links:
-            return False  
+            return False
 
         irrelevant_keywords = self.filter_config.get("irrelevant_keywords", [])
         return any(keyword in url.lower() for keyword in irrelevant_keywords)
