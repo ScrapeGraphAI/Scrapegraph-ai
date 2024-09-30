@@ -2,7 +2,11 @@
 DescriptionNode Module
 """
 from typing import List, Optional
+from tqdm import tqdm
+from langchain.prompts import PromptTemplate
+from langchain_core.runnables import RunnableParallel
 from .base_node import BaseNode
+from ..prompts.description_node_prompts import DESCRIPTION_NODE_PROMPT
 
 class DescriptionNode(BaseNode):
     """
@@ -39,4 +43,32 @@ class DescriptionNode(BaseNode):
         self.cache_path = node_config.get("cache_path", False)
 
     def execute(self, state: dict) -> dict:
-        pass
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
+
+        input_keys = self.get_input_keys(state)
+        input_data = [state[key] for key in input_keys]
+        docs = input_data[1]
+
+        chains_dict = {}
+
+        for i, chunk in enumerate(tqdm(docs, desc="Processing chunks", disable=not self.verbose)):
+            prompt = PromptTemplate(
+                template=DESCRIPTION_NODE_PROMPT,
+                partial_variables={"context": chunk,
+                                   "chunk_id": i + 1
+                                 }
+            )
+            chain_name = f"chunk{i+1}"
+            chains_dict[chain_name] = prompt | self.llm_model
+
+        async_runner = RunnableParallel(**chains_dict)
+        batch_results = async_runner.invoke()
+
+        temp_res = {}
+
+        for i, (summary, document) in enumerate(zip(batch_results, docs)):
+            temp_res[summary] = document
+
+        state["descriptions"] = temp_res
+
+        return state

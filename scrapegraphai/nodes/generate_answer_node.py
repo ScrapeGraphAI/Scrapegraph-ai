@@ -1,3 +1,6 @@
+"""
+generate_answer_node module
+"""
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -15,6 +18,26 @@ from ..prompts import (
 )
 
 class GenerateAnswerNode(BaseNode):
+    """
+        Initializes the GenerateAnswerNode class.
+
+        Args:
+            input (str): The input data type for the node.
+            output (List[str]): The output data type(s) for the node.
+            node_config (Optional[dict]): Configuration dictionary for the node, 
+            which includes the LLM model, verbosity, schema, and other settings. 
+            Defaults to None.
+            node_name (str): The name of the node. Defaults to "GenerateAnswer".
+
+        Attributes:
+            llm_model: The language model specified in the node configuration.
+            verbose (bool): Whether verbose mode is enabled.
+            force (bool): Whether to force certain behaviors, overriding defaults.
+            script_creator (bool): Whether the node is in script creation mode.
+            is_md_scraper (bool): Whether the node is scraping markdown data.
+            additional_info (Optional[str]): Any additional information to be 
+            included in the prompt templates.
+    """
     def __init__(
         self,
         input: str,
@@ -100,7 +123,9 @@ class GenerateAnswerNode(BaseNode):
             prompt = PromptTemplate(
                 template=template_chunks_prompt,
                 input_variables=["question"],
-                partial_variables={"context": chunk, "chunk_id": i + 1, "format_instructions": format_instructions}
+                partial_variables={"context": chunk,
+                                   "chunk_id": i + 1,
+                                   "format_instructions": format_instructions}
             )
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model

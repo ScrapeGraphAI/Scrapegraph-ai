@@ -49,18 +49,13 @@ class RAGNode(BaseNode):
         else:
             raise ValueError("client_type provided not correct")
 
-        docs = ["Qdrant has Langchain integrations", "Qdrant also has Llama Index integrations"]
-        metadata = [
-            {"source": "Langchain-docs"},
-            {"source": "Linkedin-docs"},
-        ]
-        ids = [42, 2]
+        docs = [elem for elem in state.get("descriptions").keys()]
+        metadata = []
 
         client.add(
-            collection_name="demo_collection",
+            collection_name="vectorial_collection",
             documents=docs,
             metadata=metadata,
-            ids=ids
         )
 
         state["vectorial_db"] = client
