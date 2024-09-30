@@ -1,11 +1,10 @@
 """
-RAGNode Module
+DescriptionNode Module
 """
 from typing import List, Optional
 from .base_node import BaseNode
-from qdrant_client import QdrantClient
 
-class RAGNode(BaseNode):
+class DescriptionNode(BaseNode):
     """
     A node responsible for compressing the input tokens and storing the document
     in a vector database for retrieval. Relevant chunks are stored in the state.
@@ -37,31 +36,7 @@ class RAGNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.cache_path = node_config.get("cache_path", False)
 
     def execute(self, state: dict) -> dict:
-
-        if self.node_config.get("client_type") == "memory":
-            client = QdrantClient(":memory:")
-        elif self.node_config.get("client_type") == "local_db":
-            client = QdrantClient(path="path/to/db")
-        elif self.node_config.get("client_type") == "image":
-            client = QdrantClient(url="http://localhost:6333")
-        else:
-            raise ValueError("client_type provided not correct")
-
-        docs = ["Qdrant has Langchain integrations", "Qdrant also has Llama Index integrations"]
-        metadata = [
-            {"source": "Langchain-docs"},
-            {"source": "Linkedin-docs"},
-        ]
-        ids = [42, 2]
-
-        client.add(
-            collection_name="demo_collection",
-            documents=docs,
-            metadata=metadata,
-            ids=ids
-        )
-
-        state["vectorial_db"] = client
-        return state
+        pass

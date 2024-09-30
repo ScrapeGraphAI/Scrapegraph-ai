@@ -100,8 +100,9 @@ screenshot_scraper = [
 ]
 
 # Group 5: Faiss CPU
-faiss-cpu = [
-    "faiss-cpu>=1.8.0",
+qdrant = [
+    "qdrant-client>=1.11.3",
+    "fastembed>=0.3.6"
 ]
 
 [build-system]

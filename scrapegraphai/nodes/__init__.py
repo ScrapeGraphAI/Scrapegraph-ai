@@ -28,3 +28,6 @@ from .html_analyzer_node import HtmlAnalyzerNode
 from .generate_code_node import GenerateCodeNode
 from .search_node_with_context import SearchLinksWithContext
 from .reasoning_node import ReasoningNode
+from .fetch_node_level_k import FetchNodelevelK
+from .generate_answer_node_k_level import GenerateAnswerNodeKLevel
+from .description_node import DescriptionNode

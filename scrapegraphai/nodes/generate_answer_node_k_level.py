@@ -1,11 +1,10 @@
 """
-RAGNode Module
+GenerateAnswerNodeKLevel Module
 """
 from typing import List, Optional
 from .base_node import BaseNode
-from qdrant_client import QdrantClient
 
-class RAGNode(BaseNode):
+class GenerateAnswerNodeKLevel(BaseNode):
     """
     A node responsible for compressing the input tokens and storing the document
     in a vector database for retrieval. Relevant chunks are stored in the state.
@@ -28,7 +27,7 @@ class RAGNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "RAG",
+        node_name: str = "GANLK",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
@@ -39,29 +38,13 @@ class RAGNode(BaseNode):
         )
 
     def execute(self, state: dict) -> dict:
+        client = state["vectorial_db"]
 
-        if self.node_config.get("client_type") == "memory":
-            client = QdrantClient(":memory:")
-        elif self.node_config.get("client_type") == "local_db":
-            client = QdrantClient(path="path/to/db")
-        elif self.node_config.get("client_type") == "image":
-            client = QdrantClient(url="http://localhost:6333")
-        else:
-            raise ValueError("client_type provided not correct")
-
-        docs = ["Qdrant has Langchain integrations", "Qdrant also has Llama Index integrations"]
-        metadata = [
-            {"source": "Langchain-docs"},
-            {"source": "Linkedin-docs"},
-        ]
-        ids = [42, 2]
-
-        client.add(
+        answer = client.query(
             collection_name="demo_collection",
-            documents=docs,
-            metadata=metadata,
-            ids=ids
+            query_text="This is a query document"
         )
 
-        state["vectorial_db"] = client
+        state["answer"] = answer
+
         return state
