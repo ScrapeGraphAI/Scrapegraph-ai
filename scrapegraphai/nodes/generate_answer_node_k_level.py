@@ -99,7 +99,7 @@ class GenerateAnswerNodeKLevel(BaseNode):
 
         answer_db = client.query(
             collection_name="vectorial_collection",
-            query_text= state["question"]
+            query_text=state["question"]
         )
 
         results_db = [elem for elem in state[answer_db]]
