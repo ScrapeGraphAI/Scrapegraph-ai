@@ -67,7 +67,11 @@ class DescriptionNode(BaseNode):
         temp_res = {}
 
         for i, (summary, document) in enumerate(zip(batch_results, docs)):
-            temp_res[summary] = document
+            temp_res[summary] = {
+                "id": i,
+                "summary": summary,
+                "document": document
+            }
 
         state["descriptions"] = temp_res
 

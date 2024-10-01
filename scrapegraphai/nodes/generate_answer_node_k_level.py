@@ -102,6 +102,7 @@ class GenerateAnswerNodeKLevel(BaseNode):
             query_text=state["question"]
         )
 
+        ## TODO: from the id get the data
         results_db = [elem for elem in state[answer_db]]
 
         chains_dict = {}

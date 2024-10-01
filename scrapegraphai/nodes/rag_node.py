@@ -49,13 +49,13 @@ class RAGNode(BaseNode):
         else:
             raise ValueError("client_type provided not correct")
 
-        docs = [elem for elem in state.get("descriptions").keys()]
-        metadata = []
+        docs = [elem.get("summary") for elem in state.get("descriptions", {})]
+        ids = [elem.get("id") for elem in state.get("descriptions", {})]
 
         client.add(
             collection_name="vectorial_collection",
             documents=docs,
-            metadata=metadata,
+            ids=ids
         )
 
         state["vectorial_db"] = client
