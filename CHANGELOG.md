@@ -1,3 +1,14 @@
+## [1.26.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.1...v1.26.0-beta.2) (2024-10-01)
+
+
+### Features
+
+* refactoring of research web ([26f89d8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/26f89d895d547ef2463492f82da7ac21b57b9d1b))
+
+
+### CI
+
+* **release:** 1.25.1 [skip ci] ([a98328c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a98328c7f2f39bdd609615247cb71ecf912a3bd8))
 
 ## [1.26.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.25.0...v1.26.0-beta.1) (2024-09-29)
 
