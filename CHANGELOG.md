@@ -1,13 +1,16 @@
+
 ## [1.26.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.25.0...v1.26.0-beta.1) (2024-09-29)
 
 
-### Features
 
 * add html_mode to smart_scraper ([bdcffd6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bdcffd6360237b27797546a198ceece55ce4bc81))
 * add reasoning integration ([b2822f6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b2822f620a610e61d295cbf4b670aa08fde9de24))
 
 
+
 ### Bug Fixes
+
+* removed deep scraper ([9aa8c88](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9aa8c889fb32f2eb2005a2fb04f05dc188092279))
 
 * integration with html_mode ([f87ffa1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f87ffa1d8db32b38c47d9f5aa2ae88f1d7978a04))
 * removed deep scraper ([9aa8c88](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9aa8c889fb32f2eb2005a2fb04f05dc188092279))
