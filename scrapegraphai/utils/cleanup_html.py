@@ -101,7 +101,7 @@ def reduce_html(html, reduction):
         for attr in list(tag.attrs):
             if attr not in attrs_to_keep:
                 del tag[attr]
-   
+
     if reduction == 1:
         return minify_html(str(soup))
 

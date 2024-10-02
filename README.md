@@ -113,7 +113,6 @@ The output will be a dictionary like the following:
     "contact_email": "contact@scrapegraphai.com"
 }
 ```
-
 There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
 
 | Pipeline Name           | Description                                                                                                      |
@@ -124,6 +123,8 @@ There are other pipelines that can be used to extract information from multiple 
 | ScriptCreatorGraph      | Single-page scraper that extracts information from a website and generates a Python script.                     |
 | SmartScraperMultiGraph  | Multi-page scraper that extracts information from multiple pages given a single prompt and a list of sources.    |
 | ScriptCreatorMultiGraph | Multi-page scraper that generates a Python script for extracting information from multiple pages and sources.     |
+
+For each of these graphs there is the multi version. It allows to make calls of the LLM in parallel.
 
 It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
 
@@ -166,34 +167,6 @@ Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegra
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
-
-## 🗺️ Roadmap
-
-We are working on the following features! If you are interested in collaborating right-click on the feature and open in a new tab to file a PR. If you have doubts and wanna discuss them with us, just contact us on [discord](https://discord.gg/uJN7TYcpNa) or open a [Discussion](https://github.com/VinciGit00/Scrapegraph-ai/discussions) here on Github!
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#5C4B9B', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#ffffff', 'primaryBorderColor': '#5C4B9B', 'fontFamily': 'Arial', 'fontSize': '16px', 'textColor': '#5C4B9B' }}}%%
-graph LR
-    A[DeepSearch Graph] --> F[Use Existing Chromium Instances]
-    F --> B[Page Caching]
-    B --> C[Screenshot Scraping]
-    C --> D[Handle Dynamic Content]
-    D --> E[New Webdrivers]
-
-    style A fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
-    style F fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
-    style B fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
-    style C fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
-    style D fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
-    style E fill:#ffffff,stroke:#5C4B9B,stroke-width:2px,rx:10,ry:10
-
-    click A href "https://github.com/VinciGit00/Scrapegraph-ai/issues/260" "Open DeepSearch Graph Issue"
-    click F href "https://github.com/VinciGit00/Scrapegraph-ai/issues/329" "Open Chromium Instances Issue"
-    click B href "https://github.com/VinciGit00/Scrapegraph-ai/issues/197" "Open Page Caching Issue"
-    click C href "https://github.com/VinciGit00/Scrapegraph-ai/issues/197" "Open Screenshot Scraping Issue"
-    click D href "https://github.com/VinciGit00/Scrapegraph-ai/issues/279" "Open Handle Dynamic Content Issue"
-    click E href "https://github.com/VinciGit00/Scrapegraph-ai/issues/171" "Open New Webdrivers Issue"
-```
 
 ## 📈 Telemetry 
 We collect anonymous usage metrics to enhance our package's quality and user experience. The data helps us prioritize improvements and ensure compatibility. If you wish to opt-out, set the environment variable SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. For more information, please refer to the documentation [here](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
