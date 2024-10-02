@@ -7,6 +7,8 @@ from ..docloaders import ChromiumLoader
 from ..utils.cleanup_html import cleanup_html
 from ..utils.convert_to_md import convert_to_md
 from langchain_core.documents import Document
+from bs4 import BeautifulSoup
+from urllib.parse import quote, urljoin
 
 class FetchNodeLevelK(BaseNode):
     """
@@ -34,8 +36,6 @@ class FetchNodeLevelK(BaseNode):
         node_name: str = "FetchLevelK",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
-
-        self.llm_model = node_config["llm_model"]
         
         self.embedder_model = node_config.get("embedder_model", None)
         
@@ -56,6 +56,16 @@ class FetchNodeLevelK(BaseNode):
         self.browser_base = (
             None if node_config is None else node_config.get("browser_base", None)
         )
+        
+        self.depth = (
+            1 if node_config is None else node_config.get("depth", 1)
+        )
+        
+        self.only_inside_links = (
+            False if node_config is None else node_config.get("only_inside_links", False)
+        )
+        
+        self.min_input_len = 1
 
     def execute(self, state: dict) -> dict:
         """
@@ -83,6 +93,8 @@ class FetchNodeLevelK(BaseNode):
 
         source = input_data[0]
         
+        documents = [{"source": source}]
+        
         self.logger.info(f"--- (Fetching HTML from: {source}) ---")
         
         loader_kwargs = {}
@@ -90,6 +102,12 @@ class FetchNodeLevelK(BaseNode):
         if self.node_config is not None:
             loader_kwargs = self.node_config.get("loader_kwargs", {})
         
+        for _ in range(self.depth):
+            documents = self.obtain_content(documents, loader_kwargs)
+        
+        return {self.output_keys[0]: documents}
+    
+    def fetch_content(self, source: str, loader_kwargs) -> Optional[str]:
         if self.browser_base is not None:
             try:
                 from ..docloaders.browser_base import browser_base_fetch
@@ -108,8 +126,58 @@ class FetchNodeLevelK(BaseNode):
             
             document = loader.load()
         
-        if not document or not document[0].page_content.strip():
-                raise ValueError("""No HTML body content found in
-                                 the document fetched by ChromiumLoader.""")
+        return document
+    
+    def extract_links(self, html_content: str) -> list:
+        soup = BeautifulSoup(html_content, 'html.parser')
+        links = [link['href'] for link in soup.find_all('a', href=True)]
+        self.logger.info(f"Extracted {len(links)} links.")
+        return links
+    
+    def get_full_links(self, base_url: str, links: list) -> list:
+        full_links = []
+        for link in links:
+            if self.only_inside_links and link.startswith("http"):
+                continue
+            full_link = link if link.startswith("http") else urljoin(base_url, link)
+            full_links.append(full_link)
+        return full_links
+    
+    def obtain_content(self, documents: List, loader_kwargs) -> List:
+        for doc in documents:
+            source = doc['source']
+            if 'document' not in doc:
+                document = self.fetch_content(source, loader_kwargs)
                 
-        parsed_content = document[0].page_content
+                if not document or not document[0].page_content.strip():
+                    self.logger.warning(f"Failed to fetch content for {source}")
+                    documents.remove(doc)
+                    continue
+                
+                doc['document'] = document[0].page_content
+                
+                links = self.extract_links(doc['document'])
+                full_links = self.get_full_links(source, links)
+                
+                # Check if the links are already present in other documents
+                for link in full_links:
+                    # Check if any document is from the same link
+                    if not any(d.get('source', '') == link for d in documents):
+                        # Add the document
+                        documents.append({"source": link})
+        
+        return documents
+    
+    def process_links(self, base_url: str, links: list, loader_kwargs, depth: int, current_depth: int = 1) -> dict:
+        content_dict = {}
+        for idx, link in enumerate(links, start=1):
+            full_link = link if link.startswith("http") else urljoin(base_url, link)
+            self.logger.info(f"Processing link {idx}: {full_link}")
+            link_content = self.fetch_content(full_link, loader_kwargs)
+
+            if current_depth < depth:
+                new_links = self.extract_links(link_content)
+                content_dict.update(self.process_links(full_link, new_links, depth, current_depth + 1))
+            else:
+                self.logger.warning(f"Failed to fetch content for {full_link}")
+        return content_dict
