@@ -5,6 +5,7 @@ import re
 from typing import List, Optional, Tuple
 from .base_node import BaseNode
 from ..utils.convert_to_md import convert_to_md
+from langchain_community.document_transformers import Html2TextTransformer
 
 class ParseNodeDepthK(BaseNode):
     """
@@ -62,8 +63,9 @@ class ParseNodeDepthK(BaseNode):
         documents = input_data[0]
         
         for doc in documents:
-            document_md = convert_to_md(doc["document"])
-            doc["document_md"] = document_md
+            document_md = Html2TextTransformer(ignore_links=True).transform_documents(doc["document"])
+            #document_md = convert_to_md(doc["document"])
+            doc["document"] = document_md[0].page_content
         
         state.update({self.output[0]: documents})
         

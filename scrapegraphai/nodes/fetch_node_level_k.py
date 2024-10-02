@@ -95,8 +95,6 @@ class FetchNodeLevelK(BaseNode):
         
         documents = [{"source": source}]
         
-        self.logger.info(f"--- (Fetching HTML from: {source}) ---")
-        
         loader_kwargs = {}
 
         if self.node_config is not None:
@@ -112,6 +110,8 @@ class FetchNodeLevelK(BaseNode):
         return state
     
     def fetch_content(self, source: str, loader_kwargs) -> Optional[str]:
+        self.logger.info(f"--- (Fetching HTML from: {source}) ---")
+        
         if self.browser_base is not None:
             try:
                 from ..docloaders.browser_base import browser_base_fetch
@@ -159,9 +159,10 @@ class FetchNodeLevelK(BaseNode):
                     documents.remove(doc)
                     continue
                 
-                doc['document'] = document[0].page_content
+                #doc['document'] = document[0].page_content
+                doc['document'] = document
                 
-                links = self.extract_links(doc['document'])
+                links = self.extract_links(doc['document'][0].page_content)
                 full_links = self.get_full_links(source, links)
                 
                 # Check if the links are already present in other documents
