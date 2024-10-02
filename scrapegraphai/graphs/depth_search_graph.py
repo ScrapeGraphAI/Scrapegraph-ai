@@ -67,7 +67,8 @@ class DepthSearchGraph(AbstractGraph):
                 "force": self.config.get("force", False),
                 "cut": self.config.get("cut", True),
                 "browser_base": self.config.get("browser_base"),
-                "depth": self.config.get("depth", 1)
+                "depth": self.config.get("depth", 1),
+                "only_inside_links": self.config.get("only_inside_links", False)
             }
         )
 

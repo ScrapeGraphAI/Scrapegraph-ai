@@ -9,6 +9,7 @@ graph_config = {
     "verbose": True,
     "headless": False,
     "depth": 2,
+    "only_inside_links": True,
 }
 
 search_graph = DepthSearchGraph(

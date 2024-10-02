@@ -105,7 +105,11 @@ class FetchNodeLevelK(BaseNode):
         for _ in range(self.depth):
             documents = self.obtain_content(documents, loader_kwargs)
         
-        return {self.output_keys[0]: documents}
+        filtered_documents = [doc for doc in documents if 'document' in doc]
+        
+        state.update({self.output[0]: filtered_documents})
+        
+        return state
     
     def fetch_content(self, source: str, loader_kwargs) -> Optional[str]:
         if self.browser_base is not None:
@@ -144,6 +148,7 @@ class FetchNodeLevelK(BaseNode):
         return full_links
     
     def obtain_content(self, documents: List, loader_kwargs) -> List:
+        new_documents = []
         for doc in documents:
             source = doc['source']
             if 'document' not in doc:
@@ -162,10 +167,11 @@ class FetchNodeLevelK(BaseNode):
                 # Check if the links are already present in other documents
                 for link in full_links:
                     # Check if any document is from the same link
-                    if not any(d.get('source', '') == link for d in documents):
+                    if not any(d.get('source', '') == link for d in documents) and not any(d.get('source', '') == link for d in new_documents):
                         # Add the document
-                        documents.append({"source": link})
+                        new_documents.append({"source": link})
         
+        documents.extend(new_documents)
         return documents
     
     def process_links(self, base_url: str, links: list, loader_kwargs, depth: int, current_depth: int = 1) -> dict:
