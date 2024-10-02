@@ -97,10 +97,24 @@ class GenerateAnswerNodeKLevel(BaseNode):
 
         client = state["vectorial_db"]
 
-        answer_db = client.query(
-            collection_name="vectorial_collection",
-            query_text=state["question"]
+        if state.get("embeddings"):
+            import openai
+            openai_client = openai.Client()
+
+            answer_db = client.search(
+            collection_name="collection",
+            query_vector=openai_client.embeddings.create(
+                input=["What is the best to use for vector search scaling?"],
+                model=state.get("embeddings").get("model"),
+            )
+            .data[0]
+            .embedding,
         )
+        else:
+            answer_db = client.query(
+                collection_name="vectorial_collection",
+                query_text=state["question"]
+            )
 
         ## TODO: from the id get the data
         results_db = [elem for elem in state[answer_db]]

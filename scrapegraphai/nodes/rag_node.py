@@ -4,6 +4,7 @@ RAGNode Module
 from typing import List, Optional
 from .base_node import BaseNode
 from qdrant_client import QdrantClient
+from qdrant_client.models import PointStruct, VectorParams, Distance
 
 class RAGNode(BaseNode):
     """
@@ -51,6 +52,41 @@ class RAGNode(BaseNode):
 
         docs = [elem.get("summary") for elem in state.get("descriptions", {})]
         ids = [elem.get("id") for elem in state.get("descriptions", {})]
+
+        if state.get("embeddings"):
+            import openai
+            openai_client = openai.Client()
+
+            files = state.get("documents")
+
+            array_of_embeddings = []
+            i=0
+
+            for file in files:
+                embeddings = openai_client.embeddings.create(input=file,
+                                                             model=state.get("embeddings").get("model"))
+                i+=1
+                points = PointStruct(
+                        id=i,
+                        vector=embeddings,
+                        payload={"text": file},
+                    )
+
+                array_of_embeddings.append(points)
+
+            collection_name = "collection"
+
+            client.create_collection(
+                collection_name,
+                vectors_config=VectorParams(
+                    size=1536,
+                    distance=Distance.COSINE,
+                ),
+            )
+            client.upsert(collection_name, points)
+
+            state["vectorial_db"] = client
+            return state
 
         client.add(
             collection_name="vectorial_collection",
