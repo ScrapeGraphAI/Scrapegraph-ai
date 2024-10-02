@@ -8,7 +8,8 @@ from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from ..utils.save_code_to_file import save_code_to_file
 from ..nodes import (
-    FetchNodeLevelK
+    FetchNodeLevelK,
+    ParseNodeDepthK
 )
 
 class DepthSearchGraph(AbstractGraph):
@@ -71,12 +72,23 @@ class DepthSearchGraph(AbstractGraph):
                 "only_inside_links": self.config.get("only_inside_links", False)
             }
         )
+        
+        parse_node = ParseNodeDepthK(
+            input="docs",
+            output=["docs"],
+            node_config={
+                "verbose": self.config.get("verbose", False)
+            }
+        )
 
         return BaseGraph(
             nodes=[
-                fetch_node
+                fetch_node,
+                parse_node
             ],
-            edges=[],
+            edges=[
+                (fetch_node, parse_node),
+            ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__
         )
