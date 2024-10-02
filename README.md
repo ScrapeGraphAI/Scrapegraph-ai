@@ -156,6 +156,9 @@ Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
   <a href="https://2ly.link/1zNj1">
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 15%;">
   </a>
+    <a href="https://scrape.do">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapedo.png" alt="Stats" style="width: 15%;">
+  </a>
 </div>
 
 ## 🤝 Contributing
