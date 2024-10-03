@@ -4,7 +4,6 @@ Example of custom graph using existing nodes
 
 import os
 from dotenv import load_dotenv
-
 from langchain_openai import OpenAIEmbeddings
 from langchain_openai import ChatOpenAI
 from scrapegraphai.graphs import BaseGraph

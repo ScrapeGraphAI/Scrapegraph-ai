@@ -14,7 +14,7 @@ from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNod
 # Define the configuration for the graph
 # ************************************************
 
-graph_config = {  
+graph_config = {
     "llm": {
         "model": "ernie/ernie-bot-turbo",
         "ernie_client_id": "<ernie_client_id>",
