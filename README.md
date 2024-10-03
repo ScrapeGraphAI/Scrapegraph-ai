@@ -54,12 +54,6 @@ Additional dependecies can be added while installing the library:
   pip install scrapegraphai[more-browser-options]
   ```
 
-- <b>qdrants Options</b>: this group includes qdrant integration for RAGnode and DeepScraperGraph.
-
-  ```bash
-  pip install scrapegraphai[qdrant]
-  ```
-
 </details>
 
 

@@ -101,12 +101,6 @@ screenshot_scraper = [
     "pillow>=10.4.0",
 ]
 
-# Group 5: qdrant
-qdrant = [
-    "qdrant-client>=1.11.3",
-    "fastembed>=0.3.6"
-]
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
