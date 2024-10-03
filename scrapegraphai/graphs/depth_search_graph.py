@@ -146,6 +146,6 @@ class DepthSearchGraph(AbstractGraph):
         inputs = {"user_prompt": self.prompt, self.input_key: self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
-        docs = self.final_state.get("docs", "No docs")
+        docs = self.final_state.get("answer", "No answer")
 
         return docs

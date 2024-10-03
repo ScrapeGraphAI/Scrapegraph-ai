@@ -40,8 +40,9 @@ class RAGNode(BaseNode):
         )
 
     def execute(self, state: dict) -> dict:
-
-        if self.node_config.get("client_type") == "memory":
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
+        
+        if self.node_config.get("client_type") in ["memory", None]:
             client = QdrantClient(":memory:")
         elif self.node_config.get("client_type") == "local_db":
             client = QdrantClient(path="path/to/db")
@@ -50,8 +51,8 @@ class RAGNode(BaseNode):
         else:
             raise ValueError("client_type provided not correct")
 
-        docs = [elem.get("summary") for elem in state.get("descriptions", {})]
-        ids = [elem.get("id") for elem in state.get("descriptions", {})]
+        docs = [elem.get("summary") for elem in state.get("docs")]
+        ids = [i for i in range(1, len(state.get("docs"))+1)]
 
         if state.get("embeddings"):
             import openai

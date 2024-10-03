@@ -52,9 +52,9 @@ class GenerateAnswerNodeKLevel(BaseNode):
         self.additional_info = node_config.get("additional_info")
 
     def execute(self, state: dict) -> dict:
-        input_keys = self.get_input_keys(state)
-        input_data = [state[key] for key in input_keys]
-        user_prompt = input_data[0]
+        self.logger.info(f"--- Executing {self.node_name} Node ---")
+
+        user_prompt = state.get("user_prompt")
 
         if self.node_config.get("schema", None) is not None:
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
@@ -113,19 +113,18 @@ class GenerateAnswerNodeKLevel(BaseNode):
         else:
             answer_db = client.query(
                 collection_name="vectorial_collection",
-                query_text=state["question"]
+                query_text=user_prompt
             )
 
-        ## TODO: from the id get the data
-        results_db = [elem for elem in state[answer_db]]
-
         chains_dict = {}
-        for i, chunk in enumerate(tqdm(results_db,
+        elems =[state.get("docs")[elem.id-1] for elem in answer_db if elem.score>0.5]
+
+        for i, chunk in enumerate(tqdm(elems,
                                        desc="Processing chunks", disable=not self.verbose)):
             prompt = PromptTemplate(
                         template=template_chunks_prompt,
-                        input_variables=["question"],
-                        partial_variables={"context": chunk,
+                        input_variables=["format_instructions"],
+                        partial_variables={"context": chunk.get("document"),
                                         "chunk_id": i + 1,
                                      }
                 )
@@ -133,7 +132,7 @@ class GenerateAnswerNodeKLevel(BaseNode):
             chains_dict[chain_name] = prompt | self.llm_model
 
         async_runner = RunnableParallel(**chains_dict)
-        batch_results = async_runner.invoke({"question": user_prompt})
+        batch_results = async_runner.invoke({"format_instructions": user_prompt})
 
         merge_prompt = PromptTemplate(
             template=template_merge_prompt,

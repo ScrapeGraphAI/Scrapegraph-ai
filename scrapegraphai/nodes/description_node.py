@@ -44,34 +44,25 @@ class DescriptionNode(BaseNode):
     def execute(self, state: dict) -> dict:
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        input_keys = self.get_input_keys(state)
-        input_data = [state[key] for key in input_keys]
-        docs = input_data[1]
+        docs = [elem for elem in state.get("docs")]
 
         chains_dict = {}
 
         for i, chunk in enumerate(tqdm(docs, desc="Processing chunks", disable=not self.verbose)):
             prompt = PromptTemplate(
                 template=DESCRIPTION_NODE_PROMPT,
-                partial_variables={"context": chunk,
-                                   "chunk_id": i + 1
-                                 }
+                partial_variables={"content": chunk.get("document")}
             )
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model
 
         async_runner = RunnableParallel(**chains_dict)
-        batch_results = async_runner.invoke()
+        batch_results = async_runner.invoke({})
 
-        temp_res = {}
 
-        for i, (summary, document) in enumerate(zip(batch_results, docs)):
-            temp_res[summary] = {
-                "id": i,
-                "summary": summary,
-                "document": document
-            }
+        for i in range(1, len(docs)+1):
+            docs[i-1]["summary"] = batch_results.get(f"chunk{i}").content
 
-        state["descriptions"] = temp_res
+        state.update({self.output[0]: docs})
 
         return state
