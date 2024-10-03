@@ -31,12 +31,11 @@ class DescriptionNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "RAG",
+        node_name: str = "DESCRIPTION",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]
-        self.embedder_model = node_config.get("embedder_model", None)
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )

@@ -9,13 +9,18 @@ from .abstract_graph import AbstractGraph
 from ..utils.save_code_to_file import save_code_to_file
 from ..nodes import (
     FetchNodeLevelK,
-    ParseNodeDepthK
+    ParseNodeDepthK,
+    DescriptionNode,
+    RAGNode,
+    GenerateAnswerNodeKLevel
 )
 
 class DepthSearchGraph(AbstractGraph):
     """
-    CodeGeneratorGraph is a script generator pipeline that generates the function extract_data(html: str) -> dict() for
-    extracting the wanted information from a HTML page. The code generated is in Python and uses the library BeautifulSoup.
+    CodeGeneratorGraph is a script generator pipeline that generates 
+    the function extract_data(html: str) -> dict() for
+    extracting the wanted information from a HTML page. The 
+    code generated is in Python and uses the library BeautifulSoup.
     It requires a user prompt, a source URL, and an output schema.
 
     Attributes:
@@ -60,7 +65,7 @@ class DepthSearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow.
         """
 
-        fetch_node = FetchNodeLevelK(
+        fetch_node_k = FetchNodeLevelK(
             input="url| local_dir",
             output=["docs"],
             node_config={
@@ -72,8 +77,8 @@ class DepthSearchGraph(AbstractGraph):
                 "only_inside_links": self.config.get("only_inside_links", False)
             }
         )
-        
-        parse_node = ParseNodeDepthK(
+
+        parse_node_k = ParseNodeDepthK(
             input="docs",
             output=["docs"],
             node_config={
@@ -81,15 +86,52 @@ class DepthSearchGraph(AbstractGraph):
             }
         )
 
+        description_node = DescriptionNode(
+            input="docs",
+            output=["docs"],
+            node_config={
+                "llm_model": self.llm_model,
+                "verbose": self.config.get("verbose", False),
+                "cache_path": self.config.get("cache_path", False)
+            }
+        )
+
+        rag_node = RAGNode (
+            input="docs",
+            output=["vectorial_db"],
+            node_config={
+                "llm_model": self.llm_model,
+                "embedder_model": self.config.get("embedder_model", False),
+                "verbose": self.config.get("verbose", False),
+            }
+        )
+
+        generate_answer_k = GenerateAnswerNodeKLevel(
+            input="vectorial_db",
+            output=["answer"],
+            node_config={
+                "llm_model": self.llm_model,
+                "embedder_model": self.config.get("embedder_model", False),
+                "verbose": self.config.get("verbose", False),
+            }
+
+        )
+
         return BaseGraph(
             nodes=[
-                fetch_node,
-                parse_node
+                fetch_node_k,
+                parse_node_k,
+                description_node,
+                rag_node,
+                generate_answer_k
             ],
             edges=[
-                (fetch_node, parse_node),
+                (fetch_node_k, parse_node_k),
+                (parse_node_k, description_node),
+                (description_node, rag_node),
+                (rag_node, generate_answer_k)
             ],
-            entry_point=fetch_node,
+            entry_point=fetch_node_k,
             graph_name=self.__class__.__name__
         )
 

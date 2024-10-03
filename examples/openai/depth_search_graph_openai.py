@@ -1,4 +1,6 @@
-
+"""
+depth_search_graph_opeani example
+"""
 from scrapegraphai.graphs import DepthSearchGraph
 
 graph_config = {
