@@ -26,3 +26,4 @@ from .search_link_graph import SearchLinkGraph
 from .screenshot_scraper_graph import ScreenshotScraperGraph
 from .smart_scraper_multi_concat_graph import SmartScraperMultiConcatGraph
 from .code_generator_graph import CodeGeneratorGraph
+from .smart_scraper_multi_cond_graph import SmartScraperMultiCondGraph
