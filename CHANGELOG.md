@@ -1,3 +1,11 @@
+## [1.26.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.2...v1.26.0-beta.3) (2024-10-04)
+
+
+### Features
+
+* add deep scraper implementation ([4b371f4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4b371f4d94dae47986aad751508813d89ce87b93))
+* finished basic version of deep scraper ([85cb957](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/85cb9572971719f9f7c66171f5e2246376b6aed2))
+
 ## [1.26.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.1...v1.26.0-beta.2) (2024-10-01)
 
 
