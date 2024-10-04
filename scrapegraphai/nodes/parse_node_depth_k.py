@@ -1,11 +1,9 @@
 """
 ParseNodeDepthK Module
 """
-import re
-from typing import List, Optional, Tuple
-from .base_node import BaseNode
-from ..utils.convert_to_md import convert_to_md
+from typing import List, Optional
 from langchain_community.document_transformers import Html2TextTransformer
+from .base_node import BaseNode
 
 class ParseNodeDepthK(BaseNode):
     """
@@ -54,19 +52,16 @@ class ParseNodeDepthK(BaseNode):
         """
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
-        
-        # Interpret input keys based on the provided input expression
+
         input_keys = self.get_input_keys(state)
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         documents = input_data[0]
-        
+
         for doc in documents:
             document_md = Html2TextTransformer(ignore_links=True).transform_documents(doc["document"])
-            #document_md = convert_to_md(doc["document"])
             doc["document"] = document_md[0].page_content
-        
+
         state.update({self.output[0]: documents})
-        
+
         return state
