@@ -25,7 +25,7 @@ text = pd.read_csv(file_path)
 graph_config = {
     "llm": {
         "api_key": os.environ["AZURE_OPENAI_KEY"],
-        "model": "azure_openai/gpt-3.5-turbo",
+        "model": "azure_openai/gpt-4o"
     },
     "verbose": True,
     "headless": False
