@@ -26,7 +26,6 @@ from ..utils import (transform_schema,
 from .base_node import BaseNode
 from jsonschema import validate, ValidationError
 
-
 class GenerateCodeNode(BaseNode):
     """
     A node that generates Python code for a function that extracts data
@@ -96,7 +95,7 @@ class GenerateCodeNode(BaseNode):
         Raises:
             KeyError: If the input keys are not found in the state, indicating
                       that the necessary information for generating an answer is missing.
-            RuntimeError: If the maximum number of iterations is 
+            RuntimeError: If the maximum number of iterations is
             reached without obtaining the desired code.
         """
 
@@ -170,7 +169,7 @@ class GenerateCodeNode(BaseNode):
             self.logger.info(f"--- (Checking if the informations exctrcated are the ones Requested) ---")
             state = self.semantic_comparison_loop(state)
             if state["errors"]["semantic"]:
-                continue      
+                continue
             break
 
         if state["iteration"] == self.max_iterations["overall"] and \
@@ -195,9 +194,9 @@ class GenerateCodeNode(BaseNode):
             state["errors"]["syntax"] = [syntax_message]
             self.logger.info(f"--- (Synax Error Found: {syntax_message}) ---")
             analysis = syntax_focused_analysis(state, self.llm_model)
-            self.logger.info(f"""--- (Regenerating Code 
+            self.logger.info(f"""--- (Regenerating Code
                              to fix the Error) ---""")
-            state["generated_code"] = syntax_focused_code_generation(state, 
+            state["generated_code"] = syntax_focused_code_generation(state,
                                                                      analysis, self.llm_model)
             state["generated_code"] = extract_code(state["generated_code"])
         return state
@@ -217,14 +216,14 @@ class GenerateCodeNode(BaseNode):
             self.logger.info(f"--- (Code Execution Error: {execution_result}) ---")
             analysis = execution_focused_analysis(state, self.llm_model)
             self.logger.info(f"--- (Regenerating Code to fix the Error) ---")
-            state["generated_code"] = execution_focused_code_generation(state, 
+            state["generated_code"] = execution_focused_code_generation(state,
                                                                         analysis, self.llm_model)
             state["generated_code"] = extract_code(state["generated_code"])
         return state
 
     def validation_reasoning_loop(self, state: dict) -> dict:
         for _ in range(self.max_iterations["validation"]):
-            validation, errors = self.validate_dict(state["execution_result"], 
+            validation, errors = self.validate_dict(state["execution_result"],
                                                     self.output_schema.schema())
             if validation:
                 state["errors"]["validation"] = []
@@ -240,7 +239,7 @@ class GenerateCodeNode(BaseNode):
 
     def semantic_comparison_loop(self, state: dict) -> dict:
         for _ in range(self.max_iterations["semantic"]):
-            comparison_result = self.semantic_comparison(state["execution_result"], 
+            comparison_result = self.semantic_comparison(state["execution_result"],
                                                          state["reference_answer"])
             if comparison_result["are_semantically_equivalent"]:
                 state["errors"]["semantic"] = []
@@ -342,7 +341,7 @@ class GenerateCodeNode(BaseNode):
             if not extract_data:
                 raise NameError("Function 'extract_data' not found in the generated code.")
 
-            result = extract_data(self.raw_html)            
+            result = extract_data(self.raw_html)
             return True, result
         except Exception as e:
             return False, f"Error during execution: {str(e)}"
@@ -357,5 +356,5 @@ class GenerateCodeNode(BaseNode):
             validate(instance=data, schema=schema)
             return True, None
         except ValidationError as e:
-            errors = e.errors()
+            errors = [e.message]
             return False, errors
