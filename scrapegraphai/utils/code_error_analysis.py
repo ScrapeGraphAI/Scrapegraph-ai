@@ -2,16 +2,17 @@
 This module contains the functions that are used to generate the prompts for the code error analysis.
 """
 from typing import Any, Dict
+import json
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-import json
 from ..prompts import (
     TEMPLATE_SYNTAX_ANALYSIS, TEMPLATE_EXECUTION_ANALYSIS,
     TEMPLATE_VALIDATION_ANALYSIS, TEMPLATE_SEMANTIC_ANALYSIS
 )
 
 def syntax_focused_analysis(state: dict, llm_model) -> str:
-    prompt = PromptTemplate(template=TEMPLATE_SYNTAX_ANALYSIS, input_variables=["generated_code", "errors"])
+    prompt = PromptTemplate(template=TEMPLATE_SYNTAX_ANALYSIS,
+                            input_variables=["generated_code", "errors"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "generated_code": state["generated_code"],
@@ -19,7 +20,9 @@ def syntax_focused_analysis(state: dict, llm_model) -> str:
     })
 
 def execution_focused_analysis(state: dict, llm_model) -> str:
-    prompt = PromptTemplate(template=TEMPLATE_EXECUTION_ANALYSIS, input_variables=["generated_code", "errors", "html_code", "html_analysis"])
+    prompt = PromptTemplate(template=TEMPLATE_EXECUTION_ANALYSIS,
+                            input_variables=["generated_code", "errors",
+                                              "html_code", "html_analysis"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "generated_code": state["generated_code"],
@@ -29,7 +32,9 @@ def execution_focused_analysis(state: dict, llm_model) -> str:
     })
 
 def validation_focused_analysis(state: dict, llm_model) -> str:
-    prompt = PromptTemplate(template=TEMPLATE_VALIDATION_ANALYSIS, input_variables=["generated_code", "errors", "json_schema", "execution_result"])
+    prompt = PromptTemplate(template=TEMPLATE_VALIDATION_ANALYSIS,
+                            input_variables=["generated_code", "errors", 
+                                             "json_schema", "execution_result"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "generated_code": state["generated_code"],
@@ -39,7 +44,9 @@ def validation_focused_analysis(state: dict, llm_model) -> str:
     })
 
 def semantic_focused_analysis(state: dict, comparison_result: Dict[str, Any], llm_model) -> str:        
-    prompt = PromptTemplate(template=TEMPLATE_SEMANTIC_ANALYSIS, input_variables=["generated_code", "differences", "explanation"])
+    prompt = PromptTemplate(template=TEMPLATE_SEMANTIC_ANALYSIS,
+                            input_variables=["generated_code", 
+                                             "differences", "explanation"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "generated_code": state["generated_code"],

@@ -10,7 +10,8 @@ from ..prompts import (
 )
 
 def syntax_focused_code_generation(state: dict, analysis: str, llm_model) -> str:
-    prompt = PromptTemplate(template=TEMPLATE_SYNTAX_CODE_GENERATION, input_variables=["analysis", "generated_code"])
+    prompt = PromptTemplate(template=TEMPLATE_SYNTAX_CODE_GENERATION,
+                            input_variables=["analysis", "generated_code"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "analysis": analysis,
@@ -18,7 +19,8 @@ def syntax_focused_code_generation(state: dict, analysis: str, llm_model) -> str
     })
 
 def execution_focused_code_generation(state: dict, analysis: str, llm_model) -> str:
-    prompt = PromptTemplate(template=TEMPLATE_EXECUTION_CODE_GENERATION, input_variables=["analysis", "generated_code"])
+    prompt = PromptTemplate(template=TEMPLATE_EXECUTION_CODE_GENERATION,
+                            input_variables=["analysis", "generated_code"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "analysis": analysis,
@@ -26,16 +28,20 @@ def execution_focused_code_generation(state: dict, analysis: str, llm_model) -> 
     })
 
 def validation_focused_code_generation(state: dict, analysis: str, llm_model) -> str:
-    prompt = PromptTemplate(template=TEMPLATE_VALIDATION_CODE_GENERATION, input_variables=["analysis", "generated_code", "json_schema"])
+    prompt = PromptTemplate(template=TEMPLATE_VALIDATION_CODE_GENERATION,
+                            input_variables=["analysis", "generated_code",
+                                             "json_schema"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "analysis": analysis,
         "generated_code": state["generated_code"],
         "json_schema": state["json_schema"]
     })
-    
+
 def semantic_focused_code_generation(state: dict, analysis: str, llm_model) -> str:
-    prompt = PromptTemplate(template=TEMPLATE_SEMANTIC_CODE_GENERATION, input_variables=["analysis", "generated_code", "generated_result", "reference_result"])
+    prompt = PromptTemplate(template=TEMPLATE_SEMANTIC_CODE_GENERATION,
+                            input_variables=["analysis", "generated_code",
+                                             "generated_result", "reference_result"])
     chain = prompt | llm_model | StrOutputParser()
     return chain.invoke({
         "analysis": analysis,

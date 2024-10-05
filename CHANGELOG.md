@@ -1,3 +1,11 @@
+## [1.25.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.25.1...v1.25.2) (2024-10-03)
+
+
+### Bug Fixes
+
+* update dependencies ([7579d0e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7579d0e2599d63c0003b1b7a0918132511a9c8f1))
+
+## [1.25.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.25.0...v1.25.1) (2024-09-29)
 ## [1.26.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.2...v1.26.0-beta.3) (2024-10-04)
 
 
