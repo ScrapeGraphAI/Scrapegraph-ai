@@ -59,6 +59,8 @@ class BaseGraph:
             # raise a warning if the entry point is not the first node in the list
             warnings.warn(
                 "Careful! The entry point node is different from the first node in the graph.")
+            
+        self._set_conditional_node_edges()
 
         # Burr configuration
         self.use_burr = use_burr
@@ -77,8 +79,23 @@ class BaseGraph:
 
         edge_dict = {}
         for from_node, to_node in edges:
-            edge_dict[from_node.node_name] = to_node.node_name
+            if from_node.node_type != 'conditional_node':
+                edge_dict[from_node.node_name] = to_node.node_name
         return edge_dict
+
+    def _set_conditional_node_edges(self):
+        """
+        Sets the true_node_name and false_node_name for each ConditionalNode.
+        """
+        for node in self.nodes:
+            if node.node_type == 'conditional_node':
+                # Find outgoing edges from this ConditionalNode
+                outgoing_edges = [(from_node, to_node) for from_node, to_node in self.raw_edges if from_node.node_name == node.node_name]
+                if len(outgoing_edges) != 2:
+                    raise ValueError(f"ConditionalNode '{node.node_name}' must have exactly two outgoing edges.")
+                # Assign true_node_name and false_node_name
+                node.true_node_name = outgoing_edges[0][1].node_name
+                node.false_node_name = outgoing_edges[1][1].node_name
 
     def _execute_standard(self, initial_state: dict) -> Tuple[dict, list]:
         """
@@ -201,7 +218,12 @@ class BaseGraph:
                     cb_total["total_cost_USD"] += cb_data["total_cost_USD"]
 
             if current_node.node_type == "conditional_node":
-                current_node_name = result
+                node_names = {node.node_name for node in self.nodes}
+                if result in node_names:
+                    current_node_name = result
+                else:
+                    raise ValueError(f"Conditional Node returned a node name '{result}' that does not exist in the graph")
+                
             elif current_node_name in self.edges:
                 current_node_name = self.edges[current_node_name]
             else:
