@@ -28,3 +28,8 @@ from .html_analyzer_node import HtmlAnalyzerNode
 from .generate_code_node import GenerateCodeNode
 from .search_node_with_context import SearchLinksWithContext
 from .conditional_node import ConditionalNode
+from .reasoning_node import ReasoningNode
+from .fetch_node_level_k import FetchNodeLevelK
+from .generate_answer_node_k_level import GenerateAnswerNodeKLevel
+from .description_node import DescriptionNode
+from .parse_node_depth_k import ParseNodeDepthK
