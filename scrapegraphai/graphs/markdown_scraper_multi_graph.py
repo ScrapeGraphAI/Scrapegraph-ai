@@ -41,7 +41,7 @@ class MDScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], 
+    def __init__(self, prompt: str, source: List[str],
                  config: dict, schema: Optional[BaseModel] = None):
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)

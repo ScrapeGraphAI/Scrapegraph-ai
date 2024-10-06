@@ -10,7 +10,8 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     ReasoningNode,
-    GenerateAnswerNode
+    GenerateAnswerNode,
+    ConditionalNode
 )
 
 class SmartScraperGraph(AbstractGraph):

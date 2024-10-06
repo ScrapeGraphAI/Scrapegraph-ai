@@ -5,7 +5,7 @@ Basic example of scraping pipeline using SmartScraperMultiConcatGraph with Groq
 import os
 import json
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperMultiCondGraph
+from scrapegraphai.graphs import SmartScraperMultiGraph
 
 load_dotenv()
 
@@ -13,22 +13,21 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-groq_key = os.getenv("GROQ_APIKEY")
-
 graph_config = {
     "llm": {
-        "model": "groq/gemma-7b-it",
-        "api_key": groq_key,
-        "temperature": 0
+        "api_key": os.getenv("OPENAI_API_KEY"),
+        "model": "openai/gpt-4o",
     },
-    "headless": False
+
+    "verbose": True,
+    "headless": False,
 }
 
 # *******************************************************
 # Create the SmartScraperMultiCondGraph instance and run it
 # *******************************************************
 
-multiple_search_graph = SmartScraperMultiCondGraph(
+multiple_search_graph = SmartScraperMultiGraph(
     prompt="Who is Marco Perini?",
     source=[
         "https://perinim.github.io/",

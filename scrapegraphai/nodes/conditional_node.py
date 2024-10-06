@@ -38,17 +38,15 @@ class ConditionalNode(BaseNode):
         Initializes an empty ConditionalNode.
         """
         super().__init__(node_name, "conditional_node", input, output, 2, node_config)
-        
+
         try:
             self.key_name = self.node_config["key_name"]
         except:
             raise NotImplementedError("You need to provide key_name inside the node config")       
-        
+
         self.true_node_name = None
         self.false_node_name = None
-
         self.condition = self.node_config.get("condition", None)
-
         self.eval_instance = EvalWithCompoundTypes()
         self.eval_instance.functions = {'len': len}
 
@@ -65,21 +63,18 @@ class ConditionalNode(BaseNode):
 
         if self.true_node_name is None or self.false_node_name is None:
             raise ValueError("ConditionalNode's next nodes are not set properly.")
-        
-        # Evaluate the condition
+
         if self.condition:
             condition_result = self._evaluate_condition(state, self.condition)
         else:
-            # Default behavior: check existence and non-emptiness of key_name
             value = state.get(self.key_name)
             condition_result = value is not None and value != ''
 
-        # Return the appropriate next node name
         if condition_result:
             return self.true_node_name
         else:
             return self.false_node_name
-        
+
     def _evaluate_condition(self, state: dict, condition: str) -> bool:
         """
         Parses and evaluates the condition expression against the state.
