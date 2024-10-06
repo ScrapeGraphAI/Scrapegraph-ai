@@ -15,6 +15,7 @@ graph_config = {
     "verbose": True,
     "headless": False,
 }
+
 FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)

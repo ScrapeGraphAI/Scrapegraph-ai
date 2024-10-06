@@ -19,3 +19,4 @@ from .generate_code_node_prompts import (TEMPLATE_INIT_CODE_GENERATION,
                                          TEMPLATE_VALIDATION_ANALYSIS, TEMPLATE_VALIDATION_CODE_GENERATION,
                                          TEMPLATE_SEMANTIC_COMPARISON, TEMPLATE_SEMANTIC_ANALYSIS,
                                          TEMPLATE_SEMANTIC_CODE_GENERATION)
+from .reasoning_node_prompts import TEMPLATE_REASONING, TEMPLATE_REASONING_WITH_CONTEXT
