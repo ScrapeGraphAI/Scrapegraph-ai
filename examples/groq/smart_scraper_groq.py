@@ -21,7 +21,8 @@ graph_config = {
         "api_key": groq_key,
         "temperature": 0
     },
-    "headless": False
+    "headless": False,
+    "backend": "undetected_chromedriver"
 }
 
 # ************************************************
