@@ -77,7 +77,7 @@ class ChromiumLoader(BaseLoader):
         logger.info(f"Starting scraping with {self.backend}...")
         results = ""
         try:
-            driver = uc.Chrome()
+            driver = uc.Chrome(headless=self.headless)
             results = driver.get(url).page_content
         except Exception as e:
             results = f"Error: {e}"
