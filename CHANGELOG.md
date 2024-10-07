@@ -1,3 +1,10 @@
+## [1.26.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.6...v1.26.0-beta.7) (2024-10-07)
+
+
+### Bug Fixes
+
+* import error ([37b6ba0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/37b6ba08ae9972240fc00a15efe43233fd093f3b))
+
 ## [1.26.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.5...v1.26.0-beta.6) (2024-10-07)
 
 
