@@ -1,3 +1,10 @@
+## [1.26.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.5...v1.26.0-beta.6) (2024-10-07)
+
+
+### Features
+
+* refactoring of the conditional node ([420c71b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/420c71ba2ca0fc77465dd533a807b887c6a87f52))
+
 ## [1.26.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.4...v1.26.0-beta.5) (2024-10-05)
 
 
