@@ -22,6 +22,7 @@ graph_config = {
         "temperature": 0
     },
     "headless": False,
+    "backend": "undetected_chromedriver"
 }
 
 # ************************************************
