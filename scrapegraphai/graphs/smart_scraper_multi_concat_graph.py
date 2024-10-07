@@ -15,7 +15,7 @@ from ..nodes import (
 )
 from ..utils.copy import safe_deepcopy
 
-class SmartScraperMultiCondGraph(AbstractGraph):
+class SmartScraperMultiConcatGraph(AbstractGraph):
     """ 
     SmartScraperMultiConditionalGraph is a scraping pipeline that scrapes a 
     list of URLs and generates answers to a given prompt.
