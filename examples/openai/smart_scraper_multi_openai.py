@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
 import os
 import json
 from dotenv import load_dotenv

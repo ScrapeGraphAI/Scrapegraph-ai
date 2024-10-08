@@ -1,14 +1,13 @@
 """ 
 Basic example of scraping pipeline using SmartScraper with a custom rate limit
 """
-
-import os, json
+import os
+import json
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
-
 
 # ************************************************
 # Define the configuration for the graph

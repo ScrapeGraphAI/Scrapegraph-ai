@@ -1,4 +1,7 @@
-import os, json
+"""
+pdf_scraper_oneapi module
+"""
+import json
 from scrapegraphai.graphs import PDFScraperGraph
 
 # ************************************************
@@ -24,10 +27,6 @@ source = """
     the Beatrice of his earlier poetry, through the celestial spheres of Paradise.
 """
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 pdf_scraper_graph = PDFScraperGraph(
     prompt="Summarize the text and find the main topics",
     source=source,

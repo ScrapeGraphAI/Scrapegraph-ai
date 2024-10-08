@@ -6,9 +6,9 @@ import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from ..nodes import ( FetchScreenNode, GenerateAnswerFromImageNode, )
+from ..nodes import (FetchScreenNode, GenerateAnswerFromImageNode)
 
-class ScreenshotScraperGraph(AbstractGraph): 
+class ScreenshotScraperGraph(AbstractGraph):
     """ 
     A graph instance representing the web scraping workflow for images.
 

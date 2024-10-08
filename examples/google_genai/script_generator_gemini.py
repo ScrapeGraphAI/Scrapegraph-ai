@@ -1,14 +1,12 @@
 """ 
 Basic example of scraping pipeline using ScriptCreatorGraph
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
-
 
 # ************************************************
 # Define the configuration for the graph

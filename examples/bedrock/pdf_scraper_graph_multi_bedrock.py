@@ -1,9 +1,7 @@
 """
 Module for showing how PDFScraper multi works
 """
-import os
 import json
-from dotenv import load_dotenv
 from scrapegraphai.graphs import PdfScraperMultiGraph
 
 graph_config = {

@@ -2,10 +2,8 @@
 Basic example of scraping pipeline using SmartScraper
 """
 
-import os
 import json
 from scrapegraphai.graphs import SmartScraperMultiConcatGraph
-
 
 # ************************************************
 # Define the configuration for the graph

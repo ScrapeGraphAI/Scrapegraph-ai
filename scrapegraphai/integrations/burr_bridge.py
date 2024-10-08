@@ -8,7 +8,6 @@ import uuid
 from hashlib import md5
 from typing import Any, Dict, List, Tuple
 import inspect
-
 try:
     import burr
     from burr import tracking

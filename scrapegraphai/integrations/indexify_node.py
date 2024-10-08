@@ -1,7 +1,6 @@
 """
 IndexifyNode Module
 """
-
 from typing import List, Optional
 from ..utils.logging import get_logger
 from ..nodes.base_node import BaseNode

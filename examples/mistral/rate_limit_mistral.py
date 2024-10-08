@@ -1,11 +1,11 @@
 """ 
 Basic example of scraping pipeline using SmartScraper with a custom rate limit
 """
-
-import os, json
+import os
+import json
 from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import prettify_exec_info
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # ************************************************
@@ -37,10 +37,3 @@ smart_scraper_graph = SmartScraperGraph(
 
 result = smart_scraper_graph.run()
 print(json.dumps(result, indent=4))
-
-# ************************************************
-# Get graph execution info
-# ************************************************
-
-graph_exec_info = smart_scraper_graph.get_execution_info()
-print(prettify_exec_info(graph_exec_info))

@@ -1,7 +1,6 @@
 """ 
 GraphBuilder Module
 """
-
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
 from langchain_community.chat_models import ErnieBotChat
@@ -100,7 +99,7 @@ class GraphBuilder:
             LLMChain: An instance of the LLMChain class.
         """
 
-        create_graph_prompt_template = """
+        create_graph_prompt_template ="""
         You are an AI that designs direct graphs for web scraping tasks. 
         Your goal is to create a web scraping pipeline that is efficient and tailored to the user's requirements. 
         You have access to a set of default nodes, each with specific capabilities:

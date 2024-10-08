@@ -18,8 +18,10 @@ from ..nodes import (
 
 class CodeGeneratorGraph(AbstractGraph):
     """
-    CodeGeneratorGraph is a script generator pipeline that generates the function extract_data(html: str) -> dict() for
-    extracting the wanted information from a HTML page. The code generated is in Python and uses the library BeautifulSoup.
+    CodeGeneratorGraph is a script generator pipeline that generates 
+    the function extract_data(html: str) -> dict() for
+    extracting the wanted information from a HTML page. 
+    The code generated is in Python and uses the library BeautifulSoup.
     It requires a user prompt, a source URL, and an output schema.
 
     Attributes:

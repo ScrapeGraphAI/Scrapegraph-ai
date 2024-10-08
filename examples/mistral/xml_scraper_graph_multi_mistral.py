@@ -1,7 +1,6 @@
 """
 Basic example of scraping pipeline using XMLScraperMultiGraph from XML documents
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import XMLScraperMultiGraph
@@ -22,7 +21,6 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
 
 mistral_key = os.getenv("MISTRAL_API_KEY")
 

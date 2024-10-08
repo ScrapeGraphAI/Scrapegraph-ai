@@ -2,7 +2,6 @@
 Generate answer node prompts
 """
 
-
 TEMPLATE_CHUNKS_MD = """
 You are a website scraper and you have just scraped the
 following content from a website converted in markdown format.

@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using ScriptCreatorGraph
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import ScriptCreatorGraph
@@ -46,4 +45,3 @@ print(result)
 
 graph_exec_info = script_creator_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
-

@@ -1,11 +1,11 @@
 """
 Basic example of scraping pipeline using XMLScraperMultiGraph from XML documents
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import XMLScraperMultiGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
 load_dotenv()
 
 # ************************************************
@@ -22,7 +22,6 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-
 
 openai_key = os.getenv("OPENAI_APIKEY")
 
