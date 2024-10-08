@@ -1,20 +1,18 @@
 """
-PDFScraperGraph Module
+md_scraper module
 """
 from typing import Optional
+import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from ..nodes import (
-    FetchNode,
-    ParseNode,
-    GenerateAnswerPDFNode
-)
+from ..nodes import FetchNode, ParseNode, GenerateAnswerNode
 
-class PDFScraperGraph(AbstractGraph):
+class DocumentScraperGraph(AbstractGraph):
     """
-    PDFScraperGraph is a scraping pipeline that extracts information from pdf files using a natural
-    language model to interpret and answer prompts.
+    DocumentScraperGraph is a scraping pipeline that automates the process of 
+    extracting information from web pages using a natural language model to interpret 
+    and answer prompts.
 
     Attributes:
         prompt (str): The prompt for the graph.
@@ -23,10 +21,9 @@ class PDFScraperGraph(AbstractGraph):
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
         embedder_model: An instance of an embedding model client, 
-        configured for generating embeddings.
+                        configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
-        model_token (int): The token limit for the language model.
 
     Args:
         prompt (str): The prompt for the graph.
@@ -35,18 +32,18 @@ class PDFScraperGraph(AbstractGraph):
         schema (BaseModel): The schema for the graph output.
 
     Example:
-        >>> pdf_scraper = PDFScraperGraph(
+        >>> smart_scraper = DocumentScraperGraph(
         ...     "List me all the attractions in Chioggia.",
-        ...     "data/chioggia.pdf",
+        ...     "https://en.wikipedia.org/wiki/Chioggia",
         ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
-        >>> result = pdf_scraper.run()
+        >>> result = smart_scraper.run()
     """
 
     def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
         super().__init__(prompt, config, source, schema)
 
-        self.input_key = "pdf" if source.endswith("pdf") else "pdf_dir"
+        self.input_key = "md" if source.endswith("md") else "md_dir"
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -55,12 +52,13 @@ class PDFScraperGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
-
         fetch_node = FetchNode(
-            input='pdf | pdf_dir',
+            input="md | md_dir",
             output=["doc"],
+            node_config={
+                "loader_kwargs": self.config.get("loader_kwargs", {}),
+            }
         )
-
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
@@ -70,14 +68,14 @@ class PDFScraperGraph(AbstractGraph):
                 "llm_model": self.llm_model
             }
         )
-
-        generate_answer_node_pdf = GenerateAnswerPDFNode(
-            input="user_prompt & (relevant_chunks | doc)",
+        generate_answer_node = GenerateAnswerNode(
+            input="user_prompt & (relevant_chunks | parsed_doc | doc)",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
-                "schema": self.schema
+                "schema": self.schema,
+                "is_md_scraper": True
             }
         )
 
@@ -85,11 +83,11 @@ class PDFScraperGraph(AbstractGraph):
             nodes=[
                 fetch_node,
                 parse_node,
-                generate_answer_node_pdf,
+                generate_answer_node,
             ],
             edges=[
                 (fetch_node, parse_node),
-                (parse_node, generate_answer_node_pdf)
+                (parse_node, generate_answer_node)
             ],
             entry_point=fetch_node,
             graph_name=self.__class__.__name__
@@ -97,7 +95,7 @@ class PDFScraperGraph(AbstractGraph):
 
     def run(self) -> str:
         """
-        Executes the web scraping process and returns the answer to the prompt.
+        Executes the scraping process and returns the answer to the prompt.
 
         Returns:
             str: The answer to the prompt.
