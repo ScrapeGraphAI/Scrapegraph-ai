@@ -1,3 +1,10 @@
+## [1.26.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.7...v1.26.0-beta.8) (2024-10-08)
+
+
+### Features
+
+* undected_chromedriver support ([80ece21](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/80ece2179ac47a7ea42fbae4b61504a49ca18daa))
+
 ## [1.26.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.6...v1.26.0-beta.7) (2024-10-07)
 
 
