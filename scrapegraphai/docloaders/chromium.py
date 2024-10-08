@@ -61,6 +61,28 @@ class ChromiumLoader(BaseLoader):
         self.urls = urls
         self.load_state = load_state
 
+    async def ascrape_undetected_chromedriver(self, url: str) -> str:
+        """
+        Asynchronously scrape the content of a given URL using undetected chrome with Selenium.
+
+        Args:
+            url (str): The URL to scrape.
+
+        Returns:
+            str: The scraped HTML content or an error message if an exception occurs.
+
+        """
+        import undetected_chromedriver as uc
+
+        logger.info(f"Starting scraping with {self.backend}...")
+        results = ""
+        try:
+            driver = uc.Chrome(headless=self.headless)
+            results = driver.get(url).page_content
+        except Exception as e:
+            results = f"Error: {e}"
+        return results
+
     async def ascrape_playwright(self, url: str) -> str:
         """
         Asynchronously scrape the content of a given URL using Playwright's async API.
@@ -75,7 +97,7 @@ class ChromiumLoader(BaseLoader):
         from playwright.async_api import async_playwright
         from undetected_playwright import Malenia
 
-        logger.info("Starting scraping...")
+        logger.info(f"Starting scraping with {self.backend}...")
         results = ""
         async with async_playwright() as p:
             browser = await p.chromium.launch(
