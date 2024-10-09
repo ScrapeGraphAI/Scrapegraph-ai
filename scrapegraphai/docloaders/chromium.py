@@ -1,5 +1,5 @@
-""""
-chromium module
+"""
+chromiumloader module
 """
 import asyncio
 from typing import Any, AsyncIterator, Iterator, List, Optional
@@ -83,7 +83,7 @@ class ChromiumLoader(BaseLoader):
                 async with async_timeout.timeout(self.TIMEOUT):
                     driver = uc.Chrome(headless=self.headless)
                     driver.get(url)
-                    results = driver.page_content
+                    results = driver.page_source
                     logger.info(f"Successfully scraped {url}")
                     break
             except (aiohttp.ClientError, asyncio.TimeoutError) as e:
@@ -126,6 +126,45 @@ class ChromiumLoader(BaseLoader):
                     await page.wait_for_load_state(self.load_state)
                     results = await page.content()
                     logger.info("Content scraped")
+                    break
+            except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
+                attempt += 1
+                logger.error(f"Attempt {attempt} failed: {e}")
+                if attempt == self.RETRY_LIMIT:
+                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+            finally:
+                await browser.close()
+
+        return results
+
+    async def ascrape_with_js_support(self, url: str) -> str:
+        """
+        Asynchronously scrape the content of a given URL by rendering JavaScript using Playwright.
+
+        Args:
+            url (str): The URL to scrape.
+
+        Returns:
+            str: The fully rendered HTML content after JavaScript execution, 
+            or an error message if an exception occurs.
+        """
+        from playwright.async_api import async_playwright
+
+        logger.info(f"Starting scraping with JavaScript support for {url}...")
+        results = ""
+        attempt = 0
+
+        while attempt < self.RETRY_LIMIT:
+            try:
+                async with async_playwright() as p, async_timeout.timeout(self.TIMEOUT):
+                    browser = await p.chromium.launch(
+                        headless=self.headless, proxy=self.proxy, **self.browser_config
+                    )
+                    context = await browser.new_context()
+                    page = await context.new_page()
+                    await page.goto(url, wait_until="networkidle")
+                    results = await page.content()
+                    logger.info("Content scraped after JavaScript rendering")
                     break
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
