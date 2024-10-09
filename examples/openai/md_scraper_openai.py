@@ -1,9 +1,9 @@
 """
-Basic example of scraping pipeline using MDScraperGraph from MD documents
+Basic example of scraping pipeline using DocumentScraperGraph from MD documents
 """
 import os
 from dotenv import load_dotenv
-from scrapegraphai.graphs import MDScraperGraph
+from scrapegraphai.graphs import DocumentScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 load_dotenv()
@@ -33,10 +33,10 @@ graph_config = {
 }
 
 # ************************************************
-# Create the MDScraperGraph instance and run it
+# Create the DocumentScraperGraph instance and run it
 # ************************************************
 
-md_scraper_graph = MDScraperGraph(
+md_scraper_graph = DocumentScraperGraph(
     prompt="List me all the authors, title and genres of the books",
     source=text,  # Pass the content of the file, not the file object
     config=graph_config
