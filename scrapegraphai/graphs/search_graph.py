@@ -47,7 +47,8 @@ class SearchGraph(AbstractGraph):
 
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
-        self.considered_urls = []  # New attribute to store URLs
+        self.considered_urls = []
+        self.proxies = config.get("proxies")
 
         super().__init__(prompt, config, schema)
 
@@ -65,6 +66,7 @@ class SearchGraph(AbstractGraph):
             node_config={
                 "llm_model": self.llm_model,
                 "max_results": self.max_results,
+                "proxies": self.proxies,
                 "search_engine": self.copy_config.get("search_engine")
             }
         )
