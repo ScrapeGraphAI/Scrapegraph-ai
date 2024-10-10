@@ -124,7 +124,7 @@ class FetchNode(BaseNode):
             return handlers[input_type](state, input_type, source)
         elif self.input == "pdf_dir":
             return state
-        elif not source.startswith("http"):
+        elif not source.startswith("http") and not source.startswith("www"):
             return self.handle_local_source(state, source)
         else:
             return self.handle_web_source(state, source)
@@ -307,6 +307,7 @@ class FetchNode(BaseNode):
             if not document or not document[0].page_content.strip():
                 raise ValueError("""No HTML body content found in
                                  the document fetched by ChromiumLoader.""")
+
             parsed_content = document[0].page_content
 
             if (isinstance(self.llm_model, ChatOpenAI) \
