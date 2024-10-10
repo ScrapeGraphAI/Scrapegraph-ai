@@ -66,7 +66,7 @@ class CodeGeneratorGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow.
         """
 
-        if self.schema is None: 
+        if self.schema is None:
             raise KeyError("The schema is required for CodeGeneratorGraph")
 
         fetch_node = FetchNode(

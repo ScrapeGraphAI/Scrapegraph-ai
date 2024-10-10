@@ -1,5 +1,5 @@
 """ 
-__init__.py file for node folder 
+__init__.py file for node folder module
 """
 
 from .base_node import BaseNode
@@ -19,7 +19,7 @@ from .generate_answer_pdf_node import GenerateAnswerPDFNode
 from .graph_iterator_node import GraphIteratorNode
 from .merge_answers_node import MergeAnswersNode
 from .generate_answer_omni_node import GenerateAnswerOmniNode
-from .merge_generated_scripts import MergeGeneratedScriptsNode
+from .merge_generated_scripts_node import MergeGeneratedScriptsNode
 from .fetch_screen_node import FetchScreenNode
 from .generate_answer_from_image_node import GenerateAnswerFromImageNode
 from .concat_answers_node import ConcatAnswersNode
@@ -32,4 +32,4 @@ from .reasoning_node import ReasoningNode
 from .fetch_node_level_k import FetchNodeLevelK
 from .generate_answer_node_k_level import GenerateAnswerNodeKLevel
 from .description_node import DescriptionNode
-from .parse_node_depth_k import ParseNodeDepthK
+from .parse_node_depth_k_node import ParseNodeDepthK

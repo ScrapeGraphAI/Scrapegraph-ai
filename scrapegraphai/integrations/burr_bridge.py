@@ -11,7 +11,8 @@ import inspect
 try:
     import burr
     from burr import tracking
-    from burr.core import Application, ApplicationBuilder, State, Action, default, ApplicationContext
+    from burr.core import (Application, ApplicationBuilder,
+                            State, Action, default, ApplicationContext)
     from burr.lifecycle import PostRunStepHook, PreRunStepHook
 except ImportError:
     raise ImportError("""burr package is not installed. 
