@@ -1,3 +1,10 @@
+## [1.26.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.12...v1.26.0-beta.13) (2024-10-10)
+
+
+### Features
+
+* update chromium loader ([4f816f3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4f816f3b04974e90ca4208158f05724cfe68ffb8))
+
 ## [1.26.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.11...v1.26.0-beta.12) (2024-10-09)
 
 
