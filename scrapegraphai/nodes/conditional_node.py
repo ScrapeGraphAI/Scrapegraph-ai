@@ -2,8 +2,8 @@
 Module for implementing the conditional node
 """
 from typing import Optional, List
-from .base_node import BaseNode
 from simpleeval import simple_eval, EvalWithCompoundTypes
+from .base_node import BaseNode
 
 class ConditionalNode(BaseNode):
     """
