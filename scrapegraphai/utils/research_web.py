@@ -1,5 +1,5 @@
 """
-research_web module
+search_web module
 """
 import re
 from typing import List
@@ -9,8 +9,8 @@ import requests
 from bs4 import BeautifulSoup
 
 def search_on_web(query: str, search_engine: str = "Google",
-                  max_results: int = 10, port: int = 8080, 
-                  timeout: int = 10) -> List[str]:
+                  max_results: int = 10, port: int = 8080,
+                  timeout: int = 10, proxies: dict = None) -> List[str]:
     """
     Searches the web for a given query using specified search
     engine options and filters out PDF links.
@@ -23,6 +23,7 @@ def search_on_web(query: str, search_engine: str = "Google",
         port (int, optional): The port number to use when searching with 'SearXNG'. Default is 8080.
         timeout (int, optional): The number of seconds to wait 
         for a response from a request. Default is 10 seconds.
+        proxies (dict, optional): Dictionary containing proxy settings.
 
     Returns:
         List[str]: A list of URLs as strings that are the search results, excluding any PDF links.
@@ -32,7 +33,8 @@ def search_on_web(query: str, search_engine: str = "Google",
         requests.exceptions.Timeout: If the request times out.
 
     Example:
-        >>> search_on_web("example query", search_engine="Google", max_results=5)
+        >>> search_on_web("example query", search_engine="Google", max_results=5, 
+        proxies={"http": "http://proxy.example.com:8080"})
         ['http://example.com', 'http://example.org', ...]
     """
 
@@ -50,7 +52,12 @@ def search_on_web(query: str, search_engine: str = "Google",
 
     if search_engine.lower() == "google":
         res = []
-        for url in google_search(query, stop=max_results):
+        google_search_params = {"stop": max_results}
+
+        if proxies:
+            google_search_params["proxies"] = proxies
+
+        for url in google_search(query, **google_search_params):
             res.append(url)
         return filter_pdf_links(res)
 
@@ -66,7 +73,7 @@ def search_on_web(query: str, search_engine: str = "Google",
             AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"""
         }
         search_url = f"https://www.bing.com/search?q={query}"
-        response = requests.get(search_url, headers=headers, timeout=timeout)
+        response = requests.get(search_url, headers=headers, timeout=timeout, proxies=proxies)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
@@ -79,7 +86,7 @@ def search_on_web(query: str, search_engine: str = "Google",
     elif search_engine.lower() == "searxng":
         url = f"http://localhost:{port}"
         params = {"q": query, "format": "json", "engines": "google,duckduckgo,brave,qwant,bing"}
-        response = requests.get(url, params=params, timeout=timeout)
+        response = requests.get(url, params=params, timeout=timeout, proxies=proxies)
         data = response.json()
         limited_results = [result['url'] for result in data["results"][:max_results]]
         return filter_pdf_links(limited_results)

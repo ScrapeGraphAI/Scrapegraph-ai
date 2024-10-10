@@ -47,6 +47,7 @@ class SearchInternetNode(BaseNode):
             else "google"
         )
         self.max_results = node_config.get("max_results", 3)
+        self.proxyes = node_config.get("proxies", 3)
 
     def execute(self, state: dict) -> dict:
         """
@@ -94,7 +95,8 @@ class SearchInternetNode(BaseNode):
         self.logger.info(f"Search Query: {search_query}")
 
         answer = search_on_web(query=search_query, max_results=self.max_results,
-                               search_engine=self.search_engine)
+                               search_engine=self.search_engine,
+                               proxies=self.proxyes)
 
         if len(answer) == 0:
             raise ValueError("Zero results found for the search query.")
