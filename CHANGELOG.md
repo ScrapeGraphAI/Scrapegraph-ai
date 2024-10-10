@@ -1,3 +1,10 @@
+## [1.26.0-beta.14](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.13...v1.26.0-beta.14) (2024-10-10)
+
+
+### Features
+
+* refactoring fetch_node ([39a029e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/39a029ed9a8cd7c2277ba1386b976738e99d231b))
+
 ## [1.26.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.12...v1.26.0-beta.13) (2024-10-10)
 
 
