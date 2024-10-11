@@ -1,3 +1,10 @@
+## [1.26.0-beta.15](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.14...v1.26.0-beta.15) (2024-10-11)
+
+
+### Features
+
+* prompt refactoring ([5a2f6d9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5a2f6d9a77a814d5c3756e85cabde8af978f4c06))
+
 ## [1.26.0-beta.14](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.13...v1.26.0-beta.14) (2024-10-10)
 
 
