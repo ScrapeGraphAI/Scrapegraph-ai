@@ -120,7 +120,7 @@ class GraphBuilder:
         Returns:
             dict: A JSON representation of the graph configuration.
         """
-        return self.chain.invoke(self.prompt)
+        return self.chain.ainvoke(self.prompt)
 
     @staticmethod
     def convert_json_to_graphviz(json_data, format: str = 'pdf'):

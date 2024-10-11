@@ -108,7 +108,7 @@ class RobotsNode(BaseNode):
             )
 
             chain = prompt | self.llm_model | output_parser
-            is_scrapable = chain.invoke({"path": source})[0]
+            is_scrapable = chain.ainvoke({"path": source})[0]
 
             if "no" in is_scrapable:
                 self.logger.warning(

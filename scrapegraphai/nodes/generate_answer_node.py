@@ -1,6 +1,3 @@
-"""
-generate_answer_node module
-"""
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
@@ -18,26 +15,6 @@ from ..prompts import (
 )
 
 class GenerateAnswerNode(BaseNode):
-    """
-        Initializes the GenerateAnswerNode class.
-
-        Args:
-            input (str): The input data type for the node.
-            output (List[str]): The output data type(s) for the node.
-            node_config (Optional[dict]): Configuration dictionary for the node, 
-            which includes the LLM model, verbosity, schema, and other settings. 
-            Defaults to None.
-            node_name (str): The name of the node. Defaults to "GenerateAnswer".
-
-        Attributes:
-            llm_model: The language model specified in the node configuration.
-            verbose (bool): Whether verbose mode is enabled.
-            force (bool): Whether to force certain behaviors, overriding defaults.
-            script_creator (bool): Whether the node is in script creation mode.
-            is_md_scraper (bool): Whether the node is scraping markdown data.
-            additional_info (Optional[str]): Any additional information to be 
-            included in the prompt templates.
-    """
     def __init__(
         self,
         input: str,
@@ -113,7 +90,7 @@ class GenerateAnswerNode(BaseNode):
             chain = prompt | self.llm_model
             if output_parser:
                 chain = chain | output_parser
-            answer = chain.invoke({"question": user_prompt})
+            answer = chain.ainvoke({"question": user_prompt})
 
             state.update({self.output[0]: answer})
             return state
@@ -144,7 +121,7 @@ class GenerateAnswerNode(BaseNode):
         merge_chain = merge_prompt | self.llm_model
         if output_parser:
             merge_chain = merge_chain | output_parser
-        answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
+        answer = merge_chain.ainvoke({"context": batch_results, "question": user_prompt})
 
         state.update({self.output[0]: answer})
         return state

@@ -131,7 +131,7 @@ class GenerateScraperNode(BaseNode):
         )
         map_chain = prompt | self.llm_model | StrOutputParser()
 
-        answer = map_chain.invoke({"question": user_prompt})
+        answer = map_chain.ainvoke({"question": user_prompt})
 
         state.update({self.output[0]: answer})
         return state

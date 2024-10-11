@@ -93,7 +93,7 @@ class HtmlAnalyzerNode(BaseNode):
         output_parser = StrOutputParser()
 
         chain =  prompt | self.llm_model | output_parser
-        html_analysis = chain.invoke({})
+        html_analysis = chain.ainvoke({})
 
         state.update({self.output[0]: html_analysis, self.output[1]: reduced_html})
         return state

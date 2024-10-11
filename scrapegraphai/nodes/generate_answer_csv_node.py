@@ -126,7 +126,7 @@ class GenerateAnswerCSVNode(BaseNode):
             )
 
             chain =  prompt | self.llm_model | output_parser
-            answer = chain.invoke({"question": user_prompt})
+            answer = chain.ainvoke({"question": user_prompt})
             state.update({self.output[0]: answer})
             return state
 
@@ -157,7 +157,7 @@ class GenerateAnswerCSVNode(BaseNode):
             )
 
         merge_chain = merge_prompt | self.llm_model | output_parser
-        answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
+        answer = merge_chain.ainvoke({"context": batch_results, "question": user_prompt})
 
         state.update({self.output[0]: answer})
         return state
