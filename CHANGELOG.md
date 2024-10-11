@@ -1,3 +1,20 @@
+## [1.26.0-beta.16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.15...v1.26.0-beta.16) (2024-10-11)
+
+
+### Features
+
+* add google proxy support ([a986523](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a9865238847e2edccde579ace7ba226f7012e95d))
+
+
+### Bug Fixes
+
+* typo ([e285127](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e28512720c3d47917814cf388912aef0e2230188))
+
+
+### Perf
+
+* Proxy integration in googlesearch ([e828c70](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e828c7010acb1bd04498e027da69f35d53a37890))
+
 ## [1.26.0-beta.15](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.14...v1.26.0-beta.15) (2024-10-11)
 
 
