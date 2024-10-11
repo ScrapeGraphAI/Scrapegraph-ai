@@ -60,6 +60,7 @@ keywords = [
     "web scraping tool",
     "webscraping",
     "graph",
+    "llm"
 ]
 classifiers = [
     "Intended Audience :: Developers",
