@@ -72,6 +72,7 @@ class SearchGraph(AbstractGraph):
             node_config={
                 "llm_model": self.llm_model,
                 "max_results": self.max_results,
+                "loader_kwargs": self.loader_kwargs,
                 "search_engine": self.copy_config.get("search_engine")
             }
         )

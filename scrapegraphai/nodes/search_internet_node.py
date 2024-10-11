@@ -41,6 +41,7 @@ class SearchInternetNode(BaseNode):
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )
+        self.proxy = node_config.get("loader_kwargs", {}).get("proxy", None)
         self.search_engine = (
             node_config["search_engine"]
             if node_config.get("search_engine")
@@ -94,7 +95,7 @@ class SearchInternetNode(BaseNode):
         self.logger.info(f"Search Query: {search_query}")
 
         answer = search_on_web(query=search_query, max_results=self.max_results,
-                               search_engine=self.search_engine)
+                               search_engine=self.search_engine, proxy=self.proxy)
 
         if len(answer) == 0:
             raise ValueError("Zero results found for the search query.")
