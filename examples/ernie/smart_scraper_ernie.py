@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 

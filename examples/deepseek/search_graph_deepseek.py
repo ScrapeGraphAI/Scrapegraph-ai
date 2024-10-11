@@ -1,10 +1,10 @@
 """
 Example of Search Graph
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SearchGraph
+
 load_dotenv()
 
 # ************************************************

@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using ScriptCreatorGraph
 """
-
 import os
 from typing import List
 from dotenv import load_dotenv

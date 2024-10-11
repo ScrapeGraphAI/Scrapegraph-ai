@@ -8,8 +8,7 @@ from .abstract_graph import AbstractGraph
 from ..nodes import (
     FetchNode,
     ParseNode,
-    GenerateScraperNode,
-    ConditionalNode
+    GenerateScraperNode
 )
 
 class ScriptCreatorGraph(AbstractGraph):

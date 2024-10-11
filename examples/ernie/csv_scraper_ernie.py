@@ -1,12 +1,12 @@
 """
 Basic example of scraping pipeline using CSVScraperGraph from CSV documents
 """
-
 import os
 from dotenv import load_dotenv
 import pandas as pd
 from scrapegraphai.graphs import CSVScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
 load_dotenv()
 
 # ************************************************
@@ -23,7 +23,7 @@ text = pd.read_csv(file_path)
 # Define the configuration for the graph
 # ************************************************
 
-graph_config = {  
+graph_config = { 
     "llm": {
         "model": "ernie/ernie-bot-turbo",
         "ernie_client_id": "<ernie_client_id>",

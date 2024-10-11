@@ -1,11 +1,10 @@
 """
 Example of Search Graph
 """
+from typing import List
+from pydantic import BaseModel, Field
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
-
-from pydantic import BaseModel, Field
-from typing import List
 
 # ************************************************
 # Define the output schema for the graph

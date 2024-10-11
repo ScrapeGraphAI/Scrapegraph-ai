@@ -14,7 +14,6 @@ To disable sending telemetry there are three ways:
   or:
   export SCRAPEGRAPHAI_TELEMETRY_ENABLED=false
 """
-
 import configparser
 import functools
 import importlib.metadata

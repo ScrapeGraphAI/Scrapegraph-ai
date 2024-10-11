@@ -1,8 +1,7 @@
 """ 
 Basic example of scraping pipeline using SmartScraper with schema
 """
-
-import os, json
+import os
 from typing import List
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv

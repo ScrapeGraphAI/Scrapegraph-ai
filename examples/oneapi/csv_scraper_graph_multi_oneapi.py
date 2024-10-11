@@ -1,7 +1,6 @@
 """
 Basic example of scraping pipeline using CSVScraperMultiGraph from CSV documents
 """
-
 import os
 from dotenv import load_dotenv
 import pandas as pd
@@ -9,6 +8,7 @@ from scrapegraphai.graphs import CSVScraperMultiGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 load_dotenv()
+
 # ************************************************
 # Read the CSV file
 # ************************************************

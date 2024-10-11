@@ -1,11 +1,11 @@
 """ 
 Basic example of scraping pipeline using SmartScraper from text
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
+
 load_dotenv()
 
 # ************************************************

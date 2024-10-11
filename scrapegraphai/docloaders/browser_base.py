@@ -1,9 +1,11 @@
 """
 browserbase integration module 
 """
+import asyncio
 from typing import List
 
-def browser_base_fetch(api_key: str, project_id: str, link: List[str], text_content: bool = True, async_mode: bool = False) -> List[str]:
+def browser_base_fetch(api_key: str, project_id: str, link: List[str],
+                       text_content: bool = True, async_mode: bool = False) -> List[str]:
     """
     BrowserBase Fetch
 

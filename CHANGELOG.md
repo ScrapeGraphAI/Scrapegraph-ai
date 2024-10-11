@@ -1,3 +1,52 @@
+## [1.26.0-beta.14](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.13...v1.26.0-beta.14) (2024-10-10)
+
+
+### Features
+
+* refactoring fetch_node ([39a029e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/39a029ed9a8cd7c2277ba1386b976738e99d231b))
+
+## [1.26.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.12...v1.26.0-beta.13) (2024-10-10)
+
+
+### Features
+
+* update chromium loader ([4f816f3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4f816f3b04974e90ca4208158f05724cfe68ffb8))
+
+## [1.26.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.11...v1.26.0-beta.12) (2024-10-09)
+
+
+### Bug Fixes
+
+* nodes prompt ([8753537](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8753537ecd2a0ba480cda482b6dc50c090b418d6))
+
+## [1.26.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.10...v1.26.0-beta.11) (2024-10-09)
+
+
+### Bug Fixes
+
+* refactoring prompts ([c655642](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c65564257798a5ccdc2bdf92487cd9b069e6d951))
+
+## [1.26.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.9...v1.26.0-beta.10) (2024-10-09)
+
+
+### Bug Fixes
+
+* removed pdf_scraper graph and created document scraper ([a57da96](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a57da96175a09a16d990eeee679988d10832ce13))
+
+## [1.26.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.8...v1.26.0-beta.9) (2024-10-08)
+
+
+### Bug Fixes
+
+* pyproject.toml ([3b27c5e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b27c5e88c0b0744438e8b604f40929e22d722bc))
+
+## [1.26.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.7...v1.26.0-beta.8) (2024-10-08)
+
+
+### Features
+
+* undected_chromedriver support ([80ece21](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/80ece2179ac47a7ea42fbae4b61504a49ca18daa))
+
 ## [1.26.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.6...v1.26.0-beta.7) (2024-10-07)
 
 

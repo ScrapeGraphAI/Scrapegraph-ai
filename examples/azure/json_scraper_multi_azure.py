@@ -2,8 +2,8 @@
 Module for showing how JSONScraperMultiGraph multi works
 """
 import os
-from dotenv import load_dotenv
 import json
+from dotenv import load_dotenv
 from scrapegraphai.graphs import JSONScraperMultiGraph
 
 load_dotenv()
