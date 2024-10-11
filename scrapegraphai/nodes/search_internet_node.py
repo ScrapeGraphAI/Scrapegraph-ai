@@ -94,7 +94,7 @@ class SearchInternetNode(BaseNode):
 
         self.logger.info(f"Search Query: {search_query}")
 
-        answer = search_on_web(query=search_query, max_results=self.max_results,
+        answer = search_on_web(query=search_query, num_results=self.max_results,
                                search_engine=self.search_engine, proxy=self.proxy)
 
         if len(answer) == 0:

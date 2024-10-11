@@ -44,7 +44,7 @@ def search_on_web(query: str, search_engine: str = "Google",
             password = proxy.get('password')
 
             if all([username, password, server]):
-                proxy_url = f"https://{username}:{password}@{server}"
+                proxy_url = f"http://{username}:{password}@{server}"
                 return proxy_url
             else:
                 raise ValueError("Proxy dictionary is missing required fields.")
@@ -69,7 +69,6 @@ def search_on_web(query: str, search_engine: str = "Google",
         proxy = format_proxy(proxy)
 
     if search_engine.lower() == "google":
-        print("PROXY: ", proxy)
         res = []
         for url in google_search(query, num_results=max_results, proxy=proxy):
             res.append(url)
