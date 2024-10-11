@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 def search_on_web(query: str, search_engine: str = "Google",
                   max_results: int = 10, port: int = 8080, 
-                  timeout: int = 10) -> List[str]:
+                  timeout: int = 10, proxy: str | dict = None) -> List[str]:
     """
     Searches the web for a given query using specified search
     engine options and filters out PDF links.
@@ -23,6 +23,7 @@ def search_on_web(query: str, search_engine: str = "Google",
         port (int, optional): The port number to use when searching with 'SearXNG'. Default is 8080.
         timeout (int, optional): The number of seconds to wait 
         for a response from a request. Default is 10 seconds.
+        proxy (dict or string, optional): The proxy server to use for the request. Default is None. 
 
     Returns:
         List[str]: A list of URLs as strings that are the search results, excluding any PDF links.
@@ -36,6 +37,22 @@ def search_on_web(query: str, search_engine: str = "Google",
         ['http://example.com', 'http://example.org', ...]
     """
 
+    def format_proxy(proxy):
+        if isinstance(proxy, dict):
+            server = proxy.get('server')
+            username = proxy.get('username')
+            password = proxy.get('password')
+
+            if all([username, password, server]):
+                proxy_url = f"http://{username}:{password}@{server}"
+                return proxy_url
+            else:
+                raise ValueError("Proxy dictionary is missing required fields.")
+        elif isinstance(proxy, str):
+            return proxy  # "https://username:password@ip:port"
+        else:
+            raise TypeError("Proxy should be a dictionary or a string.")
+            
     def filter_pdf_links(links: List[str]) -> List[str]:
         """
         Filters out any links that point to PDF files.
@@ -48,9 +65,12 @@ def search_on_web(query: str, search_engine: str = "Google",
         """
         return [link for link in links if not link.lower().endswith('.pdf')]
 
+    if proxy:
+        proxy = format_proxy(proxy)
+
     if search_engine.lower() == "google":
         res = []
-        for url in google_search(query, stop=max_results):
+        for url in google_search(query, num_results=max_results, proxy=proxy):
             res.append(url)
         return filter_pdf_links(res)
 
