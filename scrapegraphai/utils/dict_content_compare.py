@@ -8,7 +8,6 @@ converting strings to lowercase and stripping whitespace.
 converting strings to lowercase and stripping whitespace.
 - are_content_equal: Compares two dictionaries for semantic equality after normalization.
 """
-
 from typing import Any, Dict, List
 
 def normalize_dict(d: Dict[str, Any]) -> Dict[str, Any]:

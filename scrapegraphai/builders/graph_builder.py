@@ -6,7 +6,6 @@ from langchain.chains import create_extraction_chain
 from langchain_community.chat_models import ErnieBotChat
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
-
 from ..helpers import nodes_metadata, graph_schema
 
 class GraphBuilder:

@@ -1,6 +1,7 @@
 """
 merge_generated_scripts_prompts module
 """
+
 TEMPLATE_MERGE_SCRIPTS_PROMPT = """
 You are a python expert in web scraping and you have just generated multiple scripts to scrape different URLs.\n
 The scripts are generated based on a user question and the content of the websites.\n

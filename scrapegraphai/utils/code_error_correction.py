@@ -9,7 +9,6 @@ validation error analysis, considering JSON schema.
 - semantic_focused_code_generation: Generates corrected code based on semantic error analysis, 
 comparing generated and reference results.
 """
-
 import json
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser

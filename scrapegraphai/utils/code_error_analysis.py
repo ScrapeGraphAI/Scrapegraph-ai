@@ -3,11 +3,13 @@ This module contains the functions that generate prompts for various types of co
 
 Functions:
 - syntax_focused_analysis: Focuses on syntax-related errors in the generated code.
-- execution_focused_analysis: Focuses on execution-related errors, including generated code and HTML analysis.
-- validation_focused_analysis: Focuses on validation-related errors, considering JSON schema and execution result.
-- semantic_focused_analysis: Focuses on semantic differences in generated code based on a comparison result.
+- execution_focused_analysis: Focuses on execution-related errors, 
+including generated code and HTML analysis.
+- validation_focused_analysis: Focuses on validation-related errors, 
+considering JSON schema and execution result.
+- semantic_focused_analysis: Focuses on semantic differences in 
+generated code based on a comparison result.
 """
-
 from typing import Any, Dict
 import json
 from langchain.prompts import PromptTemplate
@@ -63,7 +65,8 @@ def validation_focused_analysis(state: dict, llm_model) -> str:
     Analyzes the validation errors in the generated code based on a JSON schema.
 
     Args:
-        state (dict): Contains the 'generated_code', 'errors', 'json_schema', and 'execution_result'.
+        state (dict): Contains the 'generated_code', 'errors', 
+        'json_schema', and 'execution_result'.
         llm_model: The language model used for generating the analysis.
 
     Returns:

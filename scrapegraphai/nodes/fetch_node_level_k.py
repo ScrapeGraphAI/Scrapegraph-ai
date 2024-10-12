@@ -1,11 +1,12 @@
+"""
+fetch_node_level_k module
+"""
 from typing import List, Optional
-from .base_node import BaseNode
-from ..docloaders import ChromiumLoader
-from ..utils.cleanup_html import cleanup_html
-from ..utils.convert_to_md import convert_to_md
+from urllib.parse import urljoin
 from langchain_core.documents import Document
 from bs4 import BeautifulSoup
-from urllib.parse import quote, urljoin
+from .base_node import BaseNode
+from ..docloaders import ChromiumLoader
 
 class FetchNodeLevelK(BaseNode):
     """
@@ -102,7 +103,7 @@ class FetchNodeLevelK(BaseNode):
             Optional[str]: The fetched HTML content or None if fetching failed.
         """
         self.logger.info(f"--- (Fetching HTML from: {source}) ---")
-        
+
         if self.browser_base is not None:
             try:
                 from ..docloaders.browser_base import browser_base_fetch
@@ -110,9 +111,10 @@ class FetchNodeLevelK(BaseNode):
                 raise ImportError("""The browserbase module is not installed. 
                                     Please install it using `pip install browserbase`.""")
 
-            data = browser_base_fetch(self.browser_base.get("api_key"), 
+            data = browser_base_fetch(self.browser_base.get("api_key"),
                                       self.browser_base.get("project_id"), [source])
-            document = [Document(page_content=content, metadata={"source": source}) for content in data]
+            document = [Document(page_content=content,
+                                 metadata={"source": source}) for content in data]
         else:
             loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
             document = loader.load()
@@ -179,7 +181,8 @@ class FetchNodeLevelK(BaseNode):
                 full_links = self.get_full_links(source, links)
 
                 for link in full_links:
-                    if not any(d.get('source', '') == link for d in documents) and not any(d.get('source', '') == link for d in new_documents):
+                    if not any(d.get('source', '') == link for d in documents) \
+                        and not any(d.get('source', '') == link for d in new_documents):
                         new_documents.append({"source": link})
 
         documents.extend(new_documents)
@@ -208,7 +211,8 @@ class FetchNodeLevelK(BaseNode):
 
             if current_depth < depth:
                 new_links = self.extract_links(link_content)
-                content_dict.update(self.process_links(full_link, new_links, loader_kwargs, depth, current_depth + 1))
+                content_dict.update(self.process_links(full_link, new_links,
+                                                       loader_kwargs, depth, current_depth + 1))
             else:
                 self.logger.warning(f"Failed to fetch content for {full_link}")
         return content_dict

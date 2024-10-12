@@ -27,7 +27,6 @@ class GenerateScraperNode(BaseNode):
         node_name (str): The unique identifier name for the node, defaulting to "GenerateScraper".
 
     """
-
     def __init__(
         self,
         input: str,

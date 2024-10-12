@@ -71,10 +71,8 @@ class GenerateAnswerOmniNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
@@ -85,7 +83,7 @@ class GenerateAnswerOmniNode(BaseNode):
 
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"]) # json schema works only on specific models
+                    schema = self.node_config["schema"])
 
                 output_parser = get_structured_output_parser(self.node_config["schema"])
                 format_instructions = "NA"
@@ -105,8 +103,6 @@ class GenerateAnswerOmniNode(BaseNode):
             TEMPLATE_NO_CHUNKS_OMNI_prompt = self.additional_info + TEMPLATE_NO_CHUNKS_OMNI_prompt
             TEMPLATE_CHUNKS_OMNI_prompt = self.additional_info + TEMPLATE_CHUNKS_OMNI_prompt
             TEMPLATE_MERGE_OMNI_prompt = self.additional_info + TEMPLATE_MERGE_OMNI_prompt
-
-
 
         chains_dict = {}
         if len(doc) == 1:
@@ -139,7 +135,6 @@ class GenerateAnswerOmniNode(BaseNode):
                     },
                 )
 
-            # Dynamically name the chains based on their index
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
