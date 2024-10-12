@@ -85,10 +85,13 @@ class ParseNode(BaseNode):
         else:
             docs_transformed = docs_transformed[0]
 
-            link_urls, img_urls = self._extract_urls(docs_transformed.page_content, source)
+            try:
+                link_urls, img_urls = self._extract_urls(docs_transformed.page_content, source)
+            except Exception as e:
+                link_urls, img_urls = "", ""
 
             chunk_size = self.chunk_size
-            chunk_size = min(chunk_size - 500, int(chunk_size * 0.75))
+            chunk_size = min(chunk_size - 500, int(chunk_size * 0.8))
 
             if isinstance(docs_transformed, Document):
                 chunks = split_text_into_chunks(text=docs_transformed.page_content,

@@ -37,7 +37,7 @@ graph_config = {
 # ************************************************
 
 md_scraper_graph = DocumentScraperGraph(
-    prompt="List me all the authors, title and genres of the books",
+    prompt="List me all the projects",
     source=text,  # Pass the content of the file, not the file object
     config=graph_config
 )
