@@ -1,3 +1,17 @@
+## [1.26.0-beta.17](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.16...v1.26.0-beta.17) (2024-10-12)
+
+
+### Features
+
+* async invocation ([257f393](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/257f393761e8ff823e37c72659c8b55925c4aecb))
+* refactoring of mdscraper ([3b7b701](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b7b701a89aad503dea771db3f043167f7203d46))
+
+
+### Bug Fixes
+
+* bugs ([026a70b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/026a70bd3a01b0ebab4d175ae4005e7f3ba3a833))
+* search_on_web paremter ([7f03ec1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7f03ec15de20fc2d6c2aad2655cc5348cced1951))
+
 ## [1.26.0-beta.16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0-beta.15...v1.26.0-beta.16) (2024-10-11)
 
 
