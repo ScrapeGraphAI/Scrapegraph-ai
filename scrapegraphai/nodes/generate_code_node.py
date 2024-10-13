@@ -140,7 +140,17 @@ class GenerateCodeNode(BaseNode):
 
     def overall_reasoning_loop(self, state: dict) -> dict:
         """
-        overrall_reasoning_loop
+        Executes the overall reasoning loop to generate and validate the code.
+
+        Args:
+            state (dict): The current state of the reasoning process.
+
+        Returns:
+            dict: The final state after the reasoning loop.
+
+        Raises:
+            RuntimeError: If the maximum number of iterations 
+            is reached without obtaining the desired code.
         """
         self.logger.info(f"--- (Generating Code) ---")
         state["generated_code"] = self.generate_initial_code(state)
@@ -166,7 +176,8 @@ class GenerateCodeNode(BaseNode):
             if state["errors"]["validation"]:
                 continue
 
-            self.logger.info(f"--- (Checking if the informations exctrcated are the ones Requested) ---")
+            self.logger.info(f"""--- (Checking if the informations
+                             exctrcated are the ones Requested) ---""")
             state = self.semantic_comparison_loop(state)
             if state["errors"]["semantic"]:
                 continue
@@ -183,7 +194,13 @@ class GenerateCodeNode(BaseNode):
 
     def syntax_reasoning_loop(self, state: dict) -> dict:
         """
-        syntax reasoning loop
+        Executes the syntax reasoning loop to ensure the generated code has correct syntax.
+
+        Args:
+            state (dict): The current state of the reasoning process.
+
+        Returns:
+            dict: The updated state after the syntax reasoning loop.
         """
         for _ in range(self.max_iterations["syntax"]):
             syntax_valid, syntax_message = self.syntax_check(state["generated_code"])
@@ -203,10 +220,17 @@ class GenerateCodeNode(BaseNode):
 
     def execution_reasoning_loop(self, state: dict) -> dict:
         """
-        execution of the reasoning loop
+        Executes the execution reasoning loop to ensure the generated code runs without errors.
+
+        Args:
+            state (dict): The current state of the reasoning process.
+
+        Returns:
+            dict: The updated state after the execution reasoning loop.
         """
         for _ in range(self.max_iterations["execution"]):
-            execution_success, execution_result = self.create_sandbox_and_execute(state["generated_code"])
+            execution_success, execution_result = self.create_sandbox_and_execute(
+                                                                                state["generated_code"])
             if execution_success:
                 state["execution_result"] = execution_result
                 state["errors"]["execution"] = []
@@ -222,6 +246,16 @@ class GenerateCodeNode(BaseNode):
         return state
 
     def validation_reasoning_loop(self, state: dict) -> dict:
+        """
+        Executes the validation reasoning loop to ensure the 
+        generated code's output matches the desired schema.
+
+        Args:
+            state (dict): The current state of the reasoning process.
+
+        Returns:
+            dict: The updated state after the validation reasoning loop.
+        """
         for _ in range(self.max_iterations["validation"]):
             validation, errors = self.validate_dict(state["execution_result"],
                                                     self.output_schema.schema())
@@ -232,12 +266,24 @@ class GenerateCodeNode(BaseNode):
             state["errors"]["validation"] = errors
             self.logger.info(f"--- (Code Output not compliant to the deisred Output Schema) ---")
             analysis = validation_focused_analysis(state, self.llm_model)
-            self.logger.info(f"--- (Regenerating Code to make the Output compliant to the deisred Output Schema) ---")
-            state["generated_code"] = validation_focused_code_generation(state, analysis, self.llm_model)
+            self.logger.info(f"""--- (Regenerating Code to make the
+                             Output compliant to the deisred Output Schema) ---""")
+            state["generated_code"] = validation_focused_code_generation(state,
+                                                                         analysis, self.llm_model)
             state["generated_code"] = extract_code(state["generated_code"])
         return state
 
     def semantic_comparison_loop(self, state: dict) -> dict:
+        """
+        Executes the semantic comparison loop to ensure the generated code's
+          output is semantically equivalent to the reference answer.
+
+        Args:
+            state (dict): The current state of the reasoning process.
+
+        Returns:
+            dict: The updated state after the semantic comparison loop.
+        """
         for _ in range(self.max_iterations["semantic"]):
             comparison_result = self.semantic_comparison(state["execution_result"],
                                                          state["reference_answer"])
@@ -246,16 +292,25 @@ class GenerateCodeNode(BaseNode):
                 return state
 
             state["errors"]["semantic"] = comparison_result["differences"]
-            self.logger.info(f"--- (The informations exctrcated are not the all ones requested) ---")
+            self.logger.info(f"""--- (The informations exctrcated
+                             are not the all ones requested) ---""")
             analysis = semantic_focused_analysis(state, comparison_result, self.llm_model)
-            self.logger.info(f"--- (Regenerating Code to obtain all the infromation requested) ---")
-            state["generated_code"] = semantic_focused_code_generation(state, analysis, self.llm_model)
+            self.logger.info(f"""--- (Regenerating Code to
+                                obtain all the infromation requested) ---""")
+            state["generated_code"] = semantic_focused_code_generation(state,
+                                                                       analysis, self.llm_model)
             state["generated_code"] = extract_code(state["generated_code"])
         return state
 
     def generate_initial_code(self, state: dict) -> str:
         """
-        function for generating the initial code
+        Generates the initial code based on the provided state.
+
+        Args:
+            state (dict): The current state of the reasoning process.
+
+        Returns:
+            str: The initially generated code.
         """
         prompt = PromptTemplate(
             template=TEMPLATE_INIT_CODE_GENERATION,
@@ -270,12 +325,20 @@ class GenerateCodeNode(BaseNode):
         output_parser = StrOutputParser()
 
         chain =  prompt | self.llm_model | output_parser
-        generated_code = chain.invoke({})
+        generated_code = chain.ainvoke({})
         return generated_code
 
     def semantic_comparison(self, generated_result: Any, reference_result: Any) -> Dict[str, Any]:
         """
-        semtantic comparison formula
+        Performs a semantic comparison between the generated result and the reference result.
+
+        Args:
+            generated_result (Any): The result generated by the code.
+            reference_result (Any): The reference result for comparison.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the comparison result, 
+            differences, and explanation.
         """
         reference_result_dict = self.output_schema(**reference_result).dict()
         if are_content_equal(generated_result, reference_result_dict):
@@ -305,14 +368,20 @@ class GenerateCodeNode(BaseNode):
         )
 
         chain = prompt | self.llm_model | output_parser
-        return chain.invoke({
+        return chain.ainvoke({
             "generated_result": json.dumps(generated_result, indent=2),
             "reference_result": json.dumps(reference_result_dict, indent=2)
         })
 
     def syntax_check(self, code):
         """
-        syntax checker
+        Checks the syntax of the provided code.
+
+        Args:
+            code (str): The code to be checked for syntax errors.
+
+        Returns:
+            tuple: A tuple containing a boolean indicating if the syntax is correct and a message.
         """
         try:
             ast.parse(code)
@@ -322,7 +391,14 @@ class GenerateCodeNode(BaseNode):
 
     def create_sandbox_and_execute(self, function_code):
         """
-        Create a sandbox environment
+        Creates a sandbox environment and executes the provided function code.
+
+        Args:
+            function_code (str): The code to be executed in the sandbox.
+
+        Returns:
+            tuple: A tuple containing a boolean indicating if 
+            the execution was successful and the result or error message.
         """
         sandbox_globals = {
             'BeautifulSoup': BeautifulSoup,
@@ -350,7 +426,15 @@ class GenerateCodeNode(BaseNode):
 
     def validate_dict(self, data: dict, schema):
         """
-        validate_dict method
+        Validates the provided data against the given schema.
+
+        Args:
+            data (dict): The data to be validated.
+            schema (dict): The schema against which the data is validated.
+
+        Returns:
+            tuple: A tuple containing a boolean indicating 
+            if the validation was successful and a list of errors if any.
         """
         try:
             validate(instance=data, schema=schema)

@@ -59,19 +59,13 @@ class SearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # smart_scraper_instance = SmartScraperGraph(
-        #     prompt="",
-        #     source="",
-        #     config=self.copy_config,
-        #     schema=self.copy_schema
-        # )
-
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["urls"],
             node_config={
                 "llm_model": self.llm_model,
                 "max_results": self.max_results,
+                "loader_kwargs": self.loader_kwargs,
                 "search_engine": self.copy_config.get("search_engine")
             }
         )

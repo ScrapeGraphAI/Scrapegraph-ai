@@ -1,7 +1,6 @@
 """
 Example of Search Graph
 """
-
 from scrapegraphai.graphs import SearchGraph
 
 # ************************************************

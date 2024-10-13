@@ -1,11 +1,12 @@
 """
 Example of OmniSearchGraph
 """
-
-import os, json
+import os
+import json
 from dotenv import load_dotenv
 from scrapegraphai.graphs import OmniSearchGraph
 from scrapegraphai.utils import prettify_exec_info
+
 load_dotenv()
 
 # ************************************************
@@ -42,4 +43,3 @@ print(json.dumps(result, indent=2))
 
 graph_exec_info = omni_search_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
-

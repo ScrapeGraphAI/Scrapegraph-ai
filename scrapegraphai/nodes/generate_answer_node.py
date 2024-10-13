@@ -1,5 +1,5 @@
 """
-generate_answer_node module
+GenerateAnswerNode Module
 """
 from typing import List, Optional
 from langchain.prompts import PromptTemplate
@@ -19,24 +19,24 @@ from ..prompts import (
 
 class GenerateAnswerNode(BaseNode):
     """
-        Initializes the GenerateAnswerNode class.
+    Initializes the GenerateAnswerNode class.
 
-        Args:
-            input (str): The input data type for the node.
-            output (List[str]): The output data type(s) for the node.
-            node_config (Optional[dict]): Configuration dictionary for the node, 
-            which includes the LLM model, verbosity, schema, and other settings. 
-            Defaults to None.
-            node_name (str): The name of the node. Defaults to "GenerateAnswer".
+    Args:
+        input (str): The input data type for the node.
+        output (List[str]): The output data type(s) for the node.
+        node_config (Optional[dict]): Configuration dictionary for the node,
+        which includes the LLM model, verbosity, schema, and other settings.
+        Defaults to None.
+        node_name (str): The name of the node. Defaults to "GenerateAnswer".
 
-        Attributes:
-            llm_model: The language model specified in the node configuration.
-            verbose (bool): Whether verbose mode is enabled.
-            force (bool): Whether to force certain behaviors, overriding defaults.
-            script_creator (bool): Whether the node is in script creation mode.
-            is_md_scraper (bool): Whether the node is scraping markdown data.
-            additional_info (Optional[str]): Any additional information to be 
-            included in the prompt templates.
+    Attributes:
+        llm_model: The language model specified in the node configuration.
+        verbose (bool): Whether verbose mode is enabled.
+        force (bool): Whether to force certain behaviors, overriding defaults.
+        script_creator (bool): Whether the node is in script creation mode.
+        is_md_scraper (bool): Whether the node is scraping markdown data.
+        additional_info (Optional[str]): Any additional information to be
+        included in the prompt templates.
     """
     def __init__(
         self,
@@ -57,7 +57,17 @@ class GenerateAnswerNode(BaseNode):
         self.is_md_scraper = node_config.get("is_md_scraper", False)
         self.additional_info = node_config.get("additional_info")
 
-    def execute(self, state: dict) -> dict:
+    async def execute(self, state: dict) -> dict:
+        """
+        Executes the GenerateAnswerNode.
+
+        Args:
+            state (dict): The current state of the graph. The input keys will be used
+                          to fetch the correct data from the state.
+
+        Returns:
+            dict: The updated state with the output key containing the generated answer.
+        """
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         input_keys = self.get_input_keys(state)
@@ -113,7 +123,7 @@ class GenerateAnswerNode(BaseNode):
             chain = prompt | self.llm_model
             if output_parser:
                 chain = chain | output_parser
-            answer = chain.invoke({"question": user_prompt})
+            answer = await chain.ainvoke({"question": user_prompt})
 
             state.update({self.output[0]: answer})
             return state
@@ -133,7 +143,7 @@ class GenerateAnswerNode(BaseNode):
                 chains_dict[chain_name] = chains_dict[chain_name] | output_parser
 
         async_runner = RunnableParallel(**chains_dict)
-        batch_results = async_runner.invoke({"question": user_prompt})
+        batch_results = await async_runner.ainvoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
             template=template_merge_prompt,
@@ -144,7 +154,7 @@ class GenerateAnswerNode(BaseNode):
         merge_chain = merge_prompt | self.llm_model
         if output_parser:
             merge_chain = merge_chain | output_parser
-        answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
+        answer = await merge_chain.ainvoke({"context": batch_results, "question": user_prompt})
 
         state.update({self.output[0]: answer})
         return state

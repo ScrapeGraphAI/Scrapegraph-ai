@@ -1,13 +1,12 @@
 """
 Example of custom graph using existing nodes
 """
-
 import os
 from dotenv import load_dotenv
-
 from langchain_mistralai import ChatMistralAI, MistralAIEmbeddings
 from scrapegraphai.graphs import BaseGraph
 from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+
 load_dotenv()
 
 # ************************************************

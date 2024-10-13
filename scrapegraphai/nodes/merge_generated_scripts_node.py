@@ -2,9 +2,9 @@
 MergeAnswersNode Module
 """
 from typing import List, Optional
-from tqdm import tqdm
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
+from langchain_core.output_parsers import StrOutputParser
+from ..prompts import TEMPLATE_MERGE_SCRIPTS_PROMPT
 from ..utils.logging import get_logger
 from .base_node import BaseNode
 
@@ -51,10 +51,8 @@ class MergeGeneratedScriptsNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         user_prompt = input_data[0]
@@ -67,20 +65,8 @@ class MergeGeneratedScriptsNode(BaseNode):
             scripts_str += "-----------------------------------\n"
             scripts_str += script
 
-        TEMPLATE_MERGE = """
-        You are a python expert in web scraping and you have just generated multiple scripts to scrape different URLs.\n
-        The scripts are generated based on a user question and the content of the websites.\n
-        You need to create one single script that merges the scripts generated for each URL.\n
-        The scraped contents are in a JSON format and you need to merge them based on the context and providing a correct JSON structure.\n
-        The output should be just in python code without any comment and should implement the main function.\n
-        The python script, when executed, should format the extracted information sticking to the user question and scripts output format.\n
-        USER PROMPT: {user_prompt}\n
-        SCRIPTS:\n
-        {scripts}
-        """
-
         prompt_template = PromptTemplate(
-            template=TEMPLATE_MERGE,
+            template=TEMPLATE_MERGE_SCRIPTS_PROMPT,
             input_variables=["user_prompt"],
             partial_variables={
                 "scripts": scripts_str,
@@ -88,8 +74,7 @@ class MergeGeneratedScriptsNode(BaseNode):
         )
 
         merge_chain = prompt_template | self.llm_model | StrOutputParser()
-        answer = merge_chain.invoke({"user_prompt": user_prompt})
+        answer = merge_chain.ainvoke({"user_prompt": user_prompt})
 
-        # Update the state with the generated answer
         state.update({self.output[0]: answer})
         return state

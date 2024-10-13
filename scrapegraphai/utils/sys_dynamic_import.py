@@ -10,7 +10,8 @@ if typing.TYPE_CHECKING:
     import types
 
 def srcfile_import(modpath: str, modname: str) -> "types.ModuleType":
-    """imports a python module from its srcfile
+    """
+    imports a python module from its srcfile
 
     Args:
         modpath: The srcfile absolute path
@@ -42,7 +43,8 @@ def srcfile_import(modpath: str, modname: str) -> "types.ModuleType":
 
 
 def dynamic_import(modname: str, message: str = "") -> None:
-    """imports a python module at runtime
+    """
+    imports a python module at runtime
 
     Args:
         modname: The module name in the scope

@@ -23,7 +23,8 @@ class SearchLinksWithContext(BaseNode):
         input (str): Boolean expression defining the input keys needed from the state.
         output (List[str]): List of output keys to be updated in the state.
         node_config (dict): Additional configuration for the node.
-        node_name (str): The unique identifier name for the node, defaulting to "SearchLinksWithContext".
+        node_name (str): The unique identifier name for the node, 
+        defaulting to "SearchLinksWithContext".
     """
 
     def __init__(

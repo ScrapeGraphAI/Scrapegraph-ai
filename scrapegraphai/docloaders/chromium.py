@@ -1,17 +1,15 @@
 """
-Chromium module
+chromiumloader module
 """
 import asyncio
 from typing import Any, AsyncIterator, Iterator, List, Optional
-
 from langchain_community.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
-
+import aiohttp
+import async_timeout
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
-
 logger = get_logger("web-loader")
-
 
 class ChromiumLoader(BaseLoader):
     """scrapes HTML pages from URLs using a (headless) instance of the
@@ -24,6 +22,9 @@ class ChromiumLoader(BaseLoader):
         proxy: A dictionary containing proxy settings; None disables protection.
         urls: A list of URLs to scrape content from.
     """
+
+    RETRY_LIMIT = 3
+    TIMEOUT = 10
 
     def __init__(
         self,
@@ -61,6 +62,40 @@ class ChromiumLoader(BaseLoader):
         self.urls = urls
         self.load_state = load_state
 
+    async def ascrape_undetected_chromedriver(self, url: str) -> str:
+        """
+        Asynchronously scrape the content of a given URL using undetected chrome with Selenium.
+
+        Args:
+            url (str): The URL to scrape.
+
+        Returns:
+            str: The scraped HTML content or an error message if an exception occurs.
+        """
+        import undetected_chromedriver as uc
+
+        logger.info(f"Starting scraping with {self.backend}...")
+        results = ""
+        attempt = 0
+
+        while attempt < self.RETRY_LIMIT:
+            try:
+                async with async_timeout.timeout(self.TIMEOUT):
+                    driver = uc.Chrome(headless=self.headless)
+                    driver.get(url)
+                    results = driver.page_source
+                    logger.info(f"Successfully scraped {url}")
+                    break
+            except (aiohttp.ClientError, asyncio.TimeoutError) as e:
+                attempt += 1
+                logger.error(f"Attempt {attempt} failed: {e}")
+                if attempt == self.RETRY_LIMIT:
+                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+            finally:
+                driver.quit()
+
+        return results
+
     async def ascrape_playwright(self, url: str) -> str:
         """
         Asynchronously scrape the content of a given URL using Playwright's async API.
@@ -70,28 +105,75 @@ class ChromiumLoader(BaseLoader):
 
         Returns:
             str: The scraped HTML content or an error message if an exception occurs.
-
         """
         from playwright.async_api import async_playwright
         from undetected_playwright import Malenia
 
-        logger.info("Starting scraping...")
+        logger.info(f"Starting scraping with {self.backend}...")
         results = ""
-        async with async_playwright() as p:
-            browser = await p.chromium.launch(
-                headless=self.headless, proxy=self.proxy, **self.browser_config
-            )
+        attempt = 0
+
+        while attempt < self.RETRY_LIMIT:
             try:
-                context = await browser.new_context()
-                await Malenia.apply_stealth(context)
-                page = await context.new_page()
-                await page.goto(url, wait_until="domcontentloaded")
-                await page.wait_for_load_state(self.load_state)
-                results = await page.content()  # Simply get the HTML content
-                logger.info("Content scraped")
-            except Exception as e:
-                results = f"Error: {e}"
-            await browser.close()
+                async with async_playwright() as p, async_timeout.timeout(self.TIMEOUT):
+                    browser = await p.chromium.launch(
+                        headless=self.headless, proxy=self.proxy, **self.browser_config
+                    )
+                    context = await browser.new_context()
+                    await Malenia.apply_stealth(context)
+                    page = await context.new_page()
+                    await page.goto(url, wait_until="domcontentloaded")
+                    await page.wait_for_load_state(self.load_state)
+                    results = await page.content()
+                    logger.info("Content scraped")
+                    break
+            except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
+                attempt += 1
+                logger.error(f"Attempt {attempt} failed: {e}")
+                if attempt == self.RETRY_LIMIT:
+                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+            finally:
+                await browser.close()
+
+        return results
+
+    async def ascrape_with_js_support(self, url: str) -> str:
+        """
+        Asynchronously scrape the content of a given URL by rendering JavaScript using Playwright.
+
+        Args:
+            url (str): The URL to scrape.
+
+        Returns:
+            str: The fully rendered HTML content after JavaScript execution, 
+            or an error message if an exception occurs.
+        """
+        from playwright.async_api import async_playwright
+
+        logger.info(f"Starting scraping with JavaScript support for {url}...")
+        results = ""
+        attempt = 0
+
+        while attempt < self.RETRY_LIMIT:
+            try:
+                async with async_playwright() as p, async_timeout.timeout(self.TIMEOUT):
+                    browser = await p.chromium.launch(
+                        headless=self.headless, proxy=self.proxy, **self.browser_config
+                    )
+                    context = await browser.new_context()
+                    page = await context.new_page()
+                    await page.goto(url, wait_until="networkidle")
+                    results = await page.content()
+                    logger.info("Content scraped after JavaScript rendering")
+                    break
+            except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
+                attempt += 1
+                logger.error(f"Attempt {attempt} failed: {e}")
+                if attempt == self.RETRY_LIMIT:
+                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+            finally:
+                await browser.close()
+
         return results
 
     def lazy_load(self) -> Iterator[Document]:
@@ -103,7 +185,6 @@ class ChromiumLoader(BaseLoader):
 
         Yields:
             Document: The scraped content encapsulated within a Document object.
-
         """
         scraping_fn = getattr(self, f"ascrape_{self.backend}")
 

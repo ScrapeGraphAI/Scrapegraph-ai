@@ -1,21 +1,21 @@
 """
-MDScraperMultiGraph Module
+DocumentScraperMultiGraph Module
 """
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from .markdown_scraper_graph import MDScraperGraph
+from .document_scraper_graph import DocumentScraperGraph
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode
 )
 from ..utils.copy import safe_deepcopy
 
-class MDScraperMultiGraph(AbstractGraph):
+class DocumentScraperMultiGraph(AbstractGraph):
     """
-    MDScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and 
+    DocumentScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and 
     generates answers to a given prompt. It only requires a user prompt and a list of URLs.
 
     Attributes:
@@ -33,7 +33,7 @@ class MDScraperMultiGraph(AbstractGraph):
         schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
-        >>> search_graph = MDScraperMultiGraph(
+        >>> search_graph = DocumentScraperMultiGraph(
         ...     "What is Chioggia famous for?",
         ...     ["http://example.com/page1", "http://example.com/page2"],
         ...     {"llm_model": {"model": "openai/gpt-3.5-turbo"}}
@@ -41,7 +41,7 @@ class MDScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], 
+    def __init__(self, prompt: str, source: List[str],
                  config: dict, schema: Optional[BaseModel] = None):
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
@@ -60,7 +60,7 @@ class MDScraperMultiGraph(AbstractGraph):
             input="user_prompt & jsons",
             output=["results"],
             node_config={
-                "graph_instance": MDScraperGraph,
+                "graph_instance": DocumentScraperGraph,
                 "scraper_config": self.copy_config,
             },
             schema=self.copy_schema

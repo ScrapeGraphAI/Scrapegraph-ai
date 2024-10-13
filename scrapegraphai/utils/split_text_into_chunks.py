@@ -31,7 +31,7 @@ def split_text_into_chunks(text: str, chunk_size: int,
                         memoize=False)
         return chunks
 
-    else:              
+    else:
         tokens = num_tokens_calculus(text, model)
 
         if tokens <= chunk_size:
