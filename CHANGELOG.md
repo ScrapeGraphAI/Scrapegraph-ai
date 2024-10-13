@@ -1,3 +1,10 @@
+## [1.26.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.4...v1.26.5) (2024-10-13)
+
+
+### Bug Fixes
+
+* async invocation ([c2179ab](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c2179abc60d1242f272067eaca4750019b6f1d7e))
+
 ## [1.26.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.3...v1.26.4) (2024-10-13)
 
 
