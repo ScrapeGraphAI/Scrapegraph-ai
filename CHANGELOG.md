@@ -1,3 +1,12 @@
+## [1.26.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0...v1.26.1) (2024-10-13)
+
+
+### Bug Fixes
+
+* async tim ([7b07368](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7b073686ef1ff743defae5a2af3e740650f658d2))
+* typo ([9c62f24](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9c62f24e7396c298f16470bac9f548e8fe51ca5f))
+* typo ([c9d6ef5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c9d6ef5915b2155379fba5132c8640635eb7da06))
+
 ## [1.26.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.25.2...v1.26.0) (2024-10-13)
 
 
