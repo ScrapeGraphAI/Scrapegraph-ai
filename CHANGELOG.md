@@ -1,3 +1,10 @@
+## [1.26.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.3...v1.26.4) (2024-10-13)
+
+
+### Bug Fixes
+
+* csv_node ([b208ef7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b208ef792c9347ab608fdbe0913066343c3019ff))
+
 ## [1.26.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.2...v1.26.3) (2024-10-13)
 
 
