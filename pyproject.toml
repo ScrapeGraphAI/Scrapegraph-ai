@@ -35,7 +35,7 @@ dependencies = [
     "transformers>=4.44.2"
     "transformers>=4.44.2",
     "googlesearch-python>=1.2.5",
-    "async-timeout>=4.0.3"
+    "async-timeout>=4.0.3",
     "transformers>=4.44.2",
     "googlesearch-python>=1.2.5"
 ]
