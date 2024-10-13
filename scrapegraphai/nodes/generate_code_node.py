@@ -325,7 +325,7 @@ class GenerateCodeNode(BaseNode):
         output_parser = StrOutputParser()
 
         chain =  prompt | self.llm_model | output_parser
-        generated_code = chain.ainvoke({})
+        generated_code = chain.invoke({})
         return generated_code
 
     def semantic_comparison(self, generated_result: Any, reference_result: Any) -> Dict[str, Any]:
@@ -368,7 +368,7 @@ class GenerateCodeNode(BaseNode):
         )
 
         chain = prompt | self.llm_model | output_parser
-        return chain.ainvoke({
+        return chain.invoke({
             "generated_result": json.dumps(generated_result, indent=2),
             "reference_result": json.dumps(reference_result_dict, indent=2)
         })

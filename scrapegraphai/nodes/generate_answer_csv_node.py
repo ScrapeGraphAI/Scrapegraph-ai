@@ -126,7 +126,7 @@ class GenerateAnswerCSVNode(BaseNode):
             )
 
             chain =  prompt | self.llm_model | output_parser
-            answer = chain.ainvoke({"question": user_prompt})
+            answer = chain.invoke({"question": user_prompt})
             state.update({self.output[0]: answer})
             return state
 

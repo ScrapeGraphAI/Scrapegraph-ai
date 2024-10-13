@@ -74,7 +74,7 @@ class MergeGeneratedScriptsNode(BaseNode):
         )
 
         merge_chain = prompt_template | self.llm_model | StrOutputParser()
-        answer = merge_chain.ainvoke({"user_prompt": user_prompt})
+        answer = merge_chain.invoke({"user_prompt": user_prompt})
 
         state.update({self.output[0]: answer})
         return state
