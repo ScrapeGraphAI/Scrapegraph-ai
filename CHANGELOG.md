@@ -1,3 +1,10 @@
+## [1.26.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.1...v1.26.2) (2024-10-13)
+
+
+### Bug Fixes
+
+* add new dipendency ([35c44e4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/35c44e4d2ca3f6f7f27c8c5efd3381e8fc3acc82))
+
 ## [1.26.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.0...v1.26.1) (2024-10-13)
 
 
