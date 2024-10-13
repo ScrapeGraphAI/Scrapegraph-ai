@@ -1,11 +1,7 @@
 """
-This file contains the cost of models per 1k tokens for input and output.
-The file is on a best effort basis and may not be up to date. Any contributions are welcome.
-"""
-
-"""
 Cost for 1k tokens in input
 """
+
 MODEL_COST_PER_1K_TOKENS_INPUT = {
     ### MistralAI
     # General Purpose

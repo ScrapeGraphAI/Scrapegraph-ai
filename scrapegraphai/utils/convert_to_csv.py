@@ -12,7 +12,8 @@ def convert_to_csv(data: dict, filename: str, position: str = None) -> None:
     Args:
         data (dict): The data to be converted into CSV format.
         filename (str): The name of the output CSV file, without the '.csv' extension.
-        position (str, optional): The file path where the CSV should be saved. Defaults to the directory of the caller script if not provided.
+        position (str, optional): The file path where the CSV should be saved.
+        Defaults to the directory of the caller script if not provided.
 
     Returns:
         None: The function does not return anything.

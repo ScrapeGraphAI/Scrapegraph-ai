@@ -14,7 +14,6 @@ To disable sending telemetry there are three ways:
   or:
   export SCRAPEGRAPHAI_TELEMETRY_ENABLED=false
 """
-
 import configparser
 import functools
 import importlib.metadata
@@ -35,9 +34,7 @@ API_KEY = "phc_orsfU4aHhtpTSLVcUE2hdUkQDLM4OEQZndKGFBKMEtn"
 TIMEOUT = 2
 DEFAULT_CONFIG_LOCATION = os.path.expanduser("~/.scrapegraphai.conf")
 
-
 logger = logging.getLogger(__name__)
-
 
 def _load_config(config_location: str) -> configparser.ConfigParser:
     config = configparser.ConfigParser()
@@ -58,7 +55,6 @@ def _load_config(config_location: str) -> configparser.ConfigParser:
         except Exception:
             pass
     return config
-
 
 def _check_config_and_environ_for_telemetry_flag(
     telemetry_default: bool, config_obj: configparser.ConfigParser

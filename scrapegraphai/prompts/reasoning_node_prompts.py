@@ -1,5 +1,5 @@
 """
-Reasoning prompts helper
+Reasoning prompts helper module
 """
 
 TEMPLATE_REASONING = """

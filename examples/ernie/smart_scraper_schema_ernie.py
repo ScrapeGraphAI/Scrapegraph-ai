@@ -1,24 +1,18 @@
 """ 
 Basic example of scraping pipeline using SmartScraper with schema
 """
-
 import json
 import os
 from typing import Dict
-
 from dotenv import load_dotenv
 from pydantic import BaseModel
-
 from scrapegraphai.graphs import SmartScraperGraph
-
 
 load_dotenv()
 
 # ************************************************
 # Define the output schema for the graph
 # ************************************************
-
-
 class Project(BaseModel):
     title: str
     description: str

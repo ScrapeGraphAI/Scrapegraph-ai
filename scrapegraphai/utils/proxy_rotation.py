@@ -10,7 +10,9 @@ from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
 
 class ProxyBrokerCriteria(TypedDict, total=False):
-    """proxy broker criteria"""
+    """
+    proxy broker criteria
+    """
 
     anonymous: bool
     countryset: Set[str]
@@ -20,7 +22,9 @@ class ProxyBrokerCriteria(TypedDict, total=False):
 
 
 class ProxySettings(TypedDict, total=False):
-    """proxy settings"""
+    """
+    proxy settings
+    """
 
     server: str
     bypass: str
@@ -29,7 +33,9 @@ class ProxySettings(TypedDict, total=False):
 
 
 class Proxy(ProxySettings):
-    """proxy server information"""
+    """
+    proxy server information
+    """
 
     criteria: ProxyBrokerCriteria
 

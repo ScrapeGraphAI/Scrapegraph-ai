@@ -142,7 +142,7 @@ class SearchLinkNode(BaseNode):
                     input_variables=["content", "user_prompt"],
                 )
                 merge_chain = merge_prompt | self.llm_model | output_parser
-                answer = merge_chain.invoke(
+                answer = merge_chain.ainvoke(
                     {"content": chunk.page_content}
                 )
                 relevant_links += answer

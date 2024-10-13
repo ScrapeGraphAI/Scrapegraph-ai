@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using Code Generator with schema
 """
-
 import os, json
 from typing import List
 from dotenv import load_dotenv

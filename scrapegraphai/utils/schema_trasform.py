@@ -20,7 +20,8 @@ def transform_schema(pydantic_schema):
                 if value['type'] == 'array':
                     if '$ref' in value['items']:
                         ref_key = value['items']['$ref'].split('/')[-1]
-                        result[key] = [process_properties(pydantic_schema['$defs'][ref_key]['properties'])]
+                        result[key] = [process_properties(
+                                                            pydantic_schema['$defs'][ref_key]['properties'])]
                     else:
                         result[key] = [value['items']['type']]
                 else:

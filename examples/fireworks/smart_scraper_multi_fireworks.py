@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
 import os
 import json
 from dotenv import load_dotenv
@@ -19,7 +18,6 @@ graph_config = {
         "api_key": fireworks_api_key,
         "model": "fireworks/accounts/fireworks/models/mixtral-8x7b-instruct"
     },
-  
     "verbose": True,
     "headless": False,
 }

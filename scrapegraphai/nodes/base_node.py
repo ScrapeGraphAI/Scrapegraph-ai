@@ -148,11 +148,9 @@ class BaseNode(ABC):
             ValueError: If the expression is invalid or if no state keys match the expression.
         """
 
-        # Check for empty expression
         if not expression:
             raise ValueError("Empty expression.")
 
-        # Check for adjacent state keys without an operator between them
         pattern = (
             r"\b("
             + "|".join(re.escape(key) for key in state.keys())
@@ -165,10 +163,8 @@ class BaseNode(ABC):
                 "Adjacent state keys found without an operator between them."
             )
 
-        # Remove spaces
         expression = expression.replace(" ", "")
 
-        # Check for operators with empty adjacent tokens or at the start/end
         if (
             expression[0] in "&|"
             or expression[-1] in "&|"
@@ -179,7 +175,6 @@ class BaseNode(ABC):
         ):
             raise ValueError("Invalid operator usage.")
 
-        # Check for balanced parentheses and valid operator placement
         open_parentheses = close_parentheses = 0
         for i, char in enumerate(expression):
             if char == "(":

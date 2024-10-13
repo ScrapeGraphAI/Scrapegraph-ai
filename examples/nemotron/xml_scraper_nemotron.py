@@ -1,11 +1,11 @@
 """
 Basic example of scraping pipeline using XMLScraperGraph from XML documents
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import XMLScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
 load_dotenv()
 
 # ************************************************

@@ -11,7 +11,6 @@ def num_tokens_calculus(string: str, llm_model: BaseChatModel) -> int:
     """
     Returns the number of tokens in a text string.
     """
-
     if isinstance(llm_model, ChatOpenAI):
         from .tokenizers.tokenizer_openai import num_tokens_openai
         num_tokens_fn = num_tokens_openai

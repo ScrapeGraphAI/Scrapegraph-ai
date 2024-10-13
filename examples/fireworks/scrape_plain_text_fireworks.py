@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using SmartScraper from text
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
@@ -33,8 +32,6 @@ graph_config = {
         "model": "fireworks/accounts/fireworks/models/mixtral-8x7b-instruct"
     },
 }
-
-
 
 # ************************************************
 # Create the SmartScraperGraph instance and run it

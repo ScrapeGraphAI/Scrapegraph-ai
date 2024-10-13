@@ -5,6 +5,8 @@ Module for mapping the models in ai agents
 robots_dictionary = {
     "gpt-3.5-turbo": ["GPTBot", "ChatGPT-user"],
     "gpt-4-turbo": ["GPTBot", "ChatGPT-user"],
+    "gpt-4o": ["GPTBot", "ChatGPT-user"],
+    "gpt-4o-mini": ["GPTBot", "ChatGPT-user"], 
     "claude": ["Claude-Web", "ClaudeBot"],
     "perplexity": "PerplexityBot",
     "cohere": "cohere-ai",

@@ -1,23 +1,12 @@
 """ 
 Basic example of scraping pipeline using SmartScraper using Azure OpenAI Key
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
-
-# required environment variable in .env
-# AZURE_OPENAI_ENDPOINT
-# AZURE_OPENAI_CHAT_DEPLOYMENT_NAME
-# MODEL_NAME
-# AZURE_OPENAI_API_KEY
-# OPENAI_API_TYPE
-# AZURE_OPENAI_API_VERSION
-# AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME
 load_dotenv()
-
 
 # ************************************************
 # Initialize the model instances
@@ -33,7 +22,8 @@ graph_config = {
 }
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="""List me all the events, with the following fields: company_name, event_name, event_start_date, event_start_time, 
+    prompt="""List me all the events, with the following fields: 
+    company_name, event_name, event_start_date, event_start_time, 
     event_end_date, event_end_time, location, event_mode, event_category, 
     third_party_redirect, no_of_days, 
     time_in_hours, hosted_or_attending, refreshments_type, 

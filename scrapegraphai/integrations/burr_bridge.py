@@ -2,17 +2,16 @@
 Bridge class to integrate Burr into ScrapeGraphAI graphs
 [Burr](https://github.com/DAGWorks-Inc/burr)
 """
-
 import re
 import uuid
 from hashlib import md5
 from typing import Any, Dict, List, Tuple
 import inspect
-
 try:
     import burr
     from burr import tracking
-    from burr.core import Application, ApplicationBuilder, State, Action, default, ApplicationContext
+    from burr.core import (Application, ApplicationBuilder,
+                            State, Action, default, ApplicationContext)
     from burr.lifecycle import PostRunStepHook, PreRunStepHook
 except ImportError:
     raise ImportError("""burr package is not installed. 

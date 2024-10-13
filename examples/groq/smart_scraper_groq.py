@@ -1,7 +1,6 @@
 """ 
 Basic example of scraping pipeline using SmartScraper
 """
-
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
@@ -21,7 +20,7 @@ graph_config = {
         "api_key": groq_key,
         "temperature": 0
     },
-    "headless": False
+    "headless": False,
 }
 
 # ************************************************

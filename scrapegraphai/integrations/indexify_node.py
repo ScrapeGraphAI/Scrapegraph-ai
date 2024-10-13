@@ -1,7 +1,6 @@
 """
 IndexifyNode Module
 """
-
 from typing import List, Optional
 from ..utils.logging import get_logger
 from ..nodes.base_node import BaseNode
@@ -51,20 +50,12 @@ class IndexifyNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        # Interpret input keys based on the provided input expression
-        # input_keys length matches the min_input_len parameter in the __init__ method
-        # e.g. "answer & parsed_doc" or "answer | img_urls"
-
         input_keys = self.get_input_keys(state)
 
-        # Fetching data from the state based on the input keys
         input_data = [state[key] for key in input_keys]
 
         answer = input_data[0]
         img_urls = input_data[1]
-
-        # Indexify the content
-        # ...
 
         isIndexified = True
         state.update({self.output[0]: isIndexified})
