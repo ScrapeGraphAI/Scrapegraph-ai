@@ -96,7 +96,7 @@ class PromptRefinerNode(BaseNode):
         output_parser = StrOutputParser()
 
         chain =  prompt | self.llm_model | output_parser
-        refined_prompt = chain.ainvoke({})
+        refined_prompt = chain.invoke({})
 
         state.update({self.output[0]: refined_prompt})
         return state

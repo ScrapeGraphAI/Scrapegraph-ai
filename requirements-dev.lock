@@ -32,6 +32,7 @@ astroid==3.2.4
 async-timeout==4.0.3
     # via aiohttp
     # via langchain
+    # via scrapegraphai
 attrs==24.2.0
     # via aiohttp
     # via jsonschema
@@ -40,7 +41,7 @@ babel==2.16.0
     # via sphinx
 beautifulsoup4==4.12.3
     # via furo
-    # via google
+    # via googlesearch-python
     # via scrapegraphai
 blinker==1.8.2
     # via streamlit
@@ -108,8 +109,6 @@ gitdb==4.0.11
     # via gitpython
 gitpython==3.1.43
     # via streamlit
-google==3.0.0
-    # via scrapegraphai
 google-ai-generativelanguage==0.6.6
     # via google-generativeai
 google-api-core==2.19.1
@@ -131,6 +130,8 @@ google-generativeai==0.7.2
 googleapis-common-protos==1.63.2
     # via google-api-core
     # via grpcio-status
+googlesearch-python==1.2.5
+    # via scrapegraphai
 graphviz==0.20.3
     # via burr
 greenlet==3.0.3
@@ -417,6 +418,7 @@ requests==2.32.3
     # via fastembed
     # via free-proxy
     # via google-api-core
+    # via googlesearch-python
     # via huggingface-hub
     # via langchain
     # via langchain-community

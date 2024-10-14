@@ -143,7 +143,7 @@ class GenerateAnswerNodeKLevel(BaseNode):
         merge_chain = merge_prompt | self.llm_model
         if output_parser:
             merge_chain = merge_chain | output_parser
-        answer = merge_chain.ainvoke({"context": batch_results, "question": user_prompt})
+        answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
 
         state["answer"] = answer
 

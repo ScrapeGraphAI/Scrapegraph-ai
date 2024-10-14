@@ -33,7 +33,7 @@ def syntax_focused_analysis(state: dict, llm_model) -> str:
     prompt = PromptTemplate(template=TEMPLATE_SYNTAX_ANALYSIS,
                             input_variables=["generated_code", "errors"])
     chain = prompt | llm_model | StrOutputParser()
-    return chain.ainvoke({
+    return chain.invoke({
         "generated_code": state["generated_code"],
         "errors": state["errors"]["syntax"]
     })
@@ -53,7 +53,7 @@ def execution_focused_analysis(state: dict, llm_model) -> str:
                             input_variables=["generated_code", "errors",
                                               "html_code", "html_analysis"])
     chain = prompt | llm_model | StrOutputParser()
-    return chain.ainvoke({
+    return chain.invoke({
         "generated_code": state["generated_code"],
         "errors": state["errors"]["execution"],
         "html_code": state["html_code"],
@@ -76,7 +76,7 @@ def validation_focused_analysis(state: dict, llm_model) -> str:
                             input_variables=["generated_code", "errors", 
                                              "json_schema", "execution_result"])
     chain = prompt | llm_model | StrOutputParser()
-    return chain.ainvoke({
+    return chain.invoke({
         "generated_code": state["generated_code"],
         "errors": state["errors"]["validation"],
         "json_schema": state["json_schema"],
@@ -100,7 +100,7 @@ def semantic_focused_analysis(state: dict, comparison_result: Dict[str, Any], ll
                             input_variables=["generated_code", 
                                              "differences", "explanation"])
     chain = prompt | llm_model | StrOutputParser()
-    return chain.ainvoke({
+    return chain.invoke({
         "generated_code": state["generated_code"],
         "differences": json.dumps(comparison_result["differences"], indent=2),
         "explanation": comparison_result["explanation"]
