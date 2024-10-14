@@ -43,8 +43,6 @@ class ScriptCreatorMultiGraph(AbstractGraph):
     def __init__(self, prompt: str, source: List[str],
                  config: dict, schema: Optional[BaseModel] = None):
 
-        self.max_results = config.get("max_results", 3)
-
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
         super().__init__(prompt, config, source, schema)
