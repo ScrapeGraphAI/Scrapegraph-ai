@@ -1,3 +1,10 @@
+## [1.26.6-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6-beta.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* remove variable "max_result" not being used in the code ([e76a68a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e76a68a782e5bce48d421cb620d0b7bffa412918))
+
 ## [1.26.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.4...v1.26.5) (2024-10-13)
 
 
