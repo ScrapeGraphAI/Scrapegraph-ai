@@ -96,6 +96,7 @@ class JSONScraperMultiGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
+
         inputs = {"user_prompt": self.prompt, "jsons": self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 

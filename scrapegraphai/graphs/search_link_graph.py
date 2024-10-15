@@ -47,6 +47,7 @@ class SearchLinkGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
+
         fetch_node = FetchNode(
                 input="url| local_dir",
                 output=["doc"],

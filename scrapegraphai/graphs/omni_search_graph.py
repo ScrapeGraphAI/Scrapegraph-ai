@@ -59,13 +59,6 @@ class OmniSearchGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping and searching workflow.
         """
 
-        # omni_scraper_instance = OmniScraperGraph(
-        #     prompt="",
-        #     source="",
-        #     config=self.copy_config,
-        #     schema=self.copy_schema
-        # )
-
         search_internet_node = SearchInternetNode(
             input="user_prompt",
             output=["urls"],
@@ -115,6 +108,7 @@ class OmniSearchGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
+
         inputs = {"user_prompt": self.prompt}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 

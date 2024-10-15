@@ -99,6 +99,7 @@ class CodeGeneratorGraph(AbstractGraph):
                 "schema": self.schema,
             }
         )
+
         prompt_refier_node = PromptRefinerNode(
             input="user_prompt",
             output=["refined_prompt"],
@@ -108,6 +109,7 @@ class CodeGeneratorGraph(AbstractGraph):
                 "schema": self.schema
             }
         )
+
         html_analyzer_node = HtmlAnalyzerNode(
             input="refined_prompt & original_html",
             output=["html_info", "reduced_html"],
@@ -118,6 +120,7 @@ class CodeGeneratorGraph(AbstractGraph):
                 "reduction": self.config.get("reduction", 0)
             }
         )
+
         generate_code_node = GenerateCodeNode(
             input="user_prompt & refined_prompt & html_info & reduced_html & answer",
             output=["generated_code"],

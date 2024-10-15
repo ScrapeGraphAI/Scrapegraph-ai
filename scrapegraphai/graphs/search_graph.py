@@ -110,6 +110,7 @@ class SearchGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
+
         inputs = {"user_prompt": self.prompt}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
@@ -126,4 +127,5 @@ class SearchGraph(AbstractGraph):
         Returns:
             List[str]: A list of URLs considered during the search.
         """
+
         return self.considered_urls

@@ -59,7 +59,7 @@ class BaseGraph:
             # raise a warning if the entry point is not the first node in the list
             warnings.warn(
                 "Careful! The entry point node is different from the first node in the graph.")
-            
+
         self._set_conditional_node_edges()
 
         # Burr configuration
@@ -89,11 +89,9 @@ class BaseGraph:
         """
         for node in self.nodes:
             if node.node_type == 'conditional_node':
-                # Find outgoing edges from this ConditionalNode
                 outgoing_edges = [(from_node, to_node) for from_node, to_node in self.raw_edges if from_node.node_name == node.node_name]
                 if len(outgoing_edges) != 2:
                     raise ValueError(f"ConditionalNode '{node.node_name}' must have exactly two outgoing edges.")
-                # Assign true_node_name and false_node_name
                 node.true_node_name = outgoing_edges[0][1].node_name
                 node.false_node_name = outgoing_edges[1][1].node_name
 

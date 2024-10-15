@@ -96,6 +96,7 @@ class SmartScraperMultiGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
+
         inputs = {"user_prompt": self.prompt, "urls": self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
