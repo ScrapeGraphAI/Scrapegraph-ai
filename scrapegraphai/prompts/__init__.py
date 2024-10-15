@@ -5,7 +5,7 @@ __init__.py for the prompts folder
 from .generate_answer_node_prompts import   (TEMPLATE_CHUNKS,
                                             TEMPLATE_NO_CHUNKS,
                                             TEMPLATE_MERGE, TEMPLATE_CHUNKS_MD,
-                                            TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD)
+                                            TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD, REGEN_ADDITIONAL_INFO)
 from .generate_answer_node_csv_prompts import (TEMPLATE_CHUKS_CSV,
                                                TEMPLATE_NO_CHUKS_CSV,
                                                TEMPLATE_MERGE_CSV)
