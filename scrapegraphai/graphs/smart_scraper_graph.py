@@ -94,16 +94,16 @@ class SmartScraperGraph(AbstractGraph):
         regen_node = None
         if self.config.get("reattempt") is True:
             cond_node = ConditionalNode(
-                input="results",
-                output=["results"],
+                input="answer",
+                output=["answer"],
                 node_name="ConditionalNode",
                 node_config={
-                    "key_name": "results",
-                    "condition": 'results and results!="NA"',
+                    "key_name": "answer",
+                    "condition": 'not answer or answer=="NA"',
                 }
             )
             regen_node = GenerateAnswerNode(
-                input="user_prompt & results",
+                input="user_prompt & answer",
                 output=["answer"],
                 node_config={
                     "llm_model": self.llm_model,
