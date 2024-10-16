@@ -2,7 +2,6 @@
 SmartScraperGraph Module
 """
 from typing import Optional
-import logging
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
@@ -10,8 +9,10 @@ from ..nodes import (
     FetchNode,
     ParseNode,
     ReasoningNode,
-    GenerateAnswerNode
+    GenerateAnswerNode,
+    ConditionalNode
 )
+from ..prompts import REGEN_ADDITIONAL_INFO
 
 class SmartScraperGraph(AbstractGraph):
     """
@@ -89,6 +90,28 @@ class SmartScraperGraph(AbstractGraph):
             }
         )
 
+        cond_node = None
+        regen_node = None
+        if self.config.get("reattempt") is True:
+            cond_node = ConditionalNode(
+                input="answer",
+                output=["answer"],
+                node_name="ConditionalNode",
+                node_config={
+                    "key_name": "answer",
+                    "condition": 'not answer or answer=="NA"',
+                }
+            )
+            regen_node = GenerateAnswerNode(
+                input="user_prompt & answer",
+                output=["answer"],
+                node_config={
+                    "llm_model": self.llm_model,
+                    "additional_info": REGEN_ADDITIONAL_INFO,
+                    "schema": self.schema,
+                }
+            )
+
         if self.config.get("html_mode") is False:
             parse_node = ParseNode(
                 input="doc",
@@ -99,6 +122,7 @@ class SmartScraperGraph(AbstractGraph):
                 }
             )
 
+        reasoning_node = None
         if self.config.get("reasoning"):
             reasoning_node =  ReasoningNode(
                 input="user_prompt & (relevant_chunks | parsed_doc | doc)",
@@ -109,68 +133,72 @@ class SmartScraperGraph(AbstractGraph):
                     "schema": self.schema,
                 }
             )
+            
+        # Define the graph variation configurations
+        # (html_mode, reasoning, reattempt)
+        graph_variation_config = {
+            (False, True, False): {
+            "nodes": [fetch_node, parse_node, reasoning_node, generate_answer_node],
+            "edges": [(fetch_node, parse_node), (parse_node, reasoning_node), (reasoning_node, generate_answer_node)]
+            },
+            (True, True, False): {
+                "nodes": [fetch_node, reasoning_node, generate_answer_node],
+                "edges": [(fetch_node, reasoning_node), (reasoning_node, generate_answer_node)]
+            },
+            (True, False, False): {
+                "nodes": [fetch_node, generate_answer_node],
+                "edges": [(fetch_node, generate_answer_node)]
+            },
+            (False, False, False): {
+                "nodes": [fetch_node, parse_node, generate_answer_node],
+                "edges": [(fetch_node, parse_node), (parse_node, generate_answer_node)]
+            },
+            (False, True, True): {
+                "nodes": [fetch_node, parse_node, reasoning_node, generate_answer_node, cond_node, regen_node],
+                "edges": [(fetch_node, parse_node), (parse_node, reasoning_node), (reasoning_node, generate_answer_node), 
+                          (generate_answer_node, cond_node), (cond_node, regen_node), (cond_node, None)]
+            },
+            (True, True, True): {
+                "nodes": [fetch_node, reasoning_node, generate_answer_node, cond_node, regen_node],
+                "edges": [(fetch_node, reasoning_node), (reasoning_node, generate_answer_node), 
+                          (generate_answer_node, cond_node), (cond_node, regen_node), (cond_node, None)]
+            },
+            (True, False, True): {
+                "nodes": [fetch_node, generate_answer_node, cond_node, regen_node],
+                "edges": [(fetch_node, generate_answer_node), (generate_answer_node, cond_node), 
+                          (cond_node, regen_node), (cond_node, None)]
+            },
+            (False, False, True): {
+                "nodes": [fetch_node, parse_node, generate_answer_node, cond_node, regen_node],
+                "edges": [(fetch_node, parse_node), (parse_node, generate_answer_node), 
+                          (generate_answer_node, cond_node), (cond_node, regen_node), (cond_node, None)]
+            }
+        }
 
-        if self.config.get("html_mode") is False and self.config.get("reasoning") is True:
+        # Get the current conditions
+        html_mode = self.config.get("html_mode", False)
+        reasoning = self.config.get("reasoning", False)
+        reattempt = self.config.get("reattempt", False)
 
+        # Retrieve the appropriate graph configuration
+        config = graph_variation_config.get((html_mode, reasoning, reattempt))
+
+        if config:
             return BaseGraph(
-                nodes=[
-                    fetch_node,
-                    parse_node,
-                    reasoning_node,
-                    generate_answer_node,
-                ],
-                edges=[
-                    (fetch_node, parse_node),
-                    (parse_node, reasoning_node),
-                    (reasoning_node, generate_answer_node)
-                ],
+                nodes=config["nodes"],
+                edges=config["edges"],
                 entry_point=fetch_node,
                 graph_name=self.__class__.__name__
             )
 
-        elif self.config.get("html_mode") is True and self.config.get("reasoning") is True:
-
-            return BaseGraph(
-                nodes=[
-                    fetch_node,
-                    reasoning_node,
-                    generate_answer_node,
-                ],
-                edges=[
-                    (fetch_node, reasoning_node),
-                    (reasoning_node, generate_answer_node)
-                ],
-                entry_point=fetch_node,
-                graph_name=self.__class__.__name__
-            )
-
-        elif self.config.get("html_mode") is True and self.config.get("reasoning") is False:
-            return BaseGraph(
-                nodes=[
-                    fetch_node,
-                    generate_answer_node,
-                ],
-                edges=[
-                    (fetch_node, generate_answer_node)
-                ],
-                entry_point=fetch_node,
-                graph_name=self.__class__.__name__
-            )
-
+        # Default return if no conditions match
         return BaseGraph(
-                nodes=[
-                    fetch_node,
-                    parse_node,
-                    generate_answer_node,
-                ],
-                edges=[
-                    (fetch_node, parse_node),
-                    (parse_node, generate_answer_node)
-                ],
-                entry_point=fetch_node,
-                graph_name=self.__class__.__name__
-            )
-
+            nodes=[fetch_node, parse_node, generate_answer_node],
+            edges=[(fetch_node, parse_node), (parse_node, generate_answer_node)],
+            entry_point=fetch_node,
+            graph_name=self.__class__.__name__
+        )
+        
     def run(self) -> str:
         """
         Executes the scraping process and returns the answer to the prompt.

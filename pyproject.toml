@@ -1,7 +1,7 @@
 [project]
 name = "scrapegraphai"
 
-version = "1.26.6b1"
+version = "1.27.0b1"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
@@ -38,7 +38,8 @@ dependencies = [
     "async-timeout>=4.0.3",
     "transformers>=4.44.2",
     "googlesearch-python>=1.2.5",
-    "simpleeval>=1.0.0"
+    "simpleeval>=1.0.0",
+    "async_timeout>=4.0.3"
 ]
 
 license = "MIT"

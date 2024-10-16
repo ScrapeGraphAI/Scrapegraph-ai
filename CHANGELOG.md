@@ -1,3 +1,10 @@
+## [1.27.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6-beta.1...v1.27.0-beta.1) (2024-10-16)
+
+
+### Features
+
+* add conditional node structure to the smart_scraper_graph and implemented a structured way to check condition ([cacd9cd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cacd9cde004dace1a7dcc27981245632a78b95f3))
+
 ## [1.26.6-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6-beta.1) (2024-10-14)
 
 
