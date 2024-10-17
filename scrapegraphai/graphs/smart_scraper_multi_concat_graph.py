@@ -35,11 +35,11 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
         schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
-        >>> search_graph = MultipleSearchGraph(
+        >>> smart_scraper_multi_concat_graph = SmartScraperMultiConcatGraph(
         ...     "What is Chioggia famous for?",
         ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
-        >>> result = search_graph.run()
+        >>> result = smart_scraper_multi_concat_graph.run()
     """
     
     def __init__(self, prompt: str, source: List[str], 
