@@ -6,7 +6,7 @@ import os
 import pytest
 import pandas as pd
 from dotenv import load_dotenv
-from scrapegraphai.graphs import SmartScraperMultiParseConcatFirstGraph
+from scrapegraphai.graphs import SmartScraperMultiLiteGraph
 from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
@@ -27,7 +27,7 @@ def graph_config():
 
 def test_scraping_pipeline(graph_config):
     """Start of the scraping pipeline"""
-    smart_scraper_multi_parse_concat_first_graph = SmartScraperMultiParseConcatFirstGraph(
+    smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
         prompt="Who is Marco Perini?",
         source= [
         "https://perinim.github.io/",
@@ -36,14 +36,14 @@ def test_scraping_pipeline(graph_config):
         config=graph_config,
     )
 
-    result = smart_scraper_multi_parse_concat_first_graph.run()
+    result = smart_scraper_multi_lite_graph.run()
 
     assert result is not None
     assert isinstance(result, dict) 
 
 def test_get_execution_info(graph_config):
     """Get the execution info"""
-    smart_scraper_multi_parse_concat_first_graph = SmartScraperMultiParseConcatFirstGraph(
+    smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
         prompt="Who is Marco Perini?",
         source= [
         "https://perinim.github.io/",
@@ -52,8 +52,8 @@ def test_get_execution_info(graph_config):
         config=graph_config,
     )
 
-    smart_scraper_multi_parse_concat_first_graph.run()
+    smart_scraper_multi_lite_graph.run()
 
-    graph_exec_info = smart_scraper_multi_parse_concat_first_graph.get_execution_info()
+    graph_exec_info = smart_scraper_multi_lite_graph.get_execution_info()
 
     assert graph_exec_info is not None
