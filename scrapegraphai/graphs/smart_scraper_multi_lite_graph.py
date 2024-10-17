@@ -13,9 +13,9 @@ from ..nodes import (
 )
 from ..utils.copy import safe_deepcopy
 
-class SmartScraperMultiGraph(AbstractGraph):
+class SmartScraperMultiLiteGraph(AbstractGraph):
     """ 
-    SmartScraperMultiGraph is a scraping pipeline that scrapes a 
+    SmartScraperMultiLiteGraph is a scraping pipeline that scrapes a 
     list of URLs and merge the content first and finally generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
     The difference with the SmartScraperMultiGraph is that in this case the content is merged
@@ -36,7 +36,7 @@ class SmartScraperMultiGraph(AbstractGraph):
         schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
-        >>> smart_scraper_multi_graph = SmartScraperMultiGraph(
+        >>> smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
         ...     prompt="Who is Marco Perini?",
         ...     source= [
         ...         "https://perinim.github.io/",
@@ -44,7 +44,7 @@ class SmartScraperMultiGraph(AbstractGraph):
         ...     ],
         ...     config={"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
-        >>> result = smart_scraper_multi_graph.run()
+        >>> result = smart_scraper_multi_lite_graph.run()
     """
 
     def __init__(self, prompt: str, source: List[str], 
