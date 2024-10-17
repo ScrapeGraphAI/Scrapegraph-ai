@@ -13,7 +13,7 @@ from .json_scraper_graph import JSONScraperGraph
 from .csv_scraper_graph import CSVScraperGraph
 from .omni_scraper_graph import OmniScraperGraph
 from .omni_search_graph import OmniSearchGraph
-from .smart_scraper_multi_graph import SmartScraperMultiGraph
+from .smart_scraper_multi_abstract_graph import SmartScraperMultiAbstractGraph
 from .json_scraper_multi_graph import JSONScraperMultiGraph
 from .csv_scraper_multi_graph import CSVScraperMultiGraph
 from .xml_scraper_multi_graph import XMLScraperMultiGraph
@@ -25,5 +25,5 @@ from .screenshot_scraper_graph import ScreenshotScraperGraph
 from .smart_scraper_multi_concat_graph import SmartScraperMultiConcatGraph
 from .code_generator_graph import CodeGeneratorGraph
 from .depth_search_graph import DepthSearchGraph
-from .smart_scraper_multi_parse_merge_first_graph import SmartScraperMultiParseMergeFirstGraph
+from .smart_scraper_multi_graph import SmartScraperMultiGraph
 from .scrape_graph import ScrapeGraph
