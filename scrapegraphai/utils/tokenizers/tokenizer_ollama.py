@@ -3,6 +3,7 @@ Tokenization utilities for Ollama models
 """
 from langchain_core.language_models.chat_models import BaseChatModel
 from ..logging import get_logger
+from transformers import GPT2TokenizerFast
 
 def num_tokens_ollama(text: str, llm_model:BaseChatModel) -> int:
     """
@@ -21,8 +22,12 @@ def num_tokens_ollama(text: str, llm_model:BaseChatModel) -> int:
 
     logger.debug(f"Counting tokens for text of {len(text)} characters")
 
+    if isinstance(llm_model, GPT2TokenizerFast):
+        tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
+        tokens = tokenizer.encode(text)
+        return len(tokens)
+
     # Use langchain token count implementation
     # NB: https://github.com/ollama/ollama/issues/1716#issuecomment-2074265507
     tokens = llm_model.get_num_tokens(text)
     return tokens
-
