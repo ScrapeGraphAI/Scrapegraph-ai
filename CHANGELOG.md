@@ -1,3 +1,10 @@
+## [1.26.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6) (2024-10-18)
+
+
+### Bug Fixes
+
+* refactoring of gpt2 tokenizer ([44c3f9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/44c3f9c98939c44caa86dc582242819a7c6a0f80))
+
 ## [1.26.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.4...v1.26.5) (2024-10-13)
 
 
