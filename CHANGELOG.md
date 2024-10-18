@@ -5,12 +5,17 @@
 
 * add conditional node structure to the smart_scraper_graph and implemented a structured way to check condition ([cacd9cd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cacd9cde004dace1a7dcc27981245632a78b95f3))
 
-## [1.26.6-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6-beta.1) (2024-10-14)
 
+## [1.26.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6) (2024-10-18)
+
+## [1.26.6-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6-beta.1) (2024-10-14)
 
 ### Bug Fixes
 
 * remove variable "max_result" not being used in the code ([e76a68a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e76a68a782e5bce48d421cb620d0b7bffa412918))
+
+* refactoring of gpt2 tokenizer ([44c3f9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/44c3f9c98939c44caa86dc582242819a7c6a0f80))
+>>>>>>> main
 
 ## [1.26.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.4...v1.26.5) (2024-10-13)
 

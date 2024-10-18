@@ -62,6 +62,7 @@ class OmniScraperGraph(AbstractGraph):
         Returns:
             BaseGraph: A graph instance representing the web scraping workflow.
         """
+
         fetch_node = FetchNode(
             input="url | local_dir",
             output=["doc"],
@@ -69,6 +70,7 @@ class OmniScraperGraph(AbstractGraph):
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
             }
         )
+
         parse_node = ParseNode(
             input="doc & (url | local_dir)",
             output=["parsed_doc", "link_urls", "img_urls"],
@@ -78,6 +80,7 @@ class OmniScraperGraph(AbstractGraph):
                 "llm_model": self.llm_model
             }
         )
+
         image_to_text_node = ImageToTextNode(
             input="img_urls",
             output=["img_desc"],

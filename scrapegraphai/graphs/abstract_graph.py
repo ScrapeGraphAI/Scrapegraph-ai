@@ -128,7 +128,8 @@ class AbstractGraph(ABC):
             if requests_per_second is not None:
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
-                    llm_params["rate_limiter"] = InMemoryRateLimiter(requests_per_second=requests_per_second)
+                    llm_params["rate_limiter"] = InMemoryRateLimiter(
+                                                                    requests_per_second=requests_per_second)
             if max_retries is not None:
                 llm_params["max_retries"] = max_retries
 

@@ -41,7 +41,7 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
         ... )
         >>> result = search_graph.run()
     """
-    
+
     def __init__(self, prompt: str, source: List[str], 
                  config: dict, schema: Optional[BaseModel] = None):
 
@@ -122,6 +122,7 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
         Returns:
             str: The answer to the prompt.
         """
+
         inputs = {"user_prompt": self.prompt, "urls": self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
