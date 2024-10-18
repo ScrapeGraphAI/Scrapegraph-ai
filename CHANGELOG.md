@@ -1,3 +1,15 @@
+## [1.27.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.1...v1.27.0-beta.2) (2024-10-18)
+
+
+### Bug Fixes
+
+* refactoring of gpt2 tokenizer ([44c3f9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/44c3f9c98939c44caa86dc582242819a7c6a0f80))
+
+
+### CI
+
+* **release:** 1.26.6 [skip ci] ([a4634c7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a4634c73312b5c08581a8d670d53b7eebe8dadc1))
+
 ## [1.27.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6-beta.1...v1.27.0-beta.1) (2024-10-16)
 
 
