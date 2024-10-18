@@ -7,13 +7,12 @@ from scrapegraphai.graphs import DepthSearchGraph
 
 load_dotenv()
 
-openai_key = os.getenv("OPENAI_APIKEY")
+together_key = os.getenv("TOGETHER_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key": "***************************",
-        "model": "oneapi/qwen-turbo",
-        "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
+        "model": "togetherai/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+        "api_key": together_key,
     },
     "verbose": True,
     "headless": False,
