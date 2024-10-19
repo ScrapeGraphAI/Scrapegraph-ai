@@ -1,3 +1,10 @@
+## [1.26.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6...v1.26.7) (2024-10-19)
+
+
+### Bug Fixes
+
+* removed tokenizer ([a184716](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a18471688f0b79f06fb7078b01b68eeddc88eae4))
+
 ## [1.26.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6) (2024-10-18)
 
 
