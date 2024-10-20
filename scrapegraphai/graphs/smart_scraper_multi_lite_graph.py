@@ -1,24 +1,25 @@
-"""
-SmartScraperMultiCondGraph Module with ConditionalNode
+""" 
+SmartScraperMultiGraph Module
 """
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from .smart_scraper_graph import SmartScraperGraph
+from .scrape_graph import ScrapeGraph
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode,
-    ConcatAnswersNode,
-    ConditionalNode
 )
 from ..utils.copy import safe_deepcopy
 
-class SmartScraperMultiConcatGraph(AbstractGraph):
+class SmartScraperMultiLiteGraph(AbstractGraph):
     """ 
-    SmartScraperMultiConditionalGraph is a scraping pipeline that scrapes a 
-    list of URLs and generates answers to a given prompt.
+    SmartScraperMultiLiteGraph is a scraping pipeline that scrapes a 
+    list of URLs and merge the content first and finally generates answers to a given prompt.
+    It only requires a user prompt and a list of URLs.
+    The difference with the SmartScraperMultiGraph is that in this case the content is merged
+    before to be passed to the llm.
 
     Attributes:
         prompt (str): The user prompt to search the internet.
@@ -35,11 +36,15 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
         schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
-        >>> smart_scraper_multi_concat_graph = SmartScraperMultiConcatGraph(
-        ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
+        >>> smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
+        ...     prompt="Who is Marco Perini?",
+        ...     source= [
+        ...         "https://perinim.github.io/",
+        ...         "https://perinim.github.io/cv/"
+        ...     ],
+        ...     config={"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
-        >>> result = smart_scraper_multi_concat_graph.run()
+        >>> result = smart_scraper_multi_lite_graph.run()
     """
 
     def __init__(self, prompt: str, source: List[str], 
@@ -47,69 +52,39 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
 
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
-
         super().__init__(prompt, config, source, schema)
 
     def _create_graph(self) -> BaseGraph:
         """
-        Creates the graph of nodes representing the workflow for web scraping and searching,
-        including a ConditionalNode to decide between merging or concatenating the results.
-
-        Returns:
-            BaseGraph: A graph instance representing the web scraping and searching workflow.
+        Creates the graph of nodes representing the workflow for web scraping 
+        and parsing and then merge the content and generates answers to a given prompt.
         """
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
-            output=["results"],
+            output=["parsed_doc"],
             node_config={
-                "graph_instance": SmartScraperGraph,
+                "graph_instance": ScrapeGraph,
                 "scraper_config": self.copy_config,
             },
-            schema=self.copy_schema,
-            node_name="GraphIteratorNode"
-        )
-
-        conditional_node = ConditionalNode(
-            input="results",
-            output=["results"],
-            node_name="ConditionalNode",
-            node_config={
-                'key_name': 'results',
-                'condition': 'len(results) > 2'
-            }
+            schema=self.copy_schema
         )
 
         merge_answers_node = MergeAnswersNode(
-            input="user_prompt & results",
+            input="user_prompt & parsed_doc",
             output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
                 "schema": self.copy_schema
-            },
-            node_name="MergeAnswersNode"
-        )
-
-        concat_node = ConcatAnswersNode(
-            input="results",
-            output=["answer"],
-            node_config={},
-            node_name="ConcatNode"
+            }
         )
 
         return BaseGraph(
             nodes=[
                 graph_iterator_node,
-                conditional_node,
                 merge_answers_node,
-                concat_node,
             ],
             edges=[
-                (graph_iterator_node, conditional_node),
-                 # True node (len(results) > 2)
-                (conditional_node, merge_answers_node),
-                # False node (len(results) <= 2)
-                (conditional_node, concat_node)
+                (graph_iterator_node, merge_answers_node),
             ],
             entry_point=graph_iterator_node,
             graph_name=self.__class__.__name__
@@ -117,13 +92,12 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
 
     def run(self) -> str:
         """
-        Executes the web scraping and searching process.
+        Executes the web scraping and parsing process first and 
+        then concatenate the content and generates answers to a given prompt.
 
         Returns:
             str: The answer to the prompt.
         """
-
         inputs = {"user_prompt": self.prompt, "urls": self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
-
         return self.final_state.get("answer", "No answer found.")

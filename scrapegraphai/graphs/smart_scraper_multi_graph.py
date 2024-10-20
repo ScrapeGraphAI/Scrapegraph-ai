@@ -18,6 +18,8 @@ class SmartScraperMultiGraph(AbstractGraph):
     SmartScraperMultiGraph is a scraping pipeline that scrapes a 
     list of URLs and generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
+    The difference with the SmartScraperMultiLiteGraph is that in this case the content will be abstracted
+    by llm and then merged finally passed to the llm.
 
     Attributes:
         prompt (str): The user prompt to search the internet.
@@ -34,11 +36,15 @@ class SmartScraperMultiGraph(AbstractGraph):
         schema (Optional[BaseModel]): The schema for the graph output.
 
     Example:
-        >>> search_graph = MultipleSearchGraph(
-        ...     "What is Chioggia famous for?",
-        ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
+        >>> smart_scraper_multi_graph = SmartScraperMultiGraph(
+        ...     prompt="Who is Marco Perini?",
+        ...     source= [
+        ...         "https://perinim.github.io/",
+        ...         "https://perinim.github.io/cv/"
+        ...     ],
+        ...     config={"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
-        >>> result = search_graph.run()
+        >>> result = smart_scraper_multi_graph.run()
     """
 
     def __init__(self, prompt: str, source: List[str], 
