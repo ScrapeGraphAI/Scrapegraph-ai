@@ -1,3 +1,27 @@
+## [1.27.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.2...v1.27.0-beta.3) (2024-10-20)
+
+
+### Features
+
+* implement ScrapeGraph class for only web scraping automation ([612c644](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/612c644623fa6f4fe77a64a5f1a6a4d6cd5f4254))
+* Implement SmartScraperMultiParseMergeFirstGraph class that scrapes a list of URLs and merge the content first and finally generates answers to a given prompt. ([3e3e1b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e3e1b2f3ae8ed803d03b3b44b199e139baa68d4))
+
+
+### Bug Fixes
+
+* fix the example variable name ([69ff649](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/69ff6495564a5c670b89c0f802ebb1602f0e7cfa))
+
+
+### chore
+
+* fix example ([9cd9a87](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9cd9a874f91bbbb2990444818e8ab2d0855cc361))
+
+
+### Test
+
+* Add scrape_graph test ([cdb3c11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cdb3c1100ee1117afedbc70437317acaf7c7c1d3))
+* Add smart_scraper_multi_parse_merge_first_graph test ([464b8b0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/464b8b04ea0d51280849173d5eda92d4d4db8612))
+
 ## [1.27.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.1...v1.27.0-beta.2) (2024-10-18)
 
 
