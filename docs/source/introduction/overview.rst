@@ -22,6 +22,45 @@ This flexibility ensures that scrapers remain functional even when website layou
 We support many LLMs including **GPT, Gemini, Groq, Azure, Hugging Face** etc.
 as well as local models which can run on your machine using **Ollama**.
 
+AI Models and Token Limits
+==========================
+
+ScrapGraphAI supports a wide range of AI models from various providers. Each model has a specific token limit, which is important to consider when designing your scraping pipelines. Here's an overview of the supported models and their token limits:
+
+OpenAI Models
+-------------
+- GPT-3.5 Turbo (16,385 tokens)
+- GPT-4 (8,192 tokens)
+- GPT-4 Turbo Preview (128,000 tokens)
+
+Azure OpenAI Models
+-------------------
+- GPT-3.5 Turbo (16,385 tokens)
+- GPT-4 (8,192 tokens)
+- GPT-4 Turbo Preview (128,000 tokens)
+
+Google AI Models
+----------------
+- Gemini Pro (128,000 tokens)
+- Gemini 1.5 Pro (128,000 tokens)
+
+Anthropic Models
+----------------
+- Claude Instant (100,000 tokens)
+- Claude 2 (200,000 tokens)
+- Claude 3 (200,000 tokens)
+
+Mistral AI Models
+-----------------
+- Mistral Large (128,000 tokens)
+- Open Mistral 7B (32,000 tokens)
+- Open Mixtral 8x7B (32,000 tokens)
+
+For a complete list of supported models and their token limits, please refer to the API documentation.
+
+Understanding token limits is crucial for optimizing your scraping tasks. Larger token limits allow for processing more text in a single API call, which can be beneficial for scraping lengthy web pages or documents.
+
+
 Library Diagram
 ===============
 
