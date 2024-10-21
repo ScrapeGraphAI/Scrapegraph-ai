@@ -6,7 +6,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from .scrape_graph import ScrapeGraph
+from .smart_scraper_lite_graph import SmartScraperLiteGraph
 from ..nodes import (
     GraphIteratorNode,
     MergeAnswersNode,
@@ -63,7 +63,7 @@ class SmartScraperMultiLiteGraph(AbstractGraph):
             input="user_prompt & urls",
             output=["parsed_doc"],
             node_config={
-                "graph_instance": ScrapeGraph,
+                "graph_instance": SmartScraperLiteGraph,
                 "scraper_config": self.copy_config,
             },
             schema=self.copy_schema

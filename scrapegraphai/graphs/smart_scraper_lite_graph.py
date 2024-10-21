@@ -10,9 +10,9 @@ from ..nodes import (
     ParseNode,
 )
 
-class ScrapeGraph(AbstractGraph):
+class SmartScraperLiteGraph(AbstractGraph):
     """
-    ScrapeGraph is a scraping pipeline that automates the process of 
+    SmartScraperLiteGraph is a scraping pipeline that automates the process of 
     extracting information from web pages.
 
     Attributes:
@@ -30,7 +30,7 @@ class ScrapeGraph(AbstractGraph):
         schema (BaseModel): The schema for the graph output.
 
     Example:
-        >>> scraper = ScraperGraph(
+        >>> scraper = SmartScraperLiteGraph(
         ...     "https://en.wikipedia.org/wiki/Chioggia",
         ...     {"llm": {"model": "openai/gpt-3.5-turbo"}}
         ... )
@@ -38,7 +38,8 @@ class ScrapeGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, source: str, config: dict, prompt: str = "", schema: Optional[BaseModel] = None):
+    def __init__(self, source: str, config: dict, prompt: str = "", 
+                 schema: Optional[BaseModel] = None):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
