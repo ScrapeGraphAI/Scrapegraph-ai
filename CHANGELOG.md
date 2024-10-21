@@ -1,3 +1,10 @@
+## [1.27.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.3...v1.27.0-beta.4) (2024-10-21)
+
+
+### Features
+
+* refactoring of ScrapeGraph to SmartScraperLiteGraph ([52b6bf5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52b6bf5fb8c570aa8ef026916230c5d52996f887))
+
 ## [1.27.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.2...v1.27.0-beta.3) (2024-10-20)
 
 
