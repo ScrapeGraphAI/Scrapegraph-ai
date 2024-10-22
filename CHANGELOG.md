@@ -1,3 +1,10 @@
+## [1.27.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.4...v1.27.0-beta.5) (2024-10-22)
+
+
+### Features
+
+* refactoring of export functions ([0ea00c0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0ea00c078f2811f0d1b356bd84cafde80763c703))
+
 ## [1.27.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.3...v1.27.0-beta.4) (2024-10-21)
 
 
