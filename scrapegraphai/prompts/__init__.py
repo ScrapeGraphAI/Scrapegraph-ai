@@ -36,3 +36,4 @@ from .generate_code_node_prompts import (TEMPLATE_INIT_CODE_GENERATION,
 from .reasoning_node_prompts import (TEMPLATE_REASONING,
                                      TEMPLATE_REASONING_WITH_CONTEXT)
 from .merge_generated_scripts_prompts import TEMPLATE_MERGE_SCRIPTS_PROMPT
+from .get_probable_tags_node_prompts import TEMPLATE_GET_PROBABLE_TAGS
