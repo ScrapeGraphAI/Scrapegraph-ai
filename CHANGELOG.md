@@ -1,3 +1,10 @@
+## [1.27.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.5...v1.27.0-beta.6) (2024-10-23)
+
+
+### Features
+
+* add integration with scrape.do ([ae275ec](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ae275ec5e86c0bb8fdbeadc2e5f69816d1dea635))
+
 ## [1.27.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.4...v1.27.0-beta.5) (2024-10-22)
 
 
