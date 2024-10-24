@@ -1,3 +1,10 @@
+## [1.27.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.6...v1.27.0-beta.7) (2024-10-24)
+
+
+### Features
+
+* refactoring of get_probable_tags node ([f658092](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f658092dffb20ea111cc00950f617057482788f4))
+
 ## [1.27.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.5...v1.27.0-beta.6) (2024-10-23)
 
 
