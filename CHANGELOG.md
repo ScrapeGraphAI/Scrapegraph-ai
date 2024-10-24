@@ -1,3 +1,10 @@
+## [1.27.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.8...v1.27.0-beta.9) (2024-10-24)
+
+
+### Features
+
+* add model integration gpt4 ([51c55eb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/51c55eb3a2984ba60572edbcdea4c30620e18d76))
+
 ## [1.27.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.7...v1.27.0-beta.8) (2024-10-24)
 
 
