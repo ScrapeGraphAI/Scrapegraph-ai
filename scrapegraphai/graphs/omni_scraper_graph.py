@@ -1,5 +1,5 @@
 """
-OmniScraperGraph Module
+This module implements the Omni Scraper Graph for the ScrapeGraphAI application.
 """
 from typing import Optional
 from pydantic import BaseModel

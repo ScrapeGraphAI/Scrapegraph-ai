@@ -1,5 +1,5 @@
-""" 
-__init__.py for the helpers folder
+"""
+This module provides helper functions and utilities for the ScrapeGraphAI application.
 """
 from .nodes_metadata import nodes_metadata
 from .schemas import graph_schema

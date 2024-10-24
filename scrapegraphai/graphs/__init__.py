@@ -1,5 +1,5 @@
-""" 
-__init__.py file for graphs folder
+"""
+This module defines the graph structures and related functionalities for the ScrapeGraphAI application.
 """
 
 from .abstract_graph import AbstractGraph

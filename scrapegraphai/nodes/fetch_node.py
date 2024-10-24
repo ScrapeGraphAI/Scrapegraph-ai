@@ -1,4 +1,4 @@
-""""
+"""
 FetchNode Module
 """
 import json

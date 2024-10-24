@@ -1,4 +1,6 @@
-"""__init__.py file for docloaders folder"""
+"""
+This module handles document loading functionalities for the ScrapeGraphAI application.
+"""
 
 from .chromium import ChromiumLoader
 from .browser_base import browser_base_fetch
