@@ -19,3 +19,4 @@ semchunk>=1.0.1
 langchain-ollama>=0.1.3
 simpleeval>=0.9.13
 googlesearch-python>=1.2.5 
+async_timeout>=4.0.3

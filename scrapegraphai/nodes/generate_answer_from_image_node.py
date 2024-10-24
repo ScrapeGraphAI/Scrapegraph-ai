@@ -71,10 +71,10 @@ class GenerateAnswerFromImageNode(BaseNode):
         images = state.get('screenshots', [])
         analyses = []
 
-        supported_models = ("gpt-4o", "gpt-4o-mini", "gpt-4-turbo")
+        supported_models = ("gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-4")
 
         if self.node_config["config"]["llm"]["model"].split("/")[-1]not in supported_models:
-            raise ValueError(f"""Model '{self.node_config['config']['llm']['model']}'
+            raise ValueError(f"""The model provided
                              is not supported. Supported models are: 
                              {', '.join(supported_models)}.""")
 

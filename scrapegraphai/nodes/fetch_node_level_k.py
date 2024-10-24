@@ -57,6 +57,7 @@ class FetchNodeLevelK(BaseNode):
         self.headless = node_config.get("headless", True) if node_config else True
         self.loader_kwargs = node_config.get("loader_kwargs", {}) if node_config else {}
         self.browser_base = node_config.get("browser_base", None)
+        self.scrape_do = node_config.get("scrape_do", None)
         self.depth = node_config.get("depth", 1) if node_config else 1
         self.only_inside_links = node_config.get("only_inside_links", False) if node_config else False
         self.min_input_len = 1
@@ -115,6 +116,11 @@ class FetchNodeLevelK(BaseNode):
                                       self.browser_base.get("project_id"), [source])
             document = [Document(page_content=content,
                                  metadata={"source": source}) for content in data]
+        elif self.scrape_do:
+            from ..docloaders.scrape_do import scrape_do_fetch
+            data = scrape_do_fetch(self.scrape_do.get("api_key"), source)
+            document = [Document(page_content=data,
+                                 metadata={"source": source})]
         else:
             loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
             document = loader.load()

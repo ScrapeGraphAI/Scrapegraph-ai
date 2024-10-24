@@ -61,7 +61,7 @@ class ConditionalNode(BaseNode):
             str: The name of the next node to execute based on the presence of the key.
         """
 
-        if self.true_node_name is None or self.false_node_name is None:
+        if self.true_node_name is None:
             raise ValueError("ConditionalNode's next nodes are not set properly.")
 
         if self.condition:
