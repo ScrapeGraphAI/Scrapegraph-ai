@@ -1,3 +1,15 @@
+## [1.27.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.7...v1.27.0-beta.8) (2024-10-24)
+
+
+### Bug Fixes
+
+* removed tokenizer ([a184716](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a18471688f0b79f06fb7078b01b68eeddc88eae4))
+
+
+### CI
+
+* **release:** 1.26.7 [skip ci] ([ec9ef2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ec9ef2bcda9aa81f66b943829fcdb22fe265976e))
+
 ## [1.27.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.6...v1.27.0-beta.7) (2024-10-24)
 
 
