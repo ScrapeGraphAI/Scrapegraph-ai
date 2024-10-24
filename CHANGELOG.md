@@ -33,6 +33,8 @@
 
 * implement ScrapeGraph class for only web scraping automation ([612c644](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/612c644623fa6f4fe77a64a5f1a6a4d6cd5f4254))
 * Implement SmartScraperMultiParseMergeFirstGraph class that scrapes a list of URLs and merge the content first and finally generates answers to a given prompt. ([3e3e1b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e3e1b2f3ae8ed803d03b3b44b199e139baa68d4))
+=======
+## [1.26.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6...v1.26.7) (2024-10-19)
 
 
 ### Bug Fixes
@@ -70,6 +72,8 @@
 * add conditional node structure to the smart_scraper_graph and implemented a structured way to check condition ([cacd9cd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cacd9cde004dace1a7dcc27981245632a78b95f3))
 
 
+* removed tokenizer ([a184716](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a18471688f0b79f06fb7078b01b68eeddc88eae4))
+
 ## [1.26.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6) (2024-10-18)
 
 ## [1.26.6-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6-beta.1) (2024-10-14)
@@ -79,7 +83,6 @@
 * remove variable "max_result" not being used in the code ([e76a68a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e76a68a782e5bce48d421cb620d0b7bffa412918))
 
 * refactoring of gpt2 tokenizer ([44c3f9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/44c3f9c98939c44caa86dc582242819a7c6a0f80))
->>>>>>> main
 
 ## [1.26.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.4...v1.26.5) (2024-10-13)
 
