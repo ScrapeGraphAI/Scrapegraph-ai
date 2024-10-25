@@ -1,3 +1,10 @@
+## [1.27.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.9...v1.27.0-beta.10) (2024-10-25)
+
+
+### Bug Fixes
+
+* fix export function ([c8a000f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c8a000f1d943734a921b34e91498b2f29c8c9422))
+
 ## [1.27.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.8...v1.27.0-beta.9) (2024-10-24)
 
 
