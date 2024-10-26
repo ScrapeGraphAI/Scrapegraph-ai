@@ -270,10 +270,10 @@ class FetchNode(BaseNode):
         else:
             loader_kwargs = {}
 
-            if self.node_config is not None:
+            if self.node_config:
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
 
-            if self.browser_base is not None:
+            if self.browser_base:
                 try:
                     from ..docloaders.browser_base import browser_base_fetch
                 except ImportError:
@@ -285,7 +285,7 @@ class FetchNode(BaseNode):
 
                 document = [Document(page_content=content,
                                     metadata={"source": source}) for content in data]
-            elif self.scrape_do is not None:
+            elif self.scrape_do:
                 from ..docloaders.scrape_do import scrape_do_fetch
                 if (self.scrape_do.get("use_proxy") is None) or \
                 self.scrape_do.get("geoCode") is None or \

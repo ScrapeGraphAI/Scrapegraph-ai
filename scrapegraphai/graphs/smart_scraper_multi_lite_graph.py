@@ -1,23 +1,26 @@
 """ 
-ScriptCreatorMultiGraph Module
+SmartScraperMultiGraph Module
 """
 from copy import deepcopy
 from typing import List, Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from .script_creator_graph import ScriptCreatorGraph
+from .smart_scraper_lite_graph import SmartScraperLiteGraph
 from ..nodes import (
     GraphIteratorNode,
-    MergeGeneratedScriptsNode
+    MergeAnswersNode,
 )
 from ..utils.copy import safe_deepcopy
 
-class ScriptCreatorMultiGraph(AbstractGraph):
+class SmartScraperMultiLiteGraph(AbstractGraph):
     """ 
-    ScriptCreatorMultiGraph is a scraping pipeline that scrapes a list 
-    of URLs generating web scraping scripts.
+    SmartScraperMultiLiteGraph is a scraping pipeline that scrapes a 
+    list of URLs and merge the content first and finally generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
+    The difference with the SmartScraperMultiGraph is that in this case the content is merged
+    before to be passed to the llm.
+
     Attributes:
         prompt (str): The user prompt to search the internet.
         llm_model (dict): The configuration for the language model.
@@ -25,22 +28,26 @@ class ScriptCreatorMultiGraph(AbstractGraph):
         headless (bool): A flag to run the browser in headless mode.
         verbose (bool): A flag to display the execution information.
         model_token (int): The token limit for the language model.
+
     Args:
         prompt (str): The user prompt to search the internet.
         source (List[str]): The source of the graph.
         config (dict): Configuration parameters for the graph.
         schema (Optional[BaseModel]): The schema for the graph output.
+
     Example:
-        >>> script_graph = ScriptCreatorMultiGraph(
-        ...     "What is Chioggia famous for?",
-        ...     source=[],
+        >>> smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
+        ...     prompt="Who is Marco Perini?",
+        ...     source= [
+        ...         "https://perinim.github.io/",
+        ...         "https://perinim.github.io/cv/"
+        ...     ],
         ...     config={"llm": {"model": "openai/gpt-3.5-turbo"}}
-        ...     schema={}
         ... )
-        >>> result = script_graph.run()
+        >>> result = smart_scraper_multi_lite_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str],
+    def __init__(self, prompt: str, source: List[str], 
                  config: dict, schema: Optional[BaseModel] = None):
 
         self.copy_config = safe_deepcopy(config)
@@ -49,37 +56,35 @@ class ScriptCreatorMultiGraph(AbstractGraph):
 
     def _create_graph(self) -> BaseGraph:
         """
-        Creates the graph of nodes representing the workflow for web scraping and searching.
-        Returns:
-            BaseGraph: A graph instance representing the web scraping and searching workflow.
+        Creates the graph of nodes representing the workflow for web scraping 
+        and parsing and then merge the content and generates answers to a given prompt.
         """
-
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
-            output=["scripts"],
+            output=["parsed_doc"],
             node_config={
-                "graph_instance": ScriptCreatorGraph,
+                "graph_instance": SmartScraperLiteGraph,
                 "scraper_config": self.copy_config,
             },
             schema=self.copy_schema
         )
 
-        merge_scripts_node = MergeGeneratedScriptsNode(
-            input="user_prompt & scripts",
-            output=["merged_script"],
+        merge_answers_node = MergeAnswersNode(
+            input="user_prompt & parsed_doc",
+            output=["answer"],
             node_config={
                 "llm_model": self.llm_model,
-                "schema": self.schema
+                "schema": self.copy_schema
             }
         )
 
         return BaseGraph(
             nodes=[
                 graph_iterator_node,
-                merge_scripts_node,
+                merge_answers_node,
             ],
             edges=[
-                (graph_iterator_node, merge_scripts_node),
+                (graph_iterator_node, merge_answers_node),
             ],
             entry_point=graph_iterator_node,
             graph_name=self.__class__.__name__
@@ -87,11 +92,12 @@ class ScriptCreatorMultiGraph(AbstractGraph):
 
     def run(self) -> str:
         """
-        Executes the web scraping and searching process.
+        Executes the web scraping and parsing process first and 
+        then concatenate the content and generates answers to a given prompt.
+
         Returns:
             str: The answer to the prompt.
         """
-
         inputs = {"user_prompt": self.prompt, "urls": self.source}
         self.final_state, self.execution_info = self.graph.execute(inputs)
-        return self.final_state.get("merged_script", "Failed to generate the script.")
+        return self.final_state.get("answer", "No answer found.")

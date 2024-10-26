@@ -86,3 +86,7 @@ OUTPUT INSTRUCTIONS: {format_instructions}\n
 USER QUESTION: {question}\n
 WEBSITE CONTENT: {context}\n 
 """
+
+REGEN_ADDITIONAL_INFO = """
+You are a  scraper and you have just failed to scrape the requested information from a website. \n
+I want you to try again and provide the missing informations. \n"""
