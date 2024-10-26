@@ -22,7 +22,7 @@ OpenAI models
    graph_config = {
       "llm": {
          "api_key": openai_key,
-         "model": "openai/gpt-3.5-turbo",
+         "model": "openai/gpt-4o",
       },
    }
 
@@ -67,11 +67,6 @@ After that, you can run the following code, using only your machine resources br
          "format": "json",  # Ollama needs the format to be specified explicitly
          "model_tokens": 2000, #  depending on the model set context length
          "base_url": "http://localhost:11434",  # set ollama URL of the local host (YOU CAN CHANGE IT, if you have a different endpoint
-      },
-      "embeddings": {
-         "model": "ollama/nomic-embed-text",
-         "temperature": 0,
-         "base_url": "http://localhost:11434",  # set ollama URL
       }
    }
 
