@@ -93,7 +93,10 @@ class BaseGraph:
                 if len(outgoing_edges) != 2:
                     raise ValueError(f"ConditionalNode '{node.node_name}' must have exactly two outgoing edges.")
                 node.true_node_name = outgoing_edges[0][1].node_name
-                node.false_node_name = outgoing_edges[1][1].node_name
+                try:
+                    node.false_node_name = outgoing_edges[1][1].node_name
+                except:
+                    node.false_node_name = None
 
     def _execute_standard(self, initial_state: dict) -> Tuple[dict, list]:
         """
@@ -219,6 +222,8 @@ class BaseGraph:
                 node_names = {node.node_name for node in self.nodes}
                 if result in node_names:
                     current_node_name = result
+                elif result is None:
+                    current_node_name = None
                 else:
                     raise ValueError(f"Conditional Node returned a node name '{result}' that does not exist in the graph")
                 

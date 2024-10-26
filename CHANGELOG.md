@@ -1,14 +1,112 @@
-## [1.26.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6...v1.26.7) (2024-10-19)
+## [1.27.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.9...v1.27.0-beta.10) (2024-10-25)
+
+
+### Bug Fixes
+
+* fix export function ([c8a000f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c8a000f1d943734a921b34e91498b2f29c8c9422))
+
+## [1.27.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.8...v1.27.0-beta.9) (2024-10-24)
+
+
+### Features
+
+* add model integration gpt4 ([51c55eb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/51c55eb3a2984ba60572edbcdea4c30620e18d76))
+
+## [1.27.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.7...v1.27.0-beta.8) (2024-10-24)
 
 
 ### Bug Fixes
 
 * removed tokenizer ([a184716](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a18471688f0b79f06fb7078b01b68eeddc88eae4))
 
-## [1.26.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6) (2024-10-18)
+
+### CI
+
+* **release:** 1.26.7 [skip ci] ([ec9ef2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ec9ef2bcda9aa81f66b943829fcdb22fe265976e))
+
+## [1.27.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.6...v1.27.0-beta.7) (2024-10-24)
+
+
+### Features
+
+* refactoring of get_probable_tags node ([f658092](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f658092dffb20ea111cc00950f617057482788f4))
+
+## [1.27.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.5...v1.27.0-beta.6) (2024-10-23)
+
+
+### Features
+
+* add integration with scrape.do ([ae275ec](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ae275ec5e86c0bb8fdbeadc2e5f69816d1dea635))
+
+## [1.27.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.4...v1.27.0-beta.5) (2024-10-22)
+
+
+### Features
+
+* refactoring of export functions ([0ea00c0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0ea00c078f2811f0d1b356bd84cafde80763c703))
+
+## [1.27.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.3...v1.27.0-beta.4) (2024-10-21)
+
+
+### Features
+
+* refactoring of ScrapeGraph to SmartScraperLiteGraph ([52b6bf5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52b6bf5fb8c570aa8ef026916230c5d52996f887))
+
+## [1.27.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.2...v1.27.0-beta.3) (2024-10-20)
+
+
+### Features
+
+* implement ScrapeGraph class for only web scraping automation ([612c644](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/612c644623fa6f4fe77a64a5f1a6a4d6cd5f4254))
+* Implement SmartScraperMultiParseMergeFirstGraph class that scrapes a list of URLs and merge the content first and finally generates answers to a given prompt. ([3e3e1b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e3e1b2f3ae8ed803d03b3b44b199e139baa68d4))
+=======
+## [1.26.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6...v1.26.7) (2024-10-19)
 
 
 ### Bug Fixes
+
+* fix the example variable name ([69ff649](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/69ff6495564a5c670b89c0f802ebb1602f0e7cfa))
+
+
+### chore
+
+* fix example ([9cd9a87](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9cd9a874f91bbbb2990444818e8ab2d0855cc361))
+
+
+### Test
+
+* Add scrape_graph test ([cdb3c11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cdb3c1100ee1117afedbc70437317acaf7c7c1d3))
+* Add smart_scraper_multi_parse_merge_first_graph test ([464b8b0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/464b8b04ea0d51280849173d5eda92d4d4db8612))
+
+## [1.27.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.1...v1.27.0-beta.2) (2024-10-18)
+
+
+### Bug Fixes
+
+* refactoring of gpt2 tokenizer ([44c3f9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/44c3f9c98939c44caa86dc582242819a7c6a0f80))
+
+
+### CI
+
+* **release:** 1.26.6 [skip ci] ([a4634c7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a4634c73312b5c08581a8d670d53b7eebe8dadc1))
+
+## [1.27.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6-beta.1...v1.27.0-beta.1) (2024-10-16)
+
+
+### Features
+
+* add conditional node structure to the smart_scraper_graph and implemented a structured way to check condition ([cacd9cd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cacd9cde004dace1a7dcc27981245632a78b95f3))
+
+
+* removed tokenizer ([a184716](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a18471688f0b79f06fb7078b01b68eeddc88eae4))
+
+## [1.26.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6) (2024-10-18)
+
+## [1.26.6-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.5...v1.26.6-beta.1) (2024-10-14)
+
+### Bug Fixes
+
+* remove variable "max_result" not being used in the code ([e76a68a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e76a68a782e5bce48d421cb620d0b7bffa412918))
 
 * refactoring of gpt2 tokenizer ([44c3f9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/44c3f9c98939c44caa86dc582242819a7c6a0f80))
 
