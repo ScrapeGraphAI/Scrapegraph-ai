@@ -1,3 +1,50 @@
+## [1.27.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.7...v1.27.0) (2024-10-26)
+
+
+### Features
+
+* add conditional node structure to the smart_scraper_graph and implemented a structured way to check condition ([cacd9cd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cacd9cde004dace1a7dcc27981245632a78b95f3))
+* add integration with scrape.do ([ae275ec](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ae275ec5e86c0bb8fdbeadc2e5f69816d1dea635))
+* add model integration gpt4 ([51c55eb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/51c55eb3a2984ba60572edbcdea4c30620e18d76))
+* implement ScrapeGraph class for only web scraping automation ([612c644](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/612c644623fa6f4fe77a64a5f1a6a4d6cd5f4254))
+* Implement SmartScraperMultiParseMergeFirstGraph class that scrapes a list of URLs and merge the content first and finally generates answers to a given prompt. ([3e3e1b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e3e1b2f3ae8ed803d03b3b44b199e139baa68d4))
+* refactoring of export functions ([0ea00c0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0ea00c078f2811f0d1b356bd84cafde80763c703))
+* refactoring of get_probable_tags node ([f658092](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f658092dffb20ea111cc00950f617057482788f4))
+* refactoring of ScrapeGraph to SmartScraperLiteGraph ([52b6bf5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52b6bf5fb8c570aa8ef026916230c5d52996f887))
+
+
+### Bug Fixes
+
+* fix export function ([c8a000f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c8a000f1d943734a921b34e91498b2f29c8c9422))
+* fix the example variable name ([69ff649](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/69ff6495564a5c670b89c0f802ebb1602f0e7cfa))
+* remove variable "max_result" not being used in the code ([e76a68a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e76a68a782e5bce48d421cb620d0b7bffa412918))
+
+
+### chore
+
+* fix example ([9cd9a87](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9cd9a874f91bbbb2990444818e8ab2d0855cc361))
+
+
+### Test
+
+* Add scrape_graph test ([cdb3c11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cdb3c1100ee1117afedbc70437317acaf7c7c1d3))
+* Add smart_scraper_multi_parse_merge_first_graph test ([464b8b0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/464b8b04ea0d51280849173d5eda92d4d4db8612))
+
+
+### CI
+
+* **release:** 1.26.6-beta.1 [skip ci] ([e0fc457](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e0fc457d1a850f3306d473fbde55dd800133b404))
+* **release:** 1.27.0-beta.1 [skip ci] ([9266a36](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9266a36b2efdf7027470d59aa14b654d68f7cb51))
+* **release:** 1.27.0-beta.10 [skip ci] ([eee131e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/eee131e959a36a4471f72610eefbc1764808b6be))
+* **release:** 1.27.0-beta.2 [skip ci] ([d84d295](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d84d29538985ef8d04badfed547c6fdc73d7774d))
+* **release:** 1.27.0-beta.3 [skip ci] ([f576afa](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f576afaf0c1dd6d1dbf79fd5e642f6dca9dbe862))
+* **release:** 1.27.0-beta.4 [skip ci] ([3d6bbcd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3d6bbcdaa3828ff257adb22f2f7c1a46343de5b5))
+* **release:** 1.27.0-beta.5 [skip ci] ([5002c71](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5002c713d5a76b2c2e4313f888d9768e3f3142e1))
+* **release:** 1.27.0-beta.6 [skip ci] ([94b9836](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/94b9836ef6cd9c24bb8c04d7049d5477cc8ed807))
+* **release:** 1.27.0-beta.7 [skip ci] ([407f1ce](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/407f1ce4eb22fb284ef0624dd3f7bf7ba432fa5c))
+* **release:** 1.27.0-beta.8 [skip ci] ([4f1ed93](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4f1ed939e671e46bb546b6b605db87e87c0d66ee))
+* **release:** 1.27.0-beta.9 [skip ci] ([fd57cc7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fd57cc7c126658960e33b7214c2cc656ea032d8f))
+
 ## [1.27.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.9...v1.27.0-beta.10) (2024-10-25)
 
 
