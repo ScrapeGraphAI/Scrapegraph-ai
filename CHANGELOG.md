@@ -1,3 +1,10 @@
+## [1.27.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.10...v1.27.0-beta.11) (2024-10-27)
+
+
+### Features
+
+* add new mistral models ([6914170](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/691417089014b5b0b64a1b26687cbb0cba693952))
+
 ## [1.27.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.9...v1.27.0-beta.10) (2024-10-25)
 
 
