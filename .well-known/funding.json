@@ -9,7 +9,6 @@
         "description": "I'm dedicated to advancing web scraping and data extraction through AI-powered tools, focusing on making data access more accessible and ethical. My mission is to create solutions that uphold digital freedoms and support open internet principles.",
         "webpageUrl": {
             "url": "https://scrapegraphai.com",
-            "wellKnown": "https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/funding.json"
         }
     },
     "projects": [
@@ -19,11 +18,9 @@
             "description": "An AI-powered web scraping framework that intelligently extracts structured data from websites with automatic pattern recognition, adaptive scraping strategies, and built-in rate limiting. Recognized as a top 200 open-source AI project globally.",
             "webpageUrl": {
                 "url": "https://scrapegraphai.com/projects/core",
-                "wellKnown": "https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/funding.json"
             },
             "repositoryUrl": {
                 "url": "https://github.com/ScrapeGraphAI/Scrapegraph-ai",
-                "wellKnown": "https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/funding.json"
             },
             "licenses": ["spdx:MIT"],
             "tags": ["web-scraping", "ai", "data-extraction", "python", "machine-learning", "open-source", "llm"]
