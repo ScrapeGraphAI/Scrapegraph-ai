@@ -1,0 +1,75 @@
+{
+    "version": "v1.0.0",
+    "entity": {
+        "type": "project",
+        "role": "maintainer",
+        "name": "ScrapeGraphAI",
+        "email": "mvincig11@gmail.com",
+        "phone": "",
+        "description": "We are dedicated to making web scraping and data extraction more accessible through AI-powered tools. Our mission is to democratize data access while respecting ethical guidelines and website policies.",
+        "webpageUrl": {
+            "url": "https://scrapegraphai.com"
+        }
+    },
+    "projects": [
+        {
+            "guid": "scrapegraph-core",
+            "name": "ScrapeGraphAI Core",
+            "description": "An AI-powered web scraping framework that intelligently extracts structured data from websites. Features include automatic pattern recognition, adaptive scraping strategies, and built-in rate limiting. It's a top 200 open source project about AI in the world.",
+            "repositoryUrl": {
+                "url": "https://github.com/scrapegraphai/core",
+                "wellKnown": "https://github.com/scrapegraphai/core/blob/main/.well-known/funding-manifest-urls"
+            },
+            "licenses": ["spdx:MIT"],
+            "tags": ["web-scraping", "ai", "data-extraction", "python", "machine-learning", "open-source", "llm"]
+        }
+    ],
+    "funding": {
+        "channels": [
+            {
+                "guid": "github-sponsors",
+                "type": "platform",
+                "address": "https://github.com/sponsors/scrapegraphai",
+                "description": "Support us through GitHub Sponsors with monthly contributions"
+            },
+            {
+                "guid": "open-collective",
+                "type": "platform",
+                "address": "https://opencollective.com/scrapegraphai",
+                "description": "Join our Open Collective to support the project transparently"
+            }
+        ],
+        "plans": [
+            {
+                "guid": "infrastructure",
+                "status": "active",
+                "name": "Infrastructure Support",
+                "description": "Help cover our monthly cloud infrastructure costs, including API servers, model hosting, and data storage.",
+                "amount": 750,
+                "currency": "USD",
+                "frequency": "monthly",
+                "channels": ["github-sponsors", "open-collective"]
+            },
+            {
+                "guid": "development",
+                "status": "active",
+                "name": "Development Fund",
+                "description": "Support ongoing development, bug fixes, new features, and documentation improvements.",
+                "amount": 2500,
+                "currency": "USD",
+                "frequency": "monthly",
+                "channels": ["github-sponsors", "open-collective"]
+            },
+            {
+                "guid": "community-support",
+                "status": "active",
+                "name": "Community Backer",
+                "description": "Support our open source work with any amount. Every contribution makes a difference!",
+                "amount": 5,
+                "currency": "USD",
+                "frequency": "monthly",
+                "channels": ["github-sponsors", "open-collective", "ko-fi"]
+            }
+        ]
+    }
+}
