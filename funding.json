@@ -9,7 +9,7 @@
         "description": "I'm dedicated to advancing web scraping and data extraction through AI-powered tools, focusing on making data access more accessible and ethical. My mission is to create solutions that uphold digital freedoms and support open internet principles.",
         "webpageUrl": {
             "url": "https://scrapegraphai.com",
-            "wellKnown": "https://scrapegraphai.com/.well-known/funding-manifest-urls"
+            "wellKnown": "https://scrapegraphai.com/projects/core/.well-known/funding-manifest-urls"
         }
     },
     "projects": [
