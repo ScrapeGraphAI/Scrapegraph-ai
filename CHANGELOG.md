@@ -1,3 +1,10 @@
+## [1.27.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.11...v1.27.0-beta.12) (2024-10-28)
+
+
+### Features
+
+* refactoring of the base_graph ([12a6c18](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/12a6c18f6ac205b744d1de92e217cfc2dfc3486c))
+
 ## [1.27.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.10...v1.27.0-beta.11) (2024-10-27)
 
 
