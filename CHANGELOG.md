@@ -1,3 +1,10 @@
+## [1.27.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.12...v1.27.0-beta.13) (2024-10-29)
+
+
+### Bug Fixes
+
+* **AbstractGraph:** manually select model tokens ([f79f399](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f79f399ee0d660f162e0cb96d9faba48ecdc88b2)), closes [#768](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/768)
+
 ## [1.27.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.11...v1.27.0-beta.12) (2024-10-28)
 
 
