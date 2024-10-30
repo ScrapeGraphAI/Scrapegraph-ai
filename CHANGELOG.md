@@ -13,6 +13,7 @@
 * refactoring of ScrapeGraph to SmartScraperLiteGraph ([52b6bf5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/52b6bf5fb8c570aa8ef026916230c5d52996f887))
 
 
+
 ### Bug Fixes
 
 * fix export function ([c8a000f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c8a000f1d943734a921b34e91498b2f29c8c9422))
@@ -44,6 +45,21 @@
 * **release:** 1.27.0-beta.7 [skip ci] ([407f1ce](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/407f1ce4eb22fb284ef0624dd3f7bf7ba432fa5c))
 * **release:** 1.27.0-beta.8 [skip ci] ([4f1ed93](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4f1ed939e671e46bb546b6b605db87e87c0d66ee))
 * **release:** 1.27.0-beta.9 [skip ci] ([fd57cc7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fd57cc7c126658960e33b7214c2cc656ea032d8f))
+* **AbstractGraph:** manually select model tokens ([f79f399](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f79f399ee0d660f162e0cb96d9faba48ecdc88b2)), closes [#768](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/768)
+
+## [1.27.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.11...v1.27.0-beta.12) (2024-10-28)
+
+
+### Features
+
+* refactoring of the base_graph ([12a6c18](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/12a6c18f6ac205b744d1de92e217cfc2dfc3486c))
+
+## [1.27.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.10...v1.27.0-beta.11) (2024-10-27)
+
+
+### Features
+
+* add new mistral models ([6914170](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/691417089014b5b0b64a1b26687cbb0cba693952))
 
 ## [1.27.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0-beta.9...v1.27.0-beta.10) (2024-10-25)
 
