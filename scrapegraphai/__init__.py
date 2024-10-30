@@ -1,3 +1,3 @@
 """
-    __init__.py file for scrapegraphai folder
+__init__.py file for scrapegraphai folder
 """

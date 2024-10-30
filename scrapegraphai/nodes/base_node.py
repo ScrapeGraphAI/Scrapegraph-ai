@@ -1,5 +1,5 @@
-""" 
-BaseNode Module
+"""
+This module defines the base node class for the ScrapeGraphAI application.
 """
 import re
 from abc import ABC, abstractmethod

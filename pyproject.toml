@@ -1,6 +1,7 @@
 [project]
 name = "scrapegraphai"
 
+
 version = "1.27.0b13"
 
 

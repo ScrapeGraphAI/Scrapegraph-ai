@@ -1,5 +1,5 @@
 """
-md_scraper module
+This module implements the Document Scraper Graph for the ScrapeGraphAI application.
 """
 from typing import Optional
 import logging

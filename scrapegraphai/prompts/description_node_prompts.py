@@ -1,5 +1,5 @@
 """
-description node prompts
+This module contains prompts for description nodes in the ScrapeGraphAI application.
 """
 
 DESCRIPTION_NODE_PROMPT = """

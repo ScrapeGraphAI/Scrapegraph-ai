@@ -32,12 +32,16 @@ OpenAI Models
 - GPT-3.5 Turbo (16,385 tokens)
 - GPT-4 (8,192 tokens)
 - GPT-4 Turbo Preview (128,000 tokens)
+- GPT-4o (128000 tokens)
+- GTP-4o-mini (128000 tokens)
 
 Azure OpenAI Models
 -------------------
 - GPT-3.5 Turbo (16,385 tokens)
 - GPT-4 (8,192 tokens)
 - GPT-4 Turbo Preview (128,000 tokens)
+- GPT-4o (128000 tokens)
+- GTP-4o-mini (128000 tokens)
 
 Google AI Models
 ----------------
