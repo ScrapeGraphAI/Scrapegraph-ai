@@ -1,0 +1,113 @@
+{
+  "id": 0,
+  "guid": "",
+  "version": "",
+  "url": "",
+  "meta": {},
+  "status": "",
+  "status_message": null,
+  "crawl_errors": 0,
+  "crawl_message": null,
+  "created_at": "0001-01-01T00:00:00Z",
+  "updated_at": "0001-01-01T00:00:00Z",
+  "entity": {
+    "type": "individual",
+    "role": "maintainer",
+    "name": "Marco Vinciguerra",
+    "email": "mvincig11@gmail.com",
+    "phone": "",
+    "description": "I'm dedicated to advancing web scraping and data extraction through AI-powered tools, focusing on making data access more accessible and ethical. My mission is to create solutions that uphold digital freedoms and support open internet principles.",
+    "webpageUrl": {
+      "url": "https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/funding.json"
+    }
+  },
+  "projects": [
+    {
+      "guid": "scrapegraph-core",
+      "name": "ScrapeGraphAI Core",
+      "description": "An AI-powered web scraping framework that intelligently extracts structured data from websites with automatic pattern recognition, adaptive scraping strategies, and built-in rate limiting. Recognized as a top 200 open-source AI project globally.",
+      "webpageUrl": {
+        "url": "https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/funding.json"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/ScrapeGraphAI/Scrapegraph-ai"
+      },
+      "licenses": [
+        "spdx:MIT"
+      ],
+      "tags": [
+        "web-scraping",
+        "ai",
+        "data-extraction",
+        "python",
+        "machine-learning",
+        "open-source",
+        "llm"
+      ]
+    }
+  ],
+  "funding": {
+    "channels": [
+      {
+        "guid": "mybank",
+        "type": "bank",
+        "address": "",
+        "description": "Will accept direct bank transfers. Please e-mail me for details."
+      },
+      {
+        "guid": "mypay",
+        "type": "payment-provider",
+        "address": "",
+        "description": "Pay with your debit/credit card through this gateway and set up recurring subscriptions."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "infrastructure",
+        "status": "active",
+        "name": "Infrastructure Support",
+        "description": "Help cover monthly cloud infrastructure costs, including API servers, model hosting, and data storage.",
+        "amount": 750,
+        "currency": "USD",
+        "frequency": "monthly",
+        "channels": [
+          "mybank"
+        ]
+      },
+      {
+        "guid": "developer-compensation",
+        "status": "active",
+        "name": "Developer Compensation",
+        "description": "Provides financial support for developers working on maintenance, updates, and feature additions for the projects.",
+        "amount": 2500,
+        "currency": "USD",
+        "frequency": "monthly",
+        "channels": [
+          "mybank"
+        ]
+      },
+      {
+        "guid": "community-backer",
+        "status": "active",
+        "name": "Community Backer",
+        "description": "Support our open-source efforts with any contribution amount. Every donation helps!",
+        "amount": 5,
+        "currency": "USD",
+        "frequency": "monthly",
+        "channels": [
+          "mypay"
+        ]
+      }
+    ],
+    "history": [
+      {
+        "year": 2024,
+        "income": 15000,
+        "expenses": 15000,
+        "taxes": 0,
+        "currency": "USD",
+        "description": "Experienced a temporary dip in donations, with improvements expected."
+      }
+    ]
+  }
+}
