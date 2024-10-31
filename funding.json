@@ -65,7 +65,7 @@
         "currency": "USD",
         "frequency": "monthly",
         "channels": [
-          "Stripe"
+          "stripe"
         ]
       }
     ],
