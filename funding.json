@@ -49,7 +49,7 @@
   "funding": {
     "channels": [
       {
-        "guid": "Stripe",
+        "guid": "stripe",
         "type": "bank",
         "address": "https://buy.stripe.com/5kAaGW2E5gHH4vK3ce",
         "description": "Will accept direct bank transfers via Stripe in the address link, for more info contact us via email contact@scrapegraphai.com"
