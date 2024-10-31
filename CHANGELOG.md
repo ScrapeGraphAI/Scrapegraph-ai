@@ -1,3 +1,10 @@
+## [1.28.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0-beta.1...v1.28.0-beta.2) (2024-10-31)
+
+
+### Features
+
+* update generate answer ([7172b32](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7172b32a0f37f547edccab7bd09406e73c9ec5b2))
+
 ## [1.28.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0...v1.28.0-beta.1) (2024-10-30)
 
 
