@@ -30,56 +30,38 @@ def is_boto3_client(obj):
 
 def safe_deepcopy(obj: Any) -> Any:
     """
-    Attempts to create a deep copy of the object using `copy.deepcopy`
-    whenever possible. If that fails, it falls back to custom deep copy
-    logic. If that also fails, it raises a `DeepCopyError`.
-
+    Safely create a deep copy of an object, handling special cases.
+    
     Args:
-        obj (Any): The object to be copied, which can be of any type.
-
+        obj: Object to copy
+        
     Returns:
-        Any: A deep copy of the object if possible; otherwise, a shallow
-        copy if deep copying fails; if neither is possible, the original
-        object is returned.
+        Deep copy of the object
+        
     Raises:
-        DeepCopyError: If the object cannot be deep-copied or shallow-copied.
+        DeepCopyError: If object cannot be deep copied
     """
-
     try:
-
-        return copy.deepcopy(obj)
-    except (TypeError, AttributeError) as e:
-
-        if isinstance(obj, dict):
-            new_obj = {}
-
-            for k, v in obj.items():
-                new_obj[k] = safe_deepcopy(v)
-            return new_obj
-
-        elif isinstance(obj, list):
-            new_obj = []
-
-            for v in obj:
-                new_obj.append(safe_deepcopy(v))
-            return new_obj
-
-        elif isinstance(obj, tuple):
-            new_obj = tuple(safe_deepcopy(v) for v in obj)
-
-            return new_obj
-
-        elif isinstance(obj, frozenset):
-            new_obj = frozenset(safe_deepcopy(v) for v in obj)
-            return new_obj
-
-        elif is_boto3_client(obj):
+        # Handle special cases first
+        if obj is None or isinstance(obj, (str, int, float, bool)):
             return obj
-
-        else:
-            try:
-                return copy.copy(obj)
-            except (TypeError, AttributeError):
-                raise DeepCopyError(
-                    f"Cannot deep copy the object of type {type(obj)}"
-                ) from e
+            
+        if isinstance(obj, (list, set)):
+            return type(obj)(safe_deepcopy(v) for v in obj)
+            
+        if isinstance(obj, dict):
+            return {k: safe_deepcopy(v) for k, v in obj.items()}
+            
+        if isinstance(obj, tuple):
+            return tuple(safe_deepcopy(v) for v in obj)
+            
+        if isinstance(obj, frozenset):
+            return frozenset(safe_deepcopy(v) for v in obj)
+            
+        if is_boto3_client(obj):
+            return obj
+            
+        return copy.copy(obj)
+        
+    except Exception as e:
+        raise DeepCopyError(f"Cannot deep copy object of type {type(obj)}") from e

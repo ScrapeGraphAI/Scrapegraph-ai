@@ -60,13 +60,18 @@ def minify_html(html):
     """
     minify_html function 
     """
-    html = re.sub(r'<!--.*?-->', '', html, flags=re.DOTALL)
-
-    html = re.sub(r'>\s+<', '><', html)
-    html = re.sub(r'\s+>', '>', html)
-    html = re.sub(r'<\s+', '<', html)
-    html = re.sub(r'\s+', ' ', html)
-    html = re.sub(r'\s*=\s*', '=', html)
+    # Combine multiple regex operations into one for better performance
+    patterns = [
+        (r'<!--.*?-->', '', re.DOTALL),
+        (r'>\s+<', '><', 0),
+        (r'\s+>', '>', 0), 
+        (r'<\s+', '<', 0),
+        (r'\s+', ' ', 0),
+        (r'\s*=\s*', '=', 0)
+    ]
+    
+    for pattern, repl, flags in patterns:
+        html = re.sub(pattern, repl, html, flags=flags)
 
     return html.strip()
 
