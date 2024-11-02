@@ -1,3 +1,10 @@
+## [1.28.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0-beta.2...v1.28.0-beta.3) (2024-11-02)
+
+
+### Features
+
+* Serper API integration for Google search ([c218546](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c218546a3ddbdf987888e150942a244856af66cc))
+
 ## [1.28.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0-beta.1...v1.28.0-beta.2) (2024-10-31)
 
 
