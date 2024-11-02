@@ -7,10 +7,12 @@ from langchain_community.tools import DuckDuckGoSearchResults
 from googlesearch import search as google_search
 import requests
 from bs4 import BeautifulSoup
+import json
 
 def search_on_web(query: str, search_engine: str = "Google",
                   max_results: int = 10, port: int = 8080,
-                  timeout: int = 10, proxy: str | dict = None) -> List[str]:
+                  timeout: int = 10, proxy: str | dict = None,
+                  serper_api_key: str = None) -> List[str]:
     """Search web function with improved error handling and validation"""
     
     # Input validation
@@ -18,7 +20,7 @@ def search_on_web(query: str, search_engine: str = "Google",
         raise ValueError("Query must be a non-empty string")
         
     search_engine = search_engine.lower()
-    valid_engines = {"google", "duckduckgo", "bing", "searxng"}
+    valid_engines = {"google", "duckduckgo", "bing", "searxng", "serper"}
     if search_engine not in valid_engines:
         raise ValueError(f"Search engine must be one of: {', '.join(valid_engines)}")
 
@@ -42,7 +44,10 @@ def search_on_web(query: str, search_engine: str = "Google",
             
         elif search_engine == "searxng":
             results = _search_searxng(query, max_results, port, timeout)
-            
+        
+        elif search_engine.lower() == "serper":
+            results = _search_serper(query, max_results, serper_api_key, timeout)
+                
         return filter_pdf_links(results)
         
     except requests.Timeout:
@@ -75,6 +80,25 @@ def _search_searxng(query: str, max_results: int, port: int, timeout: int) -> Li
     response = requests.get(url, params=params, timeout=timeout)
     response.raise_for_status()
     return [result['url'] for result in response.json().get("results", [])[:max_results]]
+
+def _search_serper(query: str, max_results: int, serper_api_key: str, timeout: int) -> List[str]:
+    """Helper function for serper api"""
+    if not serper_api_key:
+        raise ValueError("API key is required for serper api.")
+    
+    url = "https://google.serper.dev/search"
+    payload = json.dumps({
+        "q": query,
+        "num": max_results
+    })
+    headers = {
+        'X-API-KEY': serper_api_key,
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(url, headers=headers, data=payload, timeout=timeout)
+    response.raise_for_status()
+    return [result.get("link") for result in response.json().get("organic", [])]
+
 
 def format_proxy(proxy):
     if isinstance(proxy, dict):
