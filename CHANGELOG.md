@@ -1,3 +1,10 @@
+## [1.28.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0-beta.3...v1.28.0-beta.4) (2024-11-03)
+
+
+### Bug Fixes
+
+* resolved outparser issue ([e8cabfd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e8cabfd1ae7cc93abc04745948db1f6933fd2e26))
+
 ## [1.28.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0-beta.2...v1.28.0-beta.3) (2024-11-02)
 
 
