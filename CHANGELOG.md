@@ -1,3 +1,22 @@
+## [1.29.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0...v1.29.0) (2024-11-04)
+
+
+### Features
+
+* Serper API integration for Google search ([c218546](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c218546a3ddbdf987888e150942a244856af66cc))
+
+
+### Bug Fixes
+
+* resolved outparser issue ([e8cabfd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e8cabfd1ae7cc93abc04745948db1f6933fd2e26))
+
+
+### CI
+
+* **release:** 1.28.0-beta.3 [skip ci] ([65d39bb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/65d39bbaf0671fa5ac84705e94adb42078a36c3b))
+* **release:** 1.28.0-beta.4 [skip ci] ([b90bb00](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b90bb00beb8497b8dd16fa4d1ef5af22042a55f3))
+* **release:** 1.29.0-beta.1 [skip ci] ([950e859](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/950e859b1b90c7d5b85cbfcb0948e93d4487f78d))
+
 ## [1.29.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0...v1.29.0-beta.1) (2024-11-04)
 
 
