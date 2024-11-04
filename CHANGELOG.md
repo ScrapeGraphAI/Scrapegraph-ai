@@ -12,6 +12,29 @@
 
 * Serper API integration for Google search ([c218546](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c218546a3ddbdf987888e150942a244856af66cc))
 
+## [1.28.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.27.0...v1.28.0) (2024-11-01)
+
+
+### Features
+
+* add new mistral models ([6914170](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/691417089014b5b0b64a1b26687cbb0cba693952))
+* refactoring of the base_graph ([12a6c18](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/12a6c18f6ac205b744d1de92e217cfc2dfc3486c))
+* update generate answer ([7172b32](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7172b32a0f37f547edccab7bd09406e73c9ec5b2))
+
+
+### Bug Fixes
+
+* **AbstractGraph:** manually select model tokens ([f79f399](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f79f399ee0d660f162e0cb96d9faba48ecdc88b2)), closes [#768](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/768)
+
+
+### CI
+
+* **release:** 1.27.0-beta.11 [skip ci] ([3b2cadc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b2cadce1a93f31bd7a8fda64f7afcf802ada9e2))
+* **release:** 1.27.0-beta.12 [skip ci] ([62369e3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/62369e3e2886eb8cc09f6ef64865140a87a28b60))
+* **release:** 1.27.0-beta.13 [skip ci] ([deed355](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/deed355551d01d92dde11f8c0b373bdd43f8b8cf)), closes [#768](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/768)
+* **release:** 1.28.0-beta.1 [skip ci] ([8cbe582](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8cbe582ea99945ea6543f4c2000298acaa3d75c8)), closes [#768](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/768) [#768](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/768)
+* **release:** 1.28.0-beta.2 [skip ci] ([7e3598d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7e3598ddfacb2440df7b06e95b265b1b37cb4ea3))
+
 ## [1.28.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0-beta.1...v1.28.0-beta.2) (2024-10-31)
 
 
