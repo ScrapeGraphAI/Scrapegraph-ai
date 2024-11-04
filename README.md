@@ -1,8 +1,9 @@
-# 🕷️ ScrapeGraphAI: You Only Scrape Once
 
+# 🕷️ ScrapeGraphAI: You Only Scrape Once
 [English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
 | [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
 | [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
+
 
 [![Downloads](https://img.shields.io/pepy/dt/scrapegraphai?style=for-the-badge)](https://pepy.tech/project/scrapegraphai)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
@@ -11,7 +12,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
-ScrapeGraphAI is a _web scraping_ python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, Markdown, etc.).
+ScrapeGraphAI is a *web scraping* python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, Markdown, etc.).
 
 Just say which information you want to extract and the library will do it for you!
 
@@ -38,11 +39,9 @@ Additional dependecies can be added while installing the library:
 - <b>More Language Models</b>: additional language models are installed, such as Fireworks, Groq, Anthropic, Hugging Face, and Nvidia AI Endpoints.
 
   This group allows you to use additional language models like Fireworks, Groq, Anthropic, Together AI, Hugging Face, and Nvidia AI Endpoints.
-
   ```bash
   pip install scrapegraphai[other-language-models]
   ```
-
 - <b>Semantic Options</b>: this group includes tools for advanced semantic processing, such as Graphviz.
 
   ```bash
@@ -57,11 +56,12 @@ Additional dependecies can be added while installing the library:
 
 </details>
 
-## 💻 Usage
 
+## 💻 Usage
 There are multiple standard scraping pipelines that can be used to extract information from a website (or local file).
 
 The most common one is the `SmartScraperGraph`, which extracts information from a single page given a user prompt and a source URL.
+
 
 ```python
 import json
@@ -98,17 +98,16 @@ The output will be a dictionary like the following:
     "contact_email": "contact@scrapegraphai.com"
 }
 ```
-
 There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
 
-| Pipeline Name           | Description                                                                                                   |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------- |
-| SmartScraperGraph       | Single-page scraper that only needs a user prompt and an input source.                                        |
-| SearchGraph             | Multi-page scraper that extracts information from the top n search results of a search engine.                |
-| SpeechGraph             | Single-page scraper that extracts information from a website and generates an audio file.                     |
-| ScriptCreatorGraph      | Single-page scraper that extracts information from a website and generates a Python script.                   |
-| SmartScraperMultiGraph  | Multi-page scraper that extracts information from multiple pages given a single prompt and a list of sources. |
-| ScriptCreatorMultiGraph | Multi-page scraper that generates a Python script for extracting information from multiple pages and sources. |
+| Pipeline Name           | Description                                                                                                      |
+|-------------------------|------------------------------------------------------------------------------------------------------------------|
+| SmartScraperGraph       | Single-page scraper that only needs a user prompt and an input source.                                           |
+| SearchGraph             | Multi-page scraper that extracts information from the top n search results of a search engine.                  |
+| SpeechGraph             | Single-page scraper that extracts information from a website and generates an audio file.                       |
+| ScriptCreatorGraph      | Single-page scraper that extracts information from a website and generates a Python script.                     |
+| SmartScraperMultiGraph  | Multi-page scraper that extracts information from multiple pages given a single prompt and a list of sources.    |
+| ScriptCreatorMultiGraph | Multi-page scraper that generates a Python script for extracting information from multiple pages and sources.     |
 
 For each of these graphs there is the multi version. It allows to make calls of the LLM in parallel.
 
@@ -117,7 +116,6 @@ It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, 
 Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command, if you want to use local models.
 
 ## 🔍 Demo
-
 Official streamlit demo:
 
 [![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-ai-web-dashboard.streamlit.app)
@@ -133,7 +131,6 @@ The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.r
 Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
 
 ## 🏆 Sponsors
-
 <div style="text-align: center;">
   <a href="https://2ly.link/1zaXG">
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/browserbase_logo.png" alt="Browserbase" style="width: 10%;">
@@ -159,18 +156,15 @@ Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegra
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
-## 📈 Telemetry
-
+## 📈 Telemetry 
 We collect anonymous usage metrics to enhance our package's quality and user experience. The data helps us prioritize improvements and ensure compatibility. If you wish to opt-out, set the environment variable SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. For more information, please refer to the documentation [here](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
 
-## ❤️ Contributors
 
+## ❤️ Contributors
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
 
 ## 🎓 Citations
-
 If you have used our library for research purposes please quote us with the following reference:
-
 ```text
   @misc{scrapegraph-ai,
     author = {Marco Perini, Lorenzo Padoan, Marco Vinciguerra},
@@ -187,11 +181,11 @@ If you have used our library for research purposes please quote us with the foll
   <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors_logos">
 </p>
 
-|                   | Contact Info                                                                                                                                                        |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Marco Vinciguerra | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-vinciguerra-7ba365242/) |
-| Marco Perini      | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)                     |
-| Lorenzo Padoan    | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/lorenzo-padoan-4521a2154/)    |
+|                    | Contact Info         |
+|--------------------|----------------------|
+| Marco Vinciguerra  | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-vinciguerra-7ba365242/)    |
+| Marco Perini       | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)   |
+| Lorenzo Padoan     | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/lorenzo-padoan-4521a2154/)  |
 
 ## 📜 License
 
