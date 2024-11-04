@@ -2,7 +2,7 @@
 
 [English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
 | [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
-| [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
+| [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Turkish](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
 
 [![Downloads](https://img.shields.io/pepy/dt/scrapegraphai?style=for-the-badge)](https://pepy.tech/project/scrapegraphai)
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
@@ -11,17 +11,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
 
-ScrapeGraphAI is a _web scraping_ python library that uses LLM and direct graph logic to create scraping pipelines for websites and local documents (XML, HTML, JSON, Markdown, etc.).
+ScrapeGraphAI, web siteleri ve yerel belgeler (XML, HTML, JSON, Markdown vb.) için kazıma hatları oluşturmak üzere LLM ve doğrudan grafik mantığını kullanan bir web scraping Python kütüphanesidir.
 
-Just say which information you want to extract and the library will do it for you!
+Sadece çıkarmak istediğiniz bilgiyi belirtin; kütüphane bunu sizin için gerçekleştirecektir!
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
 </p>
 
-## 🚀 Quick install
+## 🚀 Hızlı kurulum
 
-The reference page for Scrapegraph-ai is available on the official page of PyPI: [pypi](https://pypi.org/project/scrapegraphai/).
+ScrapeGraphAI için referans sayfası, PyPI'nin resmi sayfasında mevcuttur: [pypi](https://pypi.org/project/scrapegraphai/).
 
 ```bash
 pip install scrapegraphai
@@ -29,67 +29,72 @@ pip install scrapegraphai
 playwright install
 ```
 
-**Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
+**NOT**: Diğer kütüphanelerle çakışmaları önlemek için kütüphaneyi bir sanal ortamda kurmanız önerilir.
 
 <details>
-<summary><b>Optional Dependencies</b></summary>
-Additional dependecies can be added while installing the library:
+<summary><b>İsteğe Bağlı Bağımlılıklar</b></summary>
 
-- <b>More Language Models</b>: additional language models are installed, such as Fireworks, Groq, Anthropic, Hugging Face, and Nvidia AI Endpoints.
+Kütüphane kurulumunda ek bağımlılıklar eklenebilir:
 
-  This group allows you to use additional language models like Fireworks, Groq, Anthropic, Together AI, Hugging Face, and Nvidia AI Endpoints.
+- <b>Daha Fazla Dil Modeli</b>: Fireworks, Groq, Anthropic, Hugging Face ve Nvidia AI Endpoints gibi ek dil modelleri yüklenir.
 
-  ```bash
+Bu grup, Fireworks, Groq, Anthropic, Together AI, Hugging Face ve Nvidia AI Endpoints gibi ek dil modellerini kullanmanıza olanak tanır.
+
+```bash
   pip install scrapegraphai[other-language-models]
-  ```
+```
 
-- <b>Semantic Options</b>: this group includes tools for advanced semantic processing, such as Graphviz.
+- <b>Anlamsal Seçenekler</b>: Bu grup, Graphviz gibi ileri düzey anlamsal işleme araçlarını içerir.
 
-  ```bash
+```bash
   pip install scrapegraphai[more-semantic-options]
-  ```
+```
 
-- <b>Browsers Options</b>: this group includes additional browser management tools/services, such as Browserbase.
+- <b>Tarayıcı Seçenekleri</b>: Bu grup, Browserbase gibi ek tarayıcı yönetim araçlarını/hizmetlerini içerir.
 
-  ```bash
-  pip install scrapegraphai[more-browser-options]
-  ```
+```bash
+ pip install scrapegraphai[more-browser-options]
+```
 
 </details>
 
-## 💻 Usage
+## 💻 Kullanım
 
-There are multiple standard scraping pipelines that can be used to extract information from a website (or local file).
+Bir web sitesinden (veya yerel dosyadan) bilgi almak için kullanılabilecek birçok standart kazıma hattı vardır.
 
-The most common one is the `SmartScraperGraph`, which extracts information from a single page given a user prompt and a source URL.
+En yaygın olanı, bir kullanıcı istemi ve bir kaynak URL'si verildiğinde tek bir sayfadan bilgi çıkaran `SmartScraperGraph`'tır.
 
 ```python
 import json
 from scrapegraphai.graphs import SmartScraperGraph
 
-# Define the configuration for the scraping pipeline
+# Kazıma hattı için yapılandırmayı tanımlayın
+
 graph_config = {
-    "llm": {
-        "api_key": "YOUR_OPENAI_APIKEY",
-        "model": "openai/gpt-4o-mini",
-    },
-    "verbose": True,
-    "headless": False,
+"llm": {
+"api_key": "YOUR_OPENAI_APIKEY",
+"model": "openai/gpt-4o-mini",
+},
+"verbose": True,
+"headless": False,
 }
 
-# Create the SmartScraperGraph instance
+# SmartScraperGraph örneğini oluşturun
+
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Find some information about what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
-    config=graph_config
+prompt="Şirketin ne yaptığı, adı ve iletişim e-postası hakkında bazı bilgiler bulun.",
+source="https://scrapegraphai.com/",
+config=graph_config
 )
 
-# Run the pipeline
+# Hattı çalıştırın
+
 result = smart_scraper_graph.run()
 print(json.dumps(result, indent=4))
+
 ```
 
-The output will be a dictionary like the following:
+Çıktı, aşağıdaki gibi bir sözlük olacaktır:
 
 ```python
 {
@@ -99,7 +104,7 @@ The output will be a dictionary like the following:
 }
 ```
 
-There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
+Birden fazla sayfadan bilgi ayıklamak, Python komut dosyaları oluşturmak ve hatta ses dosyaları oluşturmak için kullanılabilecek başka işlem hatları da vardır.
 
 | Pipeline Name           | Description                                                                                                   |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------- |
@@ -110,29 +115,29 @@ There are other pipelines that can be used to extract information from multiple 
 | SmartScraperMultiGraph  | Multi-page scraper that extracts information from multiple pages given a single prompt and a list of sources. |
 | ScriptCreatorMultiGraph | Multi-page scraper that generates a Python script for extracting information from multiple pages and sources. |
 
-For each of these graphs there is the multi version. It allows to make calls of the LLM in parallel.
+Bu grafiklerin her biri için çoklu versiyonu vardır. Bu, LLM'yi paralel olarak çağırmayı sağlar.
 
-It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
+Farklı LLM'leri API'ler aracılığıyla kullanmak mümkündür, örneğin **OpenAI**, **Groq**, **Azure** ve **Gemini**, veya **Ollama** kullanarak yerel modeller.
 
-Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command, if you want to use local models.
+Yerel modelleri kullanmak istiyorsanız, [Ollama](https://ollama.com/) kurulu olduğundan emin olun ve modelleri indirmek için **ollama pull** komutunu kullanın.
 
 ## 🔍 Demo
 
-Official streamlit demo:
+Resmi Streamlit demosu:
 
 [![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-ai-web-dashboard.streamlit.app)
 
-Try it directly on the web using Google Colab:
+Bunu doğrudan web üzerinde Google Colab kullanarak deneyin:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
-## 📖 Documentation
+## 📖 Dokümantasyon
 
-The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
+ScrapeGraphAI için dokümantasyonu [buradan](https://scrapegraph-ai.readthedocs.io/en/latest/) bulabilirsiniz.
 
-Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
+Docusaurus'u da [buradan](https://scrapegraph-doc.onrender.com/) kontrol edin.
 
-## 🏆 Sponsors
+## 🏆 Sponsorlar
 
 <div style="text-align: center;">
   <a href="https://2ly.link/1zaXG">
@@ -149,27 +154,27 @@ Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
   </a>
 </div>
 
-## 🤝 Contributing
+## 🤝 Katkıda Bulunma
 
-Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
+Katkıda bulunmaktan çekinmeyin ve iyileştirmeleri tartışmak ve önerilerinizi iletmek için Discord sunucumuza katılın!
 
-Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
+Lütfen [katkı sağlama yönergelerini](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md) inceleyin.
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
-## 📈 Telemetry
+## 📈 Telemetri
 
-We collect anonymous usage metrics to enhance our package's quality and user experience. The data helps us prioritize improvements and ensure compatibility. If you wish to opt-out, set the environment variable SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. For more information, please refer to the documentation [here](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
+Paketin kalitesini ve kullanıcı deneyimini geliştirmek için anonim kullanım istatistikleri topluyoruz. Bu veriler, iyileştirmeleri önceliklendirmemize ve uyumluluğu sağlamamıza yardımcı olur. Eğer bu verileri almak istemiyorsanız, ortam değişkenini SCRAPEGRAPHAI_TELEMETRY_ENABLED=false olarak ayarlayın. Daha fazla bilgi için lütfen dokümantasyona [buradan](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html) bakın.
 
-## ❤️ Contributors
+## ❤️ Katkıda Bulunanlar
 
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
 
-## 🎓 Citations
+## 🎓 Atıflar
 
-If you have used our library for research purposes please quote us with the following reference:
+Eğer kütüphanemizi araştırma amaçlı kullandıysanız, lütfen aşağıdaki referansla atıfta bulunun:
 
 ```text
   @misc{scrapegraph-ai,
@@ -181,23 +186,23 @@ If you have used our library for research purposes please quote us with the foll
   }
 ```
 
-## Authors
+## Yazarlar
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors_logos">
 </p>
 
-|                   | Contact Info                                                                                                                                                        |
+|                   | İletişim Bilgisi                                                                                                                                                    |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Marco Vinciguerra | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-vinciguerra-7ba365242/) |
 | Marco Perini      | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)                     |
 | Lorenzo Padoan    | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/lorenzo-padoan-4521a2154/)    |
 
-## 📜 License
+## 📜 Lisans
 
-ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) file for more information.
+ScrapeGraphAI, MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için [LİSANS](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) dosyasına bakın.
 
-## Acknowledgements
+## Teşekkürler
 
-- We would like to thank all the contributors to the project and the open-source community for their support.
-- ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
+- Projeye katkıda bulunan tüm katkı sahiplerine ve açık kaynak topluluğuna destekleri için teşekkür etmek isteriz.
+- ScrapeGraphAI, yalnızca veri keşfi ve araştırma amaçları için kullanılmak üzere tasarlanmıştır. Kütüphanenin herhangi bir kötüye kullanımından sorumlu değiliz.
