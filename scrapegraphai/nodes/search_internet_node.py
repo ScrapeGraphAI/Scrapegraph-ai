@@ -47,6 +47,13 @@ class SearchInternetNode(BaseNode):
             if node_config.get("search_engine")
             else "google"
         )
+
+        self.serper_api_key = (
+            node_config["serper_api_key"]
+            if node_config.get("serper_api_key")
+            else None
+        )
+
         self.max_results = node_config.get("max_results", 3)
 
     def execute(self, state: dict) -> dict:
@@ -95,7 +102,7 @@ class SearchInternetNode(BaseNode):
         self.logger.info(f"Search Query: {search_query}")
 
         answer = search_on_web(query=search_query, max_results=self.max_results,
-                               search_engine=self.search_engine, proxy=self.proxy)
+                               search_engine=self.search_engine, proxy=self.proxy, serper_api_key=self.serper_api_key)
 
         if len(answer) == 0:
             raise ValueError("Zero results found for the search query.")
