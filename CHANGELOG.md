@@ -1,3 +1,10 @@
+## [1.30.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.29.0...v1.30.0-beta.1) (2024-11-05)
+
+
+### Features
+
+* Turkish language support has been added to README.md ([60f673d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/60f673dc39cba70706291e11211b9ad180860e24))
+
 ## [1.29.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0...v1.29.0) (2024-11-04)
 
 
