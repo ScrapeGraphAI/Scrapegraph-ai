@@ -1,6 +1,3 @@
-"""
-chromiumloader module
-"""
 import asyncio
 from typing import Any, AsyncIterator, Iterator, List, Optional
 from langchain_community.document_loaders.base import BaseLoader
@@ -12,15 +9,16 @@ from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 logger = get_logger("web-loader")
 
 class ChromiumLoader(BaseLoader):
-    """scrapes HTML pages from URLs using a (headless) instance of the
-    Chromium web driver with proxy protection
+    """Scrapes HTML pages from URLs using a (headless) instance of the
+    Chromium web driver with proxy protection.
 
     Attributes:
         backend: The web driver backend library; defaults to 'playwright'.
         browser_config: A dictionary containing additional browser kwargs.
-        headless: whether to run browser in headless mode.
+        headless: Whether to run browser in headless mode.
         proxy: A dictionary containing proxy settings; None disables protection.
         urls: A list of URLs to scrape content from.
+        requires_js_support: Flag to determine if JS rendering is required.
     """
 
     RETRY_LIMIT = 3
@@ -34,15 +32,17 @@ class ChromiumLoader(BaseLoader):
         headless: bool = True,
         proxy: Optional[Proxy] = None,
         load_state: str = "domcontentloaded",
+        requires_js_support: bool = False,
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
 
         Args:
             backend: The web driver backend library; defaults to 'playwright'.
-            headless: whether to run browser in headless mode.
+            headless: Whether to run browser in headless mode.
             proxy: A dictionary containing proxy information; None disables protection.
             urls: A list of URLs to scrape content from.
+            requires_js_support: Whether to use JS rendering for scraping.
             kwargs: A dictionary containing additional browser kwargs.
 
         Raises:
@@ -61,6 +61,7 @@ class ChromiumLoader(BaseLoader):
         self.proxy = parse_or_search_proxy(proxy) if proxy else None
         self.urls = urls
         self.load_state = load_state
+        self.requires_js_support = requires_js_support
 
     async def ascrape_undetected_chromedriver(self, url: str) -> str:
         """
@@ -186,7 +187,9 @@ class ChromiumLoader(BaseLoader):
         Yields:
             Document: The scraped content encapsulated within a Document object.
         """
-        scraping_fn = getattr(self, f"ascrape_{self.backend}")
+        scraping_fn = (
+            self.ascrape_with_js_support if self.requires_js_support else getattr(self, f"ascrape_{self.backend}")
+        )
 
         for url in self.urls:
             html_content = asyncio.run(scraping_fn(url))
@@ -206,7 +209,9 @@ class ChromiumLoader(BaseLoader):
             Document: A Document object containing the scraped content, along with its
             source URL as metadata.
         """
-        scraping_fn = getattr(self, f"ascrape_{self.backend}")
+        scraping_fn = (
+            self.ascrape_with_js_support if self.requires_js_support else getattr(self, f"ascrape_{self.backend}")
+        )
 
         tasks = [scraping_fn(url) for url in self.urls]
         results = await asyncio.gather(*tasks)
