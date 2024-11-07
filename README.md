@@ -1,5 +1,8 @@
 
 # 🕷️ ScrapeGraphAI: You Only Scrape Once
+<p align="center">
+<a href="https://trendshift.io/repositories/9761" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9761" alt="VinciGit00%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<p align="center">
 [English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
 | [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
 | [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md)
