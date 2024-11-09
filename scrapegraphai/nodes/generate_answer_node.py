@@ -8,7 +8,6 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_aws import ChatBedrock
-from langchain_mistralai import ChatMistralAI
 from langchain_community.chat_models import ChatOllama
 from tqdm import tqdm
 from .base_node import BaseNode
@@ -77,7 +76,7 @@ class GenerateAnswerNode(BaseNode):
         doc = input_data[1]
 
         if self.node_config.get("schema", None) is not None:
-            if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
+            if isinstance(self.llm_model, ChatOpenAI):
                 self.llm_model = self.llm_model.with_structured_output(
                     schema=self.node_config["schema"]
                 )
