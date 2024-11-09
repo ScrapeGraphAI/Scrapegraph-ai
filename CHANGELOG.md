@@ -1,3 +1,15 @@
+## [1.30.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.1...v1.30.0-beta.2) (2024-11-09)
+
+
+### Bug Fixes
+
+* fix generate answer node ([d332e21](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d332e216db15e48ca4163a9f74818c4c6874568c))
+
+
+### Docs
+
+* Improved Turkish README ([f665138](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f665138b3dc2597088ca2c6a2e8be6cc4ce956d2))
+
 ## [1.30.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.29.0...v1.30.0-beta.1) (2024-11-05)
 
 
