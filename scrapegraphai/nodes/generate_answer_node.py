@@ -122,22 +122,10 @@ class GenerateAnswerNode(BaseNode):
                 partial_variables={"context": doc, "format_instructions": format_instructions}
             )
             chain = prompt | self.llm_model
-            raw_response = chain.invoke({"question": user_prompt})
-
             if output_parser:
-                try:
-                    answer = output_parser.parse(raw_response.content)
-                except JSONDecodeError:
-                    lines = raw_response.split('\n')
-                    if lines[0].strip().startswith('```'):
-                        lines = lines[1:]
-                    if lines[-1].strip().endswith('```'):
-                        lines = lines[:-1]
-                    cleaned_response = '\n'.join(lines)
-                    answer = output_parser.parse(cleaned_response)
-            else:
-                answer = raw_response.content
+                chain = chain | output_parser
 
+            answer = chain.invoke({"question": user_prompt})
             state.update({self.output[0]: answer})
             return state
 
