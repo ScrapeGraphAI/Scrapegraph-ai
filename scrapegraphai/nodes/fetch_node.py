@@ -170,8 +170,9 @@ class FetchNode(BaseNode):
 
         compressed_document = self.load_file_content(source, input_type)
 
-        return self.update_state(state, compressed_document)
-
+        # return self.update_state(state, compressed_document)
+        state.update({self.output[0]: compressed_document})
+        return state
     def load_file_content(self, source, input_type):
         """
         Loads the content of a file based on its input type.
@@ -230,8 +231,9 @@ class FetchNode(BaseNode):
             Document(page_content=parsed_content, metadata={"source": "local_dir"})
         ]
 
-        return self.update_state(state, compressed_document)
-
+        # return self.update_state(state, compressed_document)
+        state.update({self.output[0]: compressed_document})
+        return state
     def handle_web_source(self, state, source):
         """
         Handles the web source by fetching HTML content from a URL, 
