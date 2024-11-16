@@ -1,3 +1,10 @@
+## [1.30.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.3...v1.30.0-beta.4) (2024-11-16)
+
+
+### Bug Fixes
+
+* generate answer node ([49897c4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/49897c4d2ee9950438d99dda6987bc8ba402a6ad))
+
 ## [1.30.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.2...v1.30.0-beta.3) (2024-11-15)
 
 
