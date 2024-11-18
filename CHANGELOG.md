@@ -1,3 +1,10 @@
+## [1.30.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.4...v1.30.0-beta.5) (2024-11-18)
+
+
+### Bug Fixes
+
+* try to infer possible provider from the model name, resolves [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805) ([d2d0312](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d2d0312dc618fde305e650981cac90add93ec552))
+
 ## [1.30.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.3...v1.30.0-beta.4) (2024-11-16)
 
 
