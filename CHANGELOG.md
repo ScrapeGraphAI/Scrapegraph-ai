@@ -1,3 +1,32 @@
+## [1.31.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0...v1.31.0) (2024-11-19)
+
+
+### Features
+
+* refactoring of generate answer node ([1f465e6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1f465e636d2869e4e36555124767de026d3a66ae))
+* Turkish language support has been added to README.md ([60f673d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/60f673dc39cba70706291e11211b9ad180860e24))
+
+
+### Bug Fixes
+
+* fix generate answer node ([d332e21](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d332e216db15e48ca4163a9f74818c4c6874568c))
+* generate answer node ([49897c4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/49897c4d2ee9950438d99dda6987bc8ba402a6ad))
+* try to infer possible provider from the model name, resolves [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805) ([d2d0312](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d2d0312dc618fde305e650981cac90add93ec552))
+
+
+### Docs
+
+* Improved Turkish README ([f665138](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f665138b3dc2597088ca2c6a2e8be6cc4ce956d2))
+
+
+### CI
+
+* **release:** 1.30.0-beta.1 [skip ci] ([d996147](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d996147f018496fafac87f77d21e5e315c5e4974))
+* **release:** 1.30.0-beta.2 [skip ci] ([3e8c043](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e8c0434731d0276289990ec689272491df686a8))
+* **release:** 1.30.0-beta.3 [skip ci] ([0255007](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/02550077f1815f0de3f963cd82a07c9d4581fb8e))
+* **release:** 1.30.0-beta.4 [skip ci] ([777a685](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/777a68554e849e1373fe0611ab13131615099d64))
+* **release:** 1.30.0-beta.5 [skip ci] ([af901a5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/af901a54cf817d514838140224f71a68158356e9)), closes [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805)
+
 ## [1.30.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.29.0...v1.30.0) (2024-11-06)
 
 ## [1.30.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.4...v1.30.0-beta.5) (2024-11-18)
