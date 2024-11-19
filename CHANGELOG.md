@@ -1,3 +1,5 @@
+## [1.30.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.29.0...v1.30.0) (2024-11-06)
+
 ## [1.30.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.4...v1.30.0-beta.5) (2024-11-18)
 
 
@@ -35,6 +37,8 @@
 
 
 ### Features
+
+* update chromium ([38c6dd2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/38c6dd2aa1ce31b981eb8c35a56e9533d19df81b))
 
 * Turkish language support has been added to README.md ([60f673d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/60f673dc39cba70706291e11211b9ad180860e24))
 
