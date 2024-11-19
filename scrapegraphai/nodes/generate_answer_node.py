@@ -52,6 +52,9 @@ class GenerateAnswerNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
         self.llm_model = node_config["llm_model"]
 
+        if hasattr(self.llm_model, 'request_timeout'):
+            self.llm_model.request_timeout = node_config.get("timeout", 30)
+
         if isinstance(node_config["llm_model"], ChatOllama):
             self.llm_model.format = "json"
 
