@@ -1,6 +1,7 @@
 ## [1.31.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0...v1.31.0) (2024-11-19)
 
 
+
 ### Features
 
 * refactoring of generate answer node ([1f465e6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1f465e636d2869e4e36555124767de026d3a66ae))
