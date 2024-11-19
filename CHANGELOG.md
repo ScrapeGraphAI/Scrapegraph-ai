@@ -1,9 +1,46 @@
 ## [1.30.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.29.0...v1.30.0) (2024-11-06)
 
+## [1.30.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.4...v1.30.0-beta.5) (2024-11-18)
+
+
+### Bug Fixes
+
+* try to infer possible provider from the model name, resolves [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805) ([d2d0312](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d2d0312dc618fde305e650981cac90add93ec552))
+
+## [1.30.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.3...v1.30.0-beta.4) (2024-11-16)
+
+
+### Bug Fixes
+
+* generate answer node ([49897c4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/49897c4d2ee9950438d99dda6987bc8ba402a6ad))
+
+## [1.30.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.2...v1.30.0-beta.3) (2024-11-15)
+
+
+### Features
+
+* refactoring of generate answer node ([1f465e6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1f465e636d2869e4e36555124767de026d3a66ae))
+
+## [1.30.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0-beta.1...v1.30.0-beta.2) (2024-11-09)
+
+
+### Bug Fixes
+
+* fix generate answer node ([d332e21](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d332e216db15e48ca4163a9f74818c4c6874568c))
+
+
+### Docs
+
+* Improved Turkish README ([f665138](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f665138b3dc2597088ca2c6a2e8be6cc4ce956d2))
+
+## [1.30.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.29.0...v1.30.0-beta.1) (2024-11-05)
+
 
 ### Features
 
 * update chromium ([38c6dd2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/38c6dd2aa1ce31b981eb8c35a56e9533d19df81b))
+
+* Turkish language support has been added to README.md ([60f673d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/60f673dc39cba70706291e11211b9ad180860e24))
 
 ## [1.29.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.28.0...v1.29.0) (2024-11-04)
 
