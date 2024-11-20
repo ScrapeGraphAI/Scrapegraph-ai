@@ -1,3 +1,10 @@
+## [1.31.1-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1-beta.1...v1.31.1-beta.2) (2024-11-20)
+
+
+### Bug Fixes
+
+* generate answer node timeout ([32ef554](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/32ef5547f1d864c750cd47c115be6f38a1931d2c))
+
 ## [1.31.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.0...v1.31.1-beta.1) (2024-11-20)
 
 
