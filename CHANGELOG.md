@@ -1,3 +1,15 @@
+## [1.31.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.0...v1.31.1-beta.1) (2024-11-20)
+
+
+### Bug Fixes
+
+* timeout ([c243106](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c243106552cec3b1df254c0d0a45401eb2f5c89d))
+
+
+### CI
+
+* **release:** 1.31.0-beta.1 [skip ci] ([1df7eb0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1df7eb0bcd923bc62fd19dddc0ce9b757e9742cf)), closes [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805) [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805)
+
 ## [1.31.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.30.0...v1.31.0) (2024-11-19)
 
 
