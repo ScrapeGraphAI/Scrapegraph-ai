@@ -19,6 +19,8 @@ anyio==4.4.0
     # via httpx
     # via openai
 async-timeout==4.0.3
+    # via aiohttp
+    # via langchain
     # via scrapegraphai
 attrs==23.2.0
     # via aiohttp
@@ -48,6 +50,8 @@ dill==0.3.8
     # via multiprocess
 distro==1.9.0
     # via openai
+exceptiongroup==1.2.2
+    # via anyio
 fastembed==0.3.6
     # via scrapegraphai
 filelock==3.15.4
@@ -87,7 +91,6 @@ googlesearch-python==1.2.5
     # via scrapegraphai
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 grpcio==1.65.1
     # via google-api-core
     # via grpcio-status
@@ -368,6 +371,7 @@ tqdm==4.66.4
 transformers==4.44.2
     # via scrapegraphai
 typing-extensions==4.12.2
+    # via anyio
     # via google-generativeai
     # via huggingface-hub
     # via langchain-core
