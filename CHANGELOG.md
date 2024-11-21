@@ -1,3 +1,10 @@
+## [1.31.1-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1-beta.3...v1.31.1-beta.4) (2024-11-21)
+
+
+### Bug Fixes
+
+* add new model istance ([2f3cafe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2f3cafeab0bce38571fa10d71f454b2a31766ddc))
+
 ## [1.31.1-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1-beta.2...v1.31.1-beta.3) (2024-11-21)
 
 
