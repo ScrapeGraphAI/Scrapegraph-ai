@@ -30,6 +30,8 @@ anyio==4.4.0
 astroid==3.2.4
     # via pylint
 async-timeout==4.0.3
+    # via aiohttp
+    # via langchain
     # via scrapegraphai
 attrs==24.2.0
     # via aiohttp
@@ -78,6 +80,9 @@ distro==1.9.0
     # via openai
 docutils==0.19
     # via sphinx
+exceptiongroup==1.2.2
+    # via anyio
+    # via pytest
 fastapi==0.112.0
     # via burr
 fastapi-pagination==0.12.26
@@ -131,7 +136,6 @@ graphviz==0.20.3
     # via burr
 greenlet==3.0.3
     # via playwright
-    # via sqlalchemy
 grpcio==1.65.4
     # via google-api-core
     # via grpcio-status
@@ -500,6 +504,9 @@ tokenizers==0.19.1
     # via transformers
 toml==0.10.2
     # via streamlit
+tomli==2.1.0
+    # via pylint
+    # via pytest
 tomlkit==0.13.0
     # via pylint
 tornado==6.4.1
@@ -517,6 +524,8 @@ transformers==4.44.2
     # via scrapegraphai
 typing-extensions==4.12.2
     # via altair
+    # via anyio
+    # via astroid
     # via fastapi
     # via fastapi-pagination
     # via google-generativeai
@@ -531,6 +540,7 @@ typing-extensions==4.12.2
     # via sqlalchemy
     # via streamlit
     # via typing-inspect
+    # via uvicorn
 typing-inspect==0.9.0
     # via dataclasses-json
     # via sf-hamilton
