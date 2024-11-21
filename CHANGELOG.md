@@ -1,3 +1,10 @@
+## [1.31.1-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1-beta.2...v1.31.1-beta.3) (2024-11-21)
+
+
+### Bug Fixes
+
+* fetch node regex ([e2af232](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e2af2326f6c56e2abcc7dd5de9acdfb710507e0a))
+
 ## [1.31.1-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1-beta.1...v1.31.1-beta.2) (2024-11-20)
 
 
