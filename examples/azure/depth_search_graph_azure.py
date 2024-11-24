@@ -1,13 +1,11 @@
 """
-depth_search_graph_opeani example
+depth_search_graph_azure example
 """
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import DepthSearchGraph
 
 load_dotenv()
-
-openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
    "llm": {

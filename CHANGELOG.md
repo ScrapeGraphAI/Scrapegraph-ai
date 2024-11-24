@@ -1,3 +1,22 @@
+## [1.31.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.0...v1.31.1) (2024-11-22)
+
+
+### Bug Fixes
+
+* add new model istance ([2f3cafe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2f3cafeab0bce38571fa10d71f454b2a31766ddc))
+* fetch node regex ([e2af232](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e2af2326f6c56e2abcc7dd5de9acdfb710507e0a))
+* generate answer node timeout ([32ef554](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/32ef5547f1d864c750cd47c115be6f38a1931d2c))
+* timeout ([c243106](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c243106552cec3b1df254c0d0a45401eb2f5c89d))
+
+
+### CI
+
+* **release:** 1.31.0-beta.1 [skip ci] ([1df7eb0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1df7eb0bcd923bc62fd19dddc0ce9b757e9742cf)), closes [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805) [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805)
+* **release:** 1.31.1-beta.1 [skip ci] ([86bf4f2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/86bf4f24021d6e73378495d5b2b3acbfa2ff8ed5)), closes [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805) [#805](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/805)
+* **release:** 1.31.1-beta.2 [skip ci] ([f247844](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f247844d81e018c749c3a9a7170ed3ceded5d483))
+* **release:** 1.31.1-beta.3 [skip ci] ([30b0156](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/30b0156d17aa23e99d203eb6c7dd4f42e1e83566))
+* **release:** 1.31.1-beta.4 [skip ci] ([b2720a4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b2720a452f023999e3b394636773b794941cc6a1))
+
 ## [1.31.1-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1-beta.3...v1.31.1-beta.4) (2024-11-21)
 
 

@@ -4,7 +4,7 @@ Basic example of scraping pipeline using JSONScraperGraph from JSON documents
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import JSONScraperGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+from scrapegraphai.utils import prettify_exec_info
 load_dotenv()
 
 # ************************************************
@@ -45,15 +45,3 @@ json_scraper_graph = JSONScraperGraph(
 
 result = json_scraper_graph.run()
 print(result)
-
-# ************************************************
-# Get graph execution info
-# ************************************************
-
-graph_exec_info = json_scraper_graph.get_execution_info()
-print(prettify_exec_info(graph_exec_info))
-
-# Save to json or csv
-convert_to_csv(result, "result")
-convert_to_json(result, "result")
-

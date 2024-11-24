@@ -10,7 +10,7 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("ANTHROPIC_API_KEY"),
-        "model": "openai/gpt-4o-mini",
+        "model": "anthropic/claude-3-haiku-20240307",
     },
     "verbose": True,
     "headless": False,
