@@ -27,6 +27,8 @@ class ParseNode(BaseNode):
         node_config (dict): Additional configuration for the node.
         node_name (str): The unique identifier name for the node, defaulting to "Parse".
     """
+    url_pattern = re.compile(r"[http[s]?:\/\/]?(www\.)?([-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)")
+    relative_url_pattern = re.compile(r"[\(](/[^\(\)\s]*)")
 
     def __init__(
         self,
@@ -123,12 +125,26 @@ class ParseNode(BaseNode):
             return [], []
 
         image_extensions = default_filters.filter_dict["img_exts"]
-        image_extension_seq = '|'.join(image_extensions).replace('.','')
-        url_pattern = re.compile(r'(https?://[^\s]+|\S+\.(?:' + image_extension_seq + '))')
+        url = ""
+        all_urls = set()
 
-        all_urls = url_pattern.findall(text)
+        for group in ParseNode.url_pattern.findall(text):
+            for el in group:
+                if el != '':
+                    url += el
+            all_urls.add(url)
+            url = ""  
+
+        url = ""
+        for group in ParseNode.relative_url_pattern.findall(text):
+            for el in group:
+                if el not in ['', '[', ']', '(', ')', '{', '}']:
+                    url += el
+            all_urls.add(urljoin(source, url))
+            url = ""
+
+        all_urls = list(all_urls)
         all_urls = self._clean_urls(all_urls)
-
         if not source.startswith("http"):
             all_urls = [url for url in all_urls if url.startswith("http")]
         else:
@@ -151,9 +167,32 @@ class ParseNode(BaseNode):
         """
         cleaned_urls = []
         for url in urls:
-            url = re.sub(r'.*?\]\(', '', url)
-            url = url.rstrip(').')
+            if not ParseNode._is_valid_url(url):
+                url = re.sub(r'.*?\]\(', '', url)
+                url = re.sub(r'.*?\[\(', '', url)
+                url = re.sub(r'.*?\[\)', '', url)
+                url = re.sub(r'.*?\]\)', '', url)
+                url = re.sub(r'.*?\)\[', '', url)
+                url = re.sub(r'.*?\)\[', '', url)
+                url = re.sub(r'.*?\(\]', '', url)
+                url = re.sub(r'.*?\)\]', '', url)
+            url = url.rstrip(').-')
+            if len(url) > 0:
+                cleaned_urls.append(url)
+        
+        return cleaned_urls    
 
-            cleaned_urls.append(url)
+    @staticmethod
+    def _is_valid_url(url: str) -> bool:
+        """
+        CHecks if the URL format is valid.
 
-        return cleaned_urls
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            bool: True if the URL format is valid, False otherwise
+        """
+        if re.fullmatch(ParseNode.url_pattern, url) is not None:
+            return True
+        return False
