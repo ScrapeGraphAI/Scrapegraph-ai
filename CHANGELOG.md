@@ -1,3 +1,10 @@
+## [1.32.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1...v1.32.0-beta.1) (2024-11-24)
+
+
+### Features
+
+* revert search function ([faf0c01](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/faf0c0123b5e2e548cbd1917e9d1df22e1edb1c5))
+
 ## [1.31.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.0...v1.31.1) (2024-11-22)
 
 
