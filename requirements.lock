@@ -257,7 +257,7 @@ pyasn1==0.6.0
     # via rsa
 pyasn1-modules==0.4.0
     # via google-auth
-pydantic==2.8.2
+pydantic==2.10.1
     # via google-generativeai
     # via langchain
     # via langchain-aws
@@ -269,7 +269,8 @@ pydantic==2.8.2
     # via openai
     # via pydantic-settings
     # via qdrant-client
-pydantic-core==2.20.1
+    # via scrapegraph-py
+pydantic-core==2.27.1
     # via pydantic
 pydantic-settings==2.5.2
     # via langchain-community
@@ -286,6 +287,7 @@ python-dateutil==2.9.0.post0
     # via pandas
 python-dotenv==1.0.1
     # via pydantic-settings
+    # via scrapegraph-py
     # via scrapegraphai
 pytz==2024.1
     # via pandas
@@ -313,6 +315,7 @@ requests==2.32.3
     # via langchain-community
     # via langsmith
     # via mistral-common
+    # via scrapegraph-py
     # via tiktoken
     # via transformers
 rpds-py==0.20.0
@@ -324,6 +327,8 @@ s3transfer==0.10.2
     # via boto3
 safetensors==0.4.5
     # via transformers
+scrapegraph-py==0.0.3
+    # via scrapegraphai
 semchunk==2.2.0
     # via scrapegraphai
 sentencepiece==0.2.0
