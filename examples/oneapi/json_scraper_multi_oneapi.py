@@ -12,6 +12,7 @@ graph_config = {
         "base_url": "http://127.0.0.1:3000/v1",  # 设置 OneAPI URL
     }
 }
+
 FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
