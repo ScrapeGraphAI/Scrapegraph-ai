@@ -100,18 +100,11 @@ class ChromiumLoader(BaseLoader):
     async def ascrape_playwright(self, url: str) -> str:
         """
         Asynchronously scrape the content of a given URL using Playwright's async API.
-
-        Args:
-            url (str): The URL to scrape.
-
-        Returns:
-            str: The scraped HTML content or an error message if an exception occurs.
         """
         from playwright.async_api import async_playwright
         from undetected_playwright import Malenia
 
         logger.info(f"Starting scraping with {self.backend}...")
-        results = ""
         attempt = 0
 
         while attempt < self.RETRY_LIMIT:
@@ -127,16 +120,15 @@ class ChromiumLoader(BaseLoader):
                     await page.wait_for_load_state(self.load_state)
                     results = await page.content()
                     logger.info("Content scraped")
-                    break
+                    return results
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
                 if attempt == self.RETRY_LIMIT:
-                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                    raise RuntimeError(f"Failed to fetch {url} after {self.RETRY_LIMIT} attempts: {e}")
             finally:
-                await browser.close()
-
-        return results
+                if 'browser' in locals():
+                    await browser.close()
 
     async def ascrape_with_js_support(self, url: str) -> str:
         """
