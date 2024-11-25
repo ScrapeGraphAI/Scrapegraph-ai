@@ -1,3 +1,10 @@
+## [1.32.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.1...v1.32.0-beta.2) (2024-11-25)
+
+
+### Bug Fixes
+
+* error on fetching the code ([7285ab0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7285ab065bba9099ba2751c9d2f21ee13fed0d5f))
+
 ## [1.32.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1...v1.32.0-beta.1) (2024-11-24)
 
 
