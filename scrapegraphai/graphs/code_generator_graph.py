@@ -1,6 +1,7 @@
 """
 SmartScraperGraph Module
 """
+
 from typing import Optional
 import logging
 from pydantic import BaseModel
@@ -16,11 +17,12 @@ from ..nodes import (
     GenerateCodeNode,
 )
 
+
 class CodeGeneratorGraph(AbstractGraph):
     """
-    CodeGeneratorGraph is a script generator pipeline that generates 
+    CodeGeneratorGraph is a script generator pipeline that generates
     the function extract_data(html: str) -> dict() for
-    extracting the wanted information from a HTML page. 
+    extracting the wanted information from a HTML page.
     The code generated is in Python and uses the library BeautifulSoup.
     It requires a user prompt, a source URL, and an output schema.
 
@@ -52,8 +54,9 @@ class CodeGeneratorGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
-
+    def __init__(
+        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+    ):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -78,16 +81,14 @@ class CodeGeneratorGraph(AbstractGraph):
                 "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
                 "browser_base": self.config.get("browser_base"),
-                "scrape_do": self.config.get("scrape_do")
-            }
+                "scrape_do": self.config.get("scrape_do"),
+                "storage_state": self.config.get("storage_state"),
+            },
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            node_config={
-                "llm_model": self.llm_model,
-                "chunk_size": self.model_token
-            }
+            node_config={"llm_model": self.llm_model, "chunk_size": self.model_token},
         )
 
         generate_validation_answer_node = GenerateAnswerNode(
@@ -97,7 +98,7 @@ class CodeGeneratorGraph(AbstractGraph):
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
                 "schema": self.schema,
-            }
+            },
         )
 
         prompt_refier_node = PromptRefinerNode(
@@ -106,8 +107,8 @@ class CodeGeneratorGraph(AbstractGraph):
             node_config={
                 "llm_model": self.llm_model,
                 "chunk_size": self.model_token,
-                "schema": self.schema
-            }
+                "schema": self.schema,
+            },
         )
 
         html_analyzer_node = HtmlAnalyzerNode(
@@ -117,8 +118,8 @@ class CodeGeneratorGraph(AbstractGraph):
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
                 "schema": self.schema,
-                "reduction": self.config.get("reduction", 0)
-            }
+                "reduction": self.config.get("reduction", 0),
+            },
         )
 
         generate_code_node = GenerateCodeNode(
@@ -128,14 +129,17 @@ class CodeGeneratorGraph(AbstractGraph):
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
                 "schema": self.schema,
-                "max_iterations": self.config.get("max_iterations", {
-                    "overall": 10,
-                    "syntax": 3,
-                    "execution": 3,
-                    "validation": 3,
-                    "semantic": 3
-                }),
-            }
+                "max_iterations": self.config.get(
+                    "max_iterations",
+                    {
+                        "overall": 10,
+                        "syntax": 3,
+                        "execution": 3,
+                        "validation": 3,
+                        "semantic": 3,
+                    },
+                ),
+            },
         )
 
         return BaseGraph(
@@ -152,10 +156,10 @@ class CodeGeneratorGraph(AbstractGraph):
                 (parse_node, generate_validation_answer_node),
                 (generate_validation_answer_node, prompt_refier_node),
                 (prompt_refier_node, html_analyzer_node),
-                (html_analyzer_node, generate_code_node)
+                (html_analyzer_node, generate_code_node),
             ],
             entry_point=fetch_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:

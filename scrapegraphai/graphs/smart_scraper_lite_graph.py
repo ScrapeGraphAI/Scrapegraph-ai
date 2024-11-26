@@ -1,6 +1,7 @@
 """
 SmartScraperGraph Module
 """
+
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
@@ -10,9 +11,10 @@ from ..nodes import (
     ParseNode,
 )
 
+
 class SmartScraperLiteGraph(AbstractGraph):
     """
-    SmartScraperLiteGraph is a scraping pipeline that automates the process of 
+    SmartScraperLiteGraph is a scraping pipeline that automates the process of
     extracting information from web pages.
 
     Attributes:
@@ -38,8 +40,13 @@ class SmartScraperLiteGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, source: str, config: dict, prompt: str = "", 
-                 schema: Optional[BaseModel] = None):
+    def __init__(
+        self,
+        source: str,
+        config: dict,
+        prompt: str = "",
+        schema: Optional[BaseModel] = None,
+    ):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -60,17 +67,15 @@ class SmartScraperLiteGraph(AbstractGraph):
                 "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
                 "browser_base": self.config.get("browser_base"),
-                "scrape_do": self.config.get("scrape_do")
-            }
+                "scrape_do": self.config.get("scrape_do"),
+                "storage_state": self.config.get("storage_state"),
+            },
         )
 
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            node_config={
-                "llm_model": self.llm_model,
-                "chunk_size": self.model_token
-            }
+            node_config={"llm_model": self.llm_model, "chunk_size": self.model_token},
         )
 
         return BaseGraph(
@@ -82,7 +87,7 @@ class SmartScraperLiteGraph(AbstractGraph):
                 (fetch_node, parse_node),
             ],
             entry_point=fetch_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:
