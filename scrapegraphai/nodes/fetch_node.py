@@ -78,6 +78,10 @@ class FetchNode(BaseNode):
             None if node_config is None else node_config.get("scrape_do", None)
         )
 
+        self.storage_state = (
+            None if node_config is None else node_config.get("storage_state", None)
+        )
+
     def is_valid_url(self, source: str) -> bool:
         """
         Validates if the source string is a valid URL using regex.
