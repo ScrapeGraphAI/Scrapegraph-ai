@@ -170,6 +170,7 @@ class ChromiumLoader(BaseLoader):
                     page = await context.new_page()
                     await page.goto(url, wait_until="networkidle")
                     results = await page.content()
+                    await asyncio.sleep(3)
                     logger.info("Content scraped after JavaScript rendering")
                     break
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
