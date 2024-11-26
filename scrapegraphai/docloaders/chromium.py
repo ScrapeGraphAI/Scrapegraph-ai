@@ -126,6 +126,8 @@ class ChromiumLoader(BaseLoader):
                     await page.goto(url, wait_until="domcontentloaded")
                     await page.wait_for_load_state(self.load_state)
                     results = await page.content()
+                    # Keep the page open for a few seconds to ensure content loads
+                    await asyncio.sleep(3)
                     logger.info("Content scraped")
                     return results
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
