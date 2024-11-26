@@ -1,3 +1,10 @@
+## [1.32.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.2...v1.32.0-beta.3) (2024-11-26)
+
+
+### Bug Fixes
+
+* improved links extraction for parse_node, resolves [#822](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/822) ([7da7bfe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7da7bfe338a6ce53c83361a1f6cd9ea2d5bd797f))
+
 ## [1.32.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.1...v1.32.0-beta.2) (2024-11-25)
 
 
