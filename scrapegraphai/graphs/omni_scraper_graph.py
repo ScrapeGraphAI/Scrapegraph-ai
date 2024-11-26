@@ -1,21 +1,18 @@
 """
 This module implements the Omni Scraper Graph for the ScrapeGraphAI application.
 """
+
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
-from ..nodes import (
-    FetchNode,
-    ParseNode,
-    ImageToTextNode,
-    GenerateAnswerOmniNode
-)
+from ..nodes import FetchNode, ParseNode, ImageToTextNode, GenerateAnswerOmniNode
 from ..models import OpenAIImageToText
+
 
 class OmniScraperGraph(AbstractGraph):
     """
-    OmniScraper is a scraping pipeline that automates the process of 
+    OmniScraper is a scraping pipeline that automates the process of
     extracting information from web pages
     using a natural language model to interpret and answer prompts.
 
@@ -25,7 +22,7 @@ class OmniScraperGraph(AbstractGraph):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, 
+        embedder_model: An instance of an embedding model client,
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
@@ -47,8 +44,9 @@ class OmniScraperGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
-
+    def __init__(
+        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+    ):
         self.max_images = 5 if config is None else config.get("max_images", 5)
 
         super().__init__(prompt, config, source, schema)
@@ -68,7 +66,8 @@ class OmniScraperGraph(AbstractGraph):
             output=["doc"],
             node_config={
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
-            }
+                "storage_state": self.config.get("storage_state"),
+            },
         )
 
         parse_node = ParseNode(
@@ -77,8 +76,8 @@ class OmniScraperGraph(AbstractGraph):
             node_config={
                 "chunk_size": self.model_token,
                 "parse_urls": True,
-                "llm_model": self.llm_model
-            }
+                "llm_model": self.llm_model,
+            },
         )
 
         image_to_text_node = ImageToTextNode(
@@ -86,8 +85,8 @@ class OmniScraperGraph(AbstractGraph):
             output=["img_desc"],
             node_config={
                 "llm_model": OpenAIImageToText(self.config["llm"]),
-                "max_images": self.max_images
-            }
+                "max_images": self.max_images,
+            },
         )
 
         generate_answer_omni_node = GenerateAnswerOmniNode(
@@ -96,8 +95,8 @@ class OmniScraperGraph(AbstractGraph):
             node_config={
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
-                "schema": self.schema
-            }
+                "schema": self.schema,
+            },
         )
 
         return BaseGraph(
@@ -110,10 +109,10 @@ class OmniScraperGraph(AbstractGraph):
             edges=[
                 (fetch_node, parse_node),
                 (parse_node, image_to_text_node),
-                (image_to_text_node, generate_answer_omni_node)
+                (image_to_text_node, generate_answer_omni_node),
             ],
             entry_point=fetch_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:
