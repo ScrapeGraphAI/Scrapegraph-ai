@@ -70,7 +70,7 @@ async def main():
 
     omni_scraper_graph = OmniScraperGraph(
         prompt="List me all the projects with their description.",
-        source="https://www.linkedin.com/login",
+        source="https://www.linkedin.com/feed/",
         config=graph_config,
     )
 
