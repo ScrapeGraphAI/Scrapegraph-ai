@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install the latest version of rye
-        uses: eifinger/setup-rye@v3
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
       - name: Install dependencies
-        run: rye sync --no-lock
+        run: uv sync --frozen
       - name: Analysing the code with pylint
-        run: rye run pylint-ci
+        run: uv run poe pylint-ci
       - name: Check Pylint score
         run: |
-          pylint_score=$(rye run pylint-score-ci | grep 'Raw metrics' | awk '{print $4}')
+          pylint_score=$(uv run poe pylint-score-ci | grep 'Raw metrics' | awk '{print $4}')
           if (( $(echo "$pylint_score < 8" | bc -l) )); then
             echo "Pylint score is below 8. Blocking commit."
             exit 1
