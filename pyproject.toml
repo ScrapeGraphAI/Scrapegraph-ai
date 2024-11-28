@@ -91,7 +91,7 @@ other-language-models = [
     "langchain-anthropic>=0.1.11",
     "langchain-huggingface>=0.0.3",
     "langchain-nvidia-ai-endpoints>=0.1.6",
-    "langchain_together>=1.2.9"
+    "langchain_together>=0.2.0"
 ]
 
 # Group 2: More Semantic Options
@@ -116,17 +116,21 @@ screenshot_scraper = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.rye]
-managed = true
+[dependency-groups]
+dev = [
+    "burr[start]==0.22.1",
+    "sphinx==6.0",
+    "furo==2024.5.6",
+]
+
+[tool.uv]
 dev-dependencies = [
+    "poethepoet>=0.31.1",
     "pytest==8.0.0",
     "pytest-mock==3.14.0",
-    "-e file:.[burr]",
-    "-e file:.[docs]",
     "pylint>=3.2.5",
 ]
 
-[tool.rye.scripts]
-pylint-local = "pylint scrapegraphai/**/*.py"
+[tool.poe.tasks]
+pylint-local = "pylint scraperaphai/**/*.py"
 pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
-update-requirements = "python 'manual deployment/autorequirements.py'"
