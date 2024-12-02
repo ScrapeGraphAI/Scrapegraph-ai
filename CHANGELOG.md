@@ -1,3 +1,16 @@
+## [1.32.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.3...v1.32.0-beta.4) (2024-12-02)
+
+
+### Features
+
+* add api integration ([8aa9103](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8aa9103f02af92d9e1a780450daa7bb303afc150))
+* add sdk integration ([209b445](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/209b4456fd668d9d124fd5586b32a4be677d4bf8))
+
+
+### chore
+
+* migrate from rye to uv ([5fe528a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5fe528a7e7a3e230d8f68fd83ce5ad6ede5adfef))
+
 ## [1.32.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.2...v1.32.0-beta.3) (2024-11-26)
 
 
