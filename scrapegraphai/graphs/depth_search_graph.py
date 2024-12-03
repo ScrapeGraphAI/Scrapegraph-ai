@@ -1,6 +1,7 @@
 """
 depth search graph Module
 """
+
 from typing import Optional
 import logging
 from pydantic import BaseModel
@@ -11,14 +12,15 @@ from ..nodes import (
     ParseNodeDepthK,
     DescriptionNode,
     RAGNode,
-    GenerateAnswerNodeKLevel
+    GenerateAnswerNodeKLevel,
 )
+
 
 class DepthSearchGraph(AbstractGraph):
     """
-    CodeGeneratorGraph is a script generator pipeline that generates 
+    CodeGeneratorGraph is a script generator pipeline that generates
     the function extract_data(html: str) -> dict() for
-    extracting the wanted information from a HTML page. The 
+    extracting the wanted information from a HTML page. The
     code generated is in Python and uses the library BeautifulSoup.
     It requires a user prompt, a source URL, and an output schema.
 
@@ -50,8 +52,9 @@ class DepthSearchGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
-
+    def __init__(
+        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+    ):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -72,17 +75,16 @@ class DepthSearchGraph(AbstractGraph):
                 "force": self.config.get("force", False),
                 "cut": self.config.get("cut", True),
                 "browser_base": self.config.get("browser_base"),
+                "storage_state": self.config.get("storage_state"),
                 "depth": self.config.get("depth", 1),
-                "only_inside_links": self.config.get("only_inside_links", False)
-            }
+                "only_inside_links": self.config.get("only_inside_links", False),
+            },
         )
 
         parse_node_k = ParseNodeDepthK(
             input="docs",
             output=["docs"],
-            node_config={
-                "verbose": self.config.get("verbose", False)
-            }
+            node_config={"verbose": self.config.get("verbose", False)},
         )
 
         description_node = DescriptionNode(
@@ -91,18 +93,18 @@ class DepthSearchGraph(AbstractGraph):
             node_config={
                 "llm_model": self.llm_model,
                 "verbose": self.config.get("verbose", False),
-                "cache_path": self.config.get("cache_path", False)
-            }
+                "cache_path": self.config.get("cache_path", False),
+            },
         )
 
-        rag_node = RAGNode (
+        rag_node = RAGNode(
             input="docs",
             output=["vectorial_db"],
             node_config={
                 "llm_model": self.llm_model,
                 "embedder_model": self.config.get("embedder_model", False),
                 "verbose": self.config.get("verbose", False),
-            }
+            },
         )
 
         generate_answer_k = GenerateAnswerNodeKLevel(
@@ -112,8 +114,7 @@ class DepthSearchGraph(AbstractGraph):
                 "llm_model": self.llm_model,
                 "embedder_model": self.config.get("embedder_model", False),
                 "verbose": self.config.get("verbose", False),
-            }
-
+            },
         )
 
         return BaseGraph(
@@ -122,16 +123,16 @@ class DepthSearchGraph(AbstractGraph):
                 parse_node_k,
                 description_node,
                 rag_node,
-                generate_answer_k
+                generate_answer_k,
             ],
             edges=[
                 (fetch_node_k, parse_node_k),
                 (parse_node_k, description_node),
                 (description_node, rag_node),
-                (rag_node, generate_answer_k)
+                (rag_node, generate_answer_k),
             ],
             entry_point=fetch_node_k,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:
