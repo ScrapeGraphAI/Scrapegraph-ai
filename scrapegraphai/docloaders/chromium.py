@@ -8,7 +8,6 @@ from typing import Union
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
 logger = get_logger("web-loader")
-logger.setLevel("INFO")
 
 class ChromiumLoader(BaseLoader):
     """Scrapes HTML pages from URLs using a (headless) instance of the
