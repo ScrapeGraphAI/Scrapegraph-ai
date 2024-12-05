@@ -7,6 +7,7 @@ version = "1.32.0b5"
 
 
 
+
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     { name = "Marco Vinciguerra", email = "mvincig11@gmail.com" },

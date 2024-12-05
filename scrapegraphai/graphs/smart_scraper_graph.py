@@ -16,7 +16,6 @@ from ..nodes import (
 from ..prompts import REGEN_ADDITIONAL_INFO
 from scrapegraph_py import SyncClient
 
-
 class SmartScraperGraph(AbstractGraph):
     """
     SmartScraper is a scraping pipeline that automates the process of

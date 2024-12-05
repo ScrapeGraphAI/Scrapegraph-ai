@@ -137,7 +137,7 @@ class ChromiumLoader(BaseLoader):
                     )
             finally:
                 if "browser" in locals():
-                    await browser.close()
+
 
     async def ascrape_with_js_support(self, url: str) -> str:
         """
