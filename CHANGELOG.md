@@ -1,9 +1,8 @@
+## [1.32.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.4...v1.32.0-beta.5) (2024-12-02)
 ## [1.32.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1...v1.32.0) (2024-12-02)
 
 
-### Features
 
-* add API integration ([46373af](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/46373afe6d8c05ad26039e68190f13d82b20a349))
 
 ## [1.32.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.3...v1.32.0-beta.4) (2024-12-02)
 

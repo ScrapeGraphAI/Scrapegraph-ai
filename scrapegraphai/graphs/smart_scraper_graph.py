@@ -1,6 +1,7 @@
 """
 SmartScraperGraph Module
 """
+
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
@@ -10,14 +11,14 @@ from ..nodes import (
     ParseNode,
     ReasoningNode,
     GenerateAnswerNode,
-    ConditionalNode
+    ConditionalNode,
 )
 from ..prompts import REGEN_ADDITIONAL_INFO
 from scrapegraph_py import SyncClient
 
 class SmartScraperGraph(AbstractGraph):
     """
-    SmartScraper is a scraping pipeline that automates the process of 
+    SmartScraper is a scraping pipeline that automates the process of
     extracting information from web pages
     using a natural language model to interpret and answer prompts.
 
@@ -27,7 +28,7 @@ class SmartScraperGraph(AbstractGraph):
         config (dict): Configuration parameters for the graph.
         schema (BaseModel): The schema for the graph output.
         llm_model: An instance of a language model client, configured for generating answers.
-        embedder_model: An instance of an embedding model client, 
+        embedder_model: An instance of an embedding model client,
         configured for generating embeddings.
         verbose (bool): A flag indicating whether to show print statements during execution.
         headless (bool): A flag indicating whether to run the graph in headless mode.
@@ -48,7 +49,9 @@ class SmartScraperGraph(AbstractGraph):
         )
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
+    def __init__(
+        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+    ):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
@@ -79,16 +82,14 @@ class SmartScraperGraph(AbstractGraph):
                 "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
                 "browser_base": self.config.get("browser_base"),
-                "scrape_do": self.config.get("scrape_do")
-            }
+                "scrape_do": self.config.get("scrape_do"),
+                "storage_state": self.config.get("storage_state"),
+            },
         )
         parse_node = ParseNode(
             input="doc",
             output=["parsed_doc"],
-            node_config={
-                "llm_model": self.llm_model,
-                "chunk_size": self.model_token
-            }
+            node_config={"llm_model": self.llm_model, "chunk_size": self.model_token},
         )
 
         generate_answer_node = GenerateAnswerNode(
@@ -98,7 +99,7 @@ class SmartScraperGraph(AbstractGraph):
                 "llm_model": self.llm_model,
                 "additional_info": self.config.get("additional_info"),
                 "schema": self.schema,
-            }
+            },
         )
 
         cond_node = None
@@ -111,7 +112,7 @@ class SmartScraperGraph(AbstractGraph):
                 node_config={
                     "key_name": "answer",
                     "condition": 'not answer or answer=="NA"',
-                }
+                },
             )
             regen_node = GenerateAnswerNode(
                 input="user_prompt & answer",
@@ -120,7 +121,7 @@ class SmartScraperGraph(AbstractGraph):
                     "llm_model": self.llm_model,
                     "additional_info": REGEN_ADDITIONAL_INFO,
                     "schema": self.schema,
-                }
+                },
             )
 
         if self.config.get("html_mode") is False:
@@ -129,61 +130,107 @@ class SmartScraperGraph(AbstractGraph):
                 output=["parsed_doc"],
                 node_config={
                     "llm_model": self.llm_model,
-                    "chunk_size": self.model_token
-                }
+                    "chunk_size": self.model_token,
+                },
             )
 
         reasoning_node = None
         if self.config.get("reasoning"):
-            reasoning_node =  ReasoningNode(
+            reasoning_node = ReasoningNode(
                 input="user_prompt & (relevant_chunks | parsed_doc | doc)",
                 output=["answer"],
                 node_config={
                     "llm_model": self.llm_model,
                     "additional_info": self.config.get("additional_info"),
                     "schema": self.schema,
-                }
+                },
             )
-            
+
         # Define the graph variation configurations
         # (html_mode, reasoning, reattempt)
         graph_variation_config = {
             (False, True, False): {
-            "nodes": [fetch_node, parse_node, reasoning_node, generate_answer_node],
-            "edges": [(fetch_node, parse_node), (parse_node, reasoning_node), (reasoning_node, generate_answer_node)]
+                "nodes": [fetch_node, parse_node, reasoning_node, generate_answer_node],
+                "edges": [
+                    (fetch_node, parse_node),
+                    (parse_node, reasoning_node),
+                    (reasoning_node, generate_answer_node),
+                ],
             },
             (True, True, False): {
                 "nodes": [fetch_node, reasoning_node, generate_answer_node],
-                "edges": [(fetch_node, reasoning_node), (reasoning_node, generate_answer_node)]
+                "edges": [
+                    (fetch_node, reasoning_node),
+                    (reasoning_node, generate_answer_node),
+                ],
             },
             (True, False, False): {
                 "nodes": [fetch_node, generate_answer_node],
-                "edges": [(fetch_node, generate_answer_node)]
+                "edges": [(fetch_node, generate_answer_node)],
             },
             (False, False, False): {
                 "nodes": [fetch_node, parse_node, generate_answer_node],
-                "edges": [(fetch_node, parse_node), (parse_node, generate_answer_node)]
+                "edges": [(fetch_node, parse_node), (parse_node, generate_answer_node)],
             },
             (False, True, True): {
-                "nodes": [fetch_node, parse_node, reasoning_node, generate_answer_node, cond_node, regen_node],
-                "edges": [(fetch_node, parse_node), (parse_node, reasoning_node), (reasoning_node, generate_answer_node), 
-                          (generate_answer_node, cond_node), (cond_node, regen_node), (cond_node, None)]
+                "nodes": [
+                    fetch_node,
+                    parse_node,
+                    reasoning_node,
+                    generate_answer_node,
+                    cond_node,
+                    regen_node,
+                ],
+                "edges": [
+                    (fetch_node, parse_node),
+                    (parse_node, reasoning_node),
+                    (reasoning_node, generate_answer_node),
+                    (generate_answer_node, cond_node),
+                    (cond_node, regen_node),
+                    (cond_node, None),
+                ],
             },
             (True, True, True): {
-                "nodes": [fetch_node, reasoning_node, generate_answer_node, cond_node, regen_node],
-                "edges": [(fetch_node, reasoning_node), (reasoning_node, generate_answer_node), 
-                          (generate_answer_node, cond_node), (cond_node, regen_node), (cond_node, None)]
+                "nodes": [
+                    fetch_node,
+                    reasoning_node,
+                    generate_answer_node,
+                    cond_node,
+                    regen_node,
+                ],
+                "edges": [
+                    (fetch_node, reasoning_node),
+                    (reasoning_node, generate_answer_node),
+                    (generate_answer_node, cond_node),
+                    (cond_node, regen_node),
+                    (cond_node, None),
+                ],
             },
             (True, False, True): {
                 "nodes": [fetch_node, generate_answer_node, cond_node, regen_node],
-                "edges": [(fetch_node, generate_answer_node), (generate_answer_node, cond_node), 
-                          (cond_node, regen_node), (cond_node, None)]
+                "edges": [
+                    (fetch_node, generate_answer_node),
+                    (generate_answer_node, cond_node),
+                    (cond_node, regen_node),
+                    (cond_node, None),
+                ],
             },
             (False, False, True): {
-                "nodes": [fetch_node, parse_node, generate_answer_node, cond_node, regen_node],
-                "edges": [(fetch_node, parse_node), (parse_node, generate_answer_node), 
-                          (generate_answer_node, cond_node), (cond_node, regen_node), (cond_node, None)]
-            }
+                "nodes": [
+                    fetch_node,
+                    parse_node,
+                    generate_answer_node,
+                    cond_node,
+                    regen_node,
+                ],
+                "edges": [
+                    (fetch_node, parse_node),
+                    (parse_node, generate_answer_node),
+                    (generate_answer_node, cond_node),
+                    (cond_node, regen_node),
+                    (cond_node, None),
+                ],
+            },
         }
 
         # Get the current conditions
@@ -199,7 +246,7 @@ class SmartScraperGraph(AbstractGraph):
                 nodes=config["nodes"],
                 edges=config["edges"],
                 entry_point=fetch_node,
-                graph_name=self.__class__.__name__
+                graph_name=self.__class__.__name__,
             )
 
         # Default return if no conditions match
@@ -207,9 +254,9 @@ class SmartScraperGraph(AbstractGraph):
             nodes=[fetch_node, parse_node, generate_answer_node],
             edges=[(fetch_node, parse_node), (parse_node, generate_answer_node)],
             entry_point=fetch_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
-        
+
     def run(self) -> str:
         """
         Executes the scraping process and returns the answer to the prompt.

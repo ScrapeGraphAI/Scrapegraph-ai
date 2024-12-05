@@ -1,6 +1,7 @@
 """
 AbstractGraph Module
 """
+
 from abc import ABC, abstractmethod
 from typing import Optional
 import uuid
@@ -9,11 +10,9 @@ from pydantic import BaseModel
 from langchain.chat_models import init_chat_model
 from langchain_core.rate_limiters import InMemoryRateLimiter
 from ..helpers import models_tokens
-from ..models import (
-    OneApi,
-    DeepSeek
-)
+from ..models import OneApi, DeepSeek
 from ..utils.logging import set_verbosity_warning, set_verbosity_info
+
 
 class AbstractGraph(ABC):
     """
@@ -39,14 +38,18 @@ class AbstractGraph(ABC):
         ...         # Implementation of graph creation here
         ...         return graph
         ...
-        >>> my_graph = MyGraph("Example Graph", 
+        >>> my_graph = MyGraph("Example Graph",
         {"llm": {"model": "gpt-3.5-turbo"}}, "example_source")
         >>> result = my_graph.run()
     """
 
-    def __init__(self, prompt: str, config: dict,
-                 source: Optional[str] = None, schema: Optional[BaseModel] = None):
-
+    def __init__(
+        self,
+        prompt: str,
+        config: dict,
+        source: Optional[str] = None,
+        schema: Optional[BaseModel] = None,
+    ):
         if config.get("llm").get("temperature") is None:
             config["llm"]["temperature"] = 0
 
@@ -55,14 +58,13 @@ class AbstractGraph(ABC):
         self.config = config
         self.schema = schema
         self.llm_model = self._create_llm(config["llm"])
-        self.verbose = False if config is None else config.get(
-            "verbose", False)
-        self.headless = True if self.config is None else config.get(
-            "headless", True)
+        self.verbose = False if config is None else config.get("verbose", False)
+        self.headless = True if self.config is None else config.get("headless", True)
         self.loader_kwargs = self.config.get("loader_kwargs", {})
         self.cache_path = self.config.get("cache_path", False)
         self.browser_base = self.config.get("browser_base")
         self.scrape_do = self.config.get("scrape_do")
+        self.storage_state = self.config.get("storage_state")
 
         self.graph = self._create_graph()
         self.final_state = None
@@ -81,7 +83,7 @@ class AbstractGraph(ABC):
             "loader_kwargs": self.loader_kwargs,
             "llm_model": self.llm_model,
             "cache_path": self.cache_path,
-            }
+        }
 
         self.set_common_params(common_params, overwrite=True)
 
@@ -129,7 +131,8 @@ class AbstractGraph(ABC):
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
                     llm_params["rate_limiter"] = InMemoryRateLimiter(
-                                                                    requests_per_second=requests_per_second)
+                        requests_per_second=requests_per_second
+                    )
             if max_retries is not None:
                 llm_params["max_retries"] = max_retries
 
@@ -140,22 +143,45 @@ class AbstractGraph(ABC):
                 raise KeyError("model_tokens not specified") from exc
             return llm_params["model_instance"]
 
-        known_providers = {"openai", "azure_openai", "google_genai", "google_vertexai",
-                        "ollama", "oneapi", "nvidia", "groq", "anthropic", "bedrock", "mistralai",
-                        "hugging_face", "deepseek", "ernie", "fireworks", "togetherai"}
+        known_providers = {
+            "openai",
+            "azure_openai",
+            "google_genai",
+            "google_vertexai",
+            "ollama",
+            "oneapi",
+            "nvidia",
+            "groq",
+            "anthropic",
+            "bedrock",
+            "mistralai",
+            "hugging_face",
+            "deepseek",
+            "ernie",
+            "fireworks",
+            "togetherai",
+        }
 
-        if '/' in llm_params["model"]:
-                    split_model_provider = llm_params["model"].split("/", 1)
-                    llm_params["model_provider"] = split_model_provider[0]
-                    llm_params["model"] = split_model_provider[1]
+        if "/" in llm_params["model"]:
+            split_model_provider = llm_params["model"].split("/", 1)
+            llm_params["model_provider"] = split_model_provider[0]
+            llm_params["model"] = split_model_provider[1]
         else:
-            possible_providers = [provider for provider, models_d in models_tokens.items() if llm_params["model"] in models_d]
+            possible_providers = [
+                provider
+                for provider, models_d in models_tokens.items()
+                if llm_params["model"] in models_d
+            ]
             if len(possible_providers) <= 0:
                 raise ValueError(f"""Provider {llm_params['model_provider']} is not supported. 
                                 If possible, try to use a model instance instead.""")
             llm_params["model_provider"] = possible_providers[0]
-            print((f"Found providers {possible_providers} for model {llm_params['model']}, using {llm_params['model_provider']}.\n"
-                    "If it was not intended please specify the model provider in the graph configuration"))
+            print(
+                (
+                    f"Found providers {possible_providers} for model {llm_params['model']}, using {llm_params['model_provider']}.\n"
+                    "If it was not intended please specify the model provider in the graph configuration"
+                )
+            )
 
         if llm_params["model_provider"] not in known_providers:
             raise ValueError(f"""Provider {llm_params['model_provider']} is not supported. 
@@ -163,7 +189,9 @@ class AbstractGraph(ABC):
 
         if "model_tokens" not in llm_params:
             try:
-                self.model_token = models_tokens[llm_params["model_provider"]][llm_params["model"]]
+                self.model_token = models_tokens[llm_params["model_provider"]][
+                    llm_params["model"]
+                ]
             except KeyError:
                 print(f"""Model {llm_params['model_provider']}/{llm_params['model']} not found,
                     using default token size (8192)""")
@@ -172,10 +200,17 @@ class AbstractGraph(ABC):
             self.model_token = llm_params["model_tokens"]
 
         try:
-            if llm_params["model_provider"] not in \
-                {"oneapi","nvidia","ernie","deepseek","togetherai"}:
+            if llm_params["model_provider"] not in {
+                "oneapi",
+                "nvidia",
+                "ernie",
+                "deepseek",
+                "togetherai",
+            }:
                 if llm_params["model_provider"] == "bedrock":
-                    llm_params["model_kwargs"] = { "temperature" : llm_params.pop("temperature") }
+                    llm_params["model_kwargs"] = {
+                        "temperature": llm_params.pop("temperature")
+                    }
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
                     return init_chat_model(**llm_params)
@@ -187,6 +222,7 @@ class AbstractGraph(ABC):
 
                 if model_provider == "ernie":
                     from langchain_community.chat_models import ErnieBotChat
+
                     return ErnieBotChat(**llm_params)
 
                 elif model_provider == "oneapi":
@@ -210,7 +246,6 @@ class AbstractGraph(ABC):
 
         except Exception as e:
             raise Exception(f"Error instancing model: {e}")
-
 
     def get_state(self, key=None) -> dict:
         """ ""
