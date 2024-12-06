@@ -1,3 +1,10 @@
+## [1.33.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.0...v1.33.1) (2024-12-06)
+
+
+### Bug Fixes
+
+* did a quick fix ([a6f43d5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a6f43d53cb760e74e5b437cb721b09a4e569c5a2))
+
 ## [1.33.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0...v1.33.0) (2024-12-05)
 
 
