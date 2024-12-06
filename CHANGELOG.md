@@ -1,3 +1,10 @@
+## [1.33.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.1...v1.33.2) (2024-12-06)
+
+
+### Bug Fixes
+
+* client ([e16e94b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e16e94bf694d516071818adec5ea2f3a1404ec72))
+
 ## [1.33.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.0...v1.33.1) (2024-12-06)
 
 
