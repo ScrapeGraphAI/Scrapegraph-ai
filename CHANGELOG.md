@@ -1,3 +1,10 @@
+## [1.33.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.0-beta.1...v1.33.0-beta.2) (2024-12-06)
+
+
+### Features
+
+* added scrolling method to chromium docloader ([1c8b910](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c8b910562112947a357277bca9dc81619b72e61))
+
 ## [1.33.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0...v1.33.0-beta.1) (2024-12-05)
 
 
