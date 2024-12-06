@@ -1,6 +1,7 @@
 """
 fetch_node_level_k module
 """
+
 from typing import List, Optional
 from urllib.parse import urljoin
 from langchain_core.documents import Document
@@ -8,9 +9,10 @@ from bs4 import BeautifulSoup
 from .base_node import BaseNode
 from ..docloaders import ChromiumLoader
 
+
 class FetchNodeLevelK(BaseNode):
     """
-    A node responsible for fetching the HTML content of a specified URL and all its sub-links 
+    A node responsible for fetching the HTML content of a specified URL and all its sub-links
     recursively up to a certain level of hyperlink the graph. This content is then used to update
     the graph's state. It uses ChromiumLoader to fetch the content from a web page asynchronously
     (with proxy protection).
@@ -58,8 +60,11 @@ class FetchNodeLevelK(BaseNode):
         self.loader_kwargs = node_config.get("loader_kwargs", {}) if node_config else {}
         self.browser_base = node_config.get("browser_base", None)
         self.scrape_do = node_config.get("scrape_do", None)
+        self.storage_state = node_config.get("storage_state", None)
         self.depth = node_config.get("depth", 1) if node_config else 1
-        self.only_inside_links = node_config.get("only_inside_links", False) if node_config else False
+        self.only_inside_links = (
+            node_config.get("only_inside_links", False) if node_config else False
+        )
         self.min_input_len = 1
 
     def execute(self, state: dict) -> dict:
@@ -83,12 +88,14 @@ class FetchNodeLevelK(BaseNode):
         source = input_data[0]
 
         documents = [{"source": source}]
-        loader_kwargs = self.node_config.get("loader_kwargs", {}) if self.node_config else {}
+        loader_kwargs = (
+            self.node_config.get("loader_kwargs", {}) if self.node_config else {}
+        )
 
         for _ in range(self.depth):
             documents = self.obtain_content(documents, loader_kwargs)
 
-        filtered_documents = [doc for doc in documents if 'document' in doc]
+        filtered_documents = [doc for doc in documents if "document" in doc]
         state.update({self.output[0]: filtered_documents})
         return state
 
@@ -112,17 +119,27 @@ class FetchNodeLevelK(BaseNode):
                 raise ImportError("""The browserbase module is not installed. 
                                     Please install it using `pip install browserbase`.""")
 
-            data = browser_base_fetch(self.browser_base.get("api_key"),
-                                      self.browser_base.get("project_id"), [source])
-            document = [Document(page_content=content,
-                                 metadata={"source": source}) for content in data]
+            data = browser_base_fetch(
+                self.browser_base.get("api_key"),
+                self.browser_base.get("project_id"),
+                [source],
+            )
+            document = [
+                Document(page_content=content, metadata={"source": source})
+                for content in data
+            ]
         elif self.scrape_do:
             from ..docloaders.scrape_do import scrape_do_fetch
+
             data = scrape_do_fetch(self.scrape_do.get("api_key"), source)
-            document = [Document(page_content=data,
-                                 metadata={"source": source})]
+            document = [Document(page_content=data, metadata={"source": source})]
         else:
-            loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
+            loader = ChromiumLoader(
+                [source],
+                headless=self.headless,
+                storage_state=self.storage_state,
+                **loader_kwargs,
+            )
             document = loader.load()
         return document
 
@@ -136,8 +153,8 @@ class FetchNodeLevelK(BaseNode):
         Returns:
             list: A list of extracted hyperlinks.
         """
-        soup = BeautifulSoup(html_content, 'html.parser')
-        links = [link['href'] for link in soup.find_all('a', href=True)]
+        soup = BeautifulSoup(html_content, "html.parser")
+        links = [link["href"] for link in soup.find_all("a", href=True)]
         self.logger.info(f"Extracted {len(links)} links.")
         return links
 
@@ -173,8 +190,8 @@ class FetchNodeLevelK(BaseNode):
         """
         new_documents = []
         for doc in documents:
-            source = doc['source']
-            if 'document' not in doc:
+            source = doc["source"]
+            if "document" not in doc:
                 document = self.fetch_content(source, loader_kwargs)
 
                 if not document or not document[0].page_content.strip():
@@ -182,20 +199,27 @@ class FetchNodeLevelK(BaseNode):
                     documents.remove(doc)
                     continue
 
-                doc['document'] = document
-                links = self.extract_links(doc['document'][0].page_content)
+                doc["document"] = document
+                links = self.extract_links(doc["document"][0].page_content)
                 full_links = self.get_full_links(source, links)
 
                 for link in full_links:
-                    if not any(d.get('source', '') == link for d in documents) \
-                        and not any(d.get('source', '') == link for d in new_documents):
+                    if not any(
+                        d.get("source", "") == link for d in documents
+                    ) and not any(d.get("source", "") == link for d in new_documents):
                         new_documents.append({"source": link})
 
         documents.extend(new_documents)
         return documents
 
-    def process_links(self, base_url: str, links: list, 
-                      loader_kwargs, depth: int, current_depth: int = 1) -> dict:
+    def process_links(
+        self,
+        base_url: str,
+        links: list,
+        loader_kwargs,
+        depth: int,
+        current_depth: int = 1,
+    ) -> dict:
         """
         Processes a list of links recursively up to a given depth.
 
@@ -217,8 +241,11 @@ class FetchNodeLevelK(BaseNode):
 
             if current_depth < depth:
                 new_links = self.extract_links(link_content)
-                content_dict.update(self.process_links(full_link, new_links,
-                                                       loader_kwargs, depth, current_depth + 1))
+                content_dict.update(
+                    self.process_links(
+                        full_link, new_links, loader_kwargs, depth, current_depth + 1
+                    )
+                )
             else:
                 self.logger.warning(f"Failed to fetch content for {full_link}")
         return content_dict

@@ -1,9 +1,38 @@
-## [1.32.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1...v1.32.0) (2024-12-02)
+## [1.33.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0...v1.33.0-beta.1) (2024-12-05)
 
 
 ### Features
 
-* add API integration ([46373af](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/46373afe6d8c05ad26039e68190f13d82b20a349))
+* add api integration ([8aa9103](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8aa9103f02af92d9e1a780450daa7bb303afc150))
+* add API integration ([ba6e931](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba6e931caf5f3d4a3b9c31ec4655fe7a9f0e214c))
+* add sdk integration ([209b445](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/209b4456fd668d9d124fd5586b32a4be677d4bf8))
+* revert search function ([faf0c01](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/faf0c0123b5e2e548cbd1917e9d1df22e1edb1c5))
+
+
+### Bug Fixes
+
+* error on fetching the code ([7285ab0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7285ab065bba9099ba2751c9d2f21ee13fed0d5f))
+* improved links extraction for parse_node, resolves [#822](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/822) ([7da7bfe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7da7bfe338a6ce53c83361a1f6cd9ea2d5bd797f))
+
+
+### chore
+
+* migrate from rye to uv ([5fe528a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5fe528a7e7a3e230d8f68fd83ce5ad6ede5adfef))
+
+
+### CI
+
+* **release:** 1.32.0-beta.1 [skip ci] ([b98dd39](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b98dd39150947fb121cd726d343c9d6fb9a31d5f))
+* **release:** 1.32.0-beta.2 [skip ci] ([8b17764](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8b17764a53c4e16c7c0178925f9275282f5dba3c))
+* **release:** 1.32.0-beta.3 [skip ci] ([0769fce](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0769fce7d501692bd1135d6337b0aea4a397c8f1)), closes [#822](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/822)
+* **release:** 1.32.0-beta.4 [skip ci] ([67c9859](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/67c9859c2078e7ec3b3ac99827deb346860f1a83))
+* **release:** 1.32.0-beta.5 [skip ci] ([fbb4252](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fbb42526320cd614684fe1092cac89cde86c27d4))
+
+## [1.32.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.4...v1.32.0-beta.5) (2024-12-02)
+## [1.32.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.31.1...v1.32.0) (2024-12-02)
+
+
+
 
 ## [1.32.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0-beta.3...v1.32.0-beta.4) (2024-12-02)
 

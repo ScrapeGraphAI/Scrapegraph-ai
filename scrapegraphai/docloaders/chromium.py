@@ -9,6 +9,7 @@ from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
 logger = get_logger("web-loader")
 
+
 class ChromiumLoader(BaseLoader):
     """Scrapes HTML pages from URLs using a (headless) instance of the
     Chromium web driver with proxy protection.
@@ -34,6 +35,7 @@ class ChromiumLoader(BaseLoader):
         proxy: Optional[Proxy] = None,
         load_state: str = "domcontentloaded",
         requires_js_support: bool = False,
+        storage_state: Optional[str] = None,
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
@@ -63,6 +65,7 @@ class ChromiumLoader(BaseLoader):
         self.urls = urls
         self.load_state = load_state
         self.requires_js_support = requires_js_support
+        self.storage_state = storage_state
 
     async def ascrape_undetected_chromedriver(self, url: str) -> str:
         """
@@ -92,7 +95,9 @@ class ChromiumLoader(BaseLoader):
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
                 if attempt == self.RETRY_LIMIT:
-                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                    results = (
+                        f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                    )
             finally:
                 driver.quit()
 
@@ -244,7 +249,9 @@ class ChromiumLoader(BaseLoader):
                     browser = await p.chromium.launch(
                         headless=self.headless, proxy=self.proxy, **self.browser_config
                     )
-                    context = await browser.new_context()
+                    context = await browser.new_context(
+                        storage_state=self.storage_state
+                    )
                     await Malenia.apply_stealth(context)
                     page = await context.new_page()
                     await page.goto(url, wait_until="domcontentloaded")
@@ -262,6 +269,7 @@ class ChromiumLoader(BaseLoader):
 
         return results
 
+
     async def ascrape_with_js_support(self, url: str) -> str:
         """
         Asynchronously scrape the content of a given URL by rendering JavaScript using Playwright.
@@ -270,7 +278,7 @@ class ChromiumLoader(BaseLoader):
             url (str): The URL to scrape.
 
         Returns:
-            str: The fully rendered HTML content after JavaScript execution, 
+            str: The fully rendered HTML content after JavaScript execution,
             or an error message if an exception occurs.
         """
         from playwright.async_api import async_playwright
@@ -285,7 +293,9 @@ class ChromiumLoader(BaseLoader):
                     browser = await p.chromium.launch(
                         headless=self.headless, proxy=self.proxy, **self.browser_config
                     )
-                    context = await browser.new_context()
+                    context = await browser.new_context(
+                        storage_state=self.storage_state
+                    )
                     page = await context.new_page()
                     await page.goto(url, wait_until="networkidle")
                     results = await page.content()
@@ -295,7 +305,9 @@ class ChromiumLoader(BaseLoader):
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
                 if attempt == self.RETRY_LIMIT:
-                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                    results = (
+                        f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                    )
             finally:
                 await browser.close()
 
@@ -312,7 +324,9 @@ class ChromiumLoader(BaseLoader):
             Document: The scraped content encapsulated within a Document object.
         """
         scraping_fn = (
-            self.ascrape_with_js_support if self.requires_js_support else getattr(self, f"ascrape_{self.backend}")
+            self.ascrape_with_js_support
+            if self.requires_js_support
+            else getattr(self, f"ascrape_{self.backend}")
         )
 
         for url in self.urls:
@@ -334,7 +348,9 @@ class ChromiumLoader(BaseLoader):
             source URL as metadata.
         """
         scraping_fn = (
-            self.ascrape_with_js_support if self.requires_js_support else getattr(self, f"ascrape_{self.backend}")
+            self.ascrape_with_js_support
+            if self.requires_js_support
+            else getattr(self, f"ascrape_{self.backend}")
         )
 
         tasks = [scraping_fn(url) for url in self.urls]

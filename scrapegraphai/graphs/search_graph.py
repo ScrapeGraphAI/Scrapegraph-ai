@@ -1,21 +1,19 @@
-""" 
+"""
 SearchGraph Module
 """
+
 from copy import deepcopy
 from typing import Optional, List
 from pydantic import BaseModel
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from .smart_scraper_graph import SmartScraperGraph
-from ..nodes import (
-    SearchInternetNode,
-    GraphIteratorNode,
-    MergeAnswersNode
-)
+from ..nodes import SearchInternetNode, GraphIteratorNode, MergeAnswersNode
 from ..utils.copy import safe_deepcopy
 
+
 class SearchGraph(AbstractGraph):
-    """ 
+    """
     SearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
     It only requires a user prompt to search the internet and generate an answer.
 
@@ -66,9 +64,10 @@ class SearchGraph(AbstractGraph):
                 "llm_model": self.llm_model,
                 "max_results": self.max_results,
                 "loader_kwargs": self.loader_kwargs,
+                "storage_state": self.copy_config.get("storage_state"),
                 "search_engine": self.copy_config.get("search_engine"),
-                "serper_api_key": self.copy_config.get("serper_api_key")
-            }
+                "serper_api_key": self.copy_config.get("serper_api_key"),
+            },
         )
 
         graph_iterator_node = GraphIteratorNode(
@@ -76,32 +75,25 @@ class SearchGraph(AbstractGraph):
             output=["results"],
             node_config={
                 "graph_instance": SmartScraperGraph,
-                "scraper_config": self.copy_config
+                "scraper_config": self.copy_config,
             },
-            schema=self.copy_schema
+            schema=self.copy_schema,
         )
 
         merge_answers_node = MergeAnswersNode(
             input="user_prompt & results",
             output=["answer"],
-            node_config={
-                "llm_model": self.llm_model,
-                "schema": self.copy_schema
-            }
+            node_config={"llm_model": self.llm_model, "schema": self.copy_schema},
         )
 
         return BaseGraph(
-            nodes=[
-                search_internet_node,
-                graph_iterator_node,
-                merge_answers_node
-            ],
+            nodes=[search_internet_node, graph_iterator_node, merge_answers_node],
             edges=[
                 (search_internet_node, graph_iterator_node),
-                (graph_iterator_node, merge_answers_node)
+                (graph_iterator_node, merge_answers_node),
             ],
             entry_point=search_internet_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:
@@ -116,8 +108,8 @@ class SearchGraph(AbstractGraph):
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
         # Store the URLs after execution
-        if 'urls' in self.final_state:
-            self.considered_urls = self.final_state['urls']
+        if "urls" in self.final_state:
+            self.considered_urls = self.final_state["urls"]
 
         return self.final_state.get("answer", "No answer found.")
 

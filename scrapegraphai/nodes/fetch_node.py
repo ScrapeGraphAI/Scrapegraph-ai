@@ -1,6 +1,7 @@
 """
 FetchNode Module
 """
+
 import json
 from typing import List, Optional
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
@@ -13,6 +14,7 @@ from ..docloaders import ChromiumLoader
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
+
 
 class FetchNode(BaseNode):
     """
@@ -55,22 +57,18 @@ class FetchNode(BaseNode):
         self.loader_kwargs = (
             {} if node_config is None else node_config.get("loader_kwargs", {})
         )
-        self.llm_model = (
-            {} if node_config is None else node_config.get("llm_model", {})
-        )
-        self.force = (
-            False if node_config is None else node_config.get("force", False)
-        )
+        self.llm_model = {} if node_config is None else node_config.get("llm_model", {})
+        self.force = False if node_config is None else node_config.get("force", False)
         self.script_creator = (
             False if node_config is None else node_config.get("script_creator", False)
         )
         self.openai_md_enabled = (
-            False if node_config is None else node_config.get("openai_md_enabled", False)
+            False
+            if node_config is None
+            else node_config.get("openai_md_enabled", False)
         )
 
-        self.cut = (
-            False if node_config is None else node_config.get("cut", True)
-        )
+        self.cut = False if node_config is None else node_config.get("cut", True)
 
         self.browser_base = (
             None if node_config is None else node_config.get("browser_base", None)
@@ -80,20 +78,27 @@ class FetchNode(BaseNode):
             None if node_config is None else node_config.get("scrape_do", None)
         )
 
+        self.storage_state = (
+            None if node_config is None else node_config.get("storage_state", None)
+        )
+
     def is_valid_url(self, source: str) -> bool:
         """
         Validates if the source string is a valid URL using regex.
-        
+
         Parameters:
         source (str): The URL string to validate
-        
+
         Raises:
         ValueError: If the URL is invalid
         """
         import re
-        url_pattern = r'^https?://[^\s/$.?#].[^\s]*$'
+
+        url_pattern = r"^https?://[^\s/$.?#].[^\s]*$"
         if not bool(re.match(url_pattern, source)):
-            raise ValueError(f"Invalid URL format: {source}. URL must start with http(s):// and contain a valid domain.")
+            raise ValueError(
+                f"Invalid URL format: {source}. URL must start with http(s):// and contain a valid domain."
+            )
         return True
 
     def execute(self, state):
@@ -126,7 +131,7 @@ class FetchNode(BaseNode):
             return handlers[input_type](state, input_type, source)
         elif self.input == "pdf_dir":
             return state
-        
+
         # For web sources, validate URL before proceeding
         try:
             if self.is_valid_url(source):
@@ -134,7 +139,7 @@ class FetchNode(BaseNode):
         except ValueError as e:
             # Re-raise the exception from is_valid_url
             raise
-            
+
         return self.handle_local_source(state, source)
 
     def handle_directory(self, state, input_type, source):
@@ -150,9 +155,7 @@ class FetchNode(BaseNode):
         dict: The updated state with the compressed document.
         """
 
-        compressed_document = [
-            source
-        ]
+        compressed_document = [source]
         state.update({self.output[0]: compressed_document})
         return state
 
@@ -181,6 +184,7 @@ class FetchNode(BaseNode):
         # return self.update_state(state, compressed_document)
         state.update({self.output[0]: compressed_document})
         return state
+
     def load_file_content(self, source, input_type):
         """
         Loads the content of a file based on its input type.
@@ -197,10 +201,18 @@ class FetchNode(BaseNode):
             loader = PyPDFLoader(source)
             return loader.load()
         elif input_type == "csv":
-            return [Document(page_content=str(pd.read_csv(source)), metadata={"source": "csv"})]
+            return [
+                Document(
+                    page_content=str(pd.read_csv(source)), metadata={"source": "csv"}
+                )
+            ]
         elif input_type == "json":
             with open(source, encoding="utf-8") as f:
-                return [Document(page_content=str(json.load(f)), metadata={"source": "json"})]
+                return [
+                    Document(
+                        page_content=str(json.load(f)), metadata={"source": "json"}
+                    )
+                ]
         elif input_type == "xml" or input_type == "md":
             with open(source, "r", encoding="utf-8") as f:
                 data = f.read()
@@ -228,9 +240,15 @@ class FetchNode(BaseNode):
 
         parsed_content = source
 
-        if (isinstance(self.llm_model, ChatOpenAI) or \
-            isinstance(self.llm_model, AzureChatOpenAI)) \
-                and not self.script_creator or self.force and not self.script_creator:
+        if (
+            (
+                isinstance(self.llm_model, ChatOpenAI)
+                or isinstance(self.llm_model, AzureChatOpenAI)
+            )
+            and not self.script_creator
+            or self.force
+            and not self.script_creator
+        ):
             parsed_content = convert_to_md(source)
         else:
             parsed_content = source
@@ -242,9 +260,10 @@ class FetchNode(BaseNode):
         # return self.update_state(state, compressed_document)
         state.update({self.output[0]: compressed_document})
         return state
+
     def handle_web_source(self, state, source):
         """
-        Handles the web source by fetching HTML content from a URL, 
+        Handles the web source by fetching HTML content from a URL,
         optionally converting it to Markdown, and updating the state.
 
         Parameters:
@@ -268,8 +287,11 @@ class FetchNode(BaseNode):
                 if not self.cut:
                     parsed_content = cleanup_html(response, source)
 
-                if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
-                    and not self.script_creator or (self.force and not self.script_creator):
+                if (
+                    isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI))
+                    and not self.script_creator
+                    or (self.force and not self.script_creator)
+                ):
                     parsed_content = convert_to_md(source, parsed_content)
 
                 compressed_document = [Document(page_content=parsed_content)]
@@ -290,28 +312,42 @@ class FetchNode(BaseNode):
                     raise ImportError("""The browserbase module is not installed. 
                                       Please install it using `pip install browserbase`.""")
 
-                data =  browser_base_fetch(self.browser_base.get("api_key"),
-                                            self.browser_base.get("project_id"), [source])
+                data = browser_base_fetch(
+                    self.browser_base.get("api_key"),
+                    self.browser_base.get("project_id"),
+                    [source],
+                )
 
-                document = [Document(page_content=content,
-                                    metadata={"source": source}) for content in data]
+                document = [
+                    Document(page_content=content, metadata={"source": source})
+                    for content in data
+                ]
             elif self.scrape_do:
                 from ..docloaders.scrape_do import scrape_do_fetch
-                if (self.scrape_do.get("use_proxy") is None) or \
-                self.scrape_do.get("geoCode") is None or \
-                self.scrape_do.get("super_proxy") is None:
-                    data =  scrape_do_fetch(self.scrape_do.get("api_key"),
-                                                source)
-                else:
-                    data =  scrape_do_fetch(self.scrape_do.get("api_key"),
-                                                source, self.scrape_do.get("use_proxy"),
-                                                self.scrape_do.get("geoCode"),
-                                                self.scrape_do.get("super_proxy"))
 
-                document = [Document(page_content=data,
-                                    metadata={"source": source})]
+                if (
+                    (self.scrape_do.get("use_proxy") is None)
+                    or self.scrape_do.get("geoCode") is None
+                    or self.scrape_do.get("super_proxy") is None
+                ):
+                    data = scrape_do_fetch(self.scrape_do.get("api_key"), source)
+                else:
+                    data = scrape_do_fetch(
+                        self.scrape_do.get("api_key"),
+                        source,
+                        self.scrape_do.get("use_proxy"),
+                        self.scrape_do.get("geoCode"),
+                        self.scrape_do.get("super_proxy"),
+                    )
+
+                document = [Document(page_content=data, metadata={"source": source})]
             else:
-                loader = ChromiumLoader([source], headless=self.headless, **loader_kwargs)
+                loader = ChromiumLoader(
+                    [source],
+                    headless=self.headless,
+                    storage_state=self.storage_state,
+                    **loader_kwargs,
+                )
                 document = loader.load()
 
             if not document or not document[0].page_content.strip():
@@ -320,15 +356,25 @@ class FetchNode(BaseNode):
 
             parsed_content = document[0].page_content
 
-            if (isinstance(self.llm_model, ChatOpenAI) \
-                or isinstance(self.llm_model, AzureChatOpenAI)) \
-                and not self.script_creator or self.force \
-                and not self.script_creator and not self.openai_md_enabled:
+            if (
+                (
+                    isinstance(self.llm_model, ChatOpenAI)
+                    or isinstance(self.llm_model, AzureChatOpenAI)
+                )
+                and not self.script_creator
+                or self.force
+                and not self.script_creator
+                and not self.openai_md_enabled
+            ):
                 parsed_content = convert_to_md(document[0].page_content, parsed_content)
 
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
         state["original_html"] = document
-        state.update({self.output[0]: compressed_document,})
+        state.update(
+            {
+                self.output[0]: compressed_document,
+            }
+        )
         return state
