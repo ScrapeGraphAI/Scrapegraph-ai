@@ -4,6 +4,8 @@ SmartScraperGraph Module
 
 from typing import Optional
 from pydantic import BaseModel
+from scrapegraph_py import Client
+from scrapegraph_py.logger import sgai_logger
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from ..nodes import (
@@ -14,7 +16,6 @@ from ..nodes import (
     ConditionalNode,
 )
 from ..prompts import REGEN_ADDITIONAL_INFO
-from scrapegraph_py import SyncClient
 
 class SmartScraperGraph(AbstractGraph):
     """
@@ -65,12 +66,23 @@ class SmartScraperGraph(AbstractGraph):
         """
         if self.llm_model == "scrapegraphai/smart-scraper":
 
-            sgai_client = SyncClient(api_key=self.config.get("api_key"))
+            sgai_logger.set_logging(level="INFO")
 
+            # Initialize the client with explicit API key
+            sgai_client = Client(api_key=self.config.get("api_key"))
+
+            # SmartScraper request
             response = sgai_client.smartscraper(
                 website_url=self.source,
-                user_prompt=self.prompt
+                user_prompt=self.prompt,
             )
+
+            # Print the response
+            print(f"Request ID: {response['request_id']}")
+            print(f"Result: {response['result']}")
+
+            sgai_client.close()
+
             return response
 
         fetch_node = FetchNode(
