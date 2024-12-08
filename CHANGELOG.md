@@ -15,6 +15,7 @@
 ## [1.33.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0...v1.33.0) (2024-12-05)
 
 
+
 ### Features
 
 * add api integration ([8aa9103](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8aa9103f02af92d9e1a780450daa7bb303afc150))
