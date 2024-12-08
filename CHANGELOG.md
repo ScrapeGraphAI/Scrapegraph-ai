@@ -1,11 +1,19 @@
-## [1.33.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.0-beta.1...v1.33.0-beta.2) (2024-12-06)
+## [1.33.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.1...v1.33.2) (2024-12-06)
 
 
-### Features
+### Bug Fixes
 
-* added scrolling method to chromium docloader ([1c8b910](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c8b910562112947a357277bca9dc81619b72e61))
+* client ([e16e94b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e16e94bf694d516071818adec5ea2f3a1404ec72))
 
-## [1.33.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0...v1.33.0-beta.1) (2024-12-05)
+## [1.33.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.0...v1.33.1) (2024-12-06)
+
+
+### Bug Fixes
+
+* did a quick fix ([a6f43d5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a6f43d53cb760e74e5b437cb721b09a4e569c5a2))
+
+## [1.33.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0...v1.33.0) (2024-12-05)
+
 
 
 ### Features

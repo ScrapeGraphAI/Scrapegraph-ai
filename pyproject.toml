@@ -3,8 +3,7 @@ name = "scrapegraphai"
 
 
 
-version = "1.33.0b2"
-
+version = "1.33.2"
 
 
 
@@ -45,7 +44,7 @@ dependencies = [
     "googlesearch-python>=1.2.5",
     "simpleeval>=1.0.0",
     "async_timeout>=4.0.3",
-    "scrapegraph-py>=0.0.4"
+    "scrapegraph-py>=1.7.0"
 ]
 
 license = "MIT"
