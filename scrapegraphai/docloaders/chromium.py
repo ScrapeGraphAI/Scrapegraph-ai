@@ -265,9 +265,12 @@ class ChromiumLoader(BaseLoader):
                 if attempt == self.RETRY_LIMIT:
                     results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
             finally:
-                await browser.close()
+                if "browser" in locals():
+                    await browser.close()
+
 
         return results
+
 
 
     async def ascrape_with_js_support(self, url: str) -> str:
