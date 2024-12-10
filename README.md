@@ -126,7 +126,7 @@ Remember to have [Ollama](https://ollama.com/) installed and download the models
 ## 🔍 Demo
 Official streamlit demo:
 
-[![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-ai-web-dashboard.streamlit.app)
+[![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-demo-demo.streamlit.app)
 
 Try it directly on the web using Google Colab:
 
