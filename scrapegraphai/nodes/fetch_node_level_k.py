@@ -1,7 +1,6 @@
 """
 fetch_node_level_k module
 """
-
 from typing import List, Optional
 from urllib.parse import urljoin
 from langchain_core.documents import Document

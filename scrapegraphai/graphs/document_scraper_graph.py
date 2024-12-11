@@ -9,7 +9,6 @@ from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from ..nodes import FetchNode, ParseNode, GenerateAnswerNode
 
-
 class DocumentScraperGraph(AbstractGraph):
     """
     DocumentScraperGraph is a scraping pipeline that automates the process of

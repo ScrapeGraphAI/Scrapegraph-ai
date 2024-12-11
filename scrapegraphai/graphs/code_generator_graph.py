@@ -17,7 +17,6 @@ from ..nodes import (
     GenerateCodeNode,
 )
 
-
 class CodeGeneratorGraph(AbstractGraph):
     """
     CodeGeneratorGraph is a script generator pipeline that generates

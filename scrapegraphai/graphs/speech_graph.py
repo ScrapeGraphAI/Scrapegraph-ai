@@ -1,7 +1,6 @@
 """
 SpeechGraph Module
 """
-
 from typing import Optional
 from pydantic import BaseModel
 from .base_graph import BaseGraph
@@ -14,7 +13,6 @@ from ..nodes import (
 )
 from ..utils.save_audio_from_bytes import save_audio_from_bytes
 from ..models import OpenAITextToSpeech
-
 
 class SpeechGraph(AbstractGraph):
     """

@@ -1,7 +1,6 @@
 """
 FetchNode Module
 """
-
 import json
 from typing import List, Optional
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
@@ -14,7 +13,6 @@ from ..docloaders import ChromiumLoader
 from ..utils.convert_to_md import convert_to_md
 from ..utils.logging import get_logger
 from .base_node import BaseNode
-
 
 class FetchNode(BaseNode):
     """
