@@ -87,8 +87,8 @@ graph_config = {
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Find some information about what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+    prompt="Extract me all the news from the website",
+    source="https://www.wired.com",
     config=graph_config
 )
 
@@ -100,10 +100,20 @@ print(json.dumps(result, indent=4))
 The output will be a dictionary like the following:
 
 ```python
-{
-    "company": "ScrapeGraphAI",
-    "name": "ScrapeGraphAI Extracting content from websites and local documents using LLM",
-    "contact_email": "contact@scrapegraphai.com"
+"result": {
+    "news": [
+      {
+        "title": "The New Jersey Drone Mystery May Not Actually Be That Mysterious",
+        "link": "https://www.wired.com/story/new-jersey-drone-mystery-maybe-not-drones/",
+        "author": "Lily Hay Newman"
+      },
+      {
+        "title": "Former ByteDance Intern Accused of Sabotage Among Winners of Prestigious AI Award",
+        "link": "https://www.wired.com/story/bytedance-intern-best-paper-neurips/",
+        "author": "Louise Matsakis"
+      },
+    ...
+    ]
 }
 ```
 There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
