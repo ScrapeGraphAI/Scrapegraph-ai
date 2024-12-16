@@ -65,6 +65,15 @@ class ChromiumLoader(BaseLoader):
         self.load_state = load_state
         self.requires_js_support = requires_js_support
         self.storage_state = storage_state
+        
+    async def scrape(self, url:str) -> str:
+        if self.backend == "playwright":
+            return await self.ascrape_playwright(url)
+        elif self.backend == "selenium":
+            return await self.ascrape_undetected_chromedriver(url)
+        else:
+            raise ValueError(f"Unsupported backend: {self.backend}")     
+
 
     async def ascrape_undetected_chromedriver(self, url: str) -> str:
         """
