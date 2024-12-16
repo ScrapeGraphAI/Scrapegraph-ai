@@ -1,3 +1,10 @@
+## [1.33.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.3...v1.33.4) (2024-12-16)
+
+
+### Bug Fixes
+
+* context window ([ffdadae](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ffdadaed6fe3f17da535e6eddb73851fce2f4bf2))
+
 ## [1.33.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.2...v1.33.3) (2024-12-11)
 
 
