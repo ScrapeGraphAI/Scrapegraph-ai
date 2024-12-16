@@ -1,13 +1,6 @@
 [project]
 name = "scrapegraphai"
-
-
-
-version = "1.33.6"
-
-
-
-
+version = "1.33.5"
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     { name = "Marco Vinciguerra", email = "mvincig11@gmail.com" },
@@ -115,11 +108,22 @@ screenshot_scraper = [
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.0.0"]
 build-backend = "hatchling.build"
 
-[tool.hatch.metadata]
-allow-direct-references = true
+[tool.hatch.version]
+path = "pyproject.toml"
+
+[tool.hatch.build]
+include = [
+    "scrapegraphai/**/*.py",
+    "scrapegraphai/**/*.typed",
+    "/tests",
+]
+exclude = [
+    "tests/**",
+    "examples/**",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["scrapegraphai"]
@@ -128,7 +132,13 @@ packages = ["scrapegraphai"]
 include = [
     "/scrapegraphai",
     "/tests",
+    "pyproject.toml",
+    "README.md",
+    "LICENSE",
 ]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [dependency-groups]
 dev = [
