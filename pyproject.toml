@@ -118,6 +118,18 @@ screenshot_scraper = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["scrapegraphai"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/scrapegraphai",
+    "/tests",
+]
+
 [dependency-groups]
 dev = [
     "burr[start]==0.22.1",
