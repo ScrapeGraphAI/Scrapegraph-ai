@@ -254,4 +254,7 @@ models_tokens = {
         "mixtral-moe-8x22B-instruct": 65536,
         "mixtral-moe-8x7B-instruct": 65536,
     },
+    "togetherai" : {
+        "Meta-Llama-3.1-70B-Instruct-Turbo": 128000
+    }
 }

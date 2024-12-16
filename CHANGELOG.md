@@ -1,45 +1,3 @@
-## [1.33.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.7...v1.33.8) (2024-12-16)
-
-
-### Bug Fixes
-
-* pyproject ([76ac0a2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/76ac0a2141d9d53af023a405e2c61849921e4f0e))
-
-## [1.33.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.6...v1.33.7) (2024-12-16)
-
-
-### Bug Fixes
-
-* pyproject ([3dcfcd4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3dcfcd492e71297031a7df1dba9dd135f1fae60e))
-
-## [1.33.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.5...v1.33.6) (2024-12-16)
-
-
-### Bug Fixes
-
-* pyproject ([bf6cb0a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bf6cb0a582004617724e11ed04ba617eb39abc0c))
-
-## [1.33.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.4...v1.33.5) (2024-12-16)
-
-
-### Bug Fixes
-
-* uv.lock ([0a7fc39](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0a7fc392dea2b62122b977d62f4d85b117fc8351))
-
-## [1.33.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.3...v1.33.4) (2024-12-16)
-
-
-### Bug Fixes
-
-* context window ([ffdadae](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ffdadaed6fe3f17da535e6eddb73851fce2f4bf2))
-
-## [1.33.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.2...v1.33.3) (2024-12-11)
-
-
-### Bug Fixes
-
-* formatting ([d1b2104](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d1b2104f28d84c5129edb29a5efdaf5bf7d22bfb))
-
 ## [1.33.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.1...v1.33.2) (2024-12-06)
 
 
@@ -55,6 +13,7 @@
 * did a quick fix ([a6f43d5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a6f43d53cb760e74e5b437cb721b09a4e569c5a2))
 
 ## [1.33.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.32.0...v1.33.0) (2024-12-05)
+
 
 
 ### Features
