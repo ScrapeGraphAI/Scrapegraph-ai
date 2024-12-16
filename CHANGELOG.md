@@ -1,3 +1,10 @@
+## [1.33.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.4...v1.33.5) (2024-12-16)
+
+
+### Bug Fixes
+
+* uv.lock ([0a7fc39](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0a7fc392dea2b62122b977d62f4d85b117fc8351))
+
 ## [1.33.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.3...v1.33.4) (2024-12-16)
 
 
