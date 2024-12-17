@@ -2,7 +2,7 @@ import asyncio
 import os
 import json
 from dotenv import load_dotenv
-from chromium import ChromiumLoader  # Import your ChromiumLoader class
+from scrapegraphai.docloaders.chromium import ChromiumLoader  # Import your ChromiumLoader class
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 from aiohttp import ClientError
