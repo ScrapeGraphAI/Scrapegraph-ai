@@ -15,7 +15,6 @@ from ..nodes import (
     GenerateAnswerNodeKLevel,
 )
 
-
 class DepthSearchGraph(AbstractGraph):
     """
     CodeGeneratorGraph is a script generator pipeline that generates

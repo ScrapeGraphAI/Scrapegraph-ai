@@ -56,13 +56,11 @@ class BaseGraph:
         self.callback_manager = CustomLLMCallbackManager()
 
         if nodes[0].node_name != entry_point.node_name:
-            # raise a warning if the entry point is not the first node in the list
             warnings.warn(
                 "Careful! The entry point node is different from the first node in the graph.")
 
         self._set_conditional_node_edges()
 
-        # Burr configuration
         self.use_burr = use_burr
         self.burr_config = burr_config or {}
 
@@ -91,7 +89,8 @@ class BaseGraph:
             if node.node_type == 'conditional_node':
                 outgoing_edges = [(from_node, to_node) for from_node, to_node in self.raw_edges if from_node.node_name == node.node_name]
                 if len(outgoing_edges) != 2:
-                    raise ValueError(f"ConditionalNode '{node.node_name}' must have exactly two outgoing edges.")
+                    raise ValueError(f"""ConditionalNode '{node.node_name}'
+                                     must have exactly two outgoing edges.""")
                 node.true_node_name = outgoing_edges[0][1].node_name
                 try:
                     node.false_node_name = outgoing_edges[1][1].node_name
@@ -151,14 +150,14 @@ class BaseGraph:
         """Extracts schema information from the node configuration."""
         if not hasattr(current_node, "node_config"):
             return None
-            
+
         if not isinstance(current_node.node_config, dict):
             return None
-            
+
         schema_config = current_node.node_config.get("schema")
         if not schema_config or isinstance(schema_config, dict):
             return None
-            
+
         try:
             return schema_config.schema()
         except Exception:
@@ -167,7 +166,7 @@ class BaseGraph:
     def _execute_node(self, current_node, state, llm_model, llm_model_name):
         """Executes a single node and returns execution information."""
         curr_time = time.time()
-        
+
         with self.callback_manager.exclusive_get_callback(llm_model, llm_model_name) as cb:
             result = current_node.execute(state)
             node_exec_time = time.time() - curr_time
@@ -197,17 +196,17 @@ class BaseGraph:
             raise ValueError(
                 f"Conditional Node returned a node name '{result}' that does not exist in the graph"
             )
-        
+
         return self.edges.get(current_node.node_name)
 
     def _execute_standard(self, initial_state: dict) -> Tuple[dict, list]:
         """
-        Executes the graph by traversing nodes starting from the entry point using the standard method.
+        Executes the graph by traversing nodes
+        starting from the entry point using the standard method.
         """
         current_node_name = self.entry_point
         state = initial_state
-        
-        # Tracking variables
+
         total_exec_time = 0.0
         exec_info = []
         cb_total = {
@@ -230,16 +229,13 @@ class BaseGraph:
 
         while current_node_name:
             current_node = self._get_node_by_name(current_node_name)
-            
-            # Update source information if needed
+
             if source_type is None:
                 source_type, source, prompt = self._update_source_info(current_node, state)
-            
-            # Get model information if needed
+
             if llm_model is None:
                 llm_model, llm_model_name, embedder_model = self._get_model_info(current_node)
-            
-            # Get schema if needed
+
             if schema is None:
                 schema = self._get_schema(current_node)
 
@@ -273,7 +269,6 @@ class BaseGraph:
                 )
                 raise e
 
-        # Add total results to execution info
         exec_info.append({
             "node_name": "TOTAL RESULT",
             "total_tokens": cb_total["total_tokens"],
@@ -284,7 +279,6 @@ class BaseGraph:
             "exec_time": total_exec_time,
         })
 
-        # Log final execution results
         graph_execution_time = time.time() - start_time
         response = state.get("answer", None) if source_type == "url" else None
         content = state.get("parsed_doc", None) if response is not None else None
@@ -343,4 +337,3 @@ class BaseGraph:
         self.raw_edges.append((last_node, node))
         self.nodes.append(node)
         self.edges = self._create_edges({e for e in self.raw_edges})
-

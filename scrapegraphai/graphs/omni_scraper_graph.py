@@ -9,7 +9,6 @@ from .abstract_graph import AbstractGraph
 from ..nodes import FetchNode, ParseNode, ImageToTextNode, GenerateAnswerOmniNode
 from ..models import OpenAIImageToText
 
-
 class OmniScraperGraph(AbstractGraph):
     """
     OmniScraper is a scraping pipeline that automates the process of

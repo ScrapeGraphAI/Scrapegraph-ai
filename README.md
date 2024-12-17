@@ -87,8 +87,8 @@ graph_config = {
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Find some information about what does the company do, the name and a contact email.",
-    source="https://scrapegraphai.com/",
+    prompt="Extract me all the news from the website",
+    source="https://www.wired.com",
     config=graph_config
 )
 
@@ -100,10 +100,20 @@ print(json.dumps(result, indent=4))
 The output will be a dictionary like the following:
 
 ```python
-{
-    "company": "ScrapeGraphAI",
-    "name": "ScrapeGraphAI Extracting content from websites and local documents using LLM",
-    "contact_email": "contact@scrapegraphai.com"
+"result": {
+    "news": [
+      {
+        "title": "The New Jersey Drone Mystery May Not Actually Be That Mysterious",
+        "link": "https://www.wired.com/story/new-jersey-drone-mystery-maybe-not-drones/",
+        "author": "Lily Hay Newman"
+      },
+      {
+        "title": "Former ByteDance Intern Accused of Sabotage Among Winners of Prestigious AI Award",
+        "link": "https://www.wired.com/story/bytedance-intern-best-paper-neurips/",
+        "author": "Louise Matsakis"
+      },
+    ...
+    ]
 }
 ```
 There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
@@ -126,7 +136,7 @@ Remember to have [Ollama](https://ollama.com/) installed and download the models
 ## 🔍 Demo
 Official streamlit demo:
 
-[![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-ai-web-dashboard.streamlit.app)
+[![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-demo-demo.streamlit.app)
 
 Try it directly on the web using Google Colab:
 
@@ -203,3 +213,5 @@ ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://githu
 
 - We would like to thank all the contributors to the project and the open-source community for their support.
 - ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
+
+Made with ❤️ by [ScrapeGraph AI](https://scrapegraphai.com)
