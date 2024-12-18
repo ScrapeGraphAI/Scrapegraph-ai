@@ -32,7 +32,7 @@ jobs:
         id: build_cache
         if: success()
       - name: Cache build
-        uses: actions/cache@v2
+        uses: actions/cache@latest
         with:
           path: ./dist
           key: ${{ runner.os }}-build-${{ hashFiles('dist/**') }}
@@ -59,6 +59,10 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Install semantic release plugins
+        run: npm install semantic-release-pypi@4 @semantic-release/git@10 @semantic-release/commit-analyzer@13 @semantic-release/release-notes-generator@14 @semantic-release/github@11 @semantic-release/changelog@6 conventional-changelog-conventionalcommits@8 --no-audit
+      - name: Clear npm cache
+        run: npm cache clean --force
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4.1.0
         with:
