@@ -131,12 +131,13 @@ class FetchNode(BaseNode):
             return state
 
         # For web sources, validate URL before proceeding
-        try:
-            if self.is_valid_url(source):
-                return self.handle_web_source(state, source)
-        except ValueError as e:
-            # Re-raise the exception from is_valid_url
-            raise
+        if input_type == "url":
+            try:
+                if self.is_valid_url(source):
+                    return self.handle_web_source(state, source)
+            except ValueError as e:
+                # Re-raise the exception from is_valid_url
+                raise
 
         return self.handle_local_source(state, source)
 
