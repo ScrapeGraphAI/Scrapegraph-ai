@@ -87,8 +87,11 @@ async def main():
     # Test with Playwright backend
     print("\n--- Testing Playwright Backend ---")
     try:
-        scraper_playwright = ChromiumLoader(urls=urls_to_scrape, backend="playwright", headless=True)
-        await test_scraper_with_analysis(scraper_playwright, urls_to_scrape)
+        scraper_playwright_chromium = ChromiumLoader(urls=urls_to_scrape, backend="playwright", headless=True, browser_name = "chromium")
+        await test_scraper_with_analysis(scraper_playwright_chromium, urls_to_scrape)
+        
+        scraper_playwright_firefox = ChromiumLoader(urls=urls_to_scrape, backend="playwright", headless=True, browser_name = "firefox")
+        await test_scraper_with_analysis(scraper_playwright_firefox, urls_to_scrape)
     except ImportError as ie:
         print(f"❌ Playwright ImportError: {ie}")
     except Exception as e:
@@ -97,8 +100,11 @@ async def main():
     # Test with Selenium backend
     print("\n--- Testing Selenium Backend ---")
     try:
-        scraper_selenium = ChromiumLoader(urls=urls_to_scrape, backend="selenium", headless=True)
-        await test_scraper_with_analysis(scraper_selenium, urls_to_scrape)
+        scraper_selenium_chromium = ChromiumLoader(urls=urls_to_scrape, backend="selenium", headless=True, browser_name = "chromium")
+        await test_scraper_with_analysis(scraper_selenium_chromium, urls_to_scrape)
+        
+        scraper_selenium_firefox = ChromiumLoader(urls=urls_to_scrape, backend="selenium", headless=True, browser_name = "firefox")
+        await test_scraper_with_analysis(scraper_selenium_firefox, urls_to_scrape)
     except ImportError as ie:
         print(f"❌ Selenium ImportError: {ie}")
     except Exception as e:
