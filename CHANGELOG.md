@@ -1,3 +1,10 @@
+## [1.34.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.2...v1.34.0-beta.3) (2024-12-18)
+
+
+### Bug Fixes
+
+* pyproject ([35a4907](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/35a490747cf6b8dad747a4af7f02d6f5aeb0d338))
+
 ## [1.34.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.1...v1.34.0-beta.2) (2024-12-17)
 
 
