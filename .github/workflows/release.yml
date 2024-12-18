@@ -16,6 +16,8 @@ jobs:
           sudo apt install -y git
       - name: Install uv
         uses: astral-sh/setup-uv@v3
+      - name: Clear Node.js cache
+        run: sudo apt-get purge -y nodejs
       - name: Install Node Env
         uses: actions/setup-node@v4
         with:
