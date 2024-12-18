@@ -1,3 +1,15 @@
+## [1.33.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.8...v1.33.9) (2024-12-18)
+
+
+### Bug Fixes
+
+* validate URL only if the input type is a URL ([e2caee6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e2caee695ecce2d13aa5a82306097b1a80ba0e18))
+
+
+### Docs
+
+* added api reference 🔗 ([67038e1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/67038e195224e1a721fe123ad1d5604b3592df20))
+
 ## [1.33.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.7...v1.33.8) (2024-12-16)
 
 
