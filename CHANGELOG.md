@@ -1,3 +1,17 @@
+## [1.34.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.3...v1.34.0-beta.4) (2024-12-18)
+
+
+### Bug Fixes
+
+* build config ([b186a4f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b186a4f1c73fe29fa706158cc3c61812d6b16343))
+* build config ([46f5985](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/46f598546109067267d01ae7d8ea7609526ea4d4))
+* build config ([d2fc53f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d2fc53fc8414475c9bee7590144fe4251d56faf4))
+* last desperate attempt to restore automatic builds ([2538fe3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2538fe3db339014ef54e2c78269bce9259e284ea))
+* release config ([9cd0d31](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9cd0d31882c22f347ebd9c58d8dd66b47d178c64))
+* release config ([62ee294](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/62ee294a864993a9414644c1547bafb96a43df20))
+* release config ([89863ee](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/89863ee166e09ee18287bfcc1b5475d894c9e8c6))
+* release config ([38e477c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/38e477c540a3a50fc7ff6120da255d51798bfadd))
+
 ## [1.34.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.2...v1.34.0-beta.3) (2024-12-18)
 
 
