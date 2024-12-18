@@ -64,13 +64,13 @@ jobs:
         with:
           semantic_version: 23
           extra_plugins: |
-            semantic-release-pypi@3
-            @semantic-release/git 
-            @semantic-release/commit-analyzer@12 
-            @semantic-release/release-notes-generator@13 
-            @semantic-release/github@10 
+            semantic-release-pypi@4
+            @semantic-release/git@10
+            @semantic-release/commit-analyzer@13
+            @semantic-release/release-notes-generator@14
+            @semantic-release/github@11
             @semantic-release/changelog@6
-            conventional-changelog-conventionalcommits@7
+            conventional-changelog-conventionalcommits@8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
