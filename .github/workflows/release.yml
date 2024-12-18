@@ -65,6 +65,12 @@ jobs:
         run: npm install semantic-release-pypi@4 @semantic-release/git@10 @semantic-release/commit-analyzer@13 @semantic-release/release-notes-generator@14 @semantic-release/github@11 @semantic-release/changelog@6 conventional-changelog-conventionalcommits@8 --no-audit
       - name: Clear npm cache
         run: npm cache clean --force
+      - name: Clear Node.js cache
+        run: sudo apt-get purge -y nodejs
+      - name: Install Node Env
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4.1.0
         with:
