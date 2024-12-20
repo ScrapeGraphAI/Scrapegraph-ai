@@ -4,6 +4,8 @@ from langchain_community.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
 import aiohttp
 import async_timeout
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from typing import Union
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
@@ -36,6 +38,7 @@ class ChromiumLoader(BaseLoader):
         load_state: str = "domcontentloaded",
         requires_js_support: bool = False,
         storage_state: Optional[str] = None,
+        browser_name: str = "chromium",  #default chromium
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
@@ -66,6 +69,7 @@ class ChromiumLoader(BaseLoader):
         self.load_state = load_state
         self.requires_js_support = requires_js_support
         self.storage_state = storage_state
+        self.browser_name = browser_name
         
     async def scrape(self, url:str) -> str:
         if self.backend == "playwright":
@@ -95,11 +99,35 @@ class ChromiumLoader(BaseLoader):
         while attempt < self.RETRY_LIMIT:
             try:
                 async with async_timeout.timeout(self.TIMEOUT):
-                    driver = uc.Chrome(headless=self.headless)
-                    driver.get(url)
-                    results = driver.page_source
-                    logger.info(f"Successfully scraped {url}")
-                    break
+                    # Handling browser selection
+                    if self.backend == "selenium":
+                        if self.browser_name == "chromium":
+                            options = ChromeOptions()
+                            options.headless = self.headless
+                            # Initialize undetected chromedriver for Selenium
+                            driver = uc.Chrome(options=options)
+                            driver.get(url)
+                            results = driver.page_source
+                            logger.info(f"Successfully scraped {url} with {self.browser_name}")
+                            break
+                        elif self.browser_name == "firefox":
+                            from selenium.webdriver.firefox.options import Options as FirefoxOptions
+                            options = FirefoxOptions()
+                            options.headless = self.headless
+                            # Initialize undetected Firefox driver (if required)
+                            driver = webdriver.Firefox(options=options)
+                            driver.get(url)
+                            results = driver.page_source
+                            logger.info(f"Successfully scraped {url} with {self.browser_name}")
+                            break
+                        else:
+                            logger.error(f"Unsupported browser {self.browser_name} for Selenium.")
+                            results = f"Error: Unsupported browser {self.browser_name}."
+                            break
+                    else:
+                        logger.error(f"Unsupported backend {self.backend}.")
+                        results = f"Error: Unsupported backend {self.backend}."
+                        break
             except (aiohttp.ClientError, asyncio.TimeoutError) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
@@ -118,7 +146,8 @@ class ChromiumLoader(BaseLoader):
         timeout: Union[int, None]=30, 
         scroll: int=15000,
         sleep: float=2,
-        scroll_to_bottom: bool=False
+        scroll_to_bottom: bool=False,
+        browser_name: str = "chromium" #default chrome is added
     ) -> str:
         """
         Asynchronously scrape the content of a given URL using Playwright's sync API and scrolling.
@@ -175,9 +204,17 @@ class ChromiumLoader(BaseLoader):
         while attempt < self.RETRY_LIMIT:
             try:
                 async with async_playwright() as p:
-                    browser = await p.chromium.launch(
+                    browser = None
+                    if browser_name == "chromium":
+                        browser = await p.chromium.launch(
                         headless=self.headless, proxy=self.proxy, **self.browser_config
                     )
+                    elif browser_name == "firefox":
+                        browser = await p.firefox.launch(
+                        headless=self.headless, proxy=self.proxy, **self.browser_config
+                    )  
+                    else:
+                        raise ValueError(f"Invalid browser name: {browser_name}")      
                     context = await browser.new_context()
                     await Malenia.apply_stealth(context)
                     page = await context.new_page()
@@ -235,7 +272,7 @@ class ChromiumLoader(BaseLoader):
 
         return results
 
-    async def ascrape_playwright(self, url: str) -> str:
+    async def ascrape_playwright(self, url: str, browser_name: str = "chromium") -> str:
         """
         Asynchronously scrape the content of a given URL using Playwright's async API.
 
@@ -255,9 +292,17 @@ class ChromiumLoader(BaseLoader):
         while attempt < self.RETRY_LIMIT:
             try:
                 async with async_playwright() as p, async_timeout.timeout(self.TIMEOUT):
-                    browser = await p.chromium.launch(
+                    browser = None
+                    if browser_name == "chromium":
+                        browser = await p.chromium.launch(
                         headless=self.headless, proxy=self.proxy, **self.browser_config
                     )
+                    elif browser_name == "firefox":
+                        browser = await p.firefox.launch(
+                        headless=self.headless, proxy=self.proxy, **self.browser_config
+                    )  
+                    else:
+                        raise ValueError(f"Invalid browser name: {browser_name}")
                     context = await browser.new_context(
                         storage_state=self.storage_state
                     )
@@ -282,7 +327,7 @@ class ChromiumLoader(BaseLoader):
 
 
 
-    async def ascrape_with_js_support(self, url: str) -> str:
+    async def ascrape_with_js_support(self, url: str , browser_name:str = "chromium") -> str:
         """
         Asynchronously scrape the content of a given URL by rendering JavaScript using Playwright.
 
@@ -302,9 +347,17 @@ class ChromiumLoader(BaseLoader):
         while attempt < self.RETRY_LIMIT:
             try:
                 async with async_playwright() as p, async_timeout.timeout(self.TIMEOUT):
-                    browser = await p.chromium.launch(
+                    browser = None
+                    if browser_name == "chromium":
+                        browser = await p.chromium.launch(
                         headless=self.headless, proxy=self.proxy, **self.browser_config
                     )
+                    elif browser_name == "firefox":
+                        browser = await p.firefox.launch(
+                        headless=self.headless, proxy=self.proxy, **self.browser_config
+                    )  
+                    else:
+                        raise ValueError(f"Invalid browser name: {browser_name}")
                     context = await browser.new_context(
                         storage_state=self.storage_state
                     )
