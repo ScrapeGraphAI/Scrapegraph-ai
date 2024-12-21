@@ -5,6 +5,7 @@ AbstractGraph Module
 from abc import ABC, abstractmethod
 from typing import Optional
 import uuid
+import asyncio
 import warnings
 from pydantic import BaseModel
 from langchain.chat_models import init_chat_model
@@ -293,3 +294,14 @@ class AbstractGraph(ABC):
         """
         Abstract method to execute the graph and return the result.
         """
+
+    async def run_safe_async(self) -> str:
+        """
+        Executes the run process asynchronously safety.
+
+        Returns:
+            str: The answer to the prompt.
+        """
+        
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(None, self.run)

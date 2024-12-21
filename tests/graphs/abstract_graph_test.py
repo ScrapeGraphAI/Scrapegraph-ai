@@ -97,3 +97,11 @@ class TestAbstractGraph:
     def test_create_llm_with_rate_limit(self, llm_config, expected_model):
         graph = TestGraph("Test prompt", {"llm": llm_config})
         assert isinstance(graph.llm_model, expected_model)
+        
+    @pytest.mark.asyncio
+    async def test_run_safe_async(self):
+        graph = TestGraph("Test prompt", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-randomtest001"}})
+        with patch.object(graph, 'run', return_value="Async result") as mock_run:
+            result = await graph.run_safe_async()
+            assert result == "Async result"
+            mock_run.assert_called_once()
