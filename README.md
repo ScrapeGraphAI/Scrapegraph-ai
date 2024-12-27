@@ -38,6 +38,8 @@ We offer SDKs in both Python and Node.js, making it easy to integrate into your 
 | Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
 | Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
 
+The Official API Documentation can be found [here](https://docs.scrapegraphai.com/).
+
 ## 🚀 Quick install
 
 The reference page for Scrapegraph-ai is available on the official page of PyPI: [pypi](https://pypi.org/project/scrapegraphai/).
@@ -155,8 +157,7 @@ Try it directly on the web using Google Colab:
 ## 📖 Documentation
 
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
-
-Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
+Check out also the Docusaurus [here](https://docs-oss.scrapegraphai.com/).
 
 ## 🏆 Sponsors
 <div style="text-align: center;">
