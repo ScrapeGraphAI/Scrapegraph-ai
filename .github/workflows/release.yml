@@ -42,7 +42,7 @@ jobs:
           uv sync --frozen
           uv pip install -e .
           uv build
-          uv pip install twine  # Explicitly install twine again
+          uv pip install "pkginfo>=1.10.0" twine  # Install newer pkginfo with twine
           python -m twine check dist/*
           
       - name: Debug Dist Directory
