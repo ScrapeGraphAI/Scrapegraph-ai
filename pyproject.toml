@@ -1,6 +1,6 @@
 [project]
 name = "scrapegraphai"
-version = "1.34.0b4"
+version = "1.34.0b5"
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     { name = "Marco Vinciguerra", email = "mvincig11@gmail.com" },
