@@ -1,3 +1,14 @@
+## [1.34.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.7...v1.34.0-beta.8) (2025-01-02)
+
+
+### Bug Fixes
+
+* added twine ([df07da9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/df07da9bcc59cbccf1c45d69e3a3e904eaed565b))
+* twine ([eb36a2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/eb36a2b630d62363f3c57e243f2b90cf530c0a3b))
+* uv virtual env ([fce9886](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fce988687b3dc6fc36ce9244a8c2744f4a25d561))
+* version ([95b8990](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/95b8990a3649646972e12d78b11c7e1b7e707bf6))
+* workflow ([abe2945](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/abe29457f2380932d070bfd607c8ab5f749627c3))
+
 ## [1.34.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.6...v1.34.0-beta.7) (2025-01-02)
 
 
