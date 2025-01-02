@@ -34,17 +34,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
           
-      - name: Install dependencies
+      - name: Install dependencies and build package
         run: |
           uv venv
-          source .venv/bin/activate
+          . .venv/bin/activate
           uv pip install build hatchling hatch-vcs
           uv sync --frozen
+          uv build --no-sources
           
-      - name: Build package
-        run: python -m build
-        id: build_cache
-        
       - name: Cache build artifacts
         uses: actions/cache@v3
         with:
