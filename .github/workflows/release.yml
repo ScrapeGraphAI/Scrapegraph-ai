@@ -38,10 +38,11 @@ jobs:
         run: |
           uv venv
           . .venv/bin/activate
-          uv pip install --upgrade setuptools wheel hatchling twine
+          uv pip install --upgrade setuptools wheel hatchling
           uv sync --frozen
           uv pip install -e .
           uv build
+          uv pip install twine  # Explicitly install twine again
           python -m twine check dist/*
           
       - name: Debug Dist Directory
