@@ -1,3 +1,17 @@
+## [1.33.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.10...v1.33.11) (2025-01-02)
+
+
+### Bug Fixes
+
+* revert ([b312251](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b312251cc56ee4c82554ecf116b5e6edd1560726))
+* revert ([bb5de58](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bb5de581c064a1d141f849081e52987500957d1c))
+
+
+### Docs
+
+* added official cookbook reference ([98aa74f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/98aa74ff2d35041884130be14efdf47ca5e716df))
+* updated documentation reference ([fe89ae2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fe89ae29e6dc5f4322c25c693e2c9f6ce958d6e2))
+
 ## [1.33.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.1...v1.33.2) (2024-12-06)
 
 
