@@ -1,3 +1,10 @@
+## [1.34.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.5...v1.34.0-beta.6) (2025-01-02)
+
+
+### Bug Fixes
+
+* release workflow ([a00f128](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a00f128992e9fef88c870295c46b983b4286a3eb))
+
 ## [1.34.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.4...v1.34.0-beta.5) (2025-01-02)
 
 
