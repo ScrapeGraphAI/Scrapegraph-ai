@@ -1,3 +1,10 @@
+## [1.34.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.9...v1.34.0-beta.10) (2025-01-02)
+
+
+### Bug Fixes
+
+* upgrade twine ([020e211](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/020e21123889c6483459e9db1c3c796cbc116140))
+
 ## [1.34.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.8...v1.34.0-beta.9) (2025-01-02)
 
 
