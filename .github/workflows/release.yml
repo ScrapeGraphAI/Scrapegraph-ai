@@ -42,7 +42,7 @@ jobs:
           uv sync --frozen
           uv pip install -e .
           uv build
-          uv run twine check dist/*
+          python -m twine check dist/*
           
       - name: Debug Dist Directory
         run: ls -al dist
