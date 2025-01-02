@@ -1,3 +1,10 @@
+## [1.34.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.11...v1.34.0-beta.12) (2025-01-02)
+
+
+### Bug Fixes
+
+* removed license for license-files ([b5acfb4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b5acfb414321989c45f76fad82f0d720ec889274))
+
 ## [1.34.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.10...v1.34.0-beta.11) (2025-01-02)
 
 
