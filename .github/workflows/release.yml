@@ -25,17 +25,29 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Remove Hardcoded Version (if present)
+        run: |
+          sed -i '/^version =/d' pyproject.toml
+      - name: Update Dependencies
+        run: |
+          uv pip install --upgrade setuptools wheel hatchling twine
       - name: Build app
         run: |
           uv sync --frozen
           uv build
         id: build_cache
         if: success()
+      - name: Validate Metadata
+        run: |
+          uv run twine check dist/*
+      - name: Debug Dist Directory
+        run: |
+          ls -al dist
       - name: Cache build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./dist
-          key: ${{ runner.os }}-build-${{ hashFiles('dist/**') }}
+          key: ${{ runner.os }}-build-${{ github.sha }}
         if: steps.build_cache.outputs.id != ''
 
   release:
@@ -43,11 +55,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment: development
-    if: | 
-        github.event_name == 'push' && github.ref == 'refs/heads/main' || 
-        github.event_name == 'push' && github.ref == 'refs/heads/pre/beta' || 
-        github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.event.pull_request.base.ref == 'main' || 
-        github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.event.pull_request.base.ref == 'pre/beta'
+    if: > 
+        github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/pre/beta') ||
+        (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged &&
+         (github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'pre/beta'))
     permissions:
       contents: write
       issues: write
