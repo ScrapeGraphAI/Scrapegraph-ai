@@ -108,35 +108,8 @@ screenshot_scraper = [
 ]
 
 [build-system]
-requires = ["hatchling>=1.0.0", "hatch-vcs"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.hatch.build]
-packages = ["scrapegraphai"]
-exclude = [
-    "tests/**",
-    "examples/**",
-]
-
-[tool.hatch.version]
-source = "vcs"
-
-[tool.hatch.build.hooks.vcs]
-version-file = "scrapegraphai/_version.py"
-
-[tool.hatch.build.targets.wheel]
-packages = ["scrapegraphai"]
-
-[tool.hatch.build.targets.sdist]
-include = [
-    "/scrapegraphai",
-    "pyproject.toml",
-    "README.md",
-    "LICENSE",
-]
-
-[tool.hatch.metadata]
-allow-direct-references = true
 
 [dependency-groups]
 dev = [
