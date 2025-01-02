@@ -25,20 +25,23 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Remove Hardcoded Version (if present)
+      - name: Create Virtual Environment
         run: |
-          sed -i '/^version =/d' pyproject.toml
-      - name: Update Dependencies
+          uv venv
+      - name: Activate Virtual Environment and Install Dependencies
         run: |
+          source .venv/bin/activate  # For Linux/macOS. Use .venv\Scripts\activate for Windows
+          uv sync --frozen
           uv pip install --upgrade setuptools wheel hatchling twine
       - name: Build app
         run: |
-          uv sync --frozen
+          source .venv/bin/activate  # Activate the virtual environment again if needed
           uv build
         id: build_cache
         if: success()
       - name: Validate Metadata
         run: |
+          source .venv/bin/activate
           uv run twine check dist/*
       - name: Debug Dist Directory
         run: |
@@ -70,6 +73,9 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Restore Virtual Environment
+        run: |
+          source .venv/bin/activate
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4.1.0
         with:
