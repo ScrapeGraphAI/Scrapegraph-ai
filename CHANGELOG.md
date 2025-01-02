@@ -1,3 +1,10 @@
+## [1.34.0-beta.9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.8...v1.34.0-beta.9) (2025-01-02)
+
+
+### Bug Fixes
+
+* update pkginfo ([9203ab9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9203ab9a4ab4400105fd34433684f9ac2453f35c))
+
 ## [1.34.0-beta.8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.7...v1.34.0-beta.8) (2025-01-02)
 
 
