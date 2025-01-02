@@ -1,3 +1,10 @@
+## [1.34.0-beta.11](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.10...v1.34.0-beta.11) (2025-01-02)
+
+
+### Bug Fixes
+
+* added license-files = [ ([9150e4c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9150e4c95fa468afe9ddda3f1278b5037a2d0f38))
+
 ## [1.34.0-beta.10](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.9...v1.34.0-beta.10) (2025-01-02)
 
 
