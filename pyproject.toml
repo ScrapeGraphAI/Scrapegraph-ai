@@ -42,6 +42,9 @@ dependencies = [
 ]
 
 license = "MIT"
+license-files = [
+    "LICENSE"
+]
 readme = "README.md"
 homepage = "https://scrapegraphai.com/"
 repository = "https://github.com/ScrapeGraphAI/Scrapegraph-ai"
