@@ -1,3 +1,10 @@
+## [1.34.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.6...v1.34.0-beta.7) (2025-01-02)
+
+
+### Bug Fixes
+
+* revert to d1b2104 ([a0c0a7f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a0c0a7ff5c5dc9a107e7be8d5b5e1854886d411c))
+
 ## [1.34.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.5...v1.34.0-beta.6) (2025-01-02)
 
 
