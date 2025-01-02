@@ -4081,7 +4081,7 @@ wheels = [
 
 [[package]]
 name = "scrapegraphai"
-version = "1.34.0b8"
+version = "1.34.0b10"
 source = { editable = "." }
 dependencies = [
     { name = "async-timeout", version = "4.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },

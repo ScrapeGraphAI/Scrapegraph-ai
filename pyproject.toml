@@ -41,10 +41,12 @@ dependencies = [
     "scrapegraph-py>=1.7.0"
 ]
 
-license = "MIT"
+# License Information.
+# See PEP-639 at https://peps.python.org/pep-0639/#add-license-files-key
 license-files = [
-    "LICENSE"
+    "LICENSE",
 ]
+
 readme = "README.md"
 homepage = "https://scrapegraphai.com/"
 repository = "https://github.com/ScrapeGraphAI/Scrapegraph-ai"
