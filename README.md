@@ -24,21 +24,9 @@ Just say which information you want to extract and the library will do it for yo
   <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
 </p>
 
-## 🔗 ScrapeGraph API & SDKs
-If you are looking for a quick solution to integrate ScrapeGraph in your system, check out our powerful API [here!](https://dashboard.scrapegraphai.com/login)
+## News 📰
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/api-banner.png" alt="ScrapeGraph API Banner" style="width: 100%;">
-</p>
-
-We offer SDKs in both Python and Node.js, making it easy to integrate into your projects. Check them out below:
-
-| SDK       | Language | GitHub Link                                                                 |
-|-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
-
-The Official API Documentation can be found [here](https://docs.scrapegraphai.com/).
+- ScrapegraphAI has now his APIs! Check it out [here](https://scrapegraphai.com)!
 
 ## 🚀 Quick install
 
@@ -99,8 +87,8 @@ graph_config = {
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Extract me all the news from the website",
-    source="https://www.wired.com",
+    prompt="Find some information about what does the company do, the name and a contact email.",
+    source="https://scrapegraphai.com/",
     config=graph_config
 )
 
@@ -112,20 +100,10 @@ print(json.dumps(result, indent=4))
 The output will be a dictionary like the following:
 
 ```python
-"result": {
-    "news": [
-      {
-        "title": "The New Jersey Drone Mystery May Not Actually Be That Mysterious",
-        "link": "https://www.wired.com/story/new-jersey-drone-mystery-maybe-not-drones/",
-        "author": "Lily Hay Newman"
-      },
-      {
-        "title": "Former ByteDance Intern Accused of Sabotage Among Winners of Prestigious AI Award",
-        "link": "https://www.wired.com/story/bytedance-intern-best-paper-neurips/",
-        "author": "Louise Matsakis"
-      },
-    ...
-    ]
+{
+    "company": "ScrapeGraphAI",
+    "name": "ScrapeGraphAI Extracting content from websites and local documents using LLM",
+    "contact_email": "contact@scrapegraphai.com"
 }
 ```
 There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
@@ -157,7 +135,8 @@ Try it directly on the web using Google Colab:
 ## 📖 Documentation
 
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
-Check out also the Docusaurus [here](https://docs-oss.scrapegraphai.com/).
+
+Check out also the Docusaurus [here](https://scrapegraph-doc.onrender.com/).
 
 ## 🏆 Sponsors
 <div style="text-align: center;">
