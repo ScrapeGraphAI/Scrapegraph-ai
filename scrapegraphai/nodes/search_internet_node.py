@@ -99,5 +99,8 @@ class SearchInternetNode(BaseNode):
         if len(answer) == 0:
             raise ValueError("Zero results found for the search query.")
 
+        # Store both the URLs and considered_urls in the state
         state.update({self.output[0]: answer})
+        state["considered_urls"] = answer  # Add this as a backup
+
         return state

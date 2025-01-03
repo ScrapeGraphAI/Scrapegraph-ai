@@ -96,7 +96,17 @@ class MergeAnswersNode(BaseNode):
 
         merge_chain = prompt_template | self.llm_model | output_parser
         answer = merge_chain.invoke({"user_prompt": user_prompt})
-        answer["sources"] = state.get("urls", [])
+        
+        # Get the URLs from the state, ensuring we get the actual URLs used for scraping
+        urls = []
+        if "urls" in state:
+            urls = state["urls"]
+        elif "considered_urls" in state:
+            urls = state["considered_urls"]
+        
+        # Only add sources if we actually have URLs
+        if urls:
+            answer["sources"] = urls
 
         state.update({self.output[0]: answer})
         return state

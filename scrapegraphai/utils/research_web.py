@@ -41,7 +41,7 @@ def search_on_web(query: str, search_engine: str = "Google",
         research = DuckDuckGoSearchResults(max_results=max_results)
         res = research.run(query)
         links = re.findall(r'https?://[^\s,\]]+', res)
-        return links
+        return links[:max_results]
 
     elif search_engine.lower() == "bing":
         headers = {
@@ -66,7 +66,7 @@ def search_on_web(query: str, search_engine: str = "Google",
         response = requests.get(url, params=params)
 
         data = response.json()
-        limited_results = data["results"][:max_results]
+        limited_results = [result['url'] for result in data["results"][:max_results]]
         return limited_results
 
     else:
