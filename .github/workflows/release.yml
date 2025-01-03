@@ -14,40 +14,55 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
       - name: Install uv
         uses: astral-sh/setup-uv@v3
+        
       - name: Install Node Env
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          
       - name: Checkout
         uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Build app
+          
+      - name: Build and validate package
         run: |
+          uv venv
+          . .venv/bin/activate
+          uv pip install --upgrade setuptools wheel hatchling
           uv sync --frozen
+          uv pip install -e .
           uv build
-        id: build_cache
-        if: success()
+          uv pip install --upgrade pkginfo==1.12.0 twine==6.0.1  # Upgrade pkginfo and install twine
+          python -m twine check dist/*
+          
+      - name: Debug Dist Directory
+        run: ls -al dist
+        
       - name: Cache build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./dist
-          key: ${{ runner.os }}-build-${{ hashFiles('dist/**') }}
-        if: steps.build_cache.outputs.id != ''
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
   release:
     name: Release
     runs-on: ubuntu-latest
     needs: build
     environment: development
-    if: | 
-        github.event_name == 'push' && github.ref == 'refs/heads/main' || 
-        github.event_name == 'push' && github.ref == 'refs/heads/pre/beta' || 
-        github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.event.pull_request.base.ref == 'main' || 
-        github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.event.pull_request.base.ref == 'pre/beta'
+    if: > 
+        github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/pre/beta') ||
+        (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged &&
+         (github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'pre/beta'))
     permissions:
       contents: write
       issues: write
@@ -59,6 +74,13 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+          
+      - name: Restore build artifacts
+        uses: actions/cache@v3
+        with:
+          path: ./dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
+          
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4.1.0
         with:

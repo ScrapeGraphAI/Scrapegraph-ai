@@ -1,12 +1,6 @@
 [project]
 name = "scrapegraphai"
-
-
-
-version = "1.33.11"
-
-
-
+version = "1.34.0b14"
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
@@ -48,7 +42,6 @@ dependencies = [
     "scrapegraph-py>=1.7.0"
 ]
 
-license = "MIT"
 readme = "README.md"
 homepage = "https://scrapegraphai.com/"
 repository = "https://github.com/ScrapeGraphAI/Scrapegraph-ai"
@@ -115,7 +108,8 @@ screenshot_scraper = [
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling==1.26.3"]
+
 build-backend = "hatchling.build"
 
 [dependency-groups]
