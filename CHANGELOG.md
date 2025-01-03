@@ -1,3 +1,10 @@
+## [1.34.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.12...v1.34.0-beta.13) (2025-01-03)
+
+
+### Bug Fixes
+
+* bump hatchling version to 1.26.3 ([159ed32](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/159ed329d2e8fa86015df1e59a7e2ebb439c6ec0))
+
 ## [1.34.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.11...v1.34.0-beta.12) (2025-01-02)
 
 
