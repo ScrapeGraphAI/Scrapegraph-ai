@@ -55,6 +55,9 @@ class SmartScraperGraph(AbstractGraph):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
+        
+        # for detailed logging of the SmartScraper API set it to True
+        self.verbose = config.get("verbose", False)
 
     def _create_graph(self) -> BaseGraph:
         """
