@@ -41,12 +41,6 @@ dependencies = [
     "scrapegraph-py>=1.7.0"
 ]
 
-# License Information.
-# See PEP-639 at https://peps.python.org/pep-0639/#add-license-files-key
-license-files = [
-    "LICENSE",
-]
-
 readme = "README.md"
 homepage = "https://scrapegraphai.com/"
 repository = "https://github.com/ScrapeGraphAI/Scrapegraph-ai"
@@ -113,7 +107,7 @@ screenshot_scraper = [
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling==1.26.3"]
 build-backend = "hatchling.build"
 
 [dependency-groups]
