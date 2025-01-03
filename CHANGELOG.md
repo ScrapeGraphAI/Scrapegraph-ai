@@ -1,12 +1,15 @@
 ## [1.34.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.12...v1.34.0-beta.13) (2025-01-03)
 
 
+
 ### Bug Fixes
 
 * bump hatchling version to 1.26.3 ([159ed32](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/159ed329d2e8fa86015df1e59a7e2ebb439c6ec0))
 
 ## [1.34.0-beta.12](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.11...v1.34.0-beta.12) (2025-01-02)
 
+
+### Docs
 
 ### Bug Fixes
 
@@ -109,6 +112,7 @@
 * **release:** 1.33.6 [skip ci] ([ca96c3d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ca96c3d4309bd2b92c87a2b0095578dda302ad92))
 * **release:** 1.33.7 [skip ci] ([7a5764e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7a5764e3fdbfea12b04ea0686a28025a9d89cb2f))
 * **release:** 1.33.8 [skip ci] ([bdd6a39](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bdd6a392e2c18de8c3e4e47e2f91a4a366365ff2))
+
 
 ## [1.33.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.1...v1.33.2) (2024-12-06)
 
