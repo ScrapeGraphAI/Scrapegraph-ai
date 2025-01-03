@@ -1,3 +1,28 @@
+## [1.34.0-beta.14](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.13...v1.34.0-beta.14) (2025-01-03)
+
+
+### Bug Fixes
+
+* add model tokens ([9b16cb9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9b16cb987fd93132d814ebd933af1565eb166331))
+* revert ([b312251](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b312251cc56ee4c82554ecf116b5e6edd1560726))
+* revert ([bb5de58](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bb5de581c064a1d141f849081e52987500957d1c))
+* validate URL only if the input type is a URL ([e2caee6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e2caee695ecce2d13aa5a82306097b1a80ba0e18))
+
+
+### Docs
+
+* added api reference 🔗 ([67038e1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/67038e195224e1a721fe123ad1d5604b3592df20))
+* added official cookbook reference ([98aa74f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/98aa74ff2d35041884130be14efdf47ca5e716df))
+* fixed missing import ([96064f2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/96064f20ee8a849a2548f293419cf9028386c47b))
+* updated documentation reference ([fe89ae2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fe89ae29e6dc5f4322c25c693e2c9f6ce958d6e2))
+
+
+### CI
+
+* **release:** 1.33.10 [skip ci] ([a44b74a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a44b74aa6f7be7cdb4bdbebebc3b51a6d54a51e6))
+* **release:** 1.33.11 [skip ci] ([30f48b3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/30f48b394f6eb8c7c9a1fa113bffabd2ac1ac585))
+* **release:** 1.33.9 [skip ci] ([9b6d6c0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9b6d6c0efb2fd1af5bf87cf61a0ba3d79876d21d))
+
 ## [1.34.0-beta.13](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.12...v1.34.0-beta.13) (2025-01-03)
 
 
