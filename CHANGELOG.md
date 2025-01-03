@@ -1,3 +1,10 @@
+## [1.34.0-beta.15](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.14...v1.34.0-beta.15) (2025-01-03)
+
+
+### Bug Fixes
+
+* search graph ([d4b2679](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d4b26796d94d314af135d2d1bbd538e1d4be7593))
+
 ## [1.34.0-beta.14](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.13...v1.34.0-beta.14) (2025-01-03)
 
 
