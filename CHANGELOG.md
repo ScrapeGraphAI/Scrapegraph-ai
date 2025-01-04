@@ -1,3 +1,10 @@
+## [1.34.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0...v1.34.1) (2025-01-04)
+
+
+### Bug Fixes
+
+* add new models ([72684a9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/72684a9476e255d5e20550f82daf3e7462fb8f5a))
+
 ## [1.34.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.11...v1.34.0) (2025-01-03)
 
 
