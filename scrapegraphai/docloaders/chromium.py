@@ -4,8 +4,6 @@ from langchain_community.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
 import aiohttp
 import async_timeout
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options as ChromeOptions
 from typing import Union
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
@@ -90,7 +88,10 @@ class ChromiumLoader(BaseLoader):
         Returns:
             str: The scraped HTML content or an error message if an exception occurs.
         """
-        import undetected_chromedriver as uc
+        try:
+            import undetected_chromedriver as uc
+        except ImportError:
+            raise ImportError("undetected_chromedriver is required for ChromiumLoader. Please install it with `pip install undetected-chromedriver`.")
 
         logger.info(f"Starting scraping with {self.backend}...")
         results = ""
@@ -102,6 +103,7 @@ class ChromiumLoader(BaseLoader):
                     # Handling browser selection
                     if self.backend == "selenium":
                         if self.browser_name == "chromium":
+                            from selenium.webdriver.chrome.options import Options as ChromeOptions
                             options = ChromeOptions()
                             options.headless = self.headless
                             # Initialize undetected chromedriver for Selenium
@@ -112,6 +114,7 @@ class ChromiumLoader(BaseLoader):
                             break
                         elif self.browser_name == "firefox":
                             from selenium.webdriver.firefox.options import Options as FirefoxOptions
+                            from selenium import webdriver
                             options = FirefoxOptions()
                             options.headless = self.headless
                             # Initialize undetected Firefox driver (if required)
