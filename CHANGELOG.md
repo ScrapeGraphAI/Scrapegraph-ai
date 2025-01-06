@@ -1,3 +1,10 @@
+## [1.35.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.2...v1.35.0-beta.3) (2025-01-06)
+
+
+### Features
+
+* serper api search ([1c0141f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c0141fd281881e342a113d5a414930d8184146b))
+
 ## [1.35.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.1...v1.35.0-beta.2) (2025-01-06)
 
 
