@@ -84,6 +84,7 @@ dev-dependencies = [
     "pytest-mock>=3.14.0",
     "pytest-asyncio>=0.25.0",
     "pylint>=3.2.5",
+    "poethepoet>=0.32.0"
 ]
 
 [tool.poe.tasks]
