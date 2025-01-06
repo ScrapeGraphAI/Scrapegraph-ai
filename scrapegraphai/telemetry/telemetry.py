@@ -14,14 +14,15 @@ To disable sending telemetry there are three ways:
   or:
   export SCRAPEGRAPHAI_TELEMETRY_ENABLED=false
 """
+
 import configparser
 import functools
 import importlib.metadata
 import json
+import logging
 import os
 import platform
 import threading
-import logging
 import uuid
 from typing import Callable, Dict
 from urllib import request
@@ -35,6 +36,7 @@ TIMEOUT = 2
 DEFAULT_CONFIG_LOCATION = os.path.expanduser("~/.scrapegraphai.conf")
 
 logger = logging.getLogger(__name__)
+
 
 def _load_config(config_location: str) -> configparser.ConfigParser:
     config = configparser.ConfigParser()
@@ -56,6 +58,7 @@ def _load_config(config_location: str) -> configparser.ConfigParser:
             pass
     return config
 
+
 def _check_config_and_environ_for_telemetry_flag(
     telemetry_default: bool, config_obj: configparser.ConfigParser
 ) -> bool:
@@ -64,16 +67,20 @@ def _check_config_and_environ_for_telemetry_flag(
         try:
             telemetry_enabled = config_obj.getboolean("DEFAULT", "telemetry_enabled")
         except ValueError as e:
-            logger.debug(f"""Unable to parse value for 
-                         `telemetry_enabled` from config. Encountered {e}""")
+            logger.debug(
+                f"""Unable to parse value for
+                         `telemetry_enabled` from config. Encountered {e}"""
+            )
     if os.environ.get("SCRAPEGRAPHAI_TELEMETRY_ENABLED") is not None:
         env_value = os.environ.get("SCRAPEGRAPHAI_TELEMETRY_ENABLED")
         config_obj["DEFAULT"]["telemetry_enabled"] = env_value
         try:
             telemetry_enabled = config_obj.getboolean("DEFAULT", "telemetry_enabled")
         except ValueError as e:
-            logger.debug(f"""Unable to parse value for `SCRAPEGRAPHAI_TELEMETRY_ENABLED` 
-                         from environment. Encountered {e}""")
+            logger.debug(
+                f"""Unable to parse value for `SCRAPEGRAPHAI_TELEMETRY_ENABLED`
+                         from environment. Encountered {e}"""
+            )
     return telemetry_enabled
 
 
@@ -92,12 +99,14 @@ BASE_PROPERTIES = {
     "telemetry_version": "0.0.3",
 }
 
+
 def disable_telemetry():
     """
-    function for disabling the telemetries 
+    function for disabling the telemetries
     """
     global g_telemetry_enabled
     g_telemetry_enabled = False
+
 
 def is_telemetry_enabled() -> bool:
     """
@@ -118,6 +127,7 @@ def is_telemetry_enabled() -> bool:
     else:
         return False
 
+
 def _send_event_json(event_json: dict):
     headers = {
         "Content-Type": "application/json",
@@ -136,6 +146,7 @@ def _send_event_json(event_json: dict):
     else:
         logger.debug(f"Telemetry data sent: {data}")
 
+
 def send_event_json(event_json: dict):
     """
     fucntion for sending event json
@@ -147,6 +158,7 @@ def send_event_json(event_json: dict):
         th.start()
     except Exception as e:
         logger.debug(f"Failed to send telemetry data in a thread: {e}")
+
 
 def log_event(event: str, properties: Dict[str, any]):
     """
@@ -160,10 +172,22 @@ def log_event(event: str, properties: Dict[str, any]):
         }
         send_event_json(event_json)
 
-def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict,
-                        llm_model: str, embedder_model: str, source_type: str,
-                        execution_time: float, content: str = None, response: dict = None,
-                        error_node: str = None, exception: str = None, total_tokens: int = None):
+
+def log_graph_execution(
+    graph_name: str,
+    source: str,
+    prompt: str,
+    schema: dict,
+    llm_model: str,
+    embedder_model: str,
+    source_type: str,
+    execution_time: float,
+    content: str = None,
+    response: dict = None,
+    error_node: str = None,
+    exception: str = None,
+    total_tokens: int = None,
+):
     """
     function for logging the graph execution
     """
@@ -181,14 +205,16 @@ def log_graph_execution(graph_name: str, source: str, prompt:str, schema:dict,
         "error_node": error_node,
         "exception": exception,
         "total_tokens": total_tokens,
-        "type": "community-library"
+        "type": "community-library",
     }
     log_event("graph_execution", properties)
+
 
 def capture_function_usage(call_fn: Callable) -> Callable:
     """
     function that captures the usage
     """
+
     @functools.wraps(call_fn)
     def wrapped_fn(*args, **kwargs):
         try:
@@ -199,5 +225,8 @@ def capture_function_usage(call_fn: Callable) -> Callable:
                     function_name = call_fn.__name__
                     log_event("function_usage", {"function_name": function_name})
                 except Exception as e:
-                    logger.debug(f"Failed to send telemetry for function usage. Encountered: {e}")
+                    logger.debug(
+                        f"Failed to send telemetry for function usage. Encountered: {e}"
+                    )
+
     return wrapped_fn

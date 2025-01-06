@@ -14,7 +14,7 @@ TEMPLATE_REASONING = """
 ```
 
 **Analysis Instructions**:
-1. **Interpret User Request:** 
+1. **Interpret User Request:**
 * Identify the key information types or entities the user is seeking.
 * Note any specific attributes, relationships, or constraints mentioned.
 
@@ -47,7 +47,7 @@ TEMPLATE_REASONING_WITH_CONTEXT = """
 {additional_context}
 
 **Analysis Instructions**:
-1. **Interpret User Request and Context:** 
+1. **Interpret User Request and Context:**
 * Identify the key information types or entities the user is seeking.
 * Note any specific attributes, relationships, or constraints mentioned.
 * Incorporate insights from the additional context to refine understanding of the task.

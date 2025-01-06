@@ -1,21 +1,21 @@
-""" 
+"""
 OmniSearchGraph Module
 """
+
 from copy import deepcopy
 from typing import Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
-from .omni_scraper_graph import OmniScraperGraph
-from ..nodes import (
-    SearchInternetNode,
-    GraphIteratorNode,
-    MergeAnswersNode
-)
+
+from ..nodes import GraphIteratorNode, MergeAnswersNode, SearchInternetNode
 from ..utils.copy import safe_deepcopy
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+from .omni_scraper_graph import OmniScraperGraph
+
 
 class OmniSearchGraph(AbstractGraph):
-    """ 
+    """
     OmniSearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
     It only requires a user prompt to search the internet and generate an answer.
 
@@ -65,8 +65,8 @@ class OmniSearchGraph(AbstractGraph):
             node_config={
                 "llm_model": self.llm_model,
                 "max_results": self.max_results,
-                "search_engine": self.copy_config.get("search_engine")
-            }
+                "search_engine": self.copy_config.get("search_engine"),
+            },
         )
         graph_iterator_node = GraphIteratorNode(
             input="user_prompt & urls",
@@ -75,30 +75,23 @@ class OmniSearchGraph(AbstractGraph):
                 "graph_instance": OmniScraperGraph,
                 "scraper_config": self.copy_config,
             },
-            schema=self.copy_schema
+            schema=self.copy_schema,
         )
 
         merge_answers_node = MergeAnswersNode(
             input="user_prompt & results",
             output=["answer"],
-            node_config={
-                "llm_model": self.llm_model,
-                "schema": self.copy_schema
-            }
+            node_config={"llm_model": self.llm_model, "schema": self.copy_schema},
         )
 
         return BaseGraph(
-            nodes=[
-                search_internet_node,
-                graph_iterator_node,
-                merge_answers_node
-            ],
+            nodes=[search_internet_node, graph_iterator_node, merge_answers_node],
             edges=[
                 (search_internet_node, graph_iterator_node),
-                (graph_iterator_node, merge_answers_node)
+                (graph_iterator_node, merge_answers_node),
             ],
             entry_point=search_internet_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:

@@ -1,10 +1,11 @@
 import asyncio
-from typing import Any, AsyncIterator, Iterator, List, Optional
-from langchain_community.document_loaders.base import BaseLoader
-from langchain_core.documents import Document
+from typing import Any, AsyncIterator, Iterator, List, Optional, Union
+
 import aiohttp
 import async_timeout
-from typing import Union
+from langchain_community.document_loaders.base import BaseLoader
+from langchain_core.documents import Document
+
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
 logger = get_logger("web-loader")
@@ -33,7 +34,7 @@ class ChromiumLoader(BaseLoader):
         load_state: str = "domcontentloaded",
         requires_js_support: bool = False,
         storage_state: Optional[str] = None,
-        browser_name: str = "chromium",  #default chromium
+        browser_name: str = "chromium",  # default chromium
         retry_limit: int = 1,
         timeout: int = 60,
         **kwargs: Any,
@@ -71,8 +72,8 @@ class ChromiumLoader(BaseLoader):
         self.browser_name = browser_name
         self.retry_limit = kwargs.get("retry_limit", retry_limit)
         self.timeout = kwargs.get("timeout", timeout)
-        
-    async def scrape(self, url:str) -> str:
+
+    async def scrape(self, url: str) -> str:
         if self.backend == "playwright":
             return await self.ascrape_playwright(url)
         elif self.backend == "selenium":
@@ -81,8 +82,7 @@ class ChromiumLoader(BaseLoader):
             except Exception as e:
                 raise ValueError(f"Failed to scrape with undetected chromedriver: {e}")
         else:
-            raise ValueError(f"Unsupported backend: {self.backend}")     
-
+            raise ValueError(f"Unsupported backend: {self.backend}")
 
     async def ascrape_undetected_chromedriver(self, url: str) -> str:
         """
@@ -97,7 +97,9 @@ class ChromiumLoader(BaseLoader):
         try:
             import undetected_chromedriver as uc
         except ImportError:
-            raise ImportError("undetected_chromedriver is required for ChromiumLoader. Please install it with `pip install undetected-chromedriver`.")
+            raise ImportError(
+                "undetected_chromedriver is required for ChromiumLoader. Please install it with `pip install undetected-chromedriver`."
+            )
 
         logger.info(f"Starting scraping with {self.backend}...")
         results = ""
@@ -109,28 +111,40 @@ class ChromiumLoader(BaseLoader):
                     # Handling browser selection
                     if self.backend == "selenium":
                         if self.browser_name == "chromium":
-                            from selenium.webdriver.chrome.options import Options as ChromeOptions
+                            from selenium.webdriver.chrome.options import (
+                                Options as ChromeOptions,
+                            )
+
                             options = ChromeOptions()
                             options.headless = self.headless
                             # Initialize undetected chromedriver for Selenium
                             driver = uc.Chrome(options=options)
                             driver.get(url)
                             results = driver.page_source
-                            logger.info(f"Successfully scraped {url} with {self.browser_name}")
+                            logger.info(
+                                f"Successfully scraped {url} with {self.browser_name}"
+                            )
                             break
                         elif self.browser_name == "firefox":
-                            from selenium.webdriver.firefox.options import Options as FirefoxOptions
                             from selenium import webdriver
+                            from selenium.webdriver.firefox.options import (
+                                Options as FirefoxOptions,
+                            )
+
                             options = FirefoxOptions()
                             options.headless = self.headless
                             # Initialize undetected Firefox driver (if required)
                             driver = webdriver.Firefox(options=options)
                             driver.get(url)
                             results = driver.page_source
-                            logger.info(f"Successfully scraped {url} with {self.browser_name}")
+                            logger.info(
+                                f"Successfully scraped {url} with {self.browser_name}"
+                            )
                             break
                         else:
-                            logger.error(f"Unsupported browser {self.browser_name} for Selenium.")
+                            logger.error(
+                                f"Unsupported browser {self.browser_name} for Selenium."
+                            )
                             results = f"Error: Unsupported browser {self.browser_name}."
                             break
                     else:
@@ -150,18 +164,18 @@ class ChromiumLoader(BaseLoader):
         return results
 
     async def ascrape_playwright_scroll(
-        self, 
-        url: str, 
-        timeout: Union[int, None]=30, 
-        scroll: int=15000,
-        sleep: float=2,
-        scroll_to_bottom: bool=False,
-        browser_name: str = "chromium" #default chrome is added
+        self,
+        url: str,
+        timeout: Union[int, None] = 30,
+        scroll: int = 15000,
+        sleep: float = 2,
+        scroll_to_bottom: bool = False,
+        browser_name: str = "chromium",  # default chrome is added
     ) -> str:
         """
         Asynchronously scrape the content of a given URL using Playwright's sync API and scrolling.
 
-        Notes: 
+        Notes:
         - The user gets to decide between scrolling to the bottom of the page or scrolling by a finite amount of time.
         - If the user chooses to scroll to the bottom, the scraper will stop when the page height stops changing or when
         the timeout is reached. In this case, the user should opt for an appropriate timeout value i.e. larger than usual.
@@ -188,22 +202,29 @@ class ChromiumLoader(BaseLoader):
         - ValueError: If the scroll value is less than 5000.
         """
         # NB: I have tested using scrollHeight to determine when to stop scrolling
-        # but it doesn't always work as expected. The page height doesn't change on some sites like 
+        # but it doesn't always work as expected. The page height doesn't change on some sites like
         # https://www.steelwood.amsterdam/. The site deos not scroll to the bottom.
         # In my browser I can scroll vertically but in Chromium it scrolls horizontally?!?
 
         if timeout and timeout <= 0:
-            raise ValueError("If set, timeout value for scrolling scraper must be greater than 0.")
-        
+            raise ValueError(
+                "If set, timeout value for scrolling scraper must be greater than 0."
+            )
+
         if sleep <= 0:
-            raise ValueError("Sleep for scrolling scraper value must be greater than 0.")
-        
+            raise ValueError(
+                "Sleep for scrolling scraper value must be greater than 0."
+            )
+
         if scroll < 5000:
-            raise ValueError("Scroll value for scrolling scraper must be greater than or equal to 5000.")
-        
+            raise ValueError(
+                "Scroll value for scrolling scraper must be greater than or equal to 5000."
+            )
+
+        import time
+
         from playwright.async_api import async_playwright
         from undetected_playwright import Malenia
-        import time
 
         logger.info(f"Starting scraping with scrolling support for {url}...")
 
@@ -216,14 +237,18 @@ class ChromiumLoader(BaseLoader):
                     browser = None
                     if browser_name == "chromium":
                         browser = await p.chromium.launch(
-                        headless=self.headless, proxy=self.proxy, **self.browser_config
-                    )
+                            headless=self.headless,
+                            proxy=self.proxy,
+                            **self.browser_config,
+                        )
                     elif browser_name == "firefox":
                         browser = await p.firefox.launch(
-                        headless=self.headless, proxy=self.proxy, **self.browser_config
-                    )  
+                            headless=self.headless,
+                            proxy=self.proxy,
+                            **self.browser_config,
+                        )
                     else:
-                        raise ValueError(f"Invalid browser name: {browser_name}")      
+                        raise ValueError(f"Invalid browser name: {browser_name}")
                     context = await browser.new_context()
                     await Malenia.apply_stealth(context)
                     page = await context.new_page()
@@ -239,9 +264,13 @@ class ChromiumLoader(BaseLoader):
                     heights = []
 
                     while True:
-                        current_height = await page.evaluate("document.body.scrollHeight")
+                        current_height = await page.evaluate(
+                            "document.body.scrollHeight"
+                        )
                         heights.append(current_height)
-                        heights = heights[-5:] # Keep only the last 5 heights, to not run out of memory
+                        heights = heights[
+                            -5:
+                        ]  # Keep only the last 5 heights, to not run out of memory
 
                         # Break if we've reached the bottom of the page i.e. if scrolling makes no more progress
                         # Attention!!! This is not always reliable. Sometimes the page might not change due to lazy loading
@@ -253,8 +282,12 @@ class ChromiumLoader(BaseLoader):
                         previous_height = current_height
 
                         await page.mouse.wheel(0, scroll)
-                        logger.debug(f"Scrolled {url} to current height {current_height}px...")
-                        time.sleep(sleep)  # Allow some time for any lazy-loaded content to load
+                        logger.debug(
+                            f"Scrolled {url} to current height {current_height}px..."
+                        )
+                        time.sleep(
+                            sleep
+                        )  # Allow some time for any lazy-loaded content to load
 
                         current_time = time.time()
                         elapsed_time = current_time - start_time
@@ -262,12 +295,16 @@ class ChromiumLoader(BaseLoader):
 
                         if timeout:
                             if elapsed_time >= timeout:
-                                logger.info(f"Reached timeout of {timeout} seconds for url {url}")
+                                logger.info(
+                                    f"Reached timeout of {timeout} seconds for url {url}"
+                                )
                                 break
                             elif len(heights) == 5 and len(set(heights)) == 1:
-                                logger.info(f"Page height has not changed for url {url} for the last 5 scrolls. Stopping.")
+                                logger.info(
+                                    f"Page height has not changed for url {url} for the last 5 scrolls. Stopping."
+                                )
                                 break
-                    
+
                     results = await page.content()
                     break
 
@@ -275,7 +312,9 @@ class ChromiumLoader(BaseLoader):
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
                 if attempt == self.retry_limit:
-                    results = f"Error: Network error after {self.retry_limit} attempts - {e}"
+                    results = (
+                        f"Error: Network error after {self.retry_limit} attempts - {e}"
+                    )
             finally:
                 await browser.close()
 
@@ -308,12 +347,16 @@ class ChromiumLoader(BaseLoader):
                     browser = None
                     if browser_name == "chromium":
                         browser = await p.chromium.launch(
-                        headless=self.headless, proxy=self.proxy, **self.browser_config
-                    )
+                            headless=self.headless,
+                            proxy=self.proxy,
+                            **self.browser_config,
+                        )
                     elif browser_name == "firefox":
                         browser = await p.firefox.launch(
-                        headless=self.headless, proxy=self.proxy, **self.browser_config
-                    )  
+                            headless=self.headless,
+                            proxy=self.proxy,
+                            **self.browser_config,
+                        )
                     else:
                         raise ValueError(f"Invalid browser name: {browser_name}")
                     context = await browser.new_context(
@@ -331,9 +374,13 @@ class ChromiumLoader(BaseLoader):
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
                 if attempt == self.retry_limit:
-                    raise RuntimeError(f"Failed to scrape after {self.retry_limit} attempts: {str(e)}")
+                    raise RuntimeError(
+                        f"Failed to scrape after {self.retry_limit} attempts: {str(e)}"
+                    )
 
-    async def ascrape_with_js_support(self, url: str, browser_name: str = "chromium") -> str:
+    async def ascrape_with_js_support(
+        self, url: str, browser_name: str = "chromium"
+    ) -> str:
         """
         Asynchronously scrape the content of a given URL by rendering JavaScript using Playwright.
 
@@ -358,12 +405,16 @@ class ChromiumLoader(BaseLoader):
                     browser = None
                     if browser_name == "chromium":
                         browser = await p.chromium.launch(
-                        headless=self.headless, proxy=self.proxy, **self.browser_config
-                    )
+                            headless=self.headless,
+                            proxy=self.proxy,
+                            **self.browser_config,
+                        )
                     elif browser_name == "firefox":
                         browser = await p.firefox.launch(
-                        headless=self.headless, proxy=self.proxy, **self.browser_config
-                    )  
+                            headless=self.headless,
+                            proxy=self.proxy,
+                            **self.browser_config,
+                        )
                     else:
                         raise ValueError(f"Invalid browser name: {browser_name}")
                     context = await browser.new_context(
@@ -378,7 +429,9 @@ class ChromiumLoader(BaseLoader):
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
                 if attempt == self.retry_limit:
-                    raise RuntimeError(f"Failed to scrape after {self.retry_limit} attempts: {str(e)}")
+                    raise RuntimeError(
+                        f"Failed to scrape after {self.retry_limit} attempts: {str(e)}"
+                    )
             finally:
                 await browser.close()
 

@@ -1,8 +1,11 @@
 """
 RAGNode Module
 """
+
 from typing import List, Optional
+
 from .base_node import BaseNode
+
 
 class RAGNode(BaseNode):
     """
@@ -39,14 +42,14 @@ class RAGNode(BaseNode):
 
     def execute(self, state: dict) -> dict:
         self.logger.info(f"--- Executing {self.node_name} Node ---")
-        
+
         try:
-            import qdrant_client
+            from qdrant_client import QdrantClient
+            from qdrant_client.models import Distance, PointStruct, VectorParams
         except ImportError:
-            raise ImportError("qdrant_client is not installed. Please install it using 'pip install qdrant-client'.")
-        
-        from qdrant_client import QdrantClient
-        from qdrant_client.models import PointStruct, VectorParams, Distance
+            raise ImportError(
+                "qdrant_client is not installed. Please install it using 'pip install qdrant-client'."
+            )
 
         if self.node_config.get("client_type") in ["memory", None]:
             client = QdrantClient(":memory:")
@@ -58,26 +61,28 @@ class RAGNode(BaseNode):
             raise ValueError("client_type provided not correct")
 
         docs = [elem.get("summary") for elem in state.get("docs")]
-        ids = [i for i in range(1, len(state.get("docs"))+1)]
+        ids = list(range(1, len(state.get("docs")) + 1))
 
         if state.get("embeddings"):
             import openai
+
             openai_client = openai.Client()
 
             files = state.get("documents")
 
             array_of_embeddings = []
-            i=0
+            i = 0
 
             for file in files:
-                embeddings = openai_client.embeddings.create(input=file,
-                                                             model=state.get("embeddings").get("model"))
-                i+=1
+                embeddings = openai_client.embeddings.create(
+                    input=file, model=state.get("embeddings").get("model")
+                )
+                i += 1
                 points = PointStruct(
-                        id=i,
-                        vector=embeddings,
-                        payload={"text": file},
-                    )
+                    id=i,
+                    vector=embeddings,
+                    payload={"text": file},
+                )
 
                 array_of_embeddings.append(points)
 
@@ -95,11 +100,7 @@ class RAGNode(BaseNode):
             state["vectorial_db"] = client
             return state
 
-        client.add(
-            collection_name="vectorial_collection",
-            documents=docs,
-            ids=ids
-        )
+        client.add(collection_name="vectorial_collection", documents=docs, ids=ids)
 
         state["vectorial_db"] = client
         return state

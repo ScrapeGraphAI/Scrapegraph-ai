@@ -4,26 +4,59 @@ This module defines the graph structures and related functionalities for the Scr
 
 from .abstract_graph import AbstractGraph
 from .base_graph import BaseGraph
-from .smart_scraper_graph import SmartScraperGraph
-from .speech_graph import SpeechGraph
-from .search_graph import SearchGraph
-from .script_creator_graph import ScriptCreatorGraph
-from .xml_scraper_graph import XMLScraperGraph
-from .json_scraper_graph import JSONScraperGraph
+from .code_generator_graph import CodeGeneratorGraph
 from .csv_scraper_graph import CSVScraperGraph
-from .omni_scraper_graph import OmniScraperGraph
-from .omni_search_graph import OmniSearchGraph
-from .smart_scraper_multi_graph import SmartScraperMultiGraph
-from .json_scraper_multi_graph import JSONScraperMultiGraph
 from .csv_scraper_multi_graph import CSVScraperMultiGraph
-from .xml_scraper_multi_graph import XMLScraperMultiGraph
-from .script_creator_multi_graph import ScriptCreatorMultiGraph
+from .depth_search_graph import DepthSearchGraph
 from .document_scraper_graph import DocumentScraperGraph
 from .document_scraper_multi_graph import DocumentScraperMultiGraph
-from .search_link_graph import SearchLinkGraph
+from .json_scraper_graph import JSONScraperGraph
+from .json_scraper_multi_graph import JSONScraperMultiGraph
+from .omni_scraper_graph import OmniScraperGraph
+from .omni_search_graph import OmniSearchGraph
 from .screenshot_scraper_graph import ScreenshotScraperGraph
-from .smart_scraper_multi_concat_graph import SmartScraperMultiConcatGraph
-from .code_generator_graph import CodeGeneratorGraph
-from .depth_search_graph import DepthSearchGraph
-from .smart_scraper_multi_lite_graph import SmartScraperMultiLiteGraph
+from .script_creator_graph import ScriptCreatorGraph
+from .script_creator_multi_graph import ScriptCreatorMultiGraph
+from .search_graph import SearchGraph
+from .search_link_graph import SearchLinkGraph
+from .smart_scraper_graph import SmartScraperGraph
 from .smart_scraper_lite_graph import SmartScraperLiteGraph
+from .smart_scraper_multi_concat_graph import SmartScraperMultiConcatGraph
+from .smart_scraper_multi_graph import SmartScraperMultiGraph
+from .smart_scraper_multi_lite_graph import SmartScraperMultiLiteGraph
+from .speech_graph import SpeechGraph
+from .xml_scraper_graph import XMLScraperGraph
+from .xml_scraper_multi_graph import XMLScraperMultiGraph
+
+__all__ = [
+    # Base graphs
+    "AbstractGraph",
+    "BaseGraph",
+    # Specialized scraper graphs
+    "CSVScraperGraph",
+    "CSVScraperMultiGraph",
+    "DocumentScraperGraph",
+    "DocumentScraperMultiGraph",
+    "JSONScraperGraph",
+    "JSONScraperMultiGraph",
+    "XMLScraperGraph",
+    "XMLScraperMultiGraph",
+    # Smart scraper variants
+    "SmartScraperGraph",
+    "SmartScraperLiteGraph",
+    "SmartScraperMultiGraph",
+    "SmartScraperMultiLiteGraph",
+    "SmartScraperMultiConcatGraph",
+    # Search-related graphs
+    "SearchGraph",
+    "SearchLinkGraph",
+    "DepthSearchGraph",
+    "OmniSearchGraph",
+    # Other specialized graphs
+    "CodeGeneratorGraph",
+    "OmniScraperGraph",
+    "ScreenshotScraperGraph",
+    "ScriptCreatorGraph",
+    "ScriptCreatorMultiGraph",
+    "SpeechGraph",
+]

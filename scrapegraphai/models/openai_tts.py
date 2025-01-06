@@ -1,7 +1,9 @@
 """
 OpenAITextToSpeech Module
 """
+
 from openai import OpenAI
+
 
 class OpenAITextToSpeech:
     """
@@ -18,8 +20,9 @@ class OpenAITextToSpeech:
 
     def __init__(self, tts_config: dict):
 
-        self.client = OpenAI(api_key=tts_config.get("api_key"), 
-                             base_url=tts_config.get("base_url", None))
+        self.client = OpenAI(
+            api_key=tts_config.get("api_key"), base_url=tts_config.get("base_url", None)
+        )
         self.model = tts_config.get("model", "tts-1")
         self.voice = tts_config.get("voice", "alloy")
 
@@ -34,9 +37,7 @@ class OpenAITextToSpeech:
             bytes: The bytes of the generated speech audio.
         """
         response = self.client.audio.speech.create(
-            model=self.model,
-            voice=self.voice,
-            input=text
+            model=self.model, voice=self.voice, input=text
         )
 
         return response.content

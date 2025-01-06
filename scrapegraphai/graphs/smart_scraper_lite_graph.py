@@ -1,14 +1,15 @@
 """
 SmartScraperGraph Module
 """
+
 from typing import Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
+
+from ..nodes import FetchNode, ParseNode
 from .abstract_graph import AbstractGraph
-from ..nodes import (
-    FetchNode,
-    ParseNode,
-)
+from .base_graph import BaseGraph
+
 
 class SmartScraperLiteGraph(AbstractGraph):
     """

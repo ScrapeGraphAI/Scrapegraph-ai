@@ -1,21 +1,22 @@
-""" 
+"""
 SmartScraperMultiGraph Module
 """
+
 from copy import deepcopy
 from typing import List, Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
-from .smart_scraper_lite_graph import SmartScraperLiteGraph
-from ..nodes import (
-    GraphIteratorNode,
-    MergeAnswersNode,
-)
+
+from ..nodes import GraphIteratorNode, MergeAnswersNode
 from ..utils.copy import safe_deepcopy
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+from .smart_scraper_lite_graph import SmartScraperLiteGraph
+
 
 class SmartScraperMultiLiteGraph(AbstractGraph):
-    """ 
-    SmartScraperMultiLiteGraph is a scraping pipeline that scrapes a 
+    """
+    SmartScraperMultiLiteGraph is a scraping pipeline that scrapes a
     list of URLs and merge the content first and finally generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
     The difference with the SmartScraperMultiGraph is that in this case the content is merged
@@ -47,8 +48,13 @@ class SmartScraperMultiLiteGraph(AbstractGraph):
         >>> result = smart_scraper_multi_lite_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], 
-                 config: dict, schema: Optional[BaseModel] = None):
+    def __init__(
+        self,
+        prompt: str,
+        source: List[str],
+        config: dict,
+        schema: Optional[BaseModel] = None,
+    ):
 
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
@@ -56,7 +62,7 @@ class SmartScraperMultiLiteGraph(AbstractGraph):
 
     def _create_graph(self) -> BaseGraph:
         """
-        Creates the graph of nodes representing the workflow for web scraping 
+        Creates the graph of nodes representing the workflow for web scraping
         and parsing and then merge the content and generates answers to a given prompt.
         """
         graph_iterator_node = GraphIteratorNode(
@@ -66,16 +72,13 @@ class SmartScraperMultiLiteGraph(AbstractGraph):
                 "graph_instance": SmartScraperLiteGraph,
                 "scraper_config": self.copy_config,
             },
-            schema=self.copy_schema
+            schema=self.copy_schema,
         )
 
         merge_answers_node = MergeAnswersNode(
             input="user_prompt & parsed_doc",
             output=["answer"],
-            node_config={
-                "llm_model": self.llm_model,
-                "schema": self.copy_schema
-            }
+            node_config={"llm_model": self.llm_model, "schema": self.copy_schema},
         )
 
         return BaseGraph(
@@ -87,12 +90,12 @@ class SmartScraperMultiLiteGraph(AbstractGraph):
                 (graph_iterator_node, merge_answers_node),
             ],
             entry_point=graph_iterator_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:
         """
-        Executes the web scraping and parsing process first and 
+        Executes the web scraping and parsing process first and
         then concatenate the content and generates answers to a given prompt.
 
         Returns:

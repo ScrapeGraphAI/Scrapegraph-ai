@@ -1,14 +1,18 @@
 """
 ParseNode Module
 """
+
 import re
 from typing import List, Optional, Tuple
 from urllib.parse import urljoin
+
 from langchain_community.document_transformers import Html2TextTransformer
 from langchain_core.documents import Document
-from .base_node import BaseNode
-from ..utils.split_text_into_chunks import split_text_into_chunks
+
 from ..helpers import default_filters
+from ..utils.split_text_into_chunks import split_text_into_chunks
+from .base_node import BaseNode
+
 
 class ParseNode(BaseNode):
     """
@@ -27,7 +31,10 @@ class ParseNode(BaseNode):
         node_config (dict): Additional configuration for the node.
         node_name (str): The unique identifier name for the node, defaulting to "Parse".
     """
-    url_pattern = re.compile(r"[http[s]?:\/\/]?(www\.)?([-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)")
+
+    url_pattern = re.compile(
+        r"[http[s]?:\/\/]?(www\.)?([-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)"
+    )
     relative_url_pattern = re.compile(r"[\(](/[^\(\)\s]*)")
 
     def __init__(
@@ -77,32 +84,43 @@ class ParseNode(BaseNode):
         source = input_data[1] if self.parse_urls else None
 
         if self.parse_html:
-            docs_transformed = Html2TextTransformer(ignore_links=False).transform_documents(input_data[0])
+            docs_transformed = Html2TextTransformer(
+                ignore_links=False
+            ).transform_documents(input_data[0])
             docs_transformed = docs_transformed[0]
 
-            link_urls, img_urls = self._extract_urls(docs_transformed.page_content, source)
+            link_urls, img_urls = self._extract_urls(
+                docs_transformed.page_content, source
+            )
 
-            chunks = split_text_into_chunks(text=docs_transformed.page_content,
-                                            chunk_size=self.chunk_size-250, model=self.llm_model)
+            chunks = split_text_into_chunks(
+                text=docs_transformed.page_content,
+                chunk_size=self.chunk_size - 250,
+                model=self.llm_model,
+            )
         else:
             docs_transformed = docs_transformed[0]
 
             try:
-                link_urls, img_urls = self._extract_urls(docs_transformed.page_content, source)
-            except Exception as e:
+                link_urls, img_urls = self._extract_urls(
+                    docs_transformed.page_content, source
+                )
+            except Exception:
                 link_urls, img_urls = "", ""
 
             chunk_size = self.chunk_size
             chunk_size = min(chunk_size - 500, int(chunk_size * 0.8))
 
             if isinstance(docs_transformed, Document):
-                chunks = split_text_into_chunks(text=docs_transformed.page_content,
-                                                chunk_size=chunk_size,
-                                                model=self.llm_model)
+                chunks = split_text_into_chunks(
+                    text=docs_transformed.page_content,
+                    chunk_size=chunk_size,
+                    model=self.llm_model,
+                )
             else:
-                chunks = split_text_into_chunks(text=docs_transformed,
-                                                chunk_size=chunk_size,
-                                                model=self.llm_model)
+                chunks = split_text_into_chunks(
+                    text=docs_transformed, chunk_size=chunk_size, model=self.llm_model
+                )
 
         state.update({self.output[0]: chunks})
         if self.parse_urls:
@@ -130,15 +148,15 @@ class ParseNode(BaseNode):
 
         for group in ParseNode.url_pattern.findall(text):
             for el in group:
-                if el != '':
+                if el != "":
                     url += el
             all_urls.add(url)
-            url = ""  
+            url = ""
 
         url = ""
         for group in ParseNode.relative_url_pattern.findall(text):
             for el in group:
-                if el not in ['', '[', ']', '(', ')', '{', '}']:
+                if el not in ["", "[", "]", "(", ")", "{", "}"]:
                     url += el
             all_urls.add(urljoin(source, url))
             url = ""
@@ -150,7 +168,11 @@ class ParseNode(BaseNode):
         else:
             all_urls = [urljoin(source, url) for url in all_urls]
 
-        images = [url for url in all_urls if any(url.endswith(ext) for ext in image_extensions)]
+        images = [
+            url
+            for url in all_urls
+            if any(url.endswith(ext) for ext in image_extensions)
+        ]
         links = [url for url in all_urls if url not in images]
 
         return links, images
@@ -168,19 +190,19 @@ class ParseNode(BaseNode):
         cleaned_urls = []
         for url in urls:
             if not ParseNode._is_valid_url(url):
-                url = re.sub(r'.*?\]\(', '', url)
-                url = re.sub(r'.*?\[\(', '', url)
-                url = re.sub(r'.*?\[\)', '', url)
-                url = re.sub(r'.*?\]\)', '', url)
-                url = re.sub(r'.*?\)\[', '', url)
-                url = re.sub(r'.*?\)\[', '', url)
-                url = re.sub(r'.*?\(\]', '', url)
-                url = re.sub(r'.*?\)\]', '', url)
-            url = url.rstrip(').-')
+                url = re.sub(r".*?\]\(", "", url)
+                url = re.sub(r".*?\[\(", "", url)
+                url = re.sub(r".*?\[\)", "", url)
+                url = re.sub(r".*?\]\)", "", url)
+                url = re.sub(r".*?\)\[", "", url)
+                url = re.sub(r".*?\)\[", "", url)
+                url = re.sub(r".*?\(\]", "", url)
+                url = re.sub(r".*?\)\]", "", url)
+            url = url.rstrip(").-")
             if len(url) > 0:
                 cleaned_urls.append(url)
-        
-        return cleaned_urls    
+
+        return cleaned_urls
 
     @staticmethod
     def _is_valid_url(url: str) -> bool:

@@ -1,9 +1,13 @@
 """
 ParseNodeDepthK Module
 """
+
 from typing import List, Optional
+
 from langchain_community.document_transformers import Html2TextTransformer
+
 from .base_node import BaseNode
+
 
 class ParseNodeDepthK(BaseNode):
     """
@@ -59,7 +63,9 @@ class ParseNodeDepthK(BaseNode):
         documents = input_data[0]
 
         for doc in documents:
-            document_md = Html2TextTransformer(ignore_links=True).transform_documents(doc["document"])
+            document_md = Html2TextTransformer(ignore_links=True).transform_documents(
+                doc["document"]
+            )
             doc["document"] = document_md[0].page_content
 
         state.update({self.output[0]: documents})

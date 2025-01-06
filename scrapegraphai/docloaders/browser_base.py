@@ -1,11 +1,18 @@
 """
-browserbase integration module 
+browserbase integration module
 """
+
 import asyncio
 from typing import List
 
-def browser_base_fetch(api_key: str, project_id: str, link: List[str],
-                       text_content: bool = True, async_mode: bool = False) -> List[str]:
+
+def browser_base_fetch(
+    api_key: str,
+    project_id: str,
+    link: List[str],
+    text_content: bool = True,
+    async_mode: bool = False,
+) -> List[str]:
     """
     BrowserBase Fetch
 
@@ -24,27 +31,31 @@ def browser_base_fetch(api_key: str, project_id: str, link: List[str],
     try:
         from browserbase import Browserbase
     except ImportError:
-        raise ImportError("The browserbase module is not installed. Please install it using `pip install browserbase`.")
+        raise ImportError(
+            "The browserbase module is not installed. Please install it using `pip install browserbase`."
+        )
 
     # Initialize client with API key
     browserbase = Browserbase(api_key=api_key)
-    
+
     # Create session with project ID
     session = browserbase.sessions.create(project_id=project_id)
 
     result = []
-    async def _async_fetch_link(l):
-        return await asyncio.to_thread(session.load, l, text_content=text_content)
+
+    async def _async_fetch_link(url):
+        return await asyncio.to_thread(session.load, url, text_content=text_content)
 
     if async_mode:
+
         async def _async_browser_base_fetch():
-            for l in link:
-                result.append(await _async_fetch_link(l))
+            for url in link:
+                result.append(await _async_fetch_link(url))
             return result
 
         result = asyncio.run(_async_browser_base_fetch())
     else:
-        for l in link:
-            result.append(session.load(l, text_content=text_content))
+        for url in link:
+            result.append(session.load(url, text_content=text_content))
 
     return result

@@ -1,9 +1,12 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
-import os
+
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -17,7 +20,7 @@ load_dotenv()
 graph_config = {
     "llm": {
         "api_key": os.getenv("OPENAI_API_KEY"),
-        "model": "openai/gpt-4o",
+        "model": "openai/gpt-4o00",
     },
     "verbose": True,
     "headless": False,
@@ -30,7 +33,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="Extract me the first article",
     source="https://www.wired.com",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

@@ -1,13 +1,17 @@
 """
 GraphIterator Module
 """
+
 import asyncio
 from typing import List, Optional
-from tqdm.asyncio import tqdm
+
 from pydantic import BaseModel
+from tqdm.asyncio import tqdm
+
 from .base_node import BaseNode
 
 DEFAULT_BATCHSIZE = 16
+
 
 class GraphIteratorNode(BaseNode):
     """
@@ -52,8 +56,8 @@ class GraphIteratorNode(BaseNode):
             ontaining the results of the graph instances.
 
         Raises:
-            KeyError: If the input keys are not found in the state, 
-            indicating that thenecessary information for running 
+            KeyError: If the input keys are not found in the state,
+            indicating that thenecessary information for running
             the graph instances is missing.
         """
         batchsize = self.node_config.get("batchsize", DEFAULT_BATCHSIZE)
@@ -103,11 +107,12 @@ class GraphIteratorNode(BaseNode):
         if graph_instance is None:
             raise ValueError("graph instance is required for concurrent execution")
 
-        graph_instance = [graph_instance(
-            prompt="",
-            source="",
-            config=scraper_config,
-            schema=self.schema) for _ in range(len(urls))]
+        graph_instance = [
+            graph_instance(
+                prompt="", source="", config=scraper_config, schema=self.schema
+            )
+            for _ in range(len(urls))
+        ]
 
         for graph in graph_instance:
             if "graph_depth" in graph.config:
