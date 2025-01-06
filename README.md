@@ -32,7 +32,7 @@ The reference page for Scrapegraph-ai is available on the official page of PyPI:
 ```bash
 pip install scrapegraphai
 
-# IMPORTANT (to fetch websites content)
+# IMPORTANT (for fetching websites content)
 playwright install
 ```
 
