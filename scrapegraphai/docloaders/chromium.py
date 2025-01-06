@@ -325,14 +325,13 @@ class ChromiumLoader(BaseLoader):
                     await page.wait_for_load_state(self.load_state)
                     results = await page.content()
                     logger.info("Content scraped")
+                    await browser.close()
                     return results
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
                 if attempt == self.retry_limit:
                     raise RuntimeError(f"Failed to scrape after {self.retry_limit} attempts: {str(e)}")
-            finally:
-                await browser.close()
 
     async def ascrape_with_js_support(self, url: str, browser_name: str = "chromium") -> str:
         """
