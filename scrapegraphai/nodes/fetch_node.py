@@ -4,7 +4,6 @@ FetchNode Module
 import json
 from typing import List, Optional
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
-import pandas as pd
 import requests
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
@@ -199,6 +198,10 @@ class FetchNode(BaseNode):
             loader = PyPDFLoader(source)
             return loader.load()
         elif input_type == "csv":
+            try:
+                import pandas as pd
+            except ImportError:
+                raise ImportError("pandas is not installed. Please install it using `pip install pandas`.")
             return [
                 Document(
                     page_content=str(pd.read_csv(source)), metadata={"source": "csv"}

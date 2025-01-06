@@ -4,10 +4,8 @@ Module for testing the scrape graph class
 
 import os
 import pytest
-import pandas as pd
 from dotenv import load_dotenv
 from scrapegraphai.graphs import ScrapeGraph
-from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
