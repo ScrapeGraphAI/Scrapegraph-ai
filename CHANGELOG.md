@@ -1,3 +1,16 @@
+## [1.35.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.3-beta.1...v1.35.0-beta.1) (2025-01-06)
+
+
+### Features
+
+* ⛏️ enhanced contribution and precommit added ([fcbfe78](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fcbfe78983c5c36fe5e4e0659ccfebc7fd9952b4))
+* add timeout and retry_limit in loader_kwargs ([#865](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/865) [#831](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/831)) ([21147c4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/21147c46a53e943dd5f297e6c7c3433edadfbc27))
+
+
+### Bug Fixes
+
+* local html handling ([2a15581](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2a15581865d84021278ec0bf601172f6f8343717))
+
 ## [1.34.3-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.2...v1.34.3-beta.1) (2025-01-06)
 
 
