@@ -68,6 +68,7 @@ class AbstractGraph(ABC):
         self.browser_base = self.config.get("browser_base")
         self.scrape_do = self.config.get("scrape_do")
         self.storage_state = self.config.get("storage_state")
+        self.timeout = self.config.get("timeout", 480)
 
         self.graph = self._create_graph()
         self.final_state = None
@@ -86,6 +87,7 @@ class AbstractGraph(ABC):
             "loader_kwargs": self.loader_kwargs,
             "llm_model": self.llm_model,
             "cache_path": self.cache_path,
+            "timeout": self.timeout,
         }
 
         self.set_common_params(common_params, overwrite=True)
@@ -194,7 +196,7 @@ class AbstractGraph(ABC):
                              If possible, try to use a model instance instead."""
             )
 
-        if "model_tokens" not in llm_params:
+        if llm_params.get("model_tokens", None) is None:
             try:
                 self.model_token = models_tokens[llm_params["model_provider"]][
                     llm_params["model"]

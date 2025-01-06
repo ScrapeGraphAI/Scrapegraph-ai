@@ -1,21 +1,24 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
+
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3.1",
+        "model": "ollama/llama3.2:3b",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
+        "model_tokens": 1024,
     },
     "verbose": True,
-    "headless": False
+    "headless": False,
 }
 
 # ************************************************
@@ -24,7 +27,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="Find some information about what does the company do, the name and a contact email.",
     source="https://scrapegraphai.com/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

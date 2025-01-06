@@ -66,7 +66,7 @@ class GenerateAnswerNode(BaseNode):
         self.script_creator = node_config.get("script_creator", False)
         self.is_md_scraper = node_config.get("is_md_scraper", False)
         self.additional_info = node_config.get("additional_info")
-        self.timeout = node_config.get("timeout", 120)
+        self.timeout = node_config.get("timeout", 480)
 
     def invoke_with_timeout(self, chain, inputs, timeout):
         """Helper method to invoke chain with timeout"""
