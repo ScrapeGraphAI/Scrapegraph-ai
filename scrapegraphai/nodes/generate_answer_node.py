@@ -1,23 +1,30 @@
 """
 GenerateAnswerNode Module
 """
-from typing import List, Optional
-from json.decoder import JSONDecodeError
+
 import time
+from typing import List, Optional
+
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables import RunnableParallel
-from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_aws import ChatBedrock
 from langchain_community.chat_models import ChatOllama
-from tqdm import tqdm
-from .base_node import BaseNode
-from ..utils.output_parser import get_pydantic_output_parser
+from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.runnables import RunnableParallel
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 from requests.exceptions import Timeout
+from tqdm import tqdm
+
 from ..prompts import (
-    TEMPLATE_CHUNKS, TEMPLATE_NO_CHUNKS, TEMPLATE_MERGE,
-    TEMPLATE_CHUNKS_MD, TEMPLATE_NO_CHUNKS_MD, TEMPLATE_MERGE_MD
+    TEMPLATE_CHUNKS,
+    TEMPLATE_CHUNKS_MD,
+    TEMPLATE_MERGE,
+    TEMPLATE_MERGE_MD,
+    TEMPLATE_NO_CHUNKS,
+    TEMPLATE_NO_CHUNKS_MD,
 )
+from ..utils.output_parser import get_pydantic_output_parser
+from .base_node import BaseNode
+
 
 class GenerateAnswerNode(BaseNode):
     """
@@ -40,6 +47,7 @@ class GenerateAnswerNode(BaseNode):
         additional_info (Optional[str]): Any additional information to be
         included in the prompt templates.
     """
+
     def __init__(
         self,
         input: str,
@@ -58,7 +66,7 @@ class GenerateAnswerNode(BaseNode):
         self.script_creator = node_config.get("script_creator", False)
         self.is_md_scraper = node_config.get("is_md_scraper", False)
         self.additional_info = node_config.get("additional_info")
-        self.timeout = node_config.get("timeout", 120)
+        self.timeout = node_config.get("timeout", 480)
 
     def invoke_with_timeout(self, chain, inputs, timeout):
         """Helper method to invoke chain with timeout"""
@@ -99,7 +107,9 @@ class GenerateAnswerNode(BaseNode):
                 format_instructions = output_parser.get_format_instructions()
             else:
                 if not isinstance(self.llm_model, ChatBedrock):
-                    output_parser = get_pydantic_output_parser(self.node_config["schema"])
+                    output_parser = get_pydantic_output_parser(
+                        self.node_config["schema"]
+                    )
                     format_instructions = output_parser.get_format_instructions()
                 else:
                     output_parser = None
@@ -112,10 +122,13 @@ class GenerateAnswerNode(BaseNode):
                 output_parser = None
                 format_instructions = ""
 
-        if isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI)) \
-            and not self.script_creator \
-            or self.force \
-            and not self.script_creator or self.is_md_scraper:
+        if (
+            isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI))
+            and not self.script_creator
+            or self.force
+            and not self.script_creator
+            or self.is_md_scraper
+        ):
             template_no_chunks_prompt = TEMPLATE_NO_CHUNKS_MD
             template_chunks_prompt = TEMPLATE_CHUNKS_MD
             template_merge_prompt = TEMPLATE_MERGE_MD
@@ -133,14 +146,19 @@ class GenerateAnswerNode(BaseNode):
             prompt = PromptTemplate(
                 template=template_no_chunks_prompt,
                 input_variables=["question"],
-                partial_variables={"context": doc, "format_instructions": format_instructions}
+                partial_variables={
+                    "context": doc,
+                    "format_instructions": format_instructions,
+                },
             )
             chain = prompt | self.llm_model
             if output_parser:
                 chain = chain | output_parser
 
             try:
-                answer = self.invoke_with_timeout(chain, {"question": user_prompt}, self.timeout)
+                answer = self.invoke_with_timeout(
+                    chain, {"question": user_prompt}, self.timeout
+                )
             except Timeout:
                 state.update({self.output[0]: {"error": "Response timeout exceeded"}})
                 return state
@@ -149,13 +167,17 @@ class GenerateAnswerNode(BaseNode):
             return state
 
         chains_dict = {}
-        for i, chunk in enumerate(tqdm(doc, desc="Processing chunks", disable=not self.verbose)):
+        for i, chunk in enumerate(
+            tqdm(doc, desc="Processing chunks", disable=not self.verbose)
+        ):
             prompt = PromptTemplate(
                 template=template_chunks_prompt,
                 input_variables=["question"],
-                partial_variables={"context": chunk,
-                                   "chunk_id": i + 1,
-                                   "format_instructions": format_instructions}
+                partial_variables={
+                    "context": chunk,
+                    "chunk_id": i + 1,
+                    "format_instructions": format_instructions,
+                },
             )
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model
@@ -165,18 +187,22 @@ class GenerateAnswerNode(BaseNode):
         async_runner = RunnableParallel(**chains_dict)
         try:
             batch_results = self.invoke_with_timeout(
-                async_runner,
-                {"question": user_prompt},
-                self.timeout
+                async_runner, {"question": user_prompt}, self.timeout
             )
         except Timeout:
-            state.update({self.output[0]: {"error": "Response timeout exceeded during chunk processing"}})
+            state.update(
+                {
+                    self.output[0]: {
+                        "error": "Response timeout exceeded during chunk processing"
+                    }
+                }
+            )
             return state
 
         merge_prompt = PromptTemplate(
             template=template_merge_prompt,
             input_variables=["context", "question"],
-            partial_variables={"format_instructions": format_instructions}
+            partial_variables={"format_instructions": format_instructions},
         )
 
         merge_chain = merge_prompt | self.llm_model
@@ -186,10 +212,12 @@ class GenerateAnswerNode(BaseNode):
             answer = self.invoke_with_timeout(
                 merge_chain,
                 {"context": batch_results, "question": user_prompt},
-                self.timeout
+                self.timeout,
             )
         except Timeout:
-            state.update({self.output[0]: {"error": "Response timeout exceeded during merge"}})
+            state.update(
+                {self.output[0]: {"error": "Response timeout exceeded during merge"}}
+            )
             return state
 
         state.update({self.output[0]: answer})

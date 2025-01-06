@@ -1,18 +1,22 @@
 """
 SmartScraperGraph Module
 """
+
 from typing import Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
+
 from ..nodes import (
+    ConditionalNode,
     FetchNode,
+    GenerateAnswerNode,
     ParseNode,
     ReasoningNode,
-    GenerateAnswerNode,
-    ConditionalNode,
 )
 from ..prompts import REGEN_ADDITIONAL_INFO
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+
 
 class SmartScraperGraph(AbstractGraph):
     """
@@ -53,7 +57,7 @@ class SmartScraperGraph(AbstractGraph):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
-        
+
         # for detailed logging of the SmartScraper API set it to True
         self.verbose = config.get("verbose", False)
 
@@ -69,8 +73,10 @@ class SmartScraperGraph(AbstractGraph):
                 from scrapegraph_py import Client
                 from scrapegraph_py.logger import sgai_logger
             except ImportError:
-                raise ImportError("scrapegraph_py is not installed. Please install it using 'pip install scrapegraph-py'.")
-            
+                raise ImportError(
+                    "scrapegraph_py is not installed. Please install it using 'pip install scrapegraph-py'."
+                )
+
             sgai_logger.set_logging(level="INFO")
 
             # Initialize the client with explicit API key
@@ -91,7 +97,7 @@ class SmartScraperGraph(AbstractGraph):
             return response
 
         fetch_node = FetchNode(
-            input="url| local_dir",
+            input="url | local_dir",
             output=["doc"],
             node_config={
                 "llm_model": self.llm_model,

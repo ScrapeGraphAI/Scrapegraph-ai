@@ -1,3 +1,5 @@
+name: Code Quality Checks
+
 on:
   push:
     paths:
@@ -5,16 +7,29 @@ on:
       - '.github/workflows/pylint.yml'
 
 jobs:
-  build:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Install uv
         uses: astral-sh/setup-uv@v3
+
       - name: Install dependencies
         run: uv sync --frozen
+
+      - name: Run Ruff
+        run: uv run ruff check scrapegraphai
+
+      - name: Run Black
+        run: uv run black --check scrapegraphai
+
+      - name: Run isort
+        run: uv run isort --check-only scrapegraphai
+
       - name: Analysing the code with pylint
         run: uv run poe pylint-ci
+
       - name: Check Pylint score
         run: |
           pylint_score=$(uv run poe pylint-score-ci | grep 'Raw metrics' | awk '{print $4}')

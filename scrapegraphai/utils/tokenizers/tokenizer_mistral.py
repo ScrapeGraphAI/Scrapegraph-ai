@@ -1,11 +1,13 @@
 """
 Tokenization utilities for Mistral models
 """
+
 from langchain_core.language_models.chat_models import BaseChatModel
+
 from ..logging import get_logger
 
 
-def num_tokens_mistral(text: str, llm_model:BaseChatModel) -> int:
+def num_tokens_mistral(text: str, llm_model: BaseChatModel) -> int:
     """
     Estimate the number of tokens in a given text using Mistral's tokenization method,
     adjusted for different Mistral models.
@@ -24,15 +26,19 @@ def num_tokens_mistral(text: str, llm_model:BaseChatModel) -> int:
     try:
         model = llm_model.model
     except AttributeError:
-        raise NotImplementedError(f"The model provider you are using ('{llm_model}') "
-            "does not give us a model name so we cannot identify which encoding to use")
+        raise NotImplementedError(
+            f"The model provider you are using ('{llm_model}') "
+            "does not give us a model name so we cannot identify which encoding to use"
+        )
 
     try:
-        from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
         from mistral_common.protocol.instruct.messages import UserMessage
         from mistral_common.protocol.instruct.request import ChatCompletionRequest
+        from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
     except ImportError:
-        raise ImportError("mistral_common is not installed. Please install it using 'pip install mistral-common'.")
+        raise ImportError(
+            "mistral_common is not installed. Please install it using 'pip install mistral-common'."
+        )
 
     tokenizer = MistralTokenizer.from_model(model)
 

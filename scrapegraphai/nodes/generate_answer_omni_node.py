@@ -1,19 +1,28 @@
 """
 GenerateAnswerNode Module
 """
+
 from typing import List, Optional
+
 from langchain.prompts import PromptTemplate
+from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
-from langchain_openai import ChatOpenAI
 from langchain_mistralai import ChatMistralAI
+from langchain_openai import ChatOpenAI
 from tqdm import tqdm
-from langchain_community.chat_models import ChatOllama
+
+from ..prompts.generate_answer_node_omni_prompts import (
+    TEMPLATE_CHUNKS_OMNI,
+    TEMPLATE_MERGE_OMNI,
+    TEMPLATE_NO_CHUNKS_OMNI,
+)
+from ..utils.output_parser import (
+    get_pydantic_output_parser,
+    get_structured_output_parser,
+)
 from .base_node import BaseNode
-from ..utils.output_parser import get_structured_output_parser, get_pydantic_output_parser
-from ..prompts.generate_answer_node_omni_prompts import (TEMPLATE_NO_CHUNKS_OMNI, 
-                                                        TEMPLATE_CHUNKS_OMNI,
-                                                        TEMPLATE_MERGE_OMNI)
+
 
 class GenerateAnswerOmniNode(BaseNode):
     """
@@ -44,7 +53,7 @@ class GenerateAnswerOmniNode(BaseNode):
 
         self.llm_model = node_config["llm_model"]
         if isinstance(node_config["llm_model"], ChatOllama):
-            self.llm_model.format="json"
+            self.llm_model.format = "json"
 
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
@@ -83,7 +92,8 @@ class GenerateAnswerOmniNode(BaseNode):
 
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
-                    schema = self.node_config["schema"])
+                    schema=self.node_config["schema"]
+                )
 
                 output_parser = get_structured_output_parser(self.node_config["schema"])
                 format_instructions = "NA"
@@ -97,12 +107,18 @@ class GenerateAnswerOmniNode(BaseNode):
 
         TEMPLATE_NO_CHUNKS_OMNI_prompt = TEMPLATE_NO_CHUNKS_OMNI
         TEMPLATE_CHUNKS_OMNI_prompt = TEMPLATE_CHUNKS_OMNI
-        TEMPLATE_MERGE_OMNI_prompt= TEMPLATE_MERGE_OMNI
+        TEMPLATE_MERGE_OMNI_prompt = TEMPLATE_MERGE_OMNI
 
         if self.additional_info is not None:
-            TEMPLATE_NO_CHUNKS_OMNI_prompt = self.additional_info + TEMPLATE_NO_CHUNKS_OMNI_prompt
-            TEMPLATE_CHUNKS_OMNI_prompt = self.additional_info + TEMPLATE_CHUNKS_OMNI_prompt
-            TEMPLATE_MERGE_OMNI_prompt = self.additional_info + TEMPLATE_MERGE_OMNI_prompt
+            TEMPLATE_NO_CHUNKS_OMNI_prompt = (
+                self.additional_info + TEMPLATE_NO_CHUNKS_OMNI_prompt
+            )
+            TEMPLATE_CHUNKS_OMNI_prompt = (
+                self.additional_info + TEMPLATE_CHUNKS_OMNI_prompt
+            )
+            TEMPLATE_MERGE_OMNI_prompt = (
+                self.additional_info + TEMPLATE_MERGE_OMNI_prompt
+            )
 
         chains_dict = {}
         if len(doc) == 1:
@@ -116,7 +132,7 @@ class GenerateAnswerOmniNode(BaseNode):
                 },
             )
 
-            chain =  prompt | self.llm_model | output_parser
+            chain = prompt | self.llm_model | output_parser
             answer = chain.invoke({"question": user_prompt})
 
             state.update({self.output[0]: answer})
@@ -126,27 +142,27 @@ class GenerateAnswerOmniNode(BaseNode):
             tqdm(doc, desc="Processing chunks", disable=not self.verbose)
         ):
             prompt = PromptTemplate(
-                    template=TEMPLATE_CHUNKS_OMNI_prompt,
-                    input_variables=["question"],
-                    partial_variables={
-                        "context": chunk,
-                        "chunk_id": i + 1,
-                        "format_instructions": format_instructions,
-                    },
-                )
+                template=TEMPLATE_CHUNKS_OMNI_prompt,
+                input_variables=["question"],
+                partial_variables={
+                    "context": chunk,
+                    "chunk_id": i + 1,
+                    "format_instructions": format_instructions,
+                },
+            )
 
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
         async_runner = RunnableParallel(**chains_dict)
 
-        batch_results =  async_runner.invoke({"question": user_prompt})
+        batch_results = async_runner.invoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
-                template = TEMPLATE_MERGE_OMNI_prompt,
-                input_variables=["context", "question"],
-                partial_variables={"format_instructions": format_instructions},
-            )
+            template=TEMPLATE_MERGE_OMNI_prompt,
+            input_variables=["context", "question"],
+            partial_variables={"format_instructions": format_instructions},
+        )
 
         merge_chain = merge_prompt | self.llm_model | output_parser
         answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})

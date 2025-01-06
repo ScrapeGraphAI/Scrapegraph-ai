@@ -1,20 +1,22 @@
 """
 PromptRefinerNode Module
 """
+
 from typing import List, Optional
+
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_models import ChatOllama
-from .base_node import BaseNode
+from langchain_core.output_parsers import StrOutputParser
+
+from ..prompts import TEMPLATE_REFINER, TEMPLATE_REFINER_WITH_CONTEXT
 from ..utils import transform_schema
-from ..prompts import (
-    TEMPLATE_REFINER, TEMPLATE_REFINER_WITH_CONTEXT
-)
+from .base_node import BaseNode
+
 
 class PromptRefinerNode(BaseNode):
     """
     A node that refine the user prompt with the use of the schema and additional context and
-    create a precise prompt in subsequent steps that explicitly link elements in the user's 
+    create a precise prompt in subsequent steps that explicitly link elements in the user's
     original input to their corresponding representations in the JSON schema.
 
     Attributes:
@@ -40,14 +42,12 @@ class PromptRefinerNode(BaseNode):
         self.llm_model = node_config["llm_model"]
 
         if isinstance(node_config["llm_model"], ChatOllama):
-            self.llm_model.format="json"
+            self.llm_model.format = "json"
 
         self.verbose = (
             True if node_config is None else node_config.get("verbose", False)
         )
-        self.force = (
-            False if node_config is None else node_config.get("force", False)
-        )
+        self.force = False if node_config is None else node_config.get("force", False)
         self.script_creator = (
             False if node_config is None else node_config.get("script_creator", False)
         )
@@ -77,25 +77,31 @@ class PromptRefinerNode(BaseNode):
 
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        user_prompt = state['user_prompt']
+        user_prompt = state["user_prompt"]
 
         self.simplefied_schema = transform_schema(self.output_schema.schema())
 
         if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=TEMPLATE_REFINER_WITH_CONTEXT,
-                partial_variables={"user_input": user_prompt,
-                                    "json_schema": str(self.simplefied_schema),
-                                    "additional_context": self.additional_info})
+                partial_variables={
+                    "user_input": user_prompt,
+                    "json_schema": str(self.simplefied_schema),
+                    "additional_context": self.additional_info,
+                },
+            )
         else:
             prompt = PromptTemplate(
                 template=TEMPLATE_REFINER,
-                partial_variables={"user_input": user_prompt,
-                                    "json_schema": str(self.simplefied_schema)})
+                partial_variables={
+                    "user_input": user_prompt,
+                    "json_schema": str(self.simplefied_schema),
+                },
+            )
 
         output_parser = StrOutputParser()
 
-        chain =  prompt | self.llm_model | output_parser
+        chain = prompt | self.llm_model | output_parser
         refined_prompt = chain.invoke({})
 
         state.update({self.output[0]: refined_prompt})

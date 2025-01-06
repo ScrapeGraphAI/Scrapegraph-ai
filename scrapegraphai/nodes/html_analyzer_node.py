@@ -1,20 +1,22 @@
 """
 HtmlAnalyzerNode Module
 """
+
 from typing import List, Optional
+
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_models import ChatOllama
-from .base_node import BaseNode
+from langchain_core.output_parsers import StrOutputParser
+
+from ..prompts import TEMPLATE_HTML_ANALYSIS, TEMPLATE_HTML_ANALYSIS_WITH_CONTEXT
 from ..utils import reduce_html
-from ..prompts import (
-    TEMPLATE_HTML_ANALYSIS, TEMPLATE_HTML_ANALYSIS_WITH_CONTEXT
-)
+from .base_node import BaseNode
+
 
 class HtmlAnalyzerNode(BaseNode):
     """
     A node that generates an analysis of the provided HTML code based on the wanted infromations to be extracted.
-    
+
     Attributes:
         llm_model: An instance of a language model client, configured for generating answers.
         verbose (bool): A flag indicating whether to show print statements during execution.
@@ -38,14 +40,12 @@ class HtmlAnalyzerNode(BaseNode):
         self.llm_model = node_config["llm_model"]
 
         if isinstance(node_config["llm_model"], ChatOllama):
-            self.llm_model.format="json"
+            self.llm_model.format = "json"
 
         self.verbose = (
             True if node_config is None else node_config.get("verbose", False)
         )
-        self.force = (
-            False if node_config is None else node_config.get("force", False)
-        )
+        self.force = False if node_config is None else node_config.get("force", False)
         self.script_creator = (
             False if node_config is None else node_config.get("script_creator", False)
         )
@@ -76,23 +76,31 @@ class HtmlAnalyzerNode(BaseNode):
         input_data = [state[key] for key in input_keys]
         refined_prompt = input_data[0]
         html = input_data[1]
-        reduced_html = reduce_html(html[0].page_content, self.node_config.get("reduction", 0))
+        reduced_html = reduce_html(
+            html[0].page_content, self.node_config.get("reduction", 0)
+        )
 
         if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=TEMPLATE_HTML_ANALYSIS_WITH_CONTEXT,
-                partial_variables={"initial_analysis": refined_prompt,
-                                    "html_code": reduced_html,
-                                    "additional_context": self.additional_info})
+                partial_variables={
+                    "initial_analysis": refined_prompt,
+                    "html_code": reduced_html,
+                    "additional_context": self.additional_info,
+                },
+            )
         else:
             prompt = PromptTemplate(
                 template=TEMPLATE_HTML_ANALYSIS,
-                partial_variables={"initial_analysis": refined_prompt,
-                                    "html_code": reduced_html})
+                partial_variables={
+                    "initial_analysis": refined_prompt,
+                    "html_code": reduced_html,
+                },
+            )
 
         output_parser = StrOutputParser()
 
-        chain =  prompt | self.llm_model | output_parser
+        chain = prompt | self.llm_model | output_parser
         html_analysis = chain.invoke({})
 
         state.update({self.output[0]: html_analysis, self.output[1]: reduced_html})

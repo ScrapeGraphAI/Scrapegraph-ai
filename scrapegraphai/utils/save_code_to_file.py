@@ -2,7 +2,8 @@
 save_code_to_file module
 """
 
-def save_code_to_file(code: str, filename:str) -> None:
+
+def save_code_to_file(code: str, filename: str) -> None:
     """
     Saves the generated code to a Python file.
 

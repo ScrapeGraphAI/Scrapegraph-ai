@@ -1,11 +1,14 @@
 """
 Tokenization utilities for OpenAI models
 """
+
 import tiktoken
 from langchain_core.language_models.chat_models import BaseChatModel
+
 from ..logging import get_logger
 
-def num_tokens_openai(text: str, llm_model:BaseChatModel) -> int:
+
+def num_tokens_openai(text: str, llm_model: BaseChatModel) -> int:
     """
     Estimate the number of tokens in a given text using OpenAI's tokenization method,
     adjusted for different OpenAI models.

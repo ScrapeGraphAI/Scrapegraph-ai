@@ -1,10 +1,13 @@
 """
 fetch_screen_node module
 """
+
 from typing import List, Optional
+
 from playwright.sync_api import sync_playwright
+
 from .base_node import BaseNode
-from ..utils.logging import get_logger
+
 
 class FetchScreenNode(BaseNode):
     """
@@ -50,6 +53,6 @@ class FetchScreenNode(BaseNode):
             browser.close()
 
         state["link"] = self.url
-        state['screenshots'] = screenshot_data_list
+        state["screenshots"] = screenshot_data_list
 
         return state

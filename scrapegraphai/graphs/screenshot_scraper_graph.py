@@ -1,15 +1,18 @@
-""" 
-ScreenshotScraperGraph Module 
 """
+ScreenshotScraperGraph Module
+"""
+
 from typing import Optional
-import logging
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
+
+from ..nodes import FetchScreenNode, GenerateAnswerFromImageNode
 from .abstract_graph import AbstractGraph
-from ..nodes import (FetchScreenNode, GenerateAnswerFromImageNode)
+from .base_graph import BaseGraph
+
 
 class ScreenshotScraperGraph(AbstractGraph):
-    """ 
+    """
     A graph instance representing the web scraping workflow for images.
 
     Attributes:
@@ -19,7 +22,7 @@ class ScreenshotScraperGraph(AbstractGraph):
 
     Methods:
         __init__(prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None)
-            Initializes the ScreenshotScraperGraph instance with the given prompt, 
+            Initializes the ScreenshotScraperGraph instance with the given prompt,
             source, and configuration parameters.
 
         _create_graph()
@@ -29,9 +32,10 @@ class ScreenshotScraperGraph(AbstractGraph):
             Executes the scraping process and returns the answer to the prompt.
     """
 
-    def __init__(self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
+    def __init__(
+        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+    ):
         super().__init__(prompt, config, source, schema)
-
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -41,19 +45,11 @@ class ScreenshotScraperGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow for images.
         """
         fetch_screen_node = FetchScreenNode(
-            input="url",
-            output=["screenshots"],
-            node_config={
-                "link": self.source
-            }
+            input="url", output=["screenshots"], node_config={"link": self.source}
         )
 
         generate_answer_from_image_node = GenerateAnswerFromImageNode(
-            input="screenshots",
-            output=["answer"],
-            node_config={
-                "config": self.config
-            }
+            input="screenshots", output=["answer"], node_config={"config": self.config}
         )
 
         return BaseGraph(
@@ -65,7 +61,7 @@ class ScreenshotScraperGraph(AbstractGraph):
                 (fetch_screen_node, generate_answer_from_image_node),
             ],
             entry_point=fetch_screen_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:
@@ -80,4 +76,3 @@ class ScreenshotScraperGraph(AbstractGraph):
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
         return self.final_state.get("answer", "No answer found.")
-        

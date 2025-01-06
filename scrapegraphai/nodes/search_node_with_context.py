@@ -1,12 +1,19 @@
 """
 SearchInternetNode Module
 """
+
 from typing import List, Optional
+
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from tqdm import tqdm
-from ..prompts import TEMPLATE_SEARCH_WITH_CONTEXT_CHUNKS, TEMPLATE_SEARCH_WITH_CONTEXT_NO_CHUNKS
+
+from ..prompts import (
+    TEMPLATE_SEARCH_WITH_CONTEXT_CHUNKS,
+    TEMPLATE_SEARCH_WITH_CONTEXT_NO_CHUNKS,
+)
 from .base_node import BaseNode
+
 
 class SearchLinksWithContext(BaseNode):
     """
@@ -23,7 +30,7 @@ class SearchLinksWithContext(BaseNode):
         input (str): Boolean expression defining the input keys needed from the state.
         output (List[str]): List of output keys to be updated in the state.
         node_config (dict): Additional configuration for the node.
-        node_name (str): The unique identifier name for the node, 
+        node_name (str): The unique identifier name for the node,
         defaulting to "SearchLinksWithContext".
     """
 

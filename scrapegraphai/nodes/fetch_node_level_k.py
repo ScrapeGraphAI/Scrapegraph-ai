@@ -1,12 +1,15 @@
 """
 fetch_node_level_k module
 """
+
 from typing import List, Optional
 from urllib.parse import urljoin
-from langchain_core.documents import Document
+
 from bs4 import BeautifulSoup
-from .base_node import BaseNode
+from langchain_core.documents import Document
+
 from ..docloaders import ChromiumLoader
+from .base_node import BaseNode
 
 
 class FetchNodeLevelK(BaseNode):
@@ -115,8 +118,10 @@ class FetchNodeLevelK(BaseNode):
             try:
                 from ..docloaders.browser_base import browser_base_fetch
             except ImportError:
-                raise ImportError("""The browserbase module is not installed. 
-                                    Please install it using `pip install browserbase`.""")
+                raise ImportError(
+                    """The browserbase module is not installed.
+                                    Please install it using `pip install browserbase`."""
+                )
 
             data = browser_base_fetch(
                 self.browser_base.get("api_key"),
@@ -171,10 +176,34 @@ class FetchNodeLevelK(BaseNode):
         """
         # List of invalid URL schemes to filter out
         invalid_schemes = {
-            'mailto:', 'tel:', 'fax:', 'sms:', 'callto:', 'wtai:', 'javascript:',
-            'data:', 'file:', 'ftp:', 'irc:', 'news:', 'nntp:', 'feed:', 'webcal:',
-            'skype:', 'im:', 'mtps:', 'spotify:', 'steam:', 'teamspeak:', 'udp:',
-            'unreal:', 'ut2004:', 'ventrilo:', 'view-source:', 'ws:', 'wss:'
+            "mailto:",
+            "tel:",
+            "fax:",
+            "sms:",
+            "callto:",
+            "wtai:",
+            "javascript:",
+            "data:",
+            "file:",
+            "ftp:",
+            "irc:",
+            "news:",
+            "nntp:",
+            "feed:",
+            "webcal:",
+            "skype:",
+            "im:",
+            "mtps:",
+            "spotify:",
+            "steam:",
+            "teamspeak:",
+            "udp:",
+            "unreal:",
+            "ut2004:",
+            "ventrilo:",
+            "view-source:",
+            "ws:",
+            "wss:",
         }
 
         full_links = []
@@ -184,14 +213,18 @@ class FetchNodeLevelK(BaseNode):
                 continue
 
             # Skip if it's an external link and only_inside_links is True
-            if self.only_inside_links and link.startswith(('http://', 'https://')):
+            if self.only_inside_links and link.startswith(("http://", "https://")):
                 continue
 
             # Convert relative URLs to absolute URLs
             try:
-                full_link = link if link.startswith(('http://', 'https://')) else urljoin(base_url, link)
+                full_link = (
+                    link
+                    if link.startswith(("http://", "https://"))
+                    else urljoin(base_url, link)
+                )
                 # Ensure the final URL starts with http:// or https://
-                if full_link.startswith(('http://', 'https://')):
+                if full_link.startswith(("http://", "https://")):
                     full_links.append(full_link)
             except Exception as e:
                 self.logger.warning(f"Failed to process link {link}: {str(e)}")
@@ -216,7 +249,9 @@ class FetchNodeLevelK(BaseNode):
                 try:
                     document = self.fetch_content(source, loader_kwargs)
                 except Exception as e:
-                    self.logger.warning(f"Failed to fetch content for {source}: {str(e)}")
+                    self.logger.warning(
+                        f"Failed to fetch content for {source}: {str(e)}"
+                    )
                     continue
 
                 if not document or not document[0].page_content.strip():

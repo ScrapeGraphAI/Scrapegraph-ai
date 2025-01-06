@@ -1,4 +1,59 @@
-## [1.34.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.1...v1.34.2) (2025-01-06)
+## [1.35.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.3...v1.35.0-beta.4) (2025-01-06)
+
+
+### Features
+
+* ⏰added graph timeout and fixed model_tokens param ([#810](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/810) [#856](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/856) [#853](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/853)) ([01a331a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/01a331afa5fc6f6d6aea4f1969cbf41f0b25f5e0))
+
+## [1.35.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.2...v1.35.0-beta.3) (2025-01-06)
+
+
+### Features
+
+* serper api search ([1c0141f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c0141fd281881e342a113d5a414930d8184146b))
+
+## [1.35.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.1...v1.35.0-beta.2) (2025-01-06)
+
+
+### Features
+
+* add codequality workflow ([4380afb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4380afb5c15e7f6057fd44bdbd6bde410bb98378))
+
+## [1.35.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.3-beta.1...v1.35.0-beta.1) (2025-01-06)
+
+
+### Features
+
+* ⛏️ enhanced contribution and precommit added ([fcbfe78](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fcbfe78983c5c36fe5e4e0659ccfebc7fd9952b4))
+* add timeout and retry_limit in loader_kwargs ([#865](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/865) [#831](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/831)) ([21147c4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/21147c46a53e943dd5f297e6c7c3433edadfbc27))
+
+
+### Bug Fixes
+
+* local html handling ([2a15581](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2a15581865d84021278ec0bf601172f6f8343717))
+
+## [1.34.3-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.2...v1.34.3-beta.1) (2025-01-06)
+
+
+### Bug Fixes
+
+* browserbase integration ([752a885](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/752a885f5c521b7141728952d913a5a25650d8e2))
+
+
+### CI
+
+* **release:** 1.34.2-beta.1 [skip ci] ([f383e72](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f383e7283727ad798fe152434eee7e6750c36166)), closes [#861](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/861) [#861](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/861)
+* **release:** 1.34.2-beta.2 [skip ci] ([93fd9d2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/93fd9d29036ce86f6a17f960f691bc6e4b26ea51))
+
+## [1.34.2-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.2-beta.1...v1.34.2-beta.2) (2025-01-06)
+
+
+### Bug Fixes
+
+* browserbase integration ([752a885](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/752a885f5c521b7141728952d913a5a25650d8e2))
+
+## [1.34.2-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.1...v1.34.2-beta.1) (2025-01-06)
+
 
 
 ### Bug Fixes

@@ -3,11 +3,13 @@ This module implements the Document Scraper Graph for the ScrapeGraphAI applicat
 """
 
 from typing import Optional
-import logging
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
+
+from ..nodes import FetchNode, GenerateAnswerNode, ParseNode
 from .abstract_graph import AbstractGraph
-from ..nodes import FetchNode, ParseNode, GenerateAnswerNode
+from .base_graph import BaseGraph
+
 
 class DocumentScraperGraph(AbstractGraph):
     """

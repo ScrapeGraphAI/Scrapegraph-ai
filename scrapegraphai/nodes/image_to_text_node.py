@@ -1,15 +1,17 @@
 """
 ImageToTextNode Module
 """
-import traceback
+
 from typing import List, Optional
-from ..utils.logging import get_logger
-from .base_node import BaseNode
+
 from langchain_core.messages import HumanMessage
+
+from .base_node import BaseNode
+
 
 class ImageToTextNode(BaseNode):
     """
-    Retrieve images from a list of URLs and return a description of 
+    Retrieve images from a list of URLs and return a description of
     the images using an image-to-text model.
 
     Attributes:
@@ -78,8 +80,8 @@ class ImageToTextNode(BaseNode):
                     ]
                 )
                 text_answer = self.llm_model.invoke([message]).content
-            except Exception as e:
-                text_answer = f"Error: incompatible image format or model failure."
+            except Exception:
+                text_answer = "Error: incompatible image format or model failure."
             img_desc.append(text_answer)
 
         state.update({self.output[0]: img_desc})

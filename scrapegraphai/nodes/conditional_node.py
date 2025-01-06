@@ -1,17 +1,21 @@
 """
 Module for implementing the conditional node
 """
-from typing import Optional, List
-from simpleeval import simple_eval, EvalWithCompoundTypes
+
+from typing import List, Optional
+
+from simpleeval import EvalWithCompoundTypes, simple_eval
+
 from .base_node import BaseNode
+
 
 class ConditionalNode(BaseNode):
     """
-    A node that determines the next step in the graph's execution flow based on 
-    the presence and content of a specified key in the graph's state. It extends 
+    A node that determines the next step in the graph's execution flow based on
+    the presence and content of a specified key in the graph's state. It extends
     the BaseNode by adding condition-based logic to the execution process.
 
-    This node type is used to implement branching logic within the graph, allowing 
+    This node type is used to implement branching logic within the graph, allowing
     for dynamic paths based on the data available in the current state.
 
     It is expected that exactly two edges are created out of this node.
@@ -22,18 +26,20 @@ class ConditionalNode(BaseNode):
         key_name (str): The name of the key in the state to check for its presence.
 
     Args:
-        key_name (str): The name of the key to check in the graph's state. This is 
+        key_name (str): The name of the key to check in the graph's state. This is
                         used to determine the path the graph's execution should take.
-        node_name (str, optional): The unique identifier name for the node. Defaults 
+        node_name (str, optional): The unique identifier name for the node. Defaults
                                    to "ConditionalNode".
 
     """
 
-    def __init__(self,
+    def __init__(
+        self,
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "Cond",):
+        node_name: str = "Cond",
+    ):
         """
         Initializes an empty ConditionalNode.
         """
@@ -41,14 +47,16 @@ class ConditionalNode(BaseNode):
 
         try:
             self.key_name = self.node_config["key_name"]
-        except:
-            raise NotImplementedError("You need to provide key_name inside the node config")       
+        except (KeyError, TypeError) as e:
+            raise NotImplementedError(
+                "You need to provide key_name inside the node config"
+            ) from e
 
         self.true_node_name = None
         self.false_node_name = None
         self.condition = self.node_config.get("condition", None)
         self.eval_instance = EvalWithCompoundTypes()
-        self.eval_instance.functions = {'len': len}
+        self.eval_instance.functions = {"len": len}
 
     def execute(self, state: dict) -> dict:
         """
@@ -68,7 +76,7 @@ class ConditionalNode(BaseNode):
             condition_result = self._evaluate_condition(state, self.condition)
         else:
             value = state.get(self.key_name)
-            condition_result = value is not None and value != ''
+            condition_result = value is not None and value != ""
 
         if condition_result:
             return self.true_node_name
@@ -95,8 +103,10 @@ class ConditionalNode(BaseNode):
                 condition,
                 names=eval_globals,
                 functions=self.eval_instance.functions,
-                operators=self.eval_instance.operators
+                operators=self.eval_instance.operators,
             )
             return bool(result)
         except Exception as e:
-            raise ValueError(f"Error evaluating condition '{condition}' in {self.node_name}: {e}")
+            raise ValueError(
+                f"Error evaluating condition '{condition}' in {self.node_name}: {e}"
+            )

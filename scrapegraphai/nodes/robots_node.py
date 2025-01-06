@@ -1,15 +1,18 @@
 """
 RobotsNode Module
 """
+
 from typing import List, Optional
 from urllib.parse import urlparse
-from langchain_community.document_loaders import AsyncChromiumLoader
-from langchain.prompts import PromptTemplate
+
 from langchain.output_parsers import CommaSeparatedListOutputParser
+from langchain.prompts import PromptTemplate
+from langchain_community.document_loaders import AsyncChromiumLoader
+
 from ..helpers import robots_dictionary
-from ..utils.logging import get_logger
-from .base_node import BaseNode
 from ..prompts import TEMPLATE_ROBOT
+from .base_node import BaseNode
+
 
 class RobotsNode(BaseNode):
     """
@@ -40,7 +43,6 @@ class RobotsNode(BaseNode):
         output: List[str],
         node_config: Optional[dict] = None,
         node_name: str = "RobotNode",
-
     ):
         super().__init__(node_name, "node", input, output, 1)
 
@@ -119,7 +121,7 @@ class RobotsNode(BaseNode):
                     raise ValueError("The website you selected is not scrapable")
                 else:
                     self.logger.warning(
-                        """\033[33m(WARNING: Scraping this website is 
+                        """\033[33m(WARNING: Scraping this website is
                         not allowed but you decided to force it)\033[0m"""
                     )
             else:

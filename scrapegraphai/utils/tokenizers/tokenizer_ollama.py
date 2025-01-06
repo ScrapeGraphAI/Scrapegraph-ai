@@ -1,10 +1,13 @@
 """
 Tokenization utilities for Ollama models
 """
+
 from langchain_core.language_models.chat_models import BaseChatModel
+
 from ..logging import get_logger
 
-def num_tokens_ollama(text: str, llm_model:BaseChatModel) -> int:
+
+def num_tokens_ollama(text: str, llm_model: BaseChatModel) -> int:
     """
     Estimate the number of tokens in a given text using Ollama's tokenization method,
     adjusted for different Ollama models.
@@ -25,4 +28,3 @@ def num_tokens_ollama(text: str, llm_model:BaseChatModel) -> int:
     # NB: https://github.com/ollama/ollama/issues/1716#issuecomment-2074265507
     tokens = llm_model.get_num_tokens(text)
     return tokens
-

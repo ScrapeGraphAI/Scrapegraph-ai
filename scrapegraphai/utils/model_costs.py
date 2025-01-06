@@ -22,9 +22,8 @@ MODEL_COST_PER_1K_TOKENS_INPUT = {
     "open-mixtral-8x22b": 0.002,
     "mistral-small-latest": 0.001,
     "mistral-medium-latest": 0.00275,
-
     ### Bedrock - not Claude
-    #AI21 Labs
+    # AI21 Labs
     "a121.ju-ultra-v1": 0.0188,
     "a121.ju-mid-v1": 0.0125,
     "ai21.jamba-instruct-v1:0": 0.0005,
@@ -75,7 +74,6 @@ MODEL_COST_PER_1K_TOKENS_OUTPUT = {
     "open-mixtral-8x22b": 0.006,
     "mistral-small-latest": 0.003,
     "mistral-medium-latest": 0.0081,
-
     ### Bedrock - not Claude
     # AI21 Labs
     "a121.ju-ultra-v1": 0.0188,
