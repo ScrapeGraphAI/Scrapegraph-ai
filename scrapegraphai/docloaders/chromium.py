@@ -23,9 +23,6 @@ class ChromiumLoader(BaseLoader):
         requires_js_support: Flag to determine if JS rendering is required.
     """
 
-    RETRY_LIMIT = 3
-    TIMEOUT = 10
-
     def __init__(
         self,
         urls: List[str],
@@ -37,6 +34,8 @@ class ChromiumLoader(BaseLoader):
         requires_js_support: bool = False,
         storage_state: Optional[str] = None,
         browser_name: str = "chromium",  #default chromium
+        retry_limit: int = 1,
+        timeout: int = 10,
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
@@ -47,6 +46,8 @@ class ChromiumLoader(BaseLoader):
             proxy: A dictionary containing proxy information; None disables protection.
             urls: A list of URLs to scrape content from.
             requires_js_support: Whether to use JS rendering for scraping.
+            retry_limit: Maximum number of retry attempts for scraping. Defaults to 3.
+            timeout: Maximum time in seconds to wait for scraping. Defaults to 10.
             kwargs: A dictionary containing additional browser kwargs.
 
         Raises:
@@ -68,12 +69,17 @@ class ChromiumLoader(BaseLoader):
         self.requires_js_support = requires_js_support
         self.storage_state = storage_state
         self.browser_name = browser_name
+        self.retry_limit = retry_limit
+        self.timeout = timeout
         
     async def scrape(self, url:str) -> str:
         if self.backend == "playwright":
             return await self.ascrape_playwright(url)
         elif self.backend == "selenium":
-            return await self.ascrape_undetected_chromedriver(url)
+            try:
+                return await self.ascrape_undetected_chromedriver(url)
+            except Exception as e:
+                raise ValueError(f"Failed to scrape with undetected chromedriver: {e}")
         else:
             raise ValueError(f"Unsupported backend: {self.backend}")     
 
@@ -97,9 +103,9 @@ class ChromiumLoader(BaseLoader):
         results = ""
         attempt = 0
 
-        while attempt < self.RETRY_LIMIT:
+        while attempt < self.retry_limit:
             try:
-                async with async_timeout.timeout(self.TIMEOUT):
+                async with async_timeout.timeout(self.timeout):
                     # Handling browser selection
                     if self.backend == "selenium":
                         if self.browser_name == "chromium":
@@ -134,9 +140,9 @@ class ChromiumLoader(BaseLoader):
             except (aiohttp.ClientError, asyncio.TimeoutError) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
-                if attempt == self.RETRY_LIMIT:
+                if attempt == self.retry_limit:
                     results = (
-                        f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                        f"Error: Network error after {self.retry_limit} attempts - {e}"
                     )
             finally:
                 driver.quit()
@@ -204,7 +210,7 @@ class ChromiumLoader(BaseLoader):
         results = ""
         attempt = 0
 
-        while attempt < self.RETRY_LIMIT:
+        while attempt < self.retry_limit:
             try:
                 async with async_playwright() as p:
                     browser = None
@@ -268,8 +274,8 @@ class ChromiumLoader(BaseLoader):
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
-                if attempt == self.RETRY_LIMIT:
-                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                if attempt == self.retry_limit:
+                    results = f"Error: Network error after {self.retry_limit} attempts - {e}"
             finally:
                 await browser.close()
 
@@ -283,7 +289,11 @@ class ChromiumLoader(BaseLoader):
             url (str): The URL to scrape.
 
         Returns:
-            str: The scraped HTML content or an error message if an exception occurs.
+            str: The scraped HTML content
+
+        Raises:
+            RuntimeError: When retry limit is reached without successful scraping
+            ValueError: When an invalid browser name is provided
         """
         from playwright.async_api import async_playwright
         from undetected_playwright import Malenia
@@ -292,9 +302,9 @@ class ChromiumLoader(BaseLoader):
         results = ""
         attempt = 0
 
-        while attempt < self.RETRY_LIMIT:
+        while attempt < self.retry_limit:
             try:
-                async with async_playwright() as p, async_timeout.timeout(self.TIMEOUT):
+                async with async_playwright() as p, async_timeout.timeout(self.timeout):
                     browser = None
                     if browser_name == "chromium":
                         browser = await p.chromium.launch(
@@ -315,22 +325,16 @@ class ChromiumLoader(BaseLoader):
                     await page.wait_for_load_state(self.load_state)
                     results = await page.content()
                     logger.info("Content scraped")
-                    break
+                    return results
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
-                if attempt == self.RETRY_LIMIT:
-                    results = f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
+                if attempt == self.retry_limit:
+                    raise RuntimeError(f"Failed to scrape after {self.retry_limit} attempts: {str(e)}")
             finally:
-                if "browser" in locals():
-                    await browser.close()
+                await browser.close()
 
-
-        return results
-
-
-
-    async def ascrape_with_js_support(self, url: str , browser_name:str = "chromium") -> str:
+    async def ascrape_with_js_support(self, url: str, browser_name: str = "chromium") -> str:
         """
         Asynchronously scrape the content of a given URL by rendering JavaScript using Playwright.
 
@@ -338,18 +342,20 @@ class ChromiumLoader(BaseLoader):
             url (str): The URL to scrape.
 
         Returns:
-            str: The fully rendered HTML content after JavaScript execution,
-            or an error message if an exception occurs.
+            str: The fully rendered HTML content after JavaScript execution
+
+        Raises:
+            RuntimeError: When retry limit is reached without successful scraping
+            ValueError: When an invalid browser name is provided
         """
         from playwright.async_api import async_playwright
 
         logger.info(f"Starting scraping with JavaScript support for {url}...")
-        results = ""
         attempt = 0
 
-        while attempt < self.RETRY_LIMIT:
+        while attempt < self.retry_limit:
             try:
-                async with async_playwright() as p, async_timeout.timeout(self.TIMEOUT):
+                async with async_playwright() as p, async_timeout.timeout(self.timeout):
                     browser = None
                     if browser_name == "chromium":
                         browser = await p.chromium.launch(
@@ -368,18 +374,14 @@ class ChromiumLoader(BaseLoader):
                     await page.goto(url, wait_until="networkidle")
                     results = await page.content()
                     logger.info("Content scraped after JavaScript rendering")
-                    break
+                    return results
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
-                if attempt == self.RETRY_LIMIT:
-                    results = (
-                        f"Error: Network error after {self.RETRY_LIMIT} attempts - {e}"
-                    )
+                if attempt == self.retry_limit:
+                    raise RuntimeError(f"Failed to scrape after {self.retry_limit} attempts: {str(e)}")
             finally:
                 await browser.close()
-
-        return results
 
     def lazy_load(self) -> Iterator[Document]:
         """

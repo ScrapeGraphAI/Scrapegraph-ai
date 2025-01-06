@@ -24,21 +24,6 @@ Just say which information you want to extract and the library will do it for yo
   <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
 </p>
 
-## 🔗 ScrapeGraph API & SDKs
-If you are looking for a quick solution to integrate ScrapeGraph in your system, check out our powerful API [here!](https://dashboard.scrapegraphai.com/login)
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/api-banner.png" alt="ScrapeGraph API Banner" style="width: 100%;">
-</p>
-
-We offer SDKs in both Python and Node.js, making it easy to integrate into your projects. Check them out below:
-
-| SDK       | Language | GitHub Link                                                                 |
-|-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
-
-The Official API Documentation can be found [here](https://docs.scrapegraphai.com/).
 
 ## 🚀 Quick install
 
@@ -47,6 +32,7 @@ The reference page for Scrapegraph-ai is available on the official page of PyPI:
 ```bash
 pip install scrapegraphai
 
+# IMPORTANT (to fetch webpage content)
 playwright install
 ```
 
@@ -84,13 +70,12 @@ The most common one is the `SmartScraperGraph`, which extracts information from 
 
 
 ```python
-import json
 from scrapegraphai.graphs import SmartScraperGraph
 
 # Define the configuration for the scraping pipeline
 graph_config = {
     "llm": {
-        "api_key": "YOUR_OPENAI_APIKEY",
+        "api_key": "YOUR_OPENAI_API_KEY",
         "model": "openai/gpt-4o-mini",
     },
     "verbose": True,
@@ -99,33 +84,45 @@ graph_config = {
 
 # Create the SmartScraperGraph instance
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Extract me all the news from the website",
-    source="https://www.wired.com",
+    prompt="Extract useful information from the webpage, including a description of what the company does, founders and social media links",
+    source="https://scrapegraphai.com/",
     config=graph_config
 )
 
 # Run the pipeline
 result = smart_scraper_graph.run()
+
+import json
 print(json.dumps(result, indent=4))
 ```
 
 The output will be a dictionary like the following:
 
 ```python
-"result": {
-    "news": [
-      {
-        "title": "The New Jersey Drone Mystery May Not Actually Be That Mysterious",
-        "link": "https://www.wired.com/story/new-jersey-drone-mystery-maybe-not-drones/",
-        "author": "Lily Hay Newman"
-      },
-      {
-        "title": "Former ByteDance Intern Accused of Sabotage Among Winners of Prestigious AI Award",
-        "link": "https://www.wired.com/story/bytedance-intern-best-paper-neurips/",
-        "author": "Louise Matsakis"
-      },
-    ...
-    ]
+{
+    "description": "ScrapeGraphAI transforms websites into clean, organized data for AI agents and data analytics. It offers an AI-powered API for effortless and cost-effective data extraction.",
+    "founders": [
+        {
+            "name": "Marco Perini",
+            "role": "Founder & Technical Lead",
+            "linkedin": "https://www.linkedin.com/in/perinim/"
+        },
+        {
+            "name": "Marco Vinciguerra",
+            "role": "Founder & Software Engineer",
+            "linkedin": "https://www.linkedin.com/in/marco-vinciguerra-7ba365242/"
+        },
+        {
+            "name": "Lorenzo Padoan",
+            "role": "Founder & Product Engineer",
+            "linkedin": "https://www.linkedin.com/in/lorenzo-padoan-4521a2154/"
+        }
+    ],
+    "social_media_links": {
+        "linkedin": "https://www.linkedin.com/company/101881123",
+        "twitter": "https://x.com/scrapegraphai",
+        "github": "https://github.com/ScrapeGraphAI/Scrapegraph-ai"
+    }
 }
 ```
 There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
@@ -145,19 +142,29 @@ It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, 
 
 Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command, if you want to use local models.
 
-## 🔍 Demo
-Official streamlit demo:
-
-[![My Skills](https://skillicons.dev/icons?i=react)](https://scrapegraph-demo-demo.streamlit.app)
-
-Try it directly on the web using Google Colab:
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
 ## 📖 Documentation
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
+
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
 Check out also the Docusaurus [here](https://docs-oss.scrapegraphai.com/).
+
+## 🔗 ScrapeGraph API & SDKs
+If you are looking for a quick solution to integrate ScrapeGraph in your system, check out our powerful API [here!](https://dashboard.scrapegraphai.com/login)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/api-banner.png" alt="ScrapeGraph API Banner" style="width: 100%;">
+</p>
+
+We offer SDKs in both Python and Node.js, making it easy to integrate into your projects. Check them out below:
+
+| SDK       | Language | GitHub Link                                                                 |
+|-----------|----------|-----------------------------------------------------------------------------|
+| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+
+The Official API Documentation can be found [here](https://docs.scrapegraphai.com/).
 
 ## 🏆 Sponsors
 <div style="text-align: center;">

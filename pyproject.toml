@@ -32,13 +32,9 @@ dependencies = [
     "fastembed>=0.3.6",
     "semchunk>=2.2.0",
     "transformers>=4.44.2",
-    "transformers>=4.44.2",
     "googlesearch-python>=1.2.5",
     "async-timeout>=4.0.3",
-    "transformers>=4.44.2",
-    "googlesearch-python>=1.2.5",
     "simpleeval>=1.0.0",
-    "async_timeout>=4.0.3",
     "scrapegraph-py>=1.7.0"
 ]
 
