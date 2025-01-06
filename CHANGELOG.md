@@ -1,3 +1,21 @@
+## [1.34.0-beta.16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.15...v1.34.0-beta.16) (2025-01-06)
+
+
+### Bug Fixes
+
+* add back poethepoet for pylint ([a82af04](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a82af04afed2e4ba309b5e98b5df351d9b79ca2e))
+* better playwright installation handling ([f6009d1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f6009d1abf9e2c83999de0c9b03a41aa1bf8f2a4))
+* disallow mailto: ([#861](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/861)) ([8d9c909](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8d9c909923dff1c247c85099db20e2a6dabb93f5))
+* removed requirements files ([25861b0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/25861b04be8a6fc60c900a46033aed91d1fef1f9))
+* selenium import in ChromiumLoader ([e374e05](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e374e055d64b7fa4c5a4c7694384dd15e6361bbd))
+
+
+### chore
+
+* chromium browser asnc handling ([5be7c49](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5be7c497cd44fbd0c026bf3d833f572b34661b08))
+* made some libs optional ([5cdf055](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5cdf0550fe9dcd519d274bb343cf65c845e8a608))
+* pandas package is now optional ([54c69a2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/54c69a2b0b1677286b840be95ce482bcee881413))
+
 ## [1.34.0-beta.15](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.14...v1.34.0-beta.15) (2025-01-03)
 
 
