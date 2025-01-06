@@ -1,3 +1,10 @@
+## [1.35.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.1...v1.35.0-beta.2) (2025-01-06)
+
+
+### Features
+
+* add codequality workflow ([4380afb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4380afb5c15e7f6057fd44bdbd6bde410bb98378))
+
 ## [1.35.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.3-beta.1...v1.35.0-beta.1) (2025-01-06)
 
 
