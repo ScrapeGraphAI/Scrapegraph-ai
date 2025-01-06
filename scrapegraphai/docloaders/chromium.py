@@ -35,7 +35,7 @@ class ChromiumLoader(BaseLoader):
         storage_state: Optional[str] = None,
         browser_name: str = "chromium",  #default chromium
         retry_limit: int = 1,
-        timeout: int = 10,
+        timeout: int = 60,
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
@@ -69,8 +69,8 @@ class ChromiumLoader(BaseLoader):
         self.requires_js_support = requires_js_support
         self.storage_state = storage_state
         self.browser_name = browser_name
-        self.retry_limit = retry_limit
-        self.timeout = timeout
+        self.retry_limit = kwargs.get("retry_limit", retry_limit)
+        self.timeout = kwargs.get("timeout", timeout)
         
     async def scrape(self, url:str) -> str:
         if self.backend == "playwright":
