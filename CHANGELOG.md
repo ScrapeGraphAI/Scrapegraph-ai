@@ -1,3 +1,10 @@
+## [1.34.2-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.2-beta.1...v1.34.2-beta.2) (2025-01-06)
+
+
+### Bug Fixes
+
+* browserbase integration ([752a885](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/752a885f5c521b7141728952d913a5a25650d8e2))
+
 ## [1.34.2-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.1...v1.34.2-beta.1) (2025-01-06)
 
 
