@@ -1,14 +1,17 @@
 """
 SearchGraph Module
 """
+
 from copy import deepcopy
-from typing import Optional, List
+from typing import List, Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
-from .smart_scraper_graph import SmartScraperGraph
-from ..nodes import SearchInternetNode, GraphIteratorNode, MergeAnswersNode
+
+from ..nodes import GraphIteratorNode, MergeAnswersNode, SearchInternetNode
 from ..utils.copy import safe_deepcopy
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+from .smart_scraper_graph import SmartScraperGraph
 
 
 class SearchGraph(AbstractGraph):

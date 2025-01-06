@@ -3,11 +3,14 @@ This module implements the Omni Scraper Graph for the ScrapeGraphAI application.
 """
 
 from typing import Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
-from ..nodes import FetchNode, ParseNode, ImageToTextNode, GenerateAnswerOmniNode
+
 from ..models import OpenAIImageToText
+from ..nodes import FetchNode, GenerateAnswerOmniNode, ImageToTextNode, ParseNode
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+
 
 class OmniScraperGraph(AbstractGraph):
     """

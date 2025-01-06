@@ -1,21 +1,25 @@
 """
 Research_web module
 """
+
 import re
 from typing import List
-from langchain_community.tools import DuckDuckGoSearchResults
-from googlesearch import search as google_search
+
 import requests
 from bs4 import BeautifulSoup
+from googlesearch import search as google_search
+from langchain_community.tools import DuckDuckGoSearchResults
 
-def search_on_web(query: str, search_engine: str = "Google", 
-                  max_results: int = 10, port: int = 8080) -> List[str]:
+
+def search_on_web(
+    query: str, search_engine: str = "Google", max_results: int = 10, port: int = 8080
+) -> List[str]:
     """
     Searches the web for a given query using specified search engine options.
 
     Args:
         query (str): The search query to find on the internet.
-        search_engine (str, optional): Specifies the search engine to use, 
+        search_engine (str, optional): Specifies the search engine to use,
         options include 'Google', 'DuckDuckGo', 'Bing', or 'SearXNG'. Default is 'Google'.
         max_results (int, optional): The maximum number of search results to return.
         port (int, optional): The port number to use when searching with 'SearXNG'. Default is 8080.
@@ -40,7 +44,7 @@ def search_on_web(query: str, search_engine: str = "Google",
     elif search_engine.lower() == "duckduckgo":
         research = DuckDuckGoSearchResults(max_results=max_results)
         res = research.run(query)
-        links = re.findall(r'https?://[^\s,\]]+', res)
+        links = re.findall(r"https?://[^\s,\]]+", res)
         return links[:max_results]
 
     elif search_engine.lower() == "bing":
@@ -53,8 +57,8 @@ def search_on_web(query: str, search_engine: str = "Google",
         soup = BeautifulSoup(response.text, "html.parser")
 
         search_results = []
-        for result in soup.find_all('li', class_='b_algo', limit=max_results):
-            link = result.find('a')['href']
+        for result in soup.find_all("li", class_="b_algo", limit=max_results):
+            link = result.find("a")["href"]
             search_results.append(link)
         return search_results
 
@@ -66,8 +70,10 @@ def search_on_web(query: str, search_engine: str = "Google",
         response = requests.get(url, params=params)
 
         data = response.json()
-        limited_results = [result['url'] for result in data["results"][:max_results]]
+        limited_results = [result["url"] for result in data["results"][:max_results]]
         return limited_results
 
     else:
-        raise ValueError("The only search engines available are DuckDuckGo, Google, Bing, or SearXNG")
+        raise ValueError(
+            "The only search engines available are DuckDuckGo, Google, Bing, or SearXNG"
+        )

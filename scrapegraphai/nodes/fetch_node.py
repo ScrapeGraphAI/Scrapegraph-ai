@@ -1,16 +1,20 @@
 """
 FetchNode Module
 """
+
 import json
 from typing import List, Optional
-from langchain_openai import ChatOpenAI, AzureChatOpenAI
+
 import requests
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
-from ..utils.cleanup_html import cleanup_html
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
+
 from ..docloaders import ChromiumLoader
+from ..utils.cleanup_html import cleanup_html
 from ..utils.convert_to_md import convert_to_md
 from .base_node import BaseNode
+
 
 class FetchNode(BaseNode):
     """
@@ -78,7 +82,6 @@ class FetchNode(BaseNode):
             None if node_config is None else node_config.get("storage_state", None)
         )
 
-
     def execute(self, state):
         """
         Executes the node's logic to fetch HTML content from a specified URL and
@@ -107,15 +110,12 @@ class FetchNode(BaseNode):
 
         if input_type in handlers:
             return handlers[input_type](state, input_type, source)
-        elif self.input == "pdf_dir":
-            return state
-
-        try:
+        elif input_type == "local_dir":
+            return self.handle_local_source(state, source)
+        elif input_type == "url":
             return self.handle_web_source(state, source)
-        except ValueError as e:
-            raise
-
-        return self.handle_local_source(state, source)
+        else:
+            raise ValueError(f"Invalid input type: {input_type}")
 
     def handle_directory(self, state, input_type, source):
         """
@@ -179,7 +179,9 @@ class FetchNode(BaseNode):
             try:
                 import pandas as pd
             except ImportError:
-                raise ImportError("pandas is not installed. Please install it using `pip install pandas`.")
+                raise ImportError(
+                    "pandas is not installed. Please install it using `pip install pandas`."
+                )
             return [
                 Document(
                     page_content=str(pd.read_csv(source)), metadata={"source": "csv"}
@@ -288,8 +290,10 @@ class FetchNode(BaseNode):
                 try:
                     from ..docloaders.browser_base import browser_base_fetch
                 except ImportError:
-                    raise ImportError("""The browserbase module is not installed. 
-                                      Please install it using `pip install browserbase`.""")
+                    raise ImportError(
+                        """The browserbase module is not installed.
+                                      Please install it using `pip install browserbase`."""
+                    )
 
                 data = browser_base_fetch(
                     self.browser_base.get("api_key"),
@@ -330,8 +334,10 @@ class FetchNode(BaseNode):
                 document = loader.load()
 
             if not document or not document[0].page_content.strip():
-                raise ValueError("""No HTML body content found in
-                                 the document fetched by ChromiumLoader.""")
+                raise ValueError(
+                    """No HTML body content found in
+                                 the document fetched by ChromiumLoader."""
+                )
 
             parsed_content = document[0].page_content
 

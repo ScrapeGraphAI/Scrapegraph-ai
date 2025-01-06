@@ -4,7 +4,7 @@ Basic example of scraping pipeline using XMLScraperGraph from XML documents
 import os
 from dotenv import load_dotenv
 from scrapegraphai.graphs import XMLScraperGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 
@@ -23,7 +23,7 @@ with open(file_path, 'r', encoding="utf-8") as file:
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+openai_key = os.getenv("OPENAI_API_KEY")
 
 graph_config = {
     "llm": {
@@ -53,6 +53,3 @@ print(result)
 graph_exec_info = xml_scraper_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
 
-# Save to json or csv
-convert_to_csv(result, "result")
-convert_to_json(result, "result")

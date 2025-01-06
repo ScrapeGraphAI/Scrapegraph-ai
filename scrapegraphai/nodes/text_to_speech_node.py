@@ -1,9 +1,11 @@
 """
 TextToSpeechNode Module
 """
+
 from typing import List, Optional
-from ..utils.logging import get_logger
+
 from .base_node import BaseNode
+
 
 class TextToSpeechNode(BaseNode):
     """
@@ -43,7 +45,7 @@ class TextToSpeechNode(BaseNode):
                             correct data types from the state.
 
         Returns:
-            dict: The updated state with the output 
+            dict: The updated state with the output
             key containing the audio generated from the text.
 
         Raises:

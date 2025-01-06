@@ -3,11 +3,14 @@ high-level module for dynamic importing of python modules at runtime
 
 source code inspired by https://gist.github.com/DiTo97/46f4b733396b8d7a8f1d4d22db902cfc
 """
+
+import importlib.util
 import sys
 import typing
-import importlib.util
+
 if typing.TYPE_CHECKING:
     import types
+
 
 def srcfile_import(modpath: str, modname: str) -> "types.ModuleType":
     """

@@ -21,6 +21,7 @@ _DEFAULT_LOGGING_LEVEL = logging.WARNING
 
 _semaphore = threading.Lock()
 
+
 def _get_library_root_logger() -> logging.Logger:
     """
     Get the root logger for the library.
@@ -30,11 +31,12 @@ def _get_library_root_logger() -> logging.Logger:
     """
     return logging.getLogger(_library_name)
 
+
 def _set_library_root_logger() -> None:
     """
     Set up the root logger for the library.
 
-    This function sets up the default handler for the root logger, 
+    This function sets up the default handler for the root logger,
     if it has not already been set up.
     It also sets the logging level and propagation for the root logger.
     """
@@ -56,6 +58,7 @@ def _set_library_root_logger() -> None:
         library_root_logger.setLevel(_DEFAULT_LOGGING_LEVEL)
         library_root_logger.propagate = False
 
+
 def get_logger(name: Optional[str] = None) -> logging.Logger:
     """
     Get a logger with the specified name.
@@ -63,7 +66,7 @@ def get_logger(name: Optional[str] = None) -> logging.Logger:
     If no name is provided, the root logger for the library is returned.
 
     Args:
-        name (Optional[str]): The name of the logger. 
+        name (Optional[str]): The name of the logger.
         If None, the root logger for the library is returned.
 
     Returns:
@@ -71,6 +74,7 @@ def get_logger(name: Optional[str] = None) -> logging.Logger:
     """
     _set_library_root_logger()
     return logging.getLogger(name or _library_name)
+
 
 def get_verbosity() -> int:
     """
@@ -82,6 +86,7 @@ def get_verbosity() -> int:
     _set_library_root_logger()
     return _get_library_root_logger().getEffectiveLevel()
 
+
 def set_verbosity(verbosity: int) -> None:
     """
     Set the verbosity level of the root logger for the library.
@@ -92,11 +97,13 @@ def set_verbosity(verbosity: int) -> None:
     _set_library_root_logger()
     _get_library_root_logger().setLevel(verbosity)
 
+
 def set_verbosity_debug() -> None:
     """
     Set the verbosity level of the root logger for the library to DEBUG.
     """
     set_verbosity(logging.DEBUG)
+
 
 def set_verbosity_info() -> None:
     """
@@ -104,11 +111,13 @@ def set_verbosity_info() -> None:
     """
     set_verbosity(logging.INFO)
 
+
 def set_verbosity_warning() -> None:
     """
     Set the verbosity level of the root logger for the library to WARNING.
     """
     set_verbosity(logging.WARNING)
+
 
 def set_verbosity_error() -> None:
     """
@@ -116,11 +125,13 @@ def set_verbosity_error() -> None:
     """
     set_verbosity(logging.ERROR)
 
+
 def set_verbosity_fatal() -> None:
     """
     Set the verbosity level of the root logger for the library to FATAL.
     """
     set_verbosity(logging.FATAL)
+
 
 def set_handler(handler: logging.Handler) -> None:
     """
@@ -135,11 +146,13 @@ def set_handler(handler: logging.Handler) -> None:
 
     _get_library_root_logger().addHandler(handler)
 
+
 def setDEFAULT_HANDLER() -> None:
     """
     Add the default handler to the root logger for the library.
     """
     set_handler(DEFAULT_HANDLER)
+
 
 def unset_handler(handler: logging.Handler) -> None:
     """
@@ -154,11 +167,13 @@ def unset_handler(handler: logging.Handler) -> None:
 
     _get_library_root_logger().removeHandler(handler)
 
+
 def unsetDEFAULT_HANDLER() -> None:
     """
     Remove the default handler from the root logger for the library.
     """
     unset_handler(DEFAULT_HANDLER)
+
 
 def set_propagation() -> None:
     """
@@ -166,11 +181,13 @@ def set_propagation() -> None:
     """
     _get_library_root_logger().propagate = True
 
+
 def unset_propagation() -> None:
     """
     Disable propagation of the root logger for the library.
     """
     _get_library_root_logger().propagate = False
+
 
 def set_formatting() -> None:
     """
@@ -185,6 +202,7 @@ def set_formatting() -> None:
     for handler in _get_library_root_logger().handlers:
         handler.setFormatter(formatter)
 
+
 def unset_formatting() -> None:
     """
     Remove formatting for all handlers bound to the root logger for the library.
@@ -192,12 +210,13 @@ def unset_formatting() -> None:
     for handler in _get_library_root_logger().handlers:
         handler.setFormatter(None)
 
+
 @lru_cache(None)
 def warning_once(self, *args, **kwargs):
     """
     Emit a warning log with the same message only once.
 
-    This function is added as a method to the logging.Logger class. 
+    This function is added as a method to the logging.Logger class.
     It emits a warning log with the same message only once,
     even if it is called multiple times with the same message.
 
@@ -206,5 +225,6 @@ def warning_once(self, *args, **kwargs):
         **kwargs: The keyword arguments to pass to the logging.Logger.warning method.
     """
     self.warning(*args, **kwargs)
+
 
 logging.Logger.warning_once = warning_once

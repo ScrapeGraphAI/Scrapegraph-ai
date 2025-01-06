@@ -84,9 +84,37 @@ dev-dependencies = [
     "pytest>=8.0.0",
     "pytest-mock>=3.14.0",
     "pytest-asyncio>=0.25.0",
+    "pytest-sugar>=1.0.0",
+    "pytest-cov>=4.1.0",
     "pylint>=3.2.5",
-    "poethepoet>=0.32.0"
+    "poethepoet>=0.32.0",
+    "black>=24.2.0",
+    "ruff>=0.2.0",
+    "isort>=5.13.2",
+    "pre-commit>=3.6.0",
+    "mypy>=1.8.0",
+    "types-setuptools>=75.1.0"
 ]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "C"]
+ignore = ["E203", "E501", "C901"]  # Ignore conflicts with Black
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+disallow_untyped_calls = true
+ignore_missing_imports = true
 
 [tool.poe.tasks]
 pylint-local = "pylint scraperaphai/**/*.py"

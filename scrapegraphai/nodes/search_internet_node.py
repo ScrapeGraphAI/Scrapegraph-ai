@@ -1,14 +1,17 @@
 """
 SearchInternetNode Module
 """
+
 from typing import List, Optional
+
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatOllama
-from ..utils.logging import get_logger
+
+from ..prompts import TEMPLATE_SEARCH_INTERNET
 from ..utils.research_web import search_on_web
 from .base_node import BaseNode
-from ..prompts import TEMPLATE_SEARCH_INTERNET
+
 
 class SearchInternetNode(BaseNode):
     """
@@ -84,17 +87,20 @@ class SearchInternetNode(BaseNode):
 
         search_answer = search_prompt | self.llm_model | output_parser
 
-        if isinstance(self.llm_model, ChatOllama) and self.llm_model.format == 'json':
+        if isinstance(self.llm_model, ChatOllama) and self.llm_model.format == "json":
             self.llm_model.format = None
             search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
-            self.llm_model.format = 'json'
+            self.llm_model.format = "json"
         else:
             search_query = search_answer.invoke({"user_prompt": user_prompt})[0]
 
         self.logger.info(f"Search Query: {search_query}")
 
-        answer = search_on_web(query=search_query, max_results=self.max_results,
-                               search_engine=self.search_engine)
+        answer = search_on_web(
+            query=search_query,
+            max_results=self.max_results,
+            search_engine=self.search_engine,
+        )
 
         if len(answer) == 0:
             raise ValueError("Zero results found for the search query.")

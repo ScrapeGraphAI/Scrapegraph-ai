@@ -1,13 +1,15 @@
 """
 ConcatAnswersNode Module
 """
+
 from typing import List, Optional
-from ..utils.logging import get_logger
+
 from .base_node import BaseNode
+
 
 class ConcatAnswersNode(BaseNode):
     """
-    A node responsible for concatenating the answers from multiple 
+    A node responsible for concatenating the answers from multiple
     graph instances into a single answer.
 
     Attributes:

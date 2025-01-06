@@ -2,20 +2,28 @@
 Bridge class to integrate Burr into ScrapeGraphAI graphs
 [Burr](https://github.com/DAGWorks-Inc/burr)
 """
+
+import inspect
 import re
 import uuid
-from hashlib import md5
 from typing import Any, Dict, List, Tuple
-import inspect
+
 try:
-    import burr
     from burr import tracking
-    from burr.core import (Application, ApplicationBuilder,
-                            State, Action, default, ApplicationContext)
+    from burr.core import (
+        Action,
+        Application,
+        ApplicationBuilder,
+        ApplicationContext,
+        State,
+        default,
+    )
     from burr.lifecycle import PostRunStepHook, PreRunStepHook
 except ImportError:
-    raise ImportError("""burr package is not installed. 
-                      Please install it with 'pip install scrapegraphai[burr]'""")
+    raise ImportError(
+        """burr package is not installed.
+                      Please install it with 'pip install scrapegraphai[burr]'"""
+    )
 
 
 class PrintLnHook(PostRunStepHook, PreRunStepHook):
@@ -32,13 +40,12 @@ class PrintLnHook(PostRunStepHook, PreRunStepHook):
 
 class BurrNodeBridge(Action):
     """Bridge class to convert a base graph node to a Burr action.
-    This is nice because we can dynamically declare 
+    This is nice because we can dynamically declare
     the inputs/outputs (and not rely on function-parsing).
     """
 
     def __init__(self, node):
-        """Instantiates a BurrNodeBridge object.
-        """
+        """Instantiates a BurrNodeBridge object."""
         super(BurrNodeBridge, self).__init__()
         self.node = node
 
@@ -64,7 +71,7 @@ class BurrNodeBridge(Action):
 
 def parse_boolean_expression(expression: str) -> List[str]:
     """
-    Parse a boolean expression to extract the keys 
+    Parse a boolean expression to extract the keys
     used in the expression, without boolean operators.
 
     Args:
@@ -75,7 +82,7 @@ def parse_boolean_expression(expression: str) -> List[str]:
     """
 
     # Use regular expression to extract all unique keys
-    keys = re.findall(r'\w+', expression)
+    keys = re.findall(r"\w+", expression)
     return list(set(keys))  # Remove duplicates
 
 
@@ -132,25 +139,25 @@ class BurrBridge:
             .with_transitions(*transitions)
             .with_entrypoint(self.base_graph.entry_point)
             .with_state(**burr_state)
-            .with_identifiers(app_id=str(uuid.uuid4())) # TODO -- grab this from state
+            .with_identifiers(app_id=str(uuid.uuid4()))  # TODO -- grab this from state
             .with_hooks(*hooks)
         )
         if application_context is not None:
-            builder = (
-                builder
-                .with_tracker(
-                    application_context.tracker.copy() if application_context.tracker is not None else None
-                )
-                .with_spawning_parent(
-                    application_context.app_id,
-                    application_context.sequence_id,
-                    application_context.partition_key,
-                )
+            builder = builder.with_tracker(
+                application_context.tracker.copy()
+                if application_context.tracker is not None
+                else None
+            ).with_spawning_parent(
+                application_context.app_id,
+                application_context.sequence_id,
+                application_context.partition_key,
             )
         else:
             # This is the case in which nothing is spawning it
             # in this case, we want to create a new tracker from scratch
-            builder = builder.with_tracker(tracking.LocalTrackingClient(project=self.project_name))
+            builder = builder.with_tracker(
+                tracking.LocalTrackingClient(project=self.project_name)
+            )
         return builder.build()
 
     def _create_actions(self) -> Dict[str, Any]:
@@ -158,7 +165,7 @@ class BurrBridge:
         Create Burr actions from the base graph nodes.
 
         Returns:
-            dict: A dictionary of Burr actions with the node name 
+            dict: A dictionary of Burr actions with the node name
             as keys and the action functions as values.
         """
 
@@ -214,8 +221,7 @@ class BurrBridge:
         final_nodes = [self.burr_app.graph.actions[-1].name]
 
         last_action, result, final_state = self.burr_app.run(
-            halt_after=final_nodes,
-            inputs=self.burr_inputs
+            halt_after=final_nodes, inputs=self.burr_inputs
         )
 
         return self._convert_state_from_burr(final_state)

@@ -4,7 +4,7 @@ Prompts refiner prompts helper
 
 TEMPLATE_REFINER = """
 **Task**: Analyze the user's request and the provided JSON schema to clearly map the desired data extraction.\n
-Break down the user's request into key components, and then explicitly connect these components to the 
+Break down the user's request into key components, and then explicitly connect these components to the
 corresponding elements within the JSON schema.
 
 **User's Request**:
@@ -16,7 +16,7 @@ corresponding elements within the JSON schema.
 ```
 
 **Analysis Instructions**:
-1. **Break Down User Request:** 
+1. **Break Down User Request:**
 * Clearly identify the core entities or data types the user is asking for.\n
 * Highlight any specific attributes or relationships mentioned in the request.\n
 
@@ -30,7 +30,7 @@ Please generate only the analysis and no other text.
 
 **Response**:
 """
-        
+
 TEMPLATE_REFINER_WITH_CONTEXT = """
 **Task**: Analyze the user's request, the provided JSON schema, and the additional context the user provided to clearly map the desired data extraction.\n
 Break down the user's request into key components, and then explicitly connect these components to the corresponding elements within the JSON schema.\n
@@ -47,7 +47,7 @@ Break down the user's request into key components, and then explicitly connect t
 {additional_context}
 
 **Analysis Instructions**:
-1. **Break Down User Request:** 
+1. **Break Down User Request:**
 * Clearly identify the core entities or data types the user is asking for.\n
 * Highlight any specific attributes or relationships mentioned in the request.\n
 

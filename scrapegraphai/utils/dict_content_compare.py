@@ -2,13 +2,15 @@
 This module contains utility functions for comparing the content of two dictionaries.
 
 Functions:
-- normalize_dict: Recursively normalizes the values in a dictionary, 
+- normalize_dict: Recursively normalizes the values in a dictionary,
 converting strings to lowercase and stripping whitespace.
-- normalize_list: Recursively normalizes the values in a list, 
+- normalize_list: Recursively normalizes the values in a list,
 converting strings to lowercase and stripping whitespace.
 - are_content_equal: Compares two dictionaries for semantic equality after normalization.
 """
+
 from typing import Any, Dict, List
+
 
 def normalize_dict(d: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -18,7 +20,7 @@ def normalize_dict(d: Dict[str, Any]) -> Dict[str, Any]:
         d (Dict[str, Any]): The dictionary to normalize.
 
     Returns:
-        Dict[str, Any]: A normalized dictionary with strings converted 
+        Dict[str, Any]: A normalized dictionary with strings converted
         to lowercase and stripped of whitespace.
     """
     normalized = {}
@@ -33,6 +35,7 @@ def normalize_dict(d: Dict[str, Any]) -> Dict[str, Any]:
             normalized[key] = value
     return normalized
 
+
 def normalize_list(lst: List[Any]) -> List[Any]:
     """
     Recursively normalizes the values in a list.
@@ -44,14 +47,22 @@ def normalize_list(lst: List[Any]) -> List[Any]:
         List[Any]: A normalized list with strings converted to lowercase and stripped of whitespace.
     """
     return [
-        normalize_dict(item) if isinstance(item, dict)
-        else normalize_list(item) if isinstance(item, list)
-        else item.lower().strip() if isinstance(item, str)
-        else item
+        (
+            normalize_dict(item)
+            if isinstance(item, dict)
+            else (
+                normalize_list(item)
+                if isinstance(item, list)
+                else item.lower().strip() if isinstance(item, str) else item
+            )
+        )
         for item in lst
     ]
 
-def are_content_equal(generated_result: Dict[str, Any], reference_result: Dict[str, Any]) -> bool:
+
+def are_content_equal(
+    generated_result: Dict[str, Any], reference_result: Dict[str, Any]
+) -> bool:
     """
     Compares two dictionaries for semantic equality after normalization.
 

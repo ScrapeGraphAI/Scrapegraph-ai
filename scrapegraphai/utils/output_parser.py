@@ -1,13 +1,17 @@
 """
 Functions to retrieve the correct output parser and format instructions for the LLM model.
 """
-from typing import Union, Dict, Any, Type, Callable
+
+from typing import Any, Callable, Dict, Type, Union
+
+from langchain_core.output_parsers import JsonOutputParser
 from pydantic import BaseModel as BaseModelV2
 from pydantic.v1 import BaseModel as BaseModelV1
-from langchain_core.output_parsers import JsonOutputParser
 
-def get_structured_output_parser(schema: Union[Dict[str, Any],
-                                               Type[BaseModelV1 | BaseModelV2], Type]) -> Callable:
+
+def get_structured_output_parser(
+    schema: Union[Dict[str, Any], Type[BaseModelV1 | BaseModelV2], Type]
+) -> Callable:
     """
     Get the correct output parser for the LLM model.
 
@@ -22,8 +26,10 @@ def get_structured_output_parser(schema: Union[Dict[str, Any],
 
     return _dict_output_parser
 
-def get_pydantic_output_parser(schema: Union[Dict[str, Any], 
-                                             Type[BaseModelV1 | BaseModelV2], Type]) -> JsonOutputParser:
+
+def get_pydantic_output_parser(
+    schema: Union[Dict[str, Any], Type[BaseModelV1 | BaseModelV2], Type]
+) -> JsonOutputParser:
     """
     Get the correct output parser for the LLM model.
 
@@ -31,14 +37,19 @@ def get_pydantic_output_parser(schema: Union[Dict[str, Any],
         JsonOutputParser: The output parser object.
     """
     if issubclass(schema, BaseModelV1):
-        raise ValueError("""pydantic.v1 and langchain_core.pydantic_v1
-                         are not supported with this LLM model. Please use pydantic v2 instead.""")
+        raise ValueError(
+            """pydantic.v1 and langchain_core.pydantic_v1
+                         are not supported with this LLM model. Please use pydantic v2 instead."""
+        )
 
     if issubclass(schema, BaseModelV2):
         return JsonOutputParser(pydantic_object=schema)
 
-    raise ValueError("""The schema is not a pydantic subclass.
-                     With this LLM model you must use a pydantic schemas.""")
+    raise ValueError(
+        """The schema is not a pydantic subclass.
+                     With this LLM model you must use a pydantic schemas."""
+    )
+
 
 def _base_model_v1_output_parser(x: BaseModelV1) -> dict:
     """
@@ -74,6 +85,7 @@ def _base_model_v2_output_parser(x: BaseModelV2) -> dict:
         dict: The parsed output.
     """
     return x.model_dump()
+
 
 def _dict_output_parser(x: dict) -> dict:
     """

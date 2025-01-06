@@ -1,18 +1,17 @@
 """
 SpeechGraph Module
 """
+
 from typing import Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
-from ..nodes import (
-    FetchNode,
-    ParseNode,
-    GenerateAnswerNode,
-    TextToSpeechNode,
-)
-from ..utils.save_audio_from_bytes import save_audio_from_bytes
+
 from ..models import OpenAITextToSpeech
+from ..nodes import FetchNode, GenerateAnswerNode, ParseNode, TextToSpeechNode
+from ..utils.save_audio_from_bytes import save_audio_from_bytes
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+
 
 class SpeechGraph(AbstractGraph):
     """

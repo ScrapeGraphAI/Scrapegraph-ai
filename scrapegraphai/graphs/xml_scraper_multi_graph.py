@@ -1,21 +1,22 @@
-""" 
+"""
 XMLScraperMultiGraph Module
 """
+
 from copy import deepcopy
 from typing import List, Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
-from .xml_scraper_graph import XMLScraperGraph
-from ..nodes import (
-    GraphIteratorNode,
-    MergeAnswersNode
-)
+
+from ..nodes import GraphIteratorNode, MergeAnswersNode
 from ..utils.copy import safe_deepcopy
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+from .xml_scraper_graph import XMLScraperGraph
+
 
 class XMLScraperMultiGraph(AbstractGraph):
-    """ 
-    XMLScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and 
+    """
+    XMLScraperMultiGraph is a scraping pipeline that scrapes a list of URLs and
     generates answers to a given prompt.
     It only requires a user prompt and a list of URLs.
 
@@ -41,8 +42,13 @@ class XMLScraperMultiGraph(AbstractGraph):
         >>> result = search_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str], 
-                 config: dict, schema: Optional[BaseModel] = None):
+    def __init__(
+        self,
+        prompt: str,
+        source: List[str],
+        config: dict,
+        schema: Optional[BaseModel] = None,
+    ):
 
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
@@ -62,16 +68,13 @@ class XMLScraperMultiGraph(AbstractGraph):
                 "graph_instance": XMLScraperGraph,
                 "scaper_config": self.copy_config,
             },
-            schema=self.copy_schema
+            schema=self.copy_schema,
         )
 
         merge_answers_node = MergeAnswersNode(
             input="user_prompt & results",
             output=["answer"],
-            node_config={
-                "llm_model": self.llm_model,
-                "schema": self.copy_schema
-            }
+            node_config={"llm_model": self.llm_model, "schema": self.copy_schema},
         )
 
         return BaseGraph(
@@ -83,7 +86,7 @@ class XMLScraperMultiGraph(AbstractGraph):
                 (graph_iterator_node, merge_answers_node),
             ],
             entry_point=graph_iterator_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:

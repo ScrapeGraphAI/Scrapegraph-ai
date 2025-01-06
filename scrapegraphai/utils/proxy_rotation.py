@@ -1,13 +1,16 @@
 """
 Module for rotating proxies
 """
+
 import ipaddress
 import random
 import re
 from typing import List, Optional, Set, TypedDict
+
 import requests
 from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
+
 
 class ProxyBrokerCriteria(TypedDict, total=False):
     """
@@ -166,7 +169,6 @@ def _search_proxy(proxy: Proxy) -> ProxySettings:
         A 'playwright' compliant proxy configuration.
     """
 
-
     # remove max_shape from criteria
     criteria = proxy.get("criteria", {}).copy()
     criteria.pop("max_shape", None)
@@ -234,7 +236,7 @@ def parse_or_search_proxy(proxy: Proxy) -> ProxySettings:
     """
     assert "server" in proxy, "missing server in the proxy configuration"
 
-    server_address = re.sub(r'^\w+://', '', proxy["server"]).split(":", maxsplit=1)[0]
+    server_address = re.sub(r"^\w+://", "", proxy["server"]).split(":", maxsplit=1)[0]
 
     if is_ipv4_address(server_address):
         return _parse_proxy(proxy)

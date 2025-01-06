@@ -1,9 +1,11 @@
 """
 IndexifyNode Module
 """
+
 from typing import List, Optional
-from ..utils.logging import get_logger
+
 from ..nodes.base_node import BaseNode
+
 
 class IndexifyNode(BaseNode):
     """
@@ -54,8 +56,8 @@ class IndexifyNode(BaseNode):
 
         input_data = [state[key] for key in input_keys]
 
-        answer = input_data[0]
-        img_urls = input_data[1]
+        input_data[0]
+        input_data[1]
 
         isIndexified = True
         state.update({self.output[0]: isIndexified})

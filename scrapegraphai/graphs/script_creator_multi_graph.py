@@ -1,21 +1,22 @@
-""" 
+"""
 ScriptCreatorMultiGraph Module
 """
+
 from copy import deepcopy
 from typing import List, Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
-from .abstract_graph import AbstractGraph
-from .script_creator_graph import ScriptCreatorGraph
-from ..nodes import (
-    GraphIteratorNode,
-    MergeGeneratedScriptsNode
-)
+
+from ..nodes import GraphIteratorNode, MergeGeneratedScriptsNode
 from ..utils.copy import safe_deepcopy
+from .abstract_graph import AbstractGraph
+from .base_graph import BaseGraph
+from .script_creator_graph import ScriptCreatorGraph
+
 
 class ScriptCreatorMultiGraph(AbstractGraph):
-    """ 
-    ScriptCreatorMultiGraph is a scraping pipeline that scrapes a list 
+    """
+    ScriptCreatorMultiGraph is a scraping pipeline that scrapes a list
     of URLs generating web scraping scripts.
     It only requires a user prompt and a list of URLs.
     Attributes:
@@ -40,8 +41,13 @@ class ScriptCreatorMultiGraph(AbstractGraph):
         >>> result = script_graph.run()
     """
 
-    def __init__(self, prompt: str, source: List[str],
-                 config: dict, schema: Optional[BaseModel] = None):
+    def __init__(
+        self,
+        prompt: str,
+        source: List[str],
+        config: dict,
+        schema: Optional[BaseModel] = None,
+    ):
 
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
@@ -61,16 +67,13 @@ class ScriptCreatorMultiGraph(AbstractGraph):
                 "graph_instance": ScriptCreatorGraph,
                 "scraper_config": self.copy_config,
             },
-            schema=self.copy_schema
+            schema=self.copy_schema,
         )
 
         merge_scripts_node = MergeGeneratedScriptsNode(
             input="user_prompt & scripts",
             output=["merged_script"],
-            node_config={
-                "llm_model": self.llm_model,
-                "schema": self.schema
-            }
+            node_config={"llm_model": self.llm_model, "schema": self.schema},
         )
 
         return BaseGraph(
@@ -82,7 +85,7 @@ class ScriptCreatorMultiGraph(AbstractGraph):
                 (graph_iterator_node, merge_scripts_node),
             ],
             entry_point=graph_iterator_node,
-            graph_name=self.__class__.__name__
+            graph_name=self.__class__.__name__,
         )
 
     def run(self) -> str:

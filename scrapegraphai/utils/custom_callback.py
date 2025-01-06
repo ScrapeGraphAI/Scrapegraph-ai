@@ -4,15 +4,19 @@ Custom callback for LLM token usage statistics.
 This module has been taken and modified from the OpenAI callback manager in langchian-community.
 https://github.com/langchain-ai/langchain/blob/master/libs/community/langchain_community/callbacks/openai_info.py
 """
-from contextlib import contextmanager
+
 import threading
-from typing import Any, Dict, List, Optional
+from contextlib import contextmanager
 from contextvars import ContextVar
+from typing import Any, Dict, List, Optional
+
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.messages import AIMessage
 from langchain_core.outputs import ChatGeneration, LLMResult
 from langchain_core.tracers.context import register_configure_hook
+
 from .model_costs import MODEL_COST_PER_1K_TOKENS_INPUT, MODEL_COST_PER_1K_TOKENS_OUTPUT
+
 
 def get_token_cost_for_model(
     model_name: str, num_tokens: int, is_completion: bool = False
@@ -97,7 +101,6 @@ class CustomCallbackHandler(BaseCallbackHandler):
             completion_tokens = usage_metadata["output_tokens"]
             prompt_tokens = usage_metadata["input_tokens"]
 
-
         else:
             if response.llm_output is None:
                 return None
@@ -141,6 +144,7 @@ custom_callback: ContextVar[Optional[CustomCallbackHandler]] = ContextVar(
     "custom_callback", default=None
 )
 register_configure_hook(custom_callback, True)
+
 
 @contextmanager
 def get_custom_callback(llm_model_name: str):

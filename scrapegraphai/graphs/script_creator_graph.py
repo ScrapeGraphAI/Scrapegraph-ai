@@ -1,11 +1,15 @@
 """
 ScriptCreatorGraph Module
 """
+
 from typing import Optional
+
 from pydantic import BaseModel
-from .base_graph import BaseGraph
+
+from ..nodes import FetchNode, GenerateScraperNode, ParseNode
 from .abstract_graph import AbstractGraph
-from ..nodes import FetchNode, ParseNode, GenerateScraperNode
+from .base_graph import BaseGraph
+
 
 class ScriptCreatorGraph(AbstractGraph):
     """

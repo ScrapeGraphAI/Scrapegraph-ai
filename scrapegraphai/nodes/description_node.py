@@ -1,12 +1,16 @@
 """
 DescriptionNode Module
 """
+
 from typing import List, Optional
-from tqdm import tqdm
+
 from langchain.prompts import PromptTemplate
 from langchain_core.runnables import RunnableParallel
-from .base_node import BaseNode
+from tqdm import tqdm
+
 from ..prompts.description_node_prompts import DESCRIPTION_NODE_PROMPT
+from .base_node import BaseNode
+
 
 class DescriptionNode(BaseNode):
     """
@@ -43,14 +47,16 @@ class DescriptionNode(BaseNode):
     def execute(self, state: dict) -> dict:
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
-        docs = [elem for elem in state.get("docs")]
+        docs = list(state.get("docs"))
 
         chains_dict = {}
 
-        for i, chunk in enumerate(tqdm(docs, desc="Processing chunks", disable=not self.verbose)):
+        for i, chunk in enumerate(
+            tqdm(docs, desc="Processing chunks", disable=not self.verbose)
+        ):
             prompt = PromptTemplate(
                 template=DESCRIPTION_NODE_PROMPT,
-                partial_variables={"content": chunk.get("document")}
+                partial_variables={"content": chunk.get("document")},
             )
             chain_name = f"chunk{i+1}"
             chains_dict[chain_name] = prompt | self.llm_model
@@ -58,9 +64,8 @@ class DescriptionNode(BaseNode):
         async_runner = RunnableParallel(**chains_dict)
         batch_results = async_runner.invoke({})
 
-
-        for i in range(1, len(docs)+1):
-            docs[i-1]["summary"] = batch_results.get(f"chunk{i}").content
+        for i in range(1, len(docs) + 1):
+            docs[i - 1]["summary"] = batch_results.get(f"chunk{i}").content
 
         state.update({self.output[0]: docs})
 

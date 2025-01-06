@@ -1,30 +1,38 @@
 """
 GenerateCodeNode Module
 """
-from typing import Any, Dict, List, Optional
+
 import ast
+import json
+import re
 import sys
 from io import StringIO
-import re
-import json
-from pydantic import ValidationError
-from langchain.prompts import PromptTemplate
-from langchain.output_parsers import ResponseSchema, StructuredOutputParser
-from langchain_core.output_parsers import StrOutputParser
-from langchain_community.chat_models import ChatOllama
+from typing import Any, Dict, List, Optional
+
 from bs4 import BeautifulSoup
-from ..prompts import (
-    TEMPLATE_INIT_CODE_GENERATION, TEMPLATE_SEMANTIC_COMPARISON
+from jsonschema import ValidationError as JSONSchemaValidationError
+from jsonschema import validate
+from langchain.output_parsers import ResponseSchema, StructuredOutputParser
+from langchain.prompts import PromptTemplate
+from langchain_community.chat_models import ChatOllama
+from langchain_core.output_parsers import StrOutputParser
+
+from ..prompts import TEMPLATE_INIT_CODE_GENERATION, TEMPLATE_SEMANTIC_COMPARISON
+from ..utils import (
+    are_content_equal,
+    execution_focused_analysis,
+    execution_focused_code_generation,
+    extract_code,
+    semantic_focused_analysis,
+    semantic_focused_code_generation,
+    syntax_focused_analysis,
+    syntax_focused_code_generation,
+    transform_schema,
+    validation_focused_analysis,
+    validation_focused_code_generation,
 )
-from ..utils import (transform_schema,
-                    extract_code,
-                    syntax_focused_analysis, syntax_focused_code_generation,
-                    execution_focused_analysis, execution_focused_code_generation,
-                    validation_focused_analysis, validation_focused_code_generation,
-                    semantic_focused_analysis, semantic_focused_code_generation,
-                    are_content_equal)
 from .base_node import BaseNode
-from jsonschema import validate, ValidationError
+
 
 class GenerateCodeNode(BaseNode):
     """
@@ -54,14 +62,12 @@ class GenerateCodeNode(BaseNode):
         self.llm_model = node_config["llm_model"]
 
         if isinstance(node_config["llm_model"], ChatOllama):
-            self.llm_model.format="json"
+            self.llm_model.format = "json"
 
         self.verbose = (
             True if node_config is None else node_config.get("verbose", False)
         )
-        self.force = (
-            False if node_config is None else node_config.get("force", False)
-        )
+        self.force = False if node_config is None else node_config.get("force", False)
         self.script_creator = (
             False if node_config is None else node_config.get("script_creator", False)
         )
@@ -71,13 +77,16 @@ class GenerateCodeNode(BaseNode):
 
         self.additional_info = node_config.get("additional_info")
 
-        self.max_iterations = node_config.get("max_iterations", {
-            "overall": 10,
-            "syntax": 3,
-            "execution": 3,
-            "validation": 3,
-            "semantic": 3
-        })
+        self.max_iterations = node_config.get(
+            "max_iterations",
+            {
+                "overall": 10,
+                "syntax": 3,
+                "execution": 3,
+                "validation": 3,
+                "semantic": 3,
+            },
+        )
 
         self.output_schema = node_config.get("schema")
 
@@ -111,7 +120,7 @@ class GenerateCodeNode(BaseNode):
         reduced_html = input_data[3]
         answer = input_data[4]
 
-        self.raw_html = state['original_html'][0].page_content
+        self.raw_html = state["original_html"][0].page_content
 
         simplefied_schema = str(transform_schema(self.output_schema.schema()))
 
@@ -124,13 +133,8 @@ class GenerateCodeNode(BaseNode):
             "generated_code": "",
             "execution_result": None,
             "reference_answer": answer,
-            "errors": {
-                "syntax": [],
-                "execution": [],
-                "validation": [],
-                "semantic": []
-            },
-            "iteration": 0
+            "errors": {"syntax": [], "execution": [], "validation": [], "semantic": []},
+            "iteration": 0,
         }
 
         final_state = self.overall_reasoning_loop(reasoning_state)
@@ -149,10 +153,10 @@ class GenerateCodeNode(BaseNode):
             dict: The final state after the reasoning loop.
 
         Raises:
-            RuntimeError: If the maximum number of iterations 
+            RuntimeError: If the maximum number of iterations
             is reached without obtaining the desired code.
         """
-        self.logger.info(f"--- (Generating Code) ---")
+        self.logger.info("--- (Generating Code) ---")
         state["generated_code"] = self.generate_initial_code(state)
         state["generated_code"] = extract_code(state["generated_code"])
 
@@ -161,34 +165,41 @@ class GenerateCodeNode(BaseNode):
             if self.verbose:
                 self.logger.info(f"--- Iteration {state['iteration']} ---")
 
-            self.logger.info(f"--- (Checking Code Syntax) ---")
+            self.logger.info("--- (Checking Code Syntax) ---")
             state = self.syntax_reasoning_loop(state)
             if state["errors"]["syntax"]:
                 continue
 
-            self.logger.info(f"--- (Executing the Generated Code) ---")
+            self.logger.info("--- (Executing the Generated Code) ---")
             state = self.execution_reasoning_loop(state)
             if state["errors"]["execution"]:
                 continue
 
-            self.logger.info(f"--- (Validate the Code Output Schema) ---")
+            self.logger.info("--- (Validate the Code Output Schema) ---")
             state = self.validation_reasoning_loop(state)
             if state["errors"]["validation"]:
                 continue
 
-            self.logger.info(f"""--- (Checking if the informations
-                             exctrcated are the ones Requested) ---""")
+            self.logger.info(
+                """--- (Checking if the informations
+                             exctrcated are the ones Requested) ---"""
+            )
             state = self.semantic_comparison_loop(state)
             if state["errors"]["semantic"]:
                 continue
             break
 
-        if state["iteration"] == self.max_iterations["overall"] and \
-            (state["errors"]["syntax"] or state["errors"]["execution"] \
-             or state["errors"]["validation"] or state["errors"]["semantic"]):
-            raise RuntimeError("Max iterations reached without obtaining the desired code.")
+        if state["iteration"] == self.max_iterations["overall"] and (
+            state["errors"]["syntax"]
+            or state["errors"]["execution"]
+            or state["errors"]["validation"]
+            or state["errors"]["semantic"]
+        ):
+            raise RuntimeError(
+                "Max iterations reached without obtaining the desired code."
+            )
 
-        self.logger.info(f"--- (Code Generated Correctly) ---")
+        self.logger.info("--- (Code Generated Correctly) ---")
 
         return state
 
@@ -211,10 +222,13 @@ class GenerateCodeNode(BaseNode):
             state["errors"]["syntax"] = [syntax_message]
             self.logger.info(f"--- (Synax Error Found: {syntax_message}) ---")
             analysis = syntax_focused_analysis(state, self.llm_model)
-            self.logger.info(f"""--- (Regenerating Code
-                             to fix the Error) ---""")
-            state["generated_code"] = syntax_focused_code_generation(state,
-                                                                     analysis, self.llm_model)
+            self.logger.info(
+                """--- (Regenerating Code
+                             to fix the Error) ---"""
+            )
+            state["generated_code"] = syntax_focused_code_generation(
+                state, analysis, self.llm_model
+            )
             state["generated_code"] = extract_code(state["generated_code"])
         return state
 
@@ -230,7 +244,8 @@ class GenerateCodeNode(BaseNode):
         """
         for _ in range(self.max_iterations["execution"]):
             execution_success, execution_result = self.create_sandbox_and_execute(
-                                                                                state["generated_code"])
+                state["generated_code"]
+            )
             if execution_success:
                 state["execution_result"] = execution_result
                 state["errors"]["execution"] = []
@@ -239,15 +254,16 @@ class GenerateCodeNode(BaseNode):
             state["errors"]["execution"] = [execution_result]
             self.logger.info(f"--- (Code Execution Error: {execution_result}) ---")
             analysis = execution_focused_analysis(state, self.llm_model)
-            self.logger.info(f"--- (Regenerating Code to fix the Error) ---")
-            state["generated_code"] = execution_focused_code_generation(state,
-                                                                        analysis, self.llm_model)
+            self.logger.info("--- (Regenerating Code to fix the Error) ---")
+            state["generated_code"] = execution_focused_code_generation(
+                state, analysis, self.llm_model
+            )
             state["generated_code"] = extract_code(state["generated_code"])
         return state
 
     def validation_reasoning_loop(self, state: dict) -> dict:
         """
-        Executes the validation reasoning loop to ensure the 
+        Executes the validation reasoning loop to ensure the
         generated code's output matches the desired schema.
 
         Args:
@@ -257,19 +273,25 @@ class GenerateCodeNode(BaseNode):
             dict: The updated state after the validation reasoning loop.
         """
         for _ in range(self.max_iterations["validation"]):
-            validation, errors = self.validate_dict(state["execution_result"],
-                                                    self.output_schema.schema())
+            validation, errors = self.validate_dict(
+                state["execution_result"], self.output_schema.schema()
+            )
             if validation:
                 state["errors"]["validation"] = []
                 return state
 
             state["errors"]["validation"] = errors
-            self.logger.info(f"--- (Code Output not compliant to the deisred Output Schema) ---")
+            self.logger.info(
+                "--- (Code Output not compliant to the deisred Output Schema) ---"
+            )
             analysis = validation_focused_analysis(state, self.llm_model)
-            self.logger.info(f"""--- (Regenerating Code to make the
-                             Output compliant to the deisred Output Schema) ---""")
-            state["generated_code"] = validation_focused_code_generation(state,
-                                                                         analysis, self.llm_model)
+            self.logger.info(
+                """--- (Regenerating Code to make the
+                             Output compliant to the deisred Output Schema) ---"""
+            )
+            state["generated_code"] = validation_focused_code_generation(
+                state, analysis, self.llm_model
+            )
             state["generated_code"] = extract_code(state["generated_code"])
         return state
 
@@ -285,20 +307,28 @@ class GenerateCodeNode(BaseNode):
             dict: The updated state after the semantic comparison loop.
         """
         for _ in range(self.max_iterations["semantic"]):
-            comparison_result = self.semantic_comparison(state["execution_result"],
-                                                         state["reference_answer"])
+            comparison_result = self.semantic_comparison(
+                state["execution_result"], state["reference_answer"]
+            )
             if comparison_result["are_semantically_equivalent"]:
                 state["errors"]["semantic"] = []
                 return state
 
             state["errors"]["semantic"] = comparison_result["differences"]
-            self.logger.info(f"""--- (The informations exctrcated
-                             are not the all ones requested) ---""")
-            analysis = semantic_focused_analysis(state, comparison_result, self.llm_model)
-            self.logger.info(f"""--- (Regenerating Code to
-                                obtain all the infromation requested) ---""")
-            state["generated_code"] = semantic_focused_code_generation(state,
-                                                                       analysis, self.llm_model)
+            self.logger.info(
+                """--- (The informations exctrcated
+                             are not the all ones requested) ---"""
+            )
+            analysis = semantic_focused_analysis(
+                state, comparison_result, self.llm_model
+            )
+            self.logger.info(
+                """--- (Regenerating Code to
+                                obtain all the infromation requested) ---"""
+            )
+            state["generated_code"] = semantic_focused_code_generation(
+                state, analysis, self.llm_model
+            )
             state["generated_code"] = extract_code(state["generated_code"])
         return state
 
@@ -319,16 +349,19 @@ class GenerateCodeNode(BaseNode):
                 "json_schema": state["json_schema"],
                 "initial_analysis": state["initial_analysis"],
                 "html_code": state["html_code"],
-                "html_analysis": state["html_analysis"]
-            })
+                "html_analysis": state["html_analysis"],
+            },
+        )
 
         output_parser = StrOutputParser()
 
-        chain =  prompt | self.llm_model | output_parser
+        chain = prompt | self.llm_model | output_parser
         generated_code = chain.invoke({})
         return generated_code
 
-    def semantic_comparison(self, generated_result: Any, reference_result: Any) -> Dict[str, Any]:
+    def semantic_comparison(
+        self, generated_result: Any, reference_result: Any
+    ) -> Dict[str, Any]:
         """
         Performs a semantic comparison between the generated result and the reference result.
 
@@ -337,7 +370,7 @@ class GenerateCodeNode(BaseNode):
             reference_result (Any): The reference result for comparison.
 
         Returns:
-            Dict[str, Any]: A dictionary containing the comparison result, 
+            Dict[str, Any]: A dictionary containing the comparison result,
             differences, and explanation.
         """
         reference_result_dict = self.output_schema(**reference_result).dict()
@@ -345,33 +378,43 @@ class GenerateCodeNode(BaseNode):
             return {
                 "are_semantically_equivalent": True,
                 "differences": [],
-                "explanation": "The generated result and reference result are exactly equal."
+                "explanation": "The generated result and reference result are exactly equal.",
             }
 
         response_schemas = [
-            ResponseSchema(name="are_semantically_equivalent",
-                           description="""Boolean indicating if the
-                           results are semantically equivalent"""),
-            ResponseSchema(name="differences",
-                           description="""List of semantic differences
-                           between the results, if any"""),
-            ResponseSchema(name="explanation",
-                           description="""Detailed explanation of the
-                           comparison and reasoning""")
+            ResponseSchema(
+                name="are_semantically_equivalent",
+                description="""Boolean indicating if the
+                           results are semantically equivalent""",
+            ),
+            ResponseSchema(
+                name="differences",
+                description="""List of semantic differences
+                           between the results, if any""",
+            ),
+            ResponseSchema(
+                name="explanation",
+                description="""Detailed explanation of the
+                           comparison and reasoning""",
+            ),
         ]
         output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 
         prompt = PromptTemplate(
             template=TEMPLATE_SEMANTIC_COMPARISON,
             input_variables=["generated_result", "reference_result"],
-            partial_variables={"format_instructions": output_parser.get_format_instructions()}
+            partial_variables={
+                "format_instructions": output_parser.get_format_instructions()
+            },
         )
 
         chain = prompt | self.llm_model | output_parser
-        return chain.invoke({
-            "generated_result": json.dumps(generated_result, indent=2),
-            "reference_result": json.dumps(reference_result_dict, indent=2)
-        })
+        return chain.invoke(
+            {
+                "generated_result": json.dumps(generated_result, indent=2),
+                "reference_result": json.dumps(reference_result_dict, indent=2),
+            }
+        )
 
     def syntax_check(self, code):
         """
@@ -397,13 +440,13 @@ class GenerateCodeNode(BaseNode):
             function_code (str): The code to be executed in the sandbox.
 
         Returns:
-            tuple: A tuple containing a boolean indicating if 
+            tuple: A tuple containing a boolean indicating if
             the execution was successful and the result or error message.
         """
         sandbox_globals = {
-            'BeautifulSoup': BeautifulSoup,
-            're': re,
-            '__builtins__': __builtins__,
+            "BeautifulSoup": BeautifulSoup,
+            "re": re,
+            "__builtins__": __builtins__,
         }
 
         old_stdout = sys.stdout
@@ -412,10 +455,12 @@ class GenerateCodeNode(BaseNode):
         try:
             exec(function_code, sandbox_globals)
 
-            extract_data = sandbox_globals.get('extract_data')
+            extract_data = sandbox_globals.get("extract_data")
 
             if not extract_data:
-                raise NameError("Function 'extract_data' not found in the generated code.")
+                raise NameError(
+                    "Function 'extract_data' not found in the generated code."
+                )
 
             result = extract_data(self.raw_html)
             return True, result
@@ -433,12 +478,12 @@ class GenerateCodeNode(BaseNode):
             schema (dict): The schema against which the data is validated.
 
         Returns:
-            tuple: A tuple containing a boolean indicating 
+            tuple: A tuple containing a boolean indicating
             if the validation was successful and a list of errors if any.
         """
         try:
             validate(instance=data, schema=schema)
             return True, None
-        except ValidationError as e:
+        except JSONSchemaValidationError as e:
             errors = [e.message]
             return False, errors

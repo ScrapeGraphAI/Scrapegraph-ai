@@ -1,8 +1,10 @@
 """
 OpenAIImageToText Module
 """
-from langchain_openai import ChatOpenAI
+
 from langchain_core.messages import HumanMessage
+from langchain_openai import ChatOpenAI
+
 
 class OpenAIImageToText(ChatOpenAI):
     """

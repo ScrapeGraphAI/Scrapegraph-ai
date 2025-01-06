@@ -2,17 +2,19 @@
 AbstractGraph Module
 """
 
+import asyncio
+import uuid
+import warnings
 from abc import ABC, abstractmethod
 from typing import Optional
-import uuid
-import asyncio
-import warnings
-from pydantic import BaseModel
+
 from langchain.chat_models import init_chat_model
 from langchain_core.rate_limiters import InMemoryRateLimiter
+from pydantic import BaseModel
+
 from ..helpers import models_tokens
-from ..models import OneApi, DeepSeek
-from ..utils.logging import set_verbosity_warning, set_verbosity_info
+from ..models import DeepSeek, OneApi
+from ..utils.logging import set_verbosity_info, set_verbosity_warning
 
 
 class AbstractGraph(ABC):
@@ -174,8 +176,10 @@ class AbstractGraph(ABC):
                 if llm_params["model"] in models_d
             ]
             if len(possible_providers) <= 0:
-                raise ValueError(f"""Provider {llm_params['model_provider']} is not supported. 
-                                If possible, try to use a model instance instead.""")
+                raise ValueError(
+                    f"""Provider {llm_params['model_provider']} is not supported.
+                                If possible, try to use a model instance instead."""
+                )
             llm_params["model_provider"] = possible_providers[0]
             print(
                 (
@@ -185,8 +189,10 @@ class AbstractGraph(ABC):
             )
 
         if llm_params["model_provider"] not in known_providers:
-            raise ValueError(f"""Provider {llm_params['model_provider']} is not supported. 
-                             If possible, try to use a model instance instead.""")
+            raise ValueError(
+                f"""Provider {llm_params['model_provider']} is not supported.
+                             If possible, try to use a model instance instead."""
+            )
 
         if "model_tokens" not in llm_params:
             try:
@@ -194,8 +200,10 @@ class AbstractGraph(ABC):
                     llm_params["model"]
                 ]
             except KeyError:
-                print(f"""Model {llm_params['model_provider']}/{llm_params['model']} not found,
-                    using default token size (8192)""")
+                print(
+                    f"""Model {llm_params['model_provider']}/{llm_params['model']} not found,
+                    using default token size (8192)"""
+                )
                 self.model_token = 8192
         else:
             self.model_token = llm_params["model_tokens"]
@@ -233,16 +241,20 @@ class AbstractGraph(ABC):
                     try:
                         from langchain_together import ChatTogether
                     except ImportError:
-                        raise ImportError("""The langchain_together module is not installed. 
-                                          Please install it using `pip install langchain-together`.""")
+                        raise ImportError(
+                            """The langchain_together module is not installed.
+                                          Please install it using `pip install langchain-together`."""
+                        )
                     return ChatTogether(**llm_params)
 
                 elif model_provider == "nvidia":
                     try:
                         from langchain_nvidia_ai_endpoints import ChatNVIDIA
                     except ImportError:
-                        raise ImportError("""The langchain_nvidia_ai_endpoints module is not installed. 
-                                          Please install it using `pip install langchain-nvidia-ai-endpoints`.""")
+                        raise ImportError(
+                            """The langchain_nvidia_ai_endpoints module is not installed.
+                                          Please install it using `pip install langchain-nvidia-ai-endpoints`."""
+                        )
                     return ChatNVIDIA(**llm_params)
 
         except Exception as e:
@@ -302,6 +314,6 @@ class AbstractGraph(ABC):
         Returns:
             str: The answer to the prompt.
         """
-        
+
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(None, self.run)
