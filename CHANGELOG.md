@@ -8,6 +8,7 @@
 ## [1.34.2-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.1...v1.34.2-beta.1) (2025-01-06)
 
 
+
 ### Bug Fixes
 
 * add back poethepoet for pylint ([a82af04](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a82af04afed2e4ba309b5e98b5df351d9b79ca2e))
