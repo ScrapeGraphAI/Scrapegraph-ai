@@ -1,3 +1,10 @@
+## [1.35.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.3...v1.35.0-beta.4) (2025-01-06)
+
+
+### Features
+
+* ⏰added graph timeout and fixed model_tokens param ([#810](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/810) [#856](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/856) [#853](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/853)) ([01a331a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/01a331afa5fc6f6d6aea4f1969cbf41f0b25f5e0))
+
 ## [1.35.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0-beta.2...v1.35.0-beta.3) (2025-01-06)
 
 
