@@ -28,7 +28,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Extract me all the articles",
+    prompt="Extract me the first article",
     source="https://www.wired.com",
     config=graph_config
 )

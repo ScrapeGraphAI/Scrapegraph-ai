@@ -234,7 +234,7 @@ class AbstractGraph(ABC):
                         from langchain_together import ChatTogether
                     except ImportError:
                         raise ImportError("""The langchain_together module is not installed. 
-                                          Please install it using `pip install scrapegraphai[other-language-models]`.""")
+                                          Please install it using `pip install langchain-together`.""")
                     return ChatTogether(**llm_params)
 
                 elif model_provider == "nvidia":
@@ -242,7 +242,7 @@ class AbstractGraph(ABC):
                         from langchain_nvidia_ai_endpoints import ChatNVIDIA
                     except ImportError:
                         raise ImportError("""The langchain_nvidia_ai_endpoints module is not installed. 
-                                          Please install it using `pip install scrapegraphai[other-language-models]`.""")
+                                          Please install it using `pip install langchain-nvidia-ai-endpoints`.""")
                     return ChatNVIDIA(**llm_params)
 
         except Exception as e:

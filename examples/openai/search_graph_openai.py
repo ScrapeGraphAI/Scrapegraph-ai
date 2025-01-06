@@ -11,7 +11,7 @@ load_dotenv()
 # Define the configuration for the graph
 # ************************************************
 
-openai_key = os.getenv("OPENAI_APIKEY")
+openai_key = os.getenv("OPENAI_API_KEY")
 
 graph_config = {
     "llm": {

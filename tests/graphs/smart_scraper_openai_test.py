@@ -4,10 +4,8 @@ Module for testing the smart scraper class
 
 import os
 import pytest
-import pandas as pd
 from dotenv import load_dotenv
 from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import prettify_exec_info
 
 load_dotenv()
 

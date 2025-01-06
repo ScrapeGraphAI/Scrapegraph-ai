@@ -22,7 +22,7 @@ def detect_text(image, languages: list = ["en"]):
         from surya.model.recognition.model import load_model as load_rec_model
         from surya.model.recognition.processor import load_processor as load_rec_processor
     except:
-        raise ImportError("The dependencies for screenshot scraping are not installed. Please install them using `pip install scrapegraphai[screenshot_scraper]`.")
+        raise ImportError("The dependencies for OCR are not installed. Please install them using `pip install scrapegraphai[ocr]`.")
 
 
     langs = languages
