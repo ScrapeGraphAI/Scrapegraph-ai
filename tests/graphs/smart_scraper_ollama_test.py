@@ -3,7 +3,6 @@ Module for testing th smart scraper class
 """
 import pytest
 from scrapegraphai.graphs import SmartScraperGraph
-from transformers import GPT2TokenizerFast
 
 
 @pytest.fixture
@@ -52,10 +51,3 @@ def test_get_execution_info(graph_config: dict):
 
     assert graph_exec_info is not None
 
-
-def test_gpt2_tokenizer_loading():
-    """
-    Test loading of GPT2TokenizerFast
-    """
-    tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
-    assert tokenizer is not None

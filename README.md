@@ -32,35 +32,11 @@ The reference page for Scrapegraph-ai is available on the official page of PyPI:
 ```bash
 pip install scrapegraphai
 
-# IMPORTANT (to fetch webpage content)
+# IMPORTANT (to fetch websites content)
 playwright install
 ```
 
 **Note**: it is recommended to install the library in a virtual environment to avoid conflicts with other libraries 🐱
-
-<details>
-<summary><b>Optional Dependencies</b></summary>
-Additional dependecies can be added while installing the library:
-
-- <b>More Language Models</b>: additional language models are installed, such as Fireworks, Groq, Anthropic, Hugging Face, and Nvidia AI Endpoints.
-
-  This group allows you to use additional language models like Fireworks, Groq, Anthropic, Together AI, Hugging Face, and Nvidia AI Endpoints.
-  ```bash
-  pip install scrapegraphai[other-language-models]
-  ```
-- <b>Semantic Options</b>: this group includes tools for advanced semantic processing, such as Graphviz.
-
-  ```bash
-  pip install scrapegraphai[more-semantic-options]
-  ```
-
-- <b>Browsers Options</b>: this group includes additional browser management tools/services, such as Browserbase.
-
-  ```bash
-  pip install scrapegraphai[more-browser-options]
-  ```
-
-</details>
 
 
 ## 💻 Usage

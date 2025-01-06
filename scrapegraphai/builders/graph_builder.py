@@ -4,7 +4,6 @@ GraphBuilder Module
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_extraction_chain
 from langchain_community.chat_models import ErnieBotChat
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from ..helpers import nodes_metadata, graph_schema
 
@@ -70,6 +69,10 @@ class GraphBuilder:
         if "gpt-" in llm_params["model"]:
             return ChatOpenAI(llm_params)
         elif "gemini" in llm_params["model"]:
+            try:
+                from langchain_google_genai import ChatGoogleGenerativeAI
+            except ImportError:
+                raise ImportError("langchain_google_genai is not installed. Please install it using 'pip install langchain-google-genai'.")
             return ChatGoogleGenerativeAI(llm_params)
         elif "ernie" in llm_params["model"]:
             return ErnieBotChat(llm_params)

@@ -10,7 +10,6 @@ from langchain_core.documents import Document
 from ..utils.cleanup_html import cleanup_html
 from ..docloaders import ChromiumLoader
 from ..utils.convert_to_md import convert_to_md
-from ..utils.logging import get_logger
 from .base_node import BaseNode
 
 class FetchNode(BaseNode):
@@ -79,24 +78,6 @@ class FetchNode(BaseNode):
             None if node_config is None else node_config.get("storage_state", None)
         )
 
-    def is_valid_url(self, source: str) -> bool:
-        """
-        Validates if the source string is a valid URL using regex.
-
-        Parameters:
-        source (str): The URL string to validate
-
-        Raises:
-        ValueError: If the URL is invalid
-        """
-        import re
-
-        url_pattern = r"^https?://[^\s/$.?#].[^\s]*$"
-        if not bool(re.match(url_pattern, source)):
-            raise ValueError(
-                f"Invalid URL format: {source}. URL must start with http(s):// and contain a valid domain."
-            )
-        return True
 
     def execute(self, state):
         """
@@ -129,12 +110,9 @@ class FetchNode(BaseNode):
         elif self.input == "pdf_dir":
             return state
 
-        # For web sources, validate URL before proceeding
         try:
-            if self.is_valid_url(source):
-                return self.handle_web_source(state, source)
+            return self.handle_web_source(state, source)
         except ValueError as e:
-            # Re-raise the exception from is_valid_url
             raise
 
         return self.handle_local_source(state, source)
