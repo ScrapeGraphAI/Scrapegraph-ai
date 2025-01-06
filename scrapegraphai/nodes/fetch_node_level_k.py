@@ -160,20 +160,42 @@ class FetchNodeLevelK(BaseNode):
     def get_full_links(self, base_url: str, links: list) -> list:
         """
         Converts relative URLs to full URLs based on the base URL.
+        Filters out non-web links (mailto:, tel:, javascript:, etc.).
 
         Args:
             base_url (str): The base URL for resolving relative links.
             links (list): A list of links to convert.
 
         Returns:
-            list: A list of full URLs.
+            list: A list of valid full URLs.
         """
+        # List of invalid URL schemes to filter out
+        invalid_schemes = {
+            'mailto:', 'tel:', 'fax:', 'sms:', 'callto:', 'wtai:', 'javascript:',
+            'data:', 'file:', 'ftp:', 'irc:', 'news:', 'nntp:', 'feed:', 'webcal:',
+            'skype:', 'im:', 'mtps:', 'spotify:', 'steam:', 'teamspeak:', 'udp:',
+            'unreal:', 'ut2004:', 'ventrilo:', 'view-source:', 'ws:', 'wss:'
+        }
+
         full_links = []
         for link in links:
-            if self.only_inside_links and link.startswith("http"):
+            # Skip if link starts with any invalid scheme
+            if any(link.lower().startswith(scheme) for scheme in invalid_schemes):
                 continue
-            full_link = link if link.startswith("http") else urljoin(base_url, link)
-            full_links.append(full_link)
+
+            # Skip if it's an external link and only_inside_links is True
+            if self.only_inside_links and link.startswith(('http://', 'https://')):
+                continue
+
+            # Convert relative URLs to absolute URLs
+            try:
+                full_link = link if link.startswith(('http://', 'https://')) else urljoin(base_url, link)
+                # Ensure the final URL starts with http:// or https://
+                if full_link.startswith(('http://', 'https://')):
+                    full_links.append(full_link)
+            except Exception as e:
+                self.logger.warning(f"Failed to process link {link}: {str(e)}")
+
         return full_links
 
     def obtain_content(self, documents: List, loader_kwargs) -> List:
@@ -191,7 +213,11 @@ class FetchNodeLevelK(BaseNode):
         for doc in documents:
             source = doc["source"]
             if "document" not in doc:
-                document = self.fetch_content(source, loader_kwargs)
+                try:
+                    document = self.fetch_content(source, loader_kwargs)
+                except Exception as e:
+                    self.logger.warning(f"Failed to fetch content for {source}: {str(e)}")
+                    continue
 
                 if not document or not document[0].page_content.strip():
                     self.logger.warning(f"Failed to fetch content for {source}")

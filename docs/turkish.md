@@ -31,31 +31,6 @@ playwright install
 
 **Not**: Diğer kütüphanelerle çakışmaları önlemek için kütüphaneyi sanal bir ortamda kurmanız önerilir 🐱
 
-<details>
-<summary><b>Opsiyonel Bağımlılıklar</b></summary>
-Kütüphaneyi kurarken ek bağımlılıklar ekleyebilirsiniz:
-
-- **Daha Fazla Dil Modeli**: Fireworks, Groq, Anthropic, Hugging Face ve Nvidia AI Endpoints gibi ek dil modelleri kurulur.
-
-  Bu grup, Fireworks, Groq, Anthropic, Together AI, Hugging Face ve Nvidia AI Endpoints gibi ek dil modellerini kullanmanızı sağlar.
-
-  ```bash
-  pip install scrapegraphai[other-language-models]
-  ```
-
-- **Semantik Seçenekler**: Graphviz gibi gelişmiş semantik işleme araçlarını içerir.
-
-  ```bash
-  pip install scrapegraphai[more-semantic-options]
-  ```
-
-- **Tarayıcı Seçenekleri**: Browserbase gibi ek tarayıcı yönetim araçları/hizmetlerini içerir.
-
-  ```bash
-  pip install scrapegraphai[more-browser-options]
-  ```
-
-</details>
 
 ## 💻 Kullanım
 

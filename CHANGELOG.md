@@ -1,8 +1,24 @@
+## [1.34.0-beta.16](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.15...v1.34.0-beta.16) (2025-01-06)
 ## [1.34.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0...v1.34.1) (2025-01-04)
+
 
 
 ### Bug Fixes
 
+* add back poethepoet for pylint ([a82af04](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a82af04afed2e4ba309b5e98b5df351d9b79ca2e))
+* better playwright installation handling ([f6009d1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f6009d1abf9e2c83999de0c9b03a41aa1bf8f2a4))
+* disallow mailto: ([#861](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/861)) ([8d9c909](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8d9c909923dff1c247c85099db20e2a6dabb93f5))
+* removed requirements files ([25861b0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/25861b04be8a6fc60c900a46033aed91d1fef1f9))
+* selenium import in ChromiumLoader ([e374e05](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e374e055d64b7fa4c5a4c7694384dd15e6361bbd))
+
+
+### chore
+
+* chromium browser asnc handling ([5be7c49](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5be7c497cd44fbd0c026bf3d833f572b34661b08))
+* made some libs optional ([5cdf055](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5cdf0550fe9dcd519d274bb343cf65c845e8a608))
+* pandas package is now optional ([54c69a2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/54c69a2b0b1677286b840be95ce482bcee881413))
+
+## [1.34.0-beta.15](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.0-beta.14...v1.34.0-beta.15) (2025-01-03)
 * add new models ([72684a9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/72684a9476e255d5e20550f82daf3e7462fb8f5a))
 
 ## [1.34.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.33.11...v1.34.0) (2025-01-03)
@@ -14,8 +30,11 @@
 * added scrolling method to chromium docloader ([1c8b910](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1c8b910562112947a357277bca9dc81619b72e61))
 
 
+
 ### Bug Fixes
 
+
+* search graph ([d4b2679](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d4b26796d94d314af135d2d1bbd538e1d4be7593))
 * added license-files = [ ([9150e4c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9150e4c95fa468afe9ddda3f1278b5037a2d0f38))
 * added twine ([df07da9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/df07da9bcc59cbccf1c45d69e3a3e904eaed565b))
 * build config ([b186a4f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b186a4f1c73fe29fa706158cc3c61812d6b16343))

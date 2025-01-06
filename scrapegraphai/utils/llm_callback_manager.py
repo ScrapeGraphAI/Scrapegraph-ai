@@ -7,8 +7,7 @@ Classes:
 
 import threading
 from contextlib import contextmanager
-from langchain_community.callbacks import get_openai_callback
-from langchain_community.callbacks.manager import get_bedrock_anthropic_callback
+from langchain_community.callbacks.manager import get_openai_callback, get_bedrock_anthropic_callback
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_aws import ChatBedrock
 from .custom_callback import get_custom_callback

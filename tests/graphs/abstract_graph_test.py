@@ -11,7 +11,6 @@ from scrapegraphai.nodes import (
 from scrapegraphai.models import OneApi, DeepSeek
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_ollama import ChatOllama
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_aws import ChatBedrock
 
 
@@ -68,7 +67,6 @@ class TestAbstractGraph:
             "api_version": "no version",
             "azure_endpoint": "https://www.example.com/"},
             AzureChatOpenAI),
-        ({"model": "google_genai/gemini-pro", "google_api_key": "google-key-test"}, ChatGoogleGenerativeAI),
         ({"model": "ollama/llama2"}, ChatOllama),
         ({"model": "oneapi/qwen-turbo", "api_key": "oneapi-api-key"}, OneApi),
         ({"model": "deepseek/deepseek-coder", "api_key": "deepseek-api-key"}, DeepSeek),
@@ -86,7 +84,6 @@ class TestAbstractGraph:
     @pytest.mark.parametrize("llm_config, expected_model", [
         ({"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-randomtest001", "rate_limit": {"requests_per_second": 1}}, ChatOpenAI),
         ({"model": "azure_openai/gpt-3.5-turbo", "api_key": "random-api-key", "api_version": "no version", "azure_endpoint": "https://www.example.com/", "rate_limit": {"requests_per_second": 1}}, AzureChatOpenAI),
-        ({"model": "google_genai/gemini-pro", "google_api_key": "google-key-test", "rate_limit": {"requests_per_second": 1}}, ChatGoogleGenerativeAI),
         ({"model": "ollama/llama2", "rate_limit": {"requests_per_second": 1}}, ChatOllama),
         ({"model": "oneapi/qwen-turbo", "api_key": "oneapi-api-key", "rate_limit": {"requests_per_second": 1}}, OneApi),
         ({"model": "deepseek/deepseek-coder", "api_key": "deepseek-api-key", "rate_limit": {"requests_per_second": 1}}, DeepSeek),

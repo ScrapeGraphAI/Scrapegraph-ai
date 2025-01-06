@@ -3,8 +3,6 @@ SmartScraperGraph Module
 """
 from typing import Optional
 from pydantic import BaseModel
-from scrapegraph_py import Client
-from scrapegraph_py.logger import sgai_logger
 from .base_graph import BaseGraph
 from .abstract_graph import AbstractGraph
 from ..nodes import (
@@ -55,6 +53,9 @@ class SmartScraperGraph(AbstractGraph):
         super().__init__(prompt, config, source, schema)
 
         self.input_key = "url" if source.startswith("http") else "local_dir"
+        
+        # for detailed logging of the SmartScraper API set it to True
+        self.verbose = config.get("verbose", False)
 
     def _create_graph(self) -> BaseGraph:
         """
@@ -64,7 +65,12 @@ class SmartScraperGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow.
         """
         if self.llm_model == "scrapegraphai/smart-scraper":
-
+            try:
+                from scrapegraph_py import Client
+                from scrapegraph_py.logger import sgai_logger
+            except ImportError:
+                raise ImportError("scrapegraph_py is not installed. Please install it using 'pip install scrapegraph-py'.")
+            
             sgai_logger.set_logging(level="INFO")
 
             # Initialize the client with explicit API key

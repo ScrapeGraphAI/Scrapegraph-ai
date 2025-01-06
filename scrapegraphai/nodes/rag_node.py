@@ -3,8 +3,6 @@ RAGNode Module
 """
 from typing import List, Optional
 from .base_node import BaseNode
-from qdrant_client import QdrantClient
-from qdrant_client.models import PointStruct, VectorParams, Distance
 
 class RAGNode(BaseNode):
     """
@@ -42,6 +40,14 @@ class RAGNode(BaseNode):
     def execute(self, state: dict) -> dict:
         self.logger.info(f"--- Executing {self.node_name} Node ---")
         
+        try:
+            import qdrant_client
+        except ImportError:
+            raise ImportError("qdrant_client is not installed. Please install it using 'pip install qdrant-client'.")
+        
+        from qdrant_client import QdrantClient
+        from qdrant_client.models import PointStruct, VectorParams, Distance
+
         if self.node_config.get("client_type") in ["memory", None]:
             client = QdrantClient(":memory:")
         elif self.node_config.get("client_type") == "local_db":
