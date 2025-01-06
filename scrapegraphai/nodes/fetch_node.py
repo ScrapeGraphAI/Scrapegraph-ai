@@ -107,15 +107,13 @@ class FetchNode(BaseNode):
 
         if input_type in handlers:
             return handlers[input_type](state, input_type, source)
-        elif self.input == "pdf_dir":
-            return state
-
-        try:
+        elif input_type == "local_dir":
+            return self.handle_local_source(state, source)
+        elif input_type == "url":
             return self.handle_web_source(state, source)
-        except ValueError as e:
-            raise
+        else:
+            raise ValueError(f"Invalid input type: {input_type}")
 
-        return self.handle_local_source(state, source)
 
     def handle_directory(self, state, input_type, source):
         """

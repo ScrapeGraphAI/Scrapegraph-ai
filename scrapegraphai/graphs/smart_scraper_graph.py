@@ -91,7 +91,7 @@ class SmartScraperGraph(AbstractGraph):
             return response
 
         fetch_node = FetchNode(
-            input="url| local_dir",
+            input="url | local_dir",
             output=["doc"],
             node_config={
                 "llm_model": self.llm_model,
