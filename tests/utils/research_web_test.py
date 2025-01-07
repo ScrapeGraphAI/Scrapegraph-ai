@@ -1,5 +1,9 @@
 import pytest
-from scrapegraphai.utils.research_web import search_on_web  # Replace with actual path to your file
+from scrapegraphai.utils.research_web import (
+    search_on_web,
+)  # Replace with actual path to your file
+
+# write tests
 
 
 def test_google_search():
@@ -7,6 +11,7 @@ def test_google_search():
     results = search_on_web("test query", search_engine="Google", max_results=2)
     assert len(results) == 2
     # You can further assert if the results actually contain 'test query' in the title/snippet using additional libraries
+
 
 def test_bing_search():
     """Tests search_on_web with Bing search engine."""
