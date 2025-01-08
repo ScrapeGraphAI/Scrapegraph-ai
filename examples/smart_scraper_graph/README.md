@@ -27,4 +27,4 @@ results = graph.scrape("https://example.com")
 ## Environment Variables
 
 Required environment variables:
-- `OPENAI_API_KEY`: Your OpenAI API key 
+- `OPENAI_API_KEY`: Your OpenAI API key

@@ -1,9 +1,12 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
-import os
+
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperMultiConcatGraph
 
 load_dotenv()
@@ -28,12 +31,9 @@ graph_config = {
 
 multiple_search_graph = SmartScraperMultiConcatGraph(
     prompt="Who is Marco Perini?",
-    source= [
-        "https://perinim.github.io/",
-        "https://perinim.github.io/cv/"
-        ],
+    source=["https://perinim.github.io/", "https://perinim.github.io/cv/"],
     schema=None,
-    config=graph_config
+    config=graph_config,
 )
 
 result = multiple_search_graph.run()
