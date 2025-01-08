@@ -1,23 +1,29 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
+
 import json
+import os
+
+from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperMultiLiteGraph
 from scrapegraphai.utils import prettify_exec_info
+
+load_dotenv()
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
 
+
 graph_config = {
     "llm": {
-        "model": "ollama/llama3.1",
-        "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
-        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
+        "api_key": os.getenv("OPENAI_API_KEY"),
+        "model": "openai/gpt-4o",
     },
     "verbose": True,
-    "headless": False
+    "headless": False,
 }
 
 # ************************************************
@@ -26,11 +32,8 @@ graph_config = {
 
 smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
     prompt="Who is Marco Perini?",
-    source= [
-        "https://perinim.github.io/",
-        "https://perinim.github.io/cv/"
-    ],
-    config=graph_config
+    source=["https://perinim.github.io/", "https://perinim.github.io/cv/"],
+    config=graph_config,
 )
 
 result = smart_scraper_multi_lite_graph.run()
@@ -42,4 +45,3 @@ print(json.dumps(result, indent=4))
 
 graph_exec_info = smart_scraper_multi_lite_graph.get_execution_info()
 print(prettify_exec_info(graph_exec_info))
-

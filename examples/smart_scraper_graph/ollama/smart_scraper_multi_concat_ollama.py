@@ -1,10 +1,11 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
 
-import os
 import json
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperMultiConcatGraph
 
 load_dotenv()
@@ -18,10 +19,10 @@ graph_config = {
         "model": "ollama/llama3.1",
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
-        "base_url": "http://localhost:11434", # set ollama URL arbitrarily
+        "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
     "verbose": True,
-    "headless": False
+    "headless": False,
 }
 
 # *******************************************************
@@ -30,12 +31,9 @@ graph_config = {
 
 multiple_search_graph = SmartScraperMultiConcatGraph(
     prompt="Who is Marco Perini?",
-    source= [
-        "https://perinim.github.io/",
-        "https://perinim.github.io/cv/"
-        ],
+    source=["https://perinim.github.io/", "https://perinim.github.io/cv/"],
     schema=None,
-    config=graph_config
+    config=graph_config,
 )
 
 result = multiple_search_graph.run()
