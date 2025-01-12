@@ -54,19 +54,19 @@ def search_on_web(
         results = []
         if search_engine == "google":
 
-            if region is not None and language is not None:
+            if region and language:
                 results = list(
                     google_search(
                         query, num_results=max_results, proxy=formatted_proxy,
                         lang= language, region=region)
                 )
-            elif region is not None:
+            elif region:
                 results = list(
                     google_search(
                         query, num_results=max_results, proxy=formatted_proxy,
                         region=region)
                 )
-            elif language is not None:
+            elif language:
                 results = list(
                     google_search(
                         query, num_results=max_results, proxy=formatted_proxy,
@@ -77,7 +77,6 @@ def search_on_web(
                     google_search(
                         query, num_results=max_results, proxy=formatted_proxy)
                 )
-            print(results)
 
         elif search_engine == "duckduckgo":
             research = DuckDuckGoSearchResults(max_results=max_results)
