@@ -1,3 +1,29 @@
+## [1.36.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0...v1.36.0) (2025-01-12)
+
+
+### Features
+
+* add example of collab ([1fad118](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1fad1181a6b2d654c4eb996348907940b1d8a7af))
+
+
+### Bug Fixes
+
+* ollama tokenizer limited to 1024 tokens + ollama structured output + fix browser backend ([ad693b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ad693b2bb201b4d9280139e70a2930358e779366))
+* updated ollama structured output ([3b95911](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b9591156d96ac7266055703e7ffb354e90b01f0))
+
+
+### Docs
+
+* ✨ code quality badge update ([02022cc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/02022cc5db39fede1a1d920d17e18ba0d05328ba))
+* improved readme + fix csv scraper imports ([14b4b19](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/14b4b19f60e33c855bee4eea0a1a6fcc01a98c1a))
+* refactoring of the doc ([5ca325c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5ca325c7257b71fc4cd12ee26bde3e992ade5756))
+
+
+### CI
+
+* **release:** 1.35.1-beta.1 [skip ci] ([1d17d92](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1d17d92c1f4a29da9d9333dd9a06ea9baf043192))
+* **release:** 1.36.0-beta.1 [skip ci] ([04bd3f8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/04bd3f8e572fc79e3e3ad439cd3bb72a409edf91))
+
 ## [1.36.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.1-beta.1...v1.36.0-beta.1) (2025-01-12)
 
 
