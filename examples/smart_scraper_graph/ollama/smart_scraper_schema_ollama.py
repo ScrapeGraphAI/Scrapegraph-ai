@@ -3,7 +3,6 @@ Basic example of scraping pipeline using SmartScraper with schema
 """
 
 import json
-from typing import List
 
 from pydantic import BaseModel, Field
 
@@ -20,15 +19,11 @@ class Project(BaseModel):
 
 
 class Projects(BaseModel):
-    projects: List[Project]
+    projects: list[Project]
 
 
 graph_config = {
-    "llm": {
-        "model": "ollama/llama3.1",
-        "temperature": 0,
-        # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
-    },
+    "llm": {"model": "ollama/llama3.2", "temperature": 0, "model_tokens": 4096},
     "verbose": True,
     "headless": False,
 }
