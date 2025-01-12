@@ -5,6 +5,7 @@ MergeAnswersNode Module
 from typing import List, Optional
 
 from langchain.prompts import PromptTemplate
+from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_mistralai import ChatMistralAI
 from langchain_openai import ChatOpenAI
@@ -42,6 +43,13 @@ class MergeAnswersNode(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]
+
+        if isinstance(self.llm_model, ChatOllama):
+            if self.node_config.get("schema", None) is None:
+                self.llm_model.format = "json"
+            else:
+                self.llm_model.format = self.node_config["schema"].model_json_schema()
+
         self.verbose = (
             False if node_config is None else node_config.get("verbose", False)
         )

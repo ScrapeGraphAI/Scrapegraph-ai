@@ -13,9 +13,8 @@ graph_config = {
     "llm": {
         "model": "ollama/llama3.2:3b",
         "temperature": 0,
-        "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
-        "model_tokens": 1024,
+        "model_tokens": 4096,
     },
     "verbose": True,
     "headless": False,
