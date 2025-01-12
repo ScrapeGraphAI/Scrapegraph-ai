@@ -19,7 +19,7 @@ Example usage:
    print(f"GPT-4 token limit: {gpt4_limit}")
 
    # Check the token limit for a specific model
-   model_name = "gpt-3.5-turbo"
+   model_name = "gpt-4o-mini"
    if model_name in models_tokens['openai']:
        print(f"{model_name} token limit: {models_tokens['openai'][model_name]}")
    else:

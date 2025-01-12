@@ -96,7 +96,6 @@ class ParseNode(BaseNode):
             chunks = split_text_into_chunks(
                 text=docs_transformed.page_content,
                 chunk_size=self.chunk_size - 250,
-                model=self.llm_model,
             )
         else:
             docs_transformed = docs_transformed[0]
@@ -115,11 +114,10 @@ class ParseNode(BaseNode):
                 chunks = split_text_into_chunks(
                     text=docs_transformed.page_content,
                     chunk_size=chunk_size,
-                    model=self.llm_model,
                 )
             else:
                 chunks = split_text_into_chunks(
-                    text=docs_transformed, chunk_size=chunk_size, model=self.llm_model
+                    text=docs_transformed, chunk_size=chunk_size
                 )
 
         state.update({self.output[0]: chunks})

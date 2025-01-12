@@ -61,7 +61,6 @@ class ChromiumLoader(BaseLoader):
 
         dynamic_import(backend, message)
 
-        self.backend = backend
         self.browser_config = kwargs
         self.headless = headless
         self.proxy = parse_or_search_proxy(proxy) if proxy else None
@@ -69,7 +68,8 @@ class ChromiumLoader(BaseLoader):
         self.load_state = load_state
         self.requires_js_support = requires_js_support
         self.storage_state = storage_state
-        self.browser_name = browser_name
+        self.backend = kwargs.get("backend", backend)
+        self.browser_name = kwargs.get("browser_name", browser_name)
         self.retry_limit = kwargs.get("retry_limit", retry_limit)
         self.timeout = kwargs.get("timeout", timeout)
 

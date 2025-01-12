@@ -203,8 +203,9 @@ class AbstractGraph(ABC):
                 ]
             except KeyError:
                 print(
-                    f"""Model {llm_params['model_provider']}/{llm_params['model']} not found,
-                    using default token size (8192)"""
+                    f"""Max input tokens for model {llm_params['model_provider']}/{llm_params['model']} not found,
+                    please specify the model_tokens parameter in the llm section of the graph configuration.
+                    Using default token size: 8192"""
                 )
                 self.model_token = 8192
         else:
