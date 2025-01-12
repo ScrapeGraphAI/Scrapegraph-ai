@@ -1,41 +1,66 @@
-# Benchmark analysis
-# Local models
-The two websites benchmark are:
-- Example 1:  https://perinim.github.io/projects
-- Example 2: https://www.wired.com (at 17/4/2024)
+# 🕷️ Scrapegraph-ai Examples
 
-Both are strored locally as txt file in .txt format  because in this way we do not have to think about the internet connection
+This directory contains various example implementations of Scrapegraph-ai for different use cases. Each example demonstrates how to leverage the power of Scrapegraph-ai for specific scenarios.
 
-The time is measured in seconds
+> **Note:** While these examples showcase implementations using OpenAI and Ollama, Scrapegraph-ai supports many other LLM providers! Check out our [documentation](https://docs-oss.scrapegraphai.com/examples) for the full list of supported providers.
 
-The model runned for this benchmark is Mistral on Ollama with nomic-embed-text
+## 📚 Available Examples
 
-| Hardware                | Example 1 | Example 2 |
-| ----------------------- | --------- | --------- |
-| Macbook pro 14' m1      | 11.60s    |  26.61s   |
-| Macbook pro 16' m2 max  | 8.05s     |  12.17s    |
+- 🧠 `smart_scraper/` - Advanced web scraping with intelligent content extraction
+- 🔎 `search_graph/` - Web search and data retrieval
+- ⚙️ `script_generator_graph/` - Automated script generation
+- 🌐 `depth_search_graph/` - Deep web crawling and content exploration
+- 📊 `csv_scraper_graph/` - Scraping and processing data into CSV format
+- 📑 `xml_scraper_graph/` - XML data extraction and processing
+- 🎤 `speech_graph/` - Speech processing and analysis
+- 🔄 `omni_scraper_graph/` - Universal web scraping for multiple data types
+- 🔍 `omni_search_graph/` - Comprehensive search across multiple sources
+- 📄 `document_scraper_graph/` - Document parsing and data extraction
+- 🛠️ `custom_graph/` - Custom graph implementation examples
+- 💻 `code_generator_graph/` - Code generation utilities
+- 📋 `json_scraper_graph/` - JSON data extraction and processing
+- 📋 `colab example`:   
+<a target="_blank" href="https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing#scrollTo=vGDjka17pqqg">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
-**Note**: the examples on Docker are not runned on other devices than the Macbook because the performance are to slow (10 times slower than Ollama). Indeed the results are the following:
+## 🚀 Getting Started
 
-| Hardware           | Example 1 | Example 2 |
-| ------------------ | --------- | --------- |
-| Macbook 14' m1 pro | 139.89    | Too long  |
-# Performance on APIs services
-### Example 1: personal portfolio 
-**URL**: https://perinim.github.io/projects
-**Task**: List me all the projects with their description.
+1. Choose the example that best fits your use case
+2. Navigate to the corresponding directory
+3. Follow the README instructions in each directory
+4. Configure any required environment variables using the provided `.env.example` files
 
-| Name                | Execution time (seconds) | total_tokens | prompt_tokens | completion_tokens | successful_requests | total_cost_USD |
-| ------------------- | ------------------------ | ------------ | ------------- | ----------------- | ------------------- | -------------- |
-| gpt-3.5-turbo       | 25.22                    | 445          | 272           | 173               | 1                   | 0.000754       |
-| gpt-4-turbo-preview | 9.53                     | 449          | 272           | 177               | 1                   | 0.00803        |
+## ⚡ Quick Setup
 
-### Example 2: Wired
-**URL**: https://www.wired.com
-**Task**: List me all the articles with their description.
+```bash
+pip install scrapegraphai
 
-| Name                | Execution time (seconds) | total_tokens | prompt_tokens | completion_tokens | successful_requests | total_cost_USD |
-| ------------------- | ------------------------ | ------------ | ------------- | ----------------- | ------------------- | -------------- |
-| gpt-3.5-turbo       | 25.89                    | 445          | 272           | 173               | 1                   | 0.000754       |
-| gpt-4-turbo-preview | 64.70                    | 3573         | 2199          | 1374              | 1                   | 0.06321        |
+playwright install
 
+# choose an example
+cd examples/smart_scraper_graph/openai
+
+# run the example
+python smart_scraper_openai.py
+```
+
+## 📋 Requirements
+
+Each example may have its own specific requirements. Please refer to the individual README files in each directory for detailed setup instructions.
+
+## 📚 Additional Resources
+
+- 📖 [Full Documentation](https://docs-oss.scrapegraphai.com/examples)
+- 💡 [Examples Repository](https://github.com/ScrapeGraphAI/ScrapegraphLib-Examples)
+- 🤝 [Community Support](https://github.com/ScrapeGraphAI/scrapegraph-ai/discussions)
+
+## 🤔 Need Help?
+
+- Check out our [documentation](https://docs-oss.scrapegraphai.com)
+- Join our [Discord community](https://discord.gg/scrapegraphai)
+- Open an [issue](https://github.com/ScrapeGraphAI/scrapegraph-ai/issues)
+
+---
+
+⭐ Don't forget to star our repository if you find these examples helpful!
