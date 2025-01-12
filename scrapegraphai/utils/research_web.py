@@ -72,7 +72,7 @@ def search_on_web(
                         query, num_results=max_results, proxy=formatted_proxy,
                         lang=language)
                 )
-            else: 
+            else:
                 results = list(
                     google_search(
                         query, num_results=max_results, proxy=formatted_proxy)
