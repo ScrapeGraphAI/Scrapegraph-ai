@@ -20,7 +20,7 @@ def search_on_web(
     proxy: str | dict = None,
     serper_api_key: str = None,
     region: str = None,
-    language: str = None,
+    language: str = "en",
 ) -> List[str]:
     """Search web function with improved error handling and validation
 
@@ -71,20 +71,12 @@ def search_on_web(
                         num_results=max_results,
                         proxy=formatted_proxy,
                         region=region,
-                    )
-                )
-            elif language:
-                results = list(
-                    google_search(
-                        query,
-                        num_results=max_results,
-                        proxy=formatted_proxy,
                         lang=language,
                     )
                 )
             else:
                 results = list(
-                    google_search(query, num_results=max_results, proxy=formatted_proxy)
+                    google_search(query, num_results=max_results, proxy=formatted_proxy, lang=language)
                 )
 
         elif search_engine == "duckduckgo":
