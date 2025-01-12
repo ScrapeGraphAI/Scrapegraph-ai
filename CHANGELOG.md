@@ -1,3 +1,15 @@
+## [1.35.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0...v1.35.1-beta.1) (2025-01-12)
+
+
+### Bug Fixes
+
+* ollama tokenizer limited to 1024 tokens + ollama structured output + fix browser backend ([ad693b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ad693b2bb201b4d9280139e70a2930358e779366))
+
+
+### Docs
+
+* ✨ code quality badge update ([02022cc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/02022cc5db39fede1a1d920d17e18ba0d05328ba))
+
 ## [1.35.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.34.2...v1.35.0) (2025-01-06)
 
 
