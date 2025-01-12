@@ -51,8 +51,8 @@ from scrapegraphai.graphs import SmartScraperGraph
 # Define the configuration for the scraping pipeline
 graph_config = {
     "llm": {
-        "api_key": "YOUR_OPENAI_API_KEY",
-        "model": "openai/gpt-4o-mini",
+        "model": "ollama/llama3.2",
+        "model_tokens": 8192
     },
     "verbose": True,
     "headless": False,
@@ -71,6 +71,20 @@ result = smart_scraper_graph.run()
 import json
 print(json.dumps(result, indent=4))
 ```
+
+> [!NOTE]
+> For OpenAI and other models you just need to change the llm config!
+> ```python
+>graph_config = {
+>    "llm": {
+>        "api_key": "YOUR_OPENAI_API_KEY",
+>        "model": "openai/gpt-4o-mini",
+>    },
+>    "verbose": True,
+>    "headless": False,
+>}
+>```
+
 
 The output will be a dictionary like the following:
 
@@ -126,6 +140,16 @@ Remember to have [Ollama](https://ollama.com/) installed and download the models
 The documentation for ScrapeGraphAI can be found [here](https://scrapegraph-ai.readthedocs.io/en/latest/).
 Check out also the Docusaurus [here](https://docs-oss.scrapegraphai.com/).
 
+## 🤝 Contributing
+
+Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
+
+Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
+
+[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
+[![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
+[![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
+
 ## 🔗 ScrapeGraph API & SDKs
 If you are looking for a quick solution to integrate ScrapeGraph in your system, check out our powerful API [here!](https://dashboard.scrapegraphai.com/login)
 
@@ -157,16 +181,6 @@ The Official API Documentation can be found [here](https://docs.scrapegraphai.co
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapedo.png" alt="Stats" style="width: 11%;">
   </a>
 </div>
-
-## 🤝 Contributing
-
-Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
-
-Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
-
-[![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
-[![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
-[![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
 ## 📈 Telemetry 
 We collect anonymous usage metrics to enhance our package's quality and user experience. The data helps us prioritize improvements and ensure compatibility. If you wish to opt-out, set the environment variable SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. For more information, please refer to the documentation [here](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
