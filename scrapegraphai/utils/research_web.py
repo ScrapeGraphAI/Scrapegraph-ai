@@ -23,7 +23,7 @@ def search_on_web(
     language: str = None,
 ) -> List[str]:
     """Search web function with improved error handling and validation
-    
+
     Args:
         query (str): Search query
         search_engine (str): Search engine to use
@@ -57,25 +57,34 @@ def search_on_web(
             if region and language:
                 results = list(
                     google_search(
-                        query, num_results=max_results, proxy=formatted_proxy,
-                        lang= language, region=region)
+                        query,
+                        num_results=max_results,
+                        proxy=formatted_proxy,
+                        lang=language,
+                        region=region,
+                    )
                 )
             elif region:
                 results = list(
                     google_search(
-                        query, num_results=max_results, proxy=formatted_proxy,
-                        region=region)
+                        query,
+                        num_results=max_results,
+                        proxy=formatted_proxy,
+                        region=region,
+                    )
                 )
             elif language:
                 results = list(
                     google_search(
-                        query, num_results=max_results, proxy=formatted_proxy,
-                        lang=language)
+                        query,
+                        num_results=max_results,
+                        proxy=formatted_proxy,
+                        lang=language,
+                    )
                 )
             else:
                 results = list(
-                    google_search(
-                        query, num_results=max_results, proxy=formatted_proxy)
+                    google_search(query, num_results=max_results, proxy=formatted_proxy)
                 )
 
         elif search_engine == "duckduckgo":

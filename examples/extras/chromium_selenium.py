@@ -1,14 +1,19 @@
 import asyncio
-import os
 import json
+import os
+
+from aiohttp import ClientError
 from dotenv import load_dotenv
-from scrapegraphai.docloaders.chromium import ChromiumLoader  # Import your ChromiumLoader class
+
+from scrapegraphai.docloaders.chromium import (  # Import your ChromiumLoader class
+    ChromiumLoader,
+)
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-from aiohttp import ClientError
 
 # Load environment variables for API keys
 load_dotenv()
+
 
 # ************************************************
 # Define function to analyze content with ScrapegraphAI
@@ -16,7 +21,7 @@ load_dotenv()
 async def analyze_content_with_scrapegraph(content: str):
     """
     Analyze scraped content using ScrapegraphAI.
-    
+
     Args:
         content (str): The scraped HTML or text content.
 
@@ -33,14 +38,15 @@ async def analyze_content_with_scrapegraph(content: str):
                     "api_key": os.getenv("OPENAI_API_KEY"),
                     "model": "openai/gpt-4o",
                 },
-                "verbose": True
-            }
+                "verbose": True,
+            },
         )
         result = smart_scraper.run()
         return result
     except Exception as e:
         print(f"❌ ScrapegraphAI analysis failed: {e}")
         return {"error": str(e)}
+
 
 # ************************************************
 # Test scraper and ScrapegraphAI pipeline
@@ -61,7 +67,9 @@ async def test_scraper_with_analysis(scraper: ChromiumLoader, urls: list):
             if "Error" in result or not result.strip():
                 print(f"❌ Failed to scrape {url}: {result}")
             else:
-                print(f"✅ Successfully scraped {url}. Content (first 200 chars): {result[:200]}")
+                print(
+                    f"✅ Successfully scraped {url}. Content (first 200 chars): {result[:200]}"
+                )
 
                 # Pass scraped content to ScrapegraphAI for analysis
                 print("🤖 Analyzing content with ScrapegraphAI...")
@@ -74,6 +82,7 @@ async def test_scraper_with_analysis(scraper: ChromiumLoader, urls: list):
         except Exception as e:
             print(f"❌ Unexpected error while scraping {url}: {e}")
 
+
 # ************************************************
 # Main Execution
 # ************************************************
@@ -81,16 +90,26 @@ async def main():
     urls_to_scrape = [
         "https://example.com",
         "https://www.python.org",
-        "https://invalid-url.test"
+        "https://invalid-url.test",
     ]
 
     # Test with Playwright backend
     print("\n--- Testing Playwright Backend ---")
     try:
-        scraper_playwright_chromium = ChromiumLoader(urls=urls_to_scrape, backend="playwright", headless=True, browser_name = "chromium")
+        scraper_playwright_chromium = ChromiumLoader(
+            urls=urls_to_scrape,
+            backend="playwright",
+            headless=True,
+            browser_name="chromium",
+        )
         await test_scraper_with_analysis(scraper_playwright_chromium, urls_to_scrape)
-        
-        scraper_playwright_firefox = ChromiumLoader(urls=urls_to_scrape, backend="playwright", headless=True, browser_name = "firefox")
+
+        scraper_playwright_firefox = ChromiumLoader(
+            urls=urls_to_scrape,
+            backend="playwright",
+            headless=True,
+            browser_name="firefox",
+        )
         await test_scraper_with_analysis(scraper_playwright_firefox, urls_to_scrape)
     except ImportError as ie:
         print(f"❌ Playwright ImportError: {ie}")
@@ -100,15 +119,26 @@ async def main():
     # Test with Selenium backend
     print("\n--- Testing Selenium Backend ---")
     try:
-        scraper_selenium_chromium = ChromiumLoader(urls=urls_to_scrape, backend="selenium", headless=True, browser_name = "chromium")
+        scraper_selenium_chromium = ChromiumLoader(
+            urls=urls_to_scrape,
+            backend="selenium",
+            headless=True,
+            browser_name="chromium",
+        )
         await test_scraper_with_analysis(scraper_selenium_chromium, urls_to_scrape)
-        
-        scraper_selenium_firefox = ChromiumLoader(urls=urls_to_scrape, backend="selenium", headless=True, browser_name = "firefox")
+
+        scraper_selenium_firefox = ChromiumLoader(
+            urls=urls_to_scrape,
+            backend="selenium",
+            headless=True,
+            browser_name="firefox",
+        )
         await test_scraper_with_analysis(scraper_selenium_firefox, urls_to_scrape)
     except ImportError as ie:
         print(f"❌ Selenium ImportError: {ie}")
     except Exception as e:
         print(f"❌ Error initializing Selenium ChromiumLoader: {e}")
+
 
 if __name__ == "__main__":
     try:

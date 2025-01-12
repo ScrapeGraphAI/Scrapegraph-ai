@@ -1,10 +1,12 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
 
-import os
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -32,7 +34,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me what does the company do, the name and a contact email.",
     source="https://scrapegraphai.com/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

@@ -55,7 +55,7 @@ markmap:
     - Use Selenium or Playwright to take screenshots
     - Use LLM to asses if it is a block-like page, paragraph-like page, etc.
     - [Issue #88](https://github.com/VinciGit00/Scrapegraph-ai/issues/88)
-    
+
 ## **Long-Term Goals**
 
 - Automatic generation of scraping pipelines from a given prompt

@@ -133,11 +133,11 @@ We can also pass a model instance for the chat model and the embedding model. Fo
         openai_api_version="AZURE_OPENAI_API_VERSION",
     )
     # Supposing model_tokens are 100K
-    model_tokens_count = 100000 
+    model_tokens_count = 100000
     graph_config = {
         "llm": {
             "model_instance": llm_model_instance,
-            "model_tokens": model_tokens_count, 
+            "model_tokens": model_tokens_count,
         },
         "embeddings": {
             "model_instance": embedder_model_instance
@@ -198,7 +198,7 @@ We can also pass a model instance for the chat model and the embedding model. Fo
 Other LLM models
 ^^^^^^^^^^^^^^^^
 
-We can also pass a model instance for the chat model and the embedding model through the **model_instance** parameter. 
+We can also pass a model instance for the chat model and the embedding model through the **model_instance** parameter.
 This feature enables you to utilize a Langchain model instance.
 You will discover the model you require within the provided list:
 
@@ -208,7 +208,7 @@ You will discover the model you require within the provided list:
 For instance, consider **chat model** Moonshot. We can integrate it in the following manner:
 
 .. code-block:: python
-    
+
     from langchain_community.chat_models.moonshot import MoonshotChat
 
     # The configuration parameters are contingent upon the specific model you select
@@ -221,8 +221,7 @@ For instance, consider **chat model** Moonshot. We can integrate it in the follo
     llm_model_instance = MoonshotChat(**llm_instance_config)
     graph_config = {
         "llm": {
-            "model_instance": llm_model_instance, 
+            "model_instance": llm_model_instance,
             "model_tokens": 5000
         },
     }
-    

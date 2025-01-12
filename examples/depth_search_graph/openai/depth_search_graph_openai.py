@@ -1,8 +1,11 @@
 """
 depth_search_graph_opeani example
 """
+
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import DepthSearchGraph
 
 load_dotenv()
@@ -23,7 +26,7 @@ graph_config = {
 search_graph = DepthSearchGraph(
     prompt="List me all the projects with their description",
     source="https://perinim.github.io",
-    config=graph_config
+    config=graph_config,
 )
 
 result = search_graph.run()

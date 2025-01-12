@@ -1,6 +1,7 @@
 """
 Example of Search Graph
 """
+
 from scrapegraphai.graphs import SearchGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
@@ -25,8 +26,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me the best escursions near Trento",
-    config=graph_config
+    prompt="List me the best escursions near Trento", config=graph_config
 )
 
 result = search_graph.run()

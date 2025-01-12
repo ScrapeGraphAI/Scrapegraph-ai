@@ -1,10 +1,12 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
 
-import os
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperGraph
 
 load_dotenv()
@@ -33,7 +35,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects",
     source="https://perinim.github.io/projects/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

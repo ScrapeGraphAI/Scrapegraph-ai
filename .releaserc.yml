@@ -53,4 +53,3 @@ branches:
     channel: "dev"
     prerelease: "beta"
 debug: true
-

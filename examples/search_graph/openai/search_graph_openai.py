@@ -1,8 +1,11 @@
 """
 Example of Search Graph
 """
+
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SearchGraph
 
 load_dotenv()
@@ -27,8 +30,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me Chioggia's famous dishes",
-    config=graph_config
+    prompt="List me Chioggia's famous dishes", config=graph_config
 )
 
 result = search_graph.run()

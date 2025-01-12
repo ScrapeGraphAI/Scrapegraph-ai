@@ -27,4 +27,4 @@ json_data = graph.scrape("https://api.example.com/data")
 ## Environment Variables
 
 Required environment variables:
-- `OPENAI_API_KEY`: Your OpenAI API key 
+- `OPENAI_API_KEY`: Your OpenAI API key

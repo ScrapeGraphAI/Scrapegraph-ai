@@ -1,8 +1,11 @@
 """
 Basic example of scraping pipeline using XMLScraperMultiGraph from XML documents
 """
+
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import XMLScraperMultiGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
@@ -16,7 +19,7 @@ FILE_NAME = "inputs/books.xml"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
-with open(file_path, 'r', encoding="utf-8") as file:
+with open(file_path, "r", encoding="utf-8") as file:
     text = file.read()
 
 # ************************************************
@@ -27,7 +30,7 @@ openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
     "llm": {
-        "api_key":openai_key,
+        "api_key": openai_key,
         "model": "openai/gpt-4o",
     },
     "verbose": True,
@@ -40,7 +43,7 @@ graph_config = {
 xml_scraper_graph = XMLScraperMultiGraph(
     prompt="List me all the authors, title and genres of the books",
     source=[text, text],  # Pass the content of the file, not the file object
-    config=graph_config
+    config=graph_config,
 )
 
 result = xml_scraper_graph.run()

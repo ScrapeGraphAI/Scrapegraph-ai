@@ -1,9 +1,12 @@
 """
 Example of OmniSearchGraph
 """
-import os
+
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import OmniSearchGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -31,7 +34,7 @@ graph_config = {
 
 omni_search_graph = OmniSearchGraph(
     prompt="List me all Chioggia's famous dishes and describe their pictures.",
-    config=graph_config
+    config=graph_config,
 )
 
 result = omni_search_graph.run()

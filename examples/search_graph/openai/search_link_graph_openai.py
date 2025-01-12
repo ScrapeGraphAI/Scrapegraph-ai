@@ -1,8 +1,11 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
+
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SearchLinkGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -27,8 +30,7 @@ graph_config = {
 # ************************************************
 
 smart_scraper_graph = SearchLinkGraph(
-    source="https://sport.sky.it/nba?gr=www",
-    config=graph_config
+    source="https://sport.sky.it/nba?gr=www", config=graph_config
 )
 
 result = smart_scraper_graph.run()

@@ -1,9 +1,12 @@
-""" 
+"""
 Basic example of scraping pipeline using OmniScraper
 """
-import os
+
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import OmniScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -22,7 +25,7 @@ graph_config = {
     },
     "verbose": True,
     "headless": True,
-    "max_images": 5
+    "max_images": 5,
 }
 
 # ************************************************
@@ -33,7 +36,7 @@ omni_scraper_graph = OmniScraperGraph(
     prompt="List me all the projects with their titles and image links and descriptions.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = omni_scraper_graph.run()

@@ -3,9 +3,12 @@ Basic example of scraping pipeline using JSONScraperGraph from JSON documents
 """
 
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import JSONScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
 load_dotenv()
 
 # ************************************************
@@ -16,7 +19,7 @@ FILE_NAME = "inputs/example.json"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
-with open(file_path, 'r', encoding="utf-8") as file:
+with open(file_path, "r", encoding="utf-8") as file:
     text = file.read()
 
 # ************************************************
@@ -41,7 +44,7 @@ graph_config = {
 json_scraper_graph = JSONScraperGraph(
     prompt="List me all the authors, title and genres of the books",
     source=text,  # Pass the content of the file, not the file object
-    config=graph_config
+    config=graph_config,
 )
 
 result = json_scraper_graph.run()

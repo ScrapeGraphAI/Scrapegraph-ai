@@ -1,8 +1,10 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
+
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
@@ -19,11 +21,9 @@ graph_config = {
         "temperature": 0,
         # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
-     "loader_kwargs": {
-        "slow_mo": 10000
-    },
+    "loader_kwargs": {"slow_mo": 10000},
     "verbose": True,
-    "headless": False
+    "headless": False,
 }
 
 # ************************************************
@@ -34,7 +34,7 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the titles",
     # also accepts a string with the already downloaded HTML code
     source="https://www.wired.com/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()
