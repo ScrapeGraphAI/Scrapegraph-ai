@@ -15,7 +15,7 @@ graph_config = {
         "temperature": 0,
         "format": "json",  # Ollama needs the format to be specified explicitly
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
-        "model_tokens": 1024,
+        "model_tokens": 4096,
     },
     "verbose": True,
     "headless": False,
@@ -25,7 +25,7 @@ graph_config = {
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Find some information about what does the company do, the name and a contact email.",
+    prompt="Find some information about what does the company do and the list of founders.",
     source="https://scrapegraphai.com/",
     config=graph_config,
 )

@@ -30,8 +30,7 @@ dependencies = [
     "googlesearch-python>=1.2.5",
     "async-timeout>=4.0.3",
     "simpleeval>=1.0.0",
-    "jsonschema>=4.23.0",
-    "transformers>=4.46.3",
+    "jsonschema>=4.23.0"
 ]
 
 readme = "README.md"
