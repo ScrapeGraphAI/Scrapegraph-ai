@@ -19,8 +19,22 @@ def search_on_web(
     timeout: int = 10,
     proxy: str | dict = None,
     serper_api_key: str = None,
+    region: str = None,
+    language: str = None,
 ) -> List[str]:
-    """Search web function with improved error handling and validation"""
+    """Search web function with improved error handling and validation
+    
+    Args:
+        query (str): Search query
+        search_engine (str): Search engine to use
+        max_results (int): Maximum number of results to return
+        port (int): Port for SearXNG
+        timeout (int): Request timeout in seconds
+        proxy (str | dict): Proxy configuration
+        serper_api_key (str): API key for Serper
+        region (str): Country/region code (e.g., 'mx' for Mexico)
+        language (str): Language code (e.g., 'es' for Spanish)
+    """
 
     # Input validation
     if not query or not isinstance(query, str):
@@ -39,9 +53,31 @@ def search_on_web(
     try:
         results = []
         if search_engine == "google":
-            results = list(
-                google_search(query, num_results=max_results, proxy=formatted_proxy)
-            )
+
+            if region is not None and language is not None:
+                results = list(
+                    google_search(
+                        query, num_results=max_results, proxy=formatted_proxy,
+                        lang= language, region=region)
+                )
+            elif region is not None:
+                results = list(
+                    google_search(
+                        query, num_results=max_results, proxy=formatted_proxy,
+                        region=region)
+                )
+            elif language is not None:
+                results = list(
+                    google_search(
+                        query, num_results=max_results, proxy=formatted_proxy,
+                        lang=language)
+                )
+            else: 
+                results = list(
+                    google_search(
+                        query, num_results=max_results, proxy=formatted_proxy)
+                )
+            print(results)
 
         elif search_engine == "duckduckgo":
             research = DuckDuckGoSearchResults(max_results=max_results)
