@@ -76,7 +76,12 @@ def search_on_web(
                 )
             else:
                 results = list(
-                    google_search(query, num_results=max_results, proxy=formatted_proxy, lang=language)
+                    google_search(
+                        query,
+                        num_results=max_results,
+                        proxy=formatted_proxy,
+                        lang=language,
+                    )
                 )
 
         elif search_engine == "duckduckgo":
