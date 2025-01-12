@@ -10,7 +10,7 @@ from langchain_aws import ChatBedrock
 from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
-from langchain_openai import AzureChatOpenAI, ChatOpenAI
+from langchain_openai import ChatOpenAI
 from requests.exceptions import Timeout
 from tqdm import tqdm
 
@@ -59,7 +59,10 @@ class GenerateAnswerNode(BaseNode):
         self.llm_model = node_config["llm_model"]
 
         if isinstance(node_config["llm_model"], ChatOllama):
-            self.llm_model.format = "json"
+            if node_config.get("schema", None) is None:
+                self.llm_model.format = "json"
+            else:
+                self.llm_model.format = self.node_config["schema"].model_json_schema()
 
         self.verbose = node_config.get("verbose", False)
         self.force = node_config.get("force", False)
@@ -123,8 +126,7 @@ class GenerateAnswerNode(BaseNode):
                 format_instructions = ""
 
         if (
-            isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI))
-            and not self.script_creator
+            not self.script_creator
             or self.force
             and not self.script_creator
             or self.is_md_scraper

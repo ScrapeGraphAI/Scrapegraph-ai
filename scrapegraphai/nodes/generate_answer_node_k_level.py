@@ -6,10 +6,11 @@ from typing import List, Optional
 
 from langchain.prompts import PromptTemplate
 from langchain_aws import ChatBedrock
+from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_mistralai import ChatMistralAI
-from langchain_openai import AzureChatOpenAI, ChatOpenAI
+from langchain_openai import ChatOpenAI
 from tqdm import tqdm
 
 from ..prompts import (
@@ -55,6 +56,13 @@ class GenerateAnswerNodeKLevel(BaseNode):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
         self.llm_model = node_config["llm_model"]
+
+        if isinstance(node_config["llm_model"], ChatOllama):
+            if node_config.get("schema", None) is None:
+                self.llm_model.format = "json"
+            else:
+                self.llm_model.format = self.node_config["schema"].model_json_schema()
+
         self.embedder_model = node_config.get("embedder_model", None)
         self.verbose = node_config.get("verbose", False)
         self.force = node_config.get("force", False)
@@ -92,8 +100,7 @@ class GenerateAnswerNodeKLevel(BaseNode):
                 format_instructions = ""
 
         if (
-            isinstance(self.llm_model, (ChatOpenAI, AzureChatOpenAI))
-            and not self.script_creator
+            not self.script_creator
             or self.force
             and not self.script_creator
             or self.is_md_scraper
