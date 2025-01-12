@@ -53,36 +53,15 @@ def search_on_web(
     try:
         results = []
         if search_engine == "google":
+            kwargs = {
+                "num_results": max_results,
+                "proxy": formatted_proxy,
+                "lang": language,
+            }
+            if region:
+                kwargs["region"] = region
 
-            if region and language:
-                results = list(
-                    google_search(
-                        query,
-                        num_results=max_results,
-                        proxy=formatted_proxy,
-                        lang=language,
-                        region=region,
-                    )
-                )
-            elif region:
-                results = list(
-                    google_search(
-                        query,
-                        num_results=max_results,
-                        proxy=formatted_proxy,
-                        region=region,
-                        lang=language,
-                    )
-                )
-            else:
-                results = list(
-                    google_search(
-                        query,
-                        num_results=max_results,
-                        proxy=formatted_proxy,
-                        lang=language,
-                    )
-                )
+            results = list(google_search(query, **kwargs))
 
         elif search_engine == "duckduckgo":
             research = DuckDuckGoSearchResults(max_results=max_results)
