@@ -2,7 +2,7 @@
 SmartScraperGraph Module
 """
 
-from typing import Optional
+from typing import Optional, Type
 
 from pydantic import BaseModel
 
@@ -44,7 +44,7 @@ class SmartScraperLiteGraph(AbstractGraph):
         source: str,
         config: dict,
         prompt: str = "",
-        schema: Optional[BaseModel] = None,
+        schema: Optional[Type[BaseModel]] = None,
     ):
         super().__init__(prompt, config, source, schema)
 

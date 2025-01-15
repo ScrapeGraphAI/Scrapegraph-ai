@@ -2,7 +2,7 @@
 ScriptCreatorGraph Module
 """
 
-from typing import Optional
+from typing import Optional, Type
 
 from pydantic import BaseModel
 
@@ -44,7 +44,11 @@ class ScriptCreatorGraph(AbstractGraph):
     """
 
     def __init__(
-        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+        self,
+        prompt: str,
+        source: str,
+        config: dict,
+        schema: Optional[Type[BaseModel]] = None,
     ):
         self.library = config["library"]
 

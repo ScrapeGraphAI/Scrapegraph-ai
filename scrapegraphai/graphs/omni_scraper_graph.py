@@ -2,7 +2,7 @@
 This module implements the Omni Scraper Graph for the ScrapeGraphAI application.
 """
 
-from typing import Optional
+from typing import Optional, Type
 
 from pydantic import BaseModel
 
@@ -47,7 +47,11 @@ class OmniScraperGraph(AbstractGraph):
     """
 
     def __init__(
-        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+        self,
+        prompt: str,
+        source: str,
+        config: dict,
+        schema: Optional[Type[BaseModel]] = None,
     ):
         self.max_images = 5 if config is None else config.get("max_images", 5)
 

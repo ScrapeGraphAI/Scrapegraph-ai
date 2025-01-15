@@ -3,7 +3,7 @@ SearchGraph Module
 """
 
 from copy import deepcopy
-from typing import List, Optional
+from typing import List, Optional, Type
 
 from pydantic import BaseModel
 
@@ -42,7 +42,9 @@ class SearchGraph(AbstractGraph):
         >>> print(search_graph.get_considered_urls())
     """
 
-    def __init__(self, prompt: str, config: dict, schema: Optional[BaseModel] = None):
+    def __init__(
+        self, prompt: str, config: dict, schema: Optional[Type[BaseModel]] = None
+    ):
         self.max_results = config.get("max_results", 3)
 
         self.copy_config = safe_deepcopy(config)
