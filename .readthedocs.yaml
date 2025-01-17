@@ -11,3 +11,7 @@ sphinx:
 python:
   install:
     - requirements: docs/requirements.txt
+
+# Specify the branch to use
+git:
+  default_branch: main
