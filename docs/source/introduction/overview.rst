@@ -12,6 +12,32 @@ and modular **graph-based** pipelines to automate the scraping of data from vari
 
 Simply specify the information you need to extract, and ScrapeGraphAI handles the rest, providing a more **flexible** and **low-maintenance** solution compared to traditional scraping tools.
 
+For comprehensive documentation and updates, visit our `website <https://scrapegraphai.com>`_.
+
+Key Features
+-----------
+
+* **Just One Prompt Away**: Transform any website into clean, organized data for AI agents and Data Analytics
+* **Save Time**: No more writing complex code or dealing with manual extraction
+* **Save Money**: High-quality data extraction at a fraction of the cost of traditional scraping services
+* **AI Powered**: State-of-the-art AI technologies for fast, accurate, and dependable results
+
+Community Impact
+--------------
+
+Our open-source technology is continuously enhanced by a global community of developers:
+
+* **+17K** stars on Github
+* **7,000,000+** extracted webpages
+* **250k+** unique users
+
+Services
+--------
+
+* **Markdownify**: Convert webpage to markdown format (2 credits/page)
+* **Smart Scraper**: Structured AI web scraping given a URL (5 credits/page)
+* **Local Scraper**: Structured AI scraping given your local HTML (10 credits/page)
+
 Why ScrapegraphAI?
 ==================
 
