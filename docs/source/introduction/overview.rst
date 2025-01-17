@@ -12,6 +12,8 @@ and modular **graph-based** pipelines to automate the scraping of data from vari
 
 Simply specify the information you need to extract, and ScrapeGraphAI handles the rest, providing a more **flexible** and **low-maintenance** solution compared to traditional scraping tools.
 
+For comprehensive documentation and updates, visit our `documentation page <https://scrapegraph-ai.readthedocs.io/en/latest/introduction/overview.html>`_.
+
 Why ScrapegraphAI?
 ==================
 
@@ -200,3 +202,8 @@ Sponsors
    :width: 11%
    :alt: Scrapedo
    :target: https://scrape.do
+
+.. image:: ../../assets/scrapegraph_logo.png
+   :width: 11%
+   :alt: ScrapegraphAI
+   :target: https://scrapegraph-ai.readthedocs.io/en/latest/introduction/overview.html
