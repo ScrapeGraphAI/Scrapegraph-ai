@@ -7,13 +7,12 @@ from typing import List
 
 import requests
 from bs4 import BeautifulSoup
-from googlesearch import search as google_search
 from langchain_community.tools import DuckDuckGoSearchResults
 
 
 def search_on_web(
     query: str,
-    search_engine: str = "Google",
+    search_engine: str = "duckduckgo",
     max_results: int = 10,
     port: int = 8080,
     timeout: int = 10,
@@ -41,7 +40,7 @@ def search_on_web(
         raise ValueError("Query must be a non-empty string")
 
     search_engine = search_engine.lower()
-    valid_engines = {"google", "duckduckgo", "bing", "searxng", "serper"}
+    valid_engines = {"duckduckgo", "bing", "searxng", "serper"}
     if search_engine not in valid_engines:
         raise ValueError(f"Search engine must be one of: {', '.join(valid_engines)}")
 
@@ -52,20 +51,12 @@ def search_on_web(
 
     try:
         results = []
-        if search_engine == "google":
-            kwargs = {
-                "num_results": max_results,
-                "proxy": formatted_proxy,
-                "lang": language,
-            }
-            if region:
-                kwargs["region"] = region
-
-            results = list(google_search(query, **kwargs))
-
-        elif search_engine == "duckduckgo":
+        if search_engine == "duckduckgo":
+            # Create a DuckDuckGo search object with max_results
             research = DuckDuckGoSearchResults(max_results=max_results)
+            # Run the search
             res = research.run(query)
+            # Extract URLs using regex
             results = re.findall(r"https?://[^\s,\]]+", res)
 
         elif search_engine == "bing":
@@ -74,7 +65,7 @@ def search_on_web(
         elif search_engine == "searxng":
             results = _search_searxng(query, max_results, port, timeout)
 
-        elif search_engine.lower() == "serper":
+        elif search_engine == "serper":
             results = _search_serper(query, max_results, serper_api_key, timeout)
 
         return filter_pdf_links(results)
