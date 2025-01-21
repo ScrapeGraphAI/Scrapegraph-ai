@@ -6,7 +6,7 @@ import asyncio
 import uuid
 import warnings
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Type
 
 from langchain.chat_models import init_chat_model
 from langchain_core.rate_limiters import InMemoryRateLimiter
@@ -51,7 +51,7 @@ class AbstractGraph(ABC):
         prompt: str,
         config: dict,
         source: Optional[str] = None,
-        schema: Optional[BaseModel] = None,
+        schema: Optional[Type[BaseModel]] = None,
     ):
         if config.get("llm").get("temperature") is None:
             config["llm"]["temperature"] = 0

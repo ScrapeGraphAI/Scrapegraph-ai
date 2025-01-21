@@ -3,7 +3,7 @@ SmartScraperMultiGraph Module
 """
 
 from copy import deepcopy
-from typing import List, Optional
+from typing import List, Optional, Type
 
 from pydantic import BaseModel
 
@@ -53,7 +53,7 @@ class SmartScraperMultiGraph(AbstractGraph):
         prompt: str,
         source: List[str],
         config: dict,
-        schema: Optional[BaseModel] = None,
+        schema: Optional[Type[BaseModel]] = None,
     ):
 
         self.max_results = config.get("max_results", 3)

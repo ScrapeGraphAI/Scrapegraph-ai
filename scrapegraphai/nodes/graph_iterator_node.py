@@ -3,7 +3,7 @@ GraphIterator Module
 """
 
 import asyncio
-from typing import List, Optional
+from typing import List, Optional, Type
 
 from pydantic import BaseModel
 from tqdm.asyncio import tqdm
@@ -34,7 +34,7 @@ class GraphIteratorNode(BaseNode):
         output: List[str],
         node_config: Optional[dict] = None,
         node_name: str = "GraphIterator",
-        schema: Optional[BaseModel] = None,
+        schema: Optional[Type[BaseModel]] = None,
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
