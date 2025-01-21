@@ -14,6 +14,7 @@ Simply specify the information you need to extract, and ScrapeGraphAI handles th
 
 For comprehensive documentation and updates, visit our `website <https://scrapegraphai.com>`_.
 
+
 Why ScrapegraphAI?
 ==================
 
