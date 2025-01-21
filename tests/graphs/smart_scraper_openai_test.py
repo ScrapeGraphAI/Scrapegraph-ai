@@ -3,11 +3,14 @@ Module for testing the smart scraper class
 """
 
 import os
+
 import pytest
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperGraph
 
 load_dotenv()
+
 
 @pytest.fixture
 def graph_config():
@@ -22,6 +25,7 @@ def graph_config():
         "headless": False,
     }
 
+
 def test_scraping_pipeline(graph_config):
     """Start of the scraping pipeline"""
     smart_scraper_graph = SmartScraperGraph(
@@ -33,7 +37,8 @@ def test_scraping_pipeline(graph_config):
     result = smart_scraper_graph.run()
 
     assert result is not None
-    assert isinstance(result, dict) 
+    assert isinstance(result, dict)
+
 
 def test_get_execution_info(graph_config):
     """Get the execution info"""

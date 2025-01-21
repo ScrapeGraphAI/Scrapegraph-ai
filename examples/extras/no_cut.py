@@ -1,11 +1,12 @@
-""" 
+"""
 This example shows how to do not process the html code in the fetch phase
 """
 
-import os, json
+import json
+import os
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-
 
 # ************************************************
 # Define the configuration for the graph
@@ -29,7 +30,7 @@ graph_config = {
 smart_scraper_graph = SmartScraperGraph(
     prompt="Extract me the python code inside the page",
     source="https://www.exploit-db.com/exploits/51447",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

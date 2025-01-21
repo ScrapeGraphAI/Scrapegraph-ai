@@ -1,12 +1,15 @@
 import copy
+
 import pytest
+from pydantic.v1 import BaseModel
 
 # Assuming the custom_deepcopy function is imported or defined above this line
 from scrapegraphai.utils.copy import DeepCopyError, safe_deepcopy
-from pydantic.v1 import BaseModel
+
 
 class PydantObject(BaseModel):
     value: int
+
 
 class NormalObject:
     def __init__(self, value):
@@ -109,8 +112,6 @@ def test_circular_reference():
     assert copy_obj[0] is copy_obj
 
 
-
-
 def test_deepcopy_object_without_dict():
     original = {"origin": WithoutDict(10)}
     copy_obj = safe_deepcopy(original)
@@ -149,10 +150,12 @@ def test_deepcopy_object_without_dict():
     assert copy_obj_item.value == original_item.value
     assert copy_obj_item is original_item
 
+
 def test_unhandled_type():
     with pytest.raises(DeepCopyError):
         original = {"origin": NonCopyableObject(10)}
         copy_obj = safe_deepcopy(original)
+
 
 def test_client():
     llm_instance_config = {
@@ -165,28 +168,32 @@ def test_client():
 
     llm_model_instance = MoonshotChat(**llm_instance_config)
     copy_obj = safe_deepcopy(llm_model_instance)
-    
+
     assert copy_obj
-    assert hasattr(copy_obj, 'callbacks')
+    assert hasattr(copy_obj, "callbacks")
+
 
 def test_circular_reference_in_dict():
     original = {}
-    original['self'] = original  # Create a circular reference
+    original["self"] = original  # Create a circular reference
     copy_obj = safe_deepcopy(original)
-    
+
     # Check that the copy is a different object
     assert copy_obj is not original
     # Check that the circular reference is maintained in the copy
-    assert copy_obj['self'] is copy_obj
+    assert copy_obj["self"] is copy_obj
+
 
 def test_with_pydantic():
     original = PydantObject(value=1)
     copy_obj = safe_deepcopy(original)
     assert copy_obj.value == original.value
-    assert copy_obj is not original 
+    assert copy_obj is not original
+
 
 def test_with_boto3():
     import boto3
+
     boto_client = boto3.client("bedrock-runtime", region_name="us-west-2")
     copy_obj = safe_deepcopy(boto_client)
     assert copy_obj == boto_client

@@ -1,8 +1,11 @@
-""" 
+"""
 Module for scraping XML documents
 """
+
 import os
+
 import pytest
+
 from scrapegraphai.graphs import XMLScraperGraph
 
 
@@ -15,7 +18,7 @@ def sample_xml():
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     file_path = os.path.join(curr_dir, file_name)
 
-    with open(file_path, 'r', encoding="utf-8") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         text = file.read()
 
     return text
@@ -43,7 +46,7 @@ def test_scraping_pipeline(sample_xml: str, graph_config: dict):
     smart_scraper_graph = XMLScraperGraph(
         prompt="List me all the authors, title and genres of the books",
         source=sample_xml,
-        config=graph_config
+        config=graph_config,
     )
 
     result = smart_scraper_graph.run()

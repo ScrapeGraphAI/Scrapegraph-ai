@@ -3,10 +3,17 @@ Example of custom graph using existing nodes
 """
 
 import os
-from langchain_openai import OpenAIEmbeddings
-from langchain_openai import ChatOpenAI
+
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+from scrapegraphai.nodes import (
+    FetchNode,
+    GenerateAnswerNode,
+    ParseNode,
+    RAGNode,
+    RobotsNode,
+)
 
 # ************************************************
 # Define the configuration for the graph
@@ -20,7 +27,6 @@ graph_config = {
         # "model_tokens": 2000, # set context length arbitrarily
         "base_url": "http://localhost:11434",
     },
-  
     "verbose": True,
 }
 
@@ -39,7 +45,7 @@ robot_node = RobotsNode(
         "llm_model": llm_model,
         "force_scraping": True,
         "verbose": True,
-        }
+    },
 )
 
 fetch_node = FetchNode(
@@ -48,7 +54,7 @@ fetch_node = FetchNode(
     node_config={
         "verbose": True,
         "headless": True,
-    }
+    },
 )
 parse_node = ParseNode(
     input="doc",
@@ -56,7 +62,7 @@ parse_node = ParseNode(
     node_config={
         "chunk_size": 4096,
         "verbose": True,
-    }
+    },
 )
 
 generate_answer_node = GenerateAnswerNode(
@@ -65,7 +71,7 @@ generate_answer_node = GenerateAnswerNode(
     node_config={
         "llm_model": llm_model,
         "verbose": True,
-    }
+    },
 )
 
 # ************************************************
@@ -82,19 +88,18 @@ graph = BaseGraph(
     edges=[
         (robot_node, fetch_node),
         (fetch_node, parse_node),
-        (parse_node, generate_answer_node)
+        (parse_node, generate_answer_node),
     ],
-    entry_point=robot_node
+    entry_point=robot_node,
 )
 
 # ************************************************
 # Execute the graph
 # ************************************************
 
-result, execution_info = graph.execute({
-    "user_prompt": "Describe the content",
-    "url": "https://example.com/"
-})
+result, execution_info = graph.execute(
+    {"user_prompt": "Describe the content", "url": "https://example.com/"}
+)
 
 # get the answer from the result
 result = result.get("answer", "No answer found.")

@@ -1,22 +1,27 @@
 """
 Example of Search Graph
 """
-from scrapegraphai.graphs import SearchGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+
+from typing import List
 
 from pydantic import BaseModel, Field
-from typing import List
+
+from scrapegraphai.graphs import SearchGraph
+from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
 # ************************************************
 # Define the output schema for the graph
 # ************************************************
 
+
 class Dish(BaseModel):
     name: str = Field(description="The name of the dish")
     description: str = Field(description="The description of the dish")
 
+
 class Dishes(BaseModel):
     dishes: List[Dish]
+
 
 # ************************************************
 # Define the configuration for the graph
@@ -30,7 +35,7 @@ graph_config = {
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
     },
     "verbose": True,
-    "headless": False
+    "headless": False,
 }
 
 # ************************************************
@@ -38,9 +43,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt="List me Chioggia's famous dishes",
-    config=graph_config,
-    schema=Dishes
+    prompt="List me Chioggia's famous dishes", config=graph_config, schema=Dishes
 )
 
 result = search_graph.run()

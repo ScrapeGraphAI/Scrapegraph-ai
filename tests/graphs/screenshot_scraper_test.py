@@ -1,11 +1,14 @@
-import os
-import pytest
 import json
-from scrapegraphai.graphs import ScreenshotScraperGraph
+import os
+
+import pytest
 from dotenv import load_dotenv
+
+from scrapegraphai.graphs import ScreenshotScraperGraph
 
 # Load environment variables
 load_dotenv()
+
 
 # Define a fixture for the graph configuration
 @pytest.fixture
@@ -22,6 +25,7 @@ def graph_config():
         "headless": False,
     }
 
+
 def test_screenshot_scraper_graph(graph_config):
     """
     test
@@ -29,7 +33,7 @@ def test_screenshot_scraper_graph(graph_config):
     smart_scraper_graph = ScreenshotScraperGraph(
         prompt="List me all the projects",
         source="https://perinim.github.io/projects/",
-        config=graph_config
+        config=graph_config,
     )
 
     result = smart_scraper_graph.run()

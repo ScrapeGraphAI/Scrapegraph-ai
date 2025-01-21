@@ -1,7 +1,10 @@
+from unittest.mock import MagicMock, patch
+
 import pytest
 from langchain_community.chat_models import ChatOllama
+
 from scrapegraphai.nodes import SearchLinkNode
-from unittest.mock import patch, MagicMock
+
 
 @pytest.fixture
 def setup():
@@ -10,11 +13,7 @@ def setup():
     """
     # Define the configuration for the graph
     graph_config = {
-        "llm": {
-            "model_name": "ollama/llama3",
-            "temperature": 0,
-            "streaming": True
-        },
+        "llm": {"model_name": "ollama/llama3", "temperature": 0, "streaming": True},
     }
 
     # Instantiate the LLM model with the configuration
@@ -24,10 +23,7 @@ def setup():
     search_link_node = SearchLinkNode(
         input=["user_prompt", "parsed_content_chunks"],
         output=["relevant_links"],
-        node_config={
-            "llm_model": llm_model,
-            "verbose": False
-        }
+        node_config={"llm_model": llm_model, "verbose": False},
     )
 
     # Define the initial state for the node
@@ -37,10 +33,11 @@ def setup():
             {"page_content": "Example page content 1"},
             {"page_content": "Example page content 2"},
             # Add more example page content dictionaries as needed
-        ]
+        ],
     }
 
     return search_link_node, initial_state
+
 
 def test_search_link_node(setup):
     """
@@ -49,7 +46,11 @@ def test_search_link_node(setup):
     search_link_node, initial_state = setup
 
     # Patch the execute method to avoid actual network calls and return a mock response
-    with patch.object(SearchLinkNode, 'execute', return_value={"relevant_links": ["http://example.com"]}) as mock_execute:
+    with patch.object(
+        SearchLinkNode,
+        "execute",
+        return_value={"relevant_links": ["http://example.com"]},
+    ) as mock_execute:
         result = search_link_node.execute(initial_state)
 
         # Check if the result is not None

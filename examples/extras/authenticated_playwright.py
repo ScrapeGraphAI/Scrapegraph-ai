@@ -6,6 +6,7 @@ content.
 
 import os
 import random
+
 from dotenv import load_dotenv
 
 # import playwright so we can use it to create the state file

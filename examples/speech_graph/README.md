@@ -28,4 +28,4 @@ text = graph.process("audio_file.mp3")
 
 Required environment variables:
 - `OPENAI_API_KEY`: Your OpenAI API key
-- `WHISPER_API_KEY`: Your Whisper API key (optional) 
+- `WHISPER_API_KEY`: Your Whisper API key (optional)

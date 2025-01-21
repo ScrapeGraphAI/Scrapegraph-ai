@@ -28,4 +28,4 @@ results = graph.process()
 ## Environment Variables
 
 Required environment variables:
-- `OPENAI_API_KEY`: Your OpenAI API key 
+- `OPENAI_API_KEY`: Your OpenAI API key

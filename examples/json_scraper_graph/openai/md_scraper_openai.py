@@ -1,8 +1,11 @@
 """
 Basic example of scraping pipeline using DocumentScraperGraph from MD documents
 """
+
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import DocumentScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
@@ -16,7 +19,7 @@ FILE_NAME = "inputs/markdown_example.md"
 curr_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(curr_dir, FILE_NAME)
 
-with open(file_path, 'r', encoding="utf-8") as file:
+with open(file_path, "r", encoding="utf-8") as file:
     text = file.read()
 
 # ************************************************
@@ -39,7 +42,7 @@ graph_config = {
 md_scraper_graph = DocumentScraperGraph(
     prompt="List me all the projects",
     source=text,  # Pass the content of the file, not the file object
-    config=graph_config
+    config=graph_config,
 )
 
 result = md_scraper_graph.run()

@@ -2,9 +2,11 @@
 Basic example of scraping pipeline using SmartScraperMultiConcatGraph with Groq
 """
 
-import os
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperMultiGraph
 
 load_dotenv()
@@ -18,7 +20,6 @@ graph_config = {
         "api_key": os.getenv("OPENAI_API_KEY"),
         "model": "openai/gpt-4o",
     },
-
     "verbose": True,
     "headless": False,
 }
@@ -29,12 +30,9 @@ graph_config = {
 
 multiple_search_graph = SmartScraperMultiGraph(
     prompt="Who is Marco Perini?",
-    source=[
-        "https://perinim.github.io/",
-        "https://perinim.github.io/cv/"
-    ],
+    source=["https://perinim.github.io/", "https://perinim.github.io/cv/"],
     schema=None,
-    config=graph_config
+    config=graph_config,
 )
 
 result = multiple_search_graph.run()

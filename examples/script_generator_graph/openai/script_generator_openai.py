@@ -1,9 +1,12 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
-import os
+
 import json
+import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import ScriptCreatorGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -32,7 +35,7 @@ smart_scraper_graph = ScriptCreatorGraph(
     prompt="List me all the news with their description.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()
