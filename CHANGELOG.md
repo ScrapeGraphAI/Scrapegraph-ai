@@ -1,3 +1,15 @@
+## [1.37.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.0...v1.37.1-beta.1) (2025-01-22)
+
+
+### Bug Fixes
+
+* Schema parameter type ([2b5bd80](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2b5bd80a945a24072e578133eacc751feeec6188))
+
+
+### CI
+
+* **release:** 1.36.1-beta.1 [skip ci] ([006a2aa](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/006a2aaa3fbafbd5b2030c48d5b04b605532c06f))
+
 ## [1.36.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.36.0...v1.36.1-beta.1) (2025-01-21)
 
 
