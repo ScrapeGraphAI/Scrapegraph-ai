@@ -28,4 +28,4 @@ results = graph.search("your search query")
 
 Required environment variables:
 - `OPENAI_API_KEY`: Your OpenAI API key
-- `SERP_API_KEY`: Your SERP API key (optional) 
+- `SERP_API_KEY`: Your SERP API key (optional)

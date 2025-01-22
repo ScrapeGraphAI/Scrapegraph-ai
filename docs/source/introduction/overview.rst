@@ -3,20 +3,23 @@
    :width: 50%
    :alt: ScrapegraphAI
 
-Overview 
+Overview
 ========
 
 ScrapeGraphAI is an **open-source** Python library designed to revolutionize **scraping** tools.
-In today's data-intensive digital landscape, this library stands out by integrating **Large Language Models** (LLMs) 
+In today's data-intensive digital landscape, this library stands out by integrating **Large Language Models** (LLMs)
 and modular **graph-based** pipelines to automate the scraping of data from various sources (e.g., websites, local files etc.).
 
 Simply specify the information you need to extract, and ScrapeGraphAI handles the rest, providing a more **flexible** and **low-maintenance** solution compared to traditional scraping tools.
+
+For comprehensive documentation and updates, visit our `website <https://scrapegraphai.com>`_.
+
 
 Why ScrapegraphAI?
 ==================
 
 Traditional web scraping tools often rely on fixed patterns or manual configuration to extract data from web pages.
-ScrapegraphAI, leveraging the power of LLMs, adapts to changes in website structures, reducing the need for constant developer intervention. 
+ScrapegraphAI, leveraging the power of LLMs, adapts to changes in website structures, reducing the need for constant developer intervention.
 This flexibility ensures that scrapers remain functional even when website layouts change.
 
 We support many LLMs including **GPT, Gemini, Groq, Azure, Hugging Face** etc.
@@ -161,13 +164,13 @@ FAQ
       - Check your internet connection. Low speed or unstable connection can cause the HTML to not load properly.
 
       - Try using a proxy server to mask your IP address. Check out the :ref:`Proxy` section for more information on how to configure proxy settings.
-      
+
       - Use a different LLM model. Some models might perform better on certain websites than others.
 
       - Set the `verbose` parameter to `True` in the graph_config to see more detailed logs.
 
       - Visualize the pipeline graphically using :ref:`Burr`.
-   
+
    If the issue persists, please report it on the GitHub repository.
 
 6. **How does ScrapeGraphAI handle the context window limit of LLMs?**
@@ -200,3 +203,8 @@ Sponsors
    :width: 11%
    :alt: Scrapedo
    :target: https://scrape.do
+
+.. image:: ../../assets/scrapegraph_logo.png
+   :width: 11%
+   :alt: ScrapegraphAI
+   :target: https://scrapegraphai.com

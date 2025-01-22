@@ -1,13 +1,18 @@
 ## [1.36.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.36.0...v1.36.1-beta.1) (2025-01-21)
 
 
+
 ### Bug Fixes
 
 * Schema parameter type ([2b5bd80](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2b5bd80a945a24072e578133eacc751feeec6188))
+* search ([ce25b6a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ce25b6a4b0e1ea15edf14a5867f6336bb27590cb))
+
 
 
 ### Docs
 
+
+* add requirements.dev ([6e12981](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6e12981e637d078a6d3b3ce83f0d4901e9dd9996))
 * added first ollama example ([aa6a76e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/aa6a76e5bdf63544f62786b0d17effa205aab3d8))
 
 ## [1.36.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.35.0...v1.36.0) (2025-01-12)

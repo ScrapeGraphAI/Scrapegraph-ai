@@ -3,11 +3,15 @@ Example of Search Graph
 """
 
 import os
-from dotenv import load_dotenv
-from scrapegraphai.graphs import SearchGraph
-from pydantic import BaseModel, Field
 from typing import List
+
+from dotenv import load_dotenv
+from pydantic import BaseModel, Field
+
+from scrapegraphai.graphs import SearchGraph
+
 load_dotenv()
+
 
 # ************************************************
 # Define the configuration for the graph
@@ -15,8 +19,10 @@ load_dotenv()
 class CeoName(BaseModel):
     ceo_name: str = Field(description="The name and surname of the ceo")
 
+
 class Ceos(BaseModel):
     names: List[CeoName]
+
 
 openai_key = os.getenv("OPENAI_APIKEY")
 
@@ -24,7 +30,7 @@ graph_config = {
     "llm": {
         "api_key": openai_key,
         "model": "openai/gpt-4o",
-        },
+    },
     "max_results": 2,
     "verbose": True,
 }
@@ -35,7 +41,7 @@ graph_config = {
 
 search_graph = SearchGraph(
     prompt=f"Who is the ceo of Appke?",
-    schema = Ceos,
+    schema=Ceos,
     config=graph_config,
 )
 

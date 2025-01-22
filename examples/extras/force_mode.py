@@ -1,9 +1,11 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
 
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -17,7 +19,7 @@ load_dotenv()
 openai_key = os.getenv("OPENAI_APIKEY")
 
 graph_config = {
-  "llm": {
+    "llm": {
         "model": "ollama/llama3",
         "temperature": 0,
         # "format": "json",  # Ollama needs the format to be specified explicitly
@@ -29,7 +31,7 @@ graph_config = {
         # "base_url": "http://localhost:11434",  # set ollama URL arbitrarily
     },
     "force": True,
-    "caching": True
+    "caching": True,
 }
 
 # ************************************************
@@ -40,7 +42,7 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description.",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

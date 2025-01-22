@@ -1,10 +1,9 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
 
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
-
 
 # ************************************************
 # Define the configuration for the graph
@@ -16,12 +15,12 @@ graph_config = {
         "model": "openai/gpt-3.5-turbo",
     },
     "loader_kwargs": {
-        "proxy" : {
+        "proxy": {
             "server": "http:/**********",
             "username": "********",
             "password": "***",
         },
-     },
+    },
     "verbose": True,
     "headless": False,
 }
@@ -34,7 +33,7 @@ smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the projects with their description",
     # also accepts a string with the already downloaded HTML code
     source="https://perinim.github.io/projects/",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

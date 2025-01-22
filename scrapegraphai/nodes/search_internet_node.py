@@ -48,7 +48,7 @@ class SearchInternetNode(BaseNode):
         self.search_engine = (
             node_config["search_engine"]
             if node_config.get("search_engine")
-            else "google"
+            else "duckduckgo"
         )
 
         self.serper_api_key = (

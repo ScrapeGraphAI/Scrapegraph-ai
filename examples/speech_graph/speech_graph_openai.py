@@ -1,8 +1,11 @@
-""" 
+"""
 Basic example of scraping pipeline using SpeechSummaryGraph
 """
+
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SpeechGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -28,11 +31,7 @@ graph_config = {
         "model": "openai/gpt-4o",
         "temperature": 0.7,
     },
-    "tts_model": {
-        "api_key": openai_key,
-        "model": "tts-1",
-        "voice": "alloy"
-    },
+    "tts_model": {"api_key": openai_key, "model": "tts-1", "voice": "alloy"},
     "output_path": output_path,
 }
 

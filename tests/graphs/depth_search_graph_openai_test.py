@@ -1,12 +1,16 @@
 """
 depth_search_graph test
 """
+
 import os
+
 import pytest
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import DepthSearchGraph
 
 load_dotenv()
+
 
 @pytest.fixture
 def graph_config():
@@ -25,6 +29,7 @@ def graph_config():
         "only_inside_links": False,
     }
 
+
 def test_depth_search_graph(graph_config: dict):
     """
     Test the DepthSearchGraph scraping pipeline
@@ -32,7 +37,7 @@ def test_depth_search_graph(graph_config: dict):
     search_graph = DepthSearchGraph(
         prompt="List me all the projects with their description",
         source="https://perinim.github.io",
-        config=graph_config
+        config=graph_config,
     )
 
     result = search_graph.run()
@@ -47,7 +52,7 @@ def test_depth_search_execution_info(graph_config: dict):
     search_graph = DepthSearchGraph(
         prompt="List me all the projects with their description",
         source="https://perinim.github.io",
-        config=graph_config
+        config=graph_config,
     )
 
     search_graph.run()

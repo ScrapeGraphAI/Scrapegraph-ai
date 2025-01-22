@@ -1,9 +1,11 @@
-""" 
+"""
 Basic example of scraping pipeline using ScriptCreatorGraph
 """
 
 import os
+
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import ScriptCreatorMultiGraph
 from scrapegraphai.utils import prettify_exec_info
 
@@ -28,7 +30,7 @@ graph_config = {
 # Create the ScriptCreatorGraph instance and run it
 # ************************************************
 
-urls=[
+urls = [
     "https://schultzbergagency.com/emil-raste-karlsen/",
     "https://schultzbergagency.com/johanna-hedberg/",
 ]
@@ -41,7 +43,7 @@ script_creator_graph = ScriptCreatorMultiGraph(
     prompt="Find information about actors",
     # also accepts a string with the already downloaded HTML code
     source=urls,
-    config=graph_config
+    config=graph_config,
 )
 
 result = script_creator_graph.run()

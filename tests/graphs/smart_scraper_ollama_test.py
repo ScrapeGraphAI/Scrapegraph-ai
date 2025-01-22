@@ -1,7 +1,9 @@
-""" 
+"""
 Module for testing th smart scraper class
 """
+
 import pytest
+
 from scrapegraphai.graphs import SmartScraperGraph
 
 
@@ -27,7 +29,7 @@ def test_scraping_pipeline(graph_config: dict):
     smart_scraper_graph = SmartScraperGraph(
         prompt="List me all the news with their description.",
         source="https://perinim.github.io/projects",
-        config=graph_config
+        config=graph_config,
     )
 
     result = smart_scraper_graph.run()
@@ -42,7 +44,7 @@ def test_get_execution_info(graph_config: dict):
     smart_scraper_graph = SmartScraperGraph(
         prompt="List me all the news with their description.",
         source="https://perinim.github.io/projects",
-        config=graph_config
+        config=graph_config,
     )
 
     smart_scraper_graph.run()
@@ -50,4 +52,3 @@ def test_get_execution_info(graph_config: dict):
     graph_exec_info = smart_scraper_graph.get_execution_info()
 
     assert graph_exec_info is not None
-

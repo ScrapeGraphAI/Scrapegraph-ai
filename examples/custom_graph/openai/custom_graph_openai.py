@@ -1,12 +1,20 @@
 """
 Example of custom graph using existing nodes
 """
+
 import os
+
 from dotenv import load_dotenv
-from langchain_openai import OpenAIEmbeddings
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+
 from scrapegraphai.graphs import BaseGraph
-from scrapegraphai.nodes import FetchNode, ParseNode, RAGNode, GenerateAnswerNode, RobotsNode
+from scrapegraphai.nodes import (
+    FetchNode,
+    GenerateAnswerNode,
+    ParseNode,
+    RAGNode,
+    RobotsNode,
+)
 
 load_dotenv()
 
@@ -16,7 +24,7 @@ load_dotenv()
 
 openai_key = os.getenv("OPENAI_APIKEY")
 graph_config = {
-     "llm": {
+    "llm": {
         "api_key": openai_key,
         "model": "gpt-4o",
     },
@@ -37,7 +45,7 @@ robot_node = RobotsNode(
         "llm_model": llm_model,
         "force_scraping": True,
         "verbose": True,
-        }
+    },
 )
 
 fetch_node = FetchNode(
@@ -46,7 +54,7 @@ fetch_node = FetchNode(
     node_config={
         "verbose": True,
         "headless": True,
-    }
+    },
 )
 parse_node = ParseNode(
     input="doc",
@@ -54,7 +62,7 @@ parse_node = ParseNode(
     node_config={
         "chunk_size": 4096,
         "verbose": True,
-    }
+    },
 )
 rag_node = RAGNode(
     input="user_prompt & (parsed_doc | doc)",
@@ -63,7 +71,7 @@ rag_node = RAGNode(
         "llm_model": llm_model,
         "embedder_model": embedder,
         "verbose": True,
-    }
+    },
 )
 generate_answer_node = GenerateAnswerNode(
     input="user_prompt & (relevant_chunks | parsed_doc | doc)",
@@ -71,7 +79,7 @@ generate_answer_node = GenerateAnswerNode(
     node_config={
         "llm_model": llm_model,
         "verbose": True,
-    }
+    },
 )
 
 # ************************************************
@@ -90,19 +98,18 @@ graph = BaseGraph(
         (robot_node, fetch_node),
         (fetch_node, parse_node),
         (parse_node, rag_node),
-        (rag_node, generate_answer_node)
+        (rag_node, generate_answer_node),
     ],
-    entry_point=robot_node
+    entry_point=robot_node,
 )
 
 # ************************************************
 # Execute the graph
 # ************************************************
 
-result, execution_info = graph.execute({
-    "user_prompt": "Describe the content",
-    "url": "https://example.com/"
-})
+result, execution_info = graph.execute(
+    {"user_prompt": "Describe the content", "url": "https://example.com/"}
+)
 
 # get the answer from the result
 result = result.get("answer", "No answer found.")

@@ -27,4 +27,4 @@ csv_data = graph.scrape("https://example.com/table")
 ## Environment Variables
 
 Required environment variables:
-- `OPENAI_API_KEY`: Your OpenAI API key 
+- `OPENAI_API_KEY`: Your OpenAI API key

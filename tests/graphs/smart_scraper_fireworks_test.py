@@ -3,24 +3,28 @@ Module for testing the smart scraper class
 """
 
 import os
+
 import pytest
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import SmartScraperGraph
 
 load_dotenv()
 
+
 @pytest.fixture
 def graph_config():
     """Configuration of the graph"""
-    fireworks_api_key = os.getenv("FIREWORKS_APIKEY")  
+    fireworks_api_key = os.getenv("FIREWORKS_APIKEY")
     return {
         "llm": {
             "api_key": fireworks_api_key,
-            "model": "fireworks/accounts/fireworks/models/mixtral-8x7b-instruct"
+            "model": "fireworks/accounts/fireworks/models/mixtral-8x7b-instruct",
         },
         "verbose": True,
         "headless": False,
     }
+
 
 def test_scraping_pipeline(graph_config):
     """Start of the scraping pipeline"""
@@ -33,7 +37,8 @@ def test_scraping_pipeline(graph_config):
     result = smart_scraper_graph.run()
 
     assert result is not None
-    assert isinstance(result, dict) 
+    assert isinstance(result, dict)
+
 
 def test_get_execution_info(graph_config):
     """Get the execution info"""

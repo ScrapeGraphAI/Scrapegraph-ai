@@ -1,14 +1,16 @@
-""" 
+"""
 Basic example of scraping pipeline using SmartScraper
 """
+
 import yaml
+
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info
 
 # ************************************************
 # Define the configuration for the graph
 # ************************************************
-with open("example.yml", 'r') as file:
+with open("example.yml", "r") as file:
     graph_config = yaml.safe_load(file)
 
 # ************************************************
@@ -18,7 +20,7 @@ with open("example.yml", 'r') as file:
 smart_scraper_graph = SmartScraperGraph(
     prompt="List me all the titles",
     source="https://sport.sky.it/nba?gr=www",
-    config=graph_config
+    config=graph_config,
 )
 
 result = smart_scraper_graph.run()

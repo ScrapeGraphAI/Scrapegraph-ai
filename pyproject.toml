@@ -1,6 +1,7 @@
 [project]
 name = "scrapegraphai"
-version = "1.36.1b1"
+
+version = "1.37.0"
 
 
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
@@ -27,10 +28,10 @@ dependencies = [
     "playwright>=1.43.0",
     "undetected-playwright>=0.3.0",
     "semchunk>=2.2.0",
-    "googlesearch-python>=1.2.5",
     "async-timeout>=4.0.3",
     "simpleeval>=1.0.0",
-    "jsonschema>=4.23.0"
+    "jsonschema>=4.23.0",
+    "duckduckgo-search>=7.2.1"
 ]
 
 readme = "README.md"

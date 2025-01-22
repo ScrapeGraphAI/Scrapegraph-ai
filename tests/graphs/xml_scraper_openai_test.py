@@ -1,9 +1,12 @@
 """
 xml_scraper_test
 """
+
 import os
+
 import pytest
 from dotenv import load_dotenv
+
 from scrapegraphai.graphs import XMLScraperGraph
 from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
 
@@ -12,6 +15,7 @@ load_dotenv()
 # ************************************************
 # Define the test fixtures and helpers
 # ************************************************
+
 
 @pytest.fixture
 def graph_config():
@@ -27,6 +31,7 @@ def graph_config():
         "verbose": False,
     }
 
+
 @pytest.fixture
 def xml_content():
     """
@@ -36,12 +41,14 @@ def xml_content():
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     file_path = os.path.join(curr_dir, FILE_NAME)
 
-    with open(file_path, 'r', encoding="utf-8") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
+
 
 # ************************************************
 # Define the test cases
 # ************************************************
+
 
 def test_xml_scraper_graph(graph_config: dict, xml_content: str):
     """
@@ -50,12 +57,13 @@ def test_xml_scraper_graph(graph_config: dict, xml_content: str):
     xml_scraper_graph = XMLScraperGraph(
         prompt="List me all the authors, title and genres of the books",
         source=xml_content,  # Pass the XML content
-        config=graph_config
+        config=graph_config,
     )
 
     result = xml_scraper_graph.run()
 
     assert result is not None
+
 
 def test_xml_scraper_execution_info(graph_config: dict, xml_content: str):
     """
@@ -64,7 +72,7 @@ def test_xml_scraper_execution_info(graph_config: dict, xml_content: str):
     xml_scraper_graph = XMLScraperGraph(
         prompt="List me all the authors, title and genres of the books",
         source=xml_content,  # Pass the XML content
-        config=graph_config
+        config=graph_config,
     )
 
     xml_scraper_graph.run()
@@ -74,6 +82,7 @@ def test_xml_scraper_execution_info(graph_config: dict, xml_content: str):
     assert graph_exec_info is not None
     print(prettify_exec_info(graph_exec_info))
 
+
 def test_xml_scraper_save_results(graph_config: dict, xml_content: str):
     """
     Test saving the results of XMLScraperGraph to CSV and JSON
@@ -81,7 +90,7 @@ def test_xml_scraper_save_results(graph_config: dict, xml_content: str):
     xml_scraper_graph = XMLScraperGraph(
         prompt="List me all the authors, title and genres of the books",
         source=xml_content,  # Pass the XML content
-        config=graph_config
+        config=graph_config,
     )
 
     result = xml_scraper_graph.run()
