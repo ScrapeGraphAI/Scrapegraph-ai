@@ -34,3 +34,27 @@ class TestSearchGraph:
 
         # Assert
         assert search_graph.get_considered_urls() == urls
+
+    @patch('scrapegraphai.graphs.search_graph.BaseGraph')
+    @patch('scrapegraphai.graphs.abstract_graph.AbstractGraph._create_llm')
+    def test_run_no_answer_found(self, mock_create_llm, mock_base_graph):
+        """
+        Test that the run() method returns "No answer found." when the final state
+        doesn't contain an "answer" key.
+        """
+        # Arrange
+        prompt = "Test prompt"
+        config = {"llm": {"model": "test-model"}}
+
+        # Mock the _create_llm method to return a MagicMock
+        mock_create_llm.return_value = MagicMock()
+
+        # Mock the execute method to set the final_state without an "answer" key
+        mock_base_graph.return_value.execute.return_value = ({"urls": []}, {})
+
+        # Act
+        search_graph = SearchGraph(prompt, config)
+        result = search_graph.run()
+
+        # Assert
+        assert result == "No answer found."
