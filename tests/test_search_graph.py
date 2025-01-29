@@ -1,7 +1,7 @@
 import pytest
 
 from scrapegraphai.graphs.search_graph import SearchGraph
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 class TestSearchGraph:
     """Test class for SearchGraph"""
@@ -58,3 +58,25 @@ class TestSearchGraph:
 
         # Assert
         assert result == "No answer found."
+
+    @patch('scrapegraphai.graphs.search_graph.SearchInternetNode')
+    @patch('scrapegraphai.graphs.search_graph.GraphIteratorNode')
+    @patch('scrapegraphai.graphs.search_graph.MergeAnswersNode')
+    @patch('scrapegraphai.graphs.search_graph.BaseGraph')
+    @patch('scrapegraphai.graphs.abstract_graph.AbstractGraph._create_llm')
+    def test_max_results_config(self, mock_create_llm, mock_base_graph, mock_merge_answers, mock_graph_iterator, mock_search_internet):
+        """
+        Test that the max_results parameter from the config is correctly passed to the SearchInternetNode.
+        """
+        # Arrange
+        prompt = "Test prompt"
+        max_results = 5
+        config = {"llm": {"model": "test-model"}, "max_results": max_results}
+
+        # Act
+        search_graph = SearchGraph(prompt, config)
+
+        # Assert
+        mock_search_internet.assert_called_once()
+        call_args = mock_search_internet.call_args
+        assert call_args.kwargs['node_config']['max_results'] == max_results
