@@ -1,3 +1,28 @@
+## [1.37.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.0...v1.37.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* Schema parameter type ([2b5bd80](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2b5bd80a945a24072e578133eacc751feeec6188))
+
+
+### Test
+
+* Add coverage improvement test for tests/test_json_scraper_graph.py ([98be43e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/98be43e22db82c1220c20f899980e7e702bcff97))
+* Add coverage improvement test for tests/test_search_graph.py ([b300ca8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b300ca82bc9b4f42552f9f91e0eadc9ea59ef877))
+* Update coverage improvement test for tests/graphs/abstract_graph_test.py ([d022e5c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d022e5c53ecd4e1134c43daa6224d85357ea38be))
+* Update coverage improvement test for tests/graphs/abstract_graph_test.py ([a406264](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a406264a125318d39234cdbdfc6cfaa540b20464))
+* Update coverage improvement test for tests/test_json_scraper_graph.py ([f5ebe8a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f5ebe8ac100e77060e8e2fed687d87018fb97fdc))
+* Update coverage improvement test for tests/test_json_scraper_graph.py ([9919e7c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9919e7c12211039f03381b6b7cc0167fb268a3fb))
+* Update coverage improvement test for tests/test_search_graph.py ([ba58568](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba58568b8a7f3fba634069cf777474d2955475bc))
+* Update coverage improvement test for tests/test_search_graph.py ([16c688f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/16c688f090559497175677010bbb285c9d53cf22))
+
+
+### CI
+
+* **release:** 1.36.1-beta.1 [skip ci] ([006a2aa](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/006a2aaa3fbafbd5b2030c48d5b04b605532c06f))
+* **release:** 1.37.1-beta.1 [skip ci] ([d5c7c9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d5c7c9cd9d6e12b900b13809d11f2d8da747a3da))
+
 ## [1.37.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.0...v1.37.1-beta.1) (2025-01-22)
 
 
