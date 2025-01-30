@@ -2,7 +2,7 @@
 Module for creating the smart scraper
 """
 
-from typing import Optional
+from typing import Optional, Type
 
 from pydantic import BaseModel
 
@@ -22,7 +22,7 @@ class CSVScraperGraph(AbstractGraph):
         config (dict): Additional configuration parameters needed by some nodes in the graph.
 
     Methods:
-        __init__ (prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None):
+        __init__ (prompt: str, source: str, config: dict, schema: Optional[Type[BaseModel]] = None):
             Initializes the CSVScraperGraph with a prompt, source, and configuration.
 
         __init__ initializes the CSVScraperGraph class. It requires the user's prompt as input,
@@ -49,7 +49,11 @@ class CSVScraperGraph(AbstractGraph):
     """
 
     def __init__(
-        self, prompt: str, source: str, config: dict, schema: Optional[BaseModel] = None
+        self,
+        prompt: str,
+        source: str,
+        config: dict,
+        schema: Optional[Type[BaseModel]] = None,
     ):
         """
         Initializes the CSVScraperGraph with a prompt, source, and configuration.

@@ -3,7 +3,7 @@ JSONScraperMultiGraph Module
 """
 
 from copy import deepcopy
-from typing import List, Optional
+from typing import List, Optional, Type
 
 from pydantic import BaseModel
 
@@ -47,7 +47,7 @@ class JSONScraperMultiGraph(AbstractGraph):
         prompt: str,
         source: List[str],
         config: dict,
-        schema: Optional[BaseModel] = None,
+        schema: Optional[Type[BaseModel]] = None,
     ):
 
         self.copy_config = safe_deepcopy(config)
