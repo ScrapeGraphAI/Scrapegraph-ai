@@ -5,6 +5,7 @@ Scrape_do module
 import urllib.parse
 
 import requests
+import os
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -29,7 +30,8 @@ def scrape_do_fetch(
     """
     encoded_url = urllib.parse.quote(target_url)
     if use_proxy:
-        proxy_mode_url = f"http://{token}:@proxy.scrape.do:8080"
+        proxy_scrape_do_url = os.getenv("PROXY_SCRAPE_DO_URL", "proxy.scrape.do:8080")
+        proxy_mode_url = f"http://{token}:@{proxy_scrape_do_url}"
         proxies = {
             "http": proxy_mode_url,
             "https": proxy_mode_url,
@@ -41,7 +43,8 @@ def scrape_do_fetch(
             target_url, proxies=proxies, verify=False, params=params
         )
     else:
-        url = f"http://api.scrape.do?token={token}&url={encoded_url}"
+        api_scrape_do_url = os.getenv("API_SCRAPE_DO_URL", "api.scrape.do")
+        url = f"http://{api_scrape_do_url}?token={token}&url={encoded_url}"
         response = requests.get(url)
 
     return response.text
