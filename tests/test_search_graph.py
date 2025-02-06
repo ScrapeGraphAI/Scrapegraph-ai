@@ -80,3 +80,28 @@ class TestSearchGraph:
         mock_search_internet.assert_called_once()
         call_args = mock_search_internet.call_args
         assert call_args.kwargs['node_config']['max_results'] == max_results
+
+    @patch('scrapegraphai.graphs.search_graph.SearchInternetNode')
+    @patch('scrapegraphai.graphs.search_graph.GraphIteratorNode')
+    @patch('scrapegraphai.graphs.search_graph.MergeAnswersNode')
+    @patch('scrapegraphai.graphs.search_graph.BaseGraph')
+    @patch('scrapegraphai.graphs.abstract_graph.AbstractGraph._create_llm')
+    def test_custom_search_engine_config(self, mock_create_llm, mock_base_graph, mock_merge_answers, mock_graph_iterator, mock_search_internet):
+        """
+        Test that the custom search_engine parameter from the config is correctly passed to the SearchInternetNode.
+        """
+        # Arrange
+        prompt = "Test prompt"
+        custom_search_engine = "custom_engine"
+        config = {
+            "llm": {"model": "test-model"},
+            "search_engine": custom_search_engine
+        }
+
+        # Act
+        search_graph = SearchGraph(prompt, config)
+
+        # Assert
+        mock_search_internet.assert_called_once()
+        call_args = mock_search_internet.call_args
+        assert call_args.kwargs['node_config']['search_engine'] == custom_search_engine
