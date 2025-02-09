@@ -1,3 +1,18 @@
+## [1.38.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.1...v1.38.0) (2025-02-09)
+
+
+### Features
+
+* add gemini2.0 flash ([12a0414](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/12a0414d5eca88ebf3947e2c06151ecdf7501771))
+
+
+### Test
+
+* Add coverage improvement test for tests/test_depth_search_graph.py ([0d9995b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0d9995b297c4bd19b6c915facc6c72199854aeb6))
+* Add coverage improvement test for tests/test_scrape_do.py ([1f187b6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1f187b6948d14fd382bb7a213186856b28bd7047))
+* Update coverage improvement test for tests/test_json_scraper_graph.py ([c9d71af](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c9d71af1efc829e4de234ed06054497c3bdaacc9))
+* Update coverage improvement test for tests/test_search_graph.py ([80dd766](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/80dd766ac23dd055ae5787333604bb4b5367f278))
+
 ## [1.37.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.0...v1.37.1) (2025-01-30)
 
 
