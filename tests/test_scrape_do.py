@@ -29,3 +29,4 @@ def test_scrape_do_fetch_without_proxy():
         mock_get.assert_called_once_with(expected_url)
 
         assert result == expected_response
+

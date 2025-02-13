@@ -1,3 +1,43 @@
+## [1.38.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.1...v1.38.0) (2025-02-09)
+
+
+### Features
+
+* add gemini2.0 flash ([12a0414](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/12a0414d5eca88ebf3947e2c06151ecdf7501771))
+
+
+### Test
+
+* Add coverage improvement test for tests/test_depth_search_graph.py ([0d9995b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0d9995b297c4bd19b6c915facc6c72199854aeb6))
+* Add coverage improvement test for tests/test_scrape_do.py ([1f187b6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1f187b6948d14fd382bb7a213186856b28bd7047))
+* Update coverage improvement test for tests/test_json_scraper_graph.py ([c9d71af](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c9d71af1efc829e4de234ed06054497c3bdaacc9))
+* Update coverage improvement test for tests/test_search_graph.py ([80dd766](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/80dd766ac23dd055ae5787333604bb4b5367f278))
+
+## [1.37.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.0...v1.37.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* Schema parameter type ([2b5bd80](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2b5bd80a945a24072e578133eacc751feeec6188))
+
+
+### Test
+
+* Add coverage improvement test for tests/test_json_scraper_graph.py ([98be43e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/98be43e22db82c1220c20f899980e7e702bcff97))
+* Add coverage improvement test for tests/test_search_graph.py ([b300ca8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b300ca82bc9b4f42552f9f91e0eadc9ea59ef877))
+* Update coverage improvement test for tests/graphs/abstract_graph_test.py ([d022e5c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d022e5c53ecd4e1134c43daa6224d85357ea38be))
+* Update coverage improvement test for tests/graphs/abstract_graph_test.py ([a406264](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/a406264a125318d39234cdbdfc6cfaa540b20464))
+* Update coverage improvement test for tests/test_json_scraper_graph.py ([f5ebe8a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f5ebe8ac100e77060e8e2fed687d87018fb97fdc))
+* Update coverage improvement test for tests/test_json_scraper_graph.py ([9919e7c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9919e7c12211039f03381b6b7cc0167fb268a3fb))
+* Update coverage improvement test for tests/test_search_graph.py ([ba58568](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ba58568b8a7f3fba634069cf777474d2955475bc))
+* Update coverage improvement test for tests/test_search_graph.py ([16c688f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/16c688f090559497175677010bbb285c9d53cf22))
+
+
+### CI
+
+* **release:** 1.36.1-beta.1 [skip ci] ([006a2aa](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/006a2aaa3fbafbd5b2030c48d5b04b605532c06f))
+* **release:** 1.37.1-beta.1 [skip ci] ([d5c7c9c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d5c7c9cd9d6e12b900b13809d11f2d8da747a3da))
+
 ## [1.37.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.37.0...v1.37.1-beta.1) (2025-01-22)
 
 
