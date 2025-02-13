@@ -360,7 +360,8 @@ class ChromiumLoader(BaseLoader):
                     else:
                         raise ValueError(f"Invalid browser name: {browser_name}")
                     context = await browser.new_context(
-                        storage_state=self.storage_state
+                        storage_state=self.storage_state,
+                        ignore_https_errors=True,
                     )
                     await Malenia.apply_stealth(context)
                     page = await context.new_page()
