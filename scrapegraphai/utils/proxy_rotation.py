@@ -10,7 +10,7 @@ from typing import List, Optional, Set, TypedDict
 import requests
 from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
-
+from urllib.parse import urlparse
 
 class ProxyBrokerCriteria(TypedDict, total=False):
     """
