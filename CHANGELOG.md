@@ -1,3 +1,20 @@
+## [1.38.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.38.0...v1.38.1) (2025-02-15)
+
+
+### Bug Fixes
+
+* filter links ([04b9197](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/04b91972e88b69b722454d54c8635dfb49b38b44))
+
+
+### Test
+
+* Add coverage improvement test for tests/test_scrape_do.py ([4ce6d1b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4ce6d1b94306d0ae94a74748726468a5132b7969))
+
+
+### CI
+
+* **release:** 1.38.1-beta.1 [skip ci] ([83be82a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/83be82a11e83eb2be60a945deac361c46526c785))
+
 ## [1.38.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.38.0...v1.38.1-beta.1) (2025-02-13)
 
 
