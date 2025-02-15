@@ -77,6 +77,8 @@ class SearchLinkGraph(AbstractGraph):
                 output=["parsed_doc"],
                 node_config={
                     "chunk_size": self.model_token,
+                    "filter_links": True,
+                    "filter_config": self.config.get("filter_config", {}),
                 },
             )
 
