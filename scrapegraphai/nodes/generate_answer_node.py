@@ -3,6 +3,7 @@ GenerateAnswerNode Module
 """
 
 import time
+import json
 from typing import List, Optional
 
 from langchain.prompts import PromptTemplate
@@ -120,7 +121,11 @@ class GenerateAnswerNode(BaseNode):
         else:
             if not isinstance(self.llm_model, ChatBedrock):
                 output_parser = JsonOutputParser()
-                format_instructions = output_parser.get_format_instructions()
+                format_instructions = (
+                    "You must respond with a JSON object. Your response should be formatted as a valid JSON "
+                    "with a 'content' field containing your analysis. For example:\n"
+                    '{"content": "your analysis here"}'
+                )
             else:
                 output_parser = None
                 format_instructions = ""
@@ -131,13 +136,25 @@ class GenerateAnswerNode(BaseNode):
             and not self.script_creator
             or self.is_md_scraper
         ):
-            template_no_chunks_prompt = TEMPLATE_NO_CHUNKS_MD
-            template_chunks_prompt = TEMPLATE_CHUNKS_MD
-            template_merge_prompt = TEMPLATE_MERGE_MD
+            template_no_chunks_prompt = (
+                TEMPLATE_NO_CHUNKS_MD + "\n\nIMPORTANT: " + format_instructions
+            )
+            template_chunks_prompt = (
+                TEMPLATE_CHUNKS_MD + "\n\nIMPORTANT: " + format_instructions
+            )
+            template_merge_prompt = (
+                TEMPLATE_MERGE_MD + "\n\nIMPORTANT: " + format_instructions
+            )
         else:
-            template_no_chunks_prompt = TEMPLATE_NO_CHUNKS
-            template_chunks_prompt = TEMPLATE_CHUNKS
-            template_merge_prompt = TEMPLATE_MERGE
+            template_no_chunks_prompt = (
+                TEMPLATE_NO_CHUNKS + "\n\nIMPORTANT: " + format_instructions
+            )
+            template_chunks_prompt = (
+                TEMPLATE_CHUNKS + "\n\nIMPORTANT: " + format_instructions
+            )
+            template_merge_prompt = (
+                TEMPLATE_MERGE + "\n\nIMPORTANT: " + format_instructions
+            )
 
         if self.additional_info is not None:
             template_no_chunks_prompt = self.additional_info + template_no_chunks_prompt
@@ -161,8 +178,9 @@ class GenerateAnswerNode(BaseNode):
                 answer = self.invoke_with_timeout(
                     chain, {"question": user_prompt}, self.timeout
                 )
-            except Timeout:
-                state.update({self.output[0]: {"error": "Response timeout exceeded"}})
+            except (Timeout, json.JSONDecodeError) as e:
+                error_msg = "Response timeout exceeded" if isinstance(e, Timeout) else "Invalid JSON response format"
+                state.update({self.output[0]: {"error": error_msg, "raw_response": str(e)}})
                 return state
 
             state.update({self.output[0]: answer})
@@ -191,14 +209,9 @@ class GenerateAnswerNode(BaseNode):
             batch_results = self.invoke_with_timeout(
                 async_runner, {"question": user_prompt}, self.timeout
             )
-        except Timeout:
-            state.update(
-                {
-                    self.output[0]: {
-                        "error": "Response timeout exceeded during chunk processing"
-                    }
-                }
-            )
+        except (Timeout, json.JSONDecodeError) as e:
+            error_msg = "Response timeout exceeded during chunk processing" if isinstance(e, Timeout) else "Invalid JSON response format in chunk processing"
+            state.update({self.output[0]: {"error": error_msg, "raw_response": str(e)}})
             return state
 
         merge_prompt = PromptTemplate(
@@ -216,10 +229,9 @@ class GenerateAnswerNode(BaseNode):
                 {"context": batch_results, "question": user_prompt},
                 self.timeout,
             )
-        except Timeout:
-            state.update(
-                {self.output[0]: {"error": "Response timeout exceeded during merge"}}
-            )
+        except (Timeout, json.JSONDecodeError) as e:
+            error_msg = "Response timeout exceeded during merge" if isinstance(e, Timeout) else "Invalid JSON response format during merge"
+            state.update({self.output[0]: {"error": error_msg, "raw_response": str(e)}})
             return state
 
         state.update({self.output[0]: answer})

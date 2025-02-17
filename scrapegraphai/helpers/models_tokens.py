@@ -80,6 +80,7 @@ models_tokens = {
         "llama3.2": 128000,
         "llama3.2:1b": 128000,
         "llama3.2:3b": 128000,
+        "llama3.3": 128000,
         "llama3.3:70b": 128000,
         "scrapegraph": 8192,
         "mistral-small": 128000,
