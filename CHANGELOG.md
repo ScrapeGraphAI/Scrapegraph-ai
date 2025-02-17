@@ -1,3 +1,11 @@
+## [1.39.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.38.1-beta.1...v1.39.0-beta.1) (2025-02-17)
+
+
+### Features
+
+* add the new handling exception ([5c0bc46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c0bc46c6322ea07efa31d95819d7da47462f981))
+
+
 ## [1.38.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.38.0...v1.38.1-beta.1) (2025-02-13)
 
 
