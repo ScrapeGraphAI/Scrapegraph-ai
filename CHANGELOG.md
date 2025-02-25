@@ -1,14 +1,17 @@
 ## [1.39.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.39.0-beta.1...v1.39.0-beta.2) (2025-02-25)
 
 
+
 ### Features
 
 * add refactoring of merge and parse ([2c0b459](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2c0b4591ae4a13a89a73fb29a170adf6e52b3903))
 
 
+
 ### CI
 
 * **release:** 1.38.1 [skip ci] ([5c3d62d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5c3d62d55b5c6dcbb304b5879a19ca09bc18b153))
+
 
 ## [1.39.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.38.1-beta.1...v1.39.0-beta.1) (2025-02-17)
 
