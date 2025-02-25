@@ -78,7 +78,6 @@ class ParseNode(BaseNode):
         self.logger.info(f"--- Executing {self.node_name} Node ---")
 
         input_keys = self.get_input_keys(state)
-
         input_data = [state[key] for key in input_keys]
         docs_transformed = input_data[0]
         source = input_data[1] if self.parse_urls else None
@@ -121,6 +120,9 @@ class ParseNode(BaseNode):
                 )
 
         state.update({self.output[0]: chunks})
+        state.update({"parsed_doc": chunks})
+        state.update({"content": chunks})
+        
         if self.parse_urls:
             state.update({self.output[1]: link_urls})
             state.update({self.output[2]: img_urls})
