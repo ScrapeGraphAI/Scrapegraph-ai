@@ -87,6 +87,37 @@ class GenerateAnswerNode(BaseNode):
             self.logger.error(f"Error during chain execution: {str(e)}")
             raise
 
+    def process(self, state: dict) -> dict:
+        """Process the input state and generate an answer."""
+        user_prompt = state.get("user_prompt")
+        # Check for content in different possible state keys
+        content = (
+            state.get("relevant_chunks")
+            or state.get("parsed_doc")
+            or state.get("doc")
+            or state.get("content")
+        )
+
+        if not content:
+            raise ValueError("No content found in state to generate answer from")
+
+        if not user_prompt:
+            raise ValueError("No user prompt found in state")
+
+        # Create the chain input with both content and question keys
+        chain_input = {
+            "content": content,
+            "question": user_prompt
+        }
+
+        try:
+            response = self.invoke_with_timeout(self.chain, chain_input, self.timeout)
+            state.update({self.output[0]: response})
+            return state
+        except Exception as e:
+            self.logger.error(f"Error in GenerateAnswerNode: {str(e)}")
+            raise
+
     def execute(self, state: dict) -> dict:
         """
         Executes the GenerateAnswerNode.
