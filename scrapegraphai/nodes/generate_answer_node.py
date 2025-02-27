@@ -155,7 +155,7 @@ class GenerateAnswerNode(BaseNode):
                 format_instructions = (
                     "You must respond with a JSON object. Your response should be formatted as a valid JSON "
                     "with a 'content' field containing your analysis. For example:\n"
-                    '{"content": "your analysis here"}'
+                    '{{"content": "your analysis here"}}'
                 )
             else:
                 output_parser = None

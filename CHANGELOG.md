@@ -1,3 +1,24 @@
+## [1.40.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.40.0...v1.40.1) (2025-02-27)
+
+
+### Bug Fixes
+
+* curly bracket ([70318ca](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/70318ca1a7549a595ff81354b739866b63efe7de))
+
+## [1.40.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.39.0...v1.40.0) (2025-02-25)
+
+
+### Features
+
+* add refactoring of merge and parse ([2c0b459](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2c0b4591ae4a13a89a73fb29a170adf6e52b3903))
+* update parse node ([8cf9685](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8cf96857a000eada6d1c9ce1a357ee3d1f2bd003))
+
+
+### CI
+
+* **release:** 1.39.0-beta.2 [skip ci] ([ac2fcd6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ac2fcd66ce2603153877e3141b3ff862a348e335))
+* **release:** 1.40.0-beta.1 [skip ci] ([71053bc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71053bc7586b0e723272d0eb7e668c07aa666eae))
+
 ## [1.40.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.39.0...v1.40.0-beta.1) (2025-02-25)
 
 
