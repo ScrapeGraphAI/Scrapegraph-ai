@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.40.0...v1.40.1) (2025-02-27)
+
+
+### Bug Fixes
+
+* curly bracket ([70318ca](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/70318ca1a7549a595ff81354b739866b63efe7de))
+
 ## [1.40.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.39.0...v1.40.0) (2025-02-25)
 
 
