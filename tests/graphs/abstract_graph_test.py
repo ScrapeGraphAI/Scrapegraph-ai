@@ -200,3 +200,36 @@ class TestAbstractGraph:
         graph.set_common_params(test_params)
 
         # Assert that update_config was called on each node with the correct parameters
+    
+    def test_get_state(self):
+        """Test that get_state returns the correct final state with or without a provided key, and raises KeyError for missing keys."""
+        graph = TestGraph("dummy", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}})
+        # Set a dummy final state
+        graph.final_state = {"answer": "42", "other": "value"}
+        # Test without a key returns the entire final_state
+        state = graph.get_state()
+        assert state == {"answer": "42", "other": "value"}
+        # Test with a valid key returns the specific value
+        answer = graph.get_state("answer")
+        assert answer == "42"
+        # Test that a missing key raises a KeyError
+        with pytest.raises(KeyError):
+            _ = graph.get_state("nonexistent")
+
+    def test_append_node(self):
+        """Test that append_node correctly delegates to the graph's append_node method."""
+        graph = TestGraph("dummy", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}})
+        # Replace the graph object with a mock that has append_node
+        mock_graph = Mock()
+        graph.graph = mock_graph
+        dummy_node = Mock()
+        graph.append_node(dummy_node)
+        mock_graph.append_node.assert_called_once_with(dummy_node)
+
+    def test_get_execution_info(self):
+        """Test that get_execution_info returns the execution info stored in the graph."""
+        graph = TestGraph("dummy", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}})
+        dummy_info = {"execution": "info", "status": "ok"}
+        graph.execution_info = dummy_info
+        info = graph.get_execution_info()
+        assert info == dummy_info
