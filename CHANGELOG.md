@@ -1,3 +1,22 @@
+## [1.41.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.40.1...v1.41.0) (2025-03-09)
+
+
+### Features
+
+* add CLoD integration ([4e0e785](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4e0e78582c3a75e64c5eba26ce40b5ffbf05d58e))
+
+
+### Test
+
+* Add coverage improvement test for tests/test_generate_answer_node.py ([6769c0d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6769c0d43ab72f1c8b520dd28d19f747b22f9b7c))
+* Add coverage improvement test for tests/test_models_tokens.py ([b21e781](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b21e781ce340c7fa2c5a99a28b7c23e06e950f1e))
+* Update coverage improvement test for tests/graphs/abstract_graph_test.py ([f296ac4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f296ac4d5088a74d4f50e7262631f202a68b152c))
+
+
+### CI
+
+* **release:** 1.41.0-beta.1 [skip ci] ([7bfe494](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7bfe494237279d73cefe4161a0b8e95491329ccb))
+
 ## [1.41.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.40.1...v1.41.0-beta.1) (2025-03-07)
 
 
