@@ -30,7 +30,7 @@ graph_config = {
 # *******************************************************
 
 multiple_search_graph = SmartScraperGraph(
-    prompt="Who is Marco Perini?",
+    prompt="Who is ?",
     source="https://perinim.github.io/",
     schema=None,
     config=graph_config,

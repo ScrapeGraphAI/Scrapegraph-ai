@@ -38,7 +38,7 @@ class SmartScraperMultiGraph(AbstractGraph):
 
     Example:
         >>> smart_scraper_multi_graph = SmartScraperMultiGraph(
-        ...     prompt="Who is Marco Perini?",
+        ...     prompt="Who is ?",
         ...     source= [
         ...         "https://perinim.github.io/",
         ...         "https://perinim.github.io/cv/"

@@ -1,4 +1,4 @@
-Marco Perini Toggle navigation
+ Toggle navigation
 
   * About
   * Projects(current)
@@ -30,6 +30,6 @@ surroundings, considering uncertainties in their readings.
 Drones Modular drone architecture proposal and proof of concept. The project
 received maximum grade. ](/projects/wireless-esc-drone/)
 
-© Copyright 2023 Marco Perini. Powered by Jekyll with
+© Copyright 2023 . Powered by Jekyll with
 al-folio theme. Hosted by [GitHub
 Pages](https://pages.github.com/).

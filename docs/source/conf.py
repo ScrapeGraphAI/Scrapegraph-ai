@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.abspath("../../"))
 
 project = "ScrapeGraphAI"
 copyright = "2024, ScrapeGraphAI"
-author = "Marco Vinciguerra, Marco Perini, Lorenzo Padoan"
+author = "Marco Vinciguerra, , Lorenzo Padoan"
 
 html_last_updated_fmt = "%b %d, %Y"
 
