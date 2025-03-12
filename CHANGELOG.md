@@ -1,3 +1,10 @@
+## [1.42.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.42.0...v1.42.1) (2025-03-12)
+
+
+### Bug Fixes
+
+* add new gpt model ([cff799b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cff799b50d60089f175649eec00da1c5dceeed95))
+
 ## [1.42.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.41.0...v1.42.0) (2025-03-10)
 
 
