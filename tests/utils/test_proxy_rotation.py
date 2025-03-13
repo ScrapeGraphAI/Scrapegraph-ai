@@ -72,7 +72,7 @@ def test_is_ipv4_address():
     assert is_ipv4_address("no-address") is False
 
 
-def test_parse_or_search_proxy_success():
+def test_parse_or_search_proxy_success(monkeypatch):
     proxy = {
         "server": "192.168.1.1:8080",
         "username": "username",
@@ -91,6 +91,7 @@ def test_parse_or_search_proxy_success():
             "timeout": 10.0,
         },
     }
+    monkeypatch.setattr("scrapegraphai.utils.proxy_rotation._search_proxy", lambda proxy: {"server": "dummy_proxy:8080"})
 
     found_proxy = parse_or_search_proxy(proxy_broker)
 
