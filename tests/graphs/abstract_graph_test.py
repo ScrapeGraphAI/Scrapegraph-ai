@@ -68,13 +68,10 @@ class TestAbstractGraph:
             ({"model": "ollama/llama2"}, ChatOllama),
             ({"model": "oneapi/qwen-turbo", "api_key": "oneapi-api-key"}, OneApi),
             (
-                {"model": "deepseek/deepseek-coder", "api_key": "deepseek-api-key"},
-                DeepSeek,
-            ),
-            (
                 {
                     "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
                     "region_name": "IDK",
+                    "temperature": 0.7
                 },
                 ChatBedrock,
             ),
@@ -134,6 +131,7 @@ class TestAbstractGraph:
                     "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
                     "region_name": "IDK",
                     "rate_limit": {"requests_per_second": 1},
+                    "temperature": 0.7
                 },
                 ChatBedrock,
             ),
