@@ -1,3 +1,10 @@
+## [1.43.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.42.1...v1.43.0) (2025-03-13)
+
+
+### Features
+
+* add intrgration for o3min ([fc0a148](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fc0a1480174e59e395232af123ad8ce64595e029))
+
 ## [1.42.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.42.0...v1.42.1) (2025-03-12)
 
 
