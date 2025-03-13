@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.10, <4.0"
 resolution-markers = [
     "python_full_version < '3.11' and sys_platform == 'darwin'",
@@ -3377,7 +3378,7 @@ wheels = [
 
 [[package]]
 name = "scrapegraphai"
-version = "1.40.1"
+version = "1.43.0"
 source = { editable = "." }
 dependencies = [
     { name = "async-timeout", version = "4.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
@@ -3395,6 +3396,7 @@ dependencies = [
     { name = "langchain-openai" },
     { name = "minify-html" },
     { name = "playwright" },
+    { name = "pydantic" },
     { name = "python-dotenv" },
     { name = "semchunk" },
     { name = "simpleeval" },
@@ -3456,6 +3458,7 @@ requires-dist = [
     { name = "minify-html", specifier = ">=0.15.0" },
     { name = "pillow", marker = "extra == 'ocr'", specifier = ">=10.4.0" },
     { name = "playwright", specifier = ">=1.43.0" },
+    { name = "pydantic", specifier = ">=2.10.2" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "semchunk", specifier = ">=2.2.0" },
     { name = "simpleeval", specifier = ">=1.0.0" },
@@ -3465,6 +3468,7 @@ requires-dist = [
     { name = "tqdm", specifier = ">=4.66.4" },
     { name = "undetected-playwright", specifier = ">=0.3.0" },
 ]
+provides-extras = ["burr", "docs", "ocr"]
 
 [package.metadata.requires-dev]
 dev = [
