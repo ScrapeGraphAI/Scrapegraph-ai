@@ -2,8 +2,8 @@
 GenerateAnswerNode Module
 """
 
-import time
 import json
+import time
 from typing import List, Optional
 
 from langchain.prompts import PromptTemplate
@@ -105,10 +105,7 @@ class GenerateAnswerNode(BaseNode):
             raise ValueError("No user prompt found in state")
 
         # Create the chain input with both content and question keys
-        chain_input = {
-            "content": content,
-            "question": user_prompt
-        }
+        chain_input = {"content": content, "question": user_prompt}
 
         try:
             response = self.invoke_with_timeout(self.chain, chain_input, self.timeout)
@@ -167,25 +164,13 @@ class GenerateAnswerNode(BaseNode):
             and not self.script_creator
             or self.is_md_scraper
         ):
-            template_no_chunks_prompt = (
-                TEMPLATE_NO_CHUNKS_MD + "\n\nIMPORTANT: " + format_instructions
-            )
-            template_chunks_prompt = (
-                TEMPLATE_CHUNKS_MD + "\n\nIMPORTANT: " + format_instructions
-            )
-            template_merge_prompt = (
-                TEMPLATE_MERGE_MD + "\n\nIMPORTANT: " + format_instructions
-            )
+            template_no_chunks_prompt = TEMPLATE_NO_CHUNKS_MD
+            template_chunks_prompt = TEMPLATE_CHUNKS_MD
+            template_merge_prompt = TEMPLATE_MERGE_MD
         else:
-            template_no_chunks_prompt = (
-                TEMPLATE_NO_CHUNKS + "\n\nIMPORTANT: " + format_instructions
-            )
-            template_chunks_prompt = (
-                TEMPLATE_CHUNKS + "\n\nIMPORTANT: " + format_instructions
-            )
-            template_merge_prompt = (
-                TEMPLATE_MERGE + "\n\nIMPORTANT: " + format_instructions
-            )
+            template_no_chunks_prompt = TEMPLATE_NO_CHUNKS
+            template_chunks_prompt = TEMPLATE_CHUNKS
+            template_merge_prompt = TEMPLATE_MERGE
 
         if self.additional_info is not None:
             template_no_chunks_prompt = self.additional_info + template_no_chunks_prompt
@@ -210,8 +195,14 @@ class GenerateAnswerNode(BaseNode):
                     chain, {"question": user_prompt}, self.timeout
                 )
             except (Timeout, json.JSONDecodeError) as e:
-                error_msg = "Response timeout exceeded" if isinstance(e, Timeout) else "Invalid JSON response format"
-                state.update({self.output[0]: {"error": error_msg, "raw_response": str(e)}})
+                error_msg = (
+                    "Response timeout exceeded"
+                    if isinstance(e, Timeout)
+                    else "Invalid JSON response format"
+                )
+                state.update(
+                    {self.output[0]: {"error": error_msg, "raw_response": str(e)}}
+                )
                 return state
 
             state.update({self.output[0]: answer})
@@ -241,7 +232,11 @@ class GenerateAnswerNode(BaseNode):
                 async_runner, {"question": user_prompt}, self.timeout
             )
         except (Timeout, json.JSONDecodeError) as e:
-            error_msg = "Response timeout exceeded during chunk processing" if isinstance(e, Timeout) else "Invalid JSON response format in chunk processing"
+            error_msg = (
+                "Response timeout exceeded during chunk processing"
+                if isinstance(e, Timeout)
+                else "Invalid JSON response format in chunk processing"
+            )
             state.update({self.output[0]: {"error": error_msg, "raw_response": str(e)}})
             return state
 
@@ -261,7 +256,11 @@ class GenerateAnswerNode(BaseNode):
                 self.timeout,
             )
         except (Timeout, json.JSONDecodeError) as e:
-            error_msg = "Response timeout exceeded during merge" if isinstance(e, Timeout) else "Invalid JSON response format during merge"
+            error_msg = (
+                "Response timeout exceeded during merge"
+                if isinstance(e, Timeout)
+                else "Invalid JSON response format during merge"
+            )
             state.update({self.output[0]: {"error": error_msg, "raw_response": str(e)}})
             return state
 

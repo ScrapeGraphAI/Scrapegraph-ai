@@ -31,7 +31,8 @@ dependencies = [
     "async-timeout>=4.0.3",
     "simpleeval>=1.0.0",
     "jsonschema>=4.23.0",
-    "duckduckgo-search>=7.2.1"
+    "duckduckgo-search>=7.2.1",
+    "pydantic>=2.10.2",
 ]
 
 readme = "README.md"
