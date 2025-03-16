@@ -30,7 +30,7 @@ Then we can use them in the graph configuration as follows:
 
     graph_config = {
         "llm": {
-            "model": "llama3",
+            "model": "ollama/llama3",
             "temperature": 0.0,
             "format": "json",
         },
