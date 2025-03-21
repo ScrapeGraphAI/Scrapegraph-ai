@@ -195,7 +195,7 @@ print(result)
 研究目的で当社のライブラリを使用する場合は、以下の参考文献を引用してください：
 ```text
   @misc{scrapegraph-ai,
-    author = {Marco Perini, Lorenzo Padoan, Marco Vinciguerra},
+    author = {, Lorenzo Padoan, Marco Vinciguerra},
     title = {Scrapegraph-ai},
     year = {2024},
     url = {https://github.com/VinciGit00/Scrapegraph-ai},
@@ -212,7 +212,7 @@ print(result)
 |                    | 連絡先         |
 |--------------------|----------------------|
 | Marco Vinciguerra  | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-vinciguerra-7ba365242/)    |
-| Marco Perini       | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)   |
+|        | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)   |
 | Lorenzo Padoan     | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/lorenzo-padoan-4521a2154/)  |
 
 ## 📜 ライセンス

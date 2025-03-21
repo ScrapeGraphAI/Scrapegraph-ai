@@ -211,7 +211,7 @@ graph LR
 우리의 라이브러리를 연구 목적으로 사용한 경우 다음과 같이 인용해 주세요:
 ```text
   @misc{scrapegraph-ai,
-    author = {Marco Perini, Lorenzo Padoan, Marco Vinciguerra},
+    author = {, Lorenzo Padoan, Marco Vinciguerra},
     title = {Scrapegraph-ai},
     year = {2024},
     url = {https://github.com/VinciGit00/Scrapegraph-ai},
@@ -228,7 +228,7 @@ graph LR
 |                    | 연락처        |
 |--------------------|---------------|
 | Marco Vinciguerra  | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-vinciguerra-7ba365242/)    |
-| Marco Perini       | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)   |
+|        | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)   |
 | Lorenzo Padoan     | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/lorenzo-padoan-4521a2154/)  |
 
 ## 📜 라이선스

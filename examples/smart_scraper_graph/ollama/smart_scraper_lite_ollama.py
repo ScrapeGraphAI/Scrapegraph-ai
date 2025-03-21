@@ -19,7 +19,7 @@ graph_config = {
 }
 
 smart_scraper_lite_graph = SmartScraperLiteGraph(
-    prompt="Who is Marco Perini?",
+    prompt="Who is ?",
     source="https://perinim.github.io/",
     config=graph_config,
 )

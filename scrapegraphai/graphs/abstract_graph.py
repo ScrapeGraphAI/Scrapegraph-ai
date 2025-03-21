@@ -53,9 +53,6 @@ class AbstractGraph(ABC):
         source: Optional[str] = None,
         schema: Optional[Type[BaseModel]] = None,
     ):
-        if config.get("llm").get("temperature") is None:
-            config["llm"]["temperature"] = 0
-
         self.prompt = prompt
         self.source = source
         self.config = config
@@ -125,7 +122,7 @@ class AbstractGraph(ABC):
             KeyError: If the model is not supported.
         """
 
-        llm_defaults = {"temperature": 0, "streaming": False}
+        llm_defaults = {"streaming": False}
         llm_params = {**llm_defaults, **llm_config}
         rate_limit_params = llm_params.pop("rate_limit", {})
 

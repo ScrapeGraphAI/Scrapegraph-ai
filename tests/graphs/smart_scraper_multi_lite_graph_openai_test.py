@@ -30,7 +30,7 @@ def graph_config():
 def test_scraping_pipeline(graph_config):
     """Start of the scraping pipeline"""
     smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
-        prompt="Who is Marco Perini?",
+        prompt="Who is ?",
         source=["https://perinim.github.io/", "https://perinim.github.io/cv/"],
         config=graph_config,
     )
@@ -44,7 +44,7 @@ def test_scraping_pipeline(graph_config):
 def test_get_execution_info(graph_config):
     """Get the execution info"""
     smart_scraper_multi_lite_graph = SmartScraperMultiLiteGraph(
-        prompt="Who is Marco Perini?",
+        prompt="Who is ?",
         source=["https://perinim.github.io/", "https://perinim.github.io/cv/"],
         config=graph_config,
     )

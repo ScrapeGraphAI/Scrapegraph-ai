@@ -93,7 +93,7 @@ The output will be a dictionary like the following:
     "description": "ScrapeGraphAI transforms websites into clean, organized data for AI agents and data analytics. It offers an AI-powered API for effortless and cost-effective data extraction.",
     "founders": [
         {
-            "name": "Marco Perini",
+            "name": "",
             "role": "Founder & Technical Lead",
             "linkedin": "https://www.linkedin.com/in/perinim/"
         },
@@ -193,7 +193,7 @@ We collect anonymous usage metrics to enhance our package's quality and user exp
 If you have used our library for research purposes please quote us with the following reference:
 ```text
   @misc{scrapegraph-ai,
-    author = {Marco Perini, Lorenzo Padoan, Marco Vinciguerra},
+    author = {Lorenzo Padoan, Marco Vinciguerra},
     title = {Scrapegraph-ai},
     year = {2024},
     url = {https://github.com/VinciGit00/Scrapegraph-ai},
@@ -203,14 +203,9 @@ If you have used our library for research purposes please quote us with the foll
 
 ## Authors
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/logo_authors.png" alt="Authors_logos">
-</p>
-
 |                    | Contact Info         |
 |--------------------|----------------------|
 | Marco Vinciguerra  | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-vinciguerra-7ba365242/)    |
-| Marco Perini       | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/perinim/)   |
 | Lorenzo Padoan     | [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/lorenzo-padoan-4521a2154/)  |
 
 ## 📜 License
