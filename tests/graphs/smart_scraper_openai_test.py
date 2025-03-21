@@ -6,6 +6,7 @@ import os
 
 import pytest
 from dotenv import load_dotenv
+from pydantic import BaseModel
 
 from scrapegraphai.graphs import SmartScraperGraph
 
@@ -46,6 +47,30 @@ def test_get_execution_info(graph_config):
         prompt="List me all the projects with their description.",
         source="https://perinim.github.io/projects/",
         config=graph_config,
+    )
+
+    smart_scraper_graph.run()
+
+    graph_exec_info = smart_scraper_graph.get_execution_info()
+
+    assert graph_exec_info is not None
+
+
+def test_get_execution_info_with_schema(graph_config):
+    """Get the execution info with schema"""
+
+    class ProjectSchema(BaseModel):
+        title: str
+        description: str
+
+    class ProjectListSchema(BaseModel):
+        projects: list[ProjectSchema]
+
+    smart_scraper_graph = SmartScraperGraph(
+        prompt="List me all the projects with their description.",
+        source="https://perinim.github.io/projects/",
+        config=graph_config,
+        schema=ProjectListSchema,
     )
 
     smart_scraper_graph.run()
