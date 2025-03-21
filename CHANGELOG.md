@@ -1,3 +1,10 @@
+## [1.43.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.0...v1.43.1-beta.1) (2025-03-21)
+
+
+### Bug Fixes
+
+* Fixes schema option not working ([df1645c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/df1645c5ebc6bc2362992fec3887dcbedf519ba9))
+
 ## [1.43.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.42.1...v1.43.0) (2025-03-13)
 
 
