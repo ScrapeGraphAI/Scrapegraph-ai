@@ -1,3 +1,10 @@
+## [1.44.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.1...v1.44.0) (2025-03-26)
+
+
+### Features
+
+* add new model openai support ([087cbcb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/087cbcbc8f93665eade60156f070ada5847f3e58))
+
 ## [1.43.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.0...v1.43.1) (2025-03-21)
 
 
