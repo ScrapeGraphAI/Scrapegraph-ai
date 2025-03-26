@@ -14,6 +14,7 @@ models_tokens = {
         "gpt-4-turbo": 128000,
         "gpt-4-turbo-2024-04-09": 128000,
         "gpt-4-1106-preview": 128000,
+        "gpt-4o-search-preview": 128000,
         "gpt-4-vision-preview": 128000,
         "gpt-4": 8192,
         "gpt-4-0613": 8192,
