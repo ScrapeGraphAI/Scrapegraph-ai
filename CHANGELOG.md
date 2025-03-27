@@ -1,3 +1,10 @@
+## [1.45.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.44.0...v1.45.0) (2025-03-27)
+
+
+### Features
+
+* add scrapeless logo ([ae60e2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ae60e2b8bf7bda7519306cdd05d16c2c68538421))
+
 ## [1.44.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.1...v1.44.0) (2025-03-26)
 
 
