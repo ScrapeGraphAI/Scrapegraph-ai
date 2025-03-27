@@ -181,7 +181,7 @@ The Official API Documentation can be found [here](https://docs.scrapegraphai.co
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapedo.png" alt="Stats" style="width: 11%;">
   </a>
     <a href="https://www.scrapeless.com">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapeless.jpg" alt="Stats" style="width: 11%;">
+    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapeless.png" alt="Stats" style="width: 11%;">
   </a>
 </div>
 
