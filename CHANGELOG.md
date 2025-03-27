@@ -1,3 +1,10 @@
+## [1.46.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.45.0...v1.46.0) (2025-03-27)
+
+
+### Features
+
+* add new logo ([c085d6c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c085d6c7ffcbf446439de97c9f88f8eadba5909c))
+
 ## [1.45.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.44.0...v1.45.0) (2025-03-27)
 
 
