@@ -1,3 +1,10 @@
+## [1.44.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.1-beta.1...v1.44.0-beta.1) (2025-04-14)
+
+
+### Features
+
+* add new proxy rotation ([8913d8d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8913d8d3af3a2809d3ddcbfa09cbf2c9982a19cd))
+
 ## [1.43.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.0...v1.43.1-beta.1) (2025-03-21)
 
 
