@@ -64,7 +64,7 @@ class MergeGeneratedScriptsNode(BaseNode):
         scripts_str = ""
         for i, script in enumerate(scripts):
             scripts_str += "-----------------------------------\n"
-            scripts_str += f"SCRIPT URL {i+1}\n"
+            scripts_str += f"SCRIPT URL {i + 1}\n"
             scripts_str += "-----------------------------------\n"
             scripts_str += script
 

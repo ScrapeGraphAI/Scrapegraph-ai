@@ -2,8 +2,8 @@
 Module for minimizing the code
 """
 
-import re
 import json
+import re
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup, Comment
@@ -12,32 +12,36 @@ from minify_html import minify
 
 def extract_from_script_tags(soup):
     script_content = []
-    
+
     for script in soup.find_all("script"):
         content = script.string
         if content:
             try:
-                json_pattern = r'(?:const|let|var)?\s*\w+\s*=\s*({[\s\S]*?});?$'
+                json_pattern = r"(?:const|let|var)?\s*\w+\s*=\s*({[\s\S]*?});?$"
                 json_matches = re.findall(json_pattern, content)
-                
+
                 for potential_json in json_matches:
                     try:
                         parsed = json.loads(potential_json)
                         if parsed:
-                            script_content.append(f"JSON data from script: {json.dumps(parsed, indent=2)}")
+                            script_content.append(
+                                f"JSON data from script: {json.dumps(parsed, indent=2)}"
+                            )
                     except json.JSONDecodeError:
                         pass
-                
+
                 if "window." in content or "document." in content:
-                    data_pattern = r'(?:window|document)\.(\w+)\s*=\s*([^;]+);'
+                    data_pattern = r"(?:window|document)\.(\w+)\s*=\s*([^;]+);"
                     data_matches = re.findall(data_pattern, content)
-                    
+
                     for var_name, var_value in data_matches:
-                        script_content.append(f"Dynamic data - {var_name}: {var_value.strip()}")
+                        script_content.append(
+                            f"Dynamic data - {var_name}: {var_value.strip()}"
+                        )
             except Exception:
                 if len(content) < 1000:
                     script_content.append(f"Script content: {content.strip()}")
-    
+
     return "\n\n".join(script_content)
 
 
@@ -66,9 +70,9 @@ def cleanup_html(html_content: str, base_url: str) -> str:
 
     title_tag = soup.find("title")
     title = title_tag.get_text() if title_tag else ""
-    
+
     script_content = extract_from_script_tags(soup)
-    
+
     for tag in soup.find_all("style"):
         tag.extract()
 

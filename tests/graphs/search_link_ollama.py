@@ -1,5 +1,4 @@
 from scrapegraphai.graphs import SearchLinkGraph
-from scrapegraphai.utils import prettify_exec_info
 
 
 def test_smart_scraper_pipeline():

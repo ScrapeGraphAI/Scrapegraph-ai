@@ -1,5 +1,5 @@
 """
-    __init__.py file for utils folder
+__init__.py file for utils folder
 """
 
 from .cleanup_code import extract_code

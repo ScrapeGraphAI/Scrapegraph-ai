@@ -6,11 +6,12 @@ import ipaddress
 import random
 import re
 from typing import List, Optional, Set, TypedDict
+from urllib.parse import urlparse
 
 import requests
 from fp.errors import FreeProxyException
 from fp.fp import FreeProxy
-from urllib.parse import urlparse
+
 
 class ProxyBrokerCriteria(TypedDict, total=False):
     """
@@ -200,7 +201,9 @@ def parse_or_search_proxy(proxy: Proxy) -> ProxySettings:
         raise ValueError(f"Invalid proxy server format: {proxy['server']}")
 
     # Accept both IP addresses and domain names like 'gate.nodemaven.com'
-    if is_ipv4_address(server_address) or re.match(r"^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", server_address):
+    if is_ipv4_address(server_address) or re.match(
+        r"^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", server_address
+    ):
         return _parse_proxy(proxy)
 
     assert proxy["server"] == "broker", f"Unknown proxy server type: {proxy['server']}"

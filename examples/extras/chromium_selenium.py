@@ -9,7 +9,6 @@ from scrapegraphai.docloaders.chromium import (  # Import your ChromiumLoader cl
     ChromiumLoader,
 )
 from scrapegraphai.graphs import SmartScraperGraph
-from scrapegraphai.utils import prettify_exec_info
 
 # Load environment variables for API keys
 load_dotenv()

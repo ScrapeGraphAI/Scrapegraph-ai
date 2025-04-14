@@ -3,7 +3,6 @@ This example shows how to do not process the html code in the fetch phase
 """
 
 import json
-import os
 
 from scrapegraphai.graphs import SmartScraperGraph
 from scrapegraphai.utils import prettify_exec_info

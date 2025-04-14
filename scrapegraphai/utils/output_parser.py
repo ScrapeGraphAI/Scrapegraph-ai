@@ -10,7 +10,7 @@ from pydantic.v1 import BaseModel as BaseModelV1
 
 
 def get_structured_output_parser(
-    schema: Union[Dict[str, Any], Type[BaseModelV1 | BaseModelV2], Type]
+    schema: Union[Dict[str, Any], Type[BaseModelV1 | BaseModelV2], Type],
 ) -> Callable:
     """
     Get the correct output parser for the LLM model.
@@ -28,7 +28,7 @@ def get_structured_output_parser(
 
 
 def get_pydantic_output_parser(
-    schema: Union[Dict[str, Any], Type[BaseModelV1 | BaseModelV2], Type]
+    schema: Union[Dict[str, Any], Type[BaseModelV1 | BaseModelV2], Type],
 ) -> JsonOutputParser:
     """
     Get the correct output parser for the LLM model.

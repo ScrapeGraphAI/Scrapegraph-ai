@@ -192,3 +192,6 @@ cython_debug/
 .DS_Store
 
 dev.ipynb
+
+# CodeBeaver reports and artifacts
+.codebeaver

@@ -1,6 +1,6 @@
 import urllib.parse
-import pytest
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
+
 from scrapegraphai.docloaders.scrape_do import scrape_do_fetch
 
 
@@ -29,4 +29,3 @@ def test_scrape_do_fetch_without_proxy():
         mock_get.assert_called_once_with(expected_url)
 
         assert result == expected_response
-

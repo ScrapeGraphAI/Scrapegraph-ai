@@ -85,7 +85,7 @@ class GenerateAnswerFromImageNode(BaseNode):
             raise ValueError(
                 f"""The model provided
                              is not supported. Supported models are:
-                             {', '.join(supported_models)}."""
+                             {", ".join(supported_models)}."""
             )
 
         api_key = self.node_config.get("config", {}).get("llm", {}).get("api_key", "")

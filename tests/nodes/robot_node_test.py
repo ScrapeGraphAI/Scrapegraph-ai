@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock
 
 import pytest
-from langchain_community.chat_models import ChatOllama
 
 from scrapegraphai.nodes import RobotsNode
 

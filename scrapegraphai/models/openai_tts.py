@@ -19,7 +19,6 @@ class OpenAITextToSpeech:
     """
 
     def __init__(self, tts_config: dict):
-
         self.client = OpenAI(
             api_key=tts_config.get("api_key"), base_url=tts_config.get("base_url", None)
         )

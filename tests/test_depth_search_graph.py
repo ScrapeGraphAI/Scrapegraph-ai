@@ -1,7 +1,9 @@
-from unittest.mock import patch, MagicMock
-from scrapegraphai.graphs.depth_search_graph import DepthSearchGraph
-from scrapegraphai.graphs.abstract_graph import AbstractGraph
+from unittest.mock import MagicMock, patch
+
 import pytest
+
+from scrapegraphai.graphs.abstract_graph import AbstractGraph
+from scrapegraphai.graphs.depth_search_graph import DepthSearchGraph
 
 
 class TestDepthSearchGraph:
@@ -22,12 +24,14 @@ class TestDepthSearchGraph:
         """
         prompt = "Test prompt"
         config = {"llm": {"model": "mock_model"}}
-        
+
         # Mock both BaseGraph and _create_llm method
-        with patch("scrapegraphai.graphs.depth_search_graph.BaseGraph"), \
-             patch.object(AbstractGraph, '_create_llm', return_value=MagicMock()):
+        with (
+            patch("scrapegraphai.graphs.depth_search_graph.BaseGraph"),
+            patch.object(AbstractGraph, "_create_llm", return_value=MagicMock()),
+        ):
             graph = DepthSearchGraph(prompt, source, config)
-            
+
             assert graph.prompt == prompt
             assert graph.source == source
             assert graph.config == config
