@@ -40,7 +40,7 @@ graph_config = {
 # ************************************************
 
 search_graph = SearchGraph(
-    prompt=f"Who is the ceo of Appke?",
+    prompt="Who is the ceo of Appke?",
     schema=Ceos,
     config=graph_config,
 )

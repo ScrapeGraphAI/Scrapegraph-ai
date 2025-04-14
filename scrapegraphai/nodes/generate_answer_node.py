@@ -221,7 +221,7 @@ class GenerateAnswerNode(BaseNode):
                     "format_instructions": format_instructions,
                 },
             )
-            chain_name = f"chunk{i+1}"
+            chain_name = f"chunk{i + 1}"
             chains_dict[chain_name] = prompt | self.llm_model
             if output_parser:
                 chains_dict[chain_name] = chains_dict[chain_name] | output_parser

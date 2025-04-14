@@ -53,7 +53,6 @@ class SmartScraperMultiConcatGraph(AbstractGraph):
         config: dict,
         schema: Optional[Type[BaseModel]] = None,
     ):
-
         self.copy_config = safe_deepcopy(config)
         self.copy_schema = deepcopy(schema)
 

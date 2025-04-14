@@ -2,10 +2,10 @@
 Scrape_do module
 """
 
+import os
 import urllib.parse
 
 import requests
-import os
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

@@ -54,7 +54,6 @@ class BaseNode(ABC):
         min_input_len: int = 1,
         node_config: Optional[dict] = None,
     ):
-
         self.node_name = node_name
         self.input = input
         self.output = output
@@ -197,7 +196,6 @@ class BaseNode(ABC):
             """Evaluate an expression without parentheses."""
 
             for or_segment in exp.split("|"):
-
                 and_segment = or_segment.split("&")
                 if all(elem.strip() in state for elem in and_segment):
                     return [
@@ -226,7 +224,7 @@ class BaseNode(ABC):
             raise ValueError(
                 f"""No state keys matched the expression.
                              Expression was {expression}.
-                             State contains keys: {', '.join(state.keys())}"""
+                             State contains keys: {", ".join(state.keys())}"""
             )
 
         final_result = []

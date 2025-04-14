@@ -89,7 +89,6 @@ class GenerateAnswerOmniNode(BaseNode):
         imag_desc = input_data[2]
 
         if self.node_config.get("schema", None) is not None:
-
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
                     schema=self.node_config["schema"]
@@ -151,7 +150,7 @@ class GenerateAnswerOmniNode(BaseNode):
                 },
             )
 
-            chain_name = f"chunk{i+1}"
+            chain_name = f"chunk{i + 1}"
             chains_dict[chain_name] = prompt | self.llm_model | output_parser
 
         async_runner = RunnableParallel(**chains_dict)

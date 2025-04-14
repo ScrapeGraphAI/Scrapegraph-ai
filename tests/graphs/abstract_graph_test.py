@@ -1,16 +1,18 @@
-import pytest
+from unittest.mock import Mock, patch
 
+import pytest
 from langchain_aws import ChatBedrock
 from langchain_ollama import ChatOllama
 from langchain_openai import AzureChatOpenAI, ChatOpenAI
+
 from scrapegraphai.graphs import AbstractGraph, BaseGraph
 from scrapegraphai.models import DeepSeek, OneApi
 from scrapegraphai.nodes import FetchNode, ParseNode
-from unittest.mock import Mock, patch
 
 """
 Tests for the AbstractGraph.
 """
+
 
 class TestGraph(AbstractGraph):
     def __init__(self, prompt: str, config: dict):
@@ -47,6 +49,7 @@ class TestGraph(AbstractGraph):
         self.final_state, self.execution_info = self.graph.execute(inputs)
 
         return self.final_state.get("answer", "No answer found.")
+
 
 class TestAbstractGraph:
     @pytest.mark.parametrize(
@@ -171,7 +174,7 @@ class TestAbstractGraph:
             "llm": {
                 "model_instance": mock_model,
                 "model_tokens": 1000,
-                "model": "custom/model"
+                "model": "custom/model",
             }
         }
 
@@ -192,18 +195,27 @@ class TestAbstractGraph:
         mock_graph.nodes = [mock_node1, mock_node2]
 
         # Create a TestGraph instance with the mock graph
-        with patch('scrapegraphai.graphs.abstract_graph.AbstractGraph._create_graph', return_value=mock_graph):
-            graph = TestGraph("Test prompt", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}})
+        with patch(
+            "scrapegraphai.graphs.abstract_graph.AbstractGraph._create_graph",
+            return_value=mock_graph,
+        ):
+            graph = TestGraph(
+                "Test prompt",
+                {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}},
+            )
 
         # Call set_common_params with test parameters
         test_params = {"param1": "value1", "param2": "value2"}
         graph.set_common_params(test_params)
 
         # Assert that update_config was called on each node with the correct parameters
-    
+
     def test_get_state(self):
         """Test that get_state returns the correct final state with or without a provided key, and raises KeyError for missing keys."""
-        graph = TestGraph("dummy", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}})
+        graph = TestGraph(
+            "dummy",
+            {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}},
+        )
         # Set a dummy final state
         graph.final_state = {"answer": "42", "other": "value"}
         # Test without a key returns the entire final_state
@@ -218,7 +230,10 @@ class TestAbstractGraph:
 
     def test_append_node(self):
         """Test that append_node correctly delegates to the graph's append_node method."""
-        graph = TestGraph("dummy", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}})
+        graph = TestGraph(
+            "dummy",
+            {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}},
+        )
         # Replace the graph object with a mock that has append_node
         mock_graph = Mock()
         graph.graph = mock_graph
@@ -228,7 +243,10 @@ class TestAbstractGraph:
 
     def test_get_execution_info(self):
         """Test that get_execution_info returns the execution info stored in the graph."""
-        graph = TestGraph("dummy", {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}})
+        graph = TestGraph(
+            "dummy",
+            {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}},
+        )
         dummy_info = {"execution": "info", "status": "ok"}
         graph.execution_info = dummy_info
         info = graph.get_execution_info()

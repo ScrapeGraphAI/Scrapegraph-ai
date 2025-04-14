@@ -1,5 +1,3 @@
-import pytest
-
 from scrapegraphai.utils.convert_to_md import convert_to_md
 
 

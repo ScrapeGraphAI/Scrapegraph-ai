@@ -58,7 +58,7 @@ class DescriptionNode(BaseNode):
                 template=DESCRIPTION_NODE_PROMPT,
                 partial_variables={"content": chunk.get("document")},
             )
-            chain_name = f"chunk{i+1}"
+            chain_name = f"chunk{i + 1}"
             chains_dict[chain_name] = prompt | self.llm_model
 
         async_runner = RunnableParallel(**chains_dict)
