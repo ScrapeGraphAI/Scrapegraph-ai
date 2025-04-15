@@ -14,6 +14,67 @@ Tests for the AbstractGraph.
 """
 
 
+def test_llm_missing_tokens(monkeypatch, capsys):
+    """Test that missing model tokens causes default to 8192 with an appropriate warning printed."""
+    # Patch out models_tokens to simulate missing tokens for the given model
+    from scrapegraphai.graphs import abstract_graph
+
+    monkeypatch.setattr(
+        abstract_graph, "models_tokens", {"openai": {"gpt-3.5-turbo": 4096}}
+    )
+    llm_config = {"model": "openai/not-known-model", "openai_api_key": "test"}
+    # Patch _create_graph to return a dummy graph to avoid real graph creation
+    with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
+        graph = TestGraph("Test prompt", {"llm": llm_config})
+    # Since "not-known-model" is missing, it should default to 8192
+    assert graph.model_token == 8192
+    captured = capsys.readouterr().out
+    assert "Max input tokens for model" in captured
+
+
+def test_burr_kwargs():
+    """Test that burr_kwargs configuration correctly sets use_burr and burr_config on the graph."""
+    dummy_graph = Mock()
+    dummy_graph.nodes = []
+    with patch.object(TestGraph, "_create_graph", return_value=dummy_graph):
+        config = {
+            "llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"},
+            "burr_kwargs": {"some_key": "some_value"},
+        }
+        graph = TestGraph("Test prompt", config)
+    # Check that the burr_kwargs have been applied and an app_instance_id added if missing
+    assert dummy_graph.use_burr is True
+    assert dummy_graph.burr_config["some_key"] == "some_value"
+    assert "app_instance_id" in dummy_graph.burr_config
+
+
+def test_set_common_params():
+    """
+    Test that the set_common_params method correctly updates the configuration
+    of all nodes in the graph.
+    """
+    # Create a mock graph with mock nodes
+    mock_graph = Mock()
+    mock_node1 = Mock()
+    mock_node2 = Mock()
+    mock_graph.nodes = [mock_node1, mock_node2]
+    # Create a TestGraph instance with the mock graph
+    with patch(
+        "scrapegraphai.graphs.abstract_graph.AbstractGraph._create_graph",
+        return_value=mock_graph,
+    ):
+        graph = TestGraph(
+            "Test prompt",
+            {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}},
+        )
+    # Call set_common_params with test parameters
+    test_params = {"param1": "value1", "param2": "value2"}
+    graph.set_common_params(test_params)
+    # Assert that update_config was called on each node with the correct parameters
+    mock_node1.update_config.assert_called_once_with(test_params, False)
+    mock_node2.update_config.assert_called_once_with(test_params, False)
+
+
 class TestGraph(AbstractGraph):
     def __init__(self, prompt: str, config: dict):
         super().__init__(prompt, config)
@@ -78,6 +139,7 @@ class TestAbstractGraph:
                 {
                     "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
                     "region_name": "IDK",
+                    "temperature": 0.7,
                 },
                 ChatBedrock,
             ),
@@ -136,6 +198,7 @@ class TestAbstractGraph:
                 {
                     "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
                     "region_name": "IDK",
+                    "temperature": 0.7,
                     "rate_limit": {"requests_per_second": 1},
                 },
                 ChatBedrock,

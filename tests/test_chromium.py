@@ -1,5 +1,6 @@
 import asyncio
 import sys
+import time
 from unittest.mock import ANY, AsyncMock, patch
 
 import aiohttp
@@ -1934,3 +1935,264 @@ async def test_invalid_proxy_raises_error(monkeypatch):
     )
     with pytest.raises(ValueError, match="Invalid proxy"):
         ChromiumLoader(["http://example.com"], backend="playwright", proxy="bad_proxy")
+
+
+@pytest.mark.asyncio
+async def test_alazy_load_with_single_url_string(monkeypatch):
+    """Test that alazy_load yields Document objects when urls is a string (iterating over characters)."""
+    # Passing a string as URL; lazy_load will iterate each character.
+    loader = ChromiumLoader(
+        "http://example.com", backend="playwright", requires_js_support=False
+    )
+
+    async def dummy_scraper(url, browser_name="chromium"):
+        return f"<html>{url}</html>"
+
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_scraper)
+    docs = [doc async for doc in loader.alazy_load()]
+    # The expected number of documents is the length of the string
+    expected_length = len("http://example.com")
+    assert len(docs) == expected_length
+    # Check that the first document’s source is the first character ('h')
+    assert docs[0].metadata["source"] == "h"
+
+
+def test_lazy_load_with_single_url_string(monkeypatch):
+    """Test that lazy_load yields Document objects when urls is a string (iterating over characters)."""
+    loader = ChromiumLoader(
+        "http://example.com", backend="playwright", requires_js_support=False
+    )
+
+    async def dummy_scraper(url, browser_name="chromium"):
+        return f"<html>{url}</html>"
+
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_scraper)
+    docs = list(loader.lazy_load())
+    expected_length = len("http://example.com")
+    assert len(docs) == expected_length
+    # The first character from the URL is 'h'
+    assert docs[0].metadata["source"] == "h"
+
+
+@pytest.mark.asyncio
+async def test_ascrape_playwright_scroll_invalid_type(monkeypatch):
+    """Test that ascrape_playwright_scroll raises TypeError when invalid types are passed for scroll or sleep."""
+    # Create a dummy playwright so that evaluate and content can be called
+
+    loader = ChromiumLoader(["http://example.com"], backend="playwright")
+    # Passing a non‐numeric sleep value should eventually trigger an error
+    with pytest.raises(TypeError):
+        await loader.ascrape_playwright_scroll(
+            "http://example.com", scroll=6000, sleep="2", scroll_to_bottom=False
+        )
+
+
+@pytest.mark.asyncio
+async def test_alazy_load_non_iterable_urls():
+    """Test that alazy_load raises TypeError when urls is not an iterable (e.g., integer)."""
+    with pytest.raises(TypeError):
+        # Passing an integer as urls should cause a TypeError during iteration.
+        loader = ChromiumLoader(123, backend="playwright")
+        [doc async for doc in loader.alazy_load()]
+
+
+def test_lazy_load_non_iterable_urls():
+    """Test that lazy_load raises TypeError when urls is not an iterable (e.g., integer)."""
+    with pytest.raises(TypeError):
+        loader = ChromiumLoader(456, backend="playwright")
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+
+    # Create a loader instance with retry_limit=2 so that one failure is allowed.
+
+
+@pytest.mark.asyncio
+async def test_ascrape_playwright_caplog(monkeypatch, caplog):
+    """
+    Test that ascrape_playwright recovers on failure and that error messages are logged.
+    This test simulates one failed attempt (via a Timeout) and then a successful attempt.
+    """
+    # Create a loader instance with a retry limit of 2 and a short timeout.
+    loader = ChromiumLoader(
+        ["http://example.com"], backend="playwright", retry_limit=2, timeout=1
+    )
+    attempt = {"count": 0}
+
+    async def dummy_ascrape(url, browser_name="chromium"):
+        if attempt["count"] < 1:
+            attempt["count"] += 1
+            raise asyncio.TimeoutError("Simulated Timeout")
+        return "Recovered Content"
+
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_ascrape)
+    with caplog.at_level("ERROR"):
+        result = await loader.ascrape_playwright("http://example.com")
+    assert "Recovered Content" in result
+    assert any(
+        "Attempt 1 failed: Simulated Timeout" in record.message
+        for record in caplog.records
+    )
+
+    class DummyContext:
+        def __init__(self):
+            self.new_page_called = False
+
+        async def new_page(self):
+            self.new_page_called = True
+            return DummyPage()
+
+    class DummyBrowser:
+        def __init__(self):
+            self.new_context_kwargs = None
+
+        async def new_context(self, **kwargs):
+            self.new_context_kwargs = kwargs
+            return DummyContext()
+
+        async def close(self):
+            return
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+
+    # Initialize the loader with a non-empty storage_state value.
+    loader = ChromiumLoader(
+        ["http://example.com"], backend="playwright", storage_state="dummy_state"
+    )
+
+    # Call ascrape_playwright and capture its result.
+    result = await loader.ascrape_playwright("http://example.com")
+
+    # To verify that ignore_https_errors was passed into new_context,
+    # simulate a separate launch to inspect the new_context_kwargs.
+    browser_instance = await DummyPW.chromium.launch(
+        headless=loader.headless, proxy=loader.proxy
+    )
+    await browser_instance.new_context(
+        storage_state=loader.storage_state, ignore_https_errors=True
+    )
+    kwargs = browser_instance.new_context_kwargs
+
+    assert kwargs is not None
+    assert kwargs.get("ignore_https_errors") is True
+    assert kwargs.get("storage_state") == "dummy_state"
+    assert "<html>Ignore HTTPS errors Test</html>" in result
+
+
+@pytest.mark.asyncio
+async def test_ascrape_with_js_support_context_error_cleanup(monkeypatch):
+    """Test that ascrape_with_js_support calls browser.close() even if new_context fails."""
+    close_called = {"called": False}
+
+    class DummyBrowser:
+        async def new_context(self, **kwargs):
+            # Force an exception during context creation
+            raise Exception("Context error")
+
+        async def close(self):
+            close_called["called"] = True
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+    loader = ChromiumLoader(
+        ["http://example.com"],
+        backend="playwright",
+        requires_js_support=True,
+        retry_limit=1,
+        timeout=1,
+    )
+    with pytest.raises(RuntimeError, match="Failed to scrape after 1 attempts"):
+        await loader.ascrape_with_js_support("http://example.com")
+    assert close_called["called"] is True
+
+
+@pytest.mark.asyncio
+async def test_lazy_load_with_none_urls(monkeypatch):
+    """Test that lazy_load raises TypeError when urls is None."""
+    loader = ChromiumLoader(None, backend="playwright")
+    with pytest.raises(TypeError):
+        list(loader.lazy_load())
+
+
+@pytest.mark.asyncio
+def test_lazy_load_sequential_timing(monkeypatch):
+    """Test that lazy_load runs scraping sequentially rather than concurrently."""
+    urls = ["http://example.com/1", "http://example.com/2", "http://example.com/3"]
+    loader = ChromiumLoader(urls, backend="playwright", requires_js_support=False)
+
+    async def dummy_scraper_with_delay(url, browser_name="chromium"):
+        await asyncio.sleep(0.5)
+        return f"<html>Delayed content for {url}</html>"
+
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_scraper_with_delay)
+    start = time.monotonic()
+    docs = list(loader.lazy_load())
+    elapsed = time.monotonic() - start
+    # At least 0.5 seconds per URL should be observed.
+    assert elapsed >= 1.5, (
+        f"Sequential lazy_load took too little time: {elapsed:.2f} seconds"
+    )
+    for doc, url in zip(docs, urls):
+        assert f"Delayed content for {url}" in doc.page_content
+        assert doc.metadata["source"] == url
+
+
+@pytest.mark.asyncio
+def test_lazy_load_with_tuple_urls(monkeypatch):
+    """Test that lazy_load yields Document objects correctly when urls is provided as a tuple."""
+    urls = ("http://example.com", "http://test.com")
+    loader = ChromiumLoader(urls, backend="playwright", requires_js_support=False)
+
+    async def dummy_scraper(url, browser_name="chromium"):
+        return f"<html>Tuple content for {url}</html>"
+
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_scraper)
+    docs = list(loader.lazy_load())
+    assert len(docs) == 2
+    for doc, url in zip(docs, urls):
+        assert f"Tuple content for {url}" in doc.page_content
+        assert doc.metadata["source"] == url
