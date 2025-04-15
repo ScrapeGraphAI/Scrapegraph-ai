@@ -1,9 +1,39 @@
-## [1.44.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.1-beta.1...v1.44.0-beta.1) (2025-04-14)
+
+## [1.46.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.45.0...v1.46.0) (2025-03-27)
+
 
 
 ### Features
 
 * add new proxy rotation ([8913d8d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8913d8d3af3a2809d3ddcbfa09cbf2c9982a19cd))
+
+* add new logo ([c085d6c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c085d6c7ffcbf446439de97c9f88f8eadba5909c))
+
+## [1.45.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.44.0...v1.45.0) (2025-03-27)
+
+
+### Features
+
+* add scrapeless logo ([ae60e2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ae60e2b8bf7bda7519306cdd05d16c2c68538421))
+
+## [1.44.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.1...v1.44.0) (2025-03-26)
+
+
+### Features
+
+* add new model openai support ([087cbcb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/087cbcbc8f93665eade60156f070ada5847f3e58))
+
+## [1.43.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.0...v1.43.1) (2025-03-21)
+
+
+### Bug Fixes
+
+* Fixes schema option not working ([df1645c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/df1645c5ebc6bc2362992fec3887dcbedf519ba9))
+
+
+### CI
+
+* **release:** 1.43.1-beta.1 [skip ci] ([bdf813e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/bdf813eb03a60865050f4996b63f110ab3a366e7))
 
 ## [1.43.1-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.43.0...v1.43.1-beta.1) (2025-03-21)
 
