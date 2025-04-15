@@ -1,6 +1,6 @@
 import asyncio
 import sys
-from unittest.mock import AsyncMock, patch
+from unittest.mock import ANY, AsyncMock, patch
 
 import aiohttp
 import pytest
@@ -864,3 +864,541 @@ async def test_ascrape_playwright_browser_config(monkeypatch):
     result = await loader.ascrape_playwright("http://example.com")
     assert captured_kwargs.get("extra") == extra_kwarg_value
     assert "<html>Config Tested</html>" in result
+
+
+@pytest.mark.asyncio
+async def test_scrape_method_js_support(monkeypatch):
+    """Test that scrape method calls ascrape_with_js_support when requires_js_support is True."""
+
+    async def dummy_js(url):
+        return f"<html>JS supported content for {url}</html>"
+
+    urls = ["http://example.com"]
+    loader = ChromiumLoader(urls, backend="playwright", requires_js_support=True)
+    monkeypatch.setattr(loader, "ascrape_with_js_support", dummy_js)
+    result = await loader.scrape("http://example.com")
+    assert "JS supported content" in result
+
+
+@pytest.mark.asyncio
+async def test_ascrape_playwright_scroll_retry_failure(monkeypatch):
+    """Test that ascrape_playwright_scroll retries on failure and returns an error message after retry_limit attempts."""
+
+    # Dummy page that always raises Timeout on goto
+    class DummyPage:
+        async def goto(self, url, wait_until):
+            raise asyncio.TimeoutError("Simulated timeout in goto")
+
+        async def wait_for_load_state(self, state):
+            return
+
+        async def content(self):
+            return "<html>No Content</html>"
+
+        evaluate = AsyncMock(
+            side_effect=asyncio.TimeoutError("Simulated timeout in evaluate")
+        )
+
+        mouse = AsyncMock()
+
+    class DummyContext:
+        async def new_page(self):
+            return DummyPage()
+
+    class DummyBrowser:
+        async def new_context(self, **kwargs):
+            return DummyContext()
+
+        async def close(self):
+            return
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+
+    urls = ["http://example.com"]
+    loader = ChromiumLoader(urls, backend="playwright", retry_limit=2, timeout=1)
+    # Use a scroll value just above minimum and a sleep value > 0
+    result = await loader.ascrape_playwright_scroll(
+        "http://example.com", scroll=5000, sleep=1
+    )
+    assert "Error: Network error after 2 attempts" in result
+
+
+@pytest.mark.asyncio
+async def test_alazy_load_order(monkeypatch):
+    """Test that alazy_load returns documents in the same order as the input URLs even if scraping tasks complete out of order."""
+    urls = [
+        "http://example.com/first",
+        "http://example.com/second",
+        "http://example.com/third",
+    ]
+    loader = ChromiumLoader(urls, backend="playwright")
+
+    async def delayed_scraper(url):
+        # Delay inversely proportional to a function of the url to scramble finish order
+        import asyncio
+
+        delay = 0.3 - 0.1 * (len(url) % 3)
+        await asyncio.sleep(delay)
+        return f"<html>Content for {url}</html>"
+
+    monkeypatch.setattr(loader, "ascrape_playwright", delayed_scraper)
+
+    docs = [doc async for doc in loader.alazy_load()]
+    # Ensure that the order of documents matches the order of input URLs
+    for doc, url in zip(docs, urls):
+        assert doc.metadata["source"] == url
+        assert f"Content for {url}" in doc.page_content
+
+
+@pytest.mark.asyncio
+async def test_ascrape_with_js_support_calls_close(monkeypatch):
+    """Test that ascrape_with_js_support calls browser.close() after scraping."""
+    close_called_flag = {"called": False}
+
+    class DummyPage:
+        async def goto(self, url, wait_until):
+            return
+
+        async def wait_for_load_state(self, state):
+            return
+
+        async def content(self):
+            return "<html>Dummy Content</html>"
+
+    class DummyContext:
+        async def new_page(self):
+            return DummyPage()
+
+    class DummyBrowser:
+        async def new_context(self, **kwargs):
+            return DummyContext()
+
+        async def close(self):
+            close_called_flag["called"] = True
+            return
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+
+    urls = ["http://example.com"]
+    loader = ChromiumLoader(
+        urls, backend="playwright", requires_js_support=True, retry_limit=1, timeout=5
+    )
+    result = await loader.ascrape_with_js_support("http://example.com")
+    assert result == "<html>Dummy Content</html>"
+    assert close_called_flag["called"] is True
+
+
+@pytest.mark.asyncio
+async def test_lazy_load_invalid_backend(monkeypatch):
+    """Test that lazy_load raises AttributeError if the scraping method for an invalid backend is missing."""
+    # Create a loader instance with a backend that does not have a corresponding scraping method.
+    loader = ChromiumLoader(["http://example.com"], backend="nonexistent")
+    with pytest.raises(AttributeError):
+        # lazy_load calls asyncio.run(scraping_fn(url)) for each URL.
+        list(loader.lazy_load())
+
+
+@pytest.mark.asyncio
+async def test_ascrape_undetected_chromedriver_failure(monkeypatch):
+    """Test that ascrape_undetected_chromedriver returns an error message after all retry attempts when driver.get always fails."""
+    import types
+
+    # Create a dummy undetected_chromedriver module with a dummy Chrome driver that always fails.
+    dummy_module = types.ModuleType("undetected_chromedriver")
+
+    class DummyDriver:
+        def __init__(self, options):
+            self.options = options
+            self.quit_called = False
+
+        def get(self, url):
+            # Simulate a failure in fetching the page.
+            raise aiohttp.ClientError("Forced failure in get")
+
+        @property
+        def page_source(self):
+            return "<html>This should not be reached</html>"
+
+        def quit(self):
+            self.quit_called = True
+
+    dummy_module.Chrome = lambda options: DummyDriver(options)
+    monkeypatch.setitem(sys.modules, "undetected_chromedriver", dummy_module)
+
+    loader = ChromiumLoader(
+        ["http://example.com"], backend="selenium", retry_limit=2, timeout=1
+    )
+    loader.browser_name = "chromium"
+    result = await loader.ascrape_undetected_chromedriver("http://example.com")
+    # Check that the error message indicates the number of attempts and the forced failure.
+    assert "Error: Network error after 2 attempts" in result
+
+
+@pytest.mark.asyncio
+async def test_ascrape_playwright_scroll_constant_height(mock_playwright):
+    """Test that ascrape_playwright_scroll exits the scroll loop when page height remains constant."""
+    mock_pw, mock_browser, mock_context, mock_page = mock_playwright
+    # Set evaluate to always return constant height value (simulate constant page height)
+    mock_page.evaluate.return_value = 1000
+    # Return dummy content once scrolling loop breaks
+    mock_page.content.return_value = "<html>Constant height content</html>"
+    # Use a scroll value above minimum and a very short sleep to cycle quickly
+    loader = ChromiumLoader(["http://example.com"], backend="playwright")
+    result = await loader.ascrape_playwright_scroll(
+        "http://example.com", scroll=6000, sleep=0.1
+    )
+    assert "Constant height content" in result
+
+
+def test_lazy_load_empty_content(monkeypatch):
+    """Test that lazy_load yields a Document with empty content if the scraper returns an empty string."""
+    from langchain_core.documents import Document
+
+    urls = ["http://example.com"]
+    loader = ChromiumLoader(urls, backend="playwright", requires_js_support=False)
+
+    async def dummy_scraper(url):
+        return ""
+
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_scraper)
+    docs = list(loader.lazy_load())
+    assert len(docs) == 1
+    for doc in docs:
+        assert isinstance(doc, Document)
+        assert doc.page_content == ""
+        assert doc.metadata["source"] in urls
+
+
+@pytest.mark.asyncio
+async def test_lazy_load_scraper_returns_none(monkeypatch):
+    """Test that lazy_load yields Document objects with page_content as None when the scraper returns None."""
+    urls = ["http://example.com", "http://test.com"]
+    loader = ChromiumLoader(urls, backend="playwright")
+
+    async def dummy_none(url):
+        return None
+
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_none)
+    docs = list(loader.lazy_load())
+    assert len(docs) == 2
+    for doc, url in zip(docs, urls):
+        from langchain_core.documents import Document
+
+        assert isinstance(doc, Document)
+        assert doc.page_content is None
+        assert doc.metadata["source"] == url
+
+
+@pytest.mark.asyncio
+async def test_alazy_load_mixed_none_and_content(monkeypatch):
+    """Test that alazy_load yields Document objects in order when one scraper returns None and the other valid HTML."""
+    urls = ["http://example.com", "http://none.com"]
+    loader = ChromiumLoader(urls, backend="playwright")
+
+    async def mixed_scraper(url):
+        if "none" in url:
+            return None
+        return f"<html>Valid content for {url}</html>"
+
+    monkeypatch.setattr(loader, "ascrape_playwright", mixed_scraper)
+    docs = [doc async for doc in loader.alazy_load()]
+    assert len(docs) == 2
+    # Ensure order is preserved and check contents
+    assert docs[0].metadata["source"] == "http://example.com"
+    assert "<html>Valid content for http://example.com</html>" in docs[0].page_content
+    assert docs[1].metadata["source"] == "http://none.com"
+    assert docs[1].page_content is None
+
+
+@pytest.mark.asyncio
+async def test_ascrape_with_js_support_exception_cleanup(monkeypatch):
+    """Test that ascrape_with_js_support calls browser.close() after an exception occurs."""
+    close_called_flag = {"called": False}
+
+    class DummyPage:
+        async def goto(self, url, wait_until):
+            raise asyncio.TimeoutError("Forced timeout")
+
+        async def wait_for_load_state(self, state):
+            return
+
+        async def content(self):
+            return "<html>No Content</html>"
+
+    class DummyContext:
+        async def new_page(self):
+            return DummyPage()
+
+    class DummyBrowser:
+        async def new_context(self, **kwargs):
+            return DummyContext()
+
+        async def close(self):
+            close_called_flag["called"] = True
+            return
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+
+    loader = ChromiumLoader(
+        ["http://example.com"],
+        backend="playwright",
+        requires_js_support=True,
+        retry_limit=1,
+        timeout=1,
+    )
+
+    with pytest.raises(RuntimeError, match="Failed to scrape after 1 attempts"):
+        await loader.ascrape_with_js_support("http://example.com")
+
+
+@patch("scrapegraphai.docloaders.chromium.dynamic_import")
+def test_init_dynamic_import_called(mock_dynamic_import):
+    """Test that dynamic_import is called during initialization."""
+    urls = ["http://example.com"]
+    _ = ChromiumLoader(urls, backend="playwright")
+    mock_dynamic_import.assert_called_with("playwright", ANY)
+
+
+@pytest.mark.asyncio
+async def test_alazy_load_selenium_backend(monkeypatch):
+    """Test that alazy_load correctly yields Document objects when using selenium backend."""
+    urls = ["http://example.com", "http://selenium.com"]
+    loader = ChromiumLoader(urls, backend="selenium")
+
+    async def dummy_selenium(url):
+        return f"<html>dummy selenium backend content for {url}</html>"
+
+    monkeypatch.setattr(loader, "ascrape_undetected_chromedriver", dummy_selenium)
+    docs = [doc async for doc in loader.alazy_load()]
+    for doc, url in zip(docs, urls):
+        assert f"dummy selenium backend content for {url}" in doc.page_content
+        assert doc.metadata["source"] == url
+    assert close_called_flag["called"] is True
+
+
+@pytest.mark.asyncio
+async def test_ascrape_undetected_chromedriver_zero_retry(monkeypatch):
+    """Test that ascrape_undetected_chromedriver returns empty result when retry_limit is set to 0."""
+    import types
+
+    # Create a dummy undetected_chromedriver module where Chrome is defined but will not be used.
+    dummy_module = types.ModuleType("undetected_chromedriver")
+    dummy_module.Chrome = lambda options: None
+    monkeypatch.setitem(sys.modules, "undetected_chromedriver", dummy_module)
+
+    loader = ChromiumLoader(
+        ["http://example.com"], backend="selenium", retry_limit=0, timeout=5
+    )
+    loader.browser_name = "chromium"
+    # With retry_limit=0, the while loop never runs so the result remains an empty string.
+    result = await loader.ascrape_undetected_chromedriver("http://example.com")
+    assert result == ""
+
+
+@pytest.mark.asyncio
+async def test_scrape_selenium_exception(monkeypatch):
+    """Test that the scrape method for selenium backend raises a ValueError when ascrape_undetected_chromedriver fails."""
+
+    async def failing_scraper(url):
+        raise Exception("dummy error")
+
+    urls = ["http://example.com"]
+    loader = ChromiumLoader(urls, backend="selenium", retry_limit=1, timeout=5)
+    loader.browser_name = "chromium"
+    monkeypatch.setattr(loader, "ascrape_undetected_chromedriver", failing_scraper)
+    with pytest.raises(
+        ValueError, match="Failed to scrape with undetected chromedriver: dummy error"
+    ):
+        await loader.scrape("http://example.com")
+
+
+@pytest.mark.asyncio
+async def test_ascrape_playwright_scroll_exception_cleanup(monkeypatch):
+    """Test that ascrape_playwright_scroll calls browser.close() when an exception occurs during page navigation."""
+    close_called = {"called": False}
+
+    class DummyPage:
+        async def goto(self, url, wait_until):
+            raise asyncio.TimeoutError("Simulated timeout in goto")
+
+        async def wait_for_load_state(self, state):
+            return
+
+        async def content(self):
+            return "<html>Never reached</html>"
+
+        async def evaluate(self, script):
+            return 1000  # constant height value to simulate no progress in scrolling
+
+        mouse = AsyncMock()
+        mouse.wheel = AsyncMock()
+
+    class DummyContext:
+        async def new_page(self):
+            return DummyPage()
+
+    class DummyBrowser:
+        async def new_context(self, **kwargs):
+            return DummyContext()
+
+        async def close(self):
+            close_called["called"] = True
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+
+    loader = ChromiumLoader(
+        ["http://example.com"],
+        backend="playwright",
+        retry_limit=2,
+        timeout=1,
+        headless=True,
+    )
+    result = await loader.ascrape_playwright_scroll(
+        "http://example.com", scroll=5000, sleep=0.1, scroll_to_bottom=True
+    )
+
+    assert "Error: Network error after" in result
+    assert close_called["called"] is True
+
+
+@pytest.mark.asyncio
+async def test_ascrape_with_js_support_non_timeout_retry(monkeypatch):
+    """Test that ascrape_with_js_support retries on a non-timeout exception and eventually succeeds."""
+    attempt = {"count": 0}
+
+    class DummyPage:
+        async def goto(self, url, wait_until):
+            if attempt["count"] < 1:
+                attempt["count"] += 1
+                raise ValueError("Non-timeout error")
+
+        async def wait_for_load_state(self, state):
+            return
+
+        async def content(self):
+            return "<html>Success after non-timeout retry</html>"
+
+    class DummyContext:
+        async def new_page(self):
+            return DummyPage()
+
+    class DummyBrowser:
+        async def new_context(self, **kwargs):
+            return DummyContext()
+
+        async def close(self):
+            return
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
+    loader = ChromiumLoader(
+        ["http://nontimeout.com"],
+        backend="playwright",
+        requires_js_support=True,
+        retry_limit=2,
+        timeout=1,
+    )
+    result = await loader.ascrape_with_js_support("http://nontimeout.com")
+    assert "Success after non-timeout retry" in result
+
+
+@pytest.mark.asyncio
+async def test_scrape_uses_js_support_flag(monkeypatch):
+    """Test that the scrape method uses ascrape_with_js_support when requires_js_support is True."""
+
+    async def dummy_js(url, browser_name="chromium"):
+        return f"<html>JS flag content for {url}</html>"
+
+    async def dummy_playwright(url, browser_name="chromium"):
+        return f"<html>Playwright content for {url}</html>"
+
+    urls = ["http://example.com"]
+    loader = ChromiumLoader(urls, backend="playwright", requires_js_support=True)
+    monkeypatch.setattr(loader, "ascrape_with_js_support", dummy_js)
+    monkeypatch.setattr(loader, "ascrape_playwright", dummy_playwright)
+    result = await loader.scrape("http://example.com")
+    assert "JS flag content" in result
