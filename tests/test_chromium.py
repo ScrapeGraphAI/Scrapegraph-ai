@@ -1987,13 +1987,17 @@ async def test_ascrape_playwright_scroll_invalid_type(monkeypatch):
         )
 
 
-@pytest.mark.asyncio
-async def test_alazy_load_non_iterable_urls():
-    """Test that alazy_load raises TypeError when urls is not an iterable (e.g., integer)."""
-    with pytest.raises(TypeError):
-        # Passing an integer as urls should cause a TypeError during iteration.
-        loader = ChromiumLoader(123, backend="playwright")
-        [doc async for doc in loader.alazy_load()]
+def test_lazy_load_non_iterable_urls():
+    """Test that lazy_load treats a non‐iterable urls value as a single URL and returns one Document."""
+    loader = ChromiumLoader(456, backend="playwright")
+    docs = list(loader.lazy_load())
+    from langchain_core.documents import Document
+
+    assert len(docs) == 1, (
+        "Expected one Document when a single URL (non-iterable) is provided"
+    )
+    assert isinstance(docs[0], Document)
+    assert docs[0].metadata["source"] == 456
 
 
 def test_lazy_load_non_iterable_urls():

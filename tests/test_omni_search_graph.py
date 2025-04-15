@@ -25,14 +25,14 @@ class TestOmniSearchGraph:
     def test_run_with_answer(self):
         """Test that the run() method returns the correct answer when present."""
         config = {
-            "llm": {"model": "dummy-model"},
+            "llm": {"model": "openai/dummy-model"},
             "max_results": 3,
             "search_engine": "dummy-engine",
         }
         prompt = "Test prompt?"
         graph_instance = OmniSearchGraph(prompt, config)
         # Set required attribute manually
-        graph_instance.llm_model = {"model": "dummy-model"}
+        graph_instance.llm_model = {"model": "dummy/dummy-model"}
         # Inject a DummyGraph that returns a final state containing an "answer"
         dummy_final_state = {"answer": "expected answer"}
         graph_instance.graph = DummyGraph(dummy_final_state)
@@ -42,13 +42,13 @@ class TestOmniSearchGraph:
     def test_run_without_answer(self):
         """Test that the run() method returns the default message when no answer is found."""
         config = {
-            "llm": {"model": "dummy-model"},
+            "llm": {"model": "openai/dummy-model"},
             "max_results": 3,
             "search_engine": "dummy-engine",
         }
         prompt = "Test prompt without answer?"
         graph_instance = OmniSearchGraph(prompt, config)
-        graph_instance.llm_model = {"model": "dummy-model"}
+        graph_instance.llm_model = {"model": "dummy/dummy-model"}
         # Inject a DummyGraph that returns an empty final state
         dummy_final_state = {}
         graph_instance.graph = DummyGraph(dummy_final_state)
@@ -58,14 +58,14 @@ class TestOmniSearchGraph:
     def test_create_graph_structure(self):
         """Test that the _create_graph() method returns a graph with the expected structure."""
         config = {
-            "llm": {"model": "dummy-model"},
+            "llm": {"model": "openai/dummy-model"},
             "max_results": 4,
             "search_engine": "dummy-engine",
         }
         prompt = "Structure test prompt"
         # Using a dummy schema for testing
         graph_instance = OmniSearchGraph(prompt, config, schema=DummySchema)
-        graph_instance.llm_model = {"model": "dummy-model"}
+        graph_instance.llm_model = {"model": "dummy/dummy-model"}
         constructed_graph = graph_instance._create_graph()
         # Ensure constructed_graph has essential attributes
         assert hasattr(constructed_graph, "nodes")
@@ -81,7 +81,7 @@ class TestOmniSearchGraph:
     def test_config_deepcopy(self):
         """Test that the config passed to OmniSearchGraph is deep copied properly."""
         config = {
-            "llm": {"model": "dummy-model"},
+            "llm": {"model": "openai/dummy-model"},
             "max_results": 2,
             "search_engine": "dummy-engine",
         }
@@ -96,7 +96,7 @@ class TestOmniSearchGraph:
     def test_schema_deepcopy(self):
         """Test that the schema is deep copied correctly so external changes do not affect it."""
         config = {
-            "llm": {"model": "dummy-model"},
+            "llm": {"model": "openai/dummy-model"},
             "max_results": 2,
             "search_engine": "dummy-engine",
         }
