@@ -1,9 +1,19 @@
 ## [1.47.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.47.0-beta.1...v1.47.0-beta.2) (2025-04-15)
 
 
+
 ### Features
 
 * add 4.1 integration ([54d5e46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/54d5e46d4c5adcd2b2b6c49003a16227905d2af0))
+
+* add new proxy rotation ([8913d8d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8913d8d3af3a2809d3ddcbfa09cbf2c9982a19cd))
+
+
+### CI
+
+* **release:** 1.44.0-beta.1 [skip ci] ([5e944cc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5e944cc573f62585dbf3366aa840c997847523d1))
+* **release:** 1.47.0-beta.1 [skip ci] ([b1b8579](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b1b8579704f509d5560c3052f1edfdf31e42db4b))
+
 
 ## [1.47.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.46.0...v1.47.0-beta.1) (2025-04-15)
 
