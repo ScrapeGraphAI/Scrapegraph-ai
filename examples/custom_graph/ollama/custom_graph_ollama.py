@@ -2,8 +2,6 @@
 Example of custom graph using existing nodes
 """
 
-import os
-
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 from scrapegraphai.graphs import BaseGraph
@@ -11,7 +9,6 @@ from scrapegraphai.nodes import (
     FetchNode,
     GenerateAnswerNode,
     ParseNode,
-    RAGNode,
     RobotsNode,
 )
 

@@ -44,7 +44,6 @@ class OmniSearchGraph(AbstractGraph):
     def __init__(
         self, prompt: str, config: dict, schema: Optional[Type[BaseModel]] = None
     ):
-
         self.max_results = config.get("max_results", 3)
 
         self.copy_config = safe_deepcopy(config)

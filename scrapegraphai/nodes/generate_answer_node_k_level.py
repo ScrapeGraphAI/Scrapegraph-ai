@@ -155,7 +155,7 @@ class GenerateAnswerNodeKLevel(BaseNode):
                     "chunk_id": i + 1,
                 },
             )
-            chain_name = f"chunk{i+1}"
+            chain_name = f"chunk{i + 1}"
             chains_dict[chain_name] = prompt | self.llm_model
 
         async_runner = RunnableParallel(**chains_dict)

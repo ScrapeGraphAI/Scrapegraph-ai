@@ -122,7 +122,6 @@ class SearchLinkNode(BaseNode):
             )
         ):
             try:
-
                 links = re.findall(r'https?://[^\s"<>\]]+', str(chunk.page_content))
 
                 if not self.filter_links:

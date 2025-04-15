@@ -177,7 +177,7 @@ class AbstractGraph(ABC):
             ]
             if len(possible_providers) <= 0:
                 raise ValueError(
-                    f"""Provider {llm_params['model_provider']} is not supported.
+                    f"""Provider {llm_params["model_provider"]} is not supported.
                                 If possible, try to use a model instance instead."""
                 )
             llm_params["model_provider"] = possible_providers[0]
@@ -190,7 +190,7 @@ class AbstractGraph(ABC):
 
         if llm_params["model_provider"] not in known_providers:
             raise ValueError(
-                f"""Provider {llm_params['model_provider']} is not supported.
+                f"""Provider {llm_params["model_provider"]} is not supported.
                              If possible, try to use a model instance instead."""
             )
 
@@ -201,7 +201,7 @@ class AbstractGraph(ABC):
                 ]
             except KeyError:
                 print(
-                    f"""Max input tokens for model {llm_params['model_provider']}/{llm_params['model']} not found,
+                    f"""Max input tokens for model {llm_params["model_provider"]}/{llm_params["model"]} not found,
                     please specify the model_tokens parameter in the llm section of the graph configuration.
                     Using default token size: 8192"""
                 )

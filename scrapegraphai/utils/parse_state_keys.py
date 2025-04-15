@@ -56,7 +56,6 @@ def parse_expression(expression, state: dict) -> list:
         or "&|" in expression
         or "|&" in expression
     ):
-
         raise ValueError("Invalid operator usage.")
 
     open_parentheses = close_parentheses = 0

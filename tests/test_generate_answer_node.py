@@ -1,8 +1,6 @@
 import json
+
 import pytest
-from langchain.prompts import (
-    PromptTemplate,
-)
 from langchain_community.chat_models import (
     ChatOllama,
 )
@@ -12,19 +10,18 @@ from langchain_core.runnables import (
 from requests.exceptions import (
     Timeout,
 )
+
 from scrapegraphai.nodes.generate_answer_node import (
     GenerateAnswerNode,
 )
 
 
 class DummyLLM:
-
     def __call__(self, *args, **kwargs):
         return "dummy response"
 
 
 class DummyLogger:
-
     def info(self, msg):
         pass
 

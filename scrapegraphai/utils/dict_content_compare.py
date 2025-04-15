@@ -53,7 +53,9 @@ def normalize_list(lst: List[Any]) -> List[Any]:
             else (
                 normalize_list(item)
                 if isinstance(item, list)
-                else item.lower().strip() if isinstance(item, str) else item
+                else item.lower().strip()
+                if isinstance(item, str)
+                else item
             )
         )
         for item in lst

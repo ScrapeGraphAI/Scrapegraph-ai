@@ -2,8 +2,6 @@
 Parse_state_key test module
 """
 
-import pytest
-
 from scrapegraphai.utils.parse_state_keys import parse_expression
 
 

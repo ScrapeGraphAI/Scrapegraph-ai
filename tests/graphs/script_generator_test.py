@@ -5,7 +5,6 @@ Module for making the tests for ScriptGeneratorGraph
 import pytest
 
 from scrapegraphai.graphs import ScriptCreatorGraph
-from scrapegraphai.utils import prettify_exec_info
 
 
 @pytest.fixture
@@ -35,6 +34,6 @@ def test_script_creator_graph(graph_config: dict):
         config=graph_config,
     )
     result = smart_scraper_graph.run()
-    assert (
-        result is not None
-    ), "ScriptCreatorGraph execution failed to produce a result."
+    assert result is not None, (
+        "ScriptCreatorGraph execution failed to produce a result."
+    )

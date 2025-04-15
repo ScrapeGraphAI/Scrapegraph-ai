@@ -1,5 +1,3 @@
-import copy
-
 import pytest
 from pydantic.v1 import BaseModel
 

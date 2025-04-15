@@ -82,10 +82,9 @@ class MergeAnswersNode(BaseNode):
 
         answers_str = ""
         for i, answer in enumerate(answers):
-            answers_str += f"CONTENT WEBSITE {i+1}: {answer}\n"
+            answers_str += f"CONTENT WEBSITE {i + 1}: {answer}\n"
 
         if self.node_config.get("schema", None) is not None:
-
             if isinstance(self.llm_model, (ChatOpenAI, ChatMistralAI)):
                 self.llm_model = self.llm_model.with_structured_output(
                     schema=self.node_config["schema"]

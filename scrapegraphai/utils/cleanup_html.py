@@ -2,11 +2,47 @@
 Module for minimizing the code
 """
 
+import json
 import re
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup, Comment
 from minify_html import minify
+
+
+def extract_from_script_tags(soup):
+    script_content = []
+
+    for script in soup.find_all("script"):
+        content = script.string
+        if content:
+            try:
+                json_pattern = r"(?:const|let|var)?\s*\w+\s*=\s*({[\s\S]*?});?$"
+                json_matches = re.findall(json_pattern, content)
+
+                for potential_json in json_matches:
+                    try:
+                        parsed = json.loads(potential_json)
+                        if parsed:
+                            script_content.append(
+                                f"JSON data from script: {json.dumps(parsed, indent=2)}"
+                            )
+                    except json.JSONDecodeError:
+                        pass
+
+                if "window." in content or "document." in content:
+                    data_pattern = r"(?:window|document)\.(\w+)\s*=\s*([^;]+);"
+                    data_matches = re.findall(data_pattern, content)
+
+                    for var_name, var_value in data_matches:
+                        script_content.append(
+                            f"Dynamic data - {var_name}: {var_value.strip()}"
+                        )
+            except Exception:
+                if len(content) < 1000:
+                    script_content.append(f"Script content: {content.strip()}")
+
+    return "\n\n".join(script_content)
 
 
 def cleanup_html(html_content: str, base_url: str) -> str:
@@ -35,7 +71,9 @@ def cleanup_html(html_content: str, base_url: str) -> str:
     title_tag = soup.find("title")
     title = title_tag.get_text() if title_tag else ""
 
-    for tag in soup.find_all(["script", "style"]):
+    script_content = extract_from_script_tags(soup)
+
+    for tag in soup.find_all("style"):
         tag.extract()
 
     link_urls = [
@@ -54,7 +92,7 @@ def cleanup_html(html_content: str, base_url: str) -> str:
     body_content = soup.find("body")
     if body_content:
         minimized_body = minify(str(body_content))
-        return title, minimized_body, link_urls, image_urls
+        return title, minimized_body, link_urls, image_urls, script_content
 
     else:
         raise ValueError(
@@ -106,10 +144,10 @@ def reduce_html(html, reduction):
     for comment in soup.find_all(string=lambda text: isinstance(text, Comment)):
         comment.extract()
 
-    for tag in soup(["script", "style"]):
+    for tag in soup(["style"]):
         tag.string = ""
 
-    attrs_to_keep = ["class", "id", "href", "src"]
+    attrs_to_keep = ["class", "id", "href", "src", "type"]
     for tag in soup.find_all(True):
         for attr in list(tag.attrs):
             if attr not in attrs_to_keep:
@@ -118,7 +156,7 @@ def reduce_html(html, reduction):
     if reduction == 1:
         return minify_html(str(soup))
 
-    for tag in soup(["script", "style"]):
+    for tag in soup(["style"]):
         tag.decompose()
 
     body = soup.body
@@ -126,7 +164,7 @@ def reduce_html(html, reduction):
         return "No <body> tag found in the HTML"
 
     for tag in body.find_all(string=True):
-        if tag.parent.name not in ["script", "style"]:
+        if tag.parent.name not in ["script"]:
             tag.replace_with(re.sub(r"\s+", " ", tag.strip())[:20])
 
     reduced_html = str(body)

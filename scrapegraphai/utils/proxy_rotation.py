@@ -6,6 +6,7 @@ import ipaddress
 import random
 import re
 from typing import List, Optional, Set, TypedDict
+from urllib.parse import urlparse
 
 import requests
 from fp.errors import FreeProxyException
@@ -188,59 +189,23 @@ def is_ipv4_address(address: str) -> bool:
 
 
 def parse_or_search_proxy(proxy: Proxy) -> ProxySettings:
-    """parses a proxy configuration or searches for a new one matching
-    the specified broker criteria
-
-    Args:
-        proxy: The proxy configuration to parse or search for.
-
-    Returns:
-        A 'playwright' compliant proxy configuration.
-
-    Notes:
-        - If the proxy server is a IP address, it is assumed to be
-        a proxy server address.
-        - If the proxy server is 'broker', a proxy server is searched for
-        based on the provided broker criteria.
-
-    Example:
-        >>> proxy = {
-        ...     "server": "broker",
-        ...     "criteria": {
-        ...         "anonymous": True,
-        ...         "countryset": {"GB", "US"},
-        ...         "secure": True,
-        ...         "timeout": 5.0
-        ...         "search_outside_if_empty": False
-        ...     }
-        ... }
-
-        >>> parse_or_search_proxy(proxy)
-        {
-            "server": "<proxy-server-matching-criteria>",
-        }
-
-    Example:
-        >>> proxy = {
-        ...     "server": "192.168.1.1:8080",
-        ...     "username": "<username>",
-        ...     "password": "<password>"
-        ... }
-
-        >>> parse_or_search_proxy(proxy)
-        {
-            "server": "192.168.1.1:8080",
-            "username": "<username>",
-            "password": "<password>"
-        }
     """
-    assert "server" in proxy, "missing server in the proxy configuration"
+    Parses a proxy configuration or searches for a matching one via broker.
+    """
+    assert "server" in proxy, "Missing 'server' field in the proxy configuration."
 
-    server_address = re.sub(r"^\w+://", "", proxy["server"]).split(":", maxsplit=1)[0]
+    parsed_url = urlparse(proxy["server"])
+    server_address = parsed_url.hostname
 
-    if is_ipv4_address(server_address):
+    if server_address is None:
+        raise ValueError(f"Invalid proxy server format: {proxy['server']}")
+
+    # Accept both IP addresses and domain names like 'gate.nodemaven.com'
+    if is_ipv4_address(server_address) or re.match(
+        r"^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", server_address
+    ):
         return _parse_proxy(proxy)
 
-    assert proxy["server"] == "broker", "unknown proxy server"
+    assert proxy["server"] == "broker", f"Unknown proxy server type: {proxy['server']}"
 
     return _search_proxy(proxy)

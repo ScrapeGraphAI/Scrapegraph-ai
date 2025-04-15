@@ -6,7 +6,6 @@ from scrapegraphai.nodes import SearchInternetNode
 
 
 class TestSearchInternetNode(unittest.TestCase):
-
     def setUp(self):
         # Configuration for the graph
         self.graph_config = {
