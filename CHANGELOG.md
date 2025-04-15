@@ -1,3 +1,16 @@
+## [1.48.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.47.0...v1.48.0) (2025-04-15)
+
+
+### Features
+
+* add 4.1 integration ([54d5e46](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/54d5e46d4c5adcd2b2b6c49003a16227905d2af0))
+
+
+### CI
+
+* **release:** 1.47.0-beta.2 [skip ci] ([2019c90](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2019c907a54a84fc0e80bf26bd0d97b9b5cf9fb1))
+* **release:** 1.48.0-beta.1 [skip ci] ([cbf88fd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cbf88fdeec99a095491bbceebffd664ae0a14a4b))
+
 ## [1.48.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.47.0...v1.48.0-beta.1) (2025-04-15)
 
 
