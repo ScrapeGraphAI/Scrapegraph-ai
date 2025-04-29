@@ -1,3 +1,10 @@
+## [1.49.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.48.0...v1.49.0) (2025-04-29)
+
+
+### Features
+
+* enhance error handling and validation across utility modules ([b552aa9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b552aa902fb4f5052468148851434062d8e74b94))
+
 ## [1.48.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.47.0...v1.48.0) (2025-04-15)
 
 
