@@ -31,6 +31,8 @@ models_tokens = {
         "gpt-4.5-preview": 128000,
         "o1-preview": 128000,
         "o1-mini": 128000,
+        "o1": 128000,
+        "gpt-4.5-preview": 128000,
         "o3-mini": 200000,
     },
     "azure_openai": {
