@@ -5,6 +5,9 @@
 
 * add new openai models ([97ee48c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/97ee48cb52038ec746d8ec78de029c8dde6a7753))
 
+* enhance error handling and validation across utility modules ([b552aa9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b552aa902fb4f5052468148851434062d8e74b94))
+
+
 ## [1.48.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.47.0...v1.48.0) (2025-04-15)
 
 
