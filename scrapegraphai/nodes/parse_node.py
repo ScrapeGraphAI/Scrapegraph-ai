@@ -121,7 +121,6 @@ class ParseNode(BaseNode):
 
         state.update({self.output[0]: chunks})
         state.update({"parsed_doc": chunks})
-        state.update({"content": chunks})
 
         if self.parse_urls:
             state.update({self.output[1]: link_urls})
