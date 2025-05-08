@@ -356,7 +356,7 @@ class FetchNode(BaseNode):
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
-        state["original_html"] = document
+        state["doc"] = document
         state.update(
             {
                 self.output[0]: compressed_document,
