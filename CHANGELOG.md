@@ -1,3 +1,10 @@
+## [1.51.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.50.0...v1.51.0) (2025-05-13)
+
+
+### Features
+
+* add minor fixes ([0b4b27e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0b4b27e550ca725ed974f3488d13b161a2b48d46))
+
 ## [1.50.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.49.0...v1.50.0) (2025-04-29)
 
 
