@@ -27,7 +27,7 @@ Just say which information you want to extract and the library will do it for yo
 ## 🚀 Integrations
 ScrapeGraphAI offers seamless integration with popular frameworks and tools to enhance your scraping capabilities. Whether you're building with Python or Node.js, using LLM frameworks, or working with no-code platforms, we've got you covered with our comprehensive integration options..
 
-You cna find more informations at the following [link](https://scrapegraphai.com)
+You can find more informations at the following [link](https://scrapegraphai.com)
 
 **Integrations**:
 
