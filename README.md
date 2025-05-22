@@ -192,9 +192,6 @@ The Official API Documentation can be found [here](https://docs.scrapegraphai.co
     <a href="https://scrape.do">
     <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapedo.png" alt="Stats" style="width: 11%;">
   </a>
-    <a href="https://www.scrapeless.com/en?utm_source=github&utm_medium=ads&utm_campaign=scraping&utm_term=scrapegraphai">
-    <img src="https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/assets/scrapeless.png" alt="Stats" style="width: 11%;">
-  </a>
 </div>
 
 ## 📈 Telemetry
