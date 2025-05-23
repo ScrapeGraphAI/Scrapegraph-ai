@@ -1,3 +1,15 @@
+## [1.52.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.51.0...v1.52.0) (2025-05-23)
+
+
+### Features
+
+* add new models ([8e706d4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8e706d43efb7d525dffc616731ee7448b1046db0))
+
+
+### CI
+
+* **release:** 1.50.0-beta.1 [skip ci] ([470ed48](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/470ed4893f8acaf53cb283497cb1fc6e263cc790))
+
 ## [1.50.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.49.0...v1.50.0-beta.1) (2025-04-29)
 
 
