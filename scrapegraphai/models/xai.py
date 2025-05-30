@@ -1,23 +1,22 @@
 """
 xAI Grok Module
 """
-from langchain_groq import ChatGroq as LangchainChatGroq
+from langchain_openai import ChatOpenAI
 
-class XAI(LangchainChatGroq):
+
+class XAI(ChatOpenAI):
     """
-    Wrapper for the ChatGroq class from langchain_groq, for use with xAI models.
-    Handles API key mapping from generic 'api_key' to 'groq_api_key' and
-    maps 'model' to 'model_name'.
+    A wrapper for the ChatOpenAI class (xAI uses an OpenAI-compatible API) that
+    provides default configuration and could be extended with additional methods
+    if needed.
 
     Args:
         llm_config (dict): Configuration parameters for the language model.
     """
 
     def __init__(self, **llm_config):
-        if "api_key" in llm_config and "groq_api_key" not in llm_config:
-            llm_config["groq_api_key"] = llm_config.pop("api_key")
-        
-        if "model" in llm_config and "model_name" not in llm_config:
-            llm_config["model_name"] = llm_config.pop("model")
+        if "api_key" in llm_config:
+            llm_config["openai_api_key"] = llm_config.pop("api_key")
+        llm_config["openai_api_base"] = "https://api.x.ai/v1"
 
         super().__init__(**llm_config) 
