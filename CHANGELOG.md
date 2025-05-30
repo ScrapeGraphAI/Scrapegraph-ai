@@ -1,3 +1,15 @@
+## [1.52.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.51.0...v1.52.0-beta.1) (2025-05-30)
+
+
+### Features
+
+* add grok integration ([0c476a4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0c476a4a7bbbec3883f505cd47bcffdcd2d9e5fd))
+
+
+### CI
+
+* **release:** 1.50.0-beta.1 [skip ci] ([470ed48](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/470ed4893f8acaf53cb283497cb1fc6e263cc790))
+
 ## [1.50.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.49.0...v1.50.0-beta.1) (2025-04-29)
 
 
