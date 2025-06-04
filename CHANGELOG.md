@@ -1,3 +1,10 @@
+## [1.53.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.52.0...v1.53.0) (2025-06-04)
+
+
+### Features
+
+* enhanced readme call to action ([c23e3b7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c23e3b7abce03e1e02b41d0cbb7108a9a92768f2))
+
 ## [1.52.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.51.0...v1.52.0) (2025-05-23)
 
 
