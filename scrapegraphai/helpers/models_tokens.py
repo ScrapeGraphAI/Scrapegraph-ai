@@ -304,6 +304,8 @@ models_tokens = {
     },
     "togetherai": {"Meta-Llama-3.1-70B-Instruct-Turbo": 128000},
     "xai": {
-        "grok-1": 8192
+        "grok-1": 8192,
+        "grok-3": 128000,
+        "grok-3-mini": 128000,
     },
 }
