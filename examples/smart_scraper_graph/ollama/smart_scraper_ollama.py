@@ -11,7 +11,7 @@ from scrapegraphai.utils import prettify_exec_info
 
 graph_config = {
     "llm": {
-        "model": "ollama/llama3.2:3b",
+        "model": "ollama/llama3.2",
         "temperature": 0,
         # "base_url": "http://localhost:11434", # set ollama URL arbitrarily
         "model_tokens": 4096,
@@ -24,7 +24,7 @@ graph_config = {
 # Create the SmartScraperGraph instance and run it
 # ************************************************
 smart_scraper_graph = SmartScraperGraph(
-    prompt="Find some information about what does the company do and the list of founders.",
+    prompt="Find some information about the founders.",
     source="https://scrapegraphai.com/",
     config=graph_config,
 )

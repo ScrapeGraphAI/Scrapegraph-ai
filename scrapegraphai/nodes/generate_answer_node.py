@@ -180,9 +180,8 @@ class GenerateAnswerNode(BaseNode):
         if len(doc) == 1:
             prompt = PromptTemplate(
                 template=template_no_chunks_prompt,
-                input_variables=["question"],
+                input_variables=["content", "question"],
                 partial_variables={
-                    "context": doc,
                     "format_instructions": format_instructions,
                 },
             )
@@ -192,7 +191,7 @@ class GenerateAnswerNode(BaseNode):
 
             try:
                 answer = self.invoke_with_timeout(
-                    chain, {"question": user_prompt}, self.timeout
+                    chain, {"content": doc, "question": user_prompt}, self.timeout
                 )
             except (Timeout, json.JSONDecodeError) as e:
                 error_msg = (
@@ -216,7 +215,7 @@ class GenerateAnswerNode(BaseNode):
                 template=template_chunks_prompt,
                 input_variables=["question"],
                 partial_variables={
-                    "context": chunk,
+                    "content": chunk,
                     "chunk_id": i + 1,
                     "format_instructions": format_instructions,
                 },
@@ -242,7 +241,7 @@ class GenerateAnswerNode(BaseNode):
 
         merge_prompt = PromptTemplate(
             template=template_merge_prompt,
-            input_variables=["context", "question"],
+            input_variables=["content", "question"],
             partial_variables={"format_instructions": format_instructions},
         )
 
@@ -252,7 +251,7 @@ class GenerateAnswerNode(BaseNode):
         try:
             answer = self.invoke_with_timeout(
                 merge_chain,
-                {"context": batch_results, "question": user_prompt},
+                {"content": batch_results, "question": user_prompt},
                 self.timeout,
             )
         except (Timeout, json.JSONDecodeError) as e:
