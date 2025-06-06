@@ -1,3 +1,10 @@
+## [1.54.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.54.0...v1.54.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* bug on generate answer node ([e846a14](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e846a1415506a58f7bc8b76ac56ba0b6413178ba))
+
 ## [1.54.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.53.0...v1.54.0) (2025-06-06)
 
 
