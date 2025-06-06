@@ -13,7 +13,7 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import CLoD, DeepSeek, OneApi
+from ..models import CLoD, DeepSeek, OneApi, XAI
 from ..utils.logging import set_verbosity_info, set_verbosity_warning
 
 
@@ -163,6 +163,7 @@ class AbstractGraph(ABC):
             "fireworks",
             "clod",
             "togetherai",
+            "xai",
         }
 
         if "/" in llm_params["model"]:
@@ -217,6 +218,7 @@ class AbstractGraph(ABC):
                 "deepseek",
                 "togetherai",
                 "clod",
+                "xai",
             }:
                 if llm_params["model_provider"] == "bedrock":
                     llm_params["model_kwargs"] = {
@@ -241,6 +243,9 @@ class AbstractGraph(ABC):
 
                 elif model_provider == "oneapi":
                     return OneApi(**llm_params)
+
+                elif model_provider == "xai":
+                    return XAI(**llm_params)
 
                 elif model_provider == "togetherai":
                     try:
