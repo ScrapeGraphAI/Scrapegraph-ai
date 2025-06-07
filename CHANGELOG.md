@@ -1,3 +1,11 @@
+## [1.55.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.54.1...v1.55.0) (2025-06-07)
+
+
+### Features
+
+* add adv ([cd29791](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cd29791894325c54f1dec1d2a5f6456800beb63e))
+* update logs ([8c54162](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8c541620879570c46f32708c7e488e9a4ca0ea3e))
+
 ## [1.54.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.54.0...v1.54.1) (2025-06-06)
 
 
