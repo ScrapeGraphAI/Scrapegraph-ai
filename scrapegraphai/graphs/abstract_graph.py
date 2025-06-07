@@ -5,6 +5,7 @@ AbstractGraph Module
 import asyncio
 import uuid
 import warnings
+import time
 from abc import ABC, abstractmethod
 from typing import Optional, Type
 
@@ -14,8 +15,13 @@ from pydantic import BaseModel
 
 from ..helpers import models_tokens
 from ..models import CLoD, DeepSeek, OneApi, XAI
-from ..utils.logging import set_verbosity_info, set_verbosity_warning
+from ..utils.logging import set_verbosity_info, set_verbosity_warning, get_logger
+from ..telemetry import log_graph_execution
 
+logger = get_logger(__name__)
+
+# ANSI escape sequence for hyperlink
+CLICKABLE_URL = "\033]8;;https://scrapegraphai.com\033\\https://scrapegraphai.com\033]8;;\033\\"
 
 class AbstractGraph(ABC):
     """
@@ -316,6 +322,10 @@ class AbstractGraph(ABC):
         """
         Abstract method to execute the graph and return the result.
         """
+        inputs = {"user_prompt": self.prompt, self.input_key: self.source}
+        self.final_state, self.execution_info = self.graph.execute(inputs)
+        result = self.final_state.get("answer", "No answer found.")
+        return result
 
     async def run_safe_async(self) -> str:
         """
