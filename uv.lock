@@ -3445,6 +3445,22 @@ wheels = [
 ]
 
 [[package]]
+name = "scrapegraph-py"
+version = "1.12.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiohttp" },
+    { name = "beautifulsoup4" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/42/36/10546d18157cd2efb2de09098fac8dd6f689b98842a4cc71bb7fc29ba4b9/scrapegraph_py-1.12.0.tar.gz", hash = "sha256:82d27e8ea325975f768f80d4edf403b6294518dae6a1e3ae63e27b8934a5dacb", size = 113290 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/11/a8/8610143e9ebad9596e402260f63cbb6168f99719f07e13847b1df5a28f4d/scrapegraph_py-1.12.0-py3-none-any.whl", hash = "sha256:fd74d091529d3f8f5ba057950333e15a48ac5c0be7e2a56a8f2bad04cebdac30", size = 15458 },
+]
+
+[[package]]
 name = "scrapegraphai"
 version = "1.54.1"
 source = { editable = "." }
@@ -3466,6 +3482,7 @@ dependencies = [
     { name = "playwright" },
     { name = "pydantic" },
     { name = "python-dotenv" },
+    { name = "scrapegraph-py" },
     { name = "semchunk" },
     { name = "simpleeval" },
     { name = "tiktoken" },
@@ -3528,6 +3545,7 @@ requires-dist = [
     { name = "playwright", specifier = ">=1.43.0" },
     { name = "pydantic", specifier = ">=2.10.2" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
+    { name = "scrapegraph-py", specifier = ">=0.1.0" },
     { name = "semchunk", specifier = ">=2.2.0" },
     { name = "simpleeval", specifier = ">=1.0.0" },
     { name = "sphinx", marker = "extra == 'docs'", specifier = "==6.0" },

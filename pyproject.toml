@@ -31,6 +31,7 @@ dependencies = [
     "jsonschema>=4.23.0",
     "duckduckgo-search>=7.2.1",
     "pydantic>=2.10.2",
+    "scrapegraph-py>=0.1.0",
 ]
 
 readme = "README.md"
