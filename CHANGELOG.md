@@ -1,3 +1,10 @@
+## [1.56.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.55.0...v1.56.0) (2025-06-13)
+
+
+### Features
+
+* add scrapegraphai integration ([94e9ebd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/94e9ebd28061f8313bb23074b4db3406cf4db0c9))
+
 ## [1.55.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.54.1...v1.55.0) (2025-06-07)
 
 
