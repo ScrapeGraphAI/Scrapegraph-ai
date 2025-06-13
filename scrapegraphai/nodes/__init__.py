@@ -20,6 +20,7 @@ from .get_probable_tags_node import GetProbableTagsNode
 from .graph_iterator_node import GraphIteratorNode
 from .html_analyzer_node import HtmlAnalyzerNode
 from .image_to_text_node import ImageToTextNode
+from .markdownify_node import MarkdownifyNode
 from .merge_answers_node import MergeAnswersNode
 from .merge_generated_scripts_node import MergeGeneratedScriptsNode
 from .parse_node import ParseNode
@@ -45,6 +46,7 @@ __all__ = [
     "ParseNode",
     "ParseNodeDepthK",
     "RobotsNode",
+    "MarkdownifyNode",
     # Analysis nodes
     "HtmlAnalyzerNode",
     "GetProbableTagsNode",
