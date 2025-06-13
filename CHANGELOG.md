@@ -1,3 +1,10 @@
+## [1.57.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.56.0...v1.57.0) (2025-06-13)
+
+
+### Features
+
+* add markdownify endpoint ([7340375](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/73403755da1e4c3065e91d834c59f6d8c1825763))
+
 ## [1.56.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.55.0...v1.56.0) (2025-06-13)
 
 
