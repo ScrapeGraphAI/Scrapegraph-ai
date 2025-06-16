@@ -235,3 +235,5 @@ ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://githu
 - ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
 
 Made with ❤️ by [ScrapeGraph AI](https://scrapegraphai.com)
+
+[Scarf tracking](https://static.scarf.sh/a.png?x-pxid=102d4b8c-cd6a-4b9e-9a16-d6d141b9212d)
