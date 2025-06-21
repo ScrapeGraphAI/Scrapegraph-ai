@@ -3,7 +3,7 @@ Generate answer csv schema
 """
 
 TEMPLATE_CHUKS_CSV = """
-You are a  scraper and you have just scraped the
+You are a scraper and you have just scraped the
 following content from a csv.
 You are now asked to answer a user question about the content you have scraped.\n
 The csv is big so I am giving you one chunk at the time to be merged later with the other chunks.\n
