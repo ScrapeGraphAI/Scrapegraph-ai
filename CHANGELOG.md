@@ -1,3 +1,15 @@
+## [1.58.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.57.0...v1.58.0) (2025-06-21)
+
+
+### Features
+
+* add new oss link ([0c2481f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0c2481fffebca355e542ae420ee1bf4cade8e5e3))
+
+
+### Docs
+
+* add links to other language versions of README ([07dec35](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/07dec35f1bf95842ee55b17796bb45f2db0f44b3))
+
 ## [1.57.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.56.0...v1.57.0) (2025-06-13)
 
 
