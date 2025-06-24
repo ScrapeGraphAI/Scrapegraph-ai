@@ -8,7 +8,12 @@ from typing import Tuple
 
 from ..telemetry import log_graph_execution
 from ..utils import CustomLLMCallbackManager
+from ..utils.logging import get_logger
 
+logger = get_logger(__name__)
+
+# ANSI escape sequence for hyperlink
+CLICKABLE_URL = "\033]8;;https://scrapegraphai.com/oss\033\\https://scrapegraphai.com/oss\033]8;;\033\\"
 
 class BaseGraph:
     """
@@ -353,9 +358,24 @@ class BaseGraph:
 
             bridge = BurrBridge(self, self.burr_config)
             result = bridge.execute(initial_state)
-            return (result["_state"], [])
+            state, exec_info = (result["_state"], [])
         else:
-            return self._execute_standard(initial_state)
+            state, exec_info = self._execute_standard(initial_state)
+
+        # Print the result first
+        if "answer" in state:
+            print(state["answer"])
+        elif "parsed_doc" in state:
+            print(state["parsed_doc"])
+        elif "generated_code" in state:
+            print(state["generated_code"])
+        elif "merged_script" in state:
+            print(state["merged_script"])
+
+        # Then show the message ONLY ONCE
+        print(f"✨ Try enhanced version of ScrapegraphAI at {CLICKABLE_URL} ✨")
+
+        return state, exec_info
 
     def append_node(self, node):
         """

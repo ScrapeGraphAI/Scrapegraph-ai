@@ -1,4 +1,4 @@
-## 🚀 **Looking for an even faster and simpler way to scrape at scale (only 5 lines of code)? ** Check out our enhanced version at [**ScrapeGraphAI.com**](https://scrapegraphai.com/?utm_source=github&utm_medium=readme&utm_campaign=oss_cta&ut#m_content=top_banner)! 🚀
+## 🚀 **Looking for an even faster and simpler way to scrape at scale (only 5 lines of code)?** Check out our enhanced version at [**ScrapeGraphAI.com**](https://scrapegraphai.com/?utm_source=github&utm_medium=readme&utm_campaign=oss_cta&ut#m_content=top_banner)! 🚀
 
 ---
 
@@ -7,6 +7,10 @@
 [English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
 | [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
 | [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
+| [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de) 
+| [Español](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=es)
+| [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
+| [Português](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=pt)
 
 
 [![Downloads](https://img.shields.io/pepy/dt/scrapegraphai?style=for-the-badge)](https://pepy.tech/project/scrapegraphai)
@@ -39,7 +43,7 @@ You can find more informations at the following [link](https://scrapegraphai.com
 - **API**: [Documentation](https://docs.scrapegraphai.com/introduction)
 - **SDKs**: [Python](https://docs.scrapegraphai.com/sdks/python), [Node](https://docs.scrapegraphai.com/sdks/javascript) 
 - **LLM Frameworks**: [Langchain](https://docs.scrapegraphai.com/integrations/langchain), [Llama Index](https://docs.scrapegraphai.com/integrations/llamaindex), [Crew.ai](https://docs.scrapegraphai.com/integrations/crewai), [CamelAI](https://github.com/camel-ai/camel)
-- **Low-code Frameworks**: [Pipedream](https://pipedream.com/apps/scrapegraphai), [Bubble](https://bubble.io/plugin/scrapegraphai-1745408893195x213542371433906180), [Zapier](https://zapier.com/apps/scrapegraphai/integrations), [n8n](http://localhost:5001/dashboard), [LangFlow](https://www.langflow.org)
+- **Low-code Frameworks**: [Pipedream](https://pipedream.com/apps/scrapegraphai), [Bubble](https://bubble.io/plugin/scrapegraphai-1745408893195x213542371433906180), [Zapier](https://zapier.com/apps/scrapegraphai/integrations), [n8n](http://localhost:5001/dashboard), [LangFlow](https://www.langflow.org), [Dify](https://dify.ai)
 - **MCP server**:  [Link](https://smithery.ai/server/@ScrapeGraphAI/scrapegraph-mcp)
 
 ## 🚀 Quick install
@@ -183,22 +187,6 @@ We offer SDKs in both Python and Node.js, making it easy to integrate into your 
 
 The Official API Documentation can be found [here](https://docs.scrapegraphai.com/).
 
-## 🏆 Sponsors
-<div style="text-align: center;">
-  <a href="https://2ly.link/1zaXG">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/browserbase_logo.png" alt="Browserbase" style="width: 10%;">
-  </a>
-  <a href="https://2ly.link/1zNiz">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
-  </a>
-  <a href="https://2ly.link/1zNj1">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 15%;">
-  </a>
-    <a href="https://scrape.do">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapedo.png" alt="Stats" style="width: 11%;">
-  </a>
-</div>
-
 ## 📈 Telemetry
 We collect anonymous usage metrics to enhance our package's quality and user experience. The data helps us prioritize improvements and ensure compatibility. If you wish to opt-out, set the environment variable SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. For more information, please refer to the documentation [here](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
 
@@ -235,3 +223,5 @@ ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://githu
 - ScrapeGraphAI is meant to be used for data exploration and research purposes only. We are not responsible for any misuse of the library.
 
 Made with ❤️ by [ScrapeGraph AI](https://scrapegraphai.com)
+
+[Scarf tracking](https://static.scarf.sh/a.png?x-pxid=102d4b8c-cd6a-4b9e-9a16-d6d141b9212d)

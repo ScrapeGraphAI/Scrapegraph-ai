@@ -13,7 +13,7 @@ Make sure the output is a valid json format, do not include any backticks
 and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
-Content of {chunk_id}: {context}. \n
+Content of {chunk_id}: {content}. \n
 """
 
 TEMPLATE_NO_CHUNKS_MD = """
@@ -27,7 +27,7 @@ and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
 USER QUESTION: {question}\n
-WEBSITE CONTENT:  {context}\n
+WEBSITE CONTENT:  {content}\n
 """
 
 TEMPLATE_MERGE_MD = """
@@ -42,7 +42,7 @@ and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
 USER QUESTION: {question}\n
-WEBSITE CONTENT: {context}\n
+WEBSITE CONTENT: {content}\n
 """
 
 TEMPLATE_CHUNKS = """
@@ -56,7 +56,7 @@ Make sure the output is a valid json format without any errors, do not include a
 and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
-Content of {chunk_id}: {context}. \n
+Content of {chunk_id}: {content}. \n
 """
 
 TEMPLATE_NO_CHUNKS = """
@@ -70,7 +70,7 @@ and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
 USER QUESTION: {question}\n
-WEBSITE CONTENT:  {context}\n
+WEBSITE CONTENT:  {content}\n
 """
 
 TEMPLATE_MERGE = """
@@ -84,7 +84,7 @@ and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
 USER QUESTION: {question}\n
-WEBSITE CONTENT: {context}\n
+WEBSITE CONTENT: {content}\n
 """
 
 REGEN_ADDITIONAL_INFO = """

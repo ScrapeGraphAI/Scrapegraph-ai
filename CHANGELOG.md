@@ -1,3 +1,75 @@
+## [1.59.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.58.0...v1.59.0) (2025-06-24)
+
+
+### Features
+
+* removed sposnsors ([288c69a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/288c69a862f34b999db476e669ff97c00afacde3))
+
+## [1.58.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.57.0...v1.58.0) (2025-06-21)
+
+
+### Features
+
+* add new oss link ([0c2481f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0c2481fffebca355e542ae420ee1bf4cade8e5e3))
+
+
+### Docs
+
+* add links to other language versions of README ([07dec35](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/07dec35f1bf95842ee55b17796bb45f2db0f44b3))
+
+## [1.57.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.56.0...v1.57.0) (2025-06-13)
+
+
+### Features
+
+* add markdownify endpoint ([7340375](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/73403755da1e4c3065e91d834c59f6d8c1825763))
+
+## [1.56.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.55.0...v1.56.0) (2025-06-13)
+
+
+### Features
+
+* add scrapegraphai integration ([94e9ebd](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/94e9ebd28061f8313bb23074b4db3406cf4db0c9))
+
+## [1.55.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.54.1...v1.55.0) (2025-06-07)
+
+
+### Features
+
+* add adv ([cd29791](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cd29791894325c54f1dec1d2a5f6456800beb63e))
+* update logs ([8c54162](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8c541620879570c46f32708c7e488e9a4ca0ea3e))
+
+## [1.54.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.54.0...v1.54.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* bug on generate answer node ([e846a14](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e846a1415506a58f7bc8b76ac56ba0b6413178ba))
+
+## [1.54.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.53.0...v1.54.0) (2025-06-06)
+
+
+### Features
+
+* add grok integration ([0c476a4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/0c476a4a7bbbec3883f505cd47bcffdcd2d9e5fd))
+
+
+### Bug Fixes
+
+* grok integration and add new grok models ([3f18272](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3f1827274c60a2729233577666d2fa446c48c4ba))
+
+
+### chore
+
+* enhanced a readme ([68bb34c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/68bb34cc5e63b8a1d5acc61b9b61f9ea716a2a51))
+
+
+### CI
+
+* **release:** 1.52.0-beta.1 [skip ci] ([7adb0f1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7adb0f1df1efc4e6ada1134f6e53e4d6b072a608))
+* **release:** 1.52.0-beta.2 [skip ci] ([386b46a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/386b46a8692c8c18000bb071fc8f312adc3ad05e))
+* **release:** 1.54.0-beta.1 [skip ci] ([77d4432](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/77d44321a1d41e10ac6aa13b526a49e718bd7c5d))
+
 ## [1.54.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.53.0...v1.54.0-beta.1) (2025-06-06)
 
 
