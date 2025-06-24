@@ -187,22 +187,6 @@ We offer SDKs in both Python and Node.js, making it easy to integrate into your 
 
 The Official API Documentation can be found [here](https://docs.scrapegraphai.com/).
 
-## 🏆 Sponsors
-<div style="text-align: center;">
-  <a href="https://2ly.link/1zaXG">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/browserbase_logo.png" alt="Browserbase" style="width: 10%;">
-  </a>
-  <a href="https://2ly.link/1zNiz">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/serp_api_logo.png" alt="SerpAPI" style="width: 10%;">
-  </a>
-  <a href="https://2ly.link/1zNj1">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/transparent_stat.png" alt="Stats" style="width: 15%;">
-  </a>
-    <a href="https://scrape.do">
-    <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapedo.png" alt="Stats" style="width: 11%;">
-  </a>
-</div>
-
 ## 📈 Telemetry
 We collect anonymous usage metrics to enhance our package's quality and user experience. The data helps us prioritize improvements and ensure compatibility. If you wish to opt-out, set the environment variable SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. For more information, please refer to the documentation [here](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
 
