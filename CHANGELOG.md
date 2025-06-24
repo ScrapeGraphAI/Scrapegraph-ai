@@ -1,3 +1,10 @@
+## [1.59.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.58.0...v1.59.0) (2025-06-24)
+
+
+### Features
+
+* removed sposnsors ([288c69a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/288c69a862f34b999db476e669ff97c00afacde3))
+
 ## [1.58.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.57.0...v1.58.0) (2025-06-21)
 
 
