@@ -1,3 +1,10 @@
+## [1.60.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.59.0...v1.60.0-beta.1) (2025-06-24)
+
+
+### Features
+
+* update the readme ([939e170](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/939e170eb6de21d1b4cd703b4fcdd6d3001d4185))
+
 ## [1.59.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.58.0...v1.59.0) (2025-06-24)
 
 
