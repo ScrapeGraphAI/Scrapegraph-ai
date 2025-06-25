@@ -3,7 +3,7 @@ fetch_node_level_k module
 """
 
 from typing import List, Optional
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
 from langchain_core.documents import Document
@@ -212,17 +212,24 @@ class FetchNodeLevelK(BaseNode):
             if any(link.lower().startswith(scheme) for scheme in invalid_schemes):
                 continue
 
-            # Skip if it's an external link and only_inside_links is True
-            if self.only_inside_links and link.startswith(("http://", "https://")):
-                continue
-
-            # Convert relative URLs to absolute URLs
+            # Convert relative URLs to absolute URLs first
             try:
                 full_link = (
                     link
                     if link.startswith(("http://", "https://"))
                     else urljoin(base_url, link)
                 )
+                
+                # Skip if it's an external link and only_inside_links is True
+                if self.only_inside_links and full_link.startswith(("http://", "https://")):
+                    # Parse URLs to compare domains
+                    base_domain = urlparse(base_url).netloc
+                    link_domain = urlparse(full_link).netloc
+                    
+                    # Skip if domains don't match
+                    if base_domain != link_domain:
+                        continue
+                
                 # Ensure the final URL starts with http:// or https://
                 if full_link.startswith(("http://", "https://")):
                     full_links.append(full_link)
