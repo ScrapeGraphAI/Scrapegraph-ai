@@ -205,7 +205,6 @@ If you have used our library for research purposes please quote us with the foll
     note = {A Python library for scraping leveraging large language models}
   }
 ```
-
 ## Authors
 
 |                    | Contact Info         |
