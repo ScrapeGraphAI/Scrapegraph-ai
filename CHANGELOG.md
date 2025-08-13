@@ -1,3 +1,15 @@
+## [1.62.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.61.0...v1.62.0) (2025-08-13)
+
+
+### Features
+
+* update pr ([c07b3c0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c07b3c08cd6a87c3f7acd2d4d560b7a17d6c02eb))
+
+
+### Docs
+
+* removed duplicated line ([c2abb9f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c2abb9fd5df9b5b3a1d9158a2b607f9646c9211d))
+
 ## [1.61.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.60.0...v1.61.0) (2025-07-03)
 
 
