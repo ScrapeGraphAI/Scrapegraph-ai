@@ -56,6 +56,9 @@ class SearchInternetNode(BaseNode):
         )
 
         self.max_results = node_config.get("max_results", 3)
+        self.region = node_config.get("region", None)
+        self.language = node_config.get("language", "en")
+        self.timelimit = node_config.get("timelimit", None)
 
     def execute(self, state: dict) -> dict:
         """
@@ -102,13 +105,23 @@ class SearchInternetNode(BaseNode):
 
         self.logger.info(f"Search Query: {search_query}")
 
+        if self.verbose:
+            print(f"🧠 DEBUG: Original User Prompt: {user_prompt}")
+            print(f"🔍 DEBUG: LLM Simplified Search Query: {search_query}")
+
         answer = search_on_web(
             query=search_query,
             max_results=self.max_results,
             search_engine=self.search_engine,
             proxy=self.proxy,
             serper_api_key=self.serper_api_key,
+            region=self.region,
+            language=self.language,
+            timelimit=self.timelimit,
         )
+
+        if self.verbose:
+            print(f"🌐 DEBUG: URLs found by {self.search_engine} ({len(answer)} results): {answer[:5]}")
 
         if len(answer) == 0:
             raise ValueError("Zero results found for the search query.")

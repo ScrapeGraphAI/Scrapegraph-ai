@@ -48,6 +48,7 @@ class SearchConfig(BaseModel):
     serper_api_key: Optional[str] = Field(None, description="API key for Serper")
     region: Optional[str] = Field(None, description="Country/region code")
     language: str = Field("en", description="Language code")
+    timelimit: Optional[str] = Field(None, description="Time limit for search results (e.g., 'y' for past year)")
     
     @validator('search_engine')
     def validate_search_engine(cls, v):
@@ -153,6 +154,7 @@ def search_on_web(
     serper_api_key: Optional[str] = None,
     region: Optional[str] = None,
     language: str = "en",
+    timelimit: Optional[str] = None,
 ) -> List[str]:
     """
     Search web function with improved error handling, validation, and security features.
@@ -167,6 +169,7 @@ def search_on_web(
         serper_api_key (str): API key for Serper
         region (str): Country/region code (e.g., 'mx' for Mexico)
         language (str): Language code (e.g., 'es' for Spanish)
+        timelimit (str): Time limit for search results (e.g., 'y' for past year)
         
     Returns:
         List[str]: List of URLs from search results
@@ -190,7 +193,8 @@ def search_on_web(
             proxy=proxy,
             serper_api_key=serper_api_key,
             region=region,
-            language=language
+            language=language,
+            timelimit=timelimit
         )
         
         # Format proxy once

@@ -128,7 +128,11 @@ class GraphIteratorNode(BaseNode):
 
         async def _async_run(graph):
             async with semaphore:
-                return await asyncio.to_thread(graph.run)
+                try:
+                    return await asyncio.to_thread(graph.run)
+                except Exception as e:
+                    self.logger.warning(f"Failed to scrape {graph.source}: {str(e)}")
+                    return None
 
         for url, graph in zip(urls, graph_instance):
             graph.source = url
