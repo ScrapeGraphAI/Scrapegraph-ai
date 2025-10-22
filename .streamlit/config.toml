@@ -1,0 +1,6 @@
+[server]
+headless = true
+port = 8501
+
+[python]
+version = "3.11"
