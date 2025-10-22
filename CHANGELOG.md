@@ -1,3 +1,10 @@
+## [1.63.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.62.0...v1.63.0) (2025-10-22)
+
+
+### Features
+
+* update model tokens ([79db9b9](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/79db9b9f1341475474fca9b159325973e730a865))
+
 ## [1.62.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.61.0...v1.62.0) (2025-08-13)
 
 
