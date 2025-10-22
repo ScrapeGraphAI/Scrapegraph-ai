@@ -33,6 +33,14 @@ ENV_PATH = ROOT_DIR / ".env"
 # Load environment variables once the module is imported
 load_dotenv(ENV_PATH)
 
+# Allow Streamlit secrets to provide API keys in hosted environments
+try:
+    secret_api_key = st.secrets.get("OPENAI_API_KEY")  # type: ignore[attr-defined]
+    if secret_api_key:
+        os.environ.setdefault("OPENAI_API_KEY", secret_api_key)
+except Exception:
+    pass
+
 
 class Speaker(BaseModel):
     """Schema for a single speaker entry."""
