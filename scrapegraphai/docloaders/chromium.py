@@ -61,17 +61,26 @@ class ChromiumLoader(BaseLoader):
 
         dynamic_import(backend, message)
 
-        self.browser_config = kwargs
+        self.browser_config = dict(kwargs)
+        self._scroll_to_bottom = bool(self.browser_config.pop("scroll_to_bottom", False))
+        self._scroll_sleep = float(self.browser_config.pop("sleep", 2))
+        self._scroll_amount = int(self.browser_config.pop("scroll", 15000))
+        self._scroll_timeout_override = self.browser_config.pop("scroll_timeout", None)
+
+        backend_override = self.browser_config.pop("backend", None)
+        retry_override = self.browser_config.pop("retry_limit", None)
+        timeout_override = self.browser_config.pop("timeout", None)
+
         self.headless = headless
         self.proxy = parse_or_search_proxy(proxy) if proxy else None
         self.urls = urls
         self.load_state = load_state
         self.requires_js_support = requires_js_support
         self.storage_state = storage_state
-        self.backend = kwargs.get("backend", backend)
-        self.browser_name = kwargs.get("browser_name", browser_name)
-        self.retry_limit = kwargs.get("retry_limit", retry_limit)
-        self.timeout = kwargs.get("timeout", timeout)
+        self.backend = backend_override or backend
+        self.browser_name = self.browser_config.pop("browser_name", browser_name)
+        self.retry_limit = retry_override if retry_override is not None else retry_limit
+        self.timeout = timeout_override if timeout_override is not None else timeout
 
     async def scrape(self, url: str) -> str:
         if self.backend == "playwright":
@@ -206,6 +215,18 @@ class ChromiumLoader(BaseLoader):
         # https://www.steelwood.amsterdam/. The site deos not scroll to the bottom.
         # In my browser I can scroll vertically but in Chromium it scrolls horizontally?!?
 
+        configured_timeout = (
+            self._scroll_timeout_override
+            if self._scroll_timeout_override is not None
+            else self.timeout
+        )
+        if timeout is None:
+            timeout = configured_timeout
+
+        scroll_to_bottom = scroll_to_bottom or self._scroll_to_bottom
+        scroll = self._scroll_amount if self._scroll_amount else scroll
+        sleep = self._scroll_sleep if self._scroll_sleep else sleep
+
         if timeout and timeout <= 0:
             raise ValueError(
                 "If set, timeout value for scrolling scraper must be greater than 0."
@@ -232,20 +253,21 @@ class ChromiumLoader(BaseLoader):
         attempt = 0
 
         while attempt < self.retry_limit:
+            browser = None
             try:
                 async with async_playwright() as p:
-                    browser = None
+                    launch_kwargs = self.browser_config.copy()
                     if browser_name == "chromium":
                         browser = await p.chromium.launch(
                             headless=self.headless,
                             proxy=self.proxy,
-                            **self.browser_config,
+                            **launch_kwargs,
                         )
                     elif browser_name == "firefox":
                         browser = await p.firefox.launch(
                             headless=self.headless,
                             proxy=self.proxy,
-                            **self.browser_config,
+                            **launch_kwargs,
                         )
                     else:
                         raise ValueError(f"Invalid browser name: {browser_name}")
@@ -316,7 +338,8 @@ class ChromiumLoader(BaseLoader):
                         f"Error: Network error after {self.retry_limit} attempts - {e}"
                     )
             finally:
-                await browser.close()
+                if browser is not None:
+                    await browser.close()
 
         return results
 
@@ -342,20 +365,22 @@ class ChromiumLoader(BaseLoader):
         attempt = 0
 
         while attempt < self.retry_limit:
+            browser = None
             try:
                 async with async_playwright() as p, async_timeout.timeout(self.timeout):
-                    browser = None
                     if browser_name == "chromium":
+                        launch_kwargs = self.browser_config.copy()
                         browser = await p.chromium.launch(
                             headless=self.headless,
                             proxy=self.proxy,
-                            **self.browser_config,
+                            **launch_kwargs,
                         )
                     elif browser_name == "firefox":
+                        launch_kwargs = self.browser_config.copy()
                         browser = await p.firefox.launch(
                             headless=self.headless,
                             proxy=self.proxy,
-                            **self.browser_config,
+                            **launch_kwargs,
                         )
                     else:
                         raise ValueError(f"Invalid browser name: {browser_name}")
@@ -401,20 +426,22 @@ class ChromiumLoader(BaseLoader):
         attempt = 0
 
         while attempt < self.retry_limit:
+            browser = None
             try:
                 async with async_playwright() as p, async_timeout.timeout(self.timeout):
-                    browser = None
                     if browser_name == "chromium":
+                        launch_kwargs = self.browser_config.copy()
                         browser = await p.chromium.launch(
                             headless=self.headless,
                             proxy=self.proxy,
-                            **self.browser_config,
+                            **launch_kwargs,
                         )
                     elif browser_name == "firefox":
+                        launch_kwargs = self.browser_config.copy()
                         browser = await p.firefox.launch(
                             headless=self.headless,
                             proxy=self.proxy,
-                            **self.browser_config,
+                            **launch_kwargs,
                         )
                     else:
                         raise ValueError(f"Invalid browser name: {browser_name}")
@@ -434,7 +461,8 @@ class ChromiumLoader(BaseLoader):
                         f"Failed to scrape after {self.retry_limit} attempts: {str(e)}"
                     )
             finally:
-                await browser.close()
+                if browser is not None:
+                    await browser.close()
 
     def lazy_load(self) -> Iterator[Document]:
         """

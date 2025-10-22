@@ -1,0 +1,653 @@
+[
+  {
+    "url": "https://conferenziaworld.com/client-experience-conference/",
+    "strategy_used": "SmartScraperGraph",
+    "completeness_score": 0.3333333333333333,
+    "speaker_count": 12,
+    "linkedin_enrichment_enabled": false,
+    "data": {
+      "event": {
+        "event_name": "Global Digital Transformation & Customer Experience Summit",
+        "event_dates": "16th - 17th October 2025",
+        "event_location": "Berlin, Germany",
+        "event_time": "NA"
+      },
+      "speakers": [
+        {
+          "first_name": "Nina",
+          "last_name": "Chandé",
+          "full_name": "Nina Chandé",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/ninachande/"
+        },
+        {
+          "first_name": "Daniel",
+          "last_name": "Černý",
+          "full_name": "Daniel Černý",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/danielcerny89"
+        },
+        {
+          "first_name": "Beáta",
+          "last_name": "Sós",
+          "full_name": "Beáta Sós",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/be%C3%A1ta-s%C3%B3s-5474a26a/"
+        },
+        {
+          "first_name": "Jörg",
+          "last_name": "Malang",
+          "full_name": "Jörg Malang",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/joergmalang"
+        },
+        {
+          "first_name": "Esty",
+          "last_name": "Zilberman",
+          "full_name": "Esty Zilberman",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/esty-zilberman-033735166"
+        },
+        {
+          "first_name": "Pedro",
+          "last_name": "de Assis Maciel",
+          "full_name": "Pedro de Assis Maciel",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/pedro-de-assis-maciel/"
+        },
+        {
+          "first_name": "Julia",
+          "last_name": "Kuschnerenko",
+          "full_name": "Julia Kuschnerenko",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/juliakuschnerenko"
+        },
+        {
+          "first_name": "Merih",
+          "last_name": "Atasoy",
+          "full_name": "Merih (Marc) Atasoy",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/merihatasoy/"
+        },
+        {
+          "first_name": "Anne",
+          "last_name": "Rabak",
+          "full_name": "Anne Rabak",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/annerabak/"
+        },
+        {
+          "first_name": "Marcus",
+          "last_name": "Nessler",
+          "full_name": "Marcus Nessler",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/marcus-nessler-2ab05818"
+        },
+        {
+          "first_name": "Jennifer",
+          "last_name": "Simonds-Spellmann",
+          "full_name": "Jennifer Simonds-Spellmann",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/simondsjennifer/"
+        },
+        {
+          "first_name": "Maha",
+          "last_name": "Aly",
+          "full_name": "Dr. Maha Aly",
+          "company": "NA",
+          "position": "NA",
+          "linkedin_url": "https://www.linkedin.com/in/dr-maha-aly-675a2813/"
+        }
+      ]
+    }
+  },
+  {
+    "url": "https://vds.tech/speakers/",
+    "strategy_used": "SmartScraperGraph",
+    "completeness_score": 0.9646464646464646,
+    "speaker_count": 66,
+    "linkedin_enrichment_enabled": false,
+    "data": {
+      "event": {
+        "event_name": "VDS 2025",
+        "event_dates": "October 22-23",
+        "event_location": "Valencia’s City of Arts and Sciences",
+        "event_time": "NA"
+      },
+      "speakers": [
+        {
+          "first_name": "Kelly",
+          "last_name": "Rutherford",
+          "full_name": "Kelly Rutherford",
+          "company": "NA",
+          "position": "Hollywood Actress & Investor",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Sol",
+          "last_name": "Campbell",
+          "full_name": "Sol Campbell",
+          "company": "NA",
+          "position": "Legendary Former England Captain & Premier League Champion, Sport Tech Leader",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Gillian",
+          "last_name": "Tans",
+          "full_name": "Gillian Tans",
+          "company": "Booking.com",
+          "position": "Investor, Ex CEO/Chairwoman",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Aubrey",
+          "last_name": "de Grey",
+          "full_name": "Aubrey de Grey",
+          "company": "LEV Foundation",
+          "position": "President and Chief Science Officer",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Laura",
+          "last_name": "Urquizu",
+          "full_name": "Laura Urquizu",
+          "company": "Red Points",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Minh",
+          "last_name": "Le",
+          "full_name": "Minh Le",
+          "company": "Ultimo Ratio Games",
+          "position": "Counter Strike Creator, Lead Game Designer",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Gwen",
+          "last_name": "Kolader",
+          "full_name": "Gwen Kolader",
+          "company": "Hexaware",
+          "position": "Former VP DE&I; Global People & Culture leader",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Sacha",
+          "last_name": "Michaud",
+          "full_name": "Sacha Michaud",
+          "company": "Glovo",
+          "position": "Co-founder",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Ana",
+          "last_name": "Peleteiro",
+          "full_name": "Ana Peleteiro",
+          "company": "Preply",
+          "position": "VP of Data and Applied AI",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Enrique",
+          "last_name": "Linares",
+          "full_name": "Enrique Linares",
+          "company": "Plus Partners & letgo",
+          "position": "Co-Founder",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Sergio",
+          "last_name": "Furio",
+          "full_name": "Sergio Furio",
+          "company": "Creditas",
+          "position": "Founder & CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Ella",
+          "last_name": "McCann-Tomlin",
+          "full_name": "Ella McCann-Tomlin",
+          "company": "Mews",
+          "position": "VP ESG",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Fridtjof",
+          "last_name": "Berge",
+          "full_name": "Fridtjof Berge",
+          "company": "Antler",
+          "position": "Co-Founder & Chief Business Officer",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Hugo",
+          "last_name": "Arévalo",
+          "full_name": "Hugo Arévalo",
+          "company": "ThePower - ThePowerMBA",
+          "position": "Executive Chairman / Founder",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Manal",
+          "last_name": "Belaouane",
+          "full_name": "Manal Belaouane",
+          "company": "HV Ventures",
+          "position": "Principal",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Volodymyr",
+          "last_name": "Nosov",
+          "full_name": "Volodymyr Nosov",
+          "company": "WhiteBIT",
+          "position": "Founder and CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Alister",
+          "last_name": "Moreno",
+          "full_name": "Alister Moreno",
+          "company": "Clikalia",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "María José",
+          "last_name": "Catalá",
+          "full_name": "María José Catalá",
+          "company": "NA",
+          "position": "Mayor of Valencia",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Pablo",
+          "last_name": "Fernandez",
+          "full_name": "Pablo Fernandez",
+          "company": "Clidrive",
+          "position": "Founder and CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Dr. Elizabeth",
+          "last_name": "Nelson",
+          "full_name": "Dr. Elizabeth Nelson",
+          "company": "Smart Building Collective & Learn Adapt Build",
+          "position": "Co-Founder and Head of Research",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Iñaki",
+          "last_name": "Berenguer",
+          "full_name": "Iñaki Berenguer",
+          "company": "LifeX Ventures",
+          "position": "Co-Founder Coverwallet & Managing Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "David",
+          "last_name": "Bäckström",
+          "full_name": "David Bäckström",
+          "company": "SeQura",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Alexander",
+          "last_name": "Gerfer",
+          "full_name": "Alexander Gerfer",
+          "company": "Würth Elektronik GmbH & Co. KG eiSos",
+          "position": "CTO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Cristina",
+          "last_name": "Carrascosa",
+          "full_name": "Cristina Carrascosa",
+          "company": "ATH21",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Benjamin",
+          "last_name": "Buthmann",
+          "full_name": "Benjamin Buthmann",
+          "company": "Koalo",
+          "position": "Co-founder & CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Diana",
+          "last_name": "Morant",
+          "full_name": "Diana Morant",
+          "company": "NA",
+          "position": "Minister for Science, Innovation and Universities",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Christian",
+          "last_name": "Noske",
+          "full_name": "Christian Noske",
+          "company": "NGP Capital",
+          "position": "Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Alvaro",
+          "last_name": "Martinez",
+          "full_name": "Alvaro Martinez",
+          "company": "Luzia",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Margot",
+          "last_name": "Roose",
+          "full_name": "Margot Roose",
+          "company": "City of Tallinn",
+          "position": "Deputy Mayor, Entrepreneurship, Innovation & Circularity",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Jacky",
+          "last_name": "Abitbol",
+          "full_name": "Jacky Abitbol",
+          "company": "Cathay Innovation",
+          "position": "Managing Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "David",
+          "last_name": "Zamarin",
+          "full_name": "David Zamarin",
+          "company": "DetraPel Inc",
+          "position": "Founder & CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Teddy",
+          "last_name": "wa Kasumba",
+          "full_name": "Teddy wa Kasumba",
+          "company": "CognitionX",
+          "position": "CEO Subsaharian Africa",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Kimberly",
+          "last_name": "Fuqua",
+          "full_name": "Kimberly Fuqua",
+          "company": "Microsoft/Luminous Leaders",
+          "position": "Director of Customer Experience, EMEA",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Pablo",
+          "last_name": "Gil",
+          "full_name": "Pablo Gil",
+          "company": "PropHero Spain",
+          "position": "Co-Founder & Co-CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Martin",
+          "last_name": "Kõiva",
+          "full_name": "Martin Kõiva",
+          "company": "Klaus",
+          "position": "Co-founder",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Sébastien",
+          "last_name": "Lefebvre",
+          "full_name": "Sébastien Lefebvre",
+          "company": "Elaia Partners",
+          "position": "Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Javier",
+          "last_name": "Darriba",
+          "full_name": "Javier Darriba",
+          "company": "Encomenda Capital Partners",
+          "position": "General Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Athalis",
+          "last_name": "Kratouni",
+          "full_name": "Athalis Kratouni",
+          "company": "Tenbeo",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Ricardo",
+          "last_name": "Ortega",
+          "full_name": "Ricardo Ortega",
+          "company": "EHang",
+          "position": "Vicepresident EU & Latam",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Carolina",
+          "last_name": "Rodríguez",
+          "full_name": "Carolina Rodríguez",
+          "company": "Enisa",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Nico",
+          "last_name": "de Luis",
+          "full_name": "Nico de Luis",
+          "company": "Shakers",
+          "position": "Founder & COO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Marloes",
+          "last_name": "Mantel",
+          "full_name": "Marloes Mantel",
+          "company": "Loop Earplugs",
+          "position": "VP People & Technology",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "David",
+          "last_name": "Guérin",
+          "full_name": "David Guérin",
+          "company": "Brighteye",
+          "position": "Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Alejandro",
+          "last_name": "Rodríguez",
+          "full_name": "Alejandro Rodríguez",
+          "company": "IDC Ventures",
+          "position": "Co-Founder and Managing Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Chingiskhan",
+          "last_name": "Kazakhstan",
+          "full_name": "Chingiskhan Kazakhstan",
+          "company": "Selana",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Olivia",
+          "last_name": "McEvoy",
+          "full_name": "Olivia McEvoy",
+          "company": "Booking.com",
+          "position": "Global Head of Inclusion",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Martin",
+          "last_name": "Paas",
+          "full_name": "Martin Paas",
+          "company": "Telia Estonia",
+          "position": "Head of SOC",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Florian",
+          "last_name": "Fischer",
+          "full_name": "Florian Fischer",
+          "company": "STYX Urban Investments",
+          "position": "Founder & Chairman",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Iryna",
+          "last_name": "Krepchuk",
+          "full_name": "Iryna Krepchuk",
+          "company": "Trind Ventures",
+          "position": "Investment Manager",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Jorge",
+          "last_name": "Soriano",
+          "full_name": "Jorge Soriano",
+          "company": "Criptan",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Honorata",
+          "last_name": "Grzesikowska",
+          "full_name": "Honorata Grzesikowska",
+          "company": "Urbanitarian, Architektoniczki",
+          "position": "CEO, Urban Masterplanner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Gonzalo",
+          "last_name": "Tradacete",
+          "full_name": "Gonzalo Tradacete",
+          "company": "Faraday Venture Partners",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "David",
+          "last_name": "Villalon",
+          "full_name": "David Villalon",
+          "company": "Maisa AI",
+          "position": "Cofounder & CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Haz",
+          "last_name": "Hubble",
+          "full_name": "Haz Hubble",
+          "company": "Pally",
+          "position": "CEO & Co-Founder",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Christian",
+          "last_name": "Teichmann",
+          "full_name": "Christian Teichmann",
+          "company": "Burda Principal Investments",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Terence",
+          "last_name": "Guiamo",
+          "full_name": "Terence Guiamo",
+          "company": "Just Eat Takeaway.com",
+          "position": "Global Director Culture, Wellbeing, Inclusion, Diversity & Belonging",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Lluis",
+          "last_name": "Vidal",
+          "full_name": "Lluis Vidal",
+          "company": "Exoticca.com",
+          "position": "COO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Viktoriia",
+          "last_name": "Savitska",
+          "full_name": "Viktoriia Savitska",
+          "company": "AMVS Capital",
+          "position": "Partner",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Niklas",
+          "last_name": "Leck",
+          "full_name": "Niklas Leck",
+          "company": "Penguin",
+          "position": "Co-founder & Director",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Alejandro",
+          "last_name": "Marti",
+          "full_name": "Alejandro Marti",
+          "company": "Mitiga Solutions",
+          "position": "CEO & Co-Founder",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Ramzi",
+          "last_name": "Rizk",
+          "full_name": "Ramzi Rizk",
+          "company": "Work In Progress Capital",
+          "position": "Managing Director",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Anna",
+          "last_name": "Heim",
+          "full_name": "Anna Heim",
+          "company": "TechCrunch",
+          "position": "Freelance Reporter",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Samuel",
+          "last_name": "Frey",
+          "full_name": "Samuel Frey",
+          "company": "Aeon",
+          "position": "Co-Founder",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Hunter",
+          "last_name": "Bergschneider",
+          "full_name": "Hunter Bergschneider",
+          "company": "Global Ultrasound Institute",
+          "position": "CFO",
+          "linkedin_url": "NA"
+        },
+        {
+          "first_name": "Glib",
+          "last_name": "Udovychenko",
+          "full_name": "Glib Udovychenko",
+          "company": "Whitepay",
+          "position": "CEO",
+          "linkedin_url": "NA"
+        },
+        {}
+      ]
+    }
+  }
+]

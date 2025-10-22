@@ -34,25 +34,37 @@ class FetchScreenNode(BaseNode):
             browser = p.chromium.launch()
             page = browser.new_page()
             page.goto(self.url)
+            page.wait_for_load_state("networkidle")
 
+            # Get page height
             viewport_height = page.viewport_size["height"]
+            page_height = page.evaluate("document.body.scrollHeight")
 
             screenshot_counter = 1
-
             screenshot_data_list = []
 
             def capture_screenshot(scroll_position, counter):
                 page.evaluate(f"window.scrollTo(0, {scroll_position});")
+                page.wait_for_timeout(500)  # Wait for content to settle
                 screenshot_data = page.screenshot()
                 screenshot_data_list.append(screenshot_data)
 
-            capture_screenshot(0, screenshot_counter)
-            screenshot_counter += 1
-            capture_screenshot(viewport_height, screenshot_counter)
+            # Capture entire page by scrolling through it
+            scroll_position = 0
+            while scroll_position < page_height:
+                capture_screenshot(scroll_position, screenshot_counter)
+                screenshot_counter += 1
+                scroll_position += viewport_height
+
+            # Capture final position if not already captured
+            if page_height > viewport_height and scroll_position - viewport_height < page_height:
+                capture_screenshot(page_height - viewport_height, screenshot_counter)
 
             browser.close()
 
         state["link"] = self.url
         state["screenshots"] = screenshot_data_list
+
+        self.logger.info(f"Captured {len(screenshot_data_list)} screenshots")
 
         return state

@@ -1,0 +1,15 @@
+[
+  {
+    "url": "https://conferenziaworld.com/client-experience-conference/",
+    "website_type": "pure_images",
+    "strategy_used": "ScreenshotScraperGraph",
+    "analysis": {
+      "completeness_score": 0.3333333333333333,
+      "num_speakers_found": 12,
+      "num_images_detected": 0
+    },
+    "data": {
+      "consolidated_analysis": "No response No response"
+    }
+  }
+]

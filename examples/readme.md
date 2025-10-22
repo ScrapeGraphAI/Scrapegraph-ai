@@ -16,6 +16,7 @@ This directory contains various example implementations of Scrapegraph-ai for di
 - 🔄 `omni_scraper_graph/` - Universal web scraping for multiple data types
 - 🔍 `omni_search_graph/` - Comprehensive search across multiple sources
 - 📄 `document_scraper_graph/` - Document parsing and data extraction
+- 🖥️ `frontend/batch_speaker_app.py` - Streamlit dashboard to scrape speaker lineups from multiple event URLs
 - 🛠️ `custom_graph/` - Custom graph implementation examples
 - 💻 `code_generator_graph/` - Code generation utilities
 - 📋 `json_scraper_graph/` - JSON data extraction and processing
@@ -38,6 +39,12 @@ pip install scrapegraphai
 
 playwright install
 
+# optional: install streamlit for the interactive dashboard
+pip install streamlit python-dotenv
+
+# optional: enable OCR/vision helpers for image-based speaker cards
+pip install 'scrapegraphai[ocr]'
+
 # choose an example
 cd examples/smart_scraper_graph/openai
 
@@ -54,6 +61,17 @@ Each example may have its own specific requirements. Please refer to the individ
 - 📖 [Full Documentation](https://docs-oss.scrapegraphai.com/examples)
 - 💡 [Examples Repository](https://github.com/ScrapeGraphAI/ScrapegraphLib-Examples)
 - 🤝 [Community Support](https://github.com/ScrapeGraphAI/scrapegraph-ai/discussions)
+
+To launch the Streamlit dashboard:
+
+```bash
+streamlit run examples/frontend/batch_speaker_app.py
+```
+
+The dashboard sidebar lets you:
+- toggle Playwright JS rendering or page scrolling for slider-heavy sites,
+- enable an OCR/vision mode that uses `OmniScraperGraph` to describe speaker images (best with `gpt-4o` or another vision-capable model),
+- adjust retry and image limits to balance speed versus coverage.
 
 ## 🤔 Need Help?
 

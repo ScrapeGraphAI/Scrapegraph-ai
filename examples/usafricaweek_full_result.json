@@ -1,0 +1,180 @@
+{
+  "url": "https://usafricaweek.org/speakers",
+  "strategy_used": "ScreenshotScraperGraph",
+  "completeness_score": 0.9206349206349206,
+  "speaker_count": 21,
+  "linkedin_enrichment_enabled": false,
+  "data": {
+    "event": {},
+    "speakers": [
+      {
+        "full_name": "Yvette Clarke",
+        "first_name": "Yvette",
+        "last_name": "Clarke",
+        "company": "U.S. House of Representatives",
+        "position": "Congresswoman",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Sheila Cherfilus-McCormick",
+        "first_name": "Sheila",
+        "last_name": "Cherfilus-McCormick",
+        "company": "U.S. House of Representatives",
+        "position": "Congresswoman",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Latrice M. Walker",
+        "first_name": "Latrice",
+        "last_name": "Walker",
+        "company": "Assembly District 55",
+        "position": "Assemblywoman",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Oren Whyche-Shaw",
+        "first_name": "Oren",
+        "last_name": "Whyche-Shaw",
+        "company": "Senior U.S. Diplomat / Development Specialist",
+        "position": "Speaker",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Jaye Connolly",
+        "first_name": "Jaye",
+        "last_name": "Connolly",
+        "company": "RippleNami, Inc.",
+        "position": "Chairman & CEO",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Selina Hayes",
+        "first_name": "Selina",
+        "last_name": "Hayes",
+        "company": "Hayes Group International",
+        "position": "Founder & CEO",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Marilyn Crawford",
+        "first_name": "Marilyn",
+        "last_name": "Crawford",
+        "company": "Windsor Primetime LLC",
+        "position": "President & CEO",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "C. Derek Campbell",
+        "first_name": "C. Derek",
+        "last_name": "Campbell",
+        "company": "LVC Global Holdings",
+        "position": "Executive Chairman",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Dr. Tonye Rex Idaminabo FRSA",
+        "first_name": "Tonye Rex",
+        "last_name": "Idaminabo",
+        "company": "Elevate Africa",
+        "position": "Chief Partnership Officer",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Brian Laung Aoaeh, CFA",
+        "first_name": "Brian",
+        "last_name": "Laung Aoaeh",
+        "company": "REFASHIOND Ventures",
+        "position": "Founder",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Dr. Femi Salami",
+        "first_name": "Femi",
+        "last_name": "Salami",
+        "company": "MinePro (USA)",
+        "position": "Managing Partner",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "H. E. Dr. Arlindo das Chagas Rangel",
+        "first_name": "H. E. Dr. Arlindo",
+        "last_name": "das Chagas Rangel",
+        "company": "Aipex",
+        "position": "CEO",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Vivian Ojo",
+        "first_name": "Vivian",
+        "last_name": "Ojo",
+        "company": "African Development Bank",
+        "position": "Strategy & Resource Mobilisation Specialist",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Steven Freidmutter",
+        "first_name": "Steven",
+        "last_name": "Freidmutter",
+        "company": "SF Ventures",
+        "position": "1st Degree Connectionist, CEO",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Ngozi Oyewole",
+        "first_name": "Ngozi",
+        "last_name": "Oyewole",
+        "company": "Noxie Limited",
+        "position": "Founder and MD",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Nombasa Mawela",
+        "first_name": "Nombasa",
+        "last_name": "Mawela",
+        "company": "",
+        "position": "Dubai Real Estate Pioneer & Business Leader",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Karen L. Booker",
+        "first_name": "Karen",
+        "last_name": "Booker",
+        "company": "Alkebulum LLC",
+        "position": "CEO",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Emma Johnson",
+        "first_name": "Emma",
+        "last_name": "Johnson",
+        "company": "",
+        "position": "Project Manager",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Ava Thompson",
+        "first_name": "Ava",
+        "last_name": "Thompson",
+        "company": "",
+        "position": "Operations Coordinator",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Liam Carter",
+        "first_name": "Liam",
+        "last_name": "Carter",
+        "company": "",
+        "position": "Creative Director",
+        "linkedin_url": ""
+      },
+      {
+        "full_name": "Noah Mitchell",
+        "first_name": "Noah",
+        "last_name": "Mitchell",
+        "company": "",
+        "position": "Marketing Specialist",
+        "linkedin_url": ""
+      }
+    ]
+  }
+}

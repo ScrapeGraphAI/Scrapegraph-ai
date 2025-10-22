@@ -37,8 +37,16 @@ class GenerateAnswerFromImageNode(BaseNode):
             "Authorization": f"Bearer {api_key}",
         }
 
+        # Get max_tokens from config, default to 4000 for better extraction
+        max_tokens = self.node_config.get("config", {}).get("llm", {}).get("max_tokens", 4000)
+
+        # Strip provider prefix (e.g., "openai/gpt-4o" -> "gpt-4o")
+        model = self.node_config["config"]["llm"]["model"]
+        if "/" in model:
+            model = model.split("/", 1)[1]
+
         payload = {
-            "model": self.node_config["config"]["llm"]["model"],
+            "model": model,
             "messages": [
                 {
                     "role": "user",
@@ -53,18 +61,30 @@ class GenerateAnswerFromImageNode(BaseNode):
                     ],
                 }
             ],
-            "max_tokens": 300,
+            "max_tokens": max_tokens,
         }
 
         async with session.post(
             "https://api.openai.com/v1/chat/completions", headers=headers, json=payload
         ) as response:
             result = await response.json()
-            return (
+
+            # Better error handling
+            if "error" in result:
+                error_msg = result.get("error", {}).get("message", "Unknown error")
+                print(f"⚠️  OpenAI API Error: {error_msg}")
+                return f"API Error: {error_msg}"
+
+            content = (
                 result.get("choices", [{}])[0]
                 .get("message", {})
                 .get("content", "No response")
             )
+
+            if not content or content == "No response":
+                print(f"⚠️  Empty response from OpenAI. Full result: {result}")
+
+            return content
 
     async def execute_async(self, state: dict) -> dict:
         """

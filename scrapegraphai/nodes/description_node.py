@@ -4,7 +4,7 @@ DescriptionNode Module
 
 from typing import List, Optional
 
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableParallel
 from tqdm import tqdm
 
