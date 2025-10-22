@@ -4,7 +4,8 @@ This module defines the graph structures and related functionalities for the Scr
 
 from .abstract_graph import AbstractGraph
 from .base_graph import BaseGraph
-from .code_generator_graph import CodeGeneratorGraph
+# Lazy import to avoid langchain_classic dependency issues
+# from .code_generator_graph import CodeGeneratorGraph
 from .csv_scraper_graph import CSVScraperGraph
 from .csv_scraper_multi_graph import CSVScraperMultiGraph
 from .depth_search_graph import DepthSearchGraph
@@ -53,7 +54,7 @@ __all__ = [
     "DepthSearchGraph",
     "OmniSearchGraph",
     # Other specialized graphs
-    "CodeGeneratorGraph",
+    # "CodeGeneratorGraph",  # Commented out to avoid langchain_classic dependency
     "OmniScraperGraph",
     "ScreenshotScraperGraph",
     "ScriptCreatorGraph",
