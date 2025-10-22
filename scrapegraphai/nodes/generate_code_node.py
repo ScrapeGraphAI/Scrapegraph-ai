@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional
 from bs4 import BeautifulSoup
 from jsonschema import ValidationError as JSONSchemaValidationError
 from jsonschema import validate
-from langchain_classic.output_parsers.structured import (
+from langchain_community.output_parsers.structured import (
     ResponseSchema,
     StructuredOutputParser,
 )
