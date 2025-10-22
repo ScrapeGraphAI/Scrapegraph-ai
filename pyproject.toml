@@ -11,6 +11,7 @@ authors = [
 
 dependencies = [
     "langchain>=0.3.0",
+    "langchain-classic>=1.0.0",
     "langchain-openai>=0.1.22",
     "langchain-mistralai>=0.1.12",
     "langchain_community>=0.2.9",
