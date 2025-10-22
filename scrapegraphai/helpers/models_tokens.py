@@ -60,8 +60,10 @@ models_tokens = {
     "google_genai": {
         "gemini-pro": 128000,
         "gemini-1.5-flash-latest": 128000,
-        "gemini-2.0-flash-latest": 128000,
         "gemini-1.5-pro-latest": 128000,
+        "gemini-2.0-flash-latest": 1000000,
+        "gemini-2.0-flash-exp": 1000000,
+        "gemini-2.0-pro-exp": 2000000,
         "models/embedding-001": 2048,
     },
     "google_vertexai": {
@@ -148,8 +150,11 @@ models_tokens = {
     "groq": {
         "llama3-8b-8192": 8192,
         "llama3-70b-8192": 8192,
+        "llama-3.1-8b-instant": 128000,
+        "llama-3.3-70b-versatile": 128000,
         "mixtral-8x7b-32768": 32768,
         "gemma-7b-it": 8192,
+        "gemma2-9b-it": 8192,
         "claude-3-haiku-20240307": 8192,
     },
     "toghetherai": {
@@ -208,7 +213,7 @@ models_tokens = {
     "mistralai": {
         "mistral-large-latest": 128000,
         "open-mistral-nemo": 128000,
-        "codestral-latest": 32000,
+        "codestral-latest": 256000,
         "mistral-embed": 8000,
         "open-mistral-7b": 32000,
         "open-mixtral-8x7b": 32000,
@@ -250,8 +255,11 @@ models_tokens = {
         "claude-3-haiku": 200000,
     },
     "deepseek": {
-        "deepseek-chat": 28672,
-        "deepseek-coder": 16384,
+        "deepseek-chat": 128000,
+        "deepseek-coder": 128000,
+        "deepseek-v3": 128000,
+        "deepseek-v3.1": 128000,
+        "deepseek-r1": 128000,
     },
     "ernie": {
         "ernie-bot-turbo": 4096,
@@ -285,6 +293,8 @@ models_tokens = {
         "claude-3-opus-latest": 200000,
         "gemini-1.5-flash-8b": 128000,
         "gemini-1.5-flash": 128000,
+        "gemini-2.0-flash": 1000000,
+        "gemini-2.0-pro": 2000000,
         "open-mixtral-8x7b": 32000,
         "open-mixtral-8x22b": 64000,
         "claude-3-5-sonnet-latest": 200000,
@@ -304,11 +314,16 @@ models_tokens = {
         "gemini-2.0-flash-exp": 1000000,
         "grok-beta": 128000,
         "grok-2-latest": 128000,
+        "grok-3": 1000000,
+        "grok-3-mini": 1000000,
     },
     "togetherai": {"Meta-Llama-3.1-70B-Instruct-Turbo": 128000},
     "xai": {
         "grok-1": 8192,
-        "grok-3": 128000,
-        "grok-3-mini": 128000,
+        "grok-2": 128000,
+        "grok-2-latest": 128000,
+        "grok-3": 1000000,
+        "grok-3-mini": 1000000,
+        "grok-beta": 128000,
     },
 }
