@@ -21,7 +21,7 @@ from ..telemetry import log_graph_execution
 logger = get_logger(__name__)
 
 # ANSI escape sequence for hyperlink
-CLICKABLE_URL = "\033]8;;https://scrapegraphai.com/oss\033\\https://scrapegraphai.com/oss\033]8;;\033\\"
+CLICKABLE_URL = "\033]8;;https://scrapegraphai.com\033\\https://scrapegraphai.com\033]8;;\033\\"
 
 class AbstractGraph(ABC):
     """
