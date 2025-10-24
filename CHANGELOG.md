@@ -1,3 +1,10 @@
+## [1.63.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.63.0...v1.63.1) (2025-10-24)
+
+
+### Bug Fixes
+
+* url redirect ([8f0433c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8f0433cfb6c7b6fc7bb542a8956858fc7b4b5ea2))
+
 ## [1.63.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.62.0...v1.63.0) (2025-10-22)
 
 
