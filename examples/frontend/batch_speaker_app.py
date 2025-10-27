@@ -45,19 +45,25 @@ except Exception:
 
 def ensure_playwright_installed() -> None:
     """Install Playwright browsers when running in ephemeral environments."""
-    try:
-        subprocess.run(
-            ["playwright", "install", "--with-deps", "chromium"],
-            check=True,
-            capture_output=True,
-        )
-    except FileNotFoundError:
-        st.warning("Playwright CLI not found; please ensure Playwright is installed.", icon="⚠️")
-    except subprocess.CalledProcessError as exc:
-        # Playwright returns non-zero if browsers already exist; suppress noise.
-        stderr = exc.stderr.decode("utf-8") if exc.stderr else ""
-        if "already installed" not in stderr.lower():
-            st.warning(f"Playwright install warning: {stderr}", icon="⚠️")
+    commands = [
+        ["playwright", "install", "chromium"],
+        ["playwright", "install", "--with-deps", "chromium"],
+    ]
+    last_error = ""
+    for cmd in commands:
+        try:
+            subprocess.run(cmd, check=True, capture_output=True)
+            return
+        except FileNotFoundError:
+            st.warning("Playwright CLI not found; please ensure Playwright is installed.", icon="⚠️")
+            return
+        except subprocess.CalledProcessError as exc:
+            stderr = exc.stderr.decode("utf-8") if exc.stderr else ""
+            if "already installed" in stderr.lower():
+                return
+            last_error = stderr
+    if last_error:
+        st.warning(f"Playwright install warning: {last_error}", icon="⚠️")
 
 
 ensure_playwright_installed()
