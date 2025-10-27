@@ -13,6 +13,7 @@ import json
 import os
 import re
 import unicodedata
+import subprocess
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import List, Optional
@@ -40,6 +41,26 @@ try:
         os.environ.setdefault("OPENAI_API_KEY", secret_api_key)
 except Exception:
     pass
+
+
+def ensure_playwright_installed() -> None:
+    """Install Playwright browsers when running in ephemeral environments."""
+    try:
+        subprocess.run(
+            ["playwright", "install", "--with-deps", "chromium"],
+            check=True,
+            capture_output=True,
+        )
+    except FileNotFoundError:
+        st.warning("Playwright CLI not found; please ensure Playwright is installed.", icon="⚠️")
+    except subprocess.CalledProcessError as exc:
+        # Playwright returns non-zero if browsers already exist; suppress noise.
+        stderr = exc.stderr.decode("utf-8") if exc.stderr else ""
+        if "already installed" not in stderr.lower():
+            st.warning(f"Playwright install warning: {stderr}", icon="⚠️")
+
+
+ensure_playwright_installed()
 
 
 class Speaker(BaseModel):
