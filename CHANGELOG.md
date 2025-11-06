@@ -1,3 +1,10 @@
+## [1.64.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.63.1...v1.64.0) (2025-11-06)
+
+
+### Features
+
+* Add configurable timeout to FetchNode ([e81a4ed](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e81a4ed74540c6fb3be9465a698d8de9df72a74b))
+
 ## [1.63.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.63.0...v1.63.1) (2025-10-24)
 
 
