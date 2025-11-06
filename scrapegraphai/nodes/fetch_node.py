@@ -4,6 +4,7 @@ FetchNode Module
 
 import json
 from typing import List, Optional
+import concurrent.futures
 
 import requests
 from langchain_community.document_loaders import PyPDFLoader
@@ -67,6 +68,10 @@ class FetchNode(BaseNode):
             if node_config is None
             else node_config.get("openai_md_enabled", False)
         )
+
+        # Timeout in seconds for blocking operations (HTTP requests, PDF parsing, etc.).
+        # If set to None, no timeout will be applied.
+        self.timeout = None if node_config is None else node_config.get("timeout", 30)
 
         self.cut = False if node_config is None else node_config.get("cut", True)
 
@@ -174,7 +179,19 @@ class FetchNode(BaseNode):
 
         if input_type == "pdf":
             loader = PyPDFLoader(source)
-            return loader.load()
+            # PyPDFLoader.load() can be blocking for large PDFs. Run it in a thread and
+            # enforce the configured timeout if provided.
+            if self.timeout is None:
+                return loader.load()
+            else:
+                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                    future = executor.submit(loader.load)
+                    try:
+                        return future.result(timeout=self.timeout)
+                    except concurrent.futures.TimeoutError:
+                        raise TimeoutError(
+                            f"PDF parsing exceeded timeout of {self.timeout} seconds"
+                        )
         elif input_type == "csv":
             try:
                 import pandas as pd
@@ -260,7 +277,12 @@ class FetchNode(BaseNode):
 
         self.logger.info(f"--- (Fetching HTML from: {source}) ---")
         if self.use_soup:
-            response = requests.get(source)
+            # Apply configured timeout to blocking HTTP requests. If timeout is None,
+            # don't pass the timeout argument (requests will block until completion).
+            if self.timeout is None:
+                response = requests.get(source)
+            else:
+                response = requests.get(source, timeout=self.timeout)
             if response.status_code == 200:
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
@@ -285,6 +307,11 @@ class FetchNode(BaseNode):
 
             if self.node_config:
                 loader_kwargs = self.node_config.get("loader_kwargs", {})
+
+            # If a global timeout is configured on the node and no loader-specific timeout
+            # was provided, propagate it to ChromiumLoader so it can apply the same limit.
+            if "timeout" not in loader_kwargs and self.timeout is not None:
+                loader_kwargs["timeout"] = self.timeout
 
             if self.browser_base:
                 try:
