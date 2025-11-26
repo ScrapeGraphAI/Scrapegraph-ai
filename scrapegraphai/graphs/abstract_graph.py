@@ -5,7 +5,6 @@ AbstractGraph Module
 import asyncio
 import uuid
 import warnings
-import time
 from abc import ABC, abstractmethod
 from typing import Optional, Type
 
@@ -16,7 +15,6 @@ from pydantic import BaseModel
 from ..helpers import models_tokens
 from ..models import CLoD, DeepSeek, Nvidia, OneApi, XAI
 from ..utils.logging import set_verbosity_info, set_verbosity_warning, get_logger
-from ..telemetry import log_graph_execution
 
 logger = get_logger(__name__)
 

@@ -20,8 +20,8 @@ class Nvidia:
                 """The langchain_nvidia_ai_endpoints module is not installed.
                               Please install it using `pip install langchain-nvidia-ai-endpoints`."""
             )
-        
+
         if "api_key" in llm_config:
             llm_config["nvidia_api_key"] = llm_config.pop("api_key")
-        
+
         return ChatNVIDIA(**llm_config)
