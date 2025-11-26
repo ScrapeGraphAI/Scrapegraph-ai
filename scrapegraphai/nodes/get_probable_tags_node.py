@@ -4,8 +4,8 @@ GetProbableTagsNode Module
 
 from typing import List
 
-from langchain.output_parsers import CommaSeparatedListOutputParser
-from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import CommaSeparatedListOutputParser
+from langchain_core.prompts import PromptTemplate
 
 from ..prompts import TEMPLATE_GET_PROBABLE_TAGS
 from .base_node import BaseNode
