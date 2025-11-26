@@ -9,7 +9,7 @@ import time
 from abc import ABC, abstractmethod
 from typing import Optional, Type
 
-from langchain.chat_models import init_chat_model
+from langchain_core.language_models.chat_models import init_chat_model
 from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 

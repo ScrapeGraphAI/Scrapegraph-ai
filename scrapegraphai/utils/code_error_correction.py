@@ -15,7 +15,7 @@ from typing import Any, Dict, Optional
 from functools import lru_cache
 
 from pydantic import BaseModel, Field, validator
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 from ..prompts import (
