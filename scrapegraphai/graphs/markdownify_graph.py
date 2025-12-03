@@ -80,4 +80,4 @@ class MarkdownifyGraph(BaseGraph):
                 - Dictionary with the markdown result in the "markdown" key
                 - List of execution logs
         """
-        return super().execute(initial_state) 
+        return super().execute(initial_state)

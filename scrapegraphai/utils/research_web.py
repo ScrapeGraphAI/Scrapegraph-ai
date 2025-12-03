@@ -1,5 +1,5 @@
 """
-research_web module for web searching across different search engines with improved 
+research_web module for web searching across different search engines with improved
 error handling, validation, and security features.
 """
 
@@ -48,7 +48,7 @@ class SearchConfig(BaseModel):
     serper_api_key: Optional[str] = Field(None, description="API key for Serper")
     region: Optional[str] = Field(None, description="Country/region code")
     language: str = Field("en", description="Language code")
-    
+
     @validator('search_engine')
     def validate_search_engine(cls, v):
         """Validate search engine."""
@@ -56,14 +56,14 @@ class SearchConfig(BaseModel):
         if v.lower() not in valid_engines:
             raise ValueError(f"Search engine must be one of: {', '.join(valid_engines)}")
         return v.lower()
-    
+
     @validator('query')
     def validate_query(cls, v):
         """Validate search query."""
         if not v or not isinstance(v, str):
             raise ValueError("Query must be a non-empty string")
         return v
-    
+
     @validator('max_results')
     def validate_max_results(cls, v):
         """Validate max results."""
@@ -80,17 +80,17 @@ PDF_REGEX = re.compile(r'\.pdf(#.*)?(\?.*)?$', re.IGNORECASE)
 def rate_limited(calls: int, period: int = 60):
     """
     Decorator to limit the rate of function calls.
-    
+
     Args:
         calls (int): Maximum number of calls allowed in the period.
         period (int): Time period in seconds.
-        
+
     Returns:
         Callable: Decorated function with rate limiting.
     """
     min_interval = period / float(calls)
     last_called = [0.0]
-    
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -108,10 +108,10 @@ def rate_limited(calls: int, period: int = 60):
 def sanitize_search_query(query: str) -> str:
     """
     Sanitizes search query to prevent injection attacks.
-    
+
     Args:
         query (str): The search query.
-        
+
     Returns:
         str: Sanitized query.
     """
@@ -135,7 +135,7 @@ USER_AGENTS = [
 def get_random_user_agent() -> str:
     """
     Returns a random user agent from the list.
-    
+
     Returns:
         str: Random user agent string.
     """
@@ -167,10 +167,10 @@ def search_on_web(
         serper_api_key (str): API key for Serper
         region (str): Country/region code (e.g., 'mx' for Mexico)
         language (str): Language code (e.g., 'es' for Spanish)
-        
+
     Returns:
         List[str]: List of URLs from search results
-        
+
     Raises:
         SearchConfigError: If search configuration is invalid
         SearchRequestError: If search request fails
@@ -179,7 +179,7 @@ def search_on_web(
     try:
         # Sanitize query for security
         sanitized_query = sanitize_search_query(query)
-        
+
         # Validate search configuration
         config = SearchConfig(
             query=sanitized_query,
@@ -192,12 +192,12 @@ def search_on_web(
             region=region,
             language=language
         )
-        
+
         # Format proxy once
         formatted_proxy = None
         if config.proxy:
             formatted_proxy = format_proxy(config.proxy)
-        
+
         results = []
         if config.search_engine == "duckduckgo":
             # Create a DuckDuckGo search object with max_results
@@ -209,25 +209,25 @@ def search_on_web(
 
         elif config.search_engine == "bing":
             results = _search_bing(
-                config.query, 
-                config.max_results, 
-                config.timeout, 
+                config.query,
+                config.max_results,
+                config.timeout,
                 formatted_proxy
             )
 
         elif config.search_engine == "searxng":
             results = _search_searxng(
-                config.query, 
-                config.max_results, 
-                config.port, 
+                config.query,
+                config.max_results,
+                config.port,
                 config.timeout
             )
 
         elif config.search_engine == "serper":
             results = _search_serper(
-                config.query, 
-                config.max_results, 
-                config.serper_api_key, 
+                config.query,
+                config.max_results,
+                config.serper_api_key,
                 config.timeout
             )
 
@@ -246,40 +246,40 @@ def _search_bing(
 ) -> List[str]:
     """
     Helper function for Bing search with improved error handling.
-    
+
     Args:
         query (str): Search query
         max_results (int): Maximum number of results to return
         timeout (int): Request timeout in seconds
         proxy (str, optional): Proxy configuration
-        
+
     Returns:
         List[str]: List of URLs from search results
     """
     headers = {
         "User-Agent": get_random_user_agent()
     }
-    
+
     params = {
         "q": query,
         "count": max_results
     }
-    
+
     proxies = {"http": proxy, "https": proxy} if proxy else None
-    
+
     try:
         response = requests.get(
-            "https://www.bing.com/search", 
-            params=params, 
-            headers=headers, 
-            proxies=proxies, 
+            "https://www.bing.com/search",
+            params=params,
+            headers=headers,
+            proxies=proxies,
             timeout=timeout
         )
         response.raise_for_status()
-        
+
         soup = BeautifulSoup(response.text, "html.parser")
         results = []
-        
+
         # Extract URLs from Bing search results
         for link in soup.select("li.b_algo h2 a"):
             url = link.get("href")
@@ -287,7 +287,7 @@ def _search_bing(
                 results.append(url)
                 if len(results) >= max_results:
                     break
-                    
+
         return results
     except Exception as e:
         raise SearchRequestError(f"Bing search failed: {str(e)}")
@@ -298,20 +298,20 @@ def _search_searxng(
 ) -> List[str]:
     """
     Helper function for SearXNG search.
-    
+
     Args:
         query (str): Search query
         max_results (int): Maximum number of results to return
         port (int): Port for SearXNG
         timeout (int): Request timeout in seconds
-        
+
     Returns:
         List[str]: List of URLs from search results
     """
     headers = {
         "User-Agent": get_random_user_agent()
     }
-    
+
     params = {
         "q": query,
         "format": "json",
@@ -321,7 +321,7 @@ def _search_searxng(
         "engines": "duckduckgo,bing,brave",
         "results": max_results
     }
-    
+
     try:
         response = requests.get(
             f"http://localhost:{port}/search",
@@ -330,7 +330,7 @@ def _search_searxng(
             timeout=timeout
         )
         response.raise_for_status()
-        
+
         json_data = response.json()
         results = [result["url"] for result in json_data.get("results", [])]
         return results[:max_results]
@@ -343,29 +343,29 @@ def _search_serper(
 ) -> List[str]:
     """
     Helper function for Serper search.
-    
+
     Args:
         query (str): Search query
         max_results (int): Maximum number of results to return
         api_key (str): API key for Serper
         timeout (int): Request timeout in seconds
-        
+
     Returns:
         List[str]: List of URLs from search results
     """
     if not api_key:
         raise SearchConfigError("Serper API key is required")
-    
+
     headers = {
         "X-API-KEY": api_key,
         "Content-Type": "application/json"
     }
-    
+
     data = {
         "q": query,
         "num": max_results
     }
-    
+
     try:
         response = requests.post(
             "https://google.serper.dev/search",
@@ -374,17 +374,17 @@ def _search_serper(
             timeout=timeout
         )
         response.raise_for_status()
-        
+
         json_data = response.json()
         results = []
-        
+
         # Extract organic search results
         for item in json_data.get("organic", []):
             if "link" in item:
                 results.append(item["link"])
                 if len(results) >= max_results:
                     break
-        
+
         return results
     except Exception as e:
         raise SearchRequestError(f"Serper search failed: {str(e)}")
@@ -393,34 +393,34 @@ def _search_serper(
 def format_proxy(proxy_config: Union[str, Dict, ProxyConfig]) -> str:
     """
     Format proxy configuration into a string.
-    
+
     Args:
         proxy_config: Proxy configuration as string, dict, or ProxyConfig
-        
+
     Returns:
         str: Formatted proxy string
     """
     if isinstance(proxy_config, str):
         return proxy_config
-    
+
     if isinstance(proxy_config, dict):
         proxy_config = ProxyConfig(**proxy_config)
-    
+
     # Format proxy with authentication if provided
     if proxy_config.username and proxy_config.password:
         auth = f"{proxy_config.username}:{proxy_config.password}@"
         return f"http://{auth}{proxy_config.server}"
-    
+
     return f"http://{proxy_config.server}"
 
 
 def filter_pdf_links(urls: List[str]) -> List[str]:
     """
     Filter out PDF links from search results.
-    
+
     Args:
         urls (List[str]): List of URLs
-        
+
     Returns:
         List[str]: Filtered list of URLs without PDFs
     """
@@ -430,28 +430,28 @@ def filter_pdf_links(urls: List[str]) -> List[str]:
 def verify_request_signature(request_data: Dict, signature: str, secret_key: str) -> bool:
     """
     Verify the signature of an incoming request.
-    
+
     Args:
         request_data (Dict): Request data to verify
         signature (str): Provided signature
         secret_key (str): Secret key for verification
-        
+
     Returns:
         bool: True if signature is valid, False otherwise
     """
     import hmac
     import hashlib
     import json
-    
+
     # Sort keys for consistent serialization
     data_string = json.dumps(request_data, sort_keys=True)
-    
+
     # Create HMAC signature
     computed_signature = hmac.new(
         secret_key.encode(),
         data_string.encode(),
         hashlib.sha256
     ).hexdigest()
-    
+
     # Compare signatures using constant-time comparison to prevent timing attacks
     return hmac.compare_digest(computed_signature, signature)

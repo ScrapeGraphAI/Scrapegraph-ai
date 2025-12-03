@@ -19,4 +19,4 @@ class XAI(ChatOpenAI):
             llm_config["openai_api_key"] = llm_config.pop("api_key")
         llm_config["openai_api_base"] = "https://api.x.ai/v1"
 
-        super().__init__(**llm_config) 
+        super().__init__(**llm_config)

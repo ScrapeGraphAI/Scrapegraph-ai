@@ -80,10 +80,10 @@ class ValidationAnalysisState(CodeAnalysisState):
 def get_optimal_analysis_template(error_type: str) -> str:
     """
     Returns the optimal prompt template based on the error type.
-    
+
     Args:
         error_type (str): Type of error to analyze.
-        
+
     Returns:
         str: The prompt template text.
     """
@@ -106,10 +106,10 @@ def syntax_focused_analysis(state: Dict[str, Any], llm_model) -> str:
 
     Returns:
         str: The result of the syntax error analysis.
-        
+
     Raises:
         InvalidStateError: If state is missing required keys.
-        
+
     Example:
         >>> state = {
             'generated_code': 'print("Hello World")',
@@ -123,24 +123,24 @@ def syntax_focused_analysis(state: Dict[str, Any], llm_model) -> str:
             generated_code=state.get("generated_code", ""),
             errors=state.get("errors", {})
         )
-        
+
         # Check if syntax errors exist
         if "syntax" not in validated_state.errors:
             raise InvalidStateError("No syntax errors found in state dictionary")
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_analysis_template("syntax"),
             input_variables=["generated_code", "errors"]
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated state
         return chain.invoke({
             "generated_code": validated_state.generated_code,
             "errors": validated_state.errors["syntax"]
         })
-    
+
     except KeyError as e:
         raise InvalidStateError(f"Missing required key in state dictionary: {e}")
     except Exception as e:
@@ -157,10 +157,10 @@ def execution_focused_analysis(state: Dict[str, Any], llm_model) -> str:
 
     Returns:
         str: The result of the execution error analysis.
-        
+
     Raises:
         InvalidStateError: If state is missing required keys.
-        
+
     Example:
         >>> state = {
             'generated_code': 'print(x)',
@@ -178,14 +178,14 @@ def execution_focused_analysis(state: Dict[str, Any], llm_model) -> str:
             html_code=state.get("html_code", ""),
             html_analysis=state.get("html_analysis", "")
         )
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_analysis_template("execution"),
             input_variables=["generated_code", "errors", "html_code", "html_analysis"],
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated state
         return chain.invoke({
             "generated_code": validated_state.generated_code,
@@ -193,7 +193,7 @@ def execution_focused_analysis(state: Dict[str, Any], llm_model) -> str:
             "html_code": validated_state.html_code,
             "html_analysis": validated_state.html_analysis,
         })
-    
+
     except KeyError as e:
         raise InvalidStateError(f"Missing required key in state dictionary: {e}")
     except Exception as e:
@@ -211,10 +211,10 @@ def validation_focused_analysis(state: Dict[str, Any], llm_model) -> str:
 
     Returns:
         str: The result of the validation error analysis.
-        
+
     Raises:
         InvalidStateError: If state is missing required keys.
-        
+
     Example:
         >>> state = {
             'generated_code': 'return {"name": "John"}',
@@ -232,14 +232,14 @@ def validation_focused_analysis(state: Dict[str, Any], llm_model) -> str:
             json_schema=state.get("json_schema", {}),
             execution_result=state.get("execution_result", {})
         )
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_analysis_template("validation"),
             input_variables=["generated_code", "errors", "json_schema", "execution_result"],
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated state
         return chain.invoke({
             "generated_code": validated_state.generated_code,
@@ -247,7 +247,7 @@ def validation_focused_analysis(state: Dict[str, Any], llm_model) -> str:
             "json_schema": validated_state.json_schema,
             "execution_result": validated_state.execution_result,
         })
-    
+
     except KeyError as e:
         raise InvalidStateError(f"Missing required key in state dictionary: {e}")
     except Exception as e:
@@ -268,10 +268,10 @@ def semantic_focused_analysis(
 
     Returns:
         str: The result of the semantic error analysis.
-        
+
     Raises:
         InvalidStateError: If state or comparison_result is missing required keys.
-        
+
     Example:
         >>> state = {
             'generated_code': 'def add(a, b): return a + b'
@@ -288,27 +288,27 @@ def semantic_focused_analysis(
             generated_code=state.get("generated_code", ""),
             errors=state.get("errors", {})
         )
-        
+
         # Validate comparison_result
         if "differences" not in comparison_result:
             raise InvalidStateError("comparison_result missing 'differences' key")
         if "explanation" not in comparison_result:
             raise InvalidStateError("comparison_result missing 'explanation' key")
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_analysis_template("semantic"),
             input_variables=["generated_code", "differences", "explanation"],
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated inputs
         return chain.invoke({
             "generated_code": validated_state.generated_code,
             "differences": json.dumps(comparison_result["differences"], indent=2),
             "explanation": comparison_result["explanation"],
         })
-    
+
     except KeyError as e:
         raise InvalidStateError(f"Missing required key: {e}")
     except Exception as e:

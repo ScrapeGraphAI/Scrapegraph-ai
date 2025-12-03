@@ -11,10 +11,10 @@ comparing generated and reference results.
 """
 
 import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 from functools import lru_cache
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -39,7 +39,7 @@ class InvalidCorrectionStateError(CodeGenerationError):
 class CorrectionState(BaseModel):
     """Base model for code correction state validation."""
     generated_code: str = Field(..., description="The original generated code to correct")
-    
+
     class Config:
         extra = "allow"
 
@@ -60,10 +60,10 @@ def get_optimal_correction_template(error_type: str) -> str:
     """
     Returns the optimal prompt template for code correction based on the error type.
     Results are cached for performance.
-    
+
     Args:
         error_type (str): Type of error to correct.
-        
+
     Returns:
         str: The prompt template text.
     """
@@ -87,10 +87,10 @@ def syntax_focused_code_generation(state: Dict[str, Any], analysis: str, llm_mod
 
     Returns:
         str: The corrected code.
-        
+
     Raises:
         InvalidCorrectionStateError: If state is missing required keys.
-        
+
     Example:
         >>> state = {
             'generated_code': 'print("Hello World"'
@@ -103,23 +103,23 @@ def syntax_focused_code_generation(state: Dict[str, Any], analysis: str, llm_mod
         validated_state = CorrectionState(
             generated_code=state.get("generated_code", "")
         )
-        
+
         if not analysis or not isinstance(analysis, str):
             raise InvalidCorrectionStateError("Analysis must be a non-empty string")
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_correction_template("syntax"),
             input_variables=["analysis", "generated_code"],
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated state
         return chain.invoke({
             "analysis": analysis,
             "generated_code": validated_state.generated_code
         })
-    
+
     except KeyError as e:
         raise InvalidCorrectionStateError(f"Missing required key in state dictionary: {e}")
     except Exception as e:
@@ -137,10 +137,10 @@ def execution_focused_code_generation(state: Dict[str, Any], analysis: str, llm_
 
     Returns:
         str: The corrected code.
-        
+
     Raises:
         InvalidCorrectionStateError: If state is missing required keys or analysis is invalid.
-        
+
     Example:
         >>> state = {
             'generated_code': 'print(x)'
@@ -153,23 +153,23 @@ def execution_focused_code_generation(state: Dict[str, Any], analysis: str, llm_
         validated_state = CorrectionState(
             generated_code=state.get("generated_code", "")
         )
-        
+
         if not analysis or not isinstance(analysis, str):
             raise InvalidCorrectionStateError("Analysis must be a non-empty string")
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_correction_template("execution"),
             input_variables=["analysis", "generated_code"],
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated state
         return chain.invoke({
             "analysis": analysis,
             "generated_code": validated_state.generated_code
         })
-    
+
     except KeyError as e:
         raise InvalidCorrectionStateError(f"Missing required key in state dictionary: {e}")
     except Exception as e:
@@ -187,10 +187,10 @@ def validation_focused_code_generation(state: Dict[str, Any], analysis: str, llm
 
     Returns:
         str: The corrected code.
-        
+
     Raises:
         InvalidCorrectionStateError: If state is missing required keys or analysis is invalid.
-        
+
     Example:
         >>> state = {
             'generated_code': 'return {"name": "John"}',
@@ -205,24 +205,24 @@ def validation_focused_code_generation(state: Dict[str, Any], analysis: str, llm
             generated_code=state.get("generated_code", ""),
             json_schema=state.get("json_schema", {})
         )
-        
+
         if not analysis or not isinstance(analysis, str):
             raise InvalidCorrectionStateError("Analysis must be a non-empty string")
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_correction_template("validation"),
             input_variables=["analysis", "generated_code", "json_schema"],
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated state
         return chain.invoke({
             "analysis": analysis,
             "generated_code": validated_state.generated_code,
             "json_schema": validated_state.json_schema,
         })
-    
+
     except KeyError as e:
         raise InvalidCorrectionStateError(f"Missing required key in state dictionary: {e}")
     except Exception as e:
@@ -240,10 +240,10 @@ def semantic_focused_code_generation(state: Dict[str, Any], analysis: str, llm_m
 
     Returns:
         str: The corrected code.
-        
+
     Raises:
         InvalidCorrectionStateError: If state is missing required keys or analysis is invalid.
-        
+
     Example:
         >>> state = {
             'generated_code': 'def add(a, b): return a + b',
@@ -260,10 +260,10 @@ def semantic_focused_code_generation(state: Dict[str, Any], analysis: str, llm_m
             execution_result=state.get("execution_result", {}),
             reference_answer=state.get("reference_answer", {})
         )
-        
+
         if not analysis or not isinstance(analysis, str):
             raise InvalidCorrectionStateError("Analysis must be a non-empty string")
-        
+
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_correction_template("semantic"),
@@ -275,7 +275,7 @@ def semantic_focused_code_generation(state: Dict[str, Any], analysis: str, llm_m
             ],
         )
         chain = prompt | llm_model | StrOutputParser()
-        
+
         # Execute chain with validated state
         return chain.invoke({
             "analysis": analysis,
@@ -283,7 +283,7 @@ def semantic_focused_code_generation(state: Dict[str, Any], analysis: str, llm_m
             "generated_result": json.dumps(validated_state.execution_result, indent=2),
             "reference_result": json.dumps(validated_state.reference_answer, indent=2),
         })
-    
+
     except KeyError as e:
         raise InvalidCorrectionStateError(f"Missing required key in state dictionary: {e}")
     except Exception as e:

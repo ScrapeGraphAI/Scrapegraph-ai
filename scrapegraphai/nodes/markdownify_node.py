@@ -64,4 +64,4 @@ class MarkdownifyNode(BaseNode):
         # Update state with markdown content
         state.update({self.output[0]: markdown_content})
 
-        return state 
+        return state
