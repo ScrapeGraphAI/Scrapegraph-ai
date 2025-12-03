@@ -14,9 +14,9 @@ generated code based on a comparison result.
 import json
 from typing import Any, Dict, Optional
 
-from pydantic import BaseModel, Field, validator
-from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import PromptTemplate
+from pydantic import BaseModel, Field, validator
 
 from ..prompts import (
     TEMPLATE_EXECUTION_ANALYSIS,
@@ -28,20 +28,25 @@ from ..prompts import (
 
 class AnalysisError(Exception):
     """Base exception for code analysis errors."""
+
     pass
 
 
 class InvalidStateError(AnalysisError):
     """Exception raised when state dictionary is missing required keys."""
+
     pass
 
 
 class CodeAnalysisState(BaseModel):
     """Base model for code analysis state validation."""
-    generated_code: str = Field(..., description="The generated code to analyze")
-    errors: Dict[str, Any] = Field(..., description="Dictionary containing error information")
 
-    @validator('errors')
+    generated_code: str = Field(..., description="The generated code to analyze")
+    errors: Dict[str, Any] = Field(
+        ..., description="Dictionary containing error information"
+    )
+
+    @validator("errors")
     def validate_errors(cls, v):
         """Ensure errors dictionary has expected structure."""
         if not isinstance(v, dict):
@@ -51,28 +56,30 @@ class CodeAnalysisState(BaseModel):
 
 class ExecutionAnalysisState(CodeAnalysisState):
     """Model for execution analysis state validation."""
+
     html_code: Optional[str] = Field(None, description="HTML code if available")
     html_analysis: Optional[str] = Field(None, description="Analysis of HTML code")
 
-    @validator('errors')
+    @validator("errors")
     def validate_execution_errors(cls, v):
         """Ensure errors dictionary contains execution key."""
         super().validate_errors(v)
-        if 'execution' not in v:
+        if "execution" not in v:
             raise ValueError("errors dictionary must contain 'execution' key")
         return v
 
 
 class ValidationAnalysisState(CodeAnalysisState):
     """Model for validation analysis state validation."""
+
     json_schema: Dict[str, Any] = Field(..., description="JSON schema for validation")
     execution_result: Any = Field(..., description="Result of code execution")
 
-    @validator('errors')
+    @validator("errors")
     def validate_validation_errors(cls, v):
         """Ensure errors dictionary contains validation key."""
         super().validate_errors(v)
-        if 'validation' not in v:
+        if "validation" not in v:
             raise ValueError("errors dictionary must contain 'validation' key")
         return v
 
@@ -121,7 +128,7 @@ def syntax_focused_analysis(state: Dict[str, Any], llm_model) -> str:
         # Validate state using Pydantic model
         validated_state = CodeAnalysisState(
             generated_code=state.get("generated_code", ""),
-            errors=state.get("errors", {})
+            errors=state.get("errors", {}),
         )
 
         # Check if syntax errors exist
@@ -131,15 +138,17 @@ def syntax_focused_analysis(state: Dict[str, Any], llm_model) -> str:
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_analysis_template("syntax"),
-            input_variables=["generated_code", "errors"]
+            input_variables=["generated_code", "errors"],
         )
         chain = prompt | llm_model | StrOutputParser()
 
         # Execute chain with validated state
-        return chain.invoke({
-            "generated_code": validated_state.generated_code,
-            "errors": validated_state.errors["syntax"]
-        })
+        return chain.invoke(
+            {
+                "generated_code": validated_state.generated_code,
+                "errors": validated_state.errors["syntax"],
+            }
+        )
 
     except KeyError as e:
         raise InvalidStateError(f"Missing required key in state dictionary: {e}")
@@ -176,7 +185,7 @@ def execution_focused_analysis(state: Dict[str, Any], llm_model) -> str:
             generated_code=state.get("generated_code", ""),
             errors=state.get("errors", {}),
             html_code=state.get("html_code", ""),
-            html_analysis=state.get("html_analysis", "")
+            html_analysis=state.get("html_analysis", ""),
         )
 
         # Create prompt template and chain
@@ -187,12 +196,14 @@ def execution_focused_analysis(state: Dict[str, Any], llm_model) -> str:
         chain = prompt | llm_model | StrOutputParser()
 
         # Execute chain with validated state
-        return chain.invoke({
-            "generated_code": validated_state.generated_code,
-            "errors": validated_state.errors["execution"],
-            "html_code": validated_state.html_code,
-            "html_analysis": validated_state.html_analysis,
-        })
+        return chain.invoke(
+            {
+                "generated_code": validated_state.generated_code,
+                "errors": validated_state.errors["execution"],
+                "html_code": validated_state.html_code,
+                "html_analysis": validated_state.html_analysis,
+            }
+        )
 
     except KeyError as e:
         raise InvalidStateError(f"Missing required key in state dictionary: {e}")
@@ -230,23 +241,30 @@ def validation_focused_analysis(state: Dict[str, Any], llm_model) -> str:
             generated_code=state.get("generated_code", ""),
             errors=state.get("errors", {}),
             json_schema=state.get("json_schema", {}),
-            execution_result=state.get("execution_result", {})
+            execution_result=state.get("execution_result", {}),
         )
 
         # Create prompt template and chain
         prompt = PromptTemplate(
             template=get_optimal_analysis_template("validation"),
-            input_variables=["generated_code", "errors", "json_schema", "execution_result"],
+            input_variables=[
+                "generated_code",
+                "errors",
+                "json_schema",
+                "execution_result",
+            ],
         )
         chain = prompt | llm_model | StrOutputParser()
 
         # Execute chain with validated state
-        return chain.invoke({
-            "generated_code": validated_state.generated_code,
-            "errors": validated_state.errors["validation"],
-            "json_schema": validated_state.json_schema,
-            "execution_result": validated_state.execution_result,
-        })
+        return chain.invoke(
+            {
+                "generated_code": validated_state.generated_code,
+                "errors": validated_state.errors["validation"],
+                "json_schema": validated_state.json_schema,
+                "execution_result": validated_state.execution_result,
+            }
+        )
 
     except KeyError as e:
         raise InvalidStateError(f"Missing required key in state dictionary: {e}")
@@ -286,7 +304,7 @@ def semantic_focused_analysis(
         # Validate state using Pydantic model
         validated_state = CodeAnalysisState(
             generated_code=state.get("generated_code", ""),
-            errors=state.get("errors", {})
+            errors=state.get("errors", {}),
         )
 
         # Validate comparison_result
@@ -303,11 +321,13 @@ def semantic_focused_analysis(
         chain = prompt | llm_model | StrOutputParser()
 
         # Execute chain with validated inputs
-        return chain.invoke({
-            "generated_code": validated_state.generated_code,
-            "differences": json.dumps(comparison_result["differences"], indent=2),
-            "explanation": comparison_result["explanation"],
-        })
+        return chain.invoke(
+            {
+                "generated_code": validated_state.generated_code,
+                "differences": json.dumps(comparison_result["differences"], indent=2),
+                "explanation": comparison_result["explanation"],
+            }
+        )
 
     except KeyError as e:
         raise InvalidStateError(f"Missing required key: {e}")

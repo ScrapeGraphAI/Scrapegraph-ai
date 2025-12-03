@@ -64,9 +64,7 @@ class MarkdownifyGraph(BaseGraph):
             graph_name="Markdownify",
         )
 
-    def execute(
-        self, initial_state: Dict
-    ) -> Tuple[Dict, List[Dict]]:
+    def execute(self, initial_state: Dict) -> Tuple[Dict, List[Dict]]:
         """
         Execute the markdownify graph.
 
