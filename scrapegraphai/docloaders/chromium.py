@@ -265,7 +265,7 @@ class ChromiumLoader(BaseLoader):
 
                     while True:
                         current_height = await page.evaluate(
-                            "document.body.scrollHeight"
+                            "document.body ? document.body.scrollHeight : document.documentElement.scrollHeight"
                         )
                         heights.append(current_height)
                         heights = heights[
