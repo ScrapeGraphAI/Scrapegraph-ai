@@ -1,3 +1,10 @@
+## [1.64.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.64.1...v1.64.2) (2025-12-04)
+
+
+### Bug Fixes
+
+* trigger build ([c582303](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c58230319c936a519a0e659f93ebac2fdab80947))
+
 ## [1.64.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.64.0...v1.64.1) (2025-12-03)
 
 
