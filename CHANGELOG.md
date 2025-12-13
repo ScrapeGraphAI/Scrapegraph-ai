@@ -1,3 +1,10 @@
+## [1.66.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.65.0...v1.66.0) (2025-12-13)
+
+
+### Features
+
+* add openai gpt 5.2 ([2cd3c8c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2cd3c8c6d07224d1bc05ff24cf95cfa96fcf0c78))
+
 ## [1.65.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.64.2...v1.65.0) (2025-12-08)
 
 
