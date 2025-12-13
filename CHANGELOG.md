@@ -1,3 +1,10 @@
+## [1.65.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.64.2...v1.65.0) (2025-12-08)
+
+
+### Features
+
+* empty commit ([5f07858](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5f0785892f4ba33d31408ab200e5b002d98a8a4b))
+
 ## [1.64.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.64.1...v1.64.2) (2025-12-04)
 
 
