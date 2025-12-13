@@ -33,6 +33,11 @@ models_tokens = {
         "o1-mini": 128000,
         "o1": 128000,
         "o3-mini": 200000,
+        "gpt-5.2": 128000,
+        "gpt-5.2-pro": 128000,
+        "gpt-5.2-chat-latest": 128000,
+        "gpt-5-mini": 128000,
+        "gpt-5-nano": 128000,
     },
     "azure_openai": {
         "gpt-3.5-turbo-0125": 16385,
@@ -55,6 +60,11 @@ models_tokens = {
         "chatgpt-4o-latest": 128000,
         "o1-preview": 128000,
         "o1-mini": 128000,
+        "gpt-5.2": 128000,
+        "gpt-5.2-pro": 128000,
+        "gpt-5.2-chat-latest": 128000,
+        "gpt-5-mini": 128000,
+        "gpt-5-nano": 128000,
     },
     "google_genai": {
         "gemini-pro": 128000,
