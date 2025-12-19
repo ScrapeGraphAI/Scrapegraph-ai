@@ -1,3 +1,10 @@
+## [1.67.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.66.0...v1.67.0) (2025-12-19)
+
+
+### Features
+
+* add benchmark ([da112db](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/da112dbe1425c27035f5a1ce18758094d97c38de))
+
 ## [1.66.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.65.0...v1.66.0) (2025-12-13)
 
 
