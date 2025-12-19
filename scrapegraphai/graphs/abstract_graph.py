@@ -8,18 +8,21 @@ import warnings
 from abc import ABC, abstractmethod
 from typing import Optional, Type
 
-from langchain_core.language_models.chat_models import init_chat_model
+from langchain.chat_models import init_chat_model
 from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import CLoD, DeepSeek, Nvidia, OneApi, XAI
-from ..utils.logging import set_verbosity_info, set_verbosity_warning, get_logger
+from ..models import XAI, CLoD, DeepSeek, Nvidia, OneApi
+from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
 logger = get_logger(__name__)
 
 # ANSI escape sequence for hyperlink
-CLICKABLE_URL = "\033]8;;https://scrapegraphai.com\033\\https://scrapegraphai.com\033]8;;\033\\"
+CLICKABLE_URL = (
+    "\033]8;;https://scrapegraphai.com\033\\https://scrapegraphai.com\033]8;;\033\\"
+)
+
 
 class AbstractGraph(ABC):
     """

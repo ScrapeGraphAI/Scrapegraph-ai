@@ -6,32 +6,32 @@ version = "1.66.0"
 description = "A web scraping library based on LangChain which uses LLM and direct graph logic to create scraping pipelines."
 authors = [
     { name = "Marco Vinciguerra", email = "mvincig11@gmail.com" },
-    { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" }
+    { name = "Lorenzo Padoan", email = "lorenzo.padoan977@gmail.com" },
 ]
 
 dependencies = [
-    "langchain>=0.3.0",
-    "langchain-openai>=0.1.22",
-    "langchain-mistralai>=0.1.12",
-    "langchain_community>=0.2.9",
-    "langchain-aws>=0.1.3",
-    "langchain-ollama>=0.1.3",
-    "html2text>=2024.2.26",
-    "beautifulsoup4>=4.12.3",
-    "python-dotenv>=1.0.1",
-    "tiktoken>=0.7",
-    "tqdm>=4.66.4",
-    "minify-html>=0.15.0",
-    "free-proxy>=1.1.1",
-    "playwright>=1.43.0",
+    "langchain>=1.2.0",
+    "langchain-openai>=1.1.6",
+    "langchain-mistralai>=1.1.1",
+    "langchain_community>=0.3.31",
+    "langchain-aws>=1.1.0",
+    "langchain-ollama>=1.0.1",
+    "html2text>=2025.4.15",
+    "beautifulsoup4>=4.14.3",
+    "python-dotenv>=1.2.1",
+    "tiktoken>=0.12.0",
+    "tqdm>=4.67.1",
+    "minify-html>=0.18.1",
+    "free-proxy>=1.1.3",
+    "playwright>=1.57.0",
     "undetected-playwright>=0.3.0",
-    "semchunk>=2.2.0",
-    "async-timeout>=4.0.3",
-    "simpleeval>=1.0.0",
-    "jsonschema>=4.23.0",
-    "duckduckgo-search>=7.2.1",
-    "pydantic>=2.10.2",
-    "scrapegraph-py>=0.1.0",
+    "semchunk>=3.2.5",
+    "async-timeout>=5.0.1",
+    "simpleeval>=1.0.3",
+    "jsonschema>=4.25.1",
+    "duckduckgo-search>=8.1.1",
+    "pydantic>=2.12.5",
+    "scrapegraph-py>=1.44.0",
 ]
 
 readme = "README.md"
@@ -56,7 +56,7 @@ keywords = [
     "web scraping tool",
     "webscraping",
     "graph",
-    "llm"
+    "llm",
 ]
 classifiers = [
     "Intended Audience :: Developers",
@@ -95,7 +95,7 @@ dev-dependencies = [
     "isort>=5.13.2",
     "pre-commit>=3.6.0",
     "mypy>=1.8.0",
-    "types-setuptools>=75.1.0"
+    "types-setuptools>=75.1.0",
 ]
 
 [tool.black]
@@ -110,7 +110,7 @@ line-length = 88
 
 [tool.ruff.lint]
 select = ["F", "E", "W", "C"]
-ignore = ["E203", "E501", "C901"]  # Ignore conflicts with Black
+ignore = ["E203", "E501", "C901"] # Ignore conflicts with Black
 
 [tool.mypy]
 python_version = "3.10"
