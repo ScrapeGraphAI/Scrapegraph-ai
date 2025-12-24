@@ -174,9 +174,7 @@ Please see the [contributing guidelines](https://github.com/VinciGit00/Scrapegra
 ## 🔗 ScrapeGraph API & SDKs
 If you are looking for a quick solution to integrate ScrapeGraph in your system, check out our powerful API [here!](https://dashboard.scrapegraphai.com/login)
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/api-banner.png" alt="ScrapeGraph API Banner" style="width: 100%;">
-</p>
+[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://dashboard.scrapegraphai.com/login)
 
 We offer SDKs in both Python and Node.js, making it easy to integrate into your projects. Check them out below:
 
