@@ -1,3 +1,10 @@
+## [1.69.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.68.0...v1.69.0) (2025-12-24)
+
+
+### Features
+
+* add new banner ([e6c6060](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e6c6060b2895d5448cf3c44a6a3dffef70499ca2))
+
 ## [1.68.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.67.0...v1.68.0) (2025-12-23)
 
 
