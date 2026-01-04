@@ -11,6 +11,7 @@ authors = [
 
 dependencies = [
     "langchain>=1.2.0",
+    "langchain-classic>=1.0.0",
     "langchain-openai>=1.1.6",
     "langchain-mistralai>=1.1.1",
     "langchain_community>=0.3.31",
@@ -26,7 +27,7 @@ dependencies = [
     "playwright>=1.57.0",
     "undetected-playwright>=0.3.0",
     "semchunk>=3.2.5",
-    "async-timeout>=5.0.1",
+    "async-timeout>=4.0.0",
     "simpleeval>=1.0.3",
     "jsonschema>=4.25.1",
     "duckduckgo-search>=8.1.1",
