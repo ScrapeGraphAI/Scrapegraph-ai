@@ -1,3 +1,16 @@
+## [1.71.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.70.0...v1.71.0) (2026-01-05)
+
+
+### Features
+
+* add langchain v1.0 ([2673c26](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2673c26b3406dcc04ac9d7797e55b1df55cc4c67))
+
+
+### Bug Fixes
+
+* update langchain imports for v1.0+ compatibility ([621d3a5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/621d3a5bba6c48937e1f654b793d7316597e86c2)), closes [#1017](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1017)
+* use 'content' instead of 'context' in generate_answer_node_k_level ([ebd909a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ebd909ad7442e24bc3c8f49b8c56736672d4d9fb)), closes [#995](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/995)
+
 ## [1.70.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.69.0...v1.70.0) (2026-01-03)
 
 
