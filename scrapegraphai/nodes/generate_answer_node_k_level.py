@@ -4,10 +4,10 @@ GenerateAnswerNodeKLevel Module
 
 from typing import List, Optional
 
-from langchain_core.prompts import PromptTemplate
 from langchain_aws import ChatBedrock
 from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableParallel
 from langchain_mistralai import ChatMistralAI
 from langchain_openai import ChatOpenAI
@@ -151,7 +151,7 @@ class GenerateAnswerNodeKLevel(BaseNode):
                 template=template_chunks_prompt,
                 input_variables=["format_instructions"],
                 partial_variables={
-                    "context": chunk.get("document"),
+                    "content": chunk.get("document"),
                     "chunk_id": i + 1,
                 },
             )
@@ -163,14 +163,14 @@ class GenerateAnswerNodeKLevel(BaseNode):
 
         merge_prompt = PromptTemplate(
             template=template_merge_prompt,
-            input_variables=["context", "question"],
+            input_variables=["content", "question"],
             partial_variables={"format_instructions": format_instructions},
         )
 
         merge_chain = merge_prompt | self.llm_model
         if output_parser:
             merge_chain = merge_chain | output_parser
-        answer = merge_chain.invoke({"context": batch_results, "question": user_prompt})
+        answer = merge_chain.invoke({"content": batch_results, "question": user_prompt})
 
         state["answer"] = answer
 

@@ -2,7 +2,7 @@
 GraphBuilder Module
 """
 
-from langchain.chains import create_extraction_chain
+from langchain_classic.chains import create_extraction_chain
 from langchain_community.chat_models import ErnieBotChat
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
@@ -113,7 +113,9 @@ class GraphBuilder:
         {nodes_description}
 
         Based on the user's input: "{input}", identify the essential nodes required for the task and suggest a graph configuration that outlines the flow between the chosen nodes.
-        """.format(nodes_description=self.nodes_description, input="{input}")
+        """.format(
+            nodes_description=self.nodes_description, input="{input}"
+        )
         extraction_prompt = ChatPromptTemplate.from_template(
             create_graph_prompt_template
         )
