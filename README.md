@@ -73,7 +73,8 @@ from scrapegraphai.graphs import SmartScraperGraph
 graph_config = {
     "llm": {
         "model": "ollama/llama3.2",
-        "model_tokens": 8192
+        "model_tokens": 8192,
+        "format": "json",
     },
     "verbose": True,
     "headless": False,
