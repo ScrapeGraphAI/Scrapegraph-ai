@@ -1,3 +1,10 @@
+## [1.72.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.71.0...v1.72.0) (2026-01-20)
+
+
+### Features
+
+* add new tests ([f315f3a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f315f3a8c085892dd010fc1152b70f9b6a165671))
+
 ## [1.71.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.70.0...v1.71.0) (2026-01-05)
 
 
