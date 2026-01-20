@@ -14,7 +14,6 @@ from scrapegraphai.graphs import SmartScraperGraph
 from tests.fixtures.helpers import (
     assert_execution_info_valid,
     assert_valid_scrape_result,
-    validate_extracted_fields,
 )
 
 

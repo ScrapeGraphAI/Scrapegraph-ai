@@ -12,21 +12,21 @@ from scrapegraph_py.logger import sgai_logger
 def format_response(response: Dict[str, Any]) -> None:
     """
     Format and print the search response in a readable way.
-    
+
     Args:
         response (Dict[str, Any]): The response from the search API
     """
     print("\n" + "="*50)
     print("SEARCH RESULTS")
     print("="*50)
-    
+
     # Print request ID
     print(f"\nRequest ID: {response['request_id']}")
-    
+
     # Print number of sources
     urls = response.get('reference_urls', [])
     print(f"\nSources Processed: {len(urls)}")
-    
+
     # Print the extracted information
     print("\nExtracted Information:")
     print("-"*30)
@@ -40,7 +40,7 @@ def format_response(response: Dict[str, Any]) -> None:
                 print(f"  {value}")
     else:
         print(response['result'])
-    
+
     # Print source URLs
     if urls:
         print("\nSources:")
@@ -52,7 +52,7 @@ def format_response(response: Dict[str, Any]) -> None:
 def main():
     # Load environment variables
     load_dotenv()
-    
+
     # Get API key
     api_key = os.getenv("SCRAPEGRAPH_API_KEY")
     if not api_key:
@@ -67,7 +67,7 @@ def main():
     try:
         # Basic search scraper example
         print("\nSearching for information...")
-        
+
         search_response = sgai_client.searchscraper(
             user_prompt="Extract webpage information"
         )

@@ -12,7 +12,6 @@ This server provides:
 import json
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from pathlib import Path
 from threading import Thread
 from typing import Dict, Optional
 from urllib.parse import parse_qs, urlparse

@@ -133,7 +133,7 @@ def test_deepcopy_object_without_dict():
     assert copy_obj[0] is original[0]
 
     original_item = WithoutDict(10)
-    original = set([original_item])
+    original = {original_item}
     copy_obj = safe_deepcopy(original)
     assert copy_obj is not original
     copy_obj_item = copy_obj.pop()
@@ -152,7 +152,7 @@ def test_deepcopy_object_without_dict():
 def test_unhandled_type():
     with pytest.raises(DeepCopyError):
         original = {"origin": NonCopyableObject(10)}
-        copy_obj = safe_deepcopy(original)
+        safe_deepcopy(original)
 
 
 def test_client():

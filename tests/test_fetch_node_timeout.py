@@ -24,32 +24,32 @@ class TestFetchNodeTimeout(unittest.TestCase):
         """Set up test fixtures."""
         # Mock all the heavy external dependencies at import time
         self.mock_modules = {}
-        for module in ['langchain_core', 'langchain_core.documents', 
+        for module in ['langchain_core', 'langchain_core.documents',
                        'langchain_community', 'langchain_community.document_loaders',
-                       'langchain_openai', 'minify_html', 'pydantic', 
+                       'langchain_openai', 'minify_html', 'pydantic',
                        'langchain', 'langchain.prompts']:
             if module not in sys.modules:
                 sys.modules[module] = MagicMock()
-        
+
         # Create mock Document class
         class MockDocument:
             def __init__(self, page_content, metadata=None):
                 self.page_content = page_content
                 self.metadata = metadata or {}
-        
+
         sys.modules['langchain_core.documents'].Document = MockDocument
-        
+
         # Create mock PyPDFLoader
         class MockPyPDFLoader:
             def __init__(self, source):
                 self.source = source
-            
+
             def load(self):
                 time.sleep(0.1)  # Simulate some work
                 return [MockDocument(page_content=f"PDF content from {self.source}")]
-        
+
         sys.modules['langchain_community.document_loaders'].PyPDFLoader = MockPyPDFLoader
-        
+
         # Now import FetchNode
         from scrapegraphai.nodes.fetch_node import FetchNode
         self.FetchNode = FetchNode
@@ -105,17 +105,17 @@ class TestFetchNodeTimeout(unittest.TestCase):
         mock_response.status_code = 200
         mock_response.text = "<html><body>Test content</body></html>"
         mock_requests.get.return_value = mock_response
-        
+
         node = self.FetchNode(
             input="url",
             output=["doc"],
             node_config={"use_soup": True, "timeout": 15}
         )
-        
+
         # Execute with a URL
         state = {"url": "https://example.com"}
         node.execute(state)
-        
+
         # Verify requests.get was called with timeout
         mock_requests.get.assert_called_once()
         call_args = mock_requests.get.call_args
@@ -128,17 +128,17 @@ class TestFetchNodeTimeout(unittest.TestCase):
         mock_response.status_code = 200
         mock_response.text = "<html><body>Test content</body></html>"
         mock_requests.get.return_value = mock_response
-        
+
         node = self.FetchNode(
             input="url",
             output=["doc"],
             node_config={"use_soup": True, "timeout": None}
         )
-        
+
         # Execute with a URL
         state = {"url": "https://example.com"}
         node.execute(state)
-        
+
         # Verify requests.get was called without timeout
         mock_requests.get.assert_called_once()
         call_args = mock_requests.get.call_args
@@ -151,11 +151,11 @@ class TestFetchNodeTimeout(unittest.TestCase):
             output=["doc"],
             node_config={"timeout": 5}
         )
-        
+
         # Execute with a PDF file
         state = {"pdf": "test.pdf"}
         result = node.execute(state)
-        
+
         # Should complete successfully
         self.assertIn("doc", result)
         self.assertIsNotNone(result["doc"])
@@ -166,23 +166,23 @@ class TestFetchNodeTimeout(unittest.TestCase):
         class SlowPyPDFLoader:
             def __init__(self, source):
                 self.source = source
-            
+
             def load(self):
                 time.sleep(2)  # Sleep longer than timeout
                 return []
-        
+
         with patch('scrapegraphai.nodes.fetch_node.PyPDFLoader', SlowPyPDFLoader):
             node = self.FetchNode(
                 input="pdf",
                 output=["doc"],
                 node_config={"timeout": 0.5}  # Very short timeout
             )
-            
+
             # Execute should raise TimeoutError
             state = {"pdf": "slow.pdf"}
             with self.assertRaises(TimeoutError) as context:
                 node.execute(state)
-            
+
             self.assertIn("PDF parsing exceeded timeout", str(context.exception))
 
     @patch('scrapegraphai.nodes.fetch_node.ChromiumLoader')
@@ -193,17 +193,17 @@ class TestFetchNodeTimeout(unittest.TestCase):
         mock_doc.page_content = "<html>Test</html>"
         mock_loader.load.return_value = [mock_doc]
         mock_loader_class.return_value = mock_loader
-        
+
         node = self.FetchNode(
             input="url",
             output=["doc"],
             node_config={"timeout": 20, "headless": True}
         )
-        
+
         # Execute with a URL (not using soup, so ChromiumLoader is used)
         state = {"url": "https://example.com"}
         node.execute(state)
-        
+
         # Verify ChromiumLoader was instantiated with timeout in kwargs
         mock_loader_class.assert_called_once()
         call_kwargs = mock_loader_class.call_args[1]
@@ -217,7 +217,7 @@ class TestFetchNodeTimeout(unittest.TestCase):
         mock_doc.page_content = "<html>Test</html>"
         mock_loader.load.return_value = [mock_doc]
         mock_loader_class.return_value = mock_loader
-        
+
         node = self.FetchNode(
             input="url",
             output=["doc"],
@@ -226,11 +226,11 @@ class TestFetchNodeTimeout(unittest.TestCase):
                 "loader_kwargs": {"timeout": 50}  # Explicit loader timeout
             }
         )
-        
+
         # Execute with a URL
         state = {"url": "https://example.com"}
         node.execute(state)
-        
+
         # Verify ChromiumLoader got the loader_kwargs timeout, not node timeout
         mock_loader_class.assert_called_once()
         call_kwargs = mock_loader_class.call_args[1]

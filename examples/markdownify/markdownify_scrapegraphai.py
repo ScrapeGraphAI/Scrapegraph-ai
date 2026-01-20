@@ -10,7 +10,7 @@ from scrapegraph_py.logger import sgai_logger
 def main():
     # Load environment variables
     load_dotenv()
-    
+
     # Set up logging
     sgai_logger.set_logging(level="INFO")
 

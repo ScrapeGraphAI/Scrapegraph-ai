@@ -82,7 +82,7 @@ class TestSearchGraph:
         config = {"llm": {"model": "test-model"}, "max_results": max_results}
 
         # Act
-        search_graph = SearchGraph(prompt, config)
+        SearchGraph(prompt, config)
 
         # Assert
         mock_search_internet.assert_called_once()
@@ -111,7 +111,7 @@ class TestSearchGraph:
         config = {"llm": {"model": "test-model"}, "search_engine": custom_search_engine}
 
         # Act
-        search_graph = SearchGraph(prompt, config)
+        SearchGraph(prompt, config)
 
         # Assert
         mock_search_internet.assert_called_once()

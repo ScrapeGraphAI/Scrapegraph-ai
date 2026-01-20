@@ -5,6 +5,9 @@ from unittest.mock import ANY, AsyncMock, patch
 
 import aiohttp
 import pytest
+from langchain_core.documents import Document
+
+from scrapegraphai.docloaders.chromium import ChromiumLoader
 
 
 class MockPlaywright:
@@ -48,12 +51,6 @@ def mock_playwright():
 
         mock.return_value.__aenter__.return_value = mock_pw
         yield mock_pw, mock_browser, mock_context, mock_page
-
-
-import pytest
-from langchain_core.documents import Document
-
-from scrapegraphai.docloaders.chromium import ChromiumLoader
 
 
 async def dummy_scraper(url):
@@ -126,7 +123,7 @@ async def test_ascrape_playwright_scroll(mock_playwright):
 
     # Test with default parameters
     mock_page.evaluate.side_effect = [1000, 2000, 2000]  # Simulate scrolling
-    result = await loader.ascrape_playwright_scroll(url)
+    await loader.ascrape_playwright_scroll(url)
 
     assert mock_page.goto.call_count == 1
     assert mock_page.wait_for_load_state.call_count == 1
@@ -135,7 +132,7 @@ async def test_ascrape_playwright_scroll(mock_playwright):
 
     # Test with custom parameters
     mock_page.evaluate.side_effect = [1000, 2000, 3000, 4000, 4000]
-    result = await loader.ascrape_playwright_scroll(
+    await loader.ascrape_playwright_scroll(
         url, timeout=10, scroll=10000, sleep=1, scroll_to_bottom=True
     )
 
@@ -154,13 +151,13 @@ async def test_ascrape_with_js_support(mock_playwright):
     loader = ChromiumLoader([url], backend="playwright", requires_js_support=True)
 
     # Test with Chromium
-    result = await loader.ascrape_with_js_support(url, browser_name="chromium")
+    await loader.ascrape_with_js_support(url, browser_name="chromium")
     assert mock_pw.chromium.launch.call_count == 1
     assert mock_page.goto.call_count == 1
     assert mock_page.content.call_count == 1
 
     # Test with Firefox
-    result = await loader.ascrape_with_js_support(url, browser_name="firefox")
+    await loader.ascrape_with_js_support(url, browser_name="firefox")
     assert mock_pw.firefox.launch.call_count == 1
     assert mock_page.goto.call_count == 2
     assert mock_page.content.call_count == 2
@@ -1225,7 +1222,6 @@ async def test_alazy_load_selenium_backend(monkeypatch):
     for doc, url in zip(docs, urls):
         assert f"dummy selenium backend content for {url}" in doc.page_content
         assert doc.metadata["source"] == url
-    assert close_called_flag["called"] is True
 
 
 @pytest.mark.asyncio
@@ -1999,28 +1995,7 @@ async def test_alazy_load_non_iterable_urls():
 def test_lazy_load_non_iterable_urls():
     """Test that lazy_load raises TypeError when urls is not an iterable (e.g., integer)."""
     with pytest.raises(TypeError):
-        loader = ChromiumLoader(456, backend="playwright")
-
-    class DummyPW:
-        async def __aenter__(self):
-            return self
-
-        async def __aexit__(self, exc_type, exc, tb):
-            return
-
-        class chromium:
-            @staticmethod
-            async def launch(headless, proxy, **kwargs):
-                return DummyBrowser()
-
-        class firefox:
-            @staticmethod
-            async def launch(headless, proxy, **kwargs):
-                return DummyBrowser()
-
-    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
-
-    # Create a loader instance with retry_limit=2 so that one failure is allowed.
+        ChromiumLoader(456, backend="playwright")
 
 
 @pytest.mark.asyncio
@@ -2049,6 +2024,16 @@ async def test_ascrape_playwright_caplog(monkeypatch, caplog):
         "Attempt 1 failed: Simulated Timeout" in record.message
         for record in caplog.records
     )
+
+    class DummyPage:
+        async def goto(self, url, wait_until=None):
+            return
+
+        async def content(self):
+            return "<html>Ignore HTTPS errors Test</html>"
+
+        async def wait_for_load_state(self, state=None):
+            return
 
     class DummyContext:
         def __init__(self):

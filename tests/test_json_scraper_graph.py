@@ -72,14 +72,6 @@ class TestJSONScraperGraph:
                 {"model": "test-model", "temperature": 0}
             )
 
-    @pytest.fixture
-    def mock_llm_model(self):
-        return Mock()
-
-    @pytest.fixture
-    def mock_embedder_model(self):
-        return Mock()
-
     @patch("scrapegraphai.graphs.json_scraper_graph.FetchNode")
     @patch("scrapegraphai.graphs.json_scraper_graph.GenerateAnswerNode")
     @patch.object(JSONScraperGraph, "_create_llm")
@@ -190,14 +182,6 @@ class TestJSONScraperGraph:
             mock_create_llm.assert_called_once_with(
                 {"model": "test-model", "temperature": 0}
             )
-
-    @pytest.fixture
-    def mock_llm_model(self):
-        return Mock()
-
-    @pytest.fixture
-    def mock_embedder_model(self):
-        return Mock()
 
     @patch("scrapegraphai.graphs.json_scraper_graph.FetchNode")
     @patch("scrapegraphai.graphs.json_scraper_graph.GenerateAnswerNode")

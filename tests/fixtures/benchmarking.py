@@ -133,7 +133,7 @@ class BenchmarkTracker:
             return "No benchmark results available."
 
         # Get unique test names
-        test_names = list(set(r.test_name for r in self.results))
+        test_names = list({r.test_name for r in self.results})
 
         report = ["=" * 80, "Performance Benchmark Report", "=" * 80, ""]
 

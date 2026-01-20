@@ -41,7 +41,7 @@ def test_burr_kwargs():
             "llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"},
             "burr_kwargs": {"some_key": "some_value"},
         }
-        graph = TestGraph("Test prompt", config)
+        TestGraph("Test prompt", config)
     # Check that the burr_kwargs have been applied and an app_instance_id added if missing
     assert dummy_graph.use_burr is True
     assert dummy_graph.burr_config["some_key"] == "some_value"
@@ -59,14 +59,14 @@ def test_set_common_params():
     mock_node2 = Mock()
     mock_graph.nodes = [mock_node1, mock_node2]
     # Create a TestGraph instance with the mock graph
-    with patch(
-        "scrapegraphai.graphs.abstract_graph.AbstractGraph._create_graph",
-        return_value=mock_graph,
-    ):
+    with patch.object(TestGraph, "_create_graph", return_value=mock_graph):
         graph = TestGraph(
             "Test prompt",
             {"llm": {"model": "openai/gpt-3.5-turbo", "openai_api_key": "sk-test"}},
         )
+    # Reset mock call counts before testing set_common_params
+    mock_node1.update_config.reset_mock()
+    mock_node2.update_config.reset_mock()
     # Call set_common_params with test parameters
     test_params = {"param1": "value1", "param2": "value2"}
     graph.set_common_params(test_params)
