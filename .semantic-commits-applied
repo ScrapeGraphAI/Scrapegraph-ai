@@ -1,0 +1,11 @@
+This file marks that commits have been rewritten to follow Conventional Commits format.
+
+Original commits:
+- 9439fe5: Fix langchain import issues blocking tests
+- 323f26a: Add comprehensive timeout feature documentation
+
+Rewritten as:
+- 8c9cb8b: fix(imports): update deprecated langchain imports to langchain_core
+- 4c764bc: docs(timeout): add comprehensive timeout configuration guide
+
+These follow the semantic-release convention configured in .releaserc.yml

@@ -10,7 +10,7 @@ from scrapegraph_py.logger import sgai_logger
 def main():
     # Load environment variables from .env file
     load_dotenv()
-    
+
     # Get API key from environment variables
     api_key = os.getenv("SCRAPEGRAPH_API_KEY")
     if not api_key:

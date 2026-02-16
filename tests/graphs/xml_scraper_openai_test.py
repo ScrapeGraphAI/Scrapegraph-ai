@@ -8,7 +8,7 @@ import pytest
 from dotenv import load_dotenv
 
 from scrapegraphai.graphs import XMLScraperGraph
-from scrapegraphai.utils import convert_to_csv, convert_to_json, prettify_exec_info
+from scrapegraphai.utils import export_to_csv, export_to_json, prettify_exec_info
 
 load_dotenv()
 
@@ -96,8 +96,8 @@ def test_xml_scraper_save_results(graph_config: dict, xml_content: str):
     result = xml_scraper_graph.run()
 
     # Save to csv and json
-    convert_to_csv(result, "result")
-    convert_to_json(result, "result")
+    export_to_csv(result, "result.csv")
+    export_to_json(result, "result.json")
 
     assert os.path.exists("result.csv")
     assert os.path.exists("result.json")

@@ -7,9 +7,6 @@ from typing import Optional, Type
 
 from pydantic import BaseModel
 
-# Initialize logger
-logger = logging.getLogger(__name__)
-
 from ..nodes import (
     ConditionalNode,
     FetchNode,
@@ -20,6 +17,9 @@ from ..nodes import (
 from ..prompts import REGEN_ADDITIONAL_INFO
 from .abstract_graph import AbstractGraph
 from .base_graph import BaseGraph
+
+# Initialize logger
+logger = logging.getLogger(__name__)
 
 
 class SmartScraperGraph(AbstractGraph):
@@ -97,7 +97,7 @@ class SmartScraperGraph(AbstractGraph):
             )
 
             # Use logging instead of print for better production practices
-            if 'request_id' in response and 'result' in response:
+            if "request_id" in response and "result" in response:
                 logger.info(f"Request ID: {response['request_id']}")
                 logger.info(f"Result: {response['result']}")
             else:

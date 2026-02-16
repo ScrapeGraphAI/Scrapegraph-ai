@@ -4,8 +4,8 @@ SearchInternetNode Module
 
 from typing import List, Optional
 
-from langchain.output_parsers import CommaSeparatedListOutputParser
-from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import CommaSeparatedListOutputParser
+from langchain_core.prompts import PromptTemplate
 from tqdm import tqdm
 
 from ..prompts import (
