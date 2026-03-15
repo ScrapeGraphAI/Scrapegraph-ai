@@ -150,7 +150,7 @@ There are other pipelines that can be used to extract information from multiple 
 
 For each of these graphs there is the multi version. It allows to make calls of the LLM in parallel.
 
-It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure** and **Gemini**, or local models using **Ollama**.
+It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure**, **Gemini**, **MiniMax** and more, or local models using **Ollama**.
 
 Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command, if you want to use local models.
 
