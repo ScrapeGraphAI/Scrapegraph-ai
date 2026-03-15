@@ -1,3 +1,10 @@
+## [1.60.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.60.0-beta.2...v1.60.0-beta.3) (2026-03-15)
+
+
+### Bug Fixes
+
+* update broken test imports to match current API ([536e5ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/536e5adcde179a12ec146bd8a10cbf654e0eeeaa))
+
 ## [1.60.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.60.0-beta.1...v1.60.0-beta.2) (2026-02-24)
 
 
