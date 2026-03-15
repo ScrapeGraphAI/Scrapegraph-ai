@@ -1,3 +1,10 @@
+## [1.74.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.73.1...v1.74.0) (2026-03-15)
+
+
+### Features
+
+* add MiniMax as a supported LLM provider ([6a2f8ec](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6a2f8ecc7bdd271bc7da7bfec552c80f0e78f379))
+
 ## [1.73.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.73.0...v1.73.1) (2026-02-16)
 
 
