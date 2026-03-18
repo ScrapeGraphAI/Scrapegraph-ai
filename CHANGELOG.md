@@ -1,3 +1,10 @@
+## [1.75.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.74.0...v1.75.0) (2026-03-18)
+
+
+### Features
+
+* upgrade MiniMax default model to M2.7 ([f47be50](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/f47be507e642f00f94a0ac6300c0142b81c57371))
+
 ## [1.74.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.73.1...v1.74.0) (2026-03-15)
 
 
