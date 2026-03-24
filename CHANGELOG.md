@@ -1,3 +1,10 @@
+## [1.75.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.75.0...v1.75.1) (2026-03-24)
+
+
+### Bug Fixes
+
+* replace print() statements with proper logging across codebase ([1d9551a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1d9551aaf20be6aa39ee4f8ddd93215faae183c0))
+
 ## [1.75.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.74.0...v1.75.0) (2026-03-18)
 
 
