@@ -26,6 +26,25 @@ graph_config = {
 }
 
 # ************************************************
+# Alternative: Use Tavily as the search engine
+# Uncomment the block below and set TAVILY_API_KEY
+# in your .env file to use Tavily instead.
+# ************************************************
+
+# tavily_key = os.getenv("TAVILY_API_KEY")
+#
+# graph_config = {
+#     "llm": {
+#         "api_key": openai_key,
+#         "model": "openai/gpt-4o",
+#     },
+#     "search_engine": "tavily",
+#     "tavily_api_key": tavily_key,
+#     "max_results": 2,
+#     "verbose": True,
+# }
+
+# ************************************************
 # Create the SearchGraph instance and run it
 # ************************************************
 
