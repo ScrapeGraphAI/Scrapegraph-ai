@@ -8,9 +8,12 @@ from pydantic import BaseModel
 
 from ..models import OpenAITextToSpeech
 from ..nodes import FetchNode, GenerateAnswerNode, ParseNode, TextToSpeechNode
+from ..utils.logging import get_logger
 from ..utils.save_audio_from_bytes import save_audio_from_bytes
 from .abstract_graph import AbstractGraph
 from .base_graph import BaseGraph
+
+logger = get_logger(__name__)
 
 
 class SpeechGraph(AbstractGraph):
@@ -112,6 +115,6 @@ class SpeechGraph(AbstractGraph):
         if not audio:
             raise ValueError("No audio generated from the text.")
         save_audio_from_bytes(audio, self.config.get("output_path", "output.mp3"))
-        print(f"Audio saved to {self.config.get('output_path', 'output.mp3')}")
+        logger.info("Audio saved to %s", self.config.get("output_path", "output.mp3"))
 
         return self.final_state.get("answer", "No answer found.")

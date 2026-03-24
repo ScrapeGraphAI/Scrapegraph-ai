@@ -7,6 +7,10 @@ from io import BytesIO
 import numpy as np
 from playwright.async_api import async_playwright
 
+from ..logging import get_logger
+
+logger = get_logger(__name__)
+
 
 async def take_screenshot(url: str, save_path: str = None, quality: int = 100):
     """
@@ -155,7 +159,7 @@ def select_area_with_ipywidget(image):
 
     img_array = np.array(image)
 
-    print(img_array.shape)
+    logger.debug("Image array shape: %s", img_array.shape)
 
     def update_plot(top_bottom, left_right, image_size):
         plt.figure(figsize=(image_size, image_size))
