@@ -8,6 +8,10 @@ import json
 import xml.etree.ElementTree as ET
 from typing import Any, Dict, List
 
+from .logging import get_logger
+
+logger = get_logger(__name__)
+
 
 def export_to_json(data: List[Dict[str, Any]], filename: str) -> None:
     """
@@ -18,7 +22,7 @@ def export_to_json(data: List[Dict[str, Any]], filename: str) -> None:
     """
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-    print(f"Data exported to {filename}")
+    logger.info("Data exported to %s", filename)
 
 
 def export_to_csv(data: List[Dict[str, Any]], filename: str) -> None:
@@ -29,7 +33,7 @@ def export_to_csv(data: List[Dict[str, Any]], filename: str) -> None:
     :param filename: Name of the file to save the CSV data
     """
     if not data:
-        print("No data to export")
+        logger.warning("No data to export")
         return
 
     keys = data[0].keys()
@@ -37,7 +41,7 @@ def export_to_csv(data: List[Dict[str, Any]], filename: str) -> None:
         writer = csv.DictWriter(f, fieldnames=keys)
         writer.writeheader()
         writer.writerows(data)
-    print(f"Data exported to {filename}")
+    logger.info("Data exported to %s", filename)
 
 
 def export_to_xml(
@@ -59,4 +63,4 @@ def export_to_xml(
 
     tree = ET.ElementTree(root)
     tree.write(filename, encoding="utf-8", xml_declaration=True)
-    print(f"Data exported to {filename}")
+    logger.info("Data exported to %s", filename)

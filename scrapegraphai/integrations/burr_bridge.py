@@ -8,6 +8,10 @@ import re
 import uuid
 from typing import Any, Dict, List, Tuple
 
+from ..utils.logging import get_logger
+
+logger = get_logger(__name__)
+
 try:
     from burr import tracking
     from burr.core import (
@@ -32,10 +36,10 @@ class PrintLnHook(PostRunStepHook, PreRunStepHook):
     """
 
     def pre_run_step(self, *, state: "State", action: "Action", **future_kwargs: Any):
-        print(f"Starting action: {action.name}")
+        logger.debug("Starting action: %s", action.name)
 
     def post_run_step(self, *, state: "State", action: "Action", **future_kwargs: Any):
-        print(f"Finishing action: {action.name}")
+        logger.debug("Finishing action: %s", action.name)
 
 
 class BurrNodeBridge(Action):
