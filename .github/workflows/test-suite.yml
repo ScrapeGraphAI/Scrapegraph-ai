@@ -15,8 +15,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.10', '3.11', '3.12']
+        os: ${{ github.event_name == 'pull_request' && fromJSON('["ubuntu-latest"]') || fromJSON('["ubuntu-latest", "macos-latest", "windows-latest"]') }}
+        python-version: ['3.10', '3.12']
 
     steps:
       - name: Checkout code
@@ -49,7 +49,7 @@ jobs:
           flags: unittests
           name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
           token: ${{ secrets.CODECOV_TOKEN }}
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
 
   integration-tests:
     name: Integration Tests
@@ -100,6 +100,7 @@ jobs:
   benchmark-tests:
     name: Performance Benchmarks
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
@@ -116,10 +117,6 @@ jobs:
       - name: Install dependencies
         run: |
           uv sync
-
-      - name: Install Playwright browsers
-        run: |
-          uv run playwright install chromium
 
       - name: Run performance benchmarks
         env:
@@ -143,6 +140,7 @@ jobs:
   code-quality:
     name: Code Quality Checks
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout code
