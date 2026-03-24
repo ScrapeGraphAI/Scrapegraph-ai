@@ -54,6 +54,9 @@ class SearchInternetNode(BaseNode):
         self.serper_api_key = (
             node_config["serper_api_key"] if node_config.get("serper_api_key") else None
         )
+        self.tavily_api_key = (
+            node_config["tavily_api_key"] if node_config.get("tavily_api_key") else None
+        )
 
         self.max_results = node_config.get("max_results", 3)
 
@@ -108,6 +111,7 @@ class SearchInternetNode(BaseNode):
             search_engine=self.search_engine,
             proxy=self.proxy,
             serper_api_key=self.serper_api_key,
+            tavily_api_key=self.tavily_api_key,
         )
 
         if len(answer) == 0:
