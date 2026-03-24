@@ -71,6 +71,7 @@ class SearchGraph(AbstractGraph):
                 "storage_state": self.copy_config.get("storage_state"),
                 "search_engine": self.copy_config.get("search_engine"),
                 "serper_api_key": self.copy_config.get("serper_api_key"),
+                "tavily_api_key": self.copy_config.get("tavily_api_key"),
             },
         )
 
