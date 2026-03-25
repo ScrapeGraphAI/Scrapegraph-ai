@@ -22,6 +22,7 @@ class OpenAITextToSpeech:
         self.client = OpenAI(
             api_key=tts_config.get("api_key"), base_url=tts_config.get("base_url", None),
             timeout=60.0,
+        max_retries=3,
         )
         self.model = tts_config.get("model", "tts-1")
         self.voice = tts_config.get("voice", "alloy")
