@@ -31,6 +31,7 @@ dependencies = [
     "simpleeval>=1.0.3",
     "jsonschema>=4.25.1",
     "duckduckgo-search>=8.1.1",
+    "tavily-python>=0.3.0",
     "pydantic>=2.12.5",
     "scrapegraph-py>=1.44.0",
 ]
