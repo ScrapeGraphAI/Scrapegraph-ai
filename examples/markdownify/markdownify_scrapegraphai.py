@@ -1,7 +1,8 @@
 """
-Example script demonstrating the markdownify functionality
+Example script demonstrating the scrape functionality (v2 API - replaces markdownify)
 """
 
+import json
 import os
 from dotenv import load_dotenv
 from scrapegraph_py import Client
@@ -20,16 +21,13 @@ def main():
         raise ValueError("SCRAPEGRAPH_API_KEY environment variable not found")
     sgai_client = Client(api_key=api_key)
 
-    # Example 1: Convert a website to Markdown
-    print("Example 1: Converting website to Markdown")
+    # Scrape a website as markdown (v2 API - replaces markdownify)
+    print("Scraping website as Markdown")
     print("-" * 50)
-    response = sgai_client.markdownify(
-        website_url="https://example.com"
+    response = sgai_client.scrape(
+        url="https://example.com"
     )
-    print("Markdown output:")
-    print(response["result"])  # Access the result key from the dictionary
-    print("\nMetadata:")
-    print(response.get("metadata", {}))  # Use get() with default value
-    print("\n" + "=" * 50 + "\n")
+    print(json.dumps(response, indent=2))
+
 if __name__ == "__main__":
     main()

@@ -1,7 +1,8 @@
 """
-Example implementation using scrapegraph-py client directly.
+Example implementation using scrapegraph-py v2 client directly.
 """
 
+import json
 import os
 from dotenv import load_dotenv
 from scrapegraph_py import Client
@@ -14,7 +15,7 @@ def main():
     # Get API key from environment variables
     api_key = os.getenv("SCRAPEGRAPH_API_KEY")
     if not api_key:
-        raise ValueError("SCRAPEGRAPH_API_KEY non trovato nelle variabili d'ambiente")
+        raise ValueError("SCRAPEGRAPH_API_KEY not found in environment variables")
 
     # Set up logging
     sgai_logger.set_logging(level="INFO")
@@ -23,17 +24,14 @@ def main():
     sgai_client = Client(api_key=api_key)
 
     try:
-        # SmartScraper request
-        response = sgai_client.smartscraper(
-            website_url="https://scrapegraphai.com",
-            user_prompt="Extract the founders' informations"
+        # Extract request (v2 API - replaces smartscraper)
+        response = sgai_client.extract(
+            url="https://scrapegraphai.com",
+            prompt="Extract the founders' informations"
         )
 
         # Print the response
-        print(f"Request ID: {response['request_id']}")
-        print(f"Result: {response['result']}")
-        if response.get('reference_urls'):
-            print(f"Reference URLs: {response['reference_urls']}")
+        print(json.dumps(response, indent=2))
 
     except Exception as e:
         print(f"Error occurred: {str(e)}")

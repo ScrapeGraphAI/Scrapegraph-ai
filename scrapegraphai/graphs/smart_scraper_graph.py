@@ -90,18 +90,17 @@ class SmartScraperGraph(AbstractGraph):
             # Initialize the client with explicit API key
             sgai_client = Client(api_key=self.config.get("api_key"))
 
-            # SmartScraper request
-            response = sgai_client.smartscraper(
-                website_url=self.source,
-                user_prompt=self.prompt,
+            # Extract request (v2 API)
+            response = sgai_client.extract(
+                url=self.source,
+                prompt=self.prompt,
             )
 
             # Use logging instead of print for better production practices
-            if "request_id" in response and "result" in response:
-                logger.info(f"Request ID: {response['request_id']}")
-                logger.info(f"Result: {response['result']}")
-            else:
-                logger.warning("Missing expected keys in response.")
+            if "id" in response:
+                logger.info(f"Request ID: {response['id']}")
+            if "data" in response:
+                logger.info(f"Result: {response['data']}")
 
             sgai_client.close()
 
