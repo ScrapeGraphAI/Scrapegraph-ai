@@ -5,8 +5,8 @@ RobotsNode Module
 from typing import List, Optional
 from urllib.parse import urlparse
 
-from langchain.output_parsers import CommaSeparatedListOutputParser
-from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import CommaSeparatedListOutputParser
+from langchain_core.prompts import PromptTemplate
 from langchain_community.document_loaders import AsyncChromiumLoader
 
 from ..helpers import robots_dictionary

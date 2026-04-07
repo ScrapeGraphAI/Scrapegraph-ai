@@ -43,7 +43,7 @@ from .prettify_exec_info import prettify_exec_info
 from .proxy_rotation import Proxy, parse_or_search_proxy, search_proxy_servers
 from .save_audio_from_bytes import save_audio_from_bytes
 from .save_code_to_file import save_code_to_file
-from .schema_trasform import transform_schema
+from .schema_trasform import transform_schema  # Note: filename has typo but kept for compatibility
 from .screenshot_scraping.screenshot_preparation import (
     crop_image,
     select_area_with_ipywidget,

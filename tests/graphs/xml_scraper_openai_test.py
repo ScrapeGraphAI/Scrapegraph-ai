@@ -96,8 +96,8 @@ def test_xml_scraper_save_results(graph_config: dict, xml_content: str):
     result = xml_scraper_graph.run()
 
     # Save to csv and json
-    export_to_csv(result, "result")
-    export_to_json(result, "result")
+    export_to_csv(result, "result.csv")
+    export_to_json(result, "result.json")
 
     assert os.path.exists("result.csv")
     assert os.path.exists("result.json")

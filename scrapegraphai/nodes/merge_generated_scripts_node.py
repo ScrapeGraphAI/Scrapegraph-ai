@@ -4,7 +4,7 @@ MergeAnswersNode Module
 
 from typing import List, Optional
 
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 from ..prompts import TEMPLATE_MERGE_SCRIPTS_PROMPT

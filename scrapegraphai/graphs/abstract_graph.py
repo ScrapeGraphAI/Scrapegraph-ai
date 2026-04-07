@@ -5,7 +5,6 @@ AbstractGraph Module
 import asyncio
 import uuid
 import warnings
-import time
 from abc import ABC, abstractmethod
 from typing import Optional, Type
 
@@ -14,14 +13,16 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import CLoD, DeepSeek, OneApi, XAI
-from ..utils.logging import set_verbosity_info, set_verbosity_warning, get_logger
-from ..telemetry import log_graph_execution
+from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
+from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
 logger = get_logger(__name__)
 
 # ANSI escape sequence for hyperlink
-CLICKABLE_URL = "\033]8;;https://scrapegraphai.com/oss\033\\https://scrapegraphai.com/oss\033]8;;\033\\"
+CLICKABLE_URL = (
+    "\033]8;;https://scrapegraphai.com\033\\https://scrapegraphai.com\033]8;;\033\\"
+)
+
 
 class AbstractGraph(ABC):
     """
@@ -170,6 +171,7 @@ class AbstractGraph(ABC):
             "clod",
             "togetherai",
             "xai",
+            "minimax",
         }
 
         if "/" in llm_params["model"]:
@@ -188,11 +190,12 @@ class AbstractGraph(ABC):
                                 If possible, try to use a model instance instead."""
                 )
             llm_params["model_provider"] = possible_providers[0]
-            print(
-                (
-                    f"Found providers {possible_providers} for model {llm_params['model']}, using {llm_params['model_provider']}.\n"
-                    "If it was not intended please specify the model provider in the graph configuration"
-                )
+            logger.info(
+                "Found providers %s for model %s, using %s. "
+                "If it was not intended please specify the model provider in the graph configuration",
+                possible_providers,
+                llm_params["model"],
+                llm_params["model_provider"],
             )
 
         if llm_params["model_provider"] not in known_providers:
@@ -207,10 +210,12 @@ class AbstractGraph(ABC):
                     llm_params["model"]
                 ]
             except KeyError:
-                print(
-                    f"""Max input tokens for model {llm_params["model_provider"]}/{llm_params["model"]} not found,
-                    please specify the model_tokens parameter in the llm section of the graph configuration.
-                    Using default token size: 8192"""
+                logger.warning(
+                    "Max input tokens for model %s/%s not found, "
+                    "please specify the model_tokens parameter in the llm section of the graph configuration. "
+                    "Using default token size: 8192",
+                    llm_params["model_provider"],
+                    llm_params["model"],
                 )
                 self.model_token = 8192
         else:
@@ -225,6 +230,7 @@ class AbstractGraph(ABC):
                 "togetherai",
                 "clod",
                 "xai",
+                "minimax",
             }:
                 if llm_params["model_provider"] == "bedrock":
                     llm_params["model_kwargs"] = {
@@ -241,6 +247,9 @@ class AbstractGraph(ABC):
 
                 if model_provider == "deepseek":
                     return DeepSeek(**llm_params)
+
+                if model_provider == "minimax":
+                    return MiniMax(**llm_params)
 
                 if model_provider == "ernie":
                     from langchain_community.chat_models import ErnieBotChat
@@ -264,14 +273,7 @@ class AbstractGraph(ABC):
                     return ChatTogether(**llm_params)
 
                 elif model_provider == "nvidia":
-                    try:
-                        from langchain_nvidia_ai_endpoints import ChatNVIDIA
-                    except ImportError:
-                        raise ImportError(
-                            """The langchain_nvidia_ai_endpoints module is not installed.
-                                          Please install it using `pip install langchain-nvidia-ai-endpoints`."""
-                        )
-                    return ChatNVIDIA(**llm_params)
+                    return Nvidia(**llm_params)
 
         except Exception as e:
             raise Exception(f"Error instancing model: {e}")

@@ -2,6 +2,7 @@
 SmartScraperGraph Module
 """
 
+import logging
 from typing import Optional, Type
 
 from pydantic import BaseModel
@@ -16,6 +17,9 @@ from ..nodes import (
 from ..prompts import REGEN_ADDITIONAL_INFO
 from .abstract_graph import AbstractGraph
 from .base_graph import BaseGraph
+
+# Initialize logger
+logger = logging.getLogger(__name__)
 
 
 class SmartScraperGraph(AbstractGraph):
@@ -92,9 +96,12 @@ class SmartScraperGraph(AbstractGraph):
                 user_prompt=self.prompt,
             )
 
-            # Print the response
-            print(f"Request ID: {response['request_id']}")
-            print(f"Result: {response['result']}")
+            # Use logging instead of print for better production practices
+            if "request_id" in response and "result" in response:
+                logger.info(f"Request ID: {response['request_id']}")
+                logger.info(f"Result: {response['result']}")
+            else:
+                logger.warning("Missing expected keys in response.")
 
             sgai_client.close()
 

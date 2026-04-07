@@ -13,7 +13,7 @@ from ..utils.logging import get_logger
 logger = get_logger(__name__)
 
 # ANSI escape sequence for hyperlink
-CLICKABLE_URL = "\033]8;;https://scrapegraphai.com/oss\033\\https://scrapegraphai.com/oss\033]8;;\033\\"
+CLICKABLE_URL = "\033]8;;https://scrapegraphai.com\033\\https://scrapegraphai.com\033]8;;\033\\"
 
 class BaseGraph:
     """
@@ -362,18 +362,16 @@ class BaseGraph:
         else:
             state, exec_info = self._execute_standard(initial_state)
 
-        # Print the result first
         if "answer" in state:
-            print(state["answer"])
+            logger.info(state["answer"])
         elif "parsed_doc" in state:
-            print(state["parsed_doc"])
+            logger.info(state["parsed_doc"])
         elif "generated_code" in state:
-            print(state["generated_code"])
+            logger.info(state["generated_code"])
         elif "merged_script" in state:
-            print(state["merged_script"])
+            logger.info(state["merged_script"])
 
-        # Then show the message ONLY ONCE
-        print(f"✨ Try enhanced version of ScrapegraphAI at {CLICKABLE_URL} ✨")
+        logger.info("✨ Try enhanced version of ScrapegraphAI at %s ✨", CLICKABLE_URL)
 
         return state, exec_info
 
