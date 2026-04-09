@@ -79,30 +79,23 @@ class SmartScraperGraph(AbstractGraph):
         if self.llm_model == "scrapegraphai/smart-scraper":
             try:
                 from scrapegraph_py import Client
-                from scrapegraph_py.logger import sgai_logger
             except ImportError:
                 raise ImportError(
                     "scrapegraph_py is not installed. Please install it using 'pip install scrapegraph-py'."
                 )
 
-            sgai_logger.set_logging(level="INFO")
+            with Client(api_key=self.config.get("api_key")) as sgai_client:
+                # Extract request (v2 API)
+                response = sgai_client.extract(
+                    url=self.source,
+                    prompt=self.prompt,
+                    output_schema=self.schema,
+                )
 
-            # Initialize the client with explicit API key
-            sgai_client = Client(api_key=self.config.get("api_key"))
-
-            # Extract request (v2 API)
-            response = sgai_client.extract(
-                url=self.source,
-                prompt=self.prompt,
-            )
-
-            # Use logging instead of print for better production practices
-            if "id" in response:
-                logger.info(f"Request ID: {response['id']}")
-            if "data" in response:
-                logger.info(f"Result: {response['data']}")
-
-            sgai_client.close()
+                if "id" in response:
+                    logger.info(f"Request ID: {response['id']}")
+                if "data" in response:
+                    logger.info(f"Result: {response['data']}")
 
             return response
 
