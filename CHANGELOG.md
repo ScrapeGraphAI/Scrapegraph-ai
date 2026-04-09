@@ -1,3 +1,15 @@
+## [1.76.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.75.1...v1.76.0) (2026-04-09)
+
+
+### Features
+
+* add PlasmateLoader as lightweight scraping backend (no Chrome needed) ([9dd1fb5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9dd1fb54ed2ad08e968444cde0cd052f0c32f60a)), closes [#1055](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1055)
+
+
+### CI
+
+* reduce GitHub Actions costs by ~85% on PRs ([403080a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/403080ad82c2097b111d3472cc0c6d4ee709c6fe))
+
 ## [1.75.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.75.0...v1.75.1) (2026-03-24)
 
 
