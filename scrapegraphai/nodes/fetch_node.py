@@ -83,6 +83,10 @@ class FetchNode(BaseNode):
             None if node_config is None else node_config.get("scrape_do", None)
         )
 
+        self.plasmate = (
+            None if node_config is None else node_config.get("plasmate", None)
+        )
+
         self.storage_state = (
             None if node_config is None else node_config.get("storage_state", None)
         )
@@ -351,6 +355,19 @@ class FetchNode(BaseNode):
                     )
 
                 document = [Document(page_content=data, metadata={"source": source})]
+            elif self.plasmate is not None:
+                from ..docloaders.plasmate import PlasmateLoader
+
+                plasmate_cfg = self.plasmate if isinstance(self.plasmate, dict) else {}
+                loader = PlasmateLoader(
+                    [source],
+                    output_format=plasmate_cfg.get("output_format", "text"),
+                    timeout=plasmate_cfg.get("timeout", self.timeout or 30),
+                    selector=plasmate_cfg.get("selector"),
+                    extra_headers=plasmate_cfg.get("extra_headers", {}),
+                    fallback_to_chrome=plasmate_cfg.get("fallback_to_chrome", False),
+                )
+                document = loader.load()
             else:
                 loader = ChromiumLoader(
                     [source],
