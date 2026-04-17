@@ -77,21 +77,16 @@ class SmartScraperGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow.
         """
         if self.llm_model == "scrapegraphai/smart-scraper":
-            try:
-                from scrapegraph_py import Client
-            except ImportError:
-                raise ImportError(
-                    "scrapegraph_py is not installed. Please install it using 'pip install scrapegraph-py'."
-                )
+            from ..integrations.scrapegraph_py_compat import extract as sgai_extract
 
-            with Client(api_key=self.config.get("api_key")) as sgai_client:
-                # Extract request (v2 API)
-                response = sgai_client.extract(
-                    url=self.source,
-                    prompt=self.prompt,
-                    output_schema=self.schema,
-                )
+            response = sgai_extract(
+                api_key=self.config.get("api_key"),
+                url=self.source,
+                prompt=self.prompt,
+                schema=self.schema,
+            )
 
+            if isinstance(response, dict):
                 if "id" in response:
                     logger.info(f"Request ID: {response['id']}")
                 if "data" in response:
