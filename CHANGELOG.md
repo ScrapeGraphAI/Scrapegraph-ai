@@ -1,3 +1,22 @@
+## [2.1.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.0.0...v2.1.0-beta.1) (2026-04-19)
+
+
+### Features
+
+* add OpenAI Batch API support for SmartScraperMultiGraph ([#1036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1036)) ([9d4eba1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9d4eba1f154953e401982da7eff85686293b9a48))
+
+
+### Bug Fixes
+
+* update broken test imports to match current API ([536e5ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/536e5adcde179a12ec146bd8a10cbf654e0eeeaa))
+
+
+### CI
+
+* **release:** 1.60.0-beta.2 [skip ci] ([54d1473](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/54d147309dc7a1ce1b191c3e4feb927ee3ff4392)), closes [#1036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1036)
+* **release:** 1.60.0-beta.3 [skip ci] ([637c696](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/637c696da77da1bb916a4ece03bd66fea50be47e))
+* **release:** 1.76.0-beta.1 [skip ci] ([35ec272](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/35ec272b6f267a164fac67a26787396db548e2a7)), closes [#1036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1036) [#1036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1036)
+
 ## [2.0.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.76.0...v2.0.0) (2026-04-19)
 
 
