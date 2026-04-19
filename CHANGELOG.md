@@ -1,3 +1,23 @@
+## [2.0.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.76.0...v2.0.0) (2026-04-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* requires scrapegraph-py v2.0.0+
+
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+
+### Features
+
+* add scrapegraph-py PR [#84](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/84) SDK compatibility ([e8b2a28](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e8b2a28f4708882ca6cedfdd979b37dda26ef6c2)), closes [#82](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/82)
+* align with scrapegraph-py v2 API surface from PR [#82](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/82) ([c0f5fd5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c0f5fd592395f7f0e54bdf7367f3aff46bb6e420))
+* migrate to scrapegraph-py v2 API surface ([fd23bb0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fd23bb0544b3bb867c34b009ed7bcecda86e3ac5)), closes [ScrapeGraphAI/scrapegraph-py#82](https://github.com/ScrapeGraphAI/scrapegraph-py/issues/82)
+
+
+### CI
+
+* bump min Python to 3.12 and trim test suite ([5fda03f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5fda03fb6bd774dee4e89661dd1eaa0ef2d2c4ed))
+
 ## [1.76.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.75.1...v1.76.0) (2026-04-09)
 
 
