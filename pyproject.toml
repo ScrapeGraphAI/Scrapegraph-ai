@@ -32,7 +32,7 @@ dependencies = [
     "jsonschema>=4.25.1",
     "duckduckgo-search>=8.1.1",
     "pydantic>=2.12.5",
-    "scrapegraph-py>=1.44.0",
+    "scrapegraph-py>=2.0.0",
 ]
 
 readme = "README.md"
@@ -65,7 +65,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.12,<4.0"
 
 [project.optional-dependencies]
 burr = ["burr[start]==0.22.1"]

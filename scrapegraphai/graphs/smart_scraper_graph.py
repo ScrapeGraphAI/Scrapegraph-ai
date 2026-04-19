@@ -77,33 +77,20 @@ class SmartScraperGraph(AbstractGraph):
             BaseGraph: A graph instance representing the web scraping workflow.
         """
         if self.llm_model == "scrapegraphai/smart-scraper":
-            try:
-                from scrapegraph_py import Client
-                from scrapegraph_py.logger import sgai_logger
-            except ImportError:
-                raise ImportError(
-                    "scrapegraph_py is not installed. Please install it using 'pip install scrapegraph-py'."
-                )
+            from ..integrations.scrapegraph_py_compat import extract as sgai_extract
 
-            sgai_logger.set_logging(level="INFO")
-
-            # Initialize the client with explicit API key
-            sgai_client = Client(api_key=self.config.get("api_key"))
-
-            # SmartScraper request
-            response = sgai_client.smartscraper(
-                website_url=self.source,
-                user_prompt=self.prompt,
+            response = sgai_extract(
+                api_key=self.config.get("api_key"),
+                url=self.source,
+                prompt=self.prompt,
+                schema=self.schema,
             )
 
-            # Use logging instead of print for better production practices
-            if "request_id" in response and "result" in response:
-                logger.info(f"Request ID: {response['request_id']}")
-                logger.info(f"Result: {response['result']}")
-            else:
-                logger.warning("Missing expected keys in response.")
-
-            sgai_client.close()
+            if isinstance(response, dict):
+                if "id" in response:
+                    logger.info(f"Request ID: {response['id']}")
+                if "data" in response:
+                    logger.info(f"Result: {response['data']}")
 
             return response
 
