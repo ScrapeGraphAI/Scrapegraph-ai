@@ -1,20 +1,33 @@
-## [1.76.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.75.1...v1.76.0-beta.1) (2026-04-07)
+## [2.0.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.76.0...v2.0.0) (2026-04-19)
 
+
+### ⚠ BREAKING CHANGES
+
+* requires scrapegraph-py v2.0.0+
+
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 
 ### Features
 
-* add OpenAI Batch API support for SmartScraperMultiGraph ([#1036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1036)) ([9d4eba1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9d4eba1f154953e401982da7eff85686293b9a48))
-
-
-### Bug Fixes
-
-* update broken test imports to match current API ([536e5ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/536e5adcde179a12ec146bd8a10cbf654e0eeeaa))
+* add scrapegraph-py PR [#84](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/84) SDK compatibility ([e8b2a28](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e8b2a28f4708882ca6cedfdd979b37dda26ef6c2)), closes [#82](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/82)
+* align with scrapegraph-py v2 API surface from PR [#82](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/82) ([c0f5fd5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c0f5fd592395f7f0e54bdf7367f3aff46bb6e420))
+* migrate to scrapegraph-py v2 API surface ([fd23bb0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fd23bb0544b3bb867c34b009ed7bcecda86e3ac5)), closes [ScrapeGraphAI/scrapegraph-py#82](https://github.com/ScrapeGraphAI/scrapegraph-py/issues/82)
 
 
 ### CI
 
-* **release:** 1.60.0-beta.2 [skip ci] ([54d1473](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/54d147309dc7a1ce1b191c3e4feb927ee3ff4392)), closes [#1036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1036)
-* **release:** 1.60.0-beta.3 [skip ci] ([637c696](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/637c696da77da1bb916a4ece03bd66fea50be47e))
+* bump min Python to 3.12 and trim test suite ([5fda03f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5fda03fb6bd774dee4e89661dd1eaa0ef2d2c4ed))
+
+## [1.76.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.75.1...v1.76.0) (2026-04-09)
+
+
+### Features
+
+* add PlasmateLoader as lightweight scraping backend (no Chrome needed) ([9dd1fb5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9dd1fb54ed2ad08e968444cde0cd052f0c32f60a)), closes [#1055](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1055)
+
+
+### CI
+
 * reduce GitHub Actions costs by ~85% on PRs ([403080a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/403080ad82c2097b111d3472cc0c6d4ee709c6fe))
 
 ## [1.75.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.75.0...v1.75.1) (2026-03-24)
@@ -37,20 +50,6 @@
 ### Features
 
 * add MiniMax as a supported LLM provider ([6a2f8ec](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/6a2f8ecc7bdd271bc7da7bfec552c80f0e78f379))
-
-## [1.60.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.60.0-beta.2...v1.60.0-beta.3) (2026-03-15)
-
-
-### Bug Fixes
-
-* update broken test imports to match current API ([536e5ad](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/536e5adcde179a12ec146bd8a10cbf654e0eeeaa))
-
-## [1.60.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.60.0-beta.1...v1.60.0-beta.2) (2026-02-24)
-
-
-### Features
-
-* add OpenAI Batch API support for SmartScraperMultiGraph ([#1036](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1036)) ([9d4eba1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9d4eba1f154953e401982da7eff85686293b9a48))
 
 ## [1.73.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.73.0...v1.73.1) (2026-02-16)
 
@@ -1464,7 +1463,7 @@
 
 * implement ScrapeGraph class for only web scraping automation ([612c644](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/612c644623fa6f4fe77a64a5f1a6a4d6cd5f4254))
 * Implement SmartScraperMultiParseMergeFirstGraph class that scrapes a list of URLs and merge the content first and finally generates answers to a given prompt. ([3e3e1b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e3e1b2f3ae8ed803d03b3b44b199e139baa68d4))
-
+=======
 ## [1.26.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6...v1.26.7) (2024-10-19)
 
 
@@ -3538,6 +3537,7 @@
 * **release:** 1.6.1 [skip ci] ([44fbd71](https://github.com/VinciGit00/Scrapegraph-ai/commit/44fbd71742a57a4b10f22ed33781bb67aa77e58d))
 
 ## [1.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.6.1) (2024-06-15)
+=======
 
 
 ### Bug Fixes
