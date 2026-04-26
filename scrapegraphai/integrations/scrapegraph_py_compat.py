@@ -1,8 +1,9 @@
 """
-Compatibility layer for scrapegraph-py SDK.
+Compatibility layer for the scrapegraph-py SDK (>=2.1.1).
 
-Supports both the v2 `Client` API (PR #82) and the newer `ScrapeGraphAI`
-API (PR #84) which uses Pydantic request models and an ApiResult wrapper.
+The SDK exposes `ScrapeGraphAI` with ergonomic kwargs (PR #88) and wraps
+results in `ApiResult[T]`. This module hides those details from the rest
+of the codebase so call sites stay terse.
 """
 
 from __future__ import annotations
@@ -10,23 +11,6 @@ from __future__ import annotations
 from typing import Any, Optional, Type
 
 from pydantic import BaseModel
-
-
-def _detect_api() -> str:
-    try:
-        from scrapegraph_py import ScrapeGraphAI  # noqa: F401
-
-        return "v3"
-    except ImportError:
-        pass
-    try:
-        from scrapegraph_py import Client  # noqa: F401
-
-        return "v2"
-    except ImportError as e:
-        raise ImportError(
-            "scrapegraph_py is not installed. Install it with 'pip install scrapegraph-py'."
-        ) from e
 
 
 def _schema_to_dict(schema: Optional[Type[BaseModel]]) -> Optional[dict]:
@@ -52,58 +36,34 @@ def _unwrap_result(result: Any) -> dict:
     return result
 
 
+def _client(api_key: Optional[str]):
+    from scrapegraph_py import ScrapeGraphAI
+
+    return ScrapeGraphAI(api_key=api_key)
+
+
 def extract(
     api_key: Optional[str],
     url: str,
     prompt: str,
     schema: Optional[Type[BaseModel]] = None,
 ) -> dict:
-    """Call the scrapegraph-py extract endpoint across SDK versions."""
-    api = _detect_api()
-
-    if api == "v3":
-        from scrapegraph_py import ExtractRequest, ScrapeGraphAI
-
-        kwargs: dict[str, Any] = {"url": url, "prompt": prompt}
-        schema_dict = _schema_to_dict(schema)
-        if schema_dict is not None:
-            kwargs["schema_"] = schema_dict
-        with ScrapeGraphAI(api_key=api_key) as client:
-            return _unwrap_result(client.extract(ExtractRequest(**kwargs)))
-
-    from scrapegraph_py import Client
-
-    with Client(api_key=api_key) as client:
-        return client.extract(url=url, prompt=prompt, output_schema=schema)
+    """Call the scrapegraph-py extract endpoint."""
+    kwargs: dict[str, Any] = {"url": url}
+    schema_dict = _schema_to_dict(schema)
+    if schema_dict is not None:
+        kwargs["schema"] = schema_dict
+    with _client(api_key) as client:
+        return _unwrap_result(client.extract(prompt, **kwargs))
 
 
 def scrape(api_key: Optional[str], url: str) -> dict:
-    """Call the scrapegraph-py scrape endpoint across SDK versions."""
-    api = _detect_api()
-
-    if api == "v3":
-        from scrapegraph_py import ScrapeGraphAI, ScrapeRequest
-
-        with ScrapeGraphAI(api_key=api_key) as client:
-            return _unwrap_result(client.scrape(ScrapeRequest(url=url)))
-
-    from scrapegraph_py import Client
-
-    with Client(api_key=api_key) as client:
-        return client.scrape(url=url)
+    """Call the scrapegraph-py scrape endpoint."""
+    with _client(api_key) as client:
+        return _unwrap_result(client.scrape(url))
 
 
 def search(api_key: Optional[str], query: str) -> dict:
-    """Call the scrapegraph-py search endpoint across SDK versions."""
-    api = _detect_api()
-
-    if api == "v3":
-        from scrapegraph_py import ScrapeGraphAI, SearchRequest
-
-        with ScrapeGraphAI(api_key=api_key) as client:
-            return _unwrap_result(client.search(SearchRequest(query=query)))
-
-    from scrapegraph_py import Client
-
-    with Client(api_key=api_key) as client:
-        return client.search(query=query)
+    """Call the scrapegraph-py search endpoint."""
+    with _client(api_key) as client:
+        return _unwrap_result(client.search(query))

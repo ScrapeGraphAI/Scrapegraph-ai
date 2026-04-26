@@ -1,13 +1,13 @@
 """
-Extract structured data using the scrapegraph-py v3 API (PR #84).
-Uses ScrapeGraphAI client + ExtractRequest model + ApiResult wrapper.
+Extract structured data using the scrapegraph-py SDK (>=2.1.1).
+Uses the ScrapeGraphAI client with ergonomic kwargs and ApiResult wrapper.
 """
 
 import json
 import os
 
 from dotenv import load_dotenv
-from scrapegraph_py import ExtractRequest, ScrapeGraphAI
+from scrapegraph_py import ScrapeGraphAI
 
 load_dotenv()
 
@@ -17,10 +17,8 @@ if not api_key:
 
 with ScrapeGraphAI(api_key=api_key) as sgai:
     result = sgai.extract(
-        ExtractRequest(
-            url="https://scrapegraphai.com",
-            prompt="Extract the founders' informations",
-        )
+        "Extract the founders' informations",
+        url="https://scrapegraphai.com",
     )
 
     if result.status == "success":

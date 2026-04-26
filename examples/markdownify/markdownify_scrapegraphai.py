@@ -1,20 +1,23 @@
 """
-Scrape a webpage as clean markdown using scrapegraph-py v2 API.
-Replaces the old markdownify() call with scrape().
+Scrape a webpage as clean markdown using scrapegraph-py.
 """
 
 import json
 import os
 
 from dotenv import load_dotenv
-from scrapegraph_py import Client
+from scrapegraph_py import ScrapeGraphAI
 
 load_dotenv()
 
-api_key = os.getenv("SCRAPEGRAPH_API_KEY")
+api_key = os.getenv("SGAI_API_KEY") or os.getenv("SCRAPEGRAPH_API_KEY")
 if not api_key:
-    raise ValueError("SCRAPEGRAPH_API_KEY environment variable not found")
+    raise ValueError("SGAI_API_KEY environment variable not found")
 
-with Client(api_key=api_key) as client:
-    response = client.scrape(url="https://example.com")
-    print(json.dumps(response, indent=2))
+with ScrapeGraphAI(api_key=api_key) as sgai:
+    result = sgai.scrape("https://example.com")
+
+    if result.status != "success":
+        raise RuntimeError(result.error)
+
+    print(json.dumps(result.data.model_dump(by_alias=True), indent=2, default=str))
