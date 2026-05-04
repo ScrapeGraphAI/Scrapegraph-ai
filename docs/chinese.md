@@ -159,8 +159,7 @@ print(json.dumps(result, indent=4))
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
-ScrapeGraphAI 的文档可以在[这里](https://scrapegraph-ai.readthedocs.io/en/latest/)找到。
-还可以查看 Docusaurus [这里](https://docs-oss.scrapegraphai.com/)。
+ScrapeGraphAI 的文档可以在[这里](https://docs.scrapegraphai.com/introduction)找到。
 
 ## 🤝 贡献
 
@@ -184,7 +183,7 @@ ScrapeGraphAI 的文档可以在[这里](https://scrapegraph-ai.readthedocs.io/e
 | Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
 | Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
 
-官方 API 文档可以在[这里](https://docs.scrapegraphai.com/)找到。
+官方 API 文档可以在[这里](https://docs.scrapegraphai.com/introduction)找到。
 
 ## 🔥 基准测试
 
@@ -193,7 +192,7 @@ ScrapeGraphAI 的文档可以在[这里](https://scrapegraph-ai.readthedocs.io/e
 ![here](assets/histogram.png)
 
 ## 📈 遥测
-我们收集匿名使用指标以增强我们包的质量和用户体验。这些数据帮助我们确定改进的优先级并确保兼容性。如果您希望退出，请设置环境变量 SCRAPEGRAPHAI_TELEMETRY_ENABLED=false。有关更多信息，请参阅[这里](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html)的文档。
+我们收集匿名使用指标以增强我们包的质量和用户体验。这些数据帮助我们确定改进的优先级并确保兼容性。如果您希望退出，请设置环境变量 SCRAPEGRAPHAI_TELEMETRY_ENABLED=false。有关更多信息，请参阅[这里](https://docs.scrapegraphai.com/introduction)的文档。
 
 ## ❤️ 贡献者
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)

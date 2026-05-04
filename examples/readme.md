@@ -2,7 +2,7 @@
 
 This directory contains various example implementations of Scrapegraph-ai for different use cases. Each example demonstrates how to leverage the power of Scrapegraph-ai for specific scenarios.
 
-> **Note:** While these examples showcase implementations using OpenAI and Ollama, Scrapegraph-ai supports many other LLM providers! Check out our [documentation](https://docs-oss.scrapegraphai.com/examples) for the full list of supported providers.
+> **Note:** While these examples showcase implementations using OpenAI and Ollama, Scrapegraph-ai supports many other LLM providers! Check out our [documentation](https://docs.scrapegraphai.com/introduction) for the full list of supported providers.
 
 ## 📚 Available Examples
 
@@ -51,13 +51,13 @@ Each example may have its own specific requirements. Please refer to the individ
 
 ## 📚 Additional Resources
 
-- 📖 [Full Documentation](https://docs-oss.scrapegraphai.com/examples)
+- 📖 [Full Documentation](https://docs.scrapegraphai.com/introduction)
 - 💡 [Examples Repository](https://github.com/ScrapeGraphAI/ScrapegraphLib-Examples)
 - 🤝 [Community Support](https://github.com/ScrapeGraphAI/scrapegraph-ai/discussions)
 
 ## 🤔 Need Help?
 
-- Check out our [documentation](https://docs-oss.scrapegraphai.com)
+- Check out our [documentation](https://docs.scrapegraphai.com/introduction)
 - Join our [Discord community](https://discord.gg/scrapegraphai)
 - Open an [issue](https://github.com/ScrapeGraphAI/scrapegraph-ai/issues)
 
