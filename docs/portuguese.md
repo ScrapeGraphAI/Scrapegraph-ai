@@ -159,8 +159,7 @@ Lembre-se de ter o [Ollama](https://ollama.com/) instalado e baixar os modelos u
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
-A documentação do ScrapeGraphAI pode ser encontrada [aqui](https://scrapegraph-ai.readthedocs.io/en/latest/).
-Confira também o Docusaurus [aqui](https://docs-oss.scrapegraphai.com/).
+A documentação do ScrapeGraphAI pode ser encontrada [aqui](https://docs.scrapegraphai.com/introduction).
 
 ## 🤝 Contribuindo
 
@@ -184,7 +183,7 @@ Oferecemos SDKs em Python e Node.js, facilitando a integração em seus projetos
 | Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
 | Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
 
-A Documentação Oficial da API pode ser encontrada [aqui](https://docs.scrapegraphai.com/).
+A Documentação Oficial da API pode ser encontrada [aqui](https://docs.scrapegraphai.com/introduction).
 
 ## 🔥 Benchmark
 
@@ -193,7 +192,7 @@ De acordo com o benchmark do Firecrawl [Firecrawl benchmark](https://github.com/
 ![here](assets/histogram.png)
 
 ## 📈 Telemetria
-Coletamos métricas de uso anônimas para melhorar a qualidade e a experiência do usuário do nosso pacote. Os dados nos ajudam a priorizar melhorias e garantir compatibilidade. Se você deseja optar por não participar, defina a variável de ambiente SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. Para mais informações, consulte a documentação [aqui](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
+Coletamos métricas de uso anônimas para melhorar a qualidade e a experiência do usuário do nosso pacote. Os dados nos ajudam a priorizar melhorias e garantir compatibilidade. Se você deseja optar por não participar, defina a variável de ambiente SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. Para mais informações, consulte a documentação [aqui](https://docs.scrapegraphai.com/introduction).
 
 ## ❤️ Contribuidores
 [![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)

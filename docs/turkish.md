@@ -160,8 +160,7 @@ Yerel modelleri kullanmak istiyorsanız, [Ollama](https://ollama.com/) kurulu ol
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
-ScrapeGraphAI dokümantasyonuna [buradan](https://scrapegraph-ai.readthedocs.io/en/latest/) ulaşabilirsiniz.
-Ayrıca Docusaurus'a [buradan](https://docs-oss.scrapegraphai.com/) göz atın.
+ScrapeGraphAI dokümantasyonuna [buradan](https://docs.scrapegraphai.com/introduction) ulaşabilirsiniz.
 
 ## 🤝 Katkıda Bulunun
 
@@ -185,7 +184,7 @@ Python ve Node.js için SDK'lar sunuyoruz, böylece projelerinize kolayca entegr
 | Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
 | Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
 
-Resmi API Dokümantasyonu [burada](https://docs.scrapegraphai.com/) bulunabilir.
+Resmi API Dokümantasyonu [burada](https://docs.scrapegraphai.com/introduction) bulunabilir.
 
 ## 🔥 Kıyaslama
 
@@ -194,7 +193,7 @@ Firecrawl kıyaslamasına göre [Firecrawl benchmark](https://github.com/firecra
 ![here](assets/histogram.png)
 
 ## 📈 Telemetri
-Paketimizin kalitesini ve kullanıcı deneyimini geliştirmek amacıyla anonim kullanım metrikleri topluyoruz. Bu veriler, iyileştirmelere öncelik vermemize ve uyumluluğu sağlamamıza yardımcı olur. İsterseniz, SCRAPEGRAPHAI_TELEMETRY_ENABLED=false ortam değişkenini ayarlayarak devre dışı bırakabilirsiniz. Daha fazla bilgi için lütfen [buraya](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html) bakın.
+Paketimizin kalitesini ve kullanıcı deneyimini geliştirmek amacıyla anonim kullanım metrikleri topluyoruz. Bu veriler, iyileştirmelere öncelik vermemize ve uyumluluğu sağlamamıza yardımcı olur. İsterseniz, SCRAPEGRAPHAI_TELEMETRY_ENABLED=false ortam değişkenini ayarlayarak devre dışı bırakabilirsiniz. Daha fazla bilgi için lütfen [buraya](https://docs.scrapegraphai.com/introduction) bakın.
 
 ## ❤️ Katkıda Bulunanlar
 
