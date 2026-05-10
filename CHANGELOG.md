@@ -1,3 +1,15 @@
+## [2.1.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.0.0...v2.1.0) (2026-05-10)
+
+
+### Features
+
+* **models:** add OpenAI gpt-5.4 and gpt-5.5 family support ([c2c436d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c2c436d25c2f4dcad539ea1ab6dcda48e98a31c6))
+
+
+### chore
+
+* **docs:** drop Sphinx/RTD setup, point doc links to docs.scrapegraphai.com ([efe336e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/efe336ec3f88da90dcc4923776e7da088278147b))
+
 ## [2.0.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.76.0...v2.0.0) (2026-04-19)
 
 
