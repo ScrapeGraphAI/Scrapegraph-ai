@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.0...v2.1.1) (2026-05-10)
+
+
+### Bug Fixes
+
+* **ci:** clean stale dist artifacts before semantic-release publish ([fe5b818](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/fe5b818cfe9f8d5d26d5043c55c0e66a6ed392de))
+
 ## [2.1.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.0.0...v2.1.0) (2026-05-10)
 
 
