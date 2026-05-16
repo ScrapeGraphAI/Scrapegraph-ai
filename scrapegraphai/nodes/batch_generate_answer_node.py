@@ -9,7 +9,7 @@ import json
 import logging
 from typing import Any, Dict, List, Optional
 
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
 from ..prompts import (
