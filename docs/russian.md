@@ -159,8 +159,7 @@ print(json.dumps(result, indent=4))
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
-Документация для ScrapeGraphAI доступна [здесь](https://scrapegraph-ai.readthedocs.io/en/latest/).
-Посмотрите также Docusaurus [здесь](https://docs-oss.scrapegraphai.com/).
+Документация для ScrapeGraphAI доступна [здесь](https://docs.scrapegraphai.com/introduction).
 
 ## 🤝 Участие
 
@@ -184,7 +183,7 @@ print(json.dumps(result, indent=4))
 | Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
 | Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
 
-Официальная документация API доступна [здесь](https://docs.scrapegraphai.com/).
+Официальная документация API доступна [здесь](https://docs.scrapegraphai.com/introduction).
 
 ## 🔥 Бенчмарк
 
@@ -193,7 +192,7 @@ print(json.dumps(result, indent=4))
 ![here](assets/histogram.png)
 
 ## 📈 Телеметрия
-Мы собираем анонимные метрики использования для повышения качества нашего пакета и пользовательского опыта. Данные помогают нам определять приоритеты улучшений и обеспечивать совместимость. Если вы хотите отказаться, установите переменную окружения SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. Для получения дополнительной информации обратитесь к документации [здесь](https://scrapegraph-ai.readthedocs.io/en/latest/scrapers/telemetry.html).
+Мы собираем анонимные метрики использования для повышения качества нашего пакета и пользовательского опыта. Данные помогают нам определять приоритеты улучшений и обеспечивать совместимость. Если вы хотите отказаться, установите переменную окружения SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. Для получения дополнительной информации обратитесь к документации [здесь](https://docs.scrapegraphai.com/introduction).
 
 ## ❤️ Разработчики программного обеспечения
 

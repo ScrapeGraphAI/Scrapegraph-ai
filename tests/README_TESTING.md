@@ -427,4 +427,4 @@ When adding tests:
 
 - [pytest Documentation](https://docs.pytest.org/)
 - [pytest-cov Documentation](https://pytest-cov.readthedocs.io/)
-- [ScrapeGraphAI Documentation](https://scrapegraph-ai.readthedocs.io/)
+- [ScrapeGraphAI Documentation](https://docs.scrapegraphai.com/introduction)

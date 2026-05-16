@@ -81,6 +81,9 @@ jobs:
           path: ./dist
           key: ${{ runner.os }}-build-${{ github.sha }}
 
+      - name: Clean stale dist artifacts
+        run: rm -rf ./dist/* || true
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4.1.0
         with:
