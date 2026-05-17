@@ -3,6 +3,7 @@ __init__.py file for node folder module
 """
 
 from .base_node import BaseNode
+from .batch_generate_answer_node import BatchGenerateAnswerNode
 from .concat_answers_node import ConcatAnswersNode
 from .conditional_node import ConditionalNode
 from .description_node import DescriptionNode
@@ -53,6 +54,7 @@ __all__ = [
     "DescriptionNode",
     "ReasoningNode",
     # Generation nodes
+    "BatchGenerateAnswerNode",
     "GenerateAnswerNode",
     "GenerateAnswerNodeKLevel",
     "GenerateAnswerCSVNode",

@@ -23,6 +23,7 @@ from .smart_scraper_graph import SmartScraperGraph
 from .smart_scraper_lite_graph import SmartScraperLiteGraph
 from .smart_scraper_multi_concat_graph import SmartScraperMultiConcatGraph
 from .smart_scraper_multi_graph import SmartScraperMultiGraph
+from .smart_scraper_multi_batch_graph import SmartScraperMultiBatchGraph
 from .smart_scraper_multi_lite_graph import SmartScraperMultiLiteGraph
 from .speech_graph import SpeechGraph
 from .xml_scraper_graph import XMLScraperGraph
@@ -45,6 +46,7 @@ __all__ = [
     "SmartScraperGraph",
     "SmartScraperLiteGraph",
     "SmartScraperMultiGraph",
+    "SmartScraperMultiBatchGraph",
     "SmartScraperMultiLiteGraph",
     "SmartScraperMultiConcatGraph",
     # Search-related graphs
