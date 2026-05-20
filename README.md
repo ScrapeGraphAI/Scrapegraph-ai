@@ -10,14 +10,14 @@
   </a>
 </p>
 
-[English](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/japanese.md)
-| [한국어](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/korean.md)
-| [Русский](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/turkish.md)
-| [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
-| [Español](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/spanish.md)
-| [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
-| [Português](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/portuguese.md)
-| [Italiano](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/italian.md)
+[English](README.md) | [中文](docs/chinese.md) | [日本語](docs/japanese.md)
+| [한국어](docs/korean.md)
+| [Русский](docs/russian.md) | [Türkçe](docs/turkish.md)
+| [Deutsch](docs/german.md)
+| [Español](docs/spanish.md)
+| [français](docs/french.md)
+| [Português](docs/portuguese.md)
+| [Italiano](docs/italian.md)
 
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/scrapegraphai?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/scrapegraphai)
 
