@@ -4,25 +4,21 @@
 
 # 🕷️ ScrapeGraphAI: Você Só Faz Scraping Uma Vez
 
-[English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
-| [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
-| [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
+[English](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/japanese.md)
+| [한국어](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/korean.md)
+| [Русский](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/turkish.md)
 | [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
 | [Español](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/spanish.md)
 | [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
-| [Português](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/portuguese.md)
+| [Português](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/portuguese.md)
+| [Italiano](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/italian.md)
 
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/scrapegraphai?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/scrapegraphai)
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
-[![Pylint](https://img.shields.io/github/actions/workflow/status/VinciGit00/Scrapegraph-ai/code-quality.yml?label=Pylint&logo=github&style=for-the-badge)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/code-quality.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/VinciGit00/Scrapegraph-ai/codeql.yml?label=CodeQL&logo=github&style=for-the-badge)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/codeql.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
-
-[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://scrapegraphai.com/?utm_source=github&utm_medium=readme&utm_campaign=api_banner&utm_content=api_banner_image)
-
 <p align="center">
-<a href="https://trendshift.io/repositories/9761" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9761" alt="VinciGit00%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/15078" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15078" alt="ScrapeGraphAI%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <p align="center">
 
 [ScrapeGraphAI](https://scrapegraphai.com) é uma biblioteca Python de *web scraping* que usa LLM e lógica de grafo direto para criar pipelines de scraping para sites e documentos locais (XML, HTML, JSON, Markdown, etc.).
@@ -166,7 +162,7 @@ A documentação do ScrapeGraphAI pode ser encontrada [aqui](https://docs.scrape
 
 Sinta-se à vontade para contribuir e junte-se ao nosso servidor Discord para discutir melhorias e nos dar sugestões!
 
-Por favor, veja as [diretrizes de contribuição](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
+Por favor, veja as [diretrizes de contribuição](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
@@ -188,7 +184,7 @@ A Documentação Oficial da API pode ser encontrada [aqui](https://docs.scrapegr
 
 ## 🔥 Benchmark
 
-De acordo com o benchmark do Firecrawl [Firecrawl benchmark](https://github.com/firecrawl/scrape-evals/pull/3), o ScrapeGraph é o melhor fetcher do mercado!
+De acordo com o benchmark do Firecrawl [Firecrawl benchmark](https://scrapegraphai.com/compare/firecrawl), o ScrapeGraph é o melhor fetcher do mercado!
 
 ![here](assets/histogram.png)
 
@@ -196,7 +192,7 @@ De acordo com o benchmark do Firecrawl [Firecrawl benchmark](https://github.com/
 Coletamos métricas de uso anônimas para melhorar a qualidade e a experiência do usuário do nosso pacote. Os dados nos ajudam a priorizar melhorias e garantir compatibilidade. Se você deseja optar por não participar, defina a variável de ambiente SCRAPEGRAPHAI_TELEMETRY_ENABLED=false. Para mais informações, consulte a documentação [aqui](https://docs.scrapegraphai.com/introduction).
 
 ## ❤️ Contribuidores
-[![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=ScrapeGraphAI/Scrapegraph-ai)](https://github.com/ScrapeGraphAI/Scrapegraph-ai/graphs/contributors)
 
 ## 🎓 Citações
 Se você usou nossa biblioteca para fins de pesquisa, por favor, cite-nos com a seguinte referência:
@@ -205,7 +201,7 @@ Se você usou nossa biblioteca para fins de pesquisa, por favor, cite-nos com a 
     author = {Lorenzo Padoan, Marco Vinciguerra},
     title = {Scrapegraph-ai},
     year = {2024},
-    url = {https://github.com/VinciGit00/Scrapegraph-ai},
+    url = {https://github.com/ScrapeGraphAI/Scrapegraph-ai},
     note = {Uma biblioteca Python para scraping aproveitando grandes modelos de linguagem}
   }
 ```
@@ -219,7 +215,7 @@ Se você usou nossa biblioteca para fins de pesquisa, por favor, cite-nos com a 
 
 ## 📜 Licença
 
-O ScrapeGraphAI está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) para mais informações.
+O ScrapeGraphAI está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/LICENSE) para mais informações.
 
 ## Agradecimentos
 

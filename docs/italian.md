@@ -20,14 +20,9 @@
 | [Italiano](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/italian.md)
 
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/scrapegraphai?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/scrapegraphai)
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
-[![Pylint](https://img.shields.io/github/actions/workflow/status/ScrapeGraphAI/Scrapegraph-ai/code-quality.yml?label=Pylint&logo=github&style=for-the-badge)](https://github.com/ScrapeGraphAI/Scrapegraph-ai/actions/workflows/code-quality.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/ScrapeGraphAI/Scrapegraph-ai/codeql.yml?label=CodeQL&logo=github&style=for-the-badge)](https://github.com/ScrapeGraphAI/Scrapegraph-ai/actions/workflows/codeql.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
-
-[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://scrapegraphai.com/?utm_source=github&utm_medium=readme&utm_campaign=api_banner&utm_content=api_banner_image)
-
 <p align="center">
 <a href="https://trendshift.io/repositories/15078" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15078" alt="ScrapeGraphAI%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <p align="center">
@@ -194,7 +189,7 @@ La documentazione ufficiale dell'API è disponibile [qui](https://docs.scrapegra
 
 ## 🔥 Benchmark
 
-Secondo il benchmark di Firecrawl [Firecrawl benchmark](https://github.com/firecrawl/scrape-evals/pull/3), ScrapeGraph è il miglior fetcher sul mercato!
+Secondo il benchmark di Firecrawl [Firecrawl benchmark](https://scrapegraphai.com/compare/firecrawl), ScrapeGraph è il miglior fetcher sul mercato!
 
 ![here](assets/histogram.png)
 

@@ -190,6 +190,12 @@ Ofrecemos SDKs en Python y Node.js para facilitar la integración en tus proyect
 
 La documentación oficial de la API está disponible [aquí](https://docs.scrapegraphai.com/introduction).
 
+## 🔥 Benchmark
+
+¡Según el benchmark de Firecrawl [Firecrawl benchmark](https://scrapegraphai.com/compare/firecrawl), ScrapeGraph es el mejor fetcher del mercado!
+
+![here](assets/histogram.png)
+
 ## 📈 Telemetría
 
 Recopilamos métricas de uso anónimas para mejorar la calidad del paquete y la experiencia del usuario. Los datos nos ayudan a priorizar mejoras y garantizar compatibilidad. Si deseas hacer opt-out, configura la variable de entorno `SCRAPEGRAPHAI_TELEMETRY_ENABLED=false`. Para más información consulta la documentación [aquí](https://docs.scrapegraphai.com/introduction).

@@ -4,25 +4,21 @@
 
 # 🕷️ ScrapeGraphAI: 只需抓取一次
 
-[English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
-| [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
-| [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
+[English](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/japanese.md)
+| [한국어](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/korean.md)
+| [Русский](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/turkish.md)
 | [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
 | [Español](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/spanish.md)
 | [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
-| [Português](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/portuguese.md)
+| [Português](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/portuguese.md)
+| [Italiano](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/italian.md)
 
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/scrapegraphai?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/scrapegraphai)
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
-[![Pylint](https://img.shields.io/github/actions/workflow/status/VinciGit00/Scrapegraph-ai/code-quality.yml?label=Pylint&logo=github&style=for-the-badge)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/code-quality.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/VinciGit00/Scrapegraph-ai/codeql.yml?label=CodeQL&logo=github&style=for-the-badge)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/codeql.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
-
-[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://scrapegraphai.com/?utm_source=github&utm_medium=readme&utm_campaign=api_banner&utm_content=api_banner_image)
-
 <p align="center">
-<a href="https://trendshift.io/repositories/9761" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9761" alt="VinciGit00%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/15078" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15078" alt="ScrapeGraphAI%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <p align="center">
 
 [ScrapeGraphAI](https://scrapegraphai.com) 是一个*网络爬虫* Python 库，使用大型语言模型和直接图逻辑为网站和本地文档（XML，HTML，JSON，Markdown 等）创建爬取管道。
@@ -166,7 +162,7 @@ ScrapeGraphAI 的文档可以在[这里](https://docs.scrapegraphai.com/introduc
 
 欢迎贡献并加入我们的 Discord 服务器与我们讨论改进和提出建议！
 
-请参阅[贡献指南](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md)。
+请参阅[贡献指南](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/CONTRIBUTING.md)。
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
@@ -188,7 +184,7 @@ ScrapeGraphAI 的文档可以在[这里](https://docs.scrapegraphai.com/introduc
 
 ## 🔥 基准测试
 
-根据 Firecrawl 基准测试 [Firecrawl benchmark](https://github.com/firecrawl/scrape-evals/pull/3)，ScrapeGraph 是市场上最好的抓取工具！
+根据 Firecrawl 基准测试 [Firecrawl benchmark](https://scrapegraphai.com/compare/firecrawl)，ScrapeGraph 是市场上最好的抓取工具！
 
 ![here](assets/histogram.png)
 
@@ -196,7 +192,7 @@ ScrapeGraphAI 的文档可以在[这里](https://docs.scrapegraphai.com/introduc
 我们收集匿名使用指标以增强我们包的质量和用户体验。这些数据帮助我们确定改进的优先级并确保兼容性。如果您希望退出，请设置环境变量 SCRAPEGRAPHAI_TELEMETRY_ENABLED=false。有关更多信息，请参阅[这里](https://docs.scrapegraphai.com/introduction)的文档。
 
 ## ❤️ 贡献者
-[![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=ScrapeGraphAI/Scrapegraph-ai)](https://github.com/ScrapeGraphAI/Scrapegraph-ai/graphs/contributors)
 
 ## 🎓 引用
 如果您将我们的库用于研究目的，请使用以下参考文献引用我们：
@@ -205,7 +201,7 @@ ScrapeGraphAI 的文档可以在[这里](https://docs.scrapegraphai.com/introduc
     author = {Lorenzo Padoan, Marco Vinciguerra},
     title = {Scrapegraph-ai},
     year = {2024},
-    url = {https://github.com/VinciGit00/Scrapegraph-ai},
+    url = {https://github.com/ScrapeGraphAI/Scrapegraph-ai},
     note = {一个利用大型语言模型进行爬取的 Python 库}
   }
 ```
@@ -218,7 +214,7 @@ ScrapeGraphAI 的文档可以在[这里](https://docs.scrapegraphai.com/introduc
 
 ## 📜 许可证
 
-ScrapeGraphAI 采用 MIT 许可证。更多信息请查看 [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE) 文件。
+ScrapeGraphAI 采用 MIT 许可证。更多信息请查看 [LICENSE](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/LICENSE) 文件。
 
 ## 鸣谢
 
