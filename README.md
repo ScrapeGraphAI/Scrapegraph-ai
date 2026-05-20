@@ -182,8 +182,8 @@ We offer SDKs in both Python and Node.js, making it easy to integrate into your 
 
 | SDK       | Language | GitHub Link                                                                 |
 |-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python   | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 The Official API Documentation can be found [here](https://docs.scrapegraphai.com/introduction).
 

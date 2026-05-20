@@ -177,8 +177,8 @@ print(json.dumps(result, indent=4))
 
 | SDK       | Язык | GitHub Ссылка                                                                 |
 |-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python   | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 Официальная документация API доступна [здесь](https://docs.scrapegraphai.com/introduction).
 

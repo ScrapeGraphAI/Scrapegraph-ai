@@ -178,8 +178,8 @@ Python ve Node.js için SDK'lar sunuyoruz, böylece projelerinize kolayca entegr
 
 | SDK       | Dil | GitHub Bağlantısı                                                                 |
 |-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python   | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 Resmi API Dokümantasyonu [burada](https://docs.scrapegraphai.com/introduction) bulunabilir.
 

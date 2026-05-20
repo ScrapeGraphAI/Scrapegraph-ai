@@ -177,8 +177,8 @@ ScrapeGraphAI 的文档可以在[这里](https://docs.scrapegraphai.com/introduc
 
 | SDK       | 语言 | GitHub 链接                                                                 |
 |-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python   | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 官方 API 文档可以在[这里](https://docs.scrapegraphai.com/introduction)找到。
 

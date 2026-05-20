@@ -177,8 +177,8 @@ Python과 Node.js SDK를 제공하여 프로젝트에 쉽게 통합할 수 있�
 
 | SDK       | 언어 | GitHub 링크                                                                 |
 |-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python   | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 공식 API 문서는 [여기](https://docs.scrapegraphai.com/introduction)에서 확인할 수 있습니다.
 
