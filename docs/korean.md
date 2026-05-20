@@ -8,7 +8,7 @@
 | [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
 | [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
 | [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
-| [Español](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=es)
+| [Español](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/spanish.md)
 | [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
 | [Português](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/portuguese.md)
 
@@ -29,14 +29,15 @@
 
 추출하려는 정보를 말하기만 하면 라이브러리가 알아서 처리해 줍니다!
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
-</p>
 
 
 ## 🚀 통합
+
 ScrapeGraphAI는 인기 있는 프레임워크 및 도구와의 원활한 통합을 제공하여 스크래핑 능력을 향상시킵니다. 파이썬이든 Node.js로 개발하든, LLM 프레임워크를 사용하든, 노코드 플랫폼이든 저희의 포괄적인 통합 옵션을 제공합니다.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
+</p>
 더 많은 정보는 다음 [링크](https://scrapegraphai.com)에서 확인할 수 있습니다
 
 **통합**:

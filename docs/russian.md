@@ -8,7 +8,7 @@
 | [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
 | [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
 | [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
-| [Español](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=es)
+| [Español](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/spanish.md)
 | [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
 | [Português](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/portuguese.md)
 
@@ -29,14 +29,15 @@ ScrapeGraphAI - это библиотека для веб-скрейпинга �
 
 Просто укажите, какую информацию вы хотите извлечь, и библиотека сделает это за вас!
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
-</p>
 
 
 ## 🚀 Интеграции
+
 ScrapeGraphAI предлагает бесшовную интеграцию с популярными фреймворками и инструментами для улучшения ваших возможностей скрейпинга. Независимо от того, создаете ли вы приложения на Python или Node.js, используете ли LLM-фреймворки или работаете с платформами без кода, мы предоставляем комплексные варианты интеграции.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
+</p>
 Вы можете найти больше информации по следующей [ссылке](https://scrapegraphai.com)
 
 **Интеграции**:
