@@ -10,24 +10,19 @@
   </a>
 </p>
 
-[English](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/japanese.md)
-| [한국어](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/korean.md)
-| [Русский](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/turkish.md)
-| [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
-| [Español](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=es)
-| [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
-| [Português](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/portuguese.md)
-| [Italiano](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/italian.md)
+[English](../README.md) | [中文](chinese.md) | [日本語](japanese.md)
+| [한국어](korean.md)
+| [Русский](russian.md) | [Türkçe](turkish.md)
+| [Deutsch](german.md)
+| [Español](spanish.md)
+| [français](french.md)
+| [Português](portuguese.md)
+| [Italiano](italian.md)
 
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/scrapegraphai?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/scrapegraphai)
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
-[![Pylint](https://img.shields.io/github/actions/workflow/status/ScrapeGraphAI/Scrapegraph-ai/code-quality.yml?label=Pylint&logo=github&style=for-the-badge)](https://github.com/ScrapeGraphAI/Scrapegraph-ai/actions/workflows/code-quality.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/ScrapeGraphAI/Scrapegraph-ai/codeql.yml?label=CodeQL&logo=github&style=for-the-badge)](https://github.com/ScrapeGraphAI/Scrapegraph-ai/actions/workflows/codeql.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
-
-[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://scrapegraphai.com/?utm_source=github&utm_medium=readme&utm_campaign=api_banner&utm_content=api_banner_image)
-
 <p align="center">
 <a href="https://trendshift.io/repositories/15078" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15078" alt="ScrapeGraphAI%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <p align="center">
@@ -35,10 +30,10 @@
 [ScrapeGraphAI](https://scrapegraphai.com) è una libreria Python per il *web scraping* che utilizza LLM e logica basata sui grafi per creare pipeline di scraping per siti web e documenti locali (XML, HTML, JSON, Markdown, ecc.).
 
 Indica semplicemente quali informazioni vuoi estrarre e la libreria lo farà per te!
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
 </p>
+
 
 ## 🚀 Integrazioni
 
@@ -187,14 +182,14 @@ Offriamo gli SDK sia in Python che in Node.js, per una facile integrazione nei t
 
 | SDK        | Linguaggio | Link GitHub                                                                 |
 |------------|------------|-----------------------------------------------------------------------------|
-| Python SDK | Python     | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js   | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python     | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js   | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 La documentazione ufficiale dell'API è disponibile [qui](https://docs.scrapegraphai.com/).
 
 ## 🔥 Benchmark
 
-Secondo il benchmark di Firecrawl [Firecrawl benchmark](https://github.com/firecrawl/scrape-evals/pull/3), ScrapeGraph è il miglior fetcher sul mercato!
+Secondo il benchmark di Firecrawl [Firecrawl benchmark](https://scrapegraphai.com/compare/firecrawl), ScrapeGraph è il miglior fetcher sul mercato!
 
 ![here](assets/histogram.png)
 
