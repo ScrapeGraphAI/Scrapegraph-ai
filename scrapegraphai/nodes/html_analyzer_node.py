@@ -5,7 +5,7 @@ HtmlAnalyzerNode Module
 from typing import List, Optional
 
 from langchain_core.prompts import PromptTemplate
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 
 from ..prompts import TEMPLATE_HTML_ANALYSIS, TEMPLATE_HTML_ANALYSIS_WITH_CONTEXT

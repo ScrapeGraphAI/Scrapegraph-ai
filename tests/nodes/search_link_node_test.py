@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 import pytest
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 
 from scrapegraphai.nodes import SearchLinkNode
 
