@@ -408,12 +408,8 @@ models_tokens = {
         "grok-beta": 128000,
     },
     "minimax": {
+        "MiniMax-M3": 524288,
         "MiniMax-M2.7": 204000,
         "MiniMax-M2.7-highspeed": 204000,
-        "MiniMax-M1": 1000000,
-        "MiniMax-M1-40k": 40000,
-        "MiniMax-M2": 204000,
-        "MiniMax-M2.5": 204000,
-        "MiniMax-M2.5-highspeed": 204000,
     },
 }
