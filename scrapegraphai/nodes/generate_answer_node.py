@@ -8,7 +8,7 @@ from typing import List, Optional
 
 from langchain_core.prompts import PromptTemplate
 from langchain_aws import ChatBedrock
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI
