@@ -1,3 +1,10 @@
+## [2.2.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2026-06-01)
+
+
+### Features
+
+* upgrade MiniMax default model to M3 ([#1080](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1080)) ([1b16c26](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1b16c268f4e9044c1386ccfaf67b38692b487e5a))
+
 ## [2.2.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.1...v2.2.0-beta.1) (2026-05-16)
 
 
