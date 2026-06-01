@@ -1,6 +1,6 @@
 import unittest
 
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 
 from scrapegraphai.nodes import SearchInternetNode
 

@@ -5,6 +5,18 @@
 
 * upgrade MiniMax default model to M3 ([#1080](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1080)) ([1b16c26](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1b16c268f4e9044c1386ccfaf67b38692b487e5a))
 
+## [2.1.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.1...v2.1.2) (2026-06-01)
+
+
+### Bug Fixes
+
+* **nodes:** update outdated ChatOllama import path to langchain_ollama ([#1076](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1076)) ([e6054cb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e6054cbf19a7fe940899ea70b30706f676f86fa7))
+
+
+### Docs
+
+* 📚 Standardize and fix links across translated READMEs ([#1074](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1074)) ([458d36a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/458d36a6b83f4a412206cdbe9935a059e9d47f57))
+
 ## [2.2.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.1...v2.2.0-beta.1) (2026-05-16)
 
 

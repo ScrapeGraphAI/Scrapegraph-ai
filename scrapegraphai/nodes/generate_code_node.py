@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 from jsonschema import ValidationError as JSONSchemaValidationError
 from jsonschema import validate
 from langchain_classic.output_parsers import ResponseSchema, StructuredOutputParser
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 

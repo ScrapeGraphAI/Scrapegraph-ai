@@ -4,39 +4,36 @@
 
 # 🕷️ ScrapeGraphAI: Вы скрейпите только один раз
 
-[English](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/japanese.md)
-| [한국어](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/korean.md)
-| [Русский](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/turkish.md)
-| [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
-| [Español](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=es)
-| [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
-| [Português](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/docs/portuguese.md)
+[English](../README.md) | [中文](chinese.md) | [日本語](japanese.md)
+| [한국어](korean.md)
+| [Русский](russian.md) | [Türkçe](turkish.md)
+| [Deutsch](german.md)
+| [Español](spanish.md)
+| [français](french.md)
+| [Português](portuguese.md)
+| [Italiano](italian.md)
 
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/scrapegraphai?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/scrapegraphai)
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen?style=for-the-badge)](https://github.com/pylint-dev/pylint)
-[![Pylint](https://img.shields.io/github/actions/workflow/status/VinciGit00/Scrapegraph-ai/code-quality.yml?label=Pylint&logo=github&style=for-the-badge)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/code-quality.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/VinciGit00/Scrapegraph-ai/codeql.yml?label=CodeQL&logo=github&style=for-the-badge)](https://github.com/VinciGit00/Scrapegraph-ai/actions/workflows/codeql.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![](https://dcbadge.vercel.app/api/server/gkxQDAjfeX)](https://discord.gg/gkxQDAjfeX)
-
-[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://scrapegraphai.com/?utm_source=github&utm_medium=readme&utm_campaign=api_banner&utm_content=api_banner_image)
-
 <p align="center">
-<a href="https://trendshift.io/repositories/9761" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9761" alt="VinciGit00%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/15078" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15078" alt="ScrapeGraphAI%2FScrapegraph-ai | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <p align="center">
 
 ScrapeGraphAI - это библиотека для веб-скрейпинга на Python, которая использует LLM и прямую графовую логику для создания скрейпинговых пайплайнов для веб-сайтов и локальных документов (XML, HTML, JSON, Markdown и т.д.).
 
 Просто укажите, какую информацию вы хотите извлечь, и библиотека сделает это за вас!
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
-</p>
 
 
 ## 🚀 Интеграции
+
 ScrapeGraphAI предлагает бесшовную интеграцию с популярными фреймворками и инструментами для улучшения ваших возможностей скрейпинга. Независимо от того, создаете ли вы приложения на Python или Node.js, используете ли LLM-фреймворки или работаете с платформами без кода, мы предоставляем комплексные варианты интеграции.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
+</p>
 Вы можете найти больше информации по следующей [ссылке](https://scrapegraphai.com)
 
 **Интеграции**:
@@ -165,7 +162,7 @@ print(json.dumps(result, indent=4))
 
 Не стесняйтесь вносить свой вклад и присоединяйтесь к нашему серверу Discord, чтобы обсудить с нами улучшения и дать нам предложения!
 
-Пожалуйста, ознакомьтесь с [руководством по участию](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
+Пожалуйста, ознакомьтесь с [руководством по участию](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/CONTRIBUTING.md).
 
 [![My Skills](https://skillicons.dev/icons?i=discord)](https://discord.gg/uJN7TYcpNa)
 [![My Skills](https://skillicons.dev/icons?i=linkedin)](https://www.linkedin.com/company/scrapegraphai/)
@@ -180,14 +177,14 @@ print(json.dumps(result, indent=4))
 
 | SDK       | Язык | GitHub Ссылка                                                                 |
 |-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python   | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 Официальная документация API доступна [здесь](https://docs.scrapegraphai.com/introduction).
 
 ## 🔥 Бенчмарк
 
-Согласно бенчмарку Firecrawl [Firecrawl benchmark](https://github.com/firecrawl/scrape-evals/pull/3), ScrapeGraph является лучшим фетчером на рынке!
+Согласно бенчмарку Firecrawl [Firecrawl benchmark](https://scrapegraphai.com/compare/firecrawl), ScrapeGraph является лучшим фетчером на рынке!
 
 ![here](assets/histogram.png)
 
@@ -196,7 +193,7 @@ print(json.dumps(result, indent=4))
 
 ## ❤️ Разработчики программного обеспечения
 
-[![Contributors](https://contrib.rocks/image?repo=VinciGit00/Scrapegraph-ai)](https://github.com/VinciGit00/Scrapegraph-ai/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=ScrapeGraphAI/Scrapegraph-ai)](https://github.com/ScrapeGraphAI/Scrapegraph-ai/graphs/contributors)
 
 ## 🎓 Цитаты
 
@@ -207,7 +204,7 @@ print(json.dumps(result, indent=4))
     author = {Lorenzo Padoan, Marco Vinciguerra},
     title = {Scrapegraph-ai},
     year = {2024},
-    url = {https://github.com/VinciGit00/Scrapegraph-ai},
+    url = {https://github.com/ScrapeGraphAI/Scrapegraph-ai},
     note = {Библиотека на Python для скрейпинга с использованием больших языковых моделей}
   }
 ```
@@ -221,7 +218,7 @@ print(json.dumps(result, indent=4))
 
 ## 📜 Лицензия
 
-ScrapeGraphAI лицензирован под MIT License. Подробнее см. в файле [LICENSE](https://github.com/VinciGit00/Scrapegraph-ai/blob/main/LICENSE).
+ScrapeGraphAI лицензирован под MIT License. Подробнее см. в файле [LICENSE](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/LICENSE).
 
 ## Благодарности
 

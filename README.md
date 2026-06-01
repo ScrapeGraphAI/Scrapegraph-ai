@@ -10,14 +10,14 @@
   </a>
 </p>
 
-[English](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/README.md) | [中文](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/chinese.md) | [日本語](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/japanese.md)
-| [한국어](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/korean.md)
-| [Русский](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/russian.md) | [Türkçe](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/turkish.md)
-| [Deutsch](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=de)
-| [Español](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=es)
-| [français](https://www.readme-i18n.com/ScrapeGraphAI/Scrapegraph-ai?lang=fr)
-| [Português](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/portuguese.md)
-| [Italiano](https://github.com/ScrapeGraphAI/Scrapegraph-ai/blob/main/docs/italian.md)
+[English](README.md) | [中文](docs/chinese.md) | [日本語](docs/japanese.md)
+| [한국어](docs/korean.md)
+| [Русский](docs/russian.md) | [Türkçe](docs/turkish.md)
+| [Deutsch](docs/german.md)
+| [Español](docs/spanish.md)
+| [français](docs/french.md)
+| [Português](docs/portuguese.md)
+| [Italiano](docs/italian.md)
 
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/scrapegraphai?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/scrapegraphai)
 
@@ -34,6 +34,10 @@ Just say which information you want to extract and the library will do it for yo
 
 ## 🚀 Integrations
 ScrapeGraphAI offers seamless integration with popular frameworks and tools to enhance your scraping capabilities. Whether you're building with Python or Node.js, using LLM frameworks, or working with no-code platforms, we've got you covered with our comprehensive integration options..
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
+</p>
 
 You can find more informations at the following [link](https://scrapegraphai.com)
 
@@ -178,8 +182,8 @@ We offer SDKs in both Python and Node.js, making it easy to integrate into your 
 
 | SDK       | Language | GitHub Link                                                                 |
 |-----------|----------|-----------------------------------------------------------------------------|
-| Python SDK | Python   | [scrapegraph-py](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-py) |
-| Node.js SDK | Node.js  | [scrapegraph-js](https://github.com/ScrapeGraphAI/scrapegraph-sdk/tree/main/scrapegraph-js) |
+| Python SDK | Python   | [scrapegraph-py](https://docs.scrapegraphai.com/sdks/python) |
+| Node.js SDK | Node.js  | [scrapegraph-js](https://docs.scrapegraphai.com/sdks/javascript) |
 
 The Official API Documentation can be found [here](https://docs.scrapegraphai.com/introduction).
 

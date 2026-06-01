@@ -6,7 +6,7 @@ from typing import List, Optional
 
 from langchain_core.output_parsers import CommaSeparatedListOutputParser
 from langchain_core.prompts import PromptTemplate
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 
 from ..prompts import TEMPLATE_SEARCH_INTERNET
 from ..utils.research_web import search_on_web
