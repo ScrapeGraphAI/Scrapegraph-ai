@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.2...v2.1.3) (2026-06-02)
+
+
+### Bug Fixes
+
+* **search:** restore SearchGraph by migrating DuckDuckGo backend to ddgs ([#1083](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1083)) ([2139e37](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2139e37c0addfb9039e3b985bb33801f20e4e05b)), closes [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082) [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082)
+
 ## [2.2.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2026-06-01)
 
 
