@@ -2,6 +2,7 @@
 This module contains the model definitions used in the ScrapeGraphAI application.
 """
 
+from .atlascloud import AtlasCloud
 from .clod import CLoD
 from .deepseek import DeepSeek
 from .minimax import MiniMax
@@ -11,4 +12,14 @@ from .openai_itt import OpenAIImageToText
 from .openai_tts import OpenAITextToSpeech
 from .xai import XAI
 
-__all__ = ["DeepSeek", "MiniMax", "OneApi", "OpenAIImageToText", "OpenAITextToSpeech", "CLoD", "XAI", "Nvidia"]
+__all__ = [
+    "AtlasCloud",
+    "DeepSeek",
+    "MiniMax",
+    "OneApi",
+    "OpenAIImageToText",
+    "OpenAITextToSpeech",
+    "CLoD",
+    "XAI",
+    "Nvidia",
+]

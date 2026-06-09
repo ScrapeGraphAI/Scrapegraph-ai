@@ -13,7 +13,7 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
+from ..models import AtlasCloud, XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
 from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
 logger = get_logger(__name__)
@@ -168,6 +168,7 @@ class AbstractGraph(ABC):
             "deepseek",
             "ernie",
             "fireworks",
+            "atlascloud",
             "clod",
             "togetherai",
             "xai",
@@ -220,6 +221,7 @@ class AbstractGraph(ABC):
                 self.model_token = 8192
         else:
             self.model_token = llm_params["model_tokens"]
+        llm_params.pop("model_tokens", None)
 
         try:
             if llm_params["model_provider"] not in {
@@ -227,6 +229,7 @@ class AbstractGraph(ABC):
                 "nvidia",
                 "ernie",
                 "deepseek",
+                "atlascloud",
                 "togetherai",
                 "clod",
                 "xai",
@@ -247,6 +250,9 @@ class AbstractGraph(ABC):
 
                 if model_provider == "deepseek":
                     return DeepSeek(**llm_params)
+
+                if model_provider == "atlascloud":
+                    return AtlasCloud(**llm_params)
 
                 if model_provider == "minimax":
                     return MiniMax(**llm_params)

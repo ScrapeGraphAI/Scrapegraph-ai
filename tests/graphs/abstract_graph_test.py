@@ -6,7 +6,7 @@ from langchain_ollama import ChatOllama
 from langchain_openai import AzureChatOpenAI, ChatOpenAI
 
 from scrapegraphai.graphs import AbstractGraph, BaseGraph
-from scrapegraphai.models import DeepSeek, OneApi
+from scrapegraphai.models import AtlasCloud, DeepSeek, OneApi
 from scrapegraphai.nodes import FetchNode, ParseNode
 
 """
@@ -137,6 +137,14 @@ class TestAbstractGraph:
             ),
             (
                 {
+                    "model": "atlascloud/deepseek-ai/deepseek-v4-pro",
+                    "api_key": "atlascloud-api-key",
+                    "model_tokens": 131072,
+                },
+                AtlasCloud,
+            ),
+            (
+                {
                     "model": "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
                     "region_name": "IDK",
                     "temperature": 0.7,
@@ -193,6 +201,15 @@ class TestAbstractGraph:
                     "rate_limit": {"requests_per_second": 1},
                 },
                 DeepSeek,
+            ),
+            (
+                {
+                    "model": "atlascloud/deepseek-ai/deepseek-v4-pro",
+                    "api_key": "atlascloud-api-key",
+                    "model_tokens": 131072,
+                    "rate_limit": {"requests_per_second": 1},
+                },
+                AtlasCloud,
             ),
             (
                 {
