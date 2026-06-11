@@ -1,3 +1,10 @@
+## [2.2.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.3...v2.2.0-beta.4) (2026-06-11)
+
+
+### Bug Fixes
+
+* **nodes:** tolerate doubled-brace JSON output from models like DeepSeek ([#1085](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1085)) ([aaa5d2c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/aaa5d2cf6d2657f8e8a3b9020ab8b40cdb311c46))
+
 ## [2.2.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2026-06-01)
 
 
