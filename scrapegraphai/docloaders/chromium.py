@@ -206,7 +206,7 @@ class ChromiumLoader(BaseLoader):
         # https://www.steelwood.amsterdam/. The site deos not scroll to the bottom.
         # In my browser I can scroll vertically but in Chromium it scrolls horizontally?!?
 
-        if timeout and timeout <= 0:
+        if timeout is not None and timeout <= 0:
             raise ValueError(
                 "If set, timeout value for scrolling scraper must be greater than 0."
             )
