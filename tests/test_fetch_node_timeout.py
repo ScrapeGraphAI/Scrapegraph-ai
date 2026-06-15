@@ -146,15 +146,28 @@ class TestFetchNodeTimeout(unittest.TestCase):
 
     def test_pdf_parsing_with_timeout(self):
         """Test that PDF parsing completes within timeout."""
-        node = self.FetchNode(
-            input="pdf",
-            output=["doc"],
-            node_config={"timeout": 5}
-        )
 
-        # Execute with a PDF file
-        state = {"pdf": "test.pdf"}
-        result = node.execute(state)
+        # FetchNode binds PyPDFLoader at import time, so patch it directly on the
+        # module (the sys.modules mock in setUp does not affect the already-imported
+        # name). Use a fast mock loader that returns a document.
+        class FastPyPDFLoader:
+            def __init__(self, source):
+                self.source = source
+
+            def load(self):
+                time.sleep(0.1)  # Simulate some work
+                return [Mock(page_content=f"PDF content from {self.source}")]
+
+        with patch('scrapegraphai.nodes.fetch_node.PyPDFLoader', FastPyPDFLoader):
+            node = self.FetchNode(
+                input="pdf",
+                output=["doc"],
+                node_config={"timeout": 5}
+            )
+
+            # Execute with a PDF file
+            state = {"pdf": "test.pdf"}
+            result = node.execute(state)
 
         # Should complete successfully
         self.assertIn("doc", result)

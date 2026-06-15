@@ -192,20 +192,24 @@ def parse_or_search_proxy(proxy: Proxy) -> ProxySettings:
     """
     Parses a proxy configuration or searches for a matching one via broker.
     """
-    assert "server" in proxy, "Missing 'server' field in the proxy configuration."
+    assert "server" in proxy, "missing server in the proxy configuration"
 
-    parsed_url = urlparse(proxy["server"])
-    server_address = parsed_url.hostname
+    server = proxy["server"]
 
-    if server_address is None:
-        raise ValueError(f"Invalid proxy server format: {proxy['server']}")
+    # the special keyword "broker" triggers a proxy search via the broker
+    if server == "broker":
+        return _search_proxy(proxy)
 
-    # Accept both IP addresses and domain names like 'gate.nodemaven.com'
-    if is_ipv4_address(server_address) or re.match(
-        r"^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", server_address
+    # normalise the server so urlparse can extract the hostname even when no
+    # scheme is present (e.g. "192.168.1.1:8080" or "gate.nodemaven.com:8080")
+    to_parse = server if "://" in server else f"//{server}"
+    server_address = urlparse(to_parse).hostname
+
+    # accept both IPv4 addresses and domain names like 'gate.nodemaven.com'
+    if server_address is not None and (
+        is_ipv4_address(server_address)
+        or re.match(r"^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", server_address)
     ):
         return _parse_proxy(proxy)
 
-    assert proxy["server"] == "broker", f"Unknown proxy server type: {proxy['server']}"
-
-    return _search_proxy(proxy)
+    assert False, f"unknown proxy server: {server}"

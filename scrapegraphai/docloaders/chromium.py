@@ -10,6 +10,11 @@ from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
 
 logger = get_logger("web-loader")
 
+try:
+    from undetected_playwright import Malenia
+except ImportError:
+    Malenia = None
+
 
 class ChromiumLoader(BaseLoader):
     """Scrapes HTML pages from URLs using a (headless) instance of the
@@ -75,6 +80,8 @@ class ChromiumLoader(BaseLoader):
 
     async def scrape(self, url: str) -> str:
         if self.backend == "playwright":
+            if self.requires_js_support:
+                return await self.ascrape_with_js_support(url)
             return await self.ascrape_playwright(url)
         elif self.backend == "selenium":
             try:
@@ -224,7 +231,6 @@ class ChromiumLoader(BaseLoader):
         import time
 
         from playwright.async_api import async_playwright
-        from undetected_playwright import Malenia
 
         logger.info(f"Starting scraping with scrolling support for {url}...")
 
@@ -335,16 +341,15 @@ class ChromiumLoader(BaseLoader):
             ValueError: When an invalid browser name is provided
         """
         from playwright.async_api import async_playwright
-        from undetected_playwright import Malenia
 
         logger.info(f"Starting scraping with {self.backend}...")
         results = ""
         attempt = 0
 
         while attempt < self.retry_limit:
+            browser = None
             try:
                 async with async_playwright() as p, async_timeout.timeout(self.timeout):
-                    browser = None
                     if browser_name == "chromium":
                         browser = await p.chromium.launch(
                             headless=self.headless,
@@ -369,7 +374,6 @@ class ChromiumLoader(BaseLoader):
                     await page.wait_for_load_state(self.load_state)
                     results = await page.content()
                     logger.info("Content scraped")
-                    await browser.close()
                     return results
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
@@ -378,6 +382,9 @@ class ChromiumLoader(BaseLoader):
                     raise RuntimeError(
                         f"Failed to scrape after {self.retry_limit} attempts: {str(e)}"
                     )
+            finally:
+                if browser is not None:
+                    await browser.close()
 
     async def ascrape_with_js_support(
         self, url: str, browser_name: str = "chromium"
@@ -396,6 +403,9 @@ class ChromiumLoader(BaseLoader):
             ValueError: When an invalid browser name is provided
         """
         from playwright.async_api import async_playwright
+
+        if browser_name not in ("chromium", "firefox"):
+            raise ValueError(f"Invalid browser name: {browser_name}")
 
         logger.info(f"Starting scraping with JavaScript support for {url}...")
         attempt = 0
@@ -436,6 +446,14 @@ class ChromiumLoader(BaseLoader):
             finally:
                 await browser.close()
 
+    def _get_scraping_fn(self):
+        """Resolve the coroutine used to scrape a single URL for this backend."""
+        if self.requires_js_support:
+            return self.ascrape_with_js_support
+        if self.backend == "selenium":
+            return self.ascrape_undetected_chromedriver
+        return getattr(self, f"ascrape_{self.backend}")
+
     def lazy_load(self) -> Iterator[Document]:
         """
         Lazily load text content from the provided URLs.
@@ -446,11 +464,7 @@ class ChromiumLoader(BaseLoader):
         Yields:
             Document: The scraped content encapsulated within a Document object.
         """
-        scraping_fn = (
-            self.ascrape_with_js_support
-            if self.requires_js_support
-            else getattr(self, f"ascrape_{self.backend}")
-        )
+        scraping_fn = self._get_scraping_fn()
 
         for url in self.urls:
             html_content = asyncio.run(scraping_fn(url))
@@ -470,11 +484,7 @@ class ChromiumLoader(BaseLoader):
             Document: A Document object containing the scraped content, along with its
             source URL as metadata.
         """
-        scraping_fn = (
-            self.ascrape_with_js_support
-            if self.requires_js_support
-            else getattr(self, f"ascrape_{self.backend}")
-        )
+        scraping_fn = self._get_scraping_fn()
 
         tasks = [scraping_fn(url) for url in self.urls]
         results = await asyncio.gather(*tasks)

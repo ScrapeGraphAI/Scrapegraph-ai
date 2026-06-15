@@ -31,6 +31,7 @@ dependencies = [
     "simpleeval>=1.0.3",
     "jsonschema>=4.25.1",
     "duckduckgo-search>=8.1.1",
+    "ddgs>=9.0.0",
     "pydantic>=2.12.5",
     "scrapegraph-py>=2.0.0",
 ]
@@ -96,6 +97,8 @@ dev-dependencies = [
     "pre-commit>=3.6.0",
     "mypy>=1.8.0",
     "types-setuptools>=75.1.0",
+    "selenium>=4.0.0",
+    "pandas>=2.0.0",
 ]
 
 [tool.black]

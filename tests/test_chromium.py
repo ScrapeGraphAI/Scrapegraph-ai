@@ -19,11 +19,15 @@ class MockPlaywright:
 class MockBrowser:
     def __init__(self):
         self.new_context = AsyncMock()
+        self.close = AsyncMock()
 
 
 class MockContext:
     def __init__(self):
         self.new_page = AsyncMock()
+        # Real Playwright BrowserContext exposes add_init_script, which
+        # undetected_playwright's Malenia.apply_stealth relies on.
+        self.add_init_script = AsyncMock()
 
 
 class MockPage:
@@ -91,8 +95,13 @@ async def test_alazy_load(loader_with_dummy):
 
 
 @pytest.mark.asyncio
-async def test_scrape_method_unsupported_backend():
+async def test_scrape_method_unsupported_backend(monkeypatch):
     """Test that the scrape method raises a ValueError when an unsupported backend is provided."""
+    # Bypass the backend dependency import so we can construct the loader with an
+    # unsupported backend and exercise scrape()'s dispatch logic.
+    monkeypatch.setattr(
+        "scrapegraphai.docloaders.chromium.dynamic_import", lambda *a, **k: None
+    )
     loader = ChromiumLoader(["http://example.com"], backend="unsupported")
     with pytest.raises(ValueError):
         await loader.scrape("http://example.com")
@@ -121,19 +130,22 @@ async def test_ascrape_playwright_scroll(mock_playwright):
     url = "http://example.com"
     loader = ChromiumLoader([url], backend="playwright")
 
-    # Test with default parameters
-    mock_page.evaluate.side_effect = [1000, 2000, 2000]  # Simulate scrolling
-    await loader.ascrape_playwright_scroll(url)
+    # Test with default parameters.
+    # With scroll_to_bottom=False the loop stops once the page height has not
+    # changed for the last 5 scrolls, so feed a sequence that stabilises.
+    mock_page.evaluate.side_effect = [1000, 2000, 2000, 2000, 2000, 2000]
+    await loader.ascrape_playwright_scroll(url, sleep=0.01)
 
     assert mock_page.goto.call_count == 1
     assert mock_page.wait_for_load_state.call_count == 1
     assert mock_page.mouse.wheel.call_count > 0
     assert mock_page.content.call_count == 1
 
-    # Test with custom parameters
+    # Test with custom parameters and scroll_to_bottom=True, which stops as soon
+    # as two consecutive scrolls report the same height.
     mock_page.evaluate.side_effect = [1000, 2000, 3000, 4000, 4000]
     await loader.ascrape_playwright_scroll(
-        url, timeout=10, scroll=10000, sleep=1, scroll_to_bottom=True
+        url, timeout=10, scroll=10000, sleep=0.01, scroll_to_bottom=True
     )
 
     assert mock_page.goto.call_count == 2
@@ -302,6 +314,9 @@ async def test_ascrape_undetected_chromedriver_success(monkeypatch):
             self.options = options
             self.page_source = "<html>selenium content</html>"
 
+        def get(self, url):
+            return
+
         def quit(self):
             pass
 
@@ -315,8 +330,7 @@ async def test_ascrape_undetected_chromedriver_success(monkeypatch):
     assert "selenium content" in result
 
 
-@pytest.mark.asyncio
-async def test_lazy_load_exception(loader_with_dummy, monkeypatch):
+def test_lazy_load_exception(loader_with_dummy, monkeypatch):
     """Test that lazy_load propagates exception if the scraping function fails."""
 
     async def dummy_failure(url):
@@ -424,7 +438,7 @@ async def test_init_overrides():
         urls,
         backend="playwright",
         headless=False,
-        proxy={"http": "http://proxy"},
+        proxy={"server": "proxy.example.com:8080"},
         load_state="load",
         requires_js_support=True,
         storage_state="state",
@@ -435,7 +449,8 @@ async def test_init_overrides():
     )
     # Check that attributes are correctly set
     assert loader.headless is False
-    assert loader.proxy == {"http": "http://proxy"}
+    # The proxy is normalised through parse_or_search_proxy.
+    assert loader.proxy == {"server": "proxy.example.com:8080"}
     assert loader.load_state == "load"
     assert loader.requires_js_support is True
     assert loader.storage_state == "state"
@@ -448,8 +463,7 @@ async def test_init_overrides():
     assert loader.backend == "playwright"
 
 
-@pytest.mark.asyncio
-async def test_lazy_load_with_js_support(monkeypatch):
+def test_lazy_load_with_js_support(monkeypatch):
     """Test that lazy_load uses ascrape_with_js_support when requires_js_support is True."""
     urls = ["http://example.com", "http://test.com"]
     loader = ChromiumLoader(urls, backend="playwright", requires_js_support=True)
@@ -472,13 +486,9 @@ async def test_no_retry_returns_none(monkeypatch):
     urls = ["http://example.com"]
     loader = ChromiumLoader(urls, backend="playwright", retry_limit=0)
 
-    # Even if we patch ascrape_playwright, the while loop won't run since retry_limit is 0, so it should return None.
-    async def dummy(url, browser_name="chromium"):
-        return f"<html>Content for {url}</html>"
-
-    monkeypatch.setattr(loader, "ascrape_playwright", dummy)
+    # With retry_limit=0 the retry loop in the real ascrape_playwright never
+    # executes, so it falls through and returns None without launching a browser.
     result = await loader.ascrape_playwright("http://example.com")
-    # With retry_limit=0, the loop never runs and the function returns None.
     assert result is None
 
 
@@ -816,6 +826,9 @@ async def test_ascrape_playwright_browser_config(monkeypatch):
             return "<html>Config Tested</html>"
 
     class DummyContext:
+        async def add_init_script(self, script):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1020,10 +1033,13 @@ async def test_ascrape_with_js_support_calls_close(monkeypatch):
     assert close_called_flag["called"] is True
 
 
-@pytest.mark.asyncio
-async def test_lazy_load_invalid_backend(monkeypatch):
+def test_lazy_load_invalid_backend(monkeypatch):
     """Test that lazy_load raises AttributeError if the scraping method for an invalid backend is missing."""
-    # Create a loader instance with a backend that does not have a corresponding scraping method.
+    # Bypass the backend dependency import so we can construct the loader with a
+    # backend that has no corresponding ascrape_* method.
+    monkeypatch.setattr(
+        "scrapegraphai.docloaders.chromium.dynamic_import", lambda *a, **k: None
+    )
     loader = ChromiumLoader(["http://example.com"], backend="nonexistent")
     with pytest.raises(AttributeError):
         # lazy_load calls asyncio.run(scraping_fn(url)) for each URL.
@@ -1101,9 +1117,14 @@ def test_lazy_load_empty_content(monkeypatch):
         assert doc.metadata["source"] in urls
 
 
-@pytest.mark.asyncio
-async def test_lazy_load_scraper_returns_none(monkeypatch):
-    """Test that lazy_load yields Document objects with page_content as None when the scraper returns None."""
+def test_lazy_load_scraper_returns_none(monkeypatch):
+    """Test that lazy_load surfaces a validation error when the scraper returns None.
+
+    langchain's Document requires page_content to be a string, so a None result
+    from the scraper must raise instead of silently producing an invalid Document.
+    """
+    from pydantic import ValidationError
+
     urls = ["http://example.com", "http://test.com"]
     loader = ChromiumLoader(urls, backend="playwright")
 
@@ -1111,19 +1132,20 @@ async def test_lazy_load_scraper_returns_none(monkeypatch):
         return None
 
     monkeypatch.setattr(loader, "ascrape_playwright", dummy_none)
-    docs = list(loader.lazy_load())
-    assert len(docs) == 2
-    for doc, url in zip(docs, urls):
-        from langchain_core.documents import Document
-
-        assert isinstance(doc, Document)
-        assert doc.page_content is None
-        assert doc.metadata["source"] == url
+    with pytest.raises(ValidationError):
+        list(loader.lazy_load())
 
 
 @pytest.mark.asyncio
 async def test_alazy_load_mixed_none_and_content(monkeypatch):
-    """Test that alazy_load yields Document objects in order when one scraper returns None and the other valid HTML."""
+    """Test that alazy_load yields valid Documents in order and raises on a None result.
+
+    The first URL produces valid HTML and yields a Document, while the second
+    returns None which cannot be wrapped in a Document (page_content must be a
+    string), so iterating to the second item raises a validation error.
+    """
+    from pydantic import ValidationError
+
     urls = ["http://example.com", "http://none.com"]
     loader = ChromiumLoader(urls, backend="playwright")
 
@@ -1133,13 +1155,16 @@ async def test_alazy_load_mixed_none_and_content(monkeypatch):
         return f"<html>Valid content for {url}</html>"
 
     monkeypatch.setattr(loader, "ascrape_playwright", mixed_scraper)
-    docs = [doc async for doc in loader.alazy_load()]
-    assert len(docs) == 2
-    # Ensure order is preserved and check contents
+
+    docs = []
+    with pytest.raises(ValidationError):
+        async for doc in loader.alazy_load():
+            docs.append(doc)
+
+    # The first (valid) document was yielded in order before the None failed.
+    assert len(docs) == 1
     assert docs[0].metadata["source"] == "http://example.com"
     assert "<html>Valid content for http://example.com</html>" in docs[0].page_content
-    assert docs[1].metadata["source"] == "http://none.com"
-    assert docs[1].page_content is None
 
 
 @pytest.mark.asyncio
@@ -1459,9 +1484,14 @@ async def test_ascrape_playwright_calls_apply_stealth(monkeypatch):
     assert "Stealth Applied Content" in result
 
 
-@pytest.mark.asyncio
-async def test_lazy_load_non_string_scraper(monkeypatch):
-    """Test that lazy_load yields Document objects even if the scraping function returns a non‐string value."""
+def test_lazy_load_non_string_scraper(monkeypatch):
+    """Test that lazy_load raises when the scraping function returns a non‐string value.
+
+    Document.page_content must be a string, so a non-string scraper result must
+    surface a validation error rather than producing an invalid Document.
+    """
+    from pydantic import ValidationError
+
     urls = ["http://example.com"]
     loader = ChromiumLoader(urls, backend="playwright", requires_js_support=False)
 
@@ -1470,20 +1500,19 @@ async def test_lazy_load_non_string_scraper(monkeypatch):
         return 12345
 
     monkeypatch.setattr(loader, "ascrape_playwright", dummy_non_string)
-    docs = list(loader.lazy_load())
-    # Check that we get one Document and its page_content is the non‐string value returned by the scraper
-    from langchain_core.documents import Document
-
-    assert len(docs) == 1
-    for doc in docs:
-        assert isinstance(doc, Document)
-        assert doc.page_content == 12345
-        assert doc.metadata["source"] in urls
+    with pytest.raises(ValidationError):
+        list(loader.lazy_load())
 
 
 @pytest.mark.asyncio
 async def test_alazy_load_non_string_scraper(monkeypatch):
-    """Test that alazy_load yields Document objects with a non‐string page_content when the JS scraping function returns a non‐string value."""
+    """Test that alazy_load raises when the JS scraping function returns a non‐string value.
+
+    Document.page_content must be a string, so a non-string scraper result must
+    surface a validation error rather than producing an invalid Document.
+    """
+    from pydantic import ValidationError
+
     urls = ["http://nonstring.com"]
     # Instantiate loader with requires_js_support True so that alazy_load calls ascrape_with_js_support
     loader = ChromiumLoader(urls, backend="playwright", requires_js_support=True)
@@ -1493,13 +1522,8 @@ async def test_alazy_load_non_string_scraper(monkeypatch):
         return 54321
 
     monkeypatch.setattr(loader, "ascrape_with_js_support", dummy_non_string)
-    docs = [doc async for doc in loader.alazy_load()]
-    from langchain_core.documents import Document
-
-    assert len(docs) == 1
-    assert isinstance(docs[0], Document)
-    assert docs[0].page_content == 54321
-    assert docs[0].metadata["source"] == "http://nonstring.com"
+    with pytest.raises(ValidationError):
+        [doc async for doc in loader.alazy_load()]
 
 
 @pytest.mark.asyncio
@@ -1780,8 +1804,9 @@ async def test_ascrape_playwright_scroll_scroll_to_bottom_false(
     with a short timeout the function should break and return the page content.
     """
     mock_pw, mock_browser, mock_context, mock_page = mock_playwright
-    # simulate a sequence of scroll heights: first increases then remains constant
-    mock_page.evaluate.side_effect = [1000, 1500, 1500, 1500, 1500]
+    # simulate a sequence of scroll heights: first increases then remains constant.
+    # With scroll_to_bottom=False the loop stops once the last 5 heights are equal.
+    mock_page.evaluate.return_value = 1500
     mock_page.content.return_value = (
         "<html>Timeout reached without scrolling bottom</html>"
     )
@@ -1905,15 +1930,56 @@ async def test_alazy_load_concurrency(monkeypatch):
 async def test_scrape_playwright_value_error_retry_failure(monkeypatch):
     """Test that ascrape_playwright retries on ValueError and ultimately raises RuntimeError after exhausting retries."""
 
-    async def always_value_error(url, browser_name="chromium"):
-        raise ValueError("Forced value error")
+    # Drive the real ascrape_playwright retry loop with a navigation that always
+    # raises ValueError, so after exhausting retries it raises RuntimeError.
+    class DummyPage:
+        async def goto(self, url, wait_until):
+            raise ValueError("Forced value error")
+
+        async def wait_for_load_state(self, state):
+            return
+
+        async def content(self):
+            return "<html>Should not reach here</html>"
+
+    class DummyContext:
+        async def add_init_script(self, script):
+            return
+
+        async def new_page(self):
+            return DummyPage()
+
+    class DummyBrowser:
+        async def new_context(self, **kwargs):
+            return DummyContext()
+
+        async def close(self):
+            return
+
+    class DummyPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return DummyBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: DummyPW())
 
     urls = ["http://example.com"]
     # requires_js_support is False so that scraper calls ascrape_playwright.
     loader = ChromiumLoader(
         urls, backend="playwright", requires_js_support=False, retry_limit=2, timeout=1
     )
-    monkeypatch.setattr(loader, "ascrape_playwright", always_value_error)
     with pytest.raises(RuntimeError, match="Failed to scrape after 2 attempts"):
         await loader.scrape("http://example.com")
 
@@ -1994,8 +2060,10 @@ async def test_alazy_load_non_iterable_urls():
 
 def test_lazy_load_non_iterable_urls():
     """Test that lazy_load raises TypeError when urls is not an iterable (e.g., integer)."""
+    loader = ChromiumLoader(456, backend="playwright")
     with pytest.raises(TypeError):
-        ChromiumLoader(456, backend="playwright")
+        # Iterating over an integer during lazy_load raises TypeError.
+        list(loader.lazy_load())
 
 
 @pytest.mark.asyncio
@@ -2010,13 +2078,53 @@ async def test_ascrape_playwright_caplog(monkeypatch, caplog):
     )
     attempt = {"count": 0}
 
-    async def dummy_ascrape(url, browser_name="chromium"):
-        if attempt["count"] < 1:
-            attempt["count"] += 1
-            raise asyncio.TimeoutError("Simulated Timeout")
-        return "Recovered Content"
+    # Drive the real ascrape_playwright retry loop: fail the first navigation
+    # with a timeout and succeed on the second attempt.
+    class RetryPage:
+        async def goto(self, url, wait_until):
+            if attempt["count"] < 1:
+                attempt["count"] += 1
+                raise asyncio.TimeoutError("Simulated Timeout")
+            return
 
-    monkeypatch.setattr(loader, "ascrape_playwright", dummy_ascrape)
+        async def wait_for_load_state(self, state):
+            return
+
+        async def content(self):
+            return "Recovered Content"
+
+    class RetryContext:
+        async def add_init_script(self, script):
+            return
+
+        async def new_page(self):
+            return RetryPage()
+
+    class RetryBrowser:
+        async def new_context(self, **kwargs):
+            return RetryContext()
+
+        async def close(self):
+            return
+
+    class RetryPW:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return
+
+        class chromium:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return RetryBrowser()
+
+        class firefox:
+            @staticmethod
+            async def launch(headless, proxy, **kwargs):
+                return RetryBrowser()
+
+    monkeypatch.setattr("playwright.async_api.async_playwright", lambda: RetryPW())
     with caplog.at_level("ERROR"):
         result = await loader.ascrape_playwright("http://example.com")
     assert "Recovered Content" in result
@@ -2038,6 +2146,9 @@ async def test_ascrape_playwright_caplog(monkeypatch, caplog):
     class DummyContext:
         def __init__(self):
             self.new_page_called = False
+
+        async def add_init_script(self, script):
+            return
 
         async def new_page(self):
             self.new_page_called = True

@@ -60,15 +60,17 @@ def test_srcfile_import_missing_spec_loader(mocker):
 
 
 def test_dynamic_import_success():
-    print(sys.modules)
-    modname = "playwright"
+    # Pick a stdlib module that is guaranteed importable but not yet imported
+    # in this session, so the test stays robust regardless of what other tests
+    # have already pulled into sys.modules.
+    candidates = ["wave", "sunau", "chunk", "colorsys", "cProfile", "this"]
+    modname = next((m for m in candidates if m not in sys.modules), None)
+    assert modname is not None, "no unimported candidate module available"
     assert modname not in sys.modules
 
     dynamic_import(modname)
 
     assert modname in sys.modules
-
-    import playwright  # noqa: F401
 
 
 def test_dynamic_import_module_already_imported():

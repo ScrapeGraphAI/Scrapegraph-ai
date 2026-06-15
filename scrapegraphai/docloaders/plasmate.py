@@ -17,6 +17,7 @@ from typing import AsyncIterator, Iterator, List, Optional
 from langchain_community.document_loaders.base import BaseLoader
 from langchain_core.documents import Document
 
+from .chromium import ChromiumLoader
 from ..utils import get_logger
 
 logger = get_logger("plasmate-loader")
@@ -147,8 +148,6 @@ class PlasmateLoader(BaseLoader):
 
     def _fallback_fetch(self, url: str) -> str:
         """Fall back to ChromiumLoader when Plasmate returns empty content."""
-        from .chromium import ChromiumLoader
-
         logger.info(f"[PlasmateLoader] Falling back to ChromiumLoader for: {url}")
         loader = ChromiumLoader([url], **self.chrome_kwargs)
         docs = loader.load()

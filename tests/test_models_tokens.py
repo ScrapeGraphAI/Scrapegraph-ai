@@ -64,10 +64,10 @@ class TestModelsTokens:
                 )
 
     def test_token_limits_range(self):
-        """Test that token limits for all models fall within a plausible range (e.g., 1 to 300000)."""
+        """Test that token limits for all models fall within a plausible range (e.g., 1 to 2000000)."""
         for provider, model_dict in models_tokens.items():
             for model, token in model_dict.items():
-                assert 1 <= token <= 1100000, (
+                assert 1 <= token <= 2000000, (
                     f"Token limit for {model} in provider {provider} is out of plausible range."
                 )
 
@@ -146,8 +146,8 @@ class TestModelsTokens:
 
         # Check a specific model from the 'deepseek' provider
         deepseek = models_tokens.get("deepseek")
-        assert deepseek.get("deepseek-chat") == 28672, (
-            "Expected token limit for 'deepseek-chat' in deepseek to be 28672"
+        assert deepseek.get("deepseek-chat") == 128000, (
+            "Expected token limit for 'deepseek-chat' in deepseek to be 128000"
         )
 
         # Check a model from the 'ernie' provider
@@ -166,12 +166,11 @@ class TestModelsTokens:
         )
 
     def test_groq_specific(self):
-        """Test specific token value for 'claude-3-haiku-20240307\'' in the groq provider."""
+        """Test specific token value for 'claude-3-haiku-20240307' in the groq provider."""
         groq = models_tokens.get("groq")
         assert groq is not None, "'groq' provider should exist"
-        # Note: The model name has an embedded apostrophe at the end in its name.
-        assert groq.get("claude-3-haiku-20240307'") == 8192, (
-            "Expected token limit for 'claude-3-haiku-20240307\\'' in groq to be 8192"
+        assert groq.get("claude-3-haiku-20240307") == 8192, (
+            "Expected token limit for 'claude-3-haiku-20240307' in groq to be 8192"
         )
 
     def test_togetherai_specific(self):

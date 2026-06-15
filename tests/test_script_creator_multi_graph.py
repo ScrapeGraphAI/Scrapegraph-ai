@@ -157,7 +157,8 @@ class TestScriptCreatorMultiGraph:
         instance.llm_model = {"model": "openai/test-model"}
         instance.schema = {"type": "dummy"}
         graph = instance._create_graph()
-        assert graph.entry_point == graph.nodes[0]
+        # BaseGraph stores the entry point as the node's name (a string).
+        assert graph.entry_point == graph.nodes[0].node_name
 
     def test_run_exception(self):
         """Test that run() propagates exceptions raised by graph.execute."""
