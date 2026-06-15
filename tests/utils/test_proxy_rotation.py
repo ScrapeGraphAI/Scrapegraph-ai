@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 from fp.errors import FreeProxyException
 
@@ -92,8 +94,16 @@ def test_parse_or_search_proxy_success():
         },
     }
 
-    found_proxy = parse_or_search_proxy(proxy_broker)
+    # The "broker" keyword routes to the proxy-broker search. Mock the underlying
+    # network lookup so the routing is verified deterministically without
+    # depending on a live free-proxy service.
+    with patch(
+        "scrapegraphai.utils.proxy_rotation.search_proxy_servers",
+        return_value=["http://103.10.63.135:8080"],
+    ) as mock_search:
+        found_proxy = parse_or_search_proxy(proxy_broker)
 
+    mock_search.assert_called_once()
     assert isinstance(found_proxy, dict)
     assert "server" in found_proxy
 

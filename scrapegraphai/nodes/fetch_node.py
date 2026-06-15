@@ -70,8 +70,8 @@ class FetchNode(BaseNode):
         )
 
         # Timeout in seconds for blocking operations (HTTP requests, PDF parsing, etc.).
-        # If set to None, no timeout will be applied.
-        self.timeout = None if node_config is None else node_config.get("timeout", 30)
+        # Defaults to 30 seconds. If explicitly set to None, no timeout will be applied.
+        self.timeout = 30 if node_config is None else node_config.get("timeout", 30)
 
         self.cut = False if node_config is None else node_config.get("cut", True)
 
@@ -119,7 +119,9 @@ class FetchNode(BaseNode):
 
         if input_type in handlers:
             return handlers[input_type](state, input_type, source)
-        elif input_type == "local_dir":
+        elif input_type in ("local_dir", "txt"):
+            # `txt` carries raw text/HTML content (not a path), handled the same
+            # way as a local source.
             return self.handle_local_source(state, source)
         elif input_type == "url":
             return self.handle_web_source(state, source)
@@ -291,6 +293,10 @@ class FetchNode(BaseNode):
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
 
+                # Default the parsed content to the raw response text so it is always
+                # defined, regardless of which optional processing branches run below.
+                parsed_content = response.text
+
                 if not self.cut:
                     parsed_content = cleanup_html(response, source)
 
@@ -400,7 +406,8 @@ class FetchNode(BaseNode):
             compressed_document = [
                 Document(page_content=parsed_content, metadata={"source": "html file"})
             ]
-        state["doc"] = document
+            # `document` is only produced by the loader-based (non-soup) path.
+            state["doc"] = document
         state.update(
             {
                 self.output[0]: compressed_document,

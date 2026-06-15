@@ -221,6 +221,9 @@ def search_on_web(
             res = research.run(config.query)
             # Extract URLs using regex
             results = re.findall(r"https?://[^\s,\]]+", res)
+            # DuckDuckGo treats max_results as a soft hint and may return more,
+            # so enforce the requested limit explicitly.
+            results = results[: config.max_results]
 
         elif config.search_engine == "bing":
             results = _search_bing(

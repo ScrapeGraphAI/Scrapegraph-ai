@@ -1,3 +1,6 @@
+from unittest.mock import patch
+
+import pytest
 from pydantic import BaseModel
 
 # Import the class under test
@@ -21,6 +24,20 @@ class DummySchema(BaseModel):
 
 class TestOmniSearchGraph:
     """Test suite for the OmniSearchGraph module."""
+
+    @pytest.fixture(autouse=True)
+    def _mock_llm(self):
+        """Bypass real LLM creation since "dummy-model" is not a real model.
+
+        The tests override ``llm_model`` after construction, so the actual
+        return value here is irrelevant; we only need ``__init__`` to complete.
+        """
+        with patch.object(
+            OmniSearchGraph,
+            "_create_llm",
+            return_value={"model": "dummy-model"},
+        ):
+            yield
 
     def test_run_with_answer(self):
         """Test that the run() method returns the correct answer when present."""

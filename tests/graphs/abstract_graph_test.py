@@ -1,3 +1,4 @@
+import logging
 from unittest.mock import Mock, patch
 
 import pytest
@@ -14,8 +15,8 @@ Tests for the AbstractGraph.
 """
 
 
-def test_llm_missing_tokens(monkeypatch, capsys):
-    """Test that missing model tokens causes default to 8192 with an appropriate warning printed."""
+def test_llm_missing_tokens(monkeypatch, caplog):
+    """Test that missing model tokens defaults to 8192 with an appropriate warning logged."""
     # Patch out models_tokens to simulate missing tokens for the given model
     from scrapegraphai.graphs import abstract_graph
 
@@ -23,13 +24,16 @@ def test_llm_missing_tokens(monkeypatch, capsys):
         abstract_graph, "models_tokens", {"openai": {"gpt-3.5-turbo": 4096}}
     )
     llm_config = {"model": "openai/not-known-model", "openai_api_key": "test"}
+    # The library logger has propagate=False, so let records reach caplog's
+    # (root) handler for the duration of this test.
+    monkeypatch.setattr(logging.getLogger("scrapegraphai"), "propagate", True)
     # Patch _create_graph to return a dummy graph to avoid real graph creation
-    with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
-        graph = TestGraph("Test prompt", {"llm": llm_config})
+    with caplog.at_level(logging.WARNING, logger="scrapegraphai.graphs.abstract_graph"):
+        with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
+            graph = TestGraph("Test prompt", {"llm": llm_config})
     # Since "not-known-model" is missing, it should default to 8192
     assert graph.model_token == 8192
-    captured = capsys.readouterr().out
-    assert "Max input tokens for model" in captured
+    assert "Max input tokens for model" in caplog.text
 
 
 def test_burr_kwargs():

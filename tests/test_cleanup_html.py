@@ -49,7 +49,10 @@ def test_cleanup_html_success():
         html, base_url
     )
     assert title == "Test Title"
-    assert "<body>" in minimized_body and "</body>" in minimized_body
+    # minify-html keeps the opening <body> tag and the body content, but drops
+    # the optional closing </body> tag; assert the tag and its content survive.
+    assert "<body>" in minimized_body
+    assert "Hello World!" in minimized_body
     # Check the link is properly joined
     assert "http://example.com/page" in link_urls
     # Check the image is properly joined
@@ -133,8 +136,8 @@ def test_reduce_html_reduction_2():
     # For level 2, text should be truncated to the first 20 characters after normalization.
     # The original text "Long text with more than twenty characters. Extra content."
     # normalized becomes "Long text with more than twenty characters. Extra content."
-    # and then truncated to: "Long text with more t" (first 20 characters)
-    assert "Long text with more t" in reduced
+    # and then truncated to: "Long text with more " (first 20 characters)
+    assert "Long text with more " in reduced
     # Confirm that style tags contents are completely removed
     assert ".unused" not in reduced
 

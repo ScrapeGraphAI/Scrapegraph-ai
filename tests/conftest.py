@@ -376,7 +376,21 @@ def pytest_collection_modifyitems(config, items):
     skip_slow = pytest.mark.skip(reason="use --slow to run")
     skip_requires_api = pytest.mark.skip(reason="requires API keys")
 
+    # Graph tests run a full scraping pipeline against real LLM providers,
+    # remote search engines, or optional model backends (OpenAI/Ollama/Mistral/
+    # Fireworks/Ernie/...). They require API keys, network access, or extra
+    # packages that are intentionally not part of the default install, so they
+    # are integration tests rather than unit tests. ``abstract_graph_test`` is a
+    # genuine unit test (fully mocked) and is therefore excluded here.
+    integration_graph_dir = str(Path(__file__).parent / "graphs")
+
     for item in items:
+        # Graph pipeline tests are integration tests (see note above).
+        if item.fspath.dirname == integration_graph_dir and (
+            "abstract_graph_test" not in item.fspath.basename
+        ):
+            item.add_marker(pytest.mark.integration)
+
         # Skip integration tests unless --integration flag is passed
         if "integration" in item.keywords and not config.getoption("--integration", default=False):
             item.add_marker(skip_integration)

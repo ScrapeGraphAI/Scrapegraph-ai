@@ -13,11 +13,11 @@ def setup():
     """
     # Define the configuration for the graph
     graph_config = {
-        "llm": {"model_name": "ollama/llama3", "temperature": 0, "streaming": True},
+        "llm": {"model": "llama3", "temperature": 0, "streaming": True},
     }
 
     # Instantiate the LLM model with the configuration
-    llm_model = ChatOllama(graph_config["llm"])
+    llm_model = ChatOllama(**graph_config["llm"])
 
     # Define the SearchLinkNode with necessary configurations
     search_link_node = SearchLinkNode(

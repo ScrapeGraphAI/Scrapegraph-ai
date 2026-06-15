@@ -1,6 +1,12 @@
+import os
+
 from langchain_core.documents import Document
 
 from scrapegraphai.nodes import FetchNode
+
+# Resolve fixture files relative to this test file so the tests do not depend
+# on the process working directory.
+INPUTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inputs")
 
 
 def test_fetch_html(mocker):
@@ -44,7 +50,7 @@ def test_fetch_json():
         input="json",
         output=["doc"],
     )
-    result = node.execute({"json": "inputs/example.json"})
+    result = node.execute({"json": os.path.join(INPUTS_DIR, "example.json")})
     assert result is not None
 
 
@@ -53,7 +59,7 @@ def test_fetch_xml():
         input="xml",
         output=["doc"],
     )
-    result = node.execute({"xml": "inputs/books.xml"})
+    result = node.execute({"xml": os.path.join(INPUTS_DIR, "books.xml")})
     assert result is not None
 
 
@@ -62,7 +68,7 @@ def test_fetch_csv():
         input="csv",
         output=["doc"],
     )
-    result = node.execute({"csv": "inputs/username.csv"})
+    result = node.execute({"csv": os.path.join(INPUTS_DIR, "username.csv")})
     assert result is not None
 
 
@@ -71,6 +77,6 @@ def test_fetch_txt():
         input="txt",
         output=["doc", "links", "images"],
     )
-    with open("inputs/plain_html_example.txt") as f:
+    with open(os.path.join(INPUTS_DIR, "plain_html_example.txt")) as f:
         result = node.execute({"txt": f.read()})
     assert result is not None

@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from langchain_community.chat_models import (
+from langchain_ollama import (
     ChatOllama,
 )
 from langchain_core.runnables import (
@@ -97,7 +97,7 @@ def test_execute_multiple_chunks(dummy_node_with_pipe):
                 "chunk1": {"content": "answer for chunk 1"},
                 "chunk2": {"content": "answer for chunk 2"},
             }
-        if "context" in inputs and "question" in inputs:
+        if "content" in inputs and "question" in inputs:
             return {"content": "merged final answer"}
         return {"content": "single answer"}
 
@@ -137,7 +137,7 @@ def test_execute_merge_json_decode_error(dummy_node_with_pipe):
                 "chunk1": {"content": "answer for chunk 1"},
                 "chunk2": {"content": "answer for chunk 2"},
             }
-        if "context" in inputs and "question" in inputs:
+        if "content" in inputs and "question" in inputs:
             raise json.JSONDecodeError("Invalid JSON", "", 0)
         return {"content": "unexpected response"}
 
@@ -250,11 +250,11 @@ def test_init_chat_ollama_format():
     """
     Test that the __init__ method of GenerateAnswerNode sets the format attribute of a ChatOllama LLM correctly.
     """
-    dummy_llm = DummyChatOllama()
+    dummy_llm = DummyChatOllama(model="llama2")
     node_config = {"llm_model": dummy_llm, "verbose": False, "timeout": 1}
     node = GenerateAnswerNode("dummy_input", ["output"], node_config=node_config)
     assert node.llm_model.format == "json"
-    dummy_llm_with_schema = DummyChatOllama()
+    dummy_llm_with_schema = DummyChatOllama(model="llama2")
     node_config_with_schema = {
         "llm_model": dummy_llm_with_schema,
         "verbose": False,
