@@ -137,13 +137,17 @@ class BurrBridge:
         hooks = [PrintLnHook()]
         burr_state = State(initial_state)
         application_context = ApplicationContext.get()
+
+        # Use app_instance_id from config if provided, otherwise generate a unique one
+        app_id = self.burr_config.get("app_instance_id", str(uuid.uuid4()))
+
         builder = (
             ApplicationBuilder()
             .with_actions(**actions)
             .with_transitions(*transitions)
             .with_entrypoint(self.base_graph.entry_point)
             .with_state(**burr_state)
-            .with_identifiers(app_id=str(uuid.uuid4()))  # TODO -- grab this from state
+            .with_identifiers(app_id=app_id)
             .with_hooks(*hooks)
         )
         if application_context is not None:
@@ -221,8 +225,14 @@ class BurrBridge:
 
         self.burr_app = self._initialize_burr_app(initial_state)
 
-        # TODO: to fix final nodes detection
-        final_nodes = [self.burr_app.graph.actions[-1].name]
+        # Detect final nodes: nodes that are not the source of any transition
+        node_names = {node.node_name for node in self.base_graph.nodes}
+        source_nodes = {edge[0] for edge in self.base_graph.edges}
+        final_nodes = list(node_names - source_nodes)
+
+        if not final_nodes:
+            # Fallback: use the last node in the graph
+            final_nodes = [self.base_graph.nodes[-1].node_name]
 
         last_action, result, final_state = self.burr_app.run(
             halt_after=final_nodes, inputs=self.burr_inputs

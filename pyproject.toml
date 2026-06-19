@@ -119,5 +119,5 @@ disallow_untyped_calls = true
 ignore_missing_imports = true
 
 [tool.poe.tasks]
-pylint-local = "pylint scraperaphai/**/*.py"
+pylint-local = "pylint scrapegraphai/**/*.py"
 pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"

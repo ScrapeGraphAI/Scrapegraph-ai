@@ -1,5 +1,5 @@
 """
-PromptRefinerNode Module
+ReasoningNode Module
 """
 
 from typing import List, Optional
@@ -15,8 +15,8 @@ from .base_node import BaseNode
 
 class ReasoningNode(BaseNode):
     """
-    A node that refine the user prompt with the use of the schema and additional context and
-    create a precise prompt in subsequent steps that explicitly link elements in the user's
+    A node that refines the user prompt with the use of the schema and additional context and
+    creates a precise prompt in subsequent steps that explicitly links elements in the user's
     original input to their corresponding representations in the JSON schema.
 
     Attributes:
@@ -27,7 +27,7 @@ class ReasoningNode(BaseNode):
         input (str): Boolean expression defining the input keys needed from the state.
         output (List[str]): List of output keys to be updated in the state.
         node_config (dict): Additional configuration for the node.
-        node_name (str): The unique identifier name for the node, defaulting to "GenerateAnswer".
+        node_name (str): The unique identifier name for the node, defaulting to "ReasoningNode".
     """
 
     def __init__(
@@ -35,7 +35,7 @@ class ReasoningNode(BaseNode):
         input: str,
         output: List[str],
         node_config: Optional[dict] = None,
-        node_name: str = "PromptRefiner",
+        node_name: str = "ReasoningNode",
     ):
         super().__init__(node_name, "node", input, output, 2, node_config)
 
@@ -74,14 +74,14 @@ class ReasoningNode(BaseNode):
 
         user_prompt = state["user_prompt"]
 
-        self.simplefied_schema = transform_schema(self.output_schema.schema())
+        self.simplified_schema = transform_schema(self.output_schema.schema())
 
         if self.additional_info is not None:
             prompt = PromptTemplate(
                 template=TEMPLATE_REASONING_WITH_CONTEXT,
                 partial_variables={
                     "user_input": user_prompt,
-                    "json_schema": str(self.simplefied_schema),
+                    "json_schema": str(self.simplified_schema),
                     "additional_context": self.additional_info,
                 },
             )
@@ -90,7 +90,7 @@ class ReasoningNode(BaseNode):
                 template=TEMPLATE_REASONING,
                 partial_variables={
                     "user_input": user_prompt,
-                    "json_schema": str(self.simplefied_schema),
+                    "json_schema": str(self.simplified_schema),
                 },
             )
 

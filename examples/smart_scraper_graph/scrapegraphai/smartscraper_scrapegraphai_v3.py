@@ -19,7 +19,7 @@ with ScrapeGraphAI(api_key=api_key) as sgai:
     result = sgai.extract(
         ExtractRequest(
             url="https://scrapegraphai.com",
-            prompt="Extract the founders' informations",
+            prompt="Extract the founders' information",
         )
     )
 
