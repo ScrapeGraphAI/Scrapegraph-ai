@@ -195,3 +195,9 @@ dev.ipynb
 
 # CodeBeaver reports and artifacts
 .codebeaver
+
+# Web app
+node_modules/
+logs/
+webapp/frontend/dist/
+webapp/backend/logs/

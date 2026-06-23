@@ -121,3 +121,14 @@ ignore_missing_imports = true
 [tool.poe.tasks]
 pylint-local = "pylint scraperaphai/**/*.py"
 pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
+
+[tool.poe.tasks.web-backend]
+script = "uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload"
+working-directory = "webapp/backend"
+
+[tool.poe.tasks.web-frontend]
+cmd = "npm run dev"
+working-directory = "webapp/frontend"
+
+[tool.poe.tasks.web]
+sequence = ["web-backend", "web-frontend"]

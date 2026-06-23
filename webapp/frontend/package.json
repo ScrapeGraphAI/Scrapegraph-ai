@@ -1,0 +1,32 @@
+{
+  "name": "scrapegraphai-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": "^0.500.0",
+    "@radix-ui/react-select": "^2.2.0",
+    "@radix-ui/react-tabs": "^1.1.5",
+    "@radix-ui/react-switch": "^1.1.5",
+    "@radix-ui/react-slot": "^1.2.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.8.0",
+    "vite": "^6.3.0"
+  }
+}
