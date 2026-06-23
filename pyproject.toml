@@ -76,6 +76,14 @@ ocr = [
     "ipywidgets>=8.1.0",
     "pillow>=10.4.0",
 ]
+experimental-obscura = [
+    # Obscura browser backend (https://github.com/h4ckf0r0day/obscura)
+    # Requires: obscura binary in PATH or Docker.
+    # Playwright is already a core dependency.
+]
+experimental-crawl4ai = [
+    "crawl4ai>=0.8.0",
+]
 
 [build-system]
 requires = ["hatchling==1.26.3"]
@@ -104,6 +112,11 @@ target-version = ["py310"]
 
 [tool.isort]
 profile = "black"
+
+[tool.pytest.ini_options]
+markers = [
+    "e2e: End-to-end tests that require network access (use `pytest -m e2e` to run).",
+]
 
 [tool.ruff]
 line-length = 88

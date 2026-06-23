@@ -2,7 +2,7 @@
 This module handles document loading functionalities for the ScrapeGraphAI application.
 
 Note: ChromiumLoader and PlasmateLoader are lazy-imported to avoid triggering
-torchcodec/FFmpeg DLL loading at import time (sentence_transformers -> torchcodec chain).
+torchcodec/FFmpeg DLL loading at import time through the langchain import chain.
 """
 
 from .browser_base import browser_base_fetch

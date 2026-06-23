@@ -185,9 +185,10 @@ class AbstractGraph(ABC):
                 if llm_params["model"] in models_d
             ]
             if len(possible_providers) <= 0:
+                provider = llm_params.get("model_provider", "unknown")
                 raise ValueError(
-                    f"""Provider {llm_params["model_provider"]} is not supported.
-                                If possible, try to use a model instance instead."""
+                    f"Provider {provider} is not supported. "
+                    "If possible, try to use a model instance instead."
                 )
             llm_params["model_provider"] = possible_providers[0]
             logger.info(

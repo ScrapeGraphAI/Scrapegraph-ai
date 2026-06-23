@@ -25,6 +25,7 @@ from dotenv import load_dotenv
 _tc = types.ModuleType("torchcodec")
 _tc.__version__ = "0.0.0"
 _tc.__file__ = "<mock>"
+# Give it a spec so importlib doesn't warn
 _tc.__spec__ = types.ModuleType("spec")
 _tc.__spec__.name = "torchcodec"
 _tc.__spec__.loader = None

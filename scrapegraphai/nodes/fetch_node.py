@@ -90,6 +90,10 @@ class FetchNode(BaseNode):
             None if node_config is None else node_config.get("storage_state", None)
         )
 
+        self.experimental = (
+            None if node_config is None else node_config.get("experimental", None)
+        )
+
     def execute(self, state):
         """
         Executes the node's logic to fetch HTML content from a specified URL and
@@ -368,6 +372,42 @@ class FetchNode(BaseNode):
                     fallback_to_chrome=plasmate_cfg.get("fallback_to_chrome", False),
                 )
                 document = loader.load()
+            elif self.experimental is not None:
+                backend = self.experimental.get("backend", "")
+                proxy_cfg = loader_kwargs.get("proxy") if isinstance(loader_kwargs, dict) else None
+                if backend == "obscura":
+                    from ..experimental.obscura_loader import ObscuraLoader
+
+                    obscura_cfg = self.experimental.get("obscura", {})
+                    loader = ObscuraLoader(
+                        [source],
+                        cdp_url=obscura_cfg.get("cdp_url", "ws://127.0.0.1:9222/devtools/browser"),
+                        headless=obscura_cfg.get("headless", self.headless),
+                        timeout=obscura_cfg.get("timeout", self.timeout or 30),
+                        storage_state=self.storage_state,
+                        auto_start=obscura_cfg.get("auto_start"),
+                        proxy=proxy_cfg,
+                    )
+                    document = loader.load()
+                elif backend == "crawl4ai":
+                    from ..experimental.crawl4ai_loader import Crawl4aiLoader
+
+                    crawl4ai_cfg = self.experimental.get("crawl4ai", {})
+                    loader = Crawl4aiLoader(
+                        [source],
+                        headless=crawl4ai_cfg.get("headless", self.headless),
+                        page_timeout=crawl4ai_cfg.get("page_timeout", 30000),
+                        output_format=crawl4ai_cfg.get("output_format", "markdown"),
+                        viewport_width=crawl4ai_cfg.get("viewport_width", 1920),
+                        viewport_height=crawl4ai_cfg.get("viewport_height", 1080),
+                        proxy=proxy_cfg,
+                    )
+                    document = loader.load()
+                else:
+                    raise ValueError(
+                        f"Unknown experimental backend: {backend}. "
+                        f"Supported: 'obscura', 'crawl4ai'"
+                    )
             else:
                 loader = ChromiumLoader(
                     [source],
@@ -378,9 +418,9 @@ class FetchNode(BaseNode):
                 document = loader.load()
 
             if not document or not document[0].page_content.strip():
+                backend_name = self.experimental.get("backend", "ChromiumLoader") if self.experimental else "ChromiumLoader"
                 raise ValueError(
-                    """No HTML body content found in
-                                 the document fetched by ChromiumLoader."""
+                    f"No HTML body content found in the document fetched by {backend_name}."
                 )
 
             parsed_content = document[0].page_content

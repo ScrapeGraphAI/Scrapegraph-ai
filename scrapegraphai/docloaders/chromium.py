@@ -34,8 +34,8 @@ class ChromiumLoader:
         requires_js_support: bool = False,
         storage_state: Optional[str] = None,
         browser_name: str = "chromium",  # default chromium
-        retry_limit: int = 1,
-        timeout: int = 60,
+        retry_limit: int = 2,
+        timeout: int = 90,
         **kwargs: Any,
     ):
         """Initialize the loader with a list of URL paths.
@@ -319,9 +319,38 @@ class ChromiumLoader:
 
         return results
 
+    def _get_storage_state_path(self):
+        """Get path to persistent storage state file."""
+        import os
+        data_dir = os.path.join(os.path.expanduser("~"), ".scrapegraph", "chrome-data")
+        os.makedirs(data_dir, exist_ok=True)
+        return os.path.join(data_dir, "storage_state.json")
+
+    def _get_user_data_dir(self):
+        """Get path to persistent Chrome user data directory."""
+        import os
+        data_dir = os.path.join(os.path.expanduser("~"), ".scrapegraph", "chrome-profile")
+        os.makedirs(data_dir, exist_ok=True)
+        return data_dir
+
+    async def _save_storage_state(self, context):
+        """Save browser storage state (cookies, localStorage) for reuse."""
+        try:
+            state = await context.storage_state()
+            path = self._get_storage_state_path()
+            import json
+            with open(path, "w") as f:
+                json.dump(state, f)
+            logger.info(f"Storage state saved to {path}")
+        except Exception as e:
+            logger.warning(f"Failed to save storage state: {e}")
+
     async def ascrape_playwright(self, url: str, browser_name: str = "chromium") -> str:
         """
         Asynchronously scrape the content of a given URL using Playwright's async API.
+
+        Uses persistent Chrome profile and storage state caching to bypass
+        anti-bot protection like Cloudflare Turnstile across sessions.
 
         Args:
             url (str): The URL to scrape.
@@ -343,33 +372,92 @@ class ChromiumLoader:
         while attempt < self.retry_limit:
             try:
                 async with async_playwright() as p, async_timeout.timeout(self.timeout):
-                    browser = None
                     if browser_name == "chromium":
-                        browser = await p.chromium.launch(
+                        user_data_dir = self._get_user_data_dir()
+                        storage_path = self._get_storage_state_path()
+                        storage_state = None
+                        import os
+                        if os.path.exists(storage_path):
+                            try:
+                                import json
+                                with open(storage_path) as f:
+                                    storage_state = json.load(f)
+                                logger.info(f"Loaded storage state from {storage_path}")
+                            except Exception:
+                                pass
+
+                        args = [
+                            "--disable-blink-features=AutomationControlled",
+                            "--no-sandbox",
+                            "--disable-web-security",
+                            "--disable-features=IsolateOrigins,site-per-process",
+                        ]
+                        extra_user_args = self.browser_config.get("args", [])
+                        for a in extra_user_args:
+                            if a not in args:
+                                args.append(a)
+
+                        context = await p.chromium.launch_persistent_context(
+                            user_data_dir,
                             headless=self.headless,
+                            channel="chrome",
+                            args=args,
+                            ignore_https_errors=True,
                             proxy=self.proxy,
-                            **self.browser_config,
                         )
+                        await Malenia.apply_stealth(context)
+
+                        if storage_state and "cookies" in storage_state:
+                            try:
+                                await context.add_cookies(storage_state["cookies"])
+                                logger.info("Restored cookies from storage state")
+                            except Exception as e:
+                                logger.warning(f"Failed to restore cookies: {e}")
+
+                        page = context.pages[0] if context.pages else await context.new_page()
+
                     elif browser_name == "firefox":
-                        browser = await p.firefox.launch(
+                        context = await p.firefox.launch_persistent_context(
+                            self._get_user_data_dir(),
                             headless=self.headless,
                             proxy=self.proxy,
+                            ignore_https_errors=True,
                             **self.browser_config,
                         )
+                        page = context.pages[0] if context.pages else await context.new_page()
                     else:
                         raise ValueError(f"Invalid browser name: {browser_name}")
-                    context = await browser.new_context(
-                        storage_state=self.storage_state,
-                        ignore_https_errors=True,
-                    )
-                    await Malenia.apply_stealth(context)
-                    page = await context.new_page()
-                    await page.goto(url, wait_until="domcontentloaded")
-                    await page.wait_for_load_state(self.load_state)
+
+                    await page.goto(url, wait_until="domcontentloaded", timeout=min(self.timeout * 1000, 90000))
+                    await page.wait_for_timeout(3000)
+                    try:
+                        await page.wait_for_load_state("domcontentloaded", timeout=5000)
+                    except Exception:
+                        pass
+
                     results = await page.content()
+
+                    # Check for Cloudflare and raise descriptive error
+                    if "just a moment" in results.lower() or "bir dakika" in results.lower():
+                        # Check if it's actually blocked or just the initial challenge
+                        if not any(kw in results.lower() for kw in
+                                   ["engineering", "consulting", "solutions", "about epam",
+                                    "product development", "digital transformation"]):
+                            logger.warning(
+                                f"Cloudflare challenge detected for {url}. "
+                                f"Solve the challenge once in non-headless mode:\n"
+                                f"  1. Set headless: false in your config\n"
+                                f"  2. The browser will open with the Cloudflare challenge\n"
+                                f"  3. Complete the challenge manually\n"
+                                f"  4. Next runs will reuse the cookies automatically"
+                            )
+
+                    # Save storage state for next session
+                    await self._save_storage_state(context)
+                    await context.close()
                     logger.info("Content scraped")
-                    await browser.close()
                     return results
+
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
                 attempt += 1
                 logger.error(f"Attempt {attempt} failed: {e}")
@@ -436,11 +524,21 @@ class ChromiumLoader:
                 await browser.close()
 
     def load(self) -> List[Document]:
-        """Load all documents synchronously."""
+        """
+        Load text content from the provided URLs.
+
+        Returns:
+            List[Document]: A list of Document objects.
+        """
         return list(self.lazy_load())
 
     async def aload(self) -> List[Document]:
-        """Load all documents asynchronously."""
+        """
+        Asynchronously load text content from the provided URLs.
+
+        Returns:
+            List[Document]: A list of Document objects.
+        """
         return [doc async for doc in self.alazy_load()]
 
     def lazy_load(self) -> Iterator[Document]:
