@@ -50,6 +50,33 @@ You can find more informations at the following [link](https://scrapegraphai.com
 - **Low-code Frameworks**: [Pipedream](https://pipedream.com/apps/scrapegraphai), [Bubble](https://bubble.io/plugin/scrapegraphai-1745408893195x213542371433906180), [Zapier](https://zapier.com/apps/scrapegraphai/integrations), [n8n](http://localhost:5001/dashboard), [Dify](https://dify.ai), [Toolhouse](https://app.toolhouse.ai/mcp-servers/scrapegraph_smartscraper)
 - **MCP server**:  [Link](https://smithery.ai/server/@ScrapeGraphAI/scrapegraph-mcp)
 
+## 🆚 Open Source vs Managed API
+
+ScrapeGraphAI comes in two flavours: **this open-source library**, which you run yourself, and the **managed cloud API** (used via the [Python](https://github.com/ScrapeGraphAI/scrapegraph-py) and [JS/TS](https://github.com/ScrapeGraphAI/scrapegraph-js) SDKs). This table explains the difference so you can pick the right one.
+
+| | Open Source (`scrapegraphai`) | Managed API (`scrapegraph-py` / `scrapegraph-js`) |
+|---|---|---|
+| **What it is** | A Python library you run yourself | A hosted cloud service you call via SDK |
+| **Where it runs** | Your own infrastructure (self-hosted) | ScrapeGraphAI cloud |
+| **LLM** | Bring your own (OpenAI, Groq, Gemini, Azure, local via Ollama) | Managed for you |
+| **Browser / JS rendering** | You configure it (Playwright) | Managed (stealth, `auto`/`fast`/`js` modes) |
+| **Proxies & anti-bot** | Your responsibility | Included |
+| **Scaling & maintenance** | Your responsibility | Fully managed |
+| **Cost model** | LLM tokens + your own infra | Pay-as-you-go credits |
+| **Auth** | Your own LLM keys | `SGAI_API_KEY` |
+| **Capabilities** | Graph pipelines (SmartScraper, Search, Speech, ScriptCreator…) | Scrape, Extract, Search, Crawl, Monitor, History |
+| **Setup effort** | More configuration | Minimal — API key + one call |
+| **License** | MIT | SDK is MIT; the API service is paid |
+
+**Choose the open-source library** if you want full control, on-prem/self-hosted data, local LLMs (Ollama), or fine-grained cost tuning — and you're happy to manage browsers, proxies and scaling yourself.
+
+**Choose the managed API** if you want zero infrastructure, managed JS rendering & anti-bot, built-in **Crawl** and scheduled **Monitor** jobs, and the fastest path to production — billed per credit.
+
+- Open-source library: https://github.com/ScrapeGraphAI/Scrapegraph-ai
+- Python SDK: https://github.com/ScrapeGraphAI/scrapegraph-py
+- JS/TS SDK: https://github.com/ScrapeGraphAI/scrapegraph-js
+- API docs: https://docs.scrapegraphai.com/introduction
+
 ## 🚀 Quick install
 
 The reference page for Scrapegraph-ai is available on the official page of PyPI: [pypi](https://pypi.org/project/scrapegraphai/).
