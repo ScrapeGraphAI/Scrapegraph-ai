@@ -1,3 +1,15 @@
+## [2.1.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.3...v2.1.4) (2026-06-23)
+
+
+### Bug Fixes
+
+* lazy imports to prevent torchcodec FFmpeg DLL crash on Windows ([#1089](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1089)) ([#1092](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1092)) ([e5c2a42](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e5c2a4292174bae948731379c88aafb14197ec6c))
+
+
+### Docs
+
+* swap Integrations infographic for new API banner; fix CTA links ([71ab440](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71ab4406867ef02c22349c2dedc18c57d8bdfdec))
+
 ## [2.1.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.2...v2.1.3) (2026-06-02)
 
 
