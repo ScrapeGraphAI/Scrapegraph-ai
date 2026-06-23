@@ -7,7 +7,6 @@ from typing import List, Optional
 import concurrent.futures
 
 import requests
-from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from langchain_openai import AzureChatOpenAI, ChatOpenAI
 
@@ -182,6 +181,7 @@ class FetchNode(BaseNode):
         """
 
         if input_type == "pdf":
+            from langchain_community.document_loaders import PyPDFLoader
             loader = PyPDFLoader(source)
             # PyPDFLoader.load() can be blocking for large PDFs. Run it in a thread and
             # enforce the configured timeout if provided.

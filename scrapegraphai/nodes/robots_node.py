@@ -7,7 +7,6 @@ from urllib.parse import urlparse
 
 from langchain_core.output_parsers import CommaSeparatedListOutputParser
 from langchain_core.prompts import PromptTemplate
-from langchain_community.document_loaders import AsyncChromiumLoader
 
 from ..helpers import robots_dictionary
 from ..prompts import TEMPLATE_ROBOT
@@ -90,6 +89,7 @@ class RobotsNode(BaseNode):
         else:
             parsed_url = urlparse(source)
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
+            from langchain_community.document_loaders import AsyncChromiumLoader
             loader = AsyncChromiumLoader(f"{base_url}/robots.txt")
             document = loader.load()
             if "ollama" in self.llm_model.model:
