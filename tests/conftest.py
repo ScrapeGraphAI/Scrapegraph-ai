@@ -14,8 +14,23 @@ from pathlib import Path
 from typing import Any, Dict
 from unittest.mock import Mock
 
+import sys
+import types
+
 import pytest
 from dotenv import load_dotenv
+
+# Mock torchcodec to prevent FFmpeg DLL crashes at import time.
+# sentence_transformers -> torchcodec -> FFmpeg native DLLs can't load on some systems.
+_tc = types.ModuleType("torchcodec")
+_tc.__version__ = "0.0.0"
+_tc.__file__ = "<mock>"
+_tc.__spec__ = types.ModuleType("spec")
+_tc.__spec__.name = "torchcodec"
+_tc.__spec__.loader = None
+_tc.__spec__.submodule_search_locations = []
+if "torchcodec" not in sys.modules:
+    sys.modules["torchcodec"] = _tc
 
 # Load environment variables
 load_dotenv()
