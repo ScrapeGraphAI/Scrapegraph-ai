@@ -1,3 +1,10 @@
+## [2.2.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.4...v2.2.0-beta.5) (2026-06-23)
+
+
+### Bug Fixes
+
+* lazy imports to prevent torchcodec FFmpeg DLL crash on Windows ([#1089](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1089)) ([2f55377](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2f55377010fb16c81655aa1c8d08b88daa880797))
+
 ## [2.2.0-beta.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.3...v2.2.0-beta.4) (2026-06-11)
 
 
