@@ -11,6 +11,8 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    # Hard cap so a hanging test can never burn the full 6h runner budget again.
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -27,8 +29,21 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: Install Playwright browsers
-        run: uv run playwright install chromium
-
+      # Run only the deterministic, mock-based unit suites. The provider graph
+      # tests (tests/graphs/*), integration tests (tests/integration/*) and the
+      # browser/network suites (e.g. tests/test_chromium.py) require real API
+      # keys or live network/browsers, so in CI they either fail or hang
+      # indefinitely. They should be re-added here once mocked or gated behind
+      # markers + secrets.
       - name: Run unit tests
-        run: uv run pytest tests/ -m "unit or not integration"
+        run: >
+          uv run pytest
+          tests/test_batch_api.py
+          tests/test_csv_scraper_multi_graph.py
+          tests/test_depth_search_graph.py
+          tests/test_json_scraper_graph.py
+          tests/test_minimax_models.py
+          tests/test_scrape_do.py
+          tests/test_search_graph.py
+          tests/utils/convert_to_md_test.py
+          tests/utils/parse_state_keys_test.py
