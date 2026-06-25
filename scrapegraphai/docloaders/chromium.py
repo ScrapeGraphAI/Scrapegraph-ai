@@ -67,10 +67,10 @@ class ChromiumLoader:
         self.load_state = load_state
         self.requires_js_support = requires_js_support
         self.storage_state = storage_state
-        self.backend = kwargs.get("backend", backend)
-        self.browser_name = kwargs.get("browser_name", browser_name)
-        self.retry_limit = kwargs.get("retry_limit", retry_limit)
-        self.timeout = kwargs.get("timeout", timeout)
+        self.backend = backend
+        self.browser_name = browser_name
+        self.retry_limit = retry_limit
+        self.timeout = timeout
 
     async def scrape(self, url: str) -> str:
         if self.backend == "playwright":
@@ -158,7 +158,8 @@ class ChromiumLoader:
                         f"Error: Network error after {self.retry_limit} attempts - {e}"
                     )
             finally:
-                driver.quit()
+                if "driver" in dir():
+                    driver.quit()
 
         return results
 
@@ -205,7 +206,7 @@ class ChromiumLoader:
         # https://www.steelwood.amsterdam/. The site deos not scroll to the bottom.
         # In my browser I can scroll vertically but in Chromium it scrolls horizontally?!?
 
-        if timeout and timeout <= 0:
+        if timeout is not None and timeout <= 0:
             raise ValueError(
                 "If set, timeout value for scrolling scraper must be greater than 0."
             )
@@ -315,7 +316,8 @@ class ChromiumLoader:
                         f"Error: Network error after {self.retry_limit} attempts - {e}"
                     )
             finally:
-                await browser.close()
+                if browser is not None:
+                    await browser.close()
 
         return results
 
@@ -433,7 +435,19 @@ class ChromiumLoader:
                         f"Failed to scrape after {self.retry_limit} attempts: {str(e)}"
                     )
             finally:
-                await browser.close()
+                if browser is not None:
+                    await browser.close()
+
+    def _get_scraping_fn(self):
+        """Return the appropriate scraping function based on backend config."""
+        if self.requires_js_support:
+            return self.ascrape_with_js_support
+        if self.backend == "playwright":
+            return self.ascrape_playwright
+        elif self.backend == "selenium":
+            return self.ascrape_undetected_chromedriver
+        else:
+            raise ValueError(f"Unsupported backend: {self.backend}")
 
     def load(self) -> List[Document]:
         """Load all documents synchronously."""
@@ -453,11 +467,7 @@ class ChromiumLoader:
         Yields:
             Document: The scraped content encapsulated within a Document object.
         """
-        scraping_fn = (
-            self.ascrape_with_js_support
-            if self.requires_js_support
-            else getattr(self, f"ascrape_{self.backend}")
-        )
+        scraping_fn = self._get_scraping_fn()
 
         for url in self.urls:
             html_content = asyncio.run(scraping_fn(url))
@@ -477,11 +487,7 @@ class ChromiumLoader:
             Document: A Document object containing the scraped content, along with its
             source URL as metadata.
         """
-        scraping_fn = (
-            self.ascrape_with_js_support
-            if self.requires_js_support
-            else getattr(self, f"ascrape_{self.backend}")
-        )
+        scraping_fn = self._get_scraping_fn()
 
         tasks = [scraping_fn(url) for url in self.urls]
         results = await asyncio.gather(*tasks)
