@@ -221,6 +221,9 @@ class AbstractGraph(ABC):
         else:
             self.model_token = llm_params["model_tokens"]
 
+        # Consumed by ScrapeGraphAI; must not be forwarded to the model client.
+        llm_params.pop("model_tokens", None)
+
         try:
             if llm_params["model_provider"] not in {
                 "oneapi",
