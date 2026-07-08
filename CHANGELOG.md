@@ -1,3 +1,20 @@
+## [2.1.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.4...v2.1.5) (2026-07-08)
+
+
+### Bug Fixes
+
+* pop model_tokens so it is not forwarded to the model client ([#1100](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1100)) ([d2b970c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d2b970ca77da64b6b6b91fa2353f2e41b9cfe105))
+
+
+### Docs
+
+* **readme:** add Open Source vs Managed API comparison ([#1091](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1091)) ([ef3523b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ef3523b1e1c62052b5c0e6b14cebe7933441a7e5))
+
+
+### CI
+
+* run only deterministic unit suites in Test Suite workflow ([#1095](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1095)) ([037a42e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/037a42ed73354c8b3eabd9dcc28236152602ef9e))
+
 ## [2.1.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.3...v2.1.4) (2026-06-23)
 
 
