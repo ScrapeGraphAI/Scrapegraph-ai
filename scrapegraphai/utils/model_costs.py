@@ -50,6 +50,7 @@ MODEL_COST_PER_1K_TOKENS_INPUT = {
     "amazon.titan-text-express-v1": 0.0002,
     "amazon.titan-text-lite-v1": 0.00015,
     "amazon.titan-text-premier-v1:0": 0.0005,
+    "MiniMax-M3": 0.0006,
 }
 
 """
@@ -102,4 +103,5 @@ MODEL_COST_PER_1K_TOKENS_OUTPUT = {
     "amazon.titan-text-express-v1": 0.0006,
     "amazon.titan-text-lite-v1": 0.0002,
     "amazon.titan-text-premier-v1:0": 0.0015,
+    "MiniMax-M3": 0.0024,
 }

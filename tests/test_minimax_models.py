@@ -25,6 +25,24 @@ def models_tokens():
     return module.models_tokens
 
 
+@pytest.fixture(scope="module")
+def model_costs():
+    """Import model_costs directly to avoid triggering the full package init."""
+    spec = importlib.util.spec_from_file_location(
+        "model_costs",
+        os.path.join(
+            os.path.dirname(__file__),
+            "..",
+            "scrapegraphai",
+            "utils",
+            "model_costs.py",
+        ),
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def test_minimax_m3_in_model_list(models_tokens):
     """MiniMax-M3 should be in the model list."""
     minimax_models = models_tokens["minimax"]
@@ -57,6 +75,12 @@ def test_minimax_deprecated_models_removed(models_tokens):
 def test_minimax_token_limits(models_tokens):
     """MiniMax model token limits should match upstream documentation."""
     minimax_models = models_tokens["minimax"]
-    assert minimax_models["MiniMax-M3"] == 524288
+    assert minimax_models["MiniMax-M3"] == 1000000
     assert minimax_models["MiniMax-M2.7"] == 204000
     assert minimax_models["MiniMax-M2.7-highspeed"] == 204000
+
+
+def test_minimax_m3_cost(model_costs):
+    """MiniMax-M3 pricing should match upstream documentation."""
+    assert model_costs.MODEL_COST_PER_1K_TOKENS_INPUT["MiniMax-M3"] == 0.0006
+    assert model_costs.MODEL_COST_PER_1K_TOKENS_OUTPUT["MiniMax-M3"] == 0.0024
