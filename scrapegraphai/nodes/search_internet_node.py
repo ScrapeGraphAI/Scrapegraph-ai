@@ -56,6 +56,7 @@ class SearchInternetNode(BaseNode):
         )
 
         self.max_results = node_config.get("max_results", 3)
+        self.max_retries = node_config.get("max_retries", 1)
 
     def execute(self, state: dict) -> dict:
         """
@@ -108,6 +109,7 @@ class SearchInternetNode(BaseNode):
             search_engine=self.search_engine,
             proxy=self.proxy,
             serper_api_key=self.serper_api_key,
+            max_retries=self.max_retries,
         )
 
         if len(answer) == 0:

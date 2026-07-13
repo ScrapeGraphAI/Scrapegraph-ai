@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from scrapegraphai.graphs.search_graph import SearchGraph
+from scrapegraphai.graphs.search_graph import SearchGraph, SearchGraphEmptyAnswerError
 
 
 class TestSearchGraph:
@@ -27,7 +27,7 @@ class TestSearchGraph:
         mock_create_llm.return_value = MagicMock()
 
         # Mock the execute method to set the final_state
-        mock_base_graph.return_value.execute.return_value = ({"urls": urls}, {})
+        mock_base_graph.return_value.execute.return_value = ({"urls": urls, "answer": "ok"}, {})
 
         # Act
         search_graph = SearchGraph(prompt, config)
@@ -53,12 +53,32 @@ class TestSearchGraph:
         # Mock the execute method to set the final_state without an "answer" key
         mock_base_graph.return_value.execute.return_value = ({"urls": []}, {})
 
-        # Act
+        # Act / Assert: silent "No answer found." is now a clear exception
         search_graph = SearchGraph(prompt, config)
-        result = search_graph.run()
+        with pytest.raises(SearchGraphEmptyAnswerError) as exc_info:
+            search_graph.run()
+        assert "no URLs were considered" in str(exc_info.value)
+        assert exc_info.value.considered_urls == []
 
-        # Assert
-        assert result == "No answer found."
+    @patch("scrapegraphai.graphs.search_graph.BaseGraph")
+    @patch("scrapegraphai.graphs.abstract_graph.AbstractGraph._create_llm")
+    def test_run_empty_answer_with_urls_raises(self, mock_create_llm, mock_base_graph):
+        """
+        When URLs were considered but the scraper/LLM produced no answer,
+        run() must surface a clear error (not a silent "No answer found.").
+        """
+        prompt = "Test prompt"
+        config = {"llm": {"model": "test-model"}}
+        urls = ["https://a.com", "https://b.com"]
+
+        mock_create_llm.return_value = MagicMock()
+        mock_base_graph.return_value.execute.return_value = ({"urls": urls}, {})
+
+        search_graph = SearchGraph(prompt, config)
+        with pytest.raises(SearchGraphEmptyAnswerError) as exc_info:
+            search_graph.run()
+        assert exc_info.value.considered_urls == urls
+        assert "2 URL(s)" in str(exc_info.value)
 
     @patch("scrapegraphai.graphs.search_graph.SearchInternetNode")
     @patch("scrapegraphai.graphs.search_graph.GraphIteratorNode")
