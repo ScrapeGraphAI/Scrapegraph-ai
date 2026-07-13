@@ -412,4 +412,15 @@ models_tokens = {
         "MiniMax-M2.7": 204000,
         "MiniMax-M2.7-highspeed": 204000,
     },
+    "openrouter": {
+        "openai/gpt-4o": 128000,
+        "openai/gpt-4o-mini": 128000,
+        "anthropic/claude-3.5-sonnet": 200000,
+        "anthropic/claude-3.5-haiku": 200000,
+        "google/gemini-2.0-flash-001": 1000000,
+        "meta-llama/llama-3.3-70b-instruct": 131072,
+        "deepseek/deepseek-chat": 128000,
+        "mistralai/mixtral-8x7b-instruct": 32768,
+        "qwen/qwen2.5-72b-instruct": 32768,
+    },
 }
