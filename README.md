@@ -165,6 +165,8 @@ Remember to have [Ollama](https://ollama.com/) installed and download the models
 
 The documentation for ScrapeGraphAI can be found [here](https://docs.scrapegraphai.com/introduction).
 
+- **[Troubleshooting & common issues](docs/troubleshooting.md)**: empty/`NA` outputs, `pydantic` validation errors, anti-bot 403s, and token-limit errors, with fixes.
+
 ## 🤝 Contributing
 
 Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
