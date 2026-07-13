@@ -165,6 +165,8 @@ Remember to have [Ollama](https://ollama.com/) installed and download the models
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
 The documentation for ScrapeGraphAI can be found [here](https://docs.scrapegraphai.com/introduction).
+
+- **[Troubleshooting & common issues](docs/troubleshooting.md)**: empty/`NA` outputs, `pydantic` validation errors, anti-bot 403s, and token-limit errors, with fixes.
 ## 🆚 Open Source vs Managed API
 
 ScrapeGraphAI comes in two flavours: **this open-source library**, which you run yourself, and the **managed cloud API** (used via the [Python](https://github.com/ScrapeGraphAI/scrapegraph-py) and [JS/TS](https://github.com/ScrapeGraphAI/scrapegraph-js) SDKs). This table explains the difference so you can pick the right one.
