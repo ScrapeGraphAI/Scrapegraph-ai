@@ -13,7 +13,7 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
+from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi, OpenRouter
 from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
 logger = get_logger(__name__)
@@ -172,6 +172,7 @@ class AbstractGraph(ABC):
             "togetherai",
             "xai",
             "minimax",
+            "openrouter",
         }
 
         if "/" in llm_params["model"]:
@@ -253,6 +254,9 @@ class AbstractGraph(ABC):
 
                 if model_provider == "minimax":
                     return MiniMax(**llm_params)
+
+                if model_provider == "openrouter":
+                    return OpenRouter(**llm_params)
 
                 if model_provider == "ernie":
                     from langchain_community.chat_models import ErnieBotChat
