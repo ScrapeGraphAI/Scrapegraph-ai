@@ -50,6 +50,7 @@ MODEL_COST_PER_1K_TOKENS_INPUT = {
     "amazon.titan-text-express-v1": 0.0002,
     "amazon.titan-text-lite-v1": 0.00015,
     "amazon.titan-text-premier-v1:0": 0.0005,
+    "MiniMax-M2.7": 0.0003,
 }
 
 """
@@ -102,4 +103,84 @@ MODEL_COST_PER_1K_TOKENS_OUTPUT = {
     "amazon.titan-text-express-v1": 0.0006,
     "amazon.titan-text-lite-v1": 0.0002,
     "amazon.titan-text-premier-v1:0": 0.0015,
+    "MiniMax-M2.7": 0.0012,
 }
+
+
+MODEL_CACHE_COST_PER_1K_TOKENS = {
+    "MiniMax-M2.7": {"read": 0.00006, "write": 0.000375},
+}
+
+
+MODEL_COST_TIERS_PER_1K_TOKENS = {
+    "MiniMax-M3": {
+        "standard": (
+            {
+                "input_tokens_lte": 512000,
+                "input": 0.0003,
+                "output": 0.0012,
+                "cache_read": 0.00006,
+                "cache_write": None,
+            },
+            {
+                "input_tokens_gt": 512000,
+                "input": 0.0006,
+                "output": 0.0024,
+                "cache_read": 0.00012,
+                "cache_write": None,
+            },
+        ),
+        "priority": (
+            {
+                "input_tokens_lte": 512000,
+                "input": 0.00045,
+                "output": 0.0018,
+                "cache_read": 0.00009,
+                "cache_write": None,
+            },
+            {
+                "input_tokens_gt": 512000,
+                "input": 0.0009,
+                "output": 0.0036,
+                "cache_read": 0.00018,
+                "cache_write": None,
+            },
+        ),
+    }
+}
+
+
+def get_model_cost_per_1k_tokens(
+    model_name: str,
+    input_tokens: int,
+    is_completion: bool = False,
+    service_tier: str = "standard",
+) -> float:
+    """Return the applicable input or output rate for a model."""
+    if input_tokens < 0:
+        raise ValueError("input_tokens must not be negative")
+
+    if model_name in MODEL_COST_TIERS_PER_1K_TOKENS:
+        try:
+            pricing_tiers = MODEL_COST_TIERS_PER_1K_TOKENS[model_name][service_tier]
+        except KeyError as exc:
+            raise ValueError(
+                f"Unsupported service tier {service_tier!r} for {model_name}"
+            ) from exc
+
+        rate_key = "output" if is_completion else "input"
+        for pricing in pricing_tiers:
+            upper_bound = pricing.get("input_tokens_lte")
+            lower_bound = pricing.get("input_tokens_gt")
+            if upper_bound is not None and input_tokens <= upper_bound:
+                return float(pricing[rate_key])
+            if lower_bound is not None and input_tokens > lower_bound:
+                return float(pricing[rate_key])
+        raise ValueError(f"No pricing tier matches {input_tokens} input tokens")
+
+    costs = (
+        MODEL_COST_PER_1K_TOKENS_OUTPUT
+        if is_completion
+        else MODEL_COST_PER_1K_TOKENS_INPUT
+    )
+    return costs[model_name]
