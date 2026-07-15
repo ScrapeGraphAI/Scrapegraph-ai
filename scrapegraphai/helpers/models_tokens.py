@@ -335,6 +335,10 @@ models_tokens = {
         "deepseek-ai/DeepSeek-V2-Chat": 131072,
         "claude-3-haiku": 200000,
     },
+    "atlascloud": {
+        "deepseek-ai/deepseek-v4-pro": 1048576,
+        "qwen/qwen3.5-flash": 1000000,
+    },
     "deepseek": {
         "deepseek-chat": 128000,
         "deepseek-coder": 128000,
