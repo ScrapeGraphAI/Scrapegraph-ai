@@ -15,11 +15,19 @@ from langchain_core.messages import AIMessage
 from langchain_core.outputs import ChatGeneration, LLMResult
 from langchain_core.tracers.context import register_configure_hook
 
-from .model_costs import MODEL_COST_PER_1K_TOKENS_INPUT, MODEL_COST_PER_1K_TOKENS_OUTPUT
+from .model_costs import (
+    MODEL_COST_PER_1K_TOKENS_INPUT,
+    MODEL_COST_TIERS_PER_1K_TOKENS,
+    get_model_cost_per_1k_tokens,
+)
 
 
 def get_token_cost_for_model(
-    model_name: str, num_tokens: int, is_completion: bool = False
+    model_name: str,
+    num_tokens: int,
+    is_completion: bool = False,
+    input_tokens: Optional[int] = None,
+    service_tier: str = "standard",
 ) -> float:
     """
     Get the cost in USD for a given model and number of tokens.
@@ -29,15 +37,30 @@ def get_token_cost_for_model(
         num_tokens: Number of tokens.
         is_completion: Whether the model is used for completion or not.
             Defaults to False.
+        input_tokens: Number of input tokens used to select a pricing tier.
+        service_tier: Provider service tier. Defaults to standard.
 
     Returns:
         Cost in USD.
     """
-    if model_name not in MODEL_COST_PER_1K_TOKENS_INPUT:
+    if (
+        model_name not in MODEL_COST_PER_1K_TOKENS_INPUT
+        and model_name not in MODEL_COST_TIERS_PER_1K_TOKENS
+    ):
         return 0.0
-    if is_completion:
-        return MODEL_COST_PER_1K_TOKENS_OUTPUT[model_name] * (num_tokens / 1000)
-    return MODEL_COST_PER_1K_TOKENS_INPUT[model_name] * (num_tokens / 1000)
+    if input_tokens is None:
+        if is_completion and model_name in MODEL_COST_TIERS_PER_1K_TOKENS:
+            raise ValueError(
+                "input_tokens is required for completion costs with tiered pricing"
+            )
+        input_tokens = num_tokens
+    rate = get_model_cost_per_1k_tokens(
+        model_name,
+        input_tokens,
+        is_completion=is_completion,
+        service_tier=service_tier,
+    )
+    return rate * (num_tokens / 1000)
 
 
 class CustomCallbackHandler(BaseCallbackHandler):
@@ -49,10 +72,11 @@ class CustomCallbackHandler(BaseCallbackHandler):
     successful_requests: int = 0
     total_cost: float = 0.0
 
-    def __init__(self, llm_model_name: str) -> None:
+    def __init__(self, llm_model_name: str, service_tier: str = "standard") -> None:
         super().__init__()
         self._lock = threading.Lock()
         self.model_name = llm_model_name if llm_model_name else "unknown"
+        self.service_tier = service_tier
 
     def __repr__(self) -> str:
         return (
@@ -114,11 +138,23 @@ class CustomCallbackHandler(BaseCallbackHandler):
             token_usage = response.llm_output["token_usage"]
             completion_tokens = token_usage.get("completion_tokens", 0)
             prompt_tokens = token_usage.get("prompt_tokens", 0)
-        if self.model_name in MODEL_COST_PER_1K_TOKENS_INPUT:
+        if (
+            self.model_name in MODEL_COST_PER_1K_TOKENS_INPUT
+            or self.model_name in MODEL_COST_TIERS_PER_1K_TOKENS
+        ):
             completion_cost = get_token_cost_for_model(
-                self.model_name, completion_tokens, is_completion=True
+                self.model_name,
+                completion_tokens,
+                is_completion=True,
+                input_tokens=prompt_tokens,
+                service_tier=self.service_tier,
             )
-            prompt_cost = get_token_cost_for_model(self.model_name, prompt_tokens)
+            prompt_cost = get_token_cost_for_model(
+                self.model_name,
+                prompt_tokens,
+                input_tokens=prompt_tokens,
+                service_tier=self.service_tier,
+            )
         else:
             completion_cost = 0
             prompt_cost = 0
@@ -147,11 +183,11 @@ register_configure_hook(custom_callback, True)
 
 
 @contextmanager
-def get_custom_callback(llm_model_name: str):
+def get_custom_callback(llm_model_name: str, service_tier: str = "standard"):
     """
     Function to get custom callback for LLM token usage statistics.
     """
-    cb = CustomCallbackHandler(llm_model_name)
+    cb = CustomCallbackHandler(llm_model_name, service_tier=service_tier)
     custom_callback.set(cb)
     yield cb
     custom_callback.set(None)

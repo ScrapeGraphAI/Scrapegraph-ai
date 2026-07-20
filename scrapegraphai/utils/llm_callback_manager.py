@@ -47,7 +47,15 @@ class CustomLLMCallbackManager:
         """
         if CustomLLMCallbackManager._lock.acquire(blocking=False):
             try:
-                if isinstance(llm_model, ChatOpenAI) or isinstance(
+                from ..models.minimax import MiniMax
+
+                if isinstance(llm_model, MiniMax):
+                    service_tier = llm_model.service_tier or "standard"
+                    with get_custom_callback(
+                        llm_model_name, service_tier=service_tier
+                    ) as cb:
+                        yield cb
+                elif isinstance(llm_model, ChatOpenAI) or isinstance(
                     llm_model, AzureChatOpenAI
                 ):
                     with get_openai_callback() as cb:
