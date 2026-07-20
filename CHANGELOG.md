@@ -1,3 +1,10 @@
+## [2.1.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.5...v2.1.6) (2026-07-20)
+
+
+### Bug Fixes
+
+* update MiniMax model metadata and endpoints ([#1103](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1103)) ([e5f8f2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e5f8f2bf008cd7ce7f3d5980bf6f98e6153b2264))
+
 ## [2.1.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.4...v2.1.5) (2026-07-08)
 
 
