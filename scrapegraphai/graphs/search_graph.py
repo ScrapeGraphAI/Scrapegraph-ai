@@ -14,6 +14,20 @@ from .base_graph import BaseGraph
 from .smart_scraper_graph import SmartScraperGraph
 
 
+class SearchGraphEmptyAnswerError(ValueError):
+    """Raised when SearchGraph completes but yields no usable answer.
+
+    This replaces the previous silent ``"No answer found."`` return so callers can
+    tell a real failure (blocked search, 403/CAPTCHA on every URL, empty pages,
+    exhausted model quota) apart from a genuine empty result. The considered URLs
+    are attached so callers can inspect what was actually attempted.
+    """
+
+    def __init__(self, message: str, considered_urls: Optional[List[str]] = None):
+        super().__init__(message)
+        self.considered_urls: List[str] = considered_urls or []
+
+
 class SearchGraph(AbstractGraph):
     """
     SearchGraph is a scraping pipeline that searches the internet for answers to a given prompt.
@@ -71,6 +85,7 @@ class SearchGraph(AbstractGraph):
                 "storage_state": self.copy_config.get("storage_state"),
                 "search_engine": self.copy_config.get("search_engine"),
                 "serper_api_key": self.copy_config.get("serper_api_key"),
+                "max_retries": self.copy_config.get("max_retries", 1),
             },
         )
 
@@ -106,6 +121,12 @@ class SearchGraph(AbstractGraph):
 
         Returns:
             str: The answer to the prompt.
+
+        Raises:
+            SearchGraphEmptyAnswerError: If the graph completes but produces no
+                usable answer. This surfaces what used to be a silent
+                ``"No answer found."`` return so callers can distinguish a
+                configuration/blocking problem from a genuine empty result.
         """
 
         inputs = {"user_prompt": self.prompt}
@@ -115,7 +136,28 @@ class SearchGraph(AbstractGraph):
         if "urls" in self.final_state:
             self.considered_urls = self.final_state["urls"]
 
-        return self.final_state.get("answer", "No answer found.")
+        answer = self.final_state.get("answer")
+        considered = self.considered_urls or []
+
+        if not answer or (isinstance(answer, str) and answer.strip() == ""):
+            if not considered:
+                raise SearchGraphEmptyAnswerError(
+                    "SearchGraph finished but produced no answer and no URLs were "
+                    "considered. The search engine likely returned nothing "
+                    "(blocked, rate-limited, or the query matched no results). "
+                    "Check your search_engine / proxy / API key configuration.",
+                    considered_urls=considered,
+                )
+            raise SearchGraphEmptyAnswerError(
+                f"SearchGraph finished but produced no answer after considering "
+                f"{len(considered)} URL(s). The scraper or LLM likely returned "
+                f"empty for every source (commonly 403/CAPTCHA blocking, JS-only "
+                f"pages, or an exhausted model quota). Try a proxy, a headless "
+                f"browser, or inspect the sources. Considered URLs: {considered}",
+                considered_urls=considered,
+            )
+
+        return answer
 
     def get_considered_urls(self) -> List[str]:
         """

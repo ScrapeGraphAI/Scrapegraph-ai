@@ -58,6 +58,9 @@ class SearchConfig(BaseModel):
     serper_api_key: Optional[str] = Field(None, description="API key for Serper")
     region: Optional[str] = Field(None, description="Country/region code")
     language: str = Field("en", description="Language code")
+    max_retries: int = Field(
+        1, description="Retries on transient failures (403/rate-limit)"
+    )
 
     @validator("search_engine")
     def validate_search_engine(cls, v):
@@ -81,6 +84,13 @@ class SearchConfig(BaseModel):
         """Validate max results."""
         if v < 1 or v > 100:
             raise ValueError("max_results must be between 1 and 100")
+        return v
+
+    @validator("max_retries")
+    def validate_max_retries(cls, v):
+        """Validate max retries."""
+        if v < 0 or v > 5:
+            raise ValueError("max_retries must be between 0 and 5")
         return v
 
 
@@ -156,6 +166,33 @@ def get_random_user_agent() -> str:
     return random.choice(USER_AGENTS)
 
 
+def _run_with_retries(func, max_retries: int):
+    """Run ``func`` retrying transient failures with exponential backoff.
+
+    Args:
+        func: Zero-argument callable performing the search.
+        max_retries: Extra attempts after the first failure.
+
+    Returns:
+        The result of ``func``.
+
+    Raises:
+        SearchRequestError: If every attempt fails, wrapping the last error.
+    """
+    last_exc = None
+    for attempt in range(max_retries + 1):
+        try:
+            return func()
+        except Exception as exc:  # noqa: BLE001 - normalise to SearchRequestError
+            last_exc = exc
+            if attempt < max_retries:
+                time.sleep(min(2 ** attempt, 8))
+                continue
+    raise SearchRequestError(
+        f"Search failed after {max_retries + 1} attempt(s): {last_exc}"
+    )
+
+
 @rate_limited(calls=10, period=60)
 def search_on_web(
     query: str,
@@ -167,6 +204,7 @@ def search_on_web(
     serper_api_key: Optional[str] = None,
     region: Optional[str] = None,
     language: str = "en",
+    max_retries: int = 1,
 ) -> List[str]:
     """
     Search web function with improved error handling, validation, and security features.
@@ -205,6 +243,7 @@ def search_on_web(
             serper_api_key=serper_api_key,
             region=region,
             language=language,
+            max_retries=max_retries,
         )
 
         # Format proxy once
@@ -215,22 +254,34 @@ def search_on_web(
         results = []
         if config.search_engine == "duckduckgo":
             results = _search_duckduckgo(
-                config.query, config.max_results, formatted_proxy
+                config.query, config.max_results, formatted_proxy, config.max_retries
             )
 
         elif config.search_engine == "bing":
             results = _search_bing(
-                config.query, config.max_results, config.timeout, formatted_proxy
+                config.query,
+                config.max_results,
+                config.timeout,
+                formatted_proxy,
+                config.max_retries,
             )
 
         elif config.search_engine == "searxng":
             results = _search_searxng(
-                config.query, config.max_results, config.port, config.timeout
+                config.query,
+                config.max_results,
+                config.port,
+                config.timeout,
+                config.max_retries,
             )
 
         elif config.search_engine == "serper":
             results = _search_serper(
-                config.query, config.max_results, config.serper_api_key, config.timeout
+                config.query,
+                config.max_results,
+                config.serper_api_key,
+                config.timeout,
+                config.max_retries,
             )
 
         return filter_pdf_links(results)
@@ -244,7 +295,7 @@ def search_on_web(
 
 
 def _search_duckduckgo(
-    query: str, max_results: int, proxy: Optional[str] = None
+    query: str, max_results: int, proxy: Optional[str] = None, max_retries: int = 1
 ) -> List[str]:
     """
     Helper function for DuckDuckGo search using the ``ddgs`` package.
@@ -253,11 +304,14 @@ def _search_duckduckgo(
     ``langchain-community`` releases import ``from ddgs import DDGS``, which
     silently broke the previous langchain-based implementation. This calls
     ``ddgs`` directly so results no longer depend on parsing a formatted string.
+    Transient failures (rate-limiting, blocked requests) are retried with
+    exponential backoff.
 
     Args:
         query (str): Search query
         max_results (int): Maximum number of results to return
         proxy (str, optional): Proxy configuration
+        max_retries (int): Extra attempts on transient failure
 
     Returns:
         List[str]: List of URLs from search results
@@ -270,20 +324,19 @@ def _search_duckduckgo(
             "search. Please install it with `pip install -U ddgs`."
         ) from e
 
-    try:
+    def _once():
         with DDGS(proxy=proxy) as ddgs:
-            results = [
+            return [
                 result["href"]
                 for result in ddgs.text(query, max_results=max_results)
                 if result.get("href")
             ]
-        return results
-    except Exception as e:
-        raise SearchRequestError(f"DuckDuckGo search failed: {str(e)}")
+
+    return _run_with_retries(_once, max_retries)
 
 
 def _search_bing(
-    query: str, max_results: int, timeout: int, proxy: Optional[str] = None
+    query: str, max_results: int, timeout: int, proxy: Optional[str] = None, max_retries: int = 1
 ) -> List[str]:
     """
     Helper function for Bing search with improved error handling.
@@ -293,17 +346,16 @@ def _search_bing(
         max_results (int): Maximum number of results to return
         timeout (int): Request timeout in seconds
         proxy (str, optional): Proxy configuration
+        max_retries (int): Extra attempts on transient failure
 
     Returns:
         List[str]: List of URLs from search results
     """
-    headers = {"User-Agent": get_random_user_agent()}
 
-    params = {"q": query, "count": max_results}
-
-    proxies = {"http": proxy, "https": proxy} if proxy else None
-
-    try:
+    def _once():
+        headers = {"User-Agent": get_random_user_agent()}
+        params = {"q": query, "count": max_results}
+        proxies = {"http": proxy, "https": proxy} if proxy else None
         response = requests.get(
             "https://www.bing.com/search",
             params=params,
@@ -325,11 +377,11 @@ def _search_bing(
                     break
 
         return results
-    except Exception as e:
-        raise SearchRequestError(f"Bing search failed: {str(e)}")
+
+    return _run_with_retries(_once, max_retries)
 
 
-def _search_searxng(query: str, max_results: int, port: int, timeout: int) -> List[str]:
+def _search_searxng(query: str, max_results: int, port: int, timeout: int, max_retries: int = 1) -> List[str]:
     """
     Helper function for SearXNG search.
 
@@ -338,23 +390,23 @@ def _search_searxng(query: str, max_results: int, port: int, timeout: int) -> Li
         max_results (int): Maximum number of results to return
         port (int): Port for SearXNG
         timeout (int): Request timeout in seconds
+        max_retries (int): Extra attempts on transient failure
 
     Returns:
         List[str]: List of URLs from search results
     """
-    headers = {"User-Agent": get_random_user_agent()}
 
-    params = {
-        "q": query,
-        "format": "json",
-        "categories": "general",
-        "language": "en",
-        "time_range": "",
-        "engines": "duckduckgo,bing,brave",
-        "results": max_results,
-    }
-
-    try:
+    def _once():
+        headers = {"User-Agent": get_random_user_agent()}
+        params = {
+            "q": query,
+            "format": "json",
+            "categories": "general",
+            "language": "en",
+            "time_range": "",
+            "engines": "duckduckgo,bing,brave",
+            "results": max_results,
+        }
         response = requests.get(
             f"http://localhost:{port}/search",
             params=params,
@@ -366,12 +418,12 @@ def _search_searxng(query: str, max_results: int, port: int, timeout: int) -> Li
         json_data = response.json()
         results = [result["url"] for result in json_data.get("results", [])]
         return results[:max_results]
-    except Exception as e:
-        raise SearchRequestError(f"SearXNG search failed: {str(e)}")
+
+    return _run_with_retries(_once, max_retries)
 
 
 def _search_serper(
-    query: str, max_results: int, api_key: str, timeout: int
+    query: str, max_results: int, api_key: str, timeout: int, max_retries: int = 1
 ) -> List[str]:
     """
     Helper function for Serper search.
@@ -381,6 +433,7 @@ def _search_serper(
         max_results (int): Maximum number of results to return
         api_key (str): API key for Serper
         timeout (int): Request timeout in seconds
+        max_retries (int): Extra attempts on transient failure
 
     Returns:
         List[str]: List of URLs from search results
@@ -388,11 +441,9 @@ def _search_serper(
     if not api_key:
         raise SearchConfigError("Serper API key is required")
 
-    headers = {"X-API-KEY": api_key, "Content-Type": "application/json"}
-
-    data = {"q": query, "num": max_results}
-
-    try:
+    def _once():
+        headers = {"X-API-KEY": api_key, "Content-Type": "application/json"}
+        data = {"q": query, "num": max_results}
         response = requests.post(
             "https://google.serper.dev/search",
             json=data,
@@ -412,8 +463,8 @@ def _search_serper(
                     break
 
         return results
-    except Exception as e:
-        raise SearchRequestError(f"Serper search failed: {str(e)}")
+
+    return _run_with_retries(_once, max_retries)
 
 
 def format_proxy(proxy_config: Union[str, Dict, ProxyConfig]) -> str:
