@@ -2,8 +2,10 @@
 This utility function transforms the pydantic schema into a more comprehensible schema.
 """
 
+from typing import Any, Dict, Union
 
-def transform_schema(pydantic_schema):
+
+def transform_schema(pydantic_schema: Dict[str, Any]) -> Dict[str, Any]:
     """
     Transform the pydantic schema into a more comprehensible JSON schema.
 
@@ -12,10 +14,13 @@ def transform_schema(pydantic_schema):
 
     Returns:
         dict: The transformed JSON schema.
+
+    Raises:
+        ValueError: If the schema is missing the 'properties' key.
     """
 
-    def process_properties(properties):
-        result = {}
+    def process_properties(properties: Dict[str, Any]) -> Dict[str, Any]:
+        result: Dict[str, Any] = {}
         for key, value in properties.items():
             if "type" in value:
                 if value["type"] == "array":

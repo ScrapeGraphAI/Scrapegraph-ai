@@ -15,7 +15,7 @@ from .base_node import BaseNode
 
 class HtmlAnalyzerNode(BaseNode):
     """
-    A node that generates an analysis of the provided HTML code based on the wanted infromations to be extracted.
+    A node that generates an analysis of the provided HTML code based on the wanted information to be extracted.
 
     Attributes:
         llm_model: An instance of a language model client, configured for generating answers.
@@ -57,7 +57,7 @@ class HtmlAnalyzerNode(BaseNode):
 
     def execute(self, state: dict) -> dict:
         """
-        Generates an analysis of the provided HTML code based on the wanted infromations to be extracted.
+        Generates an analysis of the provided HTML code based on the wanted information to be extracted.
 
         Args:
             state (dict): The current state of the graph. The input keys will be used

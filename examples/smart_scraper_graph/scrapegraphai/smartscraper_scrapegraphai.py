@@ -18,6 +18,6 @@ if not api_key:
 with Client(api_key=api_key) as client:
     response = client.extract(
         url="https://scrapegraphai.com",
-        prompt="Extract the founders' informations",
+        prompt="Extract the founders' information",
     )
     print(json.dumps(response, indent=2))

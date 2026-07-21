@@ -122,11 +122,11 @@ class GenerateCodeNode(BaseNode):
 
         self.raw_html = state["original_html"][0].page_content
 
-        simplefied_schema = str(transform_schema(self.output_schema.schema()))
+        simplified_schema = str(transform_schema(self.output_schema.schema()))
 
         reasoning_state = {
             "user_input": user_prompt,
-            "json_schema": simplefied_schema,
+            "json_schema": simplified_schema,
             "initial_analysis": refined_prompt,
             "html_code": reduced_html,
             "html_analysis": html_info,
@@ -181,8 +181,8 @@ class GenerateCodeNode(BaseNode):
                 continue
 
             self.logger.info(
-                """--- (Checking if the informations
-                             exctrcated are the ones Requested) ---"""
+                """--- (Checking if the information
+                             extracted are the ones requested) ---"""
             )
             state = self.semantic_comparison_loop(state)
             if state["errors"]["semantic"]:
@@ -220,7 +220,7 @@ class GenerateCodeNode(BaseNode):
                 return state
 
             state["errors"]["syntax"] = [syntax_message]
-            self.logger.info(f"--- (Synax Error Found: {syntax_message}) ---")
+            self.logger.info(f"--- (Syntax Error Found: {syntax_message}) ---")
             analysis = syntax_focused_analysis(state, self.llm_model)
             self.logger.info(
                 """--- (Regenerating Code
@@ -282,12 +282,12 @@ class GenerateCodeNode(BaseNode):
 
             state["errors"]["validation"] = errors
             self.logger.info(
-                "--- (Code Output not compliant to the deisred Output Schema) ---"
+                "--- (Code Output not compliant to the desired Output Schema) ---"
             )
             analysis = validation_focused_analysis(state, self.llm_model)
             self.logger.info(
                 """--- (Regenerating Code to make the
-                             Output compliant to the deisred Output Schema) ---"""
+                             Output compliant to the desired Output Schema) ---"""
             )
             state["generated_code"] = validation_focused_code_generation(
                 state, analysis, self.llm_model
@@ -316,15 +316,15 @@ class GenerateCodeNode(BaseNode):
 
             state["errors"]["semantic"] = comparison_result["differences"]
             self.logger.info(
-                """--- (The informations exctrcated
-                             are not the all ones requested) ---"""
+                """--- (The information extracted
+                             are not all the ones requested) ---"""
             )
             analysis = semantic_focused_analysis(
                 state, comparison_result, self.llm_model
             )
             self.logger.info(
                 """--- (Regenerating Code to
-                                obtain all the infromation requested) ---"""
+                                obtain all the information requested) ---"""
             )
             state["generated_code"] = semantic_focused_code_generation(
                 state, analysis, self.llm_model
