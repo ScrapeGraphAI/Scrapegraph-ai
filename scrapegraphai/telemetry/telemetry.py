@@ -44,13 +44,11 @@ def _check_config_and_environ_for_telemetry_flag(default_value: bool, config_obj
         except Exception:
             pass
 
-    if os.environ.get("SCRAPEGRAPHAI_TELEMETRY_ENABLED") is not None:
-        try:
-            telemetry_enabled = config_obj.getboolean(
-                "DEFAULT", "telemetry_enabled"
-            )
-        except Exception:
-            pass
+    env_value = os.environ.get("SCRAPEGRAPHAI_TELEMETRY_ENABLED")
+    if env_value is not None:
+        env_value = env_value.strip().lower()
+        if env_value in configparser.ConfigParser.BOOLEAN_STATES:
+            telemetry_enabled = configparser.ConfigParser.BOOLEAN_STATES[env_value]
 
     return telemetry_enabled
 
