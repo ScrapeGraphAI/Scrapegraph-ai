@@ -6,6 +6,7 @@ import async_timeout
 from langchain_core.documents import Document
 
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
+from ..utils.event_loop import run_coroutine_sync
 
 logger = get_logger("web-loader")
 
@@ -460,7 +461,7 @@ class ChromiumLoader:
         )
 
         for url in self.urls:
-            html_content = asyncio.run(scraping_fn(url))
+            html_content = run_coroutine_sync(scraping_fn(url))
             metadata = {"source": url}
             yield Document(page_content=html_content, metadata=metadata)
 
