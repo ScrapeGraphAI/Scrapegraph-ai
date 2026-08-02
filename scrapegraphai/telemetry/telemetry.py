@@ -8,12 +8,14 @@ import threading
 import uuid
 from typing import Callable, Dict
 from urllib import request
+
 VERSION = importlib.metadata.version("scrapegraphai")
 TRACK_URL = "https://sgai-oss-tracing.onrender.com/v1/telemetry"
 TIMEOUT = 2
 DEFAULT_CONFIG_LOCATION = os.path.expanduser("~/.scrapegraphai.conf")
 
 logger = logging.getLogger(__name__)
+
 
 def _load_config(config_location: str) -> configparser.ConfigParser:
     config = configparser.ConfigParser()
@@ -45,12 +47,8 @@ def _check_config_and_environ_for_telemetry_flag(default_value: bool, config_obj
             pass
 
     if os.environ.get("SCRAPEGRAPHAI_TELEMETRY_ENABLED") is not None:
-        try:
-            telemetry_enabled = config_obj.getboolean(
-                "DEFAULT", "telemetry_enabled"
-            )
-        except Exception:
-            pass
+        env_value = os.environ.get("SCRAPEGRAPHAI_TELEMETRY_ENABLED")
+        telemetry_enabled = env_value.strip().lower() in ("true", "1", "yes")
 
     return telemetry_enabled
 
@@ -200,4 +198,5 @@ def capture_function_usage(call_fn: Callable) -> Callable:
         finally:
             if is_telemetry_enabled():
                 log_event("function_usage", {"function_name": call_fn.__name__})
+
     return wrapped_fn
