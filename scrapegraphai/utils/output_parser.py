@@ -5,8 +5,8 @@ Functions to retrieve the correct output parser and format instructions for the 
 from typing import Any, Callable, Dict, List, Type, Union
 
 from langchain_core.exceptions import OutputParserException
-from langchain_core.outputs import Generation
 from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.outputs import Generation
 from pydantic import BaseModel as BaseModelV2
 from pydantic.v1 import BaseModel as BaseModelV1
 
@@ -58,6 +58,9 @@ def get_structured_output_parser(
     Returns:
         Callable: The output parser function.
     """
+    if isinstance(schema, dict):
+        return _dict_output_parser
+
     if issubclass(schema, BaseModelV1):
         return _base_model_v1_output_parser
 
