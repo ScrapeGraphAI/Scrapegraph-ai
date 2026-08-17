@@ -64,6 +64,9 @@ class AbstractGraph(ABC):
         self.source = source
         self.config = config
         self.schema = schema
+        # Set to True when no token limit is known for the configured model and
+        # the 8192 fallback is used; see _create_llm.
+        self.model_tokens_defaulted = False
         self.llm_model = self._create_llm(config["llm"])
         self.verbose = False if config is None else config.get("verbose", False)
         self.headless = True if self.config is None else config.get("headless", True)
@@ -218,6 +221,12 @@ class AbstractGraph(ABC):
                     llm_params["model"],
                 )
                 self.model_token = 8192
+                # A silent 8192 window truncates long pages and changes the
+                # answer without failing. The log line alone is not reachable
+                # from the returned object, so callers that batch runs (or
+                # capture stdout only) have no way to tell a real limit from
+                # the fallback. Record it so it can be asserted on.
+                self.model_tokens_defaulted = True
         else:
             self.model_token = llm_params["model_tokens"]
 
