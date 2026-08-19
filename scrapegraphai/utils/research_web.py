@@ -11,7 +11,6 @@ from typing import Dict, List, Optional, Union
 
 import requests
 from bs4 import BeautifulSoup
-from langchain_community.tools import DuckDuckGoSearchResults
 from pydantic import BaseModel, Field, validator
 
 
@@ -215,12 +214,9 @@ def search_on_web(
 
         results = []
         if config.search_engine == "duckduckgo":
-            # Create a DuckDuckGo search object with max_results
-            research = DuckDuckGoSearchResults(max_results=config.max_results)
-            # Run the search
-            res = research.run(config.query)
-            # Extract URLs using regex
-            results = re.findall(r"https?://[^\s,\]]+", res)
+            results = _search_duckduckgo(
+                config.query, config.max_results, formatted_proxy
+            )
 
         elif config.search_engine == "bing":
             results = _search_bing(
@@ -245,6 +241,45 @@ def search_on_web(
         raise SearchRequestError(f"Search request failed: {str(e)}")
     except ValueError as e:
         raise SearchConfigError(f"Invalid search configuration: {str(e)}")
+
+
+def _search_duckduckgo(
+    query: str, max_results: int, proxy: Optional[str] = None
+) -> List[str]:
+    """
+    Helper function for DuckDuckGo search using the ``ddgs`` package.
+
+    The ``duckduckgo-search`` package was renamed to ``ddgs``; recent
+    ``langchain-community`` releases import ``from ddgs import DDGS``, which
+    silently broke the previous langchain-based implementation. This calls
+    ``ddgs`` directly so results no longer depend on parsing a formatted string.
+
+    Args:
+        query (str): Search query
+        max_results (int): Maximum number of results to return
+        proxy (str, optional): Proxy configuration
+
+    Returns:
+        List[str]: List of URLs from search results
+    """
+    try:
+        from ddgs import DDGS
+    except ImportError as e:
+        raise ImportError(
+            "Could not import the 'ddgs' package required for DuckDuckGo "
+            "search. Please install it with `pip install -U ddgs`."
+        ) from e
+
+    try:
+        with DDGS(proxy=proxy) as ddgs:
+            results = [
+                result["href"]
+                for result in ddgs.text(query, max_results=max_results)
+                if result.get("href")
+            ]
+        return results
+    except Exception as e:
+        raise SearchRequestError(f"DuckDuckGo search failed: {str(e)}")
 
 
 def _search_bing(

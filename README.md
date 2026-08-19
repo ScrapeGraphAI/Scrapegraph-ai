@@ -36,7 +36,9 @@ Just say which information you want to extract and the library will do it for yo
 ScrapeGraphAI offers seamless integration with popular frameworks and tools to enhance your scraping capabilities. Whether you're building with Python or Node.js, using LLM frameworks, or working with no-code platforms, we've got you covered with our comprehensive integration options..
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/sgai-hero.png" alt="ScrapeGraphAI Hero" style="width: 100%;">
+  <a href="https://scrapegraphai.com">
+    <img src="https://raw.githubusercontent.com/ScrapeGraphAI/.github/main/profile/assets/api_banner.png" alt="Web data extraction at scale? Try ScrapeGraphAI cloud" style="width: 100%;">
+  </a>
 </p>
 
 You can find more informations at the following [link](https://scrapegraphai.com)
@@ -47,6 +49,7 @@ You can find more informations at the following [link](https://scrapegraphai.com
 - **LLM Frameworks**: [Langchain](https://docs.scrapegraphai.com/integrations/langchain), [Llama Index](https://docs.scrapegraphai.com/integrations/llamaindex), [Crew.ai](https://docs.scrapegraphai.com/integrations/crewai), [Agno](https://docs.scrapegraphai.com/integrations/agno), [CamelAI](https://github.com/camel-ai/camel)
 - **Low-code Frameworks**: [Pipedream](https://pipedream.com/apps/scrapegraphai), [Bubble](https://bubble.io/plugin/scrapegraphai-1745408893195x213542371433906180), [Zapier](https://zapier.com/apps/scrapegraphai/integrations), [n8n](http://localhost:5001/dashboard), [Dify](https://dify.ai), [Toolhouse](https://app.toolhouse.ai/mcp-servers/scrapegraph_smartscraper)
 - **MCP server**:  [Link](https://smithery.ai/server/@ScrapeGraphAI/scrapegraph-mcp)
+
 
 ## 🚀 Quick install
 
@@ -152,7 +155,7 @@ There are other pipelines that can be used to extract information from multiple 
 
 For each of these graphs there is the multi version. It allows to make calls of the LLM in parallel.
 
-It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure**, **Gemini**, **MiniMax** and more, or local models using **Ollama**.
+It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure**, **Gemini**, **[MiniMax](docs/minimax.md)** and more, or local models using **Ollama**.
 
 Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command, if you want to use local models.
 
@@ -162,6 +165,32 @@ Remember to have [Ollama](https://ollama.com/) installed and download the models
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sEZBonBMGP44CtO6GQTwAlL0BGJXjtfd?usp=sharing)
 
 The documentation for ScrapeGraphAI can be found [here](https://docs.scrapegraphai.com/introduction).
+## 🆚 Open Source vs Managed API
+
+ScrapeGraphAI comes in two flavours: **this open-source library**, which you run yourself, and the **managed cloud API** (used via the [Python](https://github.com/ScrapeGraphAI/scrapegraph-py) and [JS/TS](https://github.com/ScrapeGraphAI/scrapegraph-js) SDKs). This table explains the difference so you can pick the right one.
+
+| | Open Source (`scrapegraphai`) | Managed API (`scrapegraph-py` / `scrapegraph-js`) |
+|---|---|---|
+| **What it is** | A Python library you run yourself | A hosted cloud service you call via SDK |
+| **Where it runs** | Your own infrastructure (self-hosted) | ScrapeGraphAI cloud |
+| **LLM** | Bring your own (OpenAI, Groq, Gemini, Azure, local via Ollama) | Managed for you |
+| **Browser / JS rendering** | You configure it (Playwright) | Managed (stealth, `auto`/`fast`/`js` modes) |
+| **Proxies & anti-bot** | Your responsibility | Included |
+| **Scaling & maintenance** | Your responsibility | Fully managed |
+| **Cost model** | LLM tokens + your own infra | Pay-as-you-go credits |
+| **Auth** | Your own LLM keys | `SGAI_API_KEY` |
+| **Capabilities** | Graph pipelines (SmartScraper, Search, Speech, ScriptCreator…) | Scrape, Extract, Search, Crawl, Monitor, History |
+| **Setup effort** | More configuration | Minimal — API key + one call |
+| **License** | MIT | SDK is MIT; the API service is paid |
+
+**Choose the open-source library** if you want full control, on-prem/self-hosted data, local LLMs (Ollama), or fine-grained cost tuning — and you're happy to manage browsers, proxies and scaling yourself.
+
+**Choose the managed API** if you want zero infrastructure, managed JS rendering & anti-bot, built-in **Crawl** and scheduled **Monitor** jobs, and the fastest path to production — billed per credit.
+
+- Open-source library: https://github.com/ScrapeGraphAI/Scrapegraph-ai
+- Python SDK: https://github.com/ScrapeGraphAI/scrapegraph-py
+- JS/TS SDK: https://github.com/ScrapeGraphAI/scrapegraph-js
+- API docs: https://docs.scrapegraphai.com/introduction
 
 ## 🤝 Contributing
 
@@ -174,9 +203,9 @@ Please see the [contributing guidelines](https://github.com/ScrapeGraphAI/Scrape
 [![My Skills](https://skillicons.dev/icons?i=twitter)](https://twitter.com/scrapegraphai)
 
 ## 🔗 ScrapeGraph API & SDKs
-If you are looking for a quick solution to integrate ScrapeGraph in your system, check out our powerful API [here!](https://dashboard.scrapegraphai.com/login)
+If you are looking for a quick solution to integrate ScrapeGraph in your system, check out our powerful API [here!](https://scrapegraphai.com)
 
-[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://dashboard.scrapegraphai.com/login)
+[![API Banner](https://raw.githubusercontent.com/ScrapeGraphAI/Scrapegraph-ai/main/docs/assets/api_banner.png)](https://scrapegraphai.com)
 
 We offer SDKs in both Python and Node.js, making it easy to integrate into your projects. Check them out below:
 

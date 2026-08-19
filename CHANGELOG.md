@@ -1,3 +1,77 @@
+## [2.1.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.6...v2.1.7) (2026-08-19)
+
+
+### Bug Fixes
+
+* **graph:** expose when the 8192 token fallback was used ([470da9d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/470da9d51d6220a8020ee8a1d91b618d3d622042)), closes [#1121](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1121)
+
+## [2.1.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.5...v2.1.6) (2026-07-20)
+
+
+### Bug Fixes
+
+* update MiniMax model metadata and endpoints ([#1103](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1103)) ([e5f8f2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e5f8f2bf008cd7ce7f3d5980bf6f98e6153b2264))
+
+## [2.1.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.4...v2.1.5) (2026-07-08)
+
+
+### Bug Fixes
+
+* pop model_tokens so it is not forwarded to the model client ([#1100](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1100)) ([d2b970c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d2b970ca77da64b6b6b91fa2353f2e41b9cfe105))
+
+
+### Docs
+
+* **readme:** add Open Source vs Managed API comparison ([#1091](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1091)) ([ef3523b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ef3523b1e1c62052b5c0e6b14cebe7933441a7e5))
+
+
+### CI
+
+* run only deterministic unit suites in Test Suite workflow ([#1095](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1095)) ([037a42e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/037a42ed73354c8b3eabd9dcc28236152602ef9e))
+
+## [2.1.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.3...v2.1.4) (2026-06-23)
+
+
+### Bug Fixes
+
+* lazy imports to prevent torchcodec FFmpeg DLL crash on Windows ([#1089](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1089)) ([#1092](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1092)) ([e5c2a42](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e5c2a4292174bae948731379c88aafb14197ec6c))
+
+
+### Docs
+
+* swap Integrations infographic for new API banner; fix CTA links ([71ab440](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71ab4406867ef02c22349c2dedc18c57d8bdfdec))
+
+## [2.1.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.2...v2.1.3) (2026-06-02)
+
+
+### Bug Fixes
+
+* **search:** restore SearchGraph by migrating DuckDuckGo backend to ddgs ([#1083](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1083)) ([2139e37](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2139e37c0addfb9039e3b985bb33801f20e4e05b)), closes [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082) [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082)
+
+## [2.2.0-beta.3](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.2...v2.2.0-beta.3) (2026-06-01)
+
+
+### Bug Fixes
+
+* **nodes:** update outdated ChatOllama import path to langchain_ollama ([#1076](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1076)) ([e6054cb](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e6054cbf19a7fe940899ea70b30706f676f86fa7))
+
+
+### Docs
+
+* 📚 Standardize and fix links across translated READMEs ([#1074](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1074)) ([458d36a](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/458d36a6b83f4a412206cdbe9935a059e9d47f57))
+
+
+### CI
+
+* **release:** 2.1.2 [skip ci] ([210c992](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/210c99280048863774fa27053412185a5c18150d)), closes [#1076](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1076) [#1074](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1074)
+
+## [2.2.0-beta.2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.1...v2.2.0-beta.2) (2026-06-01)
+
+
+### Features
+
+* upgrade MiniMax default model to M3 ([#1080](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1080)) ([1b16c26](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/1b16c268f4e9044c1386ccfaf67b38692b487e5a))
+
 ## [2.2.0-beta.5](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.4...v2.2.0-beta.5) (2026-06-23)
 
 
@@ -1572,7 +1646,6 @@ Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 
 * implement ScrapeGraph class for only web scraping automation ([612c644](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/612c644623fa6f4fe77a64a5f1a6a4d6cd5f4254))
 * Implement SmartScraperMultiParseMergeFirstGraph class that scrapes a list of URLs and merge the content first and finally generates answers to a given prompt. ([3e3e1b2](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3e3e1b2f3ae8ed803d03b3b44b199e139baa68d4))
-=======
 ## [1.26.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v1.26.6...v1.26.7) (2024-10-19)
 
 
@@ -3646,7 +3719,6 @@ Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 * **release:** 1.6.1 [skip ci] ([44fbd71](https://github.com/VinciGit00/Scrapegraph-ai/commit/44fbd71742a57a4b10f22ed33781bb67aa77e58d))
 
 ## [1.6.1](https://github.com/VinciGit00/Scrapegraph-ai/compare/v1.6.0...v1.6.1) (2024-06-15)
-=======
 
 
 ### Bug Fixes
