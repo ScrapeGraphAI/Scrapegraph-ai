@@ -38,6 +38,7 @@ jobs:
       - name: Run unit tests
         run: >
           uv run pytest
+          tests/test_atlascloud_model.py
           tests/test_batch_api.py
           tests/test_csv_scraper_multi_graph.py
           tests/test_depth_search_graph.py
@@ -46,4 +47,5 @@ jobs:
           tests/test_scrape_do.py
           tests/test_search_graph.py
           tests/utils/convert_to_md_test.py
+          tests/utils/output_parser_test.py
           tests/utils/parse_state_keys_test.py
