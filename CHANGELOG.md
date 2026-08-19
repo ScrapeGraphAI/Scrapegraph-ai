@@ -1,3 +1,10 @@
+## [2.1.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.6...v2.1.7) (2026-08-19)
+
+
+### Bug Fixes
+
+* **graph:** expose when the 8192 token fallback was used ([470da9d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/470da9d51d6220a8020ee8a1d91b618d3d622042)), closes [#1121](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1121)
+
 ## [2.1.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.5...v2.1.6) (2026-07-20)
 
 
