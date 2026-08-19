@@ -32,6 +32,61 @@ def test_llm_missing_tokens(monkeypatch, capsys):
     assert "Max input tokens for model" in captured
 
 
+def test_llm_missing_tokens_sets_defaulted_flag(monkeypatch):
+    """An unknown model must record that the 8192 window is a fallback.
+
+    The warning is only a log line, so a caller reading ``model_token`` sees
+    8192 and cannot tell whether that is the model's real limit or the
+    default. A silent 8192 window truncates long pages and changes the answer
+    without failing, which is the failure mode reported in #1121.
+    """
+    from scrapegraphai.graphs import abstract_graph
+
+    monkeypatch.setattr(
+        abstract_graph, "models_tokens", {"openai": {"gpt-3.5-turbo": 4096}}
+    )
+    llm_config = {"model": "openai/not-known-model", "openai_api_key": "test"}
+    with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
+        graph = TestGraph("Test prompt", {"llm": llm_config})
+
+    assert graph.model_token == 8192
+    assert graph.model_tokens_defaulted is True
+
+
+def test_known_model_does_not_set_defaulted_flag(monkeypatch):
+    """A model with a known limit must not be flagged as defaulted."""
+    from scrapegraphai.graphs import abstract_graph
+
+    monkeypatch.setattr(
+        abstract_graph, "models_tokens", {"openai": {"gpt-3.5-turbo": 4096}}
+    )
+    llm_config = {"model": "openai/gpt-3.5-turbo", "openai_api_key": "test"}
+    with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
+        graph = TestGraph("Test prompt", {"llm": llm_config})
+
+    assert graph.model_token == 4096
+    assert graph.model_tokens_defaulted is False
+
+
+def test_explicit_model_tokens_does_not_set_defaulted_flag(monkeypatch):
+    """An explicit model_tokens is authoritative, not a fallback."""
+    from scrapegraphai.graphs import abstract_graph
+
+    monkeypatch.setattr(
+        abstract_graph, "models_tokens", {"openai": {"gpt-3.5-turbo": 4096}}
+    )
+    llm_config = {
+        "model": "openai/not-known-model",
+        "openai_api_key": "test",
+        "model_tokens": 1000000,
+    }
+    with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
+        graph = TestGraph("Test prompt", {"llm": llm_config})
+
+    assert graph.model_token == 1000000
+    assert graph.model_tokens_defaulted is False
+
+
 def test_burr_kwargs():
     """Test that burr_kwargs configuration correctly sets use_burr and burr_config on the graph."""
     dummy_graph = Mock()
