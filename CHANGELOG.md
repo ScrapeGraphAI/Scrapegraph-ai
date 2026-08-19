@@ -1,3 +1,32 @@
+## [2.2.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2026-08-19)
+
+
+### Bug Fixes
+
+* **graph:** expose when the 8192 token fallback was used ([470da9d](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/470da9d51d6220a8020ee8a1d91b618d3d622042)), closes [#1121](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1121)
+* lazy imports to prevent torchcodec FFmpeg DLL crash on Windows ([#1089](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1089)) ([#1092](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1092)) ([e5c2a42](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e5c2a4292174bae948731379c88aafb14197ec6c))
+* pop model_tokens so it is not forwarded to the model client ([#1100](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1100)) ([d2b970c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d2b970ca77da64b6b6b91fa2353f2e41b9cfe105))
+* **search:** restore SearchGraph by migrating DuckDuckGo backend to ddgs ([#1083](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1083)) ([2139e37](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2139e37c0addfb9039e3b985bb33801f20e4e05b)), closes [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082) [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082)
+* update MiniMax model metadata and endpoints ([#1103](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1103)) ([e5f8f2b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/e5f8f2bf008cd7ce7f3d5980bf6f98e6153b2264))
+
+
+### Docs
+
+* add AGENTS.md with contribution rules for AI agents ([3b2f986](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3b2f986612bbc70879a0337197a1064cf5875245))
+* **readme:** add Open Source vs Managed API comparison ([#1091](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1091)) ([ef3523b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ef3523b1e1c62052b5c0e6b14cebe7933441a7e5))
+* swap Integrations infographic for new API banner; fix CTA links ([71ab440](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/71ab4406867ef02c22349c2dedc18c57d8bdfdec))
+
+
+### CI
+
+* **release:** 2.1.3 [skip ci] ([cfb815f](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/cfb815fb0bba3dfc8262a24a7ddab28e22e13893)), closes [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082) [#1082](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1082)
+* **release:** 2.1.4 [skip ci] ([7fc9c57](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/7fc9c57a0bb861d829f38ed672e35c5ba0e6c79c)), closes [#1089](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1089) [#1092](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1092)
+* **release:** 2.1.5 [skip ci] ([c9e0bd0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/c9e0bd036a1f5def8ac92759cda90ba52e3b35e5)), closes [#1100](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1100) [#1091](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1091) [#1095](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1095)
+* **release:** 2.1.6 [skip ci] ([27d9d28](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/27d9d289f964844a28006f6d7d1518e293fd49ff)), closes [#1103](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1103)
+* **release:** 2.1.7 [skip ci] ([ca112db](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/ca112db4d8b1bd34961e9f1b7e3adf0c7d600c01)), closes [#1121](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1121)
+* run only deterministic unit suites in Test Suite workflow ([#1095](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1095)) ([037a42e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/037a42ed73354c8b3eabd9dcc28236152602ef9e))
+* run the two new deterministic unit suites ([23e3d06](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/23e3d064e3850de222bcfc13907695278ca3bba9)), closes [#1104](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1104) [#1085](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1085)
+
 ## [2.1.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.6...v2.1.7) (2026-08-19)
 
 
