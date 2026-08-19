@@ -9,7 +9,6 @@ from typing import List, Optional
 from langchain_core.prompts import PromptTemplate
 from langchain_aws import ChatBedrock
 from langchain_ollama import ChatOllama
-from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI
 from requests.exceptions import Timeout
@@ -23,7 +22,10 @@ from ..prompts import (
     TEMPLATE_NO_CHUNKS,
     TEMPLATE_NO_CHUNKS_MD,
 )
-from ..utils.output_parser import get_pydantic_output_parser
+from ..utils.output_parser import (
+    TolerantJsonOutputParser,
+    get_pydantic_output_parser,
+)
 from .base_node import BaseNode
 
 
@@ -148,7 +150,7 @@ class GenerateAnswerNode(BaseNode):
                     format_instructions = ""
         else:
             if not isinstance(self.llm_model, ChatBedrock):
-                output_parser = JsonOutputParser()
+                output_parser = TolerantJsonOutputParser()
                 format_instructions = (
                     "You must respond with a JSON object. Your response should be formatted as a valid JSON "
                     "with a 'content' field containing your analysis. For example:\n"

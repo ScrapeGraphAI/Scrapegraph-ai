@@ -2,11 +2,51 @@
 Functions to retrieve the correct output parser and format instructions for the LLM model.
 """
 
-from typing import Any, Callable, Dict, Type, Union
+from typing import Any, Callable, Dict, List, Type, Union
 
+from langchain_core.exceptions import OutputParserException
+from langchain_core.outputs import Generation
 from langchain_core.output_parsers import JsonOutputParser
 from pydantic import BaseModel as BaseModelV2
 from pydantic.v1 import BaseModel as BaseModelV1
+
+
+def _strip_doubled_braces(text: str) -> str:
+    """Strip one layer of the doubled braces some models echo from the prompt.
+
+    The default ``format_instructions`` show the expected shape using LangChain's
+    escaped braces, e.g. ``{{"content": "..."}}``. Strongly instruction-following
+    models (GPT-4o, etc.) emit single braces, but some models (notably DeepSeek)
+    copy the doubled braces verbatim, producing ``{{"content": "..."}}`` which is
+    not valid JSON. This normalizes that single case and is a no-op otherwise.
+    """
+    stripped = text.strip()
+    if stripped.startswith("{{") and stripped.endswith("}}"):
+        return stripped[1:-1]
+    return text
+
+
+class TolerantJsonOutputParser(JsonOutputParser):
+    """A :class:`JsonOutputParser` tolerant of doubled-brace output.
+
+    Behaviour is unchanged on the happy path: valid JSON is parsed by the parent
+    parser exactly as before. Only when parsing fails AND the output is wrapped in
+    doubled braces (``{{ ... }}``) does it retry once with a single layer of braces
+    removed. This keeps providers like DeepSeek working without altering output for
+    any model that already returns clean JSON.
+    """
+
+    def parse_result(self, result: List[Generation], *, partial: bool = False) -> Any:
+        try:
+            return super().parse_result(result, partial=partial)
+        except OutputParserException:
+            text = result[0].text
+            normalized = _strip_doubled_braces(text)
+            if normalized != text:
+                return super().parse_result(
+                    [Generation(text=normalized)], partial=partial
+                )
+            raise
 
 
 def get_structured_output_parser(
