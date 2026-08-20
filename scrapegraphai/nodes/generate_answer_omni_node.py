@@ -125,7 +125,7 @@ class GenerateAnswerOmniNode(BaseNode):
                 template=TEMPLATE_NO_CHUNKS_OMNI_prompt,
                 input_variables=["question"],
                 partial_variables={
-                    "context": doc,
+                    "context": doc[0],
                     "format_instructions": format_instructions,
                     "img_desc": imag_desc,
                 },

@@ -127,7 +127,7 @@ class GenerateAnswerCSVNode(BaseNode):
                 template=TEMPLATE_NO_CHUKS_CSV_PROMPT,
                 input_variables=["question"],
                 partial_variables={
-                    "context": doc,
+                    "context": doc[0],
                     "format_instructions": format_instructions,
                 },
             )
