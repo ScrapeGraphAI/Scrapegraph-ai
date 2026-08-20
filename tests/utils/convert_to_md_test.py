@@ -11,6 +11,15 @@ def test_html_with_links_and_images():
     assert convert_to_md(html) is not None
 
 
+def test_relative_links_use_document_url_as_base():
+    html = '<a href="guide.html">Guide</a><img src="images/logo.png" alt="Logo">'
+
+    markdown = convert_to_md(html, "https://example.com/docs/index.html")
+
+    assert "[Guide](https://example.com/docs/guide.html)" in markdown
+    assert "![Logo](https://example.com/docs/images/logo.png)" in markdown
+
+
 def test_html_with_tables():
     html = """
     <table>
