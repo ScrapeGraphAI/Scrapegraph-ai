@@ -192,6 +192,12 @@ ScrapeGraphAI comes in two flavours: **this open-source library**, which you run
 - JS/TS SDK: https://github.com/ScrapeGraphAI/scrapegraph-js
 - API docs: https://docs.scrapegraphai.com/introduction
 
+## 🏆 Sponsors
+
+[![NodeMaven](docs/assets/nodemaven-banner.png)](https://go.nodemaven.com/scrapegraphyai)
+
+Codes for ScrapeGraphAI users: `SCRAPEGRAPH35` (35% off mobile and residential proxies), `SCRAPEGRAPH40` (40% off ISP / static proxies).
+
 ## 🤝 Contributing
 
 Feel free to contribute and join our Discord server to discuss with us improvements and give us suggestions!
