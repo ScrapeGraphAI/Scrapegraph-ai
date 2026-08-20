@@ -287,6 +287,6 @@ node_config = {
 
 ## See Also
 
-- [FetchNode API Documentation](../api/nodes/fetch_node.md)
-- [Graph Configuration](./graph_configuration.md)
-- [Error Handling](./error_handling.md)
+- [FetchNode source](../scrapegraphai/nodes/fetch_node.py)
+- [Graph examples](#graph-examples)
+- [Timeout handling best practices](#best-practices)
