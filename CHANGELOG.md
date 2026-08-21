@@ -1,3 +1,15 @@
+## [2.2.0-beta.7](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.6...v2.2.0-beta.7) (2026-08-21)
+
+
+### Bug Fixes
+
+* resolve markdown links from the document URL ([875385b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/875385b56a3b2ce33b0bddc7baa194017d0293e2))
+
+
+### Docs
+
+* fix timeout documentation links ([4763fdc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4763fdcc08af079a7e5a386ce58e7ae2d989155d))
+
 ## [2.2.0-beta.6](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0-beta.5...v2.2.0-beta.6) (2026-08-19)
 
 
