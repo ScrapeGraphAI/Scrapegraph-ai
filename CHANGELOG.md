@@ -1,3 +1,17 @@
+## [2.2.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.0...v2.2.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* resolve markdown links from the document URL ([875385b](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/875385b56a3b2ce33b0bddc7baa194017d0293e2))
+
+
+### Docs
+
+* **readme:** add NodeMaven affiliate discount codes ([5677e3c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/5677e3c462b3d7fffad5a237e17ac0e0088f836a))
+* **readme:** add NodeMaven sponsor banner and tracking link ([68573c0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/68573c010933a7b19746180353d616aee190219a))
+* fix timeout documentation links ([4763fdc](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/4763fdcc08af079a7e5a386ce58e7ae2d989155d))
+
 ## [2.2.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.1.7...v2.2.0) (2026-08-19)
 
 
