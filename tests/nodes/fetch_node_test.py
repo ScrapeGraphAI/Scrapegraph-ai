@@ -1,3 +1,5 @@
+from typing import Any
+
 from langchain_core.documents import Document
 
 from scrapegraphai.nodes import FetchNode
@@ -37,6 +39,35 @@ def test_fetch_html(mocker):
         "https://raw.githubusercontent.com/VinciGit00/Scrapegraph-ai/main/docs/assets/scrapegraphai_logo.png"
         in doc.page_content
     )
+
+
+def test_fetch_x_status_with_xquik(mocker: Any) -> None:
+    source = "https://x.com/example/status/1893456789012345678"
+    document = Document(
+        page_content='{"tweet":{"id":"1893456789012345678"}}',
+        metadata={"source": source, "loader": "xquik"},
+    )
+    loader_class = mocker.patch("scrapegraphai.docloaders.xquik.XquikLoader")
+    loader_class.return_value.load.return_value = [document]
+    convert_to_md = mocker.patch("scrapegraphai.nodes.fetch_node.convert_to_md")
+    node = FetchNode(
+        input="url",
+        output=["doc"],
+        node_config={
+            "force": True,
+            "xquik": {"api_key": "test-key", "timeout": 12},
+        },
+    )
+
+    result = node.execute({"url": source})
+
+    loader_class.assert_called_once_with(
+        [source],
+        api_key="test-key",
+        timeout=12,
+    )
+    convert_to_md.assert_not_called()
+    assert result["doc"] == [document]
 
 
 def test_fetch_json():

@@ -142,6 +142,45 @@ The output will be a dictionary like the following:
     }
 }
 ```
+
+### Scrape X posts with Xquik
+
+Public X status pages can return login or client-rendered shells instead of the
+post content. Install the optional Xquik integration to retrieve the published
+tweet data before ScrapeGraphAI extracts the requested fields:
+
+```bash
+pip install scrapegraphai x_twitter_scraper
+```
+
+```python
+import os
+
+from scrapegraphai.graphs import SmartScraperGraph
+
+graph = SmartScraperGraph(
+    prompt="Extract the post text, author username, creation time, and metrics.",
+    source="https://x.com/example/status/1893456789012345678",
+    config={
+        "llm": {
+            "api_key": os.environ["OPENAI_API_KEY"],
+            "model": "openai/gpt-4o-mini",
+        },
+        "xquik": {
+            "api_key": os.environ["X_TWITTER_SCRAPER_API_KEY"],
+            "timeout": 30,
+        },
+    },
+)
+
+result = graph.run()
+```
+
+The source may also be a numeric tweet ID. See the
+[complete Xquik example](examples/xquik_tweet/README.md).
+
+Xquik is an independent third-party service. Not affiliated with X Corp.
+
 There are other pipelines that can be used to extract information from multiple pages, generate Python scripts, or even generate audio files.
 
 | Pipeline Name           | Description                                                                                                      |

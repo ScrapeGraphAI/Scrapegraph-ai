@@ -2,9 +2,9 @@
 FetchNode Module
 """
 
+import concurrent.futures
 import json
 from typing import List, Optional
-import concurrent.futures
 
 import requests
 from langchain_core.documents import Document
@@ -85,6 +85,8 @@ class FetchNode(BaseNode):
         self.plasmate = (
             None if node_config is None else node_config.get("plasmate", None)
         )
+
+        self.xquik = None if node_config is None else node_config.get("xquik", None)
 
         self.storage_state = (
             None if node_config is None else node_config.get("storage_state", None)
@@ -182,6 +184,7 @@ class FetchNode(BaseNode):
 
         if input_type == "pdf":
             from langchain_community.document_loaders import PyPDFLoader
+
             loader = PyPDFLoader(source)
             # PyPDFLoader.load() can be blocking for large PDFs. Run it in a thread and
             # enforce the configured timeout if provided.
@@ -317,7 +320,17 @@ class FetchNode(BaseNode):
             if "timeout" not in loader_kwargs and self.timeout is not None:
                 loader_kwargs["timeout"] = self.timeout
 
-            if self.browser_base:
+            if self.xquik is not None:
+                from ..docloaders.xquik import XquikLoader
+
+                xquik_config = self.xquik if isinstance(self.xquik, dict) else {}
+                xquik_loader = XquikLoader(
+                    [source],
+                    api_key=xquik_config.get("api_key"),
+                    timeout=xquik_config.get("timeout", self.timeout or 30),
+                )
+                document = xquik_loader.load()
+            elif self.browser_base:
                 try:
                     from ..docloaders.browser_base import browser_base_fetch
                 except ImportError:
@@ -385,7 +398,7 @@ class FetchNode(BaseNode):
 
             parsed_content = document[0].page_content
 
-            if (
+            if self.xquik is None and (
                 (
                     isinstance(self.llm_model, ChatOpenAI)
                     or isinstance(self.llm_model, AzureChatOpenAI)
@@ -397,8 +410,13 @@ class FetchNode(BaseNode):
             ):
                 parsed_content = convert_to_md(document[0].page_content, parsed_content)
 
+            metadata = (
+                dict(document[0].metadata)
+                if self.xquik is not None
+                else {"source": "html file"}
+            )
             compressed_document = [
-                Document(page_content=parsed_content, metadata={"source": "html file"})
+                Document(page_content=parsed_content, metadata=metadata)
             ]
         state["doc"] = document
         state.update(

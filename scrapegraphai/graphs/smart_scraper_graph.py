@@ -64,7 +64,11 @@ class SmartScraperGraph(AbstractGraph):
     ):
         super().__init__(prompt, config, source, schema)
 
-        self.input_key = "url" if source.startswith("http") else "local_dir"
+        self.input_key = (
+            "url"
+            if source.startswith("http") or config.get("xquik") is not None
+            else "local_dir"
+        )
 
         # for detailed logging of the SmartScraper API set it to True
         self.verbose = config.get("verbose", False)
@@ -104,6 +108,7 @@ class SmartScraperGraph(AbstractGraph):
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
                 "browser_base": self.config.get("browser_base"),
                 "scrape_do": self.config.get("scrape_do"),
+                "xquik": self.config.get("xquik"),
                 "storage_state": self.config.get("storage_state"),
             },
         )
