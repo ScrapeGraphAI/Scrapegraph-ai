@@ -152,9 +152,9 @@ class GenerateAnswerNode(BaseNode):
             if not isinstance(self.llm_model, ChatBedrock):
                 output_parser = TolerantJsonOutputParser()
                 format_instructions = (
-                    "You must respond with a JSON object. Your response should be formatted as a valid JSON "
-                    "with a 'content' field containing your analysis. For example:\n"
-                    '{{"content": "your analysis here"}}'
+                    "You must respond with a valid JSON object. "
+                    "Determine the JSON keys and structure based on what the user's question asks for. "
+                    "Do not use a 'content' wrapper field - output the requested keys directly."
                 )
             else:
                 output_parser = None
@@ -193,7 +193,7 @@ class GenerateAnswerNode(BaseNode):
 
             try:
                 answer = self.invoke_with_timeout(
-                    chain, {"content": doc, "question": user_prompt}, self.timeout
+                    chain, {"content": doc[0], "question": user_prompt}, self.timeout
                 )
             except (Timeout, json.JSONDecodeError) as e:
                 error_msg = (
