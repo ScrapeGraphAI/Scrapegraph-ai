@@ -19,6 +19,7 @@ from .code_error_correction import (
 from .convert_to_md import convert_to_md
 from .data_export import export_to_csv, export_to_json, export_to_xml
 from .dict_content_compare import are_content_equal
+from .event_loop import run_coroutine_sync
 from .llm_callback_manager import CustomLLMCallbackManager
 from .logging import (
     get_logger,
@@ -86,6 +87,7 @@ __all__ = [
     "dynamic_import",
     "srcfile_import",
     "num_tokens_calculus",
+    "run_coroutine_sync",
     # Proxy handling
     "Proxy",
     "parse_or_search_proxy",

@@ -8,6 +8,7 @@ from typing import List, Optional, Type
 from pydantic import BaseModel
 from tqdm.asyncio import tqdm
 
+from ..utils.event_loop import run_coroutine_sync
 from .base_node import BaseNode
 
 DEFAULT_BATCHSIZE = 16
@@ -66,15 +67,7 @@ class GraphIteratorNode(BaseNode):
             f"--- Executing {self.node_name} Node with batchsize {batchsize} ---"
         )
 
-        try:
-            eventloop = asyncio.get_event_loop()
-        except RuntimeError:
-            eventloop = None
-
-        if eventloop and eventloop.is_running():
-            state = eventloop.run_until_complete(self._async_execute(state, batchsize))
-        else:
-            state = asyncio.run(self._async_execute(state, batchsize))
+        state = run_coroutine_sync(self._async_execute(state, batchsize))
 
         return state
 
