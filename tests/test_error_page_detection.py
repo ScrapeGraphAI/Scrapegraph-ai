@@ -324,3 +324,86 @@ def test_state_is_unchanged_by_the_guard():
 
     assert state["parsed_doc"]
     assert "1865" in "".join(state["parsed_doc"])
+
+
+# --------------------------------------------------------------------------- #
+# ParseNode: warn when the answer looks one link away (issue #1120)
+# --------------------------------------------------------------------------- #
+
+POLICY_PROMPT = (
+    "Does this page, or a privacy policy it links to, state that email addresses "
+    "will not be sold or transferred to third parties?"
+)
+
+# The reported shape: a contact page whose notice really does exist, but on the
+# policy page it links to rather than in its own text.
+CONTACT_LINKING_TO_POLICY = (
+    "<html><body><p>Call us on 555-0100 to book an appointment.</p>"
+    '<a href="https://example.com/privacy/">Privacy Policy</a>'
+    "</body></html>"
+)
+
+CONTACT_ANSWERING_ITSELF = (
+    "<html><body><p>We never sell or transfer your email addresses to third "
+    "parties, and our privacy policy says so.</p>"
+    '<a href="https://example.com/">Home</a></body></html>'
+)
+
+CONTACT_WITHOUT_LINKS = (
+    "<html><body><p>We never sell or transfer your email addresses to third "
+    "parties; that is our privacy policy.</p></body></html>"
+)
+
+
+def test_warns_when_the_answer_is_only_behind_a_link(library_logs_propagate, caplog):
+    """A term present only in a link is evidence the page was never going to answer."""
+    node = _parse_node()
+
+    with caplog.at_level("WARNING"):
+        _run(node, CONTACT_LINKING_TO_POLICY, POLICY_PROMPT)
+
+    assert "appear only in links on this page" in caplog.text
+    assert "DepthSearchGraph" in caplog.text
+    assert "privacy" in caplog.text
+
+
+def test_silent_when_the_page_itself_holds_the_terms(library_logs_propagate, caplog):
+    """No hint when the page can answer; the warning must not fire on every link."""
+    node = _parse_node()
+
+    with caplog.at_level("WARNING"):
+        _run(node, CONTACT_ANSWERING_ITSELF, POLICY_PROMPT)
+
+    assert "appear only in links on this page" not in caplog.text
+
+
+def test_silent_when_the_page_has_no_links(library_logs_propagate, caplog):
+    """With nothing linked there is no other page to point the user at."""
+    node = _parse_node()
+
+    with caplog.at_level("WARNING"):
+        _run(node, CONTACT_WITHOUT_LINKS, POLICY_PROMPT)
+
+    assert "appear only in links on this page" not in caplog.text
+
+
+def test_link_hint_does_not_stack_with_the_missing_terms_warning(
+    library_logs_propagate, caplog
+):
+    """A page holding no trace of the request gets one warning, not two."""
+    node = _parse_node()
+
+    with caplog.at_level("WARNING"):
+        _run(node, WIKIPEDIA_404, "What is the founding year of Timpson?")
+
+    assert "None of the requested terms" in caplog.text
+    assert "appear only in links on this page" not in caplog.text
+
+
+def test_link_hint_leaves_the_parsed_chunks_untouched():
+    """The hint only logs; parsing behaviour is unchanged."""
+    node = _parse_node()
+    state = _run(node, CONTACT_LINKING_TO_POLICY, POLICY_PROMPT)
+
+    assert state["parsed_doc"]
+    assert "555-0100" in "".join(state["parsed_doc"])
