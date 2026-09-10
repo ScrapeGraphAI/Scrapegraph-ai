@@ -3,6 +3,54 @@ from langchain_core.documents import Document
 from scrapegraphai.nodes import FetchNode
 
 
+def test_fetch_html_convert_to_md_uses_source_as_baseurl(mocker):
+    """convert_to_md must receive the fetched page's URL as baseurl, not the HTML itself."""
+    content = "<html><body><a href='/relative'>link</a></body></html>"
+    mock_loader_cls = mocker.patch("scrapegraphai.nodes.fetch_node.ChromiumLoader")
+    mock_loader = mock_loader_cls.return_value
+    mock_loader.load.return_value = [Document(page_content=content)]
+    mock_convert = mocker.patch(
+        "scrapegraphai.nodes.fetch_node.convert_to_md", return_value="converted"
+    )
+
+    node = FetchNode(
+        input="url | local_dir",
+        output=["doc_content"],
+        node_config={"headless": False, "force": True},
+    )
+    source = "https://scrapegraph-ai.com/example"
+    result = node.execute({"url": source})
+
+    mock_convert.assert_called_once_with(content, source)
+    assert result["doc_content"][0].page_content == "converted"
+
+
+def test_fetch_html_use_soup_with_default_cut_does_not_raise(mocker):
+    """use_soup with the default cut=True must not raise UnboundLocalError and
+    must call convert_to_md with (html, source), not (source, html)."""
+    html = "<html><body><a href='/relative'>link</a></body></html>"
+    mock_response = mocker.Mock()
+    mock_response.status_code = 200
+    mock_response.text = html
+    mocker.patch(
+        "scrapegraphai.nodes.fetch_node.requests.get", return_value=mock_response
+    )
+    mock_convert = mocker.patch(
+        "scrapegraphai.nodes.fetch_node.convert_to_md", return_value="converted"
+    )
+
+    node = FetchNode(
+        input="url | local_dir",
+        output=["doc_content"],
+        node_config={"use_soup": True, "force": True},
+    )
+    source = "https://scrapegraph-ai.com/example"
+    result = node.execute({"url": source})
+
+    mock_convert.assert_called_once_with(html, source)
+    assert result["doc_content"][0].page_content == "converted"
+
+
 def test_fetch_html(mocker):
     title = "ScrapeGraph AI"
     link_url = "https://github.com/VinciGit00/Scrapegraph-ai"
