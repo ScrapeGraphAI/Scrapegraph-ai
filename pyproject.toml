@@ -121,3 +121,10 @@ ignore_missing_imports = true
 [tool.poe.tasks]
 pylint-local = "pylint scraperaphai/**/*.py"
 pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
+
+[dependency-groups]
+dev = [
+    "langchain-fireworks>=1.6.1",
+    "pandas>=2.3.3",
+    "selenium>=4.49.0",
+]
