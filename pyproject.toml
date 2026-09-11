@@ -121,3 +121,11 @@ ignore_missing_imports = true
 [tool.poe.tasks]
 pylint-local = "pylint scraperaphai/**/*.py"
 pylint-ci = "pylint --disable=C0114,C0115,C0116 --exit-zero scrapegraphai/**/*.py"
+
+[dependency-groups]
+vagas = [
+    "langchain-google-genai>=3,<4",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+]
