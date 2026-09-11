@@ -14,7 +14,7 @@ def graph_config():
     """
     return {
         "llm": {
-            "model": "ollama/mistral",
+            "model": "ollama/glm-5.3-flash:cloud",
             "temperature": 0,
             "format": "json",
             "base_url": "http://localhost:11434",
@@ -34,6 +34,6 @@ def test_script_creator_graph(graph_config: dict):
         config=graph_config,
     )
     result = smart_scraper_graph.run()
-    assert result is not None, (
-        "ScriptCreatorGraph execution failed to produce a result."
-    )
+    assert (
+        result is not None
+    ), "ScriptCreatorGraph execution failed to produce a result."

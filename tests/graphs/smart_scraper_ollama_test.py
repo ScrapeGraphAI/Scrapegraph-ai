@@ -14,7 +14,7 @@ def graph_config():
     """
     return {
         "llm": {
-            "model": "ollama/mistral",
+            "model": "ollama/glm-5.3-flash:cloud",
             "temperature": 0,
             "format": "json",
             "base_url": "http://localhost:11434",
