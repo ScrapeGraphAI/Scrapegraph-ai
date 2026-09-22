@@ -6,10 +6,12 @@ import pytest
 from langchain_core.documents import Document
 from langchain_core.messages import AIMessage
 from langchain_core.outputs import ChatGeneration, ChatResult
+from langchain_core.runnables import RunnableLambda
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel
 
 from scrapegraphai.graphs import CodeGeneratorGraph
+from scrapegraphai.nodes import GenerateCodeNode
 
 
 class Project(BaseModel):
@@ -29,19 +31,29 @@ CODE = """def extract_data(html):
 """
 
 
+@pytest.mark.parametrize("list_reference", [False, True])
 @pytest.mark.parametrize("source_kind", ["html", "url"])
 @pytest.mark.parametrize("force", [False, True])
 def test_run_preserves_html_for_analysis_and_execution(
-    monkeypatch, tmp_path, source_kind, force
+    monkeypatch, tmp_path, source_kind, force, list_reference
 ):
     """Exercise run(), including real parsing and generated-code validation."""
     prompts = []
+    projects = [{"title": "First", "description": ""}]
+    reference = projects if list_reference else {"projects": projects}
     responses = iter(
         [
-            json.dumps({"projects": [{"title": "First", "description": ""}]}),
+            json.dumps(reference),
             "Extract the project title.",
             "Project titles are in h1.project elements.",
             CODE,
+            json.dumps(
+                {
+                    "are_semantically_equivalent": True,
+                    "differences": [],
+                    "explanation": "Same project.",
+                }
+            ),
         ]
     )
 
@@ -79,4 +91,48 @@ def test_run_preserves_html_for_analysis_and_execution(
     assert (tmp_path / "extracted_data.py").read_text() == result
     assert graph.final_state["doc"][0].page_content == HTML
     assert 'class="project"' in prompts[2][0].content
-    assert len(prompts) == 4
+    assert len(prompts) == (5 if list_reference else 4)
+
+
+@pytest.mark.parametrize(
+    "reference",
+    [
+        {"projects": [{"title": "First"}, {"title": "Second"}]},
+        [{"title": "First"}, {"title": "Second"}],
+        {"items": [{"title": "First"}, {"title": "Second"}]},
+    ],
+    ids=["schema-valid-object", "list", "schema-invalid-object"],
+)
+def test_semantic_comparison_keeps_the_complete_reference(reference):
+    """Validate conforming objects and send other JSON intact to comparison."""
+    prompts = []
+    comparison = {
+        "are_semantically_equivalent": True,
+        "differences": [],
+        "explanation": "Both results contain the same two projects.",
+    }
+
+    def compare(prompt):
+        prompts.append(prompt.to_string())
+        return AIMessage(content=json.dumps(comparison))
+
+    node = GenerateCodeNode(
+        input="user_prompt & doc",
+        output=["generated_code"],
+        node_config={"llm_model": RunnableLambda(compare), "schema": Projects},
+    )
+    generated = {
+        "projects": [
+            {"title": "First", "description": ""},
+            {"title": "Second", "description": ""},
+        ]
+    }
+
+    result = node.semantic_comparison(generated, reference)
+
+    assert result["are_semantically_equivalent"] is True
+    if isinstance(reference, dict) and "projects" in reference:
+        assert prompts == []
+    else:
+        assert len(prompts) == 1
+        assert json.dumps(reference, indent=2) in prompts[0]

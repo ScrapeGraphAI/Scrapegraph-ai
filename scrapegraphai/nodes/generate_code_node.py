@@ -16,6 +16,7 @@ from langchain_classic.output_parsers import ResponseSchema, StructuredOutputPar
 from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
+from pydantic import ValidationError
 
 from ..prompts import TEMPLATE_INIT_CODE_GENERATION, TEMPLATE_SEMANTIC_COMPARISON
 from ..utils import (
@@ -373,8 +374,20 @@ class GenerateCodeNode(BaseNode):
             Dict[str, Any]: A dictionary containing the comparison result,
             differences, and explanation.
         """
-        reference_result_dict = self.output_schema(**reference_result).dict()
-        if are_content_equal(generated_result, reference_result_dict):
+        try:
+            reference_data = self.output_schema.model_validate(
+                reference_result
+            ).model_dump()
+        except (ValidationError, TypeError):
+            # JsonOutputParser can return JSON that does not match the schema.
+            # Keep the complete reference for the semantic comparison below.
+            reference_data = reference_result
+
+        if (
+            isinstance(generated_result, dict)
+            and isinstance(reference_data, dict)
+            and are_content_equal(generated_result, reference_data)
+        ):
             return {
                 "are_semantically_equivalent": True,
                 "differences": [],
@@ -412,7 +425,7 @@ class GenerateCodeNode(BaseNode):
         return chain.invoke(
             {
                 "generated_result": json.dumps(generated_result, indent=2),
-                "reference_result": json.dumps(reference_result_dict, indent=2),
+                "reference_result": json.dumps(reference_data, indent=2),
             }
         )
 
