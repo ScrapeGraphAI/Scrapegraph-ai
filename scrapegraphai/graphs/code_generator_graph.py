@@ -82,6 +82,7 @@ class CodeGeneratorGraph(AbstractGraph):
             output=["doc"],
             node_config={
                 "llm_model": self.llm_model,
+                "script_creator": True,
                 "force": self.config.get("force", False),
                 "cut": self.config.get("cut", True),
                 "loader_kwargs": self.config.get("loader_kwargs", {}),
@@ -121,7 +122,7 @@ class CodeGeneratorGraph(AbstractGraph):
         )
 
         html_analyzer_node = HtmlAnalyzerNode(
-            input="refined_prompt & original_html",
+            input="refined_prompt & doc",
             output=["html_info", "reduced_html"],
             node_config={
                 "llm_model": self.llm_model,

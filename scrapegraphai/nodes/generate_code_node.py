@@ -120,7 +120,7 @@ class GenerateCodeNode(BaseNode):
         reduced_html = input_data[3]
         answer = input_data[4]
 
-        self.raw_html = state["original_html"][0].page_content
+        self.raw_html = state["doc"][0].page_content
 
         simplefied_schema = str(transform_schema(self.output_schema.schema()))
 
