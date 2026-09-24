@@ -348,6 +348,10 @@ models_tokens = {
         "deepseek-ai/deepseek-v4-pro": 1048576,
         "qwen/qwen3.5-flash": 1000000,
     },
+    "cheaperinference": {
+        "gpt-5.4-mini": 400000,
+        "gpt-5.4": 1000000,
+    },
     "deepseek": {
         "deepseek-chat": 128000,
         "deepseek-coder": 128000,
