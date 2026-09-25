@@ -78,6 +78,14 @@ class AbstractGraph(ABC):
         self.timeout = self.config.get("timeout", 480)
 
         self.graph = self._create_graph()
+        # Report the token window through the execution info as well. The
+        # warning emitted for an unknown model only reaches stderr, which is
+        # lost in batch and async contexts, so a caller had no way to tell a
+        # truncating 8192 fallback from a real limit by looking at the result.
+        # _create_llm is overridable and does not set model_token on every
+        # path, so fall back to the defaults BaseGraph already declares.
+        self.graph.model_token = getattr(self, "model_token", None)
+        self.graph.model_tokens_defaulted = self.model_tokens_defaulted
         self.final_state = None
         self.execution_info = None
 
@@ -318,6 +326,13 @@ class AbstractGraph(ABC):
     def get_execution_info(self):
         """
         Returns the execution information of the graph.
+
+        The final "TOTAL RESULT" entry also carries the token window the run
+        actually used: ``effective_model_tokens`` and ``model_tokens_defaulted``,
+        the latter being True when no limit was known for the configured model
+        and the 8192 fallback was applied. A defaulted window chunks long pages
+        and can change the answer without raising, so batch callers should check
+        this flag rather than rely on the warning logged to stderr.
 
         Returns:
             dict: The execution information of the graph.

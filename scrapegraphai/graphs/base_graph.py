@@ -69,6 +69,12 @@ class BaseGraph:
         self.graph_name = graph_name
         self.initial_state = {}
         self.callback_manager = CustomLLMCallbackManager()
+        # Effective input-token window used to chunk documents, and whether it
+        # is the 8192 fallback rather than the model's real limit. AbstractGraph
+        # fills these in after building the graph; they are reported in the
+        # "TOTAL RESULT" entry of the execution info (see #1121).
+        self.model_token = None
+        self.model_tokens_defaulted = False
 
         if nodes[0].node_name != entry_point.node_name:
             warnings.warn(
@@ -316,6 +322,8 @@ class BaseGraph:
                 "successful_requests": cb_total["successful_requests"],
                 "total_cost_USD": cb_total["total_cost_USD"],
                 "exec_time": total_exec_time,
+                "effective_model_tokens": self.model_token,
+                "model_tokens_defaulted": self.model_tokens_defaulted,
             }
         )
 

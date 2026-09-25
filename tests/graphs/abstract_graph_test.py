@@ -369,3 +369,79 @@ class TestAbstractGraph:
         graph.execution_info = dummy_info
         info = graph.get_execution_info()
         assert info == dummy_info
+
+
+class _StubNode:
+    """Minimal node used to drive BaseGraph without any model or network call."""
+
+    def __init__(self, node_name="Stub"):
+        self.node_name = node_name
+        self.node_type = "node"
+        self.node_config = {}
+
+    def execute(self, state):
+        return state
+
+
+def _run_stub_graph(model_token, model_tokens_defaulted):
+    """Executes a one-node graph and returns its "TOTAL RESULT" entry."""
+    stub = _StubNode()
+    graph = BaseGraph(nodes=[stub], edges=[], entry_point=stub)
+    graph.model_token = model_token
+    graph.model_tokens_defaulted = model_tokens_defaulted
+
+    with patch("scrapegraphai.graphs.base_graph.log_graph_execution"):
+        _, exec_info = graph.execute({})
+
+    return next(entry for entry in exec_info if entry["node_name"] == "TOTAL RESULT")
+
+
+def test_execution_info_reports_defaulted_token_window():
+    """The 8192 fallback must be visible in the returned execution info.
+
+    Reported in #1121: the warning for an unknown model goes to stderr, so it
+    is lost in batch, worker and async contexts. A caller that only has the
+    returned object could not tell a truncating 8192 window from a real limit.
+    """
+    total = _run_stub_graph(8192, True)
+
+    assert total["effective_model_tokens"] == 8192
+    assert total["model_tokens_defaulted"] is True
+
+
+def test_execution_info_reports_known_token_window():
+    """A model with a known limit is reported without the defaulted flag."""
+    total = _run_stub_graph(1000000, False)
+
+    assert total["effective_model_tokens"] == 1000000
+    assert total["model_tokens_defaulted"] is False
+
+
+def test_abstract_graph_propagates_defaulted_token_window(monkeypatch):
+    """AbstractGraph hands the token window to the graph it builds."""
+    from scrapegraphai.graphs import abstract_graph
+
+    monkeypatch.setattr(
+        abstract_graph, "models_tokens", {"openai": {"gpt-3.5-turbo": 4096}}
+    )
+    llm_config = {"model": "openai/not-known-model", "openai_api_key": "test"}
+    with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
+        graph = TestGraph("Test prompt", {"llm": llm_config})
+
+    assert graph.graph.model_token == 8192
+    assert graph.graph.model_tokens_defaulted is True
+
+
+def test_abstract_graph_propagates_known_token_window(monkeypatch):
+    """A known model is propagated with the defaulted flag left off."""
+    from scrapegraphai.graphs import abstract_graph
+
+    monkeypatch.setattr(
+        abstract_graph, "models_tokens", {"openai": {"gpt-3.5-turbo": 4096}}
+    )
+    llm_config = {"model": "openai/gpt-3.5-turbo", "openai_api_key": "test"}
+    with patch.object(TestGraph, "_create_graph", return_value=Mock(nodes=[])):
+        graph = TestGraph("Test prompt", {"llm": llm_config})
+
+    assert graph.graph.model_token == 4096
+    assert graph.graph.model_tokens_defaulted is False
