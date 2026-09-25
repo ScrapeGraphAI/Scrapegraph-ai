@@ -1,3 +1,11 @@
+## [2.3.0-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.4-beta.1...v2.3.0-beta.1) (2026-09-25)
+
+
+### Features
+
+* **models:** add Cheaper Inference OpenAI-compatible model wrapper ([2dcc16e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/2dcc16e65fa8914cab2cc5ffa0129e0dabc92861))
+* **models:** add Cheaper Inference OpenAI-compatible model wrapper ([b6dd13e](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/b6dd13e57aa3aea57cc6bb5dc66de41e231b28af))
+
 ## [2.2.4](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.3...v2.2.4) (2026-09-07)
 
 
@@ -15,6 +23,7 @@
 * **release:** 2.2.0-beta.8 [skip ci] ([d59c3df](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/d59c3dfceecdacbba4e17f237b017117cf7f1cee)), closes [#1102](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1102) [#1102](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1102)
 * **release:** 2.2.0-beta.9 [skip ci] ([3047ef8](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/3047ef8eda694d19c6fe4654777ea6343744acba))
 * **release:** 2.2.4-beta.1 [skip ci] ([8b3a97c](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/8b3a97c3b41aec29df0512e71f186a98ad747aa1)), closes [#1102](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1102) [#1102](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1102) [#1102](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1102) [#1102](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1102)
+
 
 ## [2.2.4-beta.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.3...v2.2.4-beta.1) (2026-09-07)
 
