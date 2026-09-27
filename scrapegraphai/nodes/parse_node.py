@@ -124,6 +124,11 @@ class ParseNode(BaseNode):
     word_pattern = re.compile(r"[a-zA-Z][a-zA-Z0-9]{2,}")
     camel_case_pattern = re.compile(r"(?<=[a-z0-9])(?=[A-Z])")
 
+    # Html2TextTransformer keeps links, so an anchor reaches the chunks as
+    # ``[label](href)``. Used to tell a page's own prose from what it merely
+    # links to.
+    markdown_link_pattern = re.compile(r"\[([^\]\n]{1,200})\]\(([^)\s]{1,500})\)")
+
     def __init__(
         self,
         input: str,
@@ -207,7 +212,9 @@ class ParseNode(BaseNode):
                     text=docs_transformed, chunk_size=chunk_size
                 )
 
-        self._warn_if_content_lacks_requested_fields(chunks, state.get("user_prompt"))
+        user_prompt = state.get("user_prompt")
+        if not self._warn_if_content_lacks_requested_fields(chunks, user_prompt):
+            self._warn_if_answer_may_be_behind_a_link(chunks, user_prompt)
 
         state.update({self.output[0]: chunks})
         state.update({"parsed_doc": chunks})
@@ -220,7 +227,7 @@ class ParseNode(BaseNode):
 
     def _warn_if_content_lacks_requested_fields(
         self, chunks: List[str], user_prompt: Optional[str]
-    ) -> None:
+    ) -> bool:
         """
         Warns when the parsed content holds no trace of what the user asked for.
 
@@ -240,6 +247,10 @@ class ParseNode(BaseNode):
         Args:
             chunks (List[str]): The parsed content chunks about to be handed downstream.
             user_prompt (Optional[str]): The user's request, when available in the state.
+
+        Returns:
+            bool: True when a warning was emitted, so the caller can skip the
+                narrower link check rather than warning twice about one run.
         """
         texts = [chunk for chunk in chunks if isinstance(chunk, str)]
         total_length = sum(len(text) for text in texts)
@@ -249,18 +260,18 @@ class ParseNode(BaseNode):
                 "The parsed content is empty; the model will be asked to answer "
                 "from nothing. Check that the source was fetched correctly."
             )
-            return
+            return True
 
         expected_terms = self._collect_expected_terms(user_prompt)
         if not expected_terms:
-            return
+            return False
 
         # Chunks overlap, so a term split across a boundary is still found in one
         # of them; searching chunk by chunk avoids rebuilding the whole document.
         for text in texts:
             lowered = text.lower()
             if any(term in lowered for term in expected_terms):
-                return
+                return False
 
         self.logger.warning(
             f"None of the requested terms {sorted(expected_terms)} appear in the "
@@ -268,6 +279,76 @@ class ParseNode(BaseNode):
             "page, may render its content with JavaScript, or the relevant "
             "section may have been dropped while parsing; the model will most "
             "likely answer NA."
+        )
+        return True
+
+    def _warn_if_answer_may_be_behind_a_link(
+        self, chunks: List[str], user_prompt: Optional[str]
+    ) -> None:
+        """
+        Warns when the evidence for the request looks one link away.
+
+        A single-page graph answers only about the text it was handed. When the
+        answer lives on a page this one links to, a privacy policy or a terms or
+        team page, the model is not silent about it: asked whether a fact holds,
+        it returns a confident negative, which reads exactly like a genuine "this
+        is not true of this site". That is the failure reported in #1120, and it
+        is the expensive direction for compliance questions, where a false "no
+        restriction found" is the answer someone acts on.
+
+        The check is deterministic and LLM-free, like
+        :meth:`_warn_if_content_lacks_requested_fields`. It warns only when a
+        term the user asked about is absent from the page's own prose yet present
+        in the label or target of a link. Requiring the term to be missing from
+        the prose keeps the warning quiet whenever the page can actually answer,
+        which is the common case.
+
+        Args:
+            chunks (List[str]): The parsed content chunks about to be handed downstream.
+            user_prompt (Optional[str]): The user's request, when available in the state.
+        """
+        texts = [chunk for chunk in chunks if isinstance(chunk, str)]
+        if not texts:
+            return
+
+        missing = self._collect_expected_terms(user_prompt)
+        if not missing:
+            return
+
+        links: List[Tuple[str, str]] = []
+        # Chunks overlap, so a term is "missing" only when no chunk's prose holds
+        # it. Narrowing chunk by chunk avoids rebuilding the whole document.
+        for text in texts:
+            links.extend(self.markdown_link_pattern.findall(text))
+            prose = self.markdown_link_pattern.sub(" ", text).lower()
+            missing = {term for term in missing if term not in prose}
+            if not missing:
+                return
+
+        if not links:
+            return
+
+        linked_terms: Set[str] = set()
+        examples: List[str] = []
+        for label, href in links:
+            target = f"{label} {href}".lower()
+            hits = {term for term in missing if term in target}
+            if not hits:
+                continue
+            linked_terms |= hits
+            if href not in examples and len(examples) < 3:
+                examples.append(href)
+
+        if not linked_terms:
+            return
+
+        self.logger.warning(
+            f"The terms {sorted(linked_terms)} appear only in links on this page "
+            f"(e.g. {examples}), not in its text. This graph reads the single page "
+            "it was given, so if the answer lives on one of those linked pages the "
+            "model will answer from the page it did see, and a negative answer here "
+            "may mean the evidence was never fetched rather than that it does not "
+            "exist. Consider DepthSearchGraph to follow the links."
         )
 
     def _collect_expected_terms(self, user_prompt: Optional[str]) -> Set[str]:
