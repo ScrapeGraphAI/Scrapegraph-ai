@@ -17,6 +17,11 @@ def transform_schema(pydantic_schema):
     def process_properties(properties):
         result = {}
         for key, value in properties.items():
+            if "anyOf" in value:
+                # Optional[X] is emitted as anyOf [X, null]: describe it as X
+                variants = [v for v in value["anyOf"] if v.get("type") != "null"]
+                if len(variants) == 1:
+                    value = {**value, **variants[0]}
             if "type" in value:
                 if value["type"] == "array":
                     if "items" in value and "$ref" in value["items"]:
