@@ -19,3 +19,12 @@ def test_parse_expression():
         assert result != []
     except ValueError as e:
         assert "Error" in str(e)
+
+
+def test_parse_expression_and_inside_parentheses():
+    """Every key of an AND group in parentheses is required and returned."""
+    state = {"a": None, "b": None, "c": None}
+
+    assert parse_expression("a & (b & c)", state) == ["a", "b", "c"]
+    assert parse_expression("(a & b) & c", state) == ["a", "b", "c"]
+    assert parse_expression("(a & b) | c", state) == ["a", "b"]

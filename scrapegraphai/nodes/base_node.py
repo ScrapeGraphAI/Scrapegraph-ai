@@ -214,7 +214,7 @@ class BaseNode(ABC):
                 sub_result = evaluate_simple_expression(sub_exp)
 
                 expression = (
-                    expression[:start] + "|".join(sub_result) + expression[end + 1 :]
+                    expression[:start] + "&".join(sub_result) + expression[end + 1 :]
                 )
             return evaluate_simple_expression(expression)
 
