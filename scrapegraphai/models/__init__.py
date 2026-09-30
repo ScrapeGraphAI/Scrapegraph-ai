@@ -2,6 +2,7 @@
 This module contains the model definitions used in the ScrapeGraphAI application.
 """
 
+from .apiroute import APIRoute
 from .atlascloud import AtlasCloud
 from .cheaperinference import CheaperInference
 from .clod import CLoD
@@ -13,4 +14,4 @@ from .openai_itt import OpenAIImageToText
 from .openai_tts import OpenAITextToSpeech
 from .xai import XAI
 
-__all__ = ["AtlasCloud", "CheaperInference", "DeepSeek", "MiniMax", "OneApi", "OpenAIImageToText", "OpenAITextToSpeech", "CLoD", "XAI", "Nvidia"]
+__all__ = ["APIRoute", "AtlasCloud", "CheaperInference", "DeepSeek", "MiniMax", "OneApi", "OpenAIImageToText", "OpenAITextToSpeech", "CLoD", "XAI", "Nvidia"]
