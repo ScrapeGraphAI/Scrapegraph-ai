@@ -379,6 +379,10 @@ models_tokens = {
         "mixtral-moe-8x22B-instruct": 65536,
         "mixtral-moe-8x7B-instruct": 65536,
     },
+    "futureinfra": {
+        "openai/gpt-4o-mini": 128000,
+        "openai/gpt-4o": 128000,
+    },
     "clod": {
         "open-mistral-7b": 32000,
         "Llama-3.1-70b": 128000,
