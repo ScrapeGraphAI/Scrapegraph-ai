@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.3.0...v2.3.1) (2026-10-06)
+
+
+### Bug Fixes
+
+* **utils:** keep Optional fields in transform_schema ([#1160](https://github.com/ScrapeGraphAI/Scrapegraph-ai/issues/1160)) ([9906c69](https://github.com/ScrapeGraphAI/Scrapegraph-ai/commit/9906c69d0bed28c5932c5b5df79a0a9b8fe19fd7))
+
 ## [2.3.0](https://github.com/ScrapeGraphAI/Scrapegraph-ai/compare/v2.2.4...v2.3.0) (2026-09-25)
 
 
