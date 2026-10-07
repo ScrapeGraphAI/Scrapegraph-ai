@@ -3,6 +3,7 @@ research_web module for web searching across different search engines with impro
 error handling, validation, and security features.
 """
 
+import os
 import random
 import re
 import time
@@ -394,7 +395,8 @@ def _search_serper(
 
     try:
         response = requests.post(
-            "https://google.serper.dev/search",
+            (os.getenv("SERPER_BASE_URL") or "https://google.serper.dev").rstrip("/")
+            + "/search",
             json=data,
             headers=headers,
             timeout=timeout,
