@@ -258,3 +258,6 @@ ScrapeGraphAI is licensed under the MIT License. See the [LICENSE](https://githu
 Made with ❤️ by [ScrapeGraph AI](https://scrapegraphai.com)
 
 [Scarf tracking](https://static.scarf.sh/a.png?x-pxid=102d4b8c-cd6a-4b9e-9a16-d6d141b9212d)
+
+
+Support any Serper.dev-compatible endpoint (like litescrape.com, serpbase.dev, serpensapi.org, and others). Set `SERPER_BASE_URL` to the provider base URL (without `/search`) and `SERPER_API_KEY` to a key issued by that provider. The default base URL is `https://google.serper.dev`.
