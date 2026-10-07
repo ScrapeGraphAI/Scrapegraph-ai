@@ -8,6 +8,7 @@ from typing import List, Optional
 
 import aiohttp
 
+from ..utils.event_loop import run_coroutine_sync
 from .base_node import BaseNode
 
 
@@ -113,15 +114,4 @@ class GenerateAnswerFromImageNode(BaseNode):
         """
         Wrapper to run the asynchronous execute_async function in a synchronous context.
         """
-        try:
-            eventloop = asyncio.get_event_loop()
-        except RuntimeError:
-            eventloop = None
-
-        if eventloop and eventloop.is_running():
-            task = eventloop.create_task(self.execute_async(state))
-            state = eventloop.run_until_complete(asyncio.gather(task))[0]
-        else:
-            state = asyncio.run(self.execute_async(state))
-
-        return state
+        return run_coroutine_sync(self.execute_async(state))

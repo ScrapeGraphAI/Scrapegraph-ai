@@ -5,6 +5,8 @@ browserbase integration module
 import asyncio
 from typing import List
 
+from ..utils.event_loop import run_coroutine_sync
+
 
 def browser_base_fetch(
     api_key: str,
@@ -53,7 +55,7 @@ def browser_base_fetch(
                 result.append(await _async_fetch_link(url))
             return result
 
-        result = asyncio.run(_async_browser_base_fetch())
+        result = run_coroutine_sync(_async_browser_base_fetch())
     else:
         for url in link:
             result.append(session.load(url, text_content=text_content))
