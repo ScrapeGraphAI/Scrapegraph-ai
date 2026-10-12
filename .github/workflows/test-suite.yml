@@ -44,6 +44,7 @@ jobs:
           tests/test_depth_search_graph.py
           tests/test_error_page_detection.py
           tests/test_json_scraper_graph.py
+          tests/test_litellm_model.py
           tests/test_minimax_models.py
           tests/test_scrape_do.py
           tests/test_search_graph.py

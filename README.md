@@ -157,6 +157,8 @@ For each of these graphs there is the multi version. It allows to make calls of 
 
 It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure**, **Gemini**, **[MiniMax](docs/minimax.md)** and more, or local models using **Ollama**.
 
+To reach any provider supported by [LiteLLM](https://docs.litellm.ai/docs/providers) (Anthropic, Bedrock, Vertex AI, Azure, ...), install `scrapegraphai[litellm]` and set the model to `litellm/<provider>/<model>`, for example `litellm/anthropic/claude-sonnet-4-6`. The context window and the cost reported in the execution info come from LiteLLM's model map.
+
 Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command, if you want to use local models.
 
 

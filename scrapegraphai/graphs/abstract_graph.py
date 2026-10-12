@@ -13,7 +13,8 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
+from ..models import XAI, CLoD, DeepSeek, LiteLLM, MiniMax, Nvidia, OneApi
+from ..models.litellm import get_litellm_model_tokens
 from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
 logger = get_logger(__name__)
@@ -175,6 +176,7 @@ class AbstractGraph(ABC):
             "togetherai",
             "xai",
             "minimax",
+            "litellm",
         }
 
         if "/" in llm_params["model"]:
@@ -209,9 +211,17 @@ class AbstractGraph(ABC):
 
         if llm_params.get("model_tokens", None) is None:
             try:
-                self.model_token = models_tokens[llm_params["model_provider"]][
-                    llm_params["model"]
-                ]
+                if llm_params["model_provider"] == "litellm":
+                    # LiteLLM routes to any provider, so read the context
+                    # window from its model map instead of models_tokens.
+                    model_token = get_litellm_model_tokens(llm_params["model"])
+                    if model_token is None:
+                        raise KeyError(llm_params["model"])
+                    self.model_token = model_token
+                else:
+                    self.model_token = models_tokens[llm_params["model_provider"]][
+                        llm_params["model"]
+                    ]
             except KeyError:
                 logger.warning(
                     "Max input tokens for model %s/%s not found, "
@@ -243,6 +253,7 @@ class AbstractGraph(ABC):
                 "clod",
                 "xai",
                 "minimax",
+                "litellm",
             }:
                 if llm_params["model_provider"] == "bedrock":
                     llm_params["model_kwargs"] = {
@@ -262,6 +273,9 @@ class AbstractGraph(ABC):
 
                 if model_provider == "minimax":
                     return MiniMax(**llm_params)
+
+                if model_provider == "litellm":
+                    return LiteLLM(**llm_params)
 
                 if model_provider == "ernie":
                     from langchain_community.chat_models import ErnieBotChat

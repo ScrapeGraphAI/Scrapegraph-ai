@@ -109,11 +109,25 @@ class CustomCallbackHandler(BaseCallbackHandler):
             generation = response.generations[0][0]
         except IndexError:
             generation = None
+        reported_cost = None
+        reported_split = None
         if isinstance(generation, ChatGeneration):
             try:
                 message = generation.message
                 if isinstance(message, AIMessage):
                     usage_metadata = message.usage_metadata
+                    # Models that price their own calls (e.g. LiteLLM) report
+                    # the cost of the request in the response metadata.
+                    metadata = message.response_metadata
+                    reported_cost = metadata.get("response_cost")
+                    if (
+                        metadata.get("prompt_cost") is not None
+                        and metadata.get("completion_cost") is not None
+                    ):
+                        reported_split = (
+                            float(metadata["prompt_cost"]),
+                            float(metadata["completion_cost"]),
+                        )
                 else:
                     usage_metadata = None
             except AttributeError:
@@ -155,13 +169,20 @@ class CustomCallbackHandler(BaseCallbackHandler):
                 input_tokens=prompt_tokens,
                 service_tier=self.service_tier,
             )
+            request_cost = prompt_cost + completion_cost
+        elif reported_split is not None:
+            prompt_cost, completion_cost = reported_split
+            request_cost = prompt_cost + completion_cost
+        elif reported_cost is not None:
+            # The model priced the call but not its parts, so only the total
+            # is known.
+            request_cost = float(reported_cost)
         else:
-            completion_cost = 0
-            prompt_cost = 0
+            request_cost = 0
 
         # update shared state behind lock
         with self._lock:
-            self.total_cost += prompt_cost + completion_cost
+            self.total_cost += request_cost
             self.total_tokens += token_usage.get("total_tokens", 0)
             self.prompt_tokens += prompt_tokens
             self.completion_tokens += completion_tokens

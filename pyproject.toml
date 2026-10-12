@@ -69,6 +69,7 @@ requires-python = ">=3.12,<4.0"
 
 [project.optional-dependencies]
 burr = ["burr[start]==0.22.1"]
+litellm = ["litellm>=1.94.0,<1.105.0"]
 nvidia = ["langchain-nvidia-ai-endpoints>=0.1.0"]
 ocr = [
     "surya-ocr>=0.5.0",
