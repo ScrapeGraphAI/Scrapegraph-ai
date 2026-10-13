@@ -6,7 +6,7 @@ import ipaddress
 import random
 import re
 from typing import List, Optional, Set, TypedDict
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 import requests
 from fp.errors import FreeProxyException
@@ -188,9 +188,36 @@ def is_ipv4_address(address: str) -> bool:
         return False
 
 
+def _is_proxy_host(host: str, port: Optional[int]) -> bool:
+    """If a parsed host looks like a proxy server rather than a typo"""
+    try:
+        ipaddress.ip_address(host)
+        return True
+    except ValueError:
+        pass
+
+    if host == "localhost" or re.match(r"^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", host):
+        return True
+
+    # a bare name such as a Docker service is fine once it carries a port
+    return port is not None
+
+
+def _without_userinfo(server: str) -> str:
+    """The server string with any ``user:pass@`` part removed, for errors and logs"""
+    scheme, sep, rest = server.partition("://")
+    if not sep:
+        scheme, rest = "", server
+    return f"{scheme}{sep}{rest.rpartition('@')[2]}"
+
+
 def parse_or_search_proxy(proxy: Proxy) -> ProxySettings:
     """
     Parses a proxy configuration or searches for a matching one via broker.
+
+    Credentials written into the server URL (``http://user:pass@host:port``)
+    are moved to ``username`` and ``password``, because Playwright ignores
+    them in ``server``. Percent-encoded characters in them are decoded.
     """
     assert "server" in proxy, "missing server in the proxy configuration"
 
@@ -198,19 +225,25 @@ def parse_or_search_proxy(proxy: Proxy) -> ProxySettings:
     if server == "broker":
         return _search_proxy(proxy)
 
+    safe_server = _without_userinfo(server)
     server_with_scheme = server if "://" in server else f"http://{server}"
     parsed_url = urlparse(server_with_scheme)
-    server_address = parsed_url.hostname
+    try:
+        server_address = parsed_url.hostname
+        server_port = parsed_url.port
+    except ValueError:
+        raise ValueError(f"Invalid proxy server format: {safe_server}") from None
 
     if server_address is None:
-        raise ValueError(f"Invalid proxy server format: {proxy['server']}")
+        raise ValueError(f"Invalid proxy server format: {safe_server}")
 
-    # Accept both IP addresses and domain names like 'gate.nodemaven.com'
-    if is_ipv4_address(server_address) or re.match(
-        r"^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", server_address
-    ):
-        return _parse_proxy(proxy)
+    if not _is_proxy_host(server_address, server_port):
+        raise AssertionError(f"unknown proxy server type: {safe_server}")
 
-    assert proxy["server"] == "broker", f"unknown proxy server type: {proxy['server']}"
+    if parsed_url.username is not None:
+        proxy = {**proxy, "server": safe_server}
+        if "username" not in proxy and "password" not in proxy:
+            proxy["username"] = unquote(parsed_url.username)
+            proxy["password"] = unquote(parsed_url.password or "")
 
-    return _search_proxy(proxy)
+    return _parse_proxy(proxy)

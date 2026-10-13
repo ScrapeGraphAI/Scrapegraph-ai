@@ -130,3 +130,47 @@ def test_parse_or_search_proxy_unknown_server():
         parse_or_search_proxy(proxy)
 
     assert "unknown proxy server" in str(error_info.value)
+
+
+def test_parse_or_search_proxy_moves_url_credentials_out_of_server():
+    for server in (
+        "http://user:p%40ss%2Fw@gate.example.com:8080",
+        "user:p%40ss%2Fw@gate.example.com:8080",
+    ):
+        parsed = parse_or_search_proxy({"server": server})
+        assert parsed["username"] == "user"
+        assert parsed["password"] == "p@ss/w"
+        assert "@" not in parsed["server"]
+        assert parsed["server"].endswith("gate.example.com:8080")
+
+
+def test_parse_or_search_proxy_explicit_credentials_win_over_url():
+    parsed = parse_or_search_proxy(
+        {
+            "server": "http://old:secret@gate.example.com:8080",
+            "username": "user",
+            "password": "pass",
+        }
+    )
+    assert parsed == {
+        "server": "http://gate.example.com:8080",
+        "username": "user",
+        "password": "pass",
+    }
+
+
+def test_parse_or_search_proxy_accepts_local_and_bare_hosts_with_a_port():
+    for server in (
+        "localhost:8888",
+        "http://proxy:8080",
+        "http://[::1]:8080",
+        "socks5://gate.example.com:1080",
+    ):
+        assert parse_or_search_proxy({"server": server}) == {"server": server}
+
+
+def test_parse_or_search_proxy_errors_do_not_show_the_password():
+    with pytest.raises(AssertionError) as error_info:
+        parse_or_search_proxy({"server": "http://user:secret@unknown"})
+
+    assert "secret" not in str(error_info.value)
