@@ -149,17 +149,18 @@ class GenerateAnswerNodeKLevel(BaseNode):
         ):
             prompt = PromptTemplate(
                 template=template_chunks_prompt,
-                input_variables=["format_instructions"],
+                input_variables=["question"],
                 partial_variables={
                     "content": chunk.get("document"),
                     "chunk_id": i + 1,
+                    "format_instructions": format_instructions,
                 },
             )
             chain_name = f"chunk{i + 1}"
             chains_dict[chain_name] = prompt | self.llm_model
 
         async_runner = RunnableParallel(**chains_dict)
-        batch_results = async_runner.invoke({"format_instructions": user_prompt})
+        batch_results = async_runner.invoke({"question": user_prompt})
 
         merge_prompt = PromptTemplate(
             template=template_merge_prompt,

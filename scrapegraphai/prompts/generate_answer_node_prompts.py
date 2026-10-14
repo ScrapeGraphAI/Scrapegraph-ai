@@ -13,6 +13,7 @@ Make sure the output is a valid json format, do not include any backticks
 and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
+USER QUESTION: {question}
 Content of {chunk_id}: {content}. \n
 """
 
@@ -56,6 +57,7 @@ Make sure the output is a valid json format without any errors, do not include a
 and things that will invalidate the dictionary. \n
 Do not start the response with ```json because it will invalidate the postprocessing. \n
 OUTPUT INSTRUCTIONS: {format_instructions}\n
+USER QUESTION: {question}
 Content of {chunk_id}: {content}. \n
 """
 
