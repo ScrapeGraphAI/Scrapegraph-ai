@@ -29,6 +29,7 @@ from scrapegraphai.utils.logging import set_propagation, unset_propagation
 
 class _MockPage:
     def __init__(self, status):
+        self.url = "https://example.com/"
         response = MagicMock()
         response.status = status
         self.goto = AsyncMock(return_value=response)
@@ -46,6 +47,7 @@ def playwright_with_status():
     def _factory(status):
         page = _MockPage(status)
         context = MagicMock()
+        context.route = AsyncMock()
         context.new_page = AsyncMock(return_value=page)
         browser = MagicMock()
         browser.new_context = AsyncMock(return_value=context)

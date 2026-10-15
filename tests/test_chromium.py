@@ -24,10 +24,12 @@ class MockBrowser:
 class MockContext:
     def __init__(self):
         self.new_page = AsyncMock()
+        self.route = AsyncMock()
 
 
 class MockPage:
     def __init__(self):
+        self.url = "http://example.com/"
         self.goto = AsyncMock()
         self.wait_for_load_state = AsyncMock()
         self.content = AsyncMock()
@@ -245,6 +247,8 @@ async def test_ascrape_with_js_support_retry_failure(monkeypatch):
 
     # Create dummy classes to simulate failure in page.goto
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             raise asyncio.TimeoutError("Forced timeout")
 
@@ -255,6 +259,9 @@ async def test_ascrape_with_js_support_retry_failure(monkeypatch):
             return "<html>Dummy</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -370,6 +377,8 @@ async def test_ascrape_playwright_retry_failure(monkeypatch):
 
     # Dummy classes to simulate persistent failure in page.goto for ascrape_playwright
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             raise asyncio.TimeoutError("Forced timeout in goto")
 
@@ -380,6 +389,9 @@ async def test_ascrape_playwright_retry_failure(monkeypatch):
             return "<html>This should not be returned</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -578,6 +590,8 @@ async def test_ascrape_with_js_support_retry_success(monkeypatch):
     attempt_count = {"count": 0}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             if attempt_count["count"] < 1:
                 attempt_count["count"] += 1
@@ -591,6 +605,9 @@ async def test_ascrape_with_js_support_retry_success(monkeypatch):
             return "<html>Success on retry</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -727,6 +744,8 @@ async def test_ascrape_with_js_support_storage_state(monkeypatch):
     """Test that ascrape_with_js_support passes the storage_state to the new_context call."""
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             return
 
@@ -737,6 +756,9 @@ async def test_ascrape_with_js_support_storage_state(monkeypatch):
             return "<html>Storage State Tested</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -806,6 +828,8 @@ async def test_ascrape_playwright_browser_config(monkeypatch):
     captured_kwargs = {}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             return
 
@@ -816,6 +840,9 @@ async def test_ascrape_playwright_browser_config(monkeypatch):
             return "<html>Config Tested</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -884,6 +911,8 @@ async def test_ascrape_playwright_scroll_retry_failure(monkeypatch):
 
     # Dummy page that always raises Timeout on goto
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             raise asyncio.TimeoutError("Simulated timeout in goto")
 
@@ -900,6 +929,9 @@ async def test_ascrape_playwright_scroll_retry_failure(monkeypatch):
         mouse = AsyncMock()
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -971,6 +1003,8 @@ async def test_ascrape_with_js_support_calls_close(monkeypatch):
     close_called_flag = {"called": False}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             return
 
@@ -981,6 +1015,9 @@ async def test_ascrape_with_js_support_calls_close(monkeypatch):
             return "<html>Dummy Content</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1148,6 +1185,8 @@ async def test_ascrape_with_js_support_exception_cleanup(monkeypatch):
     close_called_flag = {"called": False}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             raise asyncio.TimeoutError("Forced timeout")
 
@@ -1158,6 +1197,9 @@ async def test_ascrape_with_js_support_exception_cleanup(monkeypatch):
             return "<html>No Content</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1266,6 +1308,8 @@ async def test_ascrape_playwright_scroll_exception_cleanup(monkeypatch):
     close_called = {"called": False}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             raise asyncio.TimeoutError("Simulated timeout in goto")
 
@@ -1282,6 +1326,9 @@ async def test_ascrape_playwright_scroll_exception_cleanup(monkeypatch):
         mouse.wheel = AsyncMock()
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1332,6 +1379,8 @@ async def test_ascrape_with_js_support_non_timeout_retry(monkeypatch):
     attempt = {"count": 0}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             if attempt["count"] < 1:
                 attempt["count"] += 1
@@ -1344,6 +1393,9 @@ async def test_ascrape_with_js_support_non_timeout_retry(monkeypatch):
             return "<html>Success after non-timeout retry</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1414,6 +1466,8 @@ async def test_ascrape_playwright_calls_apply_stealth(monkeypatch):
     )
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             return
 
@@ -1424,6 +1478,9 @@ async def test_ascrape_playwright_calls_apply_stealth(monkeypatch):
             return "<html>Stealth Applied Content</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1531,6 +1588,8 @@ async def test_ascrape_with_js_support_browser_error_cleanup(monkeypatch):
     close_called = {"called": False}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             raise aiohttp.ClientError("Navigation error")
 
@@ -1541,6 +1600,9 @@ async def test_ascrape_with_js_support_browser_error_cleanup(monkeypatch):
             return "<html>Error Content</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1605,6 +1667,8 @@ async def test_ascrape_playwright_stealth_exception_cleanup(monkeypatch):
     fail_flag = {"closed": False}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             return
 
@@ -1615,6 +1679,9 @@ async def test_ascrape_playwright_stealth_exception_cleanup(monkeypatch):
             return "<html>Content</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1665,6 +1732,8 @@ async def test_ascrape_with_js_support_value_error_success(monkeypatch):
     attempt_count = {"count": 0}
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             if attempt_count["count"] < 1:
                 attempt_count["count"] += 1
@@ -1678,6 +1747,9 @@ async def test_ascrape_with_js_support_value_error_success(monkeypatch):
             return "<html>Success after ValueError</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1722,6 +1794,8 @@ async def test_ascrape_with_js_support_value_error_failure(monkeypatch):
     """Test that ascrape_with_js_support raises RuntimeError after exhausting retries on persistent ValueError."""
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             raise ValueError("Persistent value error")
 
@@ -1732,6 +1806,9 @@ async def test_ascrape_with_js_support_value_error_failure(monkeypatch):
             return "<html>Should not reach here</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -1803,6 +1880,8 @@ async def test_ascrape_with_js_support_browser_name_override_new(monkeypatch):
     """
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until):
             return
 
@@ -1813,6 +1892,9 @@ async def test_ascrape_with_js_support_browser_name_override_new(monkeypatch):
             return "<html>Firefox content</html>"
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         async def new_page(self):
             return DummyPage()
 
@@ -2026,6 +2108,8 @@ async def test_ascrape_playwright_caplog(monkeypatch, caplog):
     )
 
     class DummyPage:
+        url = "http://example.com/"
+
         async def goto(self, url, wait_until=None):
             return
 
@@ -2036,6 +2120,9 @@ async def test_ascrape_playwright_caplog(monkeypatch, caplog):
             return
 
     class DummyContext:
+        async def route(self, pattern, handler):
+            return
+
         def __init__(self):
             self.new_page_called = False
 
