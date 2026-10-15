@@ -6,6 +6,7 @@ import async_timeout
 from langchain_core.documents import Document
 
 from ..utils import Proxy, dynamic_import, get_logger, parse_or_search_proxy
+from ..utils.url_safety import validate_url
 
 logger = get_logger("web-loader")
 
@@ -34,6 +35,16 @@ def _warn_on_error_status(response: Any, url: str) -> None:
             f"Received HTTP {status} for {url}; the scraped content is likely "
             "an error page, not the intended document."
         )
+
+
+async def _block_unsafe_request(route: Any) -> None:
+    """Abort browser requests whose host resolves to a metadata address."""
+    try:
+        await asyncio.to_thread(validate_url, route.request.url)
+    except ValueError:
+        await route.abort()
+    else:
+        await route.continue_()
 
 
 class ChromiumLoader:
@@ -276,8 +287,10 @@ class ChromiumLoader:
                         raise ValueError(f"Invalid browser name: {browser_name}")
                     context = await browser.new_context()
                     await Malenia.apply_stealth(context)
+                    await context.route("**/*", _block_unsafe_request)
                     page = await context.new_page()
                     response = await page.goto(url, wait_until="domcontentloaded")
+                    await asyncio.to_thread(validate_url, page.url)
                     _warn_on_error_status(response, url)
                     await page.wait_for_load_state(self.load_state)
 
@@ -332,6 +345,7 @@ class ChromiumLoader:
                                 break
 
                     results = await page.content()
+                    await asyncio.to_thread(validate_url, page.url)
                     break
 
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:
@@ -390,11 +404,14 @@ class ChromiumLoader:
                         ignore_https_errors=True,
                     )
                     await Malenia.apply_stealth(context)
+                    await context.route("**/*", _block_unsafe_request)
                     page = await context.new_page()
                     response = await page.goto(url, wait_until="domcontentloaded")
+                    await asyncio.to_thread(validate_url, page.url)
                     _warn_on_error_status(response, url)
                     await page.wait_for_load_state(self.load_state)
                     results = await page.content()
+                    await asyncio.to_thread(validate_url, page.url)
                     logger.info("Content scraped")
                     await browser.close()
                     return results
@@ -448,10 +465,13 @@ class ChromiumLoader:
                     context = await browser.new_context(
                         storage_state=self.storage_state
                     )
+                    await context.route("**/*", _block_unsafe_request)
                     page = await context.new_page()
                     response = await page.goto(url, wait_until="networkidle")
+                    await asyncio.to_thread(validate_url, page.url)
                     _warn_on_error_status(response, url)
                     results = await page.content()
+                    await asyncio.to_thread(validate_url, page.url)
                     logger.info("Content scraped after JavaScript rendering")
                     return results
             except (aiohttp.ClientError, asyncio.TimeoutError, Exception) as e:

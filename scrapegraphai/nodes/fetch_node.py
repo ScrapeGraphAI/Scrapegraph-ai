@@ -13,6 +13,7 @@ from langchain_openai import AzureChatOpenAI, ChatOpenAI
 from ..docloaders import ChromiumLoader
 from ..utils.cleanup_html import cleanup_html
 from ..utils.convert_to_md import convert_to_md
+from ..utils.url_safety import validate_redirect, validate_url
 from .base_node import BaseNode
 
 
@@ -276,17 +277,25 @@ class FetchNode(BaseNode):
         dict: The updated state with the processed content.
 
         Raises:
-        ValueError: If the fetched HTML content is empty or contains only whitespace.
+        ValueError: If the fetched HTML content is empty or contains only whitespace,
+        or if the URL points to a link-local or cloud metadata address.
         """
+
+        if not (self.browser_base or self.scrape_do):
+            validate_url(source)
 
         self.logger.info(f"--- (Fetching HTML from: {source}) ---")
         if self.use_soup:
             # Apply configured timeout to blocking HTTP requests. If timeout is None,
             # don't pass the timeout argument (requests will block until completion).
             if self.timeout is None:
-                response = requests.get(source)
+                response = requests.get(source, hooks={"response": validate_redirect})
             else:
-                response = requests.get(source, timeout=self.timeout)
+                response = requests.get(
+                    source,
+                    timeout=self.timeout,
+                    hooks={"response": validate_redirect},
+                )
             if response.status_code == 200:
                 if not response.text.strip():
                     raise ValueError("No HTML body content found in the response.")
