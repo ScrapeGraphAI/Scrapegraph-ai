@@ -425,8 +425,13 @@ models_tokens = {
         "grok-beta": 128000,
     },
     "minimax": {
+        "MiniMax-M3.1-Flash": 1000000,
         "MiniMax-M3": 1000000,
-        "MiniMax-M2.7": 204800,
-        "MiniMax-M2.7-highspeed": 204800,
     },
+}
+
+# Saved model IDs remain routable without appearing in the current catalog.
+MINIMAX_LEGACY_MODEL_TOKENS = {
+    "MiniMax-M2.7": 204800,
+    "MiniMax-M2.7-highspeed": 204800,
 }

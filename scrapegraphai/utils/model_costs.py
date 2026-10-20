@@ -50,6 +50,7 @@ MODEL_COST_PER_1K_TOKENS_INPUT = {
     "amazon.titan-text-express-v1": 0.0002,
     "amazon.titan-text-lite-v1": 0.00015,
     "amazon.titan-text-premier-v1:0": 0.0005,
+    "MiniMax-M3.1-Flash": 0.00015,
     "MiniMax-M2.7": 0.0003,
 }
 
@@ -103,11 +104,13 @@ MODEL_COST_PER_1K_TOKENS_OUTPUT = {
     "amazon.titan-text-express-v1": 0.0006,
     "amazon.titan-text-lite-v1": 0.0002,
     "amazon.titan-text-premier-v1:0": 0.0015,
+    "MiniMax-M3.1-Flash": 0.0006,
     "MiniMax-M2.7": 0.0012,
 }
 
 
 MODEL_CACHE_COST_PER_1K_TOKENS = {
+    "MiniMax-M3.1-Flash": {"read": 0.000015, "write": None},
     "MiniMax-M2.7": {"read": 0.00006, "write": 0.000375},
 }
 

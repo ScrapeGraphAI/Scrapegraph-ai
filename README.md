@@ -157,6 +157,17 @@ For each of these graphs there is the multi version. It allows to make calls of 
 
 It is possible to use different LLM through APIs, such as **OpenAI**, **Groq**, **Azure**, **Gemini**, **[MiniMax](docs/minimax.md)** and more, or local models using **Ollama**.
 
+For MiniMax, use `{"llm": {"model_provider": "minimax", "api_key": "YOUR_MINIMAX_API_KEY"}}`
+with `SmartScraperGraph` to select `MiniMax-M3.1-Flash` by default. The current catalog
+also includes `MiniMax-M3`; explicit saved model IDs remain supported. Both current
+models have a 1,000,000-token context window. The adapter uses Chat Completions and
+preserves reasoning and tool history; pass `reasoning_effort` (`low`, `medium`,
+`high`, `xhigh`, or `max`) to tune Flash thinking. Omit it for the API default of
+`max`. Flash does not accept disabled thinking, `reasoning_effort="none"`,
+`reasoning_split=false`, or `service_tier`. See the
+[MiniMax API reference](https://platform.minimax.io/docs/api-reference/text-openai-api).
+Explicit `base_url` / `openai_api_base` and model IDs are passed through unchanged.
+
 Remember to have [Ollama](https://ollama.com/) installed and download the models using the **ollama pull** command, if you want to use local models.
 
 

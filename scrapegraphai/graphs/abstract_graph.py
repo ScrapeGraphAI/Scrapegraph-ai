@@ -13,6 +13,7 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
+from ..helpers.models_tokens import MINIMAX_LEGACY_MODEL_TOKENS
 from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
 from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
@@ -177,6 +178,9 @@ class AbstractGraph(ABC):
             "minimax",
         }
 
+        if llm_params.get("model_provider") == "minimax" and "model" not in llm_params:
+            llm_params["model"] = next(iter(models_tokens["minimax"]))
+
         if "/" in llm_params["model"]:
             split_model_provider = llm_params["model"].split("/", 1)
             llm_params["model_provider"] = split_model_provider[0]
@@ -187,6 +191,8 @@ class AbstractGraph(ABC):
                 for provider, models_d in models_tokens.items()
                 if llm_params["model"] in models_d
             ]
+            if llm_params["model"] in MINIMAX_LEGACY_MODEL_TOKENS:
+                possible_providers.append("minimax")
             if len(possible_providers) <= 0:
                 raise ValueError(
                     f"""Provider {llm_params["model_provider"]} is not supported.
@@ -209,9 +215,10 @@ class AbstractGraph(ABC):
 
         if llm_params.get("model_tokens", None) is None:
             try:
-                self.model_token = models_tokens[llm_params["model_provider"]][
-                    llm_params["model"]
-                ]
+                token_limits = models_tokens[llm_params["model_provider"]]
+                if llm_params["model_provider"] == "minimax":
+                    token_limits = {**MINIMAX_LEGACY_MODEL_TOKENS, **token_limits}
+                self.model_token = token_limits[llm_params["model"]]
             except KeyError:
                 logger.warning(
                     "Max input tokens for model %s/%s not found, "
