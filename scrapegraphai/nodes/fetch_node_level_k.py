@@ -243,7 +243,7 @@ class FetchNodeLevelK(BaseNode):
             List: The updated list of documents with fetched content.
         """
         new_documents = []
-        for doc in documents:
+        for doc in list(documents):
             source = doc["source"]
             if "document" not in doc:
                 try:
