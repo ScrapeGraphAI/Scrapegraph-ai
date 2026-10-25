@@ -13,7 +13,7 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
+from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi, Runcrate
 from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
 logger = get_logger(__name__)
@@ -175,6 +175,7 @@ class AbstractGraph(ABC):
             "togetherai",
             "xai",
             "minimax",
+            "runcrate",
         }
 
         if "/" in llm_params["model"]:
@@ -243,6 +244,7 @@ class AbstractGraph(ABC):
                 "clod",
                 "xai",
                 "minimax",
+                "runcrate",
             }:
                 if llm_params["model_provider"] == "bedrock":
                     llm_params["model_kwargs"] = {
@@ -262,6 +264,9 @@ class AbstractGraph(ABC):
 
                 if model_provider == "minimax":
                     return MiniMax(**llm_params)
+
+                if model_provider == "runcrate":
+                    return Runcrate(**llm_params)
 
                 if model_provider == "ernie":
                     from langchain_community.chat_models import ErnieBotChat

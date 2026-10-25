@@ -352,6 +352,14 @@ models_tokens = {
         "gpt-5.4-mini": 400000,
         "gpt-5.4": 1000000,
     },
+    "runcrate": {
+        "deepseek-ai/DeepSeek-V4.1-Flash": 1048576,
+        "zai-org/GLM-5.3": 1048576,
+        "zai-org/GLM-5.3-Flash": 1048576,
+        "Qwen/Qwen3.8-Flash": 1000000,
+        "openai/gpt-oss-120b": 131072,
+        "moonshotai/Kimi-K2.6": 262144,
+    },
     "deepseek": {
         "deepseek-chat": 128000,
         "deepseek-coder": 128000,

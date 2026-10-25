@@ -11,6 +11,7 @@ from .nvidia import Nvidia
 from .oneapi import OneApi
 from .openai_itt import OpenAIImageToText
 from .openai_tts import OpenAITextToSpeech
+from .runcrate import Runcrate
 from .xai import XAI
 
-__all__ = ["AtlasCloud", "CheaperInference", "DeepSeek", "MiniMax", "OneApi", "OpenAIImageToText", "OpenAITextToSpeech", "CLoD", "XAI", "Nvidia"]
+__all__ = ["AtlasCloud", "CheaperInference", "DeepSeek", "MiniMax", "OneApi", "OpenAIImageToText", "OpenAITextToSpeech", "Runcrate", "CLoD", "XAI", "Nvidia"]
