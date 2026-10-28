@@ -6,6 +6,7 @@ import json
 import time
 from typing import List, Optional
 
+from langchain_core.exceptions import OutputParserException
 from langchain_core.prompts import PromptTemplate
 from langchain_aws import ChatBedrock
 from langchain_ollama import ChatOllama
@@ -195,7 +196,7 @@ class GenerateAnswerNode(BaseNode):
                 answer = self.invoke_with_timeout(
                     chain, {"content": doc, "question": user_prompt}, self.timeout
                 )
-            except (Timeout, json.JSONDecodeError) as e:
+            except (Timeout, json.JSONDecodeError, OutputParserException) as e:
                 error_msg = (
                     "Response timeout exceeded"
                     if isinstance(e, Timeout)
@@ -232,7 +233,7 @@ class GenerateAnswerNode(BaseNode):
             batch_results = self.invoke_with_timeout(
                 async_runner, {"question": user_prompt}, self.timeout
             )
-        except (Timeout, json.JSONDecodeError) as e:
+        except (Timeout, json.JSONDecodeError, OutputParserException) as e:
             error_msg = (
                 "Response timeout exceeded during chunk processing"
                 if isinstance(e, Timeout)
@@ -256,7 +257,7 @@ class GenerateAnswerNode(BaseNode):
                 {"content": batch_results, "question": user_prompt},
                 self.timeout,
             )
-        except (Timeout, json.JSONDecodeError) as e:
+        except (Timeout, json.JSONDecodeError, OutputParserException) as e:
             error_msg = (
                 "Response timeout exceeded during merge"
                 if isinstance(e, Timeout)
