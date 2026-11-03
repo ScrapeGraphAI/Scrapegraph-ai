@@ -3,6 +3,7 @@ research_web module for web searching across different search engines with impro
 error handling, validation, and security features.
 """
 
+import os
 import random
 import re
 import time
@@ -56,13 +57,16 @@ class SearchConfig(BaseModel):
         None, description="Proxy configuration"
     )
     serper_api_key: Optional[str] = Field(None, description="API key for Serper")
+    keenable_api_key: Optional[str] = Field(
+        None, description="Optional API key for Keenable (works without one)"
+    )
     region: Optional[str] = Field(None, description="Country/region code")
     language: str = Field("en", description="Language code")
 
     @validator("search_engine")
     def validate_search_engine(cls, v):
         """Validate search engine."""
-        valid_engines = {"duckduckgo", "bing", "searxng", "serper"}
+        valid_engines = {"duckduckgo", "bing", "searxng", "serper", "keenable"}
         if v.lower() not in valid_engines:
             raise ValueError(
                 f"Search engine must be one of: {', '.join(valid_engines)}"
@@ -167,6 +171,7 @@ def search_on_web(
     serper_api_key: Optional[str] = None,
     region: Optional[str] = None,
     language: str = "en",
+    keenable_api_key: Optional[str] = None,
 ) -> List[str]:
     """
     Search web function with improved error handling, validation, and security features.
@@ -181,6 +186,9 @@ def search_on_web(
         serper_api_key (str): API key for Serper
         region (str): Country/region code (e.g., 'mx' for Mexico)
         language (str): Language code (e.g., 'es' for Spanish)
+        keenable_api_key (str): Optional API key for Keenable. Falls back to the
+            KEENABLE_API_KEY environment variable; without either, the keyless
+            public endpoint is used (rate-limited per IP)
 
     Returns:
         List[str]: List of URLs from search results
@@ -203,6 +211,7 @@ def search_on_web(
             timeout=timeout,
             proxy=proxy,
             serper_api_key=serper_api_key,
+            keenable_api_key=keenable_api_key,
             region=region,
             language=language,
         )
@@ -231,6 +240,15 @@ def search_on_web(
         elif config.search_engine == "serper":
             results = _search_serper(
                 config.query, config.max_results, config.serper_api_key, config.timeout
+            )
+
+        elif config.search_engine == "keenable":
+            results = _search_keenable(
+                config.query,
+                config.max_results,
+                config.keenable_api_key,
+                config.timeout,
+                formatted_proxy,
             )
 
         return filter_pdf_links(results)
@@ -414,6 +432,72 @@ def _search_serper(
         return results
     except Exception as e:
         raise SearchRequestError(f"Serper search failed: {str(e)}")
+
+
+KEENABLE_API_URL = "https://api.keenable.ai/v1/search"
+KEENABLE_PUBLIC_API_URL = "https://api.keenable.ai/v1/search/public"
+# Keenable returns at most 50 results per call.
+KEENABLE_MAX_RESULTS = 50
+
+
+def _search_keenable(
+    query: str,
+    max_results: int,
+    api_key: Optional[str],
+    timeout: int,
+    proxy: Optional[str] = None,
+) -> List[str]:
+    """
+    Helper function for Keenable search (https://docs.keenable.ai).
+
+    Works without an API key: with no key (argument or KEENABLE_API_KEY
+    environment variable) it calls Keenable's public endpoint, which is
+    rate-limited per IP and needs an ``X-Keenable-Title`` header naming the app.
+    A key selects the authenticated endpoint and lifts the hourly limit.
+
+    Args:
+        query (str): Search query
+        max_results (int): Maximum number of results to return (capped at 50)
+        api_key (str, optional): API key for Keenable
+        timeout (int): Request timeout in seconds
+        proxy (str, optional): Proxy configuration
+
+    Returns:
+        List[str]: List of URLs from search results
+    """
+    api_key = api_key or os.environ.get("KEENABLE_API_KEY") or None
+
+    headers = {"Content-Type": "application/json", "X-Keenable-Title": "scrapegraphai"}
+    if api_key:
+        headers["X-API-Key"] = api_key
+        url = KEENABLE_API_URL
+    else:
+        url = KEENABLE_PUBLIC_API_URL
+
+    data = {"query": query, "max_results": min(max_results, KEENABLE_MAX_RESULTS)}
+    proxies = {"http": proxy, "https": proxy} if proxy else None
+
+    try:
+        response = requests.post(
+            url,
+            json=data,
+            headers=headers,
+            proxies=proxies,
+            timeout=timeout,
+        )
+        response.raise_for_status()
+
+        json_data = response.json()
+        results = []
+        for item in json_data.get("results", []):
+            if item.get("url"):
+                results.append(item["url"])
+                if len(results) >= max_results:
+                    break
+
+        return results
+    except Exception as e:
+        raise SearchRequestError(f"Keenable search failed: {str(e)}")
 
 
 def format_proxy(proxy_config: Union[str, Dict, ProxyConfig]) -> str:
