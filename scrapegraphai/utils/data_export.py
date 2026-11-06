@@ -36,7 +36,9 @@ def export_to_csv(data: List[Dict[str, Any]], filename: str) -> None:
         logger.warning("No data to export")
         return
 
-    keys = data[0].keys()
+    # Collect the keys of every row, in order of first appearance, so rows
+    # with extra or missing keys do not make DictWriter raise.
+    keys = list(dict.fromkeys(key for row in data for key in row))
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=keys)
         writer.writeheader()
