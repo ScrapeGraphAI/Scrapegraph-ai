@@ -352,6 +352,15 @@ models_tokens = {
         "gpt-5.4-mini": 400000,
         "gpt-5.4": 1000000,
     },
+    "cloudgpu": {
+        "deepseek-v4-flash": 131072,
+        "deepseek-v4-pro": 131072,
+        "glm-5.3": 131072,
+        "kimi-k2.6": 262144,
+        "minimax-m3": 1000000,
+        "qwen3-coder-480b": 262144,
+        "qwen3.5-397b": 262144,
+    },
     "deepseek": {
         "deepseek-chat": 128000,
         "deepseek-coder": 128000,
