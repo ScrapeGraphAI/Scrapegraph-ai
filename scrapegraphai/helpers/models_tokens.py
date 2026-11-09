@@ -352,6 +352,14 @@ models_tokens = {
         "gpt-5.4-mini": 400000,
         "gpt-5.4": 1000000,
     },
+    "teamorouter": {
+        "deepseek-v4-flash": 1000000,
+        "deepseek-v4-pro": 1000000,
+        "qwen3.8-flash": 1000000,
+        "qwen3.8-max": 1000000,
+        "kimi-k3": 1000000,
+        "glm-5.3": 1000000,
+    },
     "deepseek": {
         "deepseek-chat": 128000,
         "deepseek-coder": 128000,
