@@ -13,7 +13,7 @@ from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import BaseModel
 
 from ..helpers import models_tokens
-from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi
+from ..models import XAI, CLoD, DeepSeek, MiniMax, Nvidia, OneApi, TeamoRouter
 from ..utils.logging import get_logger, set_verbosity_info, set_verbosity_warning
 
 logger = get_logger(__name__)
@@ -172,6 +172,7 @@ class AbstractGraph(ABC):
             "ernie",
             "fireworks",
             "clod",
+            "teamorouter",
             "togetherai",
             "xai",
             "minimax",
@@ -241,6 +242,7 @@ class AbstractGraph(ABC):
                 "deepseek",
                 "togetherai",
                 "clod",
+                "teamorouter",
                 "xai",
                 "minimax",
             }:
@@ -256,6 +258,9 @@ class AbstractGraph(ABC):
 
                 if model_provider == "clod":
                     return CLoD(**llm_params)
+
+                if model_provider == "teamorouter":
+                    return TeamoRouter(**llm_params)
 
                 if model_provider == "deepseek":
                     return DeepSeek(**llm_params)
