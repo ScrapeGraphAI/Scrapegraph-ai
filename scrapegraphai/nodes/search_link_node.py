@@ -76,12 +76,24 @@ class SearchLinkNode(BaseNode):
 
         lang_indicators = self.filter_config.get("lang_indicators", [])
         parsed_url = urlparse(url)
-        query_params = parse_qs(parsed_url.query)
+        query_params = {key.lower() for key in parse_qs(parsed_url.query)}
+        path = parsed_url.path.lower()
 
-        return any(
-            indicator in parsed_url.path.lower() or indicator in query_params
-            for indicator in lang_indicators
-        )
+        for indicator in lang_indicators:
+            indicator = indicator.lower()
+            if indicator.endswith("="):
+                # "lang=" matches a "lang" query parameter
+                if indicator[:-1] in query_params:
+                    return True
+            elif indicator.startswith("/"):
+                # "/fr" matches whole path segments such as /fr/ or /fr-ca/,
+                # not paths that merely start with it, like /free or /frameworks
+                code = re.escape(indicator.strip("/"))
+                if re.search(rf"/{code}(?:[-_][a-z]{{2}})?(?:/|$)", path):
+                    return True
+            elif indicator in path or indicator in query_params:
+                return True
+        return False
 
     def _is_potentially_irrelevant(self, url):
         if not self.filter_links:
