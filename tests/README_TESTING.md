@@ -9,7 +9,7 @@ Comprehensive testing infrastructure for ScrapeGraphAI with support for unit tes
 - [Running Tests](#running-tests)
 - [Test Fixtures](#test-fixtures)
 - [Performance Benchmarking](#performance-benchmarking)
-- [Mock Server](#mock-server)
+- [Mock HTTP Server](#mock-http-server)
 - [CI/CD Integration](#cicd-integration)
 
 ## Overview
